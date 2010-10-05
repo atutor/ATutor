@@ -35,14 +35,10 @@ function get_preview_link($file)
 	
 	if (substr($file, 0 , 7) == 'http://' || substr($file, 0 , 8) == 'https://') {
 		return $file;
-	} else {
-		if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-			$get_file = 'get.php/';
-		} else {
-			$get_file = 'content/' . $_SESSION['course_id'] . '/';
-		}
-		
+	} else if ($content_row['content_path'] != '') {
 		return $get_file.$content_row['content_path'].'/'.$file;
+	} else {
+		return $file;
 	}
 }
 
