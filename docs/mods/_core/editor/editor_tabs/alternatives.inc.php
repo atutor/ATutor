@@ -25,22 +25,6 @@ if ($cid == 0) {
 }
 
 /**
- * This function returns the preview link of the given file
- * @param  $file     the file location in "file manager"
- * @return the relative URL to preview the file
- */
-function get_preview_link($file)
-{
-	global $content_row;
-	
-	if (substr($file, 0 , 7) == 'http://' || substr($file, 0 , 8) == 'https://') {
-		return $file;
-	} else {
-		return $file;
-	}
-}
-
-/**
  * When the file name is a remote URL, this function reduces the full URL
  * @param  $filename
  * @return the reduced name
@@ -80,7 +64,7 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 			if ($secondary_resource['type_id'] == $alternative_type)
 			{
 				echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
-				echo '      <a href="'.get_preview_link($secondary_resource['secondary_resource']).'" title="'._AT('new_window').'" target="_new">'.get_display_filename($secondary_resource['secondary_resource']).'</a><br />'."\n";
+				echo '      <a href="'.$secondary_resource['secondary_resource'].'" title="'._AT('new_window').'" target="_new">'.get_display_filename($secondary_resource['secondary_resource']).'</a><br />'."\n";
 				echo '      <a href="#" onclick="ATutor.poptastic(\''.AT_BASE_HREF.'mods/_core/file_manager/index.php?framed=1'. SEP.'popup=1'. SEP.'cp='. $content_row['content_path'].SEP.'cid='.$content_id.SEP.'pid='.$pid.SEP.'a_type='.$alternative_type.'\');return false;" title="'._AT('new_window').'">'."\n";
 				echo '        <img src="'.AT_BASE_HREF.'images/home-tests_sm.png" border="0" title="'._AT('alter').'" alt="'._AT('alter').'" />'."\n";
 				echo '      </a>'."\n";
@@ -176,7 +160,7 @@ else
 
 		// table cell "original resource"
 		echo '    <td headers="header1">'."\n";
-		echo '    <a href="'.get_preview_link($primary_resource).'" title="'._AT('new_window').'" target="_new">'.get_display_filename($primary_resource).'</a>'."\n";
+		echo '    <a href="'.$primary_resource.'" title="'._AT('new_window').'" target="_new">'.get_display_filename($primary_resource).'</a>'."\n";
 		echo '    </td>'."\n";
 
 		// table cell "original resource type"
