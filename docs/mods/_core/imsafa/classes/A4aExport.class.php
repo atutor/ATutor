@@ -35,6 +35,11 @@ class A4aExport extends A4a {
 		$resources = parent::getPrimaryResources();
 		foreach($resources as $rid => $prop){
 			$resources_types = parent::getPrimaryResourcesTypes($rid);
+            if (empty($resources_types)){
+                //if there are no resource types, then don't use it.
+                continue;
+            }
+
 			$temp = array();
 			$secondary_array = array();
 			foreach($resources_types as $rtid){
@@ -65,7 +70,6 @@ class A4aExport extends A4a {
 			} 
 			if(!empty($temp)){
 				$this->original_files[$temp['resource']] = $temp;
-	//			debug($this->original_files['7dolomiti_1a_como1e_como_road1b.jpg'], $rid);
 			}
 		}
 		return $this->original_files;
