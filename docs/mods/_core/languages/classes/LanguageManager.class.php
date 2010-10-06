@@ -273,6 +273,9 @@ class LanguageManager {
 	function import($filename) {
 		global $languageManager, $msg;
 
+		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+		require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguagesParser.class.php');
+		
 		$import_path = AT_CONTENT_DIR . 'import/';
 
 		$archive = new PclZip($filename);
@@ -318,45 +321,23 @@ class LanguageManager {
 	// public
 	// imports LIVE language from the atutor language database
 	function liveImport($language_code) {
-		global $db;
-
-		$tmp_lang_db = mysql_connect(AT_LANG_DB_HOST, AT_LANG_DB_USER, AT_LANG_DB_PASS);
-		// set database connection using utf8
-		mysql_query("SET NAMES 'utf8'", $tmp_lang_db);
+		global $msg;
 		
-		if (!$tmp_lang_db) {
-			/* AT_ERROR_NO_DB_CONNECT */
-			echo 'Unable to connect to db.';
-			exit;
+		$zip_file_content = @file_get_contents(AT_LIVE_LANG_PACK_URL.$language_code);
+		
+		if (!$zip_file_content || substr($zip_file_content, 0, 6) == "Error:") {
+			$msg->addError(array('REMOTE_ERROR', $zip_file_content));
+			return;
 		}
-		if (!mysql_select_db('dev_atutor_langs', $tmp_lang_db)) {
-			echo 'DB connection established, but database "dev_atutor_langs" cannot be selected.';
-			exit;
-		}
-
-		$sql = "SELECT * FROM languages_SVN WHERE language_code='$language_code'";
-		$result = mysql_query($sql, $tmp_lang_db);
-
-		if ($row = mysql_fetch_assoc($result)) {
-			$row['reg_exp'] = addslashes($row['reg_exp']);
-			$row['native_name'] = addslashes($row['native_name']);
-			$row['english_name'] = addslashes($row['english_name']);
-
-			$sql = "REPLACE INTO ".TABLE_PREFIX."languages VALUES ('{$row['language_code']}', '{$row['char_set']}', '{$row['direction']}', '{$row['reg_exp']}', '{$row['native_name']}', '{$row['english_name']}', 3)";
-			$result = mysql_query($sql, $db);
-
-			$sql = "SELECT * FROM language_text_SVN WHERE language_code='$language_code'";
-			$result = mysql_query($sql, $tmp_lang_db);
-
-			$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ";
-			while ($row = mysql_fetch_assoc($result)) {
-				$row['text'] = addslashes($row['text']);
-				$row['context'] = addslashes($row['context']);
-				$sql .= "('{$row['language_code']}', '{$row['variable']}', '{$row['term']}', '{$row['text']}', '{$row['revised_date']}', '{$row['context']}'),";
-			}
-			$sql = substr($sql, 0, -1);
-			mysql_query($sql, $db);
-		}
+		
+		// write the downloaded language pack into a temporary file for pclzip to unpack
+		$lang_pack_zip = AT_CONTENT_DIR . 'import/'.md5(time()).'.zip';
+		$fp = fopen($lang_pack_zip, 'w');
+		fwrite($fp, $zip_file_content);
+		fclose($fp);
+		
+		$this->import($lang_pack_zip);
+		@unlink($lang_pack_zip);
 	}
 	
 	function getXML() {

@@ -81,11 +81,8 @@ $display_name_formats[3] = 'display_name_format_fl';
 $display_name_formats[4] = 'display_name_format_lf';
 $display_name_formats[5] = 'display_name_format_lfst';
 
-
 /* the atutor.ca language translation server: */
-define('AT_LANG_DB_HOST', 'atutor.ca');
-define('AT_LANG_DB_USER', 'dev_atutor_langs');
-define('AT_LANG_DB_PASS', 'dev_atutor_langs');
+define('AT_LIVE_LANG_PACK_URL', 'http://atutor.ca/atutor/translate/get_lang_pack.php?lang_code=');
 
 /* links */
 define('LINK_CAT_COURSE',	1);

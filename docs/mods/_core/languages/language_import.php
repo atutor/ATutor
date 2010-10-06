@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_LANGUAGES);
 
-require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguageEditor.class.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguagesParser.class.php');
 
