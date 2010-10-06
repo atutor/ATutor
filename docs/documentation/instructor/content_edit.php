@@ -78,7 +78,10 @@
 		<dd><p>Type in <kbd>[tex][/tex]</kbd> to embed LaTeX equations into your content. In the TinyMCE editor while in advanced mode, click on the TEX icon to insert the LaTeX tags.</p></dd>
 
 		<dt>Multimedia</dt>
-		<dd><p>Type the <kbd>[media][/media]</kbd> tags, along with a URL to an external media file, or a relative URL for a media file in the course File Manager (e.g. movies/mymovie.flv), to embed multimedia into your content. Supported formats currently include: mpeg, mov, wmv, swf, mp3, wav, ogg, mid, flv, mp4 and YouTube hosted videos. The media tag can take two parameters to define the width and height of the play when it displays <kbd>[media|640|480]http://www.youtube.com/watch?v=bxcZ-dFffHA[/media]</kbd>. If the parameters are not defined, the player size will default to 425x350. While in TinyMCE click on the film slides icon to insert the media tags.</p></dd>
+		<dd><p>Type the <kbd>[media][/media]</kbd> tags, along with a URL to an external media file, or a relative URL for a media file in the course File Manager (e.g. movies/mymovie.flv), to embed multimedia into your content. Supported formats currently include: mpeg, mov, wmv, swf, mp3, wav, ogg, mid, flv, mp4 and YouTube hosted videos. The media tag can take two parameters to define the width and height of the player when it displays <kbd>[media|640|480]http://www.youtube.com/watch?v=bxcZ-dFffHA[/media]</kbd>. If the parameters are not defined, the player size will default to 425x350. While in TinyMCE click on the film slides icon in the advanced editor to insert the media tags.</p>
+
+		 <p>By default Flowplayer, the media player included with ATutor, plays .flv, .mp3, . mp4, and .mov files. For Flowplayer to function, users need to have a Flash plugin installed with their browser. Other multimedia formats will use the media player plugin associated with various file types setup in a browser's addon or plugin or helper application configuration.</p>
+		</dd>
 
 		<dt>Save and Close</dt>
 		<dd><p>While editing or creating content, it is wise to frequently <kbd>Save</kbd> your content.  When you are finished, use <kbd>Close</kbd> to close the content editor.  Note that this does not save your content first so any unsaved content will be lost.</p></dd>
