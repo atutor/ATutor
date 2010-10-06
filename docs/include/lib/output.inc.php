@@ -1120,7 +1120,12 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	// keep &lt; (content saved in plain text format) as it is instead of &amp;lt;
 	$content = str_replace('&amp;lt;', '&lt;', $content);
 	
-	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp3", "wav", "ogg", "mid", "mp4", "flv");
+	$video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp4", "flv");
+	
+	$audio_exts = array("mp3", "wav", "ogg", "mid");
+	$audio_width = 425;
+	$audio_height = 27;
+	
 	$txt_exts = array("txt", "html", "htm");
 	$image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
 	$only_on_secondary_type = intval($only_on_secondary_type);
@@ -1216,9 +1221,16 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 			$ext = substr($row['secondary_resource'], strrpos($row['secondary_resource'], '.')+1);
 			
 			// alternative is video or a youtube url
-			if (in_array($ext, $video_exts) || 
+			if (in_array($ext, $video_exts) || in_array($ext, $audio_exts) || 
 			    preg_match("/http:\/\/.*youtube.com\/watch.*/", $row['secondary_resource'])) {
-			    $target = '[media]'.$row['secondary_resource'].'[/media]';
+			    if (in_array($ext, $audio_exts)) {
+			    	// display audio medias in a smaller width/height (425 * 27)
+			    	// A hack for now to handle audio media player size
+			    	$target = '[media|'.$audio_width.'|'.$audio_height.']'.$row['secondary_resource'].'[/media]';
+			    } else {
+			    	// use default media size for video medias
+			    	$target = '[media]'.$row['secondary_resource'].'[/media]';
+			    }
 				$target = apply_customized_format(embed_media($target));
 			}
 			// a text primary to be replaced by a visual alternative 
@@ -1263,7 +1275,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 				($row['primary_type']==4 && $_SESSION['prefs']['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE']=='replace'))
 				$pattern_replace_to = '${1}'."\n".$target."\n".'${3}';
 			else
-				$pattern_replace_to = '${1}${2}'."\n".$target."\n".'${3}';
+				$pattern_replace_to = '${1}${2}'."<br /><br />\n".$target."\n".'${3}';
 
 			// *** Alternative replace/append starts from here ***
 			$processed = false;    // one primary resource is only processed once 
