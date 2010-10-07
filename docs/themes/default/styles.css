@@ -775,6 +775,10 @@ div#error h4 {
 	margin-left: 0px;
 }
 
+div#error a{
+	color:red;
+	text-decoration:underline;
+}
 div#error ul, div#feedback ul, div#help ul {
 	position: relative;
 	list-style: none;
@@ -829,7 +833,10 @@ div#info {
 	border-radius: .5em;
 	-moz-border-radius: .5em;
 }
-
+div#info a{
+	color:red;
+	text-decoration:underline;
+}
 div#warning {
 	width: 50%;
 	margin-left: auto;
