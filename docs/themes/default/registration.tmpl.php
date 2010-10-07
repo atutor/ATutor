@@ -33,6 +33,8 @@ function encrypt_password()
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('required_information'); ?></legend>
+
+<p><span class="required">*</span><?php echo _AT('required_field'); ?></p>
 	<?php if (!$_POST['member_id'] && defined('AT_MASTER_LIST') && AT_MASTER_LIST && !admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
 		<div class="row">
 			<h3><?php echo _AT('account_authorization'); ?></h3>
