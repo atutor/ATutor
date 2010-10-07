@@ -69,7 +69,7 @@ function encrypt_password()
 				<input name="member_id" type="hidden" value="<?php echo intval($_POST['member_id']); ?>" />
 				<input name="login" type="hidden" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" />
 		<?php else: ?>
-			<input id="login" name="login" type="text" maxlength="20" size="30" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" /><br />
+			<input id="login" name="login" type="text" maxlength="20" size="30" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" title="<?php echo _AT('login_name').':'._AT('contain_only'); ?>"/><br />
 			<small>&middot; <?php echo _AT('contain_only'); ?><br />
 				   &middot; <?php echo _AT('20_max_chars'); ?></small>
 		<?php endif; ?>
@@ -78,7 +78,7 @@ function encrypt_password()
 	<?php if (!admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || !$_POST['member_id']): ?>
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password1"><?php echo _AT('password'); ?></label><br />
-			<input id="form_password1" name="form_password1" type="password" size="15" maxlength="15" /><br />
+			<input id="form_password1" name="form_password1" type="password" size="15" maxlength="15" title="<?php echo _AT('password').':'._AT('combination'); ?>"/><br />
 			<small>&middot; <?php echo _AT('combination'); ?><br />
 				   &middot; <?php echo _AT('15_max_chars'); ?></small>
 		</div>
