@@ -752,7 +752,7 @@ class ContentManager
 				$sequence_links['previous'] = $previous;
 			} else if ($cid) {
 				$previous['url']   = $_base_path . url_rewrite('index.php');
-				$previous['title'] = _AT('home');
+				$previous['title'] = _AT('course_home');
 				$sequence_links['previous'] = $previous;
 			}
 			if (!empty($next['content_id'])) {
