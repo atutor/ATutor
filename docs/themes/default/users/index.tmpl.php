@@ -134,9 +134,11 @@
     }
     if($perpage == count($this->all_news)){ ?>
 	<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=1"><?php echo _AT('show_pages'); ?></a>
-    <?php }else{ ?>
+    <?php }else if($newscount > 0){ ?>
 	<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo _AT('show_all'); ?></a>
-    <?php } ?>
+    <?php }else{
+	    echo _AT('none_found');
+	  }?>
 <br /><br />
 </div>  
 
