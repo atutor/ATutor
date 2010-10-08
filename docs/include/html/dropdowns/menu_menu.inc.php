@@ -20,7 +20,7 @@ ob_start();
 
 echo '<div style="white-space:nowrap;">';
 
-echo '<a href="'.$_base_path.'index.php">'._AT('home').'</a><br />';
+echo '<a href="'.$_base_path.'index.php">'._AT('course_home').'</a><br />';
 
 /* @See classes/ContentManager.class.php	*/
 $contentManager->printMainMenu();
