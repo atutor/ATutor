@@ -46,7 +46,7 @@ $_pages[AT_NAV_PUBLIC] = array_merge(array('login.php',$reg_tab,$browse_tab), (i
 
 
 //$_pages[AT_NAV_START]  = array_merge(array($my_tab , 'users/profile.php', 'users/preferences.php'), (isset($_pages[AT_NAV_START]) ? (array) $_pages[AT_NAV_START] : array()));
-$_pages[AT_NAV_COURSE] = array('index.php');
+$_pages[AT_NAV_COURSE] = array('users/index.php','index.php');
 $_pages[AT_NAV_HOME]   = array();
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
