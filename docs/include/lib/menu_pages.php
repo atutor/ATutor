@@ -95,7 +95,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
         }
 } else if (isset($_SESSION['course_id']) && $_SESSION['course_id'] == -1) {
 	/* admin pages */
-        $_pages['admin/index.php']['title_var'] = 'home';
+        $_pages['admin/index.php']['title_var'] = 'admin_home';
         $_pages['admin/index.php']['parent']    = AT_NAV_ADMIN;
         $_pages['admin/index.php']['guide']     = 'admin/?p=configuration.php';
         $_pages['admin/index.php']['children'] = array_merge(array('mods/_core/users/admins/my_edit.php', 'mods/_core/users/admins/my_password.php'), isset($_pages['mods/_core/users/index.php']['children']) ?  $_pages['admin/index.php']['children'] : array());
@@ -302,7 +302,7 @@ $_pages['users/pref_wizard/index.php']['parent'] = AT_NAV_START;
 
 
 /* course pages */
-$_pages['index.php']['title_var']  = 'home';
+$_pages['index.php']['title_var']  = 'course_home';
 $_pages['index.php']['parent'] = AT_NAV_COURSE;
 
 $_pages['enroll.php']['title_var']  = 'enroll';
