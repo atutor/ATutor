@@ -747,8 +747,9 @@ if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
 	$_FILES['file']['tmp_name'] = $full_filename;
 	$_FILES['file']['size']     = strlen($content);
 	unset($content);
-	$url_parts = pathinfo($_POST['url']);
-	$package_base_name_url = $url_parts['basename'];
+	//$url_parts = pathinfo($_POST['url']);
+	//$package_base_name_url = $url_parts['basename'];
+    $package_base_name_url = md5(time());
 }
 $ext = pathinfo($_FILES['file']['name']);
 $ext = $ext['extension'];
@@ -963,7 +964,7 @@ if ($msg->containsErrors()) {
 /* the 'content_path' field in the content table will be set to this path. */
 /* $package_base_name_url comes from the URL file name (NOT the file name of the actual file we open)*/
 if (!$package_base_name && $package_base_name_url) {
-	$package_base_name = substr($package_base_name_url, 0, -4);
+	$package_base_name = substr($package_base_name_url, -6);
 } else if (!$package_base_name) {
 	$package_base_name = substr($_FILES['file']['name'], 0, -4);
 }

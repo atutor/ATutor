@@ -1375,6 +1375,8 @@ function htmlentities_utf8($str, $use_nl2br=true){
  * Convert all '&' to '&amp;' from the input
  * @param   string  any string input, mainly URLs.
  * @return  input with & replaced to '&amp;'
+ * @author  Harris Wong
+ * @date    Oct 7, 2010
  */
 function convert_amp($input){
     $input = str_replace('&amp;', '&', $input); //convert everything to '&' first
