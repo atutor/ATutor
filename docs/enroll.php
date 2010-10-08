@@ -16,6 +16,14 @@ $_user_location = 'users';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+
+if($_POST['cancel']){
+
+	header("Location:users/browse.php");
+	exit;
+}
+
+echo 
 $course = intval($_GET['course']);
 if ($course == 0) {
 	$course = intval($_POST['form_course_id']);
@@ -103,6 +111,7 @@ if ($_SESSION['valid_user']) {
 
 				<div class="row buttons">
 					<input type="submit" name="submit" value="<?php echo _AT('enroll_me'); ?>" />
+					<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 				</div>
 			</div>
 			</form>
