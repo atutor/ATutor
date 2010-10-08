@@ -1080,7 +1080,7 @@ initContentMenu();
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						$link .='&nbsp;'.$content['title'].'</span></strong>';
+						$link .= $content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
