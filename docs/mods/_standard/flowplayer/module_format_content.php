@@ -72,14 +72,17 @@ if ($has_flv)
 	$_input .= '
 	<script language="JavaScript">
 		$f("*.flowplayerholder", "'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.4.swf", { 
-		 	clip: { autoPlay: false },  		
+		 	clip: { autoPlay: false },  
+
 	        plugins:  { 
 		        controls: { 
 		            buttons:true, 
 		            play: true,  
-		            scrubber: true 
+		            scrubber: true, 
+			    autoHide:false
 		        }         
 		    }
+		
 		});
 	</script>
 	';
