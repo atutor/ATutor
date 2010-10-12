@@ -149,6 +149,8 @@ function populate_a4a($cid, $content, $formatting){
         	$a4a->deletePrimaryResource($primary_rid);
         }
     }
+    
+    if (count($resources) == 0) return;
 
 	// insert the new resources
     foreach($resources as $primary_resource)
