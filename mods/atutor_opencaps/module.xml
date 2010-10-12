@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="1.0"> 
+    <name lang="en">AtOpenCaps</name> 
+    <description lang="en">AtOpenCaps is a module that integrates Atutor with OpenCaps, an open source web-based captioning tool. This module uses media and caption files stored in Atutor's course content directory and manages all transactions needed to deliver caption files to Open Caps editor and retrieve updated captions. This module also includes a version of FlowPlayer for playing captioned projects. 
+</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Antonio Gamba Bari</name> 
+            <email>antonio.gambabari@utoronto.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>1.0</version> 
+        <date>2010-08-10</date> 
+        <state>beta</state> 
+        <notes>See details in README file.</notes> 
+    </release> 
+</module>

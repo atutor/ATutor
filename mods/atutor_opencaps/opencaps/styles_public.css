@@ -1,0 +1,109 @@
+/* Styles for start public pages */
+
+body {
+	width:50em;
+	margin-left:auto;
+	margin-right:auto;
+	line-height:150%;
+	margin-top:5px;	
+}
+
+#start-container {
+	background-color: white;
+	margin-top:-1px;
+	padding:10px;
+}	
+
+a:link, a:visited {
+	color: #143aa8;
+}
+
+a:hover {
+	text-decoration:underline;
+}
+
+#footer {
+	width:50em;
+	margin-left:auto;
+	margin-right:auto;
+}
+
+h1 {
+	margin-left:0px;
+	padding:0px;
+}
+h2 {
+	padding:0px;
+	margin-left:0px;
+	margin-bottom:10px;
+	margin-top:0px;
+}
+
+form {
+	padding: 10px;
+}
+
+ul#start {	
+	margin-left:-40px; 
+	margin-bottom:20px;
+	list-style:none;
+}
+
+ul#start li {
+	background-color: white;
+	clear:both;
+	margin-bottom:1em;
+	padding:5px;
+}
+
+#start-tabs {
+	padding-top:5px;
+	padding-bottom:3px;
+	font-weight:bold;
+}
+
+#start-tabs ul {
+	margin:0px;
+	margin-left:-30px;
+	display:inline;
+}
+#start-tabs ul li {
+	display:inline;
+	list-style:none;
+	margin-right:5px;
+}
+
+#start-tabs a:link, #start-tabs a:visited {
+	color: black;
+	background-color:#efefef;
+	padding:3px 10px 4px 10px;
+}
+
+#start-tabs a:hover {
+	padding:3px 10px 4px 10px;
+	width:5em;
+	background-color: #ccc;
+	color: black;
+}
+#start-tabs .current a:link, #start-tabs .current a:visited {
+	padding:3px 10px 4px 10px;
+	width:5em;
+	background-color: white;
+}
+
+#start-tabs input {
+	padding:0px;
+	margin:0px;
+	margin-top:2px;
+	margin-right:3px;
+}
+
+ul.proj-list {
+	list-style:none;
+	margin:0px;
+	padding:0px;
+}	
+
+ul.proj-list li {
+	padding-top:2px;
+	padding-bottom:2px;	

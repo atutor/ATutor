@@ -1,0 +1,26 @@
+Caption Format Conversion Service
+
+Written by: 
+Antonio Gambabari
+antonio.gambabari@utoronto.ca
+
+This version: 
+November 2009
+
+Supported import formats:
+Timed Text (DFXP)
+QTtext
+SubRip
+JSON for OpenCaps
+
+Supported export formats:
+Timed Text (DFXP)
+DVD STL
+MicroDVD
+QT text
+SAMI
+SubRip
+SubViewer
+JSON for OpenCaps
+
+To use the conversion service on its own, go to (opencaps url)/conversion_service/ in your browser.
