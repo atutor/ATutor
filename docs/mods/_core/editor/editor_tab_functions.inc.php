@@ -94,12 +94,20 @@ function isValidURL($url) {
  * @return: none
  */
 function populate_a4a($cid, $content, $formatting){
-	global $db, $my_files;
+	global $db, $my_files, $content_base_href, $contentManager;
 	
     include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 	include_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 	include_once(AT_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
 	
+	// initialize content_base_href; used in format_content
+	if (!isset($content_base_href)) {
+		$result = $contentManager->getContentPage($cid);
+		// return if the cid is not found
+		if (!($content_row = @mysql_fetch_assoc($result))) return;
+		$content_base_href = $content_row["content_path"].'/';
+	}
+
 	$body = format_content($content, $formatting,array());
     
 	$handler = new ContentOutputParser();
@@ -131,16 +139,14 @@ function populate_a4a($cid, $content, $formatting){
 		$resources[] = convert_amp($file);  // converts & to &amp;
 	}
     
-    if (count($resources) == 0) return;
-
     $a4a = new A4a($cid);
     $db_primary_resources = $a4a->getPrimaryResources();
     
     // clean up the removed resources
     foreach ($db_primary_resources  as $primary_rid=>$db_resource){
         //if this file from our table is not found in the $resource, then it's not used.
-        if(in_array($db_resource['resource'], $resources)===false){
-            $a4a->deletePrimaryResource($primary_rid);
+    	if(!in_array($db_resource['resource'], $resources) || count($resources) == 0){
+        	$a4a->deletePrimaryResource($primary_rid);
         }
     }
 
