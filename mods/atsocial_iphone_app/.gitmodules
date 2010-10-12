@@ -1,0 +1,3 @@
+[submodule "three20"]
+	path = three20
+	url = http://github.com/facebook/three20.git

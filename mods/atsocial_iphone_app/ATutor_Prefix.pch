@@ -1,0 +1,18 @@
+//
+// Prefix header for all source files of the 'ATutor' target in the 'ATutor' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
+
+// Service name
+#define kATutor @"atutor"
+
+#define kConsumerKey @"key"
+#define kConsumerSecret @"secret"
+
+// E.g. @"http://localhost:8888/atutor/docs" & @"http://localhost:8888/shindig/php"
+#define kATutorURL [[NSUserDefaults standardUserDefaults] stringForKey:@"atutorURL"]
+#define kShindigURL [[NSUserDefaults standardUserDefaults] stringForKey:@"shindigURL"] 
