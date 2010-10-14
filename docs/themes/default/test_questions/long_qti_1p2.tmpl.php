@@ -6,12 +6,18 @@
 						<fieldlabel>qmd_itemtype</fieldlabel>
 						<fieldentry>String</fieldentry>
 					</qtimetadatafield>
-				</qtimetadata>
-				<qtimetadata>
 					<qtimetadatafield>
 						<fieldlabel>qmd_questiontype</fieldlabel>
 						<fieldentry>FIB-string</fieldentry>
 					</qtimetadatafield>
+                    <qtimetadatafield>
+                        <fieldlabel>cc_profile</fieldlabel>
+                        <fieldentry>cc.fib.v0p1</fieldentry>
+                    </qtimetadatafield>
+                    <qtimetadatafield>
+                        <fieldlabel>cc_weighting</fieldlabel>
+                        <fieldentry><?php echo $this->weight; ?></fieldentry>
+                    </qtimetadatafield>
 				</qtimetadata>
 			</itemmetadata>
 			<presentation>

@@ -347,13 +347,15 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 	$xml = trim($xml);
 
 	//get test title
-	$sql = "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id = $tid";
+	$sql = "SELECT title, num_takes FROM ".TABLE_PREFIX."tests WHERE test_id = $tid";
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_array($result);
 
 	//TODO: wrap around xml now
 	$savant->assign('xml_content', $xml);
 	$savant->assign('title', htmlspecialchars($row['title'], ENT_QUOTES, 'UTF-8'));
+    $savant->assign('num_takes', $row['num_takes']);
+    $savant->assign('use_cc', $use_cc);
 	$xml = $savant->fetch('test_questions/wrapper.tmpl.php');
 
 	$xml_filename = 'tests_'.$tid.'.xml';
@@ -381,7 +383,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 		$savant->assign('encoding', $course_language_charset);
 		$savant->assign('title', $test_title);
 		$savant->assign('xml_filename', $xml_filename);
-		
+        
 		$manifest_xml = $savant->fetch('test_questions/manifest_qti_1p2.tmpl.php');
 		$zipfile->add_file($manifest_xml, 'imsmanifest.xml');
 
@@ -540,6 +542,7 @@ function TestQuestionCounter($increment = FALSE) {
 
 	/*final public */function exportQTI($row, $encoding, $version) {
 		$this->savant->assign('encoding', $encoding);
+        $this->savant->assign('weight', $row['weight']);
 		//Convert all row values to html entities
 		foreach ($row as $k=>$v){
 			$row[$k] = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');	//not using htmlentities cause it changes some languages falsely.

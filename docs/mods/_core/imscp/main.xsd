@@ -21,7 +21,7 @@
     <xs:import namespace ="http://ltsc.ieee.org/xsd/LOM"                  schemaLocation = "domainProfile_2/lomLoose_localised.xsd"       />
     <xs:import namespace ="http://www.imsglobal.org/xsd/imsccauth_v1p0"   schemaLocation = "domainProfile_0/imsccauth_v1p0_localised.xsd" />
     <xs:import namespace ="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"   schemaLocation = "domainProfile_4/ims_qtiasiv1p2_localised.xsd" />
-    <xs:import namespace ="http://www.imsglobal.org/xsd/imswl_v1p0"	  schemaLocation = "imswl_v1p0_localised.xsd"			  />    
-    <xs:import namespace ="http://www.imsglobal.org/xsd/imsdt_v1p0"	  schemaLocation = "imsdt_v1p0_localised.xsd"			  />    
+    <xs:import namespace ="http://www.imsglobal.org/xsd/imswl_v1p0"	  schemaLocation = "domainProfile_5/imswl_v1p0_localised.xsd"     />    
+    <xs:import namespace ="http://www.imsglobal.org/xsd/imsdt_v1p0"	  schemaLocation = "domainProfile_6/imsdt_v1p0_localised.xsd"     />    
     <xs:import namespace ="http://www.atutor.ca/xsd/glossary"		  schemaLocation = "glossary.xsd"				  />	
 </xs:schema>

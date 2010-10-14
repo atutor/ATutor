@@ -6,12 +6,18 @@
 						<fieldlabel>qmd_itemtype</fieldlabel>
 						<fieldentry>Logical Identifier</fieldentry>
 					</qtimetadatafield>
-				</qtimetadata>
-				<qtimetadata>
-					<qtimetadatafield>
-						<fieldlabel>qmd_questiontype</fieldlabel>
-						<fieldentry>Multiple-response</fieldentry>
-					</qtimetadatafield>
+	                <qtimetadatafield>
+                        <fieldlabel>qmd_questiontype</fieldlabel>
+                        <fieldentry>Multiple-response</fieldentry>
+                    </qtimetadatafield>
+                    <qtimetadatafield>
+                        <fieldlabel>cc_profile</fieldlabel>
+                        <fieldentry>cc.mutliple_response.v0p1</fieldentry>
+                    </qtimetadatafield>
+                    <qtimetadatafield>
+                        <fieldlabel>cc_weighting</fieldlabel>
+                        <fieldentry><?php echo $this->weight; ?></fieldentry>
+                    </qtimetadatafield>
 				</qtimetadata>
 			</itemmetadata>
 			<presentation>
@@ -36,7 +42,7 @@
 			</presentation>
 			<resprocessing>
 				<outcomes>
-					<decvar/>
+					<decvar varname="SCORE" />
 				</outcomes>
 			<?php for ($i=0; $i < $this->num_choices; $i++): ?>
 				<?php if ($this->row['answer_'.$i]): ?>
@@ -44,7 +50,7 @@
 					<conditionvar>						
 						<varequal respident="RESPONSE<?php echo $this->row['question_id']; ?>">Choice<?php echo $i; ?></varequal>
 					</conditionvar>
-					<setvar varname="Respondus_Correct" action="Add"><?php echo (isset($this->row['weight']))?$this->row['weight']:1; ?></setvar>
+					<setvar varname="Respondus_Correct"><?php echo (isset($this->row['weight']))?$this->row['weight']:1; ?></setvar>
 				</respcondition>
 				<?php endif; ?>
 			<?php endfor; ?>

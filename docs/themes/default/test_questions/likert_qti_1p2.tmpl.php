@@ -6,12 +6,14 @@
 						<fieldlabel>qmd_itemtype</fieldlabel>
 						<fieldentry>Logical Identifier</fieldentry>
 					</qtimetadatafield>
-				</qtimetadata>
-				<qtimetadata>
 					<qtimetadatafield>
 						<fieldlabel>qmd_questiontype</fieldlabel>
 						<fieldentry>Multiple-choice</fieldentry>
 					</qtimetadatafield>
+                    <qtimetadatafield>
+                        <fieldlabel>cc_profile</fieldlabel>
+                        <fieldentry>cc.mutliple_choice.v0p1</fieldentry>
+                    </qtimetadatafield>
 				</qtimetadata>
 			</itemmetadata>
 			<presentation>

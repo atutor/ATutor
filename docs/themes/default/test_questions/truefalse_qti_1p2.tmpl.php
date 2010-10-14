@@ -6,11 +6,17 @@
 						<fieldlabel>qmd_itemtype</fieldlabel>
 						<fieldentry>Logical Identifier</fieldentry>
 					</qtimetadatafield>
-				</qtimetadata>
-				<qtimetadata>
-					<qtimetadatafield>
+                    <qtimetadatafield>
 						<fieldlabel>qmd_questiontype</fieldlabel>
 						<fieldentry>True/false</fieldentry>
+					</qtimetadatafield>
+                    <qtimetadatafield>
+						<fieldlabel>cc_profile</fieldlabel>
+						<fieldentry>cc.true_false.v0p1</fieldentry>
+					</qtimetadatafield>
+                    <qtimetadatafield>
+						<fieldlabel>cc_weighting</fieldlabel>
+						<fieldentry><?php echo $this->weight; ?></fieldentry>
 					</qtimetadatafield>
 				</qtimetadata>
 			</itemmetadata>
@@ -41,7 +47,7 @@
 			</presentation>
 			<resprocessing>
 				<outcomes>
-					<decvar/>
+					<decvar varname="SCORE" />
 				</outcomes>
 				<respcondition title="CorrectResponse">
 					<conditionvar>

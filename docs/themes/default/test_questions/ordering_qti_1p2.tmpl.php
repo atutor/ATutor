@@ -30,14 +30,14 @@
 			</presentation>
 			<resprocessing>
 				<outcomes>
-					<decvar/>
+					<decvar varname="SCORE" />
 				</outcomes>
 				<?php for ($i=0; $i < $this->num_choices; $i++): ?>
 				<respcondition title="CorrectResponse">
 					<conditionvar>					
 						<varequal respident="RESPONSE<?php echo $this->row['question_id']; ?>">Choice<?php echo $i; ?></varequal>
 					</conditionvar>
-					<setvar varname="Respondus_Correct" action="Add"><?php echo (isset($this->row['weight']))?$this->row['weight']/$this->num_choices:1; ?></setvar>
+					<setvar varname="Respondus_Correct"><?php echo (isset($this->row['weight']))?$this->row['weight']/$this->num_choices:1; ?></setvar>
 				</respcondition>
 				<?php endfor; ?>
 			</resprocessing>

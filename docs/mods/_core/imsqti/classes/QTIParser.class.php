@@ -328,8 +328,15 @@ class QTIParser {
 	 * This function returns the question type of this XML.
 	 * @access	public 
 	 * @param	the item_num
-	 * @return  1-8, in the order of m/c, t/f, open eneded, likert, s match, order, m/a, g match
-				false for not found.
+	 * @return  1: m/c
+     *          2: t/f
+     *          3: open ended question
+     *          4: likert
+     *          5: s match
+     *          6: order
+     *          7: m/a
+     *          8: g match
+     *          false for not found.
 	 */
 	function getQuestionType($item_num){
 		switch ($this->field_entry[$item_num]['qmd_questiontype']){
