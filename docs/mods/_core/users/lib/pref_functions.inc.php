@@ -359,7 +359,7 @@ function get_user_style()
 	global $user_style_template;
 
 	if (($_SESSION["prefs"]["PREF_FONT_FACE"] == "")
-	  && ($_SESSION["prefs"]["PREF_FONT_TIMES"] == 0 || $_SESSION["prefs"]["PREF_FONT_TIMES"] == 0.8)
+	  && ($_SESSION["prefs"]["PREF_FONT_TIMES"] == 0 || $_SESSION["prefs"]["PREF_FONT_TIMES"] == 1.0)
 	  && ($_SESSION["prefs"]["PREF_FG_COLOUR"] == "")
 	  && ($_SESSION["prefs"]["PREF_BG_COLOUR"] == "")
 	  && ($_SESSION["prefs"]["PREF_HL_COLOUR"] == ""))
@@ -371,7 +371,7 @@ function get_user_style()
 		if ($_SESSION["prefs"]["PREF_FONT_FACE"] <> "")
 			$font = "font-family: ". $_SESSION["prefs"]["PREF_FONT_FACE"] .";";
 
-		if ($_SESSION["prefs"]["PREF_FONT_TIMES"] <> 0 && $_SESSION["prefs"]["PREF_FONT_TIMES"] <> 0.8)
+		if ($_SESSION["prefs"]["PREF_FONT_TIMES"] <> 0 && $_SESSION["prefs"]["PREF_FONT_TIMES"] <> 1.0)
 			$font_size = "font-size: ". $_SESSION["prefs"]["PREF_FONT_TIMES"] ."em;";
 
 		if ($_SESSION["prefs"]["PREF_FG_COLOUR"] <> "")
