@@ -42,7 +42,7 @@
 				<?php endfor; ?>
 			</resprocessing>
 		<?php if ($this->row['feedback']): ?>
-			<itemfeedback ident="FEEDBACK" view="All">
+			<itemfeedback ident="FEEDBACK">
 				<solution>
 					<solutionmaterial>
 						<flow_mat>
