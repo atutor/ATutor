@@ -36,7 +36,7 @@
 					$selected_fs = "1";   // default
 
 ?>
-				<option value=".8" <?php if ($selected_fs == ".8") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
+				<option value="1.0" <?php if ($selected_fs == "1.0") echo 'selected="selected"'; ?>><?php echo _AT('default'); ?></option>     
 				<option value="1.5" <?php if ($selected_fs == "1.5") echo 'selected="selected"'; ?>>1.5X</option>     
 				<option value="2" <?php if ($selected_fs == "2") echo 'selected="selected"'; ?>>2X</option>     
 				<option value="2.5" <?php if ($selected_fs == "2.5") echo 'selected="selected"'; ?>>2.5X</option>     
