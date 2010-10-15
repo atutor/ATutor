@@ -203,10 +203,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			// apply alternatives
 			if (intval($_GET['alternative']) > 0) {
 				$content = provide_alternatives($cid, $content, false, intval($_GET['alternative']));
-			} else {
-				$content = provide_alternatives($cid, $content);
 			}
-	        
 			$content_array = get_content_table($content);
 			
 			$savant->assign('content_table', $content_array[0]);

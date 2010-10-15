@@ -5,46 +5,44 @@ global $_input, $_content_base_href;
 //Output for flowplayer module.
 $media_replace = array();
 $media_matches = array();
+$flowplayerholder_class = "atutor.flowplayerholder";  // style class used to play flowplayer medias
+$flowplayerholder_def = '$f("*.'.$flowplayerholder_class.'"';   // javascript definition for atutor.flowplayerholder 
 
-// .flv (playing file via full URL)
-preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.flv\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"http://##MEDIA1##.flv\"></a>";
-
-// .flv (playing file from AT_content_dir)
+// .flv
 preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.flv\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.flv\"></a>";
+$media_replace[] ="<object>\n".
+                  "  <div>\n".
+                  "    <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.flv\"></a>\n".
+                  "  </div>\n".
+                  "  <div style=\"margin-top:-2em;\">\n".
+                  "    <a href=\"##MEDIA1##.flv\">##MEDIA1##.flv</a>\n".
+                  "  </div>\n".
+                  "</object>";
 
-// .mp4 (playing file via full URL)
-preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.mp4\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"http://##MEDIA1##.mp4\"></a>";
-
-// .mp4 (playing file from AT_content_dir)
+// .mp4
 preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mp4\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mp4\"></a>";
+//$media_replace[] ="<a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mp4\"></a>";
+$media_replace[] ="<object>\n".
+                  "  <div>\n".
+                  "    <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.mp4\"></a>\n".
+                  "  </div>\n".
+                  "  <div style=\"margin-top:-2em;\">\n".
+                  "    <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
+                  "  </div>\n".
+                  "</object>";
 
-// .mov (playing file via full URL)
-preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.mov\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"http://##MEDIA1##.mov\"></a>";
+//// .mov
+//preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mov\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
+//$media_replace[] ="<a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mov\"></a>";
+//
+//// .mp3
+//preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+)\.mp3\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
+//$media_replace[] ="<a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mp3\"></a>";
 
-// .mov (playing file from AT_content_dir)
-preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mov\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mov\"></a>";
-
-// .mp3 (playing file via full URL)
-preg_match_all("#\[media[0-9a-z\|]*\]http://([\w\./-]+)\.mp3\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"http://##MEDIA1##.mp3\"></a>";
-
-// .mp3 (playing file from AT_content_dir)
-preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+)\.mp3\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="<a class=\"flowplayerholder\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mp3\"></a>";
-
-$has_flv = false;
 // Executing the replace
 for ($i=0;$i<count($media_replace);$i++){
 	foreach($media_matches[$i] as $media)
 	{
-		if (is_array($media)) $has_flv = true;
-		
 		//find width and height for each matched media
 		if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
 		{
@@ -67,24 +65,27 @@ for ($i=0;$i<count($media_replace);$i++){
 	}
 }
 
-if ($has_flv)
+// Include the javascript only if:
+// 1. $flowplayerholder_class is used but not defined
+// 2. exclude from export common cartridge or content package
+if (strpos($_input, $flowplayerholder_class) 
+    && !strpos($_input, $flowplayerholder_def)
+    && $_REQUEST['submit'] <> 'Export')
 {
-	$_input .= '
-	<script language="JavaScript">
-		$f("*.flowplayerholder", "'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.4.swf", { 
-		 	clip: { autoPlay: false },  
-
-	        plugins:  { 
-		        controls: { 
-		            buttons:true, 
-		            play: true,  
-		            scrubber: true, 
-			    autoHide:false
-		        }         
-		    }
-		
-		});
-	</script>
-	';
+	$_input .= '<script type="text/javascript">
+'.$flowplayerholder_def.', "'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.4.swf", { 
+  clip: { 
+  autoPlay: false,
+  baseUrl: \''.AT_BASE_HREF.'get.php/'.$_content_base_href.'\'},
+  plugins:  { 
+    controls: { 
+      buttons:true, 
+      play: true,  
+      scrubber: true, 
+      autoHide:false
+    }         
+  }
+});
+</script>'."\n";
 }
 ?>
