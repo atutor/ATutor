@@ -194,16 +194,18 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		// if one of the prerequisite test(s) has expired, student cannot view the content 
 		if (intval($pre_test_id) != -1 || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN))
 		{
-			$content = format_content($content_row['text'], $content_row['formatting'], $glossary);
-			
 			// find whether the body has alternatives defined
 			list($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative)
-			= provide_alternatives($cid, $content, true);
+			= provide_alternatives($cid, $content_row['text'], true);
 			
 			// apply alternatives
 			if (intval($_GET['alternative']) > 0) {
-				$content = provide_alternatives($cid, $content, false, intval($_GET['alternative']));
+				$content = provide_alternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
+			} else {
+				$content = $content_row['text'];
 			}
+			$content = format_content($content, $content_row['formatting'], $glossary);
+			
 			$content_array = get_content_table($content);
 			
 			$savant->assign('content_table', $content_array[0]);

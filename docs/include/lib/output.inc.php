@@ -715,24 +715,6 @@ function embed_media($text) {
 	                   "  <![endif]-->\n".
 	                   "</object>";
 	
-	// .mp4
-//	preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mp4\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
-//	$media_replace[] = "<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"##WIDTH##\" height=\"##HEIGHT##\">\n".
-//	                   "  <param name=\"src\" value=\"##MEDIA1##.mp4\">\n".
-//	                   "  <param name=\"controller\" value=\"true\">\n".
-//	                   "  <param name=\"autoplay\" value=\"false\">\n".
-//	                   "  <!--[if gte IE 7] > <!-->\n".
-//	                   "  <object type=\"video/quicktime\" data=\"##MEDIA1##.mp4\" width=\"##WIDTH##\" height=\"##HEIGHT##\">\n".
-//	                   "    <param name=\"controller\" value=\"true\">\n".
-//	                   "    <param name=\"autoplay\" value=\"false\">\n".
-//	                   "    <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
-//	                   "  </object>\n".
-//	                   "  <!--<![endif]-->\n".
-//	                   "  <!--[if lt IE 7]>\n".
-//	                   "  <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
-//	                   "  <![endif]-->\n".
-//	                   "</object>";
-	
 	// .swf
 	preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).swf\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
 	$media_replace[] = "<object type=\"application/x-shockwave-flash\" data=\"##MEDIA1##.swf\" width=\"##WIDTH##\" height=\"##HEIGHT##\">  <param name=\"movie\" value=\"##MEDIA1##.swf\"><param name=\"loop\" value=\"false\"><a href=\"##MEDIA1##.swf\">##MEDIA1##.swf</a></object>";
@@ -758,7 +740,7 @@ function embed_media($text) {
 	$media_replace[] ="<object type=\"application/x-midi\" data=\"##MEDIA1##.mid\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mid\"><a href=\"##MEDIA1##.mid\">##MEDIA1##.mid</a></object>";
 	
 	$text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
-//debug($media_replace);debug($media_matches);
+
 	// Executing the replace
 	for ($i=0;$i<count($media_replace);$i++){
 		foreach($media_matches[$i] as $media)
@@ -1397,7 +1379,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	}
 	
 	if (!$info_only) {
-		return format_content($content, 1, array());
+		return $content;
 	} else {
 		return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
 	}
