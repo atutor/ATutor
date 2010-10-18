@@ -23,7 +23,6 @@ if($_POST['cancel']){
 	exit;
 }
 
-echo 
 $course = intval($_GET['course']);
 if ($course == 0) {
 	$course = intval($_POST['form_course_id']);
