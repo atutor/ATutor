@@ -1166,13 +1166,6 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 		}
 	}
 	
-	// The names of all a4a resources have "&" converted to "&amp;". So the same conversion  
-	// is needed on the content before matching with resource names. 
-	$content = convert_amp($content);
-	
-	// keep &lt; (content saved in plain text format) as it is instead of &amp;lt;
-	$content = str_replace('&amp;lt;', '&lt;', $content);
-	
 	// get all relations between primary resources and their alternatives
 	$sql = "SELECT DISTINCT c.content_path, pr.resource, ";
 	

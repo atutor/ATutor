@@ -96,7 +96,11 @@ function isValidURL($url) {
 function populate_a4a($cid, $content, $formatting){
 	global $db, $my_files, $content_base_href, $contentManager;
 	
-    include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+	// Defining alternatives is only available for content type "html".
+	// But don't clean up the a4a tables at other content types in case the user needs them back at html.
+	if ($formatting <> 1) return;
+
+	include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 	include_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 	include_once(AT_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
 	
