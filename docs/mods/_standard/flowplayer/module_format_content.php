@@ -70,7 +70,7 @@ for ($i=0;$i<count($media_replace);$i++){
 // 2. exclude from export common cartridge or content package
 if (strpos($_input, $flowplayerholder_class) 
     && !strpos($_input, $flowplayerholder_def)
-    && $_REQUEST['submit'] <> 'Export')
+    && !strpos($_SERVER['PHP_SELF'], "ims_export.php"))
 {
 	$_input .= '<script type="text/javascript">
 '.$flowplayerholder_def.', "'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.4.swf", { 
