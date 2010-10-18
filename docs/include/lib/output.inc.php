@@ -952,10 +952,13 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 		return $x;
 	}
 
-	$output = apply_customized_format(format_final_output($input));
+// the following has been taken out for this: 
+// http://atutor.ca/atutor/mantis/view.php?id=4593
+// @date Oct 18, 2010
+//	$output = apply_customized_format(format_final_output($input));
+    $output = $input;
 
 	$output = '<p>'.$output.'</p>';
-
 	return $output;
 }
 

@@ -190,6 +190,10 @@ function print_organizations($parent_id,
 
 			/* generate the a4a files */
 			$a4a_xml_array = array();
+            //http://atutor.ca/atutor/mantis/view.php?id=4593
+            if ($content['formatting']===0){
+                $use_a4a = false;
+            }
 			if ($use_a4a == true){
 				$a4aExport = new A4aExport($content['content_id']);
 //				$a4aExport->setRelativePath('resources/'.$content['content_path']);
