@@ -607,11 +607,28 @@ class OrderingQuestion extends AbstractTestQuestion {
 	/*protected */function assignDisplayResultVariables($row, $answer_row) {
 		$answers = explode('|', $answer_row['answer']);
 
-		$num_choices = count($this->getChoices($row));
-
+		$choices = $this->getChoices($row);
+		$num_choices = count($choices);
+		
+		// randomize the order of choices and re-assign to $row
+		srand($row['question_id']);
+		shuffle($choices);
+		srand($row['question_id']);
+		shuffle($answers);
+		
+		// generate and shuffle the right answer
+		$right_answers = range(0, $num_choices-1);
+		srand($row['question_id']);
+		shuffle($right_answers);
+		
+		for ($i = 0; $i < count($choices); $i++) {
+			$row['choice_'.$i] = $choices[$i];
+		}
+		
 		$this->savant->assign('base_href', AT_BASE_HREF);
 		$this->savant->assign('num_choices', $num_choices);
 		$this->savant->assign('answers', $answers);
+		$this->savant->assign('right_answers', $right_answers);
 		$this->savant->assign('row', $row);
 	}
 
@@ -637,17 +654,18 @@ class OrderingQuestion extends AbstractTestQuestion {
 		$new_response = array();
 
 		// randomize the order of choices and re-assign to $row
-		$this->seed($row['question_id']);
-		$rand = array_rand($choices, $num_choices);
+		srand($row['question_id']);
+		shuffle($choices);
+		
+		srand($row['question_id']);
+		shuffle($response);
 		for ($i=0; $i < 10; $i++) {
-			$row['choice_'.$i] = $choices[$rand[$i]];
-			$new_response[$i]  = $response[$rand[$i]];
+			$row['choice_'.$i] = $choices[$i];
 		}
 
 		$this->savant->assign('num_choices', $num_choices);
 		$this->savant->assign('row', $row);
-
-		$this->savant->assign('response', $new_response);
+		$this->savant->assign('response', $response);
 	}
 
 	/*protected */function assignDisplayStatisticsVariables($row, $answers) {
@@ -677,10 +695,10 @@ class OrderingQuestion extends AbstractTestQuestion {
 	}
 
 	/*public */function mark($row) { 
-		$this->seed($row['question_id']);
 		$num_choices = count($_POST['answers'][$row['question_id']]);
 		$answers = range(0, $num_choices-1);
-		$answers = array_rand($answers, $num_choices);
+		srand($row['question_id']);
+		shuffle($answers);
 		
 		// Disturb the seed for ordering questions after mark to avoid the deterioration  
 		// of the random distribution due to a repeated initialization of the same random seed

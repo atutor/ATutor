@@ -92,15 +92,15 @@ if (isset($_POST['cancel'])) {
 			choice_8='{$_POST[choice][8]}',
 			choice_9='{$_POST[choice][9]}',
 			answer_0=$answer_new[0],
-			answer_0=$answer_new[1],
-			answer_0=$answer_new[2],
-			answer_0=$answer_new[3],
-			answer_0=$answer_new[4],
-			answer_0=$answer_new[5],
-			answer_0=$answer_new[6],
-			answer_0=$answer_new[7],
-			answer_0=$answer_new[8],
-			answer_0=$answer_new[9]
+			answer_1=$answer_new[1],
+			answer_2=$answer_new[2],
+			answer_3=$answer_new[3],
+			answer_4=$answer_new[4],
+			answer_5=$answer_new[5],
+			answer_6=$answer_new[6],
+			answer_7=$answer_new[7],
+			answer_8=$answer_new[8],
+			answer_9=$answer_new[9]
 
 			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 		$result	= mysql_query($sql, $db);
