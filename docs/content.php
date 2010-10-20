@@ -202,7 +202,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			if (intval($_GET['alternative']) > 0) {
 				$content = provide_alternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
 			} else {
-				$content = $content_row['text'];
+				$content = provide_alternatives($cid, $content_row['text']);
 			}
 			$content = format_content($content, $content_row['formatting'], $glossary);
 			

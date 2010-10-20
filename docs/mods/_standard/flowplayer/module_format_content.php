@@ -26,7 +26,7 @@ $media_replace[] ="<object>\n".
                   "  <div>\n".
                   "    <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.mp4\"></a>\n".
                   "  </div>\n".
-                  "  <div style=\"margin-top:-2em;\">\n".
+                  "  <div style=\"margin-top:-3em;\">\n".
                   "    <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
                   "  </div>\n".
                   "</object>";
