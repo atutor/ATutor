@@ -7,19 +7,19 @@ CREATE TABLE `primary_resources` (
   `resource` text NOT NULL,
   `language_code` varchar(20) default NULL,
   PRIMARY KEY  (`primary_resource_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM;
 
 CREATE TABLE `primary_resources_types` (
   `primary_resource_id` mediumint(8) unsigned NOT NULL,
   `type_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`primary_resource_id`,`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM;
 
 CREATE TABLE `resource_types` (
   `type_id` mediumint(8) unsigned NOT NULL auto_increment,
   `type` text NOT NULL,
   PRIMARY KEY  (`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM;
 
 CREATE TABLE `secondary_resources` (
   `secondary_resource_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -27,13 +27,13 @@ CREATE TABLE `secondary_resources` (
   `secondary_resource` text NOT NULL,
   `language_code` varchar(20) default NULL,
   PRIMARY KEY  (`secondary_resource_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM;
 
 CREATE TABLE `secondary_resources_types` (
   `secondary_resource_id` mediumint(8) unsigned NOT NULL,
   `type_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`secondary_resource_id`,`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM;
 
 INSERT INTO `resource_types` VALUES
 (1, 'auditory'),
@@ -62,7 +62,7 @@ CREATE TABLE `content_tests_assoc` (
   `content_id` INTEGER UNSIGNED NOT NULL,
   `test_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`content_id`, `test_id`)
-) TYPE = MyISAM;
+) ENGINE = MyISAM;
 
 # Customized test messages associated with the content page
 ALTER TABLE `content` ADD COLUMN `test_message` TEXT NOT NULL AFTER `use_customized_head`;
@@ -145,7 +145,7 @@ CREATE TABLE `guests` (
   `role` VARCHAR(255),
   `focus` VARCHAR(255),
   PRIMARY KEY  (`guest_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM;
 
 ALTER TABLE `tests_results` MODIFY member_id VARCHAR(10);
 ALTER TABLE `tests` ADD COLUMN `show_guest_form` TINYINT(1) UNSIGNED NOT NULL DEFAULT '0' AFTER `failfeedback`;

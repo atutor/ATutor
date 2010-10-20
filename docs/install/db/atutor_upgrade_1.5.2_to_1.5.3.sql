@@ -90,7 +90,7 @@ CREATE TABLE `files` (
   `file_size` int(11) NOT NULL default '0',
   `description` text NOT NULL default '',
   PRIMARY KEY  (`file_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 CREATE TABLE `files_comments` (
   `comment_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -99,7 +99,7 @@ CREATE TABLE `files_comments` (
   `date` datetime NOT NULL default '0000-00-00 00:00:00',
   `comment` text NOT NULL default '',
   PRIMARY KEY  (`comment_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 CREATE TABLE `folders` (
   `folder_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -108,7 +108,7 @@ CREATE TABLE `folders` (
   `owner_id` mediumint(8) unsigned NOT NULL default '0',
   `title` varchar(30) NOT NULL default '',
   PRIMARY KEY  (`folder_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 ## assignment manager
 CREATE TABLE `assignments` (
@@ -166,7 +166,7 @@ CREATE TABLE `blog_posts` (
   `title` varchar(100) NOT NULL default '',
   `body` text NOT NULL default '',
   PRIMARY KEY  (`post_id`)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 ## Table for `blog_posts_comments`
 # --------------------------------------------------------

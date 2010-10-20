@@ -9,7 +9,7 @@ CREATE TABLE `content_forums_assoc` (
 `forum_id` INTEGER UNSIGNED NOT NULL,
 PRIMARY KEY ( `content_id` , `forum_id` )
 )
-TYPE = MyISAM;
+ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Replace (TEXT NOT NULL) with (TEXT)
@@ -123,7 +123,7 @@ CREATE TABLE `content_prerequisites` (
   `type` varchar(50) NOT NULL DEFAULT '',
   `item_id` MEDIUMINT NOT NULL,
   PRIMARY KEY (content_id,type, item_id)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # New Social Tables
 CREATE TABLE `social_member_contact` (
@@ -134,7 +134,7 @@ CREATE TABLE `social_member_contact` (
   `con_email` varchar(50) NOT NULL,
   `con_address` text NOT NULL,
   PRIMARY KEY  (`contact_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8 ;
+) ENGINE = MyISAM  DEFAULT CHARSET=utf8 ;
 
 
 CREATE TABLE `social_member_representation` (
@@ -146,7 +146,7 @@ CREATE TABLE `social_member_representation` (
   `rep_email` varchar(50) NOT NULL,
   `rep_address` text NOT NULL,
   PRIMARY KEY  (`rep_id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=utf8  ;
+) ENGINE = MyISAM  DEFAULT CHARSET=utf8  ;
 
 CREATE TABLE `social_member_personal` (
   `per_id` int(10) unsigned NOT NULL auto_increment,
@@ -159,7 +159,7 @@ CREATE TABLE `social_member_personal` (
   `per_languages` varchar(255) NOT NULL,
   `per_disabilities` varchar(255) NOT NULL,
   PRIMARY KEY  (`per_id`)
-) ENGINE=MyISAM;
+) ENGINE = MyISAM;
 
 # Add mobile theme
 INSERT INTO `themes` VALUES ('Mobile', '1.6.4', 'mobile', NOW(), 'This is the default theme for mobile devices.', 1);

@@ -16,7 +16,7 @@ CREATE TABLE `admins` (
    `privileges` MEDIUMINT UNSIGNED NOT NULL default 0,
    `last_login` TIMESTAMP NOT NULL default 0,
    PRIMARY KEY ( `login` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `admin_log` (
   `login` varchar(30) NOT NULL default '',
@@ -26,7 +26,7 @@ CREATE TABLE `admin_log` (
   `num_affected` tinyint(3) NOT NULL default '0',
   `details` TEXT,
   KEY `login` (`login`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -43,7 +43,7 @@ CREATE TABLE `assignments` (
 	`multi_submit` TINYINT DEFAULT '0',
 	PRIMARY KEY  (`assignment_id`),
 	INDEX (`course_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `backups`
@@ -60,7 +60,7 @@ CREATE TABLE `backups` (
   `contents` TEXT ,
   PRIMARY KEY  (`backup_id`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -77,7 +77,7 @@ CREATE TABLE `blog_posts` (
   `title` VARCHAR(255) NOT NULL,
   `body` TEXT,
   PRIMARY KEY  (`post_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
  
 # --------------------------------------------------------
@@ -92,7 +92,7 @@ CREATE TABLE `blog_posts_comments` (
    `comment` TEXT ,
    PRIMARY KEY ( `comment_id` ) ,
    INDEX ( `post_id` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `config`
@@ -102,7 +102,7 @@ CREATE TABLE `config` (
   `name` CHAR( 30 ) NOT NULL default '',
   `value` TEXT,
   PRIMARY KEY ( `name` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `content`
@@ -127,7 +127,7 @@ CREATE TABLE `content` (
   `content_type` TINYINT(1) UNSIGNED NOT NULL,
   PRIMARY KEY  (`content_id`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM ;
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `course_access`
@@ -139,7 +139,7 @@ CREATE TABLE `course_access` (
   `enabled` tinyint(4) NOT NULL ,
   PRIMARY KEY ( `password` ) ,
   UNIQUE (`course_id`)
-) TYPE=MyISAM ;
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `course_cats`
@@ -150,7 +150,7 @@ CREATE TABLE `course_cats` (
   `cat_parent` mediumint(8) unsigned NOT NULL default '0',
   `theme` VARCHAR(30) NOT NULL default '',
   PRIMARY KEY  (`cat_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `course_tests_assoc`
@@ -160,7 +160,7 @@ CREATE TABLE `content_tests_assoc` (
   `test_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`content_id`, `test_id`)
 )
-TYPE = MyISAM;
+ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -171,7 +171,7 @@ CREATE TABLE `content_forums_assoc` (
 `forum_id` INTEGER UNSIGNED NOT NULL,
 PRIMARY KEY ( `content_id` , `forum_id` )
 )
-TYPE = MyISAM;
+ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `course_enrollment`
@@ -184,7 +184,7 @@ CREATE TABLE `course_enrollment` (
   `role` varchar(35) NOT NULL default '',
   `last_cid` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`,`course_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 
@@ -197,7 +197,7 @@ CREATE TABLE `course_stats` (
   `guests` mediumint(8) unsigned NOT NULL default '0',
   `members` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`course_id`,`login_date`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `courses`
@@ -228,7 +228,7 @@ CREATE TABLE `courses` (
    `banner` TEXT,
    `home_view` tinyint NOT NULL DEFAULT 1,
   PRIMARY KEY  (`course_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `faq_topics`
@@ -239,7 +239,7 @@ CREATE TABLE `faq_topics` (
   `name` TEXT ,
   KEY `course_id` (`course_id`),
   PRIMARY KEY  (`topic_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `faq_entries`
@@ -251,7 +251,7 @@ CREATE TABLE `faq_entries` (
   `question` TEXT ,
   `answer` TEXT ,
   PRIMARY KEY  (`entry_id`)
-) TYPE = MYISAM ;
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `feeds`
@@ -270,7 +270,7 @@ CREATE TABLE `feeds` (
 CREATE TABLE `file_storage_groups` (
   `group_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   PRIMARY KEY ( `group_id` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 #
 # Table structure for table `files`
@@ -290,7 +290,7 @@ CREATE TABLE `files` (
   `file_size` int(11) NOT NULL default '0',
   `description` TEXT ,
   PRIMARY KEY  (`file_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 
@@ -305,7 +305,7 @@ CREATE TABLE `files_comments` (
   `date` TIMESTAMP NOT NULL,
   `comment` TEXT ,
   PRIMARY KEY  (`comment_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 
@@ -320,7 +320,7 @@ CREATE TABLE `folders` (
   `owner_id` mediumint(8) unsigned NOT NULL default '0',
   `title` varchar(120) NOT NULL default '',
   PRIMARY KEY  (`folder_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -335,7 +335,7 @@ CREATE TABLE `forums` (
   `last_post` TIMESTAMP NOT NULL,
   `mins_to_edit` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`forum_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -347,7 +347,7 @@ CREATE TABLE `forums_accessed` (
   `last_accessed` timestamp NOT NULL,
   `subscribe` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`,`member_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `forums_courses`
@@ -357,7 +357,7 @@ CREATE TABLE `forums_courses` (
   `course_id` MEDIUMINT UNSIGNED NOT NULL default '0',
   PRIMARY KEY (`forum_id`,`course_id`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -368,7 +368,7 @@ CREATE TABLE `forums_groups` (
 `group_id` mediumint( 8 ) unsigned NOT NULL default '0',
 PRIMARY KEY ( `forum_id` , `group_id` ) ,
 KEY `group_id` ( `group_id` )
-) TYPE = MYISAM ;
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `forums_subscriptions`
@@ -378,7 +378,7 @@ CREATE TABLE `forums_subscriptions` (
   forum_id mediumint(8) unsigned NOT NULL default '0',
   member_id mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forum_id`,`member_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -397,7 +397,7 @@ CREATE TABLE `forums_threads` (
   `locked` tinyint(4) NOT NULL default '0',
   `sticky` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `glossary`
@@ -410,7 +410,7 @@ CREATE TABLE `glossary` (
   `related_word_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`word_id`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `groups`
@@ -422,7 +422,7 @@ CREATE TABLE `groups` (
   `description` TEXT ,
   `modules` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`group_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -432,7 +432,7 @@ CREATE TABLE `groups_members` (
 `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
 `member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
  PRIMARY KEY  (`group_id`,`member_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `groups_types` (since 1.5.3)
@@ -443,7 +443,7 @@ CREATE TABLE `groups_types` (
   `title` VARCHAR(80) NOT NULL ,
   PRIMARY KEY  (`type_id`),
   KEY `course_id` (`course_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `guests` (since 1.6.2)
@@ -455,7 +455,7 @@ CREATE TABLE `guests` (
   `role` VARCHAR(255),
   `focus` VARCHAR(255),
   PRIMARY KEY  (`guest_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `handbook_notes`
@@ -469,7 +469,7 @@ CREATE TABLE `handbook_notes` (
 `email` VARCHAR( 50 ) NOT NULL default '',
 `note` TEXT ,
 PRIMARY KEY ( `note_id` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -480,7 +480,7 @@ CREATE TABLE `instructor_approvals` (
   `request_date` TIMESTAMP NOT NULL,
   `notes` TEXT ,
   PRIMARY KEY  (`member_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 CREATE TABLE `languages` (
@@ -492,7 +492,7 @@ CREATE TABLE `languages` (
   `english_name` varchar(80) NOT NULL default '',
   `status` TINYINT UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY  (`language_code`,`char_set`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 #
 # Dumping data for table `languages`
@@ -511,7 +511,7 @@ CREATE TABLE `links_categories` (
   `parent_id` mediumint(8) unsigned default NULL,
   PRIMARY KEY  (`cat_id`),
   KEY `owner_id` (`owner_id`)
-) TYPE=MyISAM ;
+) ENGINE = MyISAM ;
 
 
 # --------------------------------------------------------
@@ -529,7 +529,7 @@ CREATE TABLE `links` (
   `SubmitDate` date NOT NULL default '0000-00-00',
   `hits` int(11) default '0',
   PRIMARY KEY  (`link_id`)
-) TYPE=MyISAM ;
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `language_pages`
@@ -538,7 +538,7 @@ CREATE TABLE `language_pages` (
   `term` varchar(30) NOT NULL default '',
   `page` varchar(50) NOT NULL default '',
   PRIMARY KEY  (`term`,`page`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `master_list`
@@ -548,7 +548,7 @@ CREATE TABLE `master_list` (
   `hash_field` CHAR( 40 ) NOT NULL default '',
   `member_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   PRIMARY KEY ( `public_field` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `members`
@@ -579,7 +579,7 @@ CREATE TABLE `members` (
   `last_login` TIMESTAMP NOT NULL,
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `member_track`
@@ -593,7 +593,7 @@ CREATE TABLE `member_track` (
   `last_accessed` TIMESTAMP NULL,
   KEY `member_id` (`member_id`),
   KEY `content_id` (`content_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `messages`
@@ -610,7 +610,7 @@ CREATE TABLE `messages` (
   `body` TEXT ,
   PRIMARY KEY  (`message_id`),
   KEY `to_member_id` (`to_member_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `messages_sent` (since 1.5.4)
@@ -625,7 +625,7 @@ CREATE TABLE `messages_sent` (
    `body` TEXT ,
    PRIMARY KEY ( `message_id` ) ,
    KEY `from_member_id` ( `from_member_id` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `modules` (since 1.5.2)
@@ -638,7 +638,7 @@ CREATE TABLE `modules` (
   `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL ,
   `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL,
   PRIMARY KEY ( `dir_name` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 INSERT INTO `modules` VALUES ('_core/properties',        2, 1,         0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/statistics',    2, 1,         0, 0, 0);
@@ -701,7 +701,7 @@ CREATE TABLE `news` (
   `title` VARCHAR(200) NOT NULL ,
   `body` TEXT ,
   PRIMARY KEY  (`news_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 
@@ -728,7 +728,7 @@ CREATE TABLE `polls` (
   `count7` SMALLINT UNSIGNED NOT NULL default '0',
   PRIMARY KEY ( `poll_id` ) ,
   INDEX ( `course_id` )
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `mail_queue`
@@ -744,7 +744,7 @@ CREATE TABLE `mail_queue` (
   `subject` VARCHAR(255) NOT NULL ,
   `body` TEXT ,
   PRIMARY KEY ( `mail_id` )
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 
@@ -754,7 +754,7 @@ CREATE TABLE `polls_members` (
   `poll_id` MEDIUMINT UNSIGNED NOT NULL default '0',
   `member_id` MEDIUMINT UNSIGNED NOT NULL default '0',
   PRIMARY KEY ( `poll_id` , `member_id` )
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 
@@ -763,7 +763,7 @@ CREATE TABLE `related_content` (
   `content_id` mediumint(8) unsigned NOT NULL default '0',
   `related_content_id` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`content_id`,`related_content_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Since 1.5.3
@@ -779,7 +779,7 @@ CREATE TABLE `reading_list` (
 	`comment` TEXT ,
 	PRIMARY KEY  (`reading_id`),
 	INDEX (`course_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 # Since 1.5.3
 # Table structure for table `external_resources`
@@ -797,7 +797,7 @@ CREATE TABLE `external_resources` (
 	`url` varchar(255) NOT NULL DEFAULT '',
 	PRIMARY KEY (`resource_id`),
 	INDEX (`course_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -829,7 +829,7 @@ CREATE TABLE `tests` (
   `failfeedback` TEXT,
   `show_guest_form` TINYINT(1) UNSIGNED NOT NULL default '0',
   PRIMARY KEY  (`test_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -843,7 +843,7 @@ CREATE TABLE `tests_answers` (
   `score` varchar(5) NOT NULL default '',
   `notes` TEXT ,
   PRIMARY KEY  (`result_id`,`question_id`,`member_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -854,7 +854,7 @@ CREATE TABLE `tests_groups` (
   `group_id` MEDIUMINT UNSIGNED NOT NULL default '0',
   PRIMARY KEY (`test_id`,`group_id`),
   KEY `test_id` (`test_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -901,7 +901,7 @@ CREATE TABLE `tests_questions` (
   `content_id` mediumint(8) NOT NULL,  
   PRIMARY KEY  (`question_id`),
   KEY `category_id` (category_id)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `tests_questions_assoc`
@@ -913,7 +913,7 @@ CREATE TABLE `tests_questions_assoc` (
   `ordering` mediumint(8) unsigned NOT NULL default '0',
   `required` tinyint(3) unsigned NOT NULL default '0',
   PRIMARY KEY  (`test_id`,`question_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `tests_questions_categories`
@@ -924,7 +924,7 @@ CREATE TABLE `tests_questions_categories` (
   `title` char(200) NOT NULL default '',
   PRIMARY KEY  (`category_id`),
   KEY `course_id` (`course_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `tests_results`
@@ -940,7 +940,7 @@ CREATE TABLE `tests_results` (
   `max_pos` TINYINT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `themes`
@@ -955,7 +955,7 @@ CREATE TABLE `themes` (
   `extra_info` TEXT ,
   `status` tinyint(3) unsigned NOT NULL default '1',
   PRIMARY KEY  (`title`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -1064,7 +1064,7 @@ CREATE TABLE `users_online` (
   `login` varchar(255) NOT NULL default '',
   `expiry` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`)
-) TYPE=HEAP MAX_ROWS=500;
+) ENGINE=HEAP MAX_ROWS=500;
 
 # --------------------------------------------------------
 # Table structure for table `auto_enroll`
@@ -1094,19 +1094,19 @@ CREATE TABLE `primary_resources` (
   `resource` TEXT,
   `language_code` varchar(20) default NULL,
   PRIMARY KEY  (`primary_resource_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `primary_resources_types` (
   `primary_resource_id` mediumint(8) unsigned NOT NULL,
   `type_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`primary_resource_id`,`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `resource_types` (
   `type_id` mediumint(8) unsigned NOT NULL auto_increment,
   `type` TEXT,
   PRIMARY KEY  (`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `secondary_resources` (
   `secondary_resource_id` mediumint(8) unsigned NOT NULL auto_increment,
@@ -1114,13 +1114,13 @@ CREATE TABLE `secondary_resources` (
   `secondary_resource` TEXT,
   `language_code` varchar(20) default NULL,
   PRIMARY KEY  (`secondary_resource_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `secondary_resources_types` (
   `secondary_resource_id` mediumint(8) unsigned NOT NULL,
   `type_id` mediumint(8) unsigned NOT NULL,
   PRIMARY KEY  (`secondary_resource_id`,`type_id`)
-) TYPE = MYISAM;
+) ENGINE = MyISAM;
 
 INSERT INTO `resource_types` VALUES
 (1, 'auditory'),
@@ -1488,7 +1488,7 @@ CREATE TABLE `blog_subscription` (
   `group_id` MEDIUMINT NOT NULL ,
   `member_id` MEDIUMINT NOT NULL ,
   PRIMARY KEY (group_id,member_id)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # END Adding feature of blog subsription
 
@@ -1501,7 +1501,7 @@ CREATE TABLE `content_prerequisites` (
   `type` varchar(50) NOT NULL DEFAULT '',
   `item_id` MEDIUMINT NOT NULL,
   PRIMARY KEY (content_id,type, item_id)
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # END Adding feature of content pre-requisites
 
@@ -1519,7 +1519,7 @@ CREATE TABLE `oauth_client_servers` (
   `create_date` datetime NOT NULL,
   PRIMARY KEY ( `oauth_server_id` ),
   UNIQUE INDEX idx_consumer ( `oauth_server` )
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `oauth_client_tokens`
@@ -1533,7 +1533,7 @@ CREATE TABLE `oauth_client_tokens` (
   `member_id` mediumint(8) unsigned NOT NULL ,
   `assign_date` datetime NOT NULL,
   PRIMARY KEY ( `oauth_server_id`, `token` )
-) TYPE=MyISAM;
+) ENGINE = MyISAM;
 
 # END Adding feature of oauth client
 

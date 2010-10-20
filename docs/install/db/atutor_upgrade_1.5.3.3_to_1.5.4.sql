@@ -28,7 +28,7 @@ CREATE TABLE `course_access` (
   `enabled` tinyint(4) NOT NULL ,
   PRIMARY KEY ( `password` ) ,
   UNIQUE (`course_id`)
-) TYPE=MyISAM ;
+) ENGINE=MyISAM ;
 
 ## alter the members table to support last login
 ALTER TABLE `members` ADD `last_login` TIMESTAMP NOT NULL ;
@@ -47,7 +47,7 @@ CREATE TABLE `messages_sent` (
    `body` text NOT NULL ,
    PRIMARY KEY ( `message_id` ) ,
    KEY `from_member_id` ( `from_member_id` )
-) TYPE = MYISAM;
+) ENGINE =MYISAM;
 
 ## add the profile_pictures module
 INSERT INTO `modules` VALUES ('_standard/profile_pictures', 2, 0, 0, 0, 0);

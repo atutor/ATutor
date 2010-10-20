@@ -10,7 +10,7 @@ CREATE TABLE `assignments` (
 	`multi_submit` TINYINT DEFAULT '0',
 	PRIMARY KEY  (`assignment_id`),
 	INDEX (`course_id`)
-) TYPE = MYISAM;
+) ENGINE = MYISAM;
 
 REPLACE INTO `language_text` VALUES ('en', '_msgs','AT_CONFIRM_DELETE_ASSIGNMENT','Do you wish to delete this assignment: <strong>%s</strong>?',NOW(),'');
 REPLACE INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_DUE_DATE_EMPTY','Due date is not set.',NOW(),'');

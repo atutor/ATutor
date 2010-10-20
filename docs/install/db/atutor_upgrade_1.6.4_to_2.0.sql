@@ -18,7 +18,7 @@ CREATE TABLE `oauth_client_servers` (
   `create_date` datetime NOT NULL,
   PRIMARY KEY ( `oauth_server_id` ),
   UNIQUE INDEX idx_consumer ( `oauth_server` )
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `oauth_client_tokens`
@@ -32,7 +32,7 @@ CREATE TABLE `oauth_client_tokens` (
   `member_id` mediumint(8) unsigned NOT NULL ,
   `assign_date` datetime NOT NULL,
   PRIMARY KEY ( `oauth_server_id`, `token` )
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 # END Adding feature of oauth client
 

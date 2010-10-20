@@ -244,7 +244,7 @@ CREATE TABLE `blog_subscription` (
   `group_id` MEDIUMINT NOT NULL ,
   `member_id` MEDIUMINT NOT NULL ,
   PRIMARY KEY (group_id,member_id)
-) TYPE=MyISAM;
+) ENGINE=MyISAM;
 
 # END Adding feature of blog subsription
 
