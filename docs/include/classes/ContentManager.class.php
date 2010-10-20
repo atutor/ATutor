@@ -1040,7 +1040,7 @@ initContentMenu();
 					//if this is a test link.
 					if (isset($content['test_id'])){
 						$title_n_alt =  $content['title'];
-						$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].htmlentities_utf8(SEP).'in_cid='.$content['parent_content_id'];
+						$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].SEP.'in_cid='.$content['parent_content_id'];
 						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
 					} else {
 						$in_link = 'content.php?cid='.$content['content_id'];
@@ -1048,7 +1048,7 @@ initContentMenu();
 					}
 					
 					$full_title = $content['title'];
-					$link .= $img_link . ' <a href="'.$_base_path.url_rewrite($in_link).'" title="';
+					$link .= $img_link . ' <a href="'.$_base_path.htmlentities_utf8(url_rewrite($in_link)).'" title="';
 					$base_title_length = 29;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$base_title_length = 24;
