@@ -62,6 +62,11 @@ if (isset($_REQUEST['in_cid']))
 				header('Location: '.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$pretest.SEP.'cid='.$in_cid, AT_PRETTY_URL_IS_HEADER));
 				exit;
 			}
+		} else if ($pretest == -1) {
+			require(AT_INCLUDE_PATH.'header.inc.php');
+			$msg->printAll();
+			require(AT_INCLUDE_PATH.'footer.inc.php');
+			exit;
 		}
 	}
 }
