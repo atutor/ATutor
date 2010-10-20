@@ -52,7 +52,6 @@ class ContentOutputParser {
 			$items = $elements[$name];
 			foreach ($items as $item) {
 				if ($attrs[$item] != '') {
-
 					/* some attributes allow a listing of files to include seperated by commas (ie. applet->archive). */
 					if (strpos($attrs[$item], ',') !== false) {
 						$files = explode(',', $attrs[$item]);
@@ -60,7 +59,11 @@ class ContentOutputParser {
 							$my_files[] = trim($file);
 						}
 					} else {
-						$my_files[] = $attrs[$item];
+						$file = trim($attrs[$item]);
+						// filter our classid="clsid:..."
+						if (!strpos($file, "clsid:")) {
+							$my_files[] = $file;
+						}
 					}
 				}
 			}

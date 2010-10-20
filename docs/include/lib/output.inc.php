@@ -1170,15 +1170,8 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	}
 	
 	// get all relations between primary resources and their alternatives
-	$sql = "SELECT DISTINCT c.content_path, pr.resource, ";
-	
-	// ignore primary resource type if the request is on particular secondary type.
-	// otherwise, if the primary resource is defined with multiple primary types, 
-	// the primary resource would be replaced/appended multiple times.
-	if ($only_on_secondary_type == 0) {
-		$sql .= "prt.type_id primary_type, ";
-	}
-	$sql .= "sr.secondary_resource, srt.type_id secondary_type
+	$sql = "SELECT DISTINCT c.content_path, pr.resource, prt.type_id primary_type, 
+	               sr.secondary_resource, srt.type_id secondary_type
 	          FROM ".TABLE_PREFIX."primary_resources pr, ".
 	                 TABLE_PREFIX."primary_resources_types prt,".
 	                 TABLE_PREFIX."secondary_resources sr,".
@@ -1205,7 +1198,28 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 		}
 	}
 	
+	$primary_resource_names = array();
 	while ($row = mysql_fetch_assoc($result)) {
+		// if the primary resource is defined with multiple resource type,
+		// the primary resource would be replaced/appended multiple times.
+		// This is what we want at applying alternatives by default, but
+		// not when only one secondary type is chosen to apply.
+		// This fix is to remove the duplicates on the same primary resource.
+		// A dilemma of this fix is, for example, if the primary resource type
+		// is "text" and "visual", but
+		// $_SESSION['prefs']['PREF_ALT_TO_TEXT_APPEND_OR_REPLACE'] == 'replace'
+		// $_SESSION['prefs']['PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE'] == 'append'
+		// so, should replace happen or append happen? With this fix, whichever
+		// the first in the sql return gets preserved in the array and processed.
+		// The further improvement is requried to keep rows based on the selected
+		// secondary type (http://www.atutor.ca/atutor/mantis/view.php?id=4598). 
+		if ($only_on_secondary_type > 0) {
+			if (in_array($row['resource'], $primary_resource_names)) {
+				continue;
+			} else {
+				$primary_resource_names[] = $row['resource'];
+			}
+		}
 		$alternative_rows[] = $row;
 		
 		$youtube_playURL = convert_youtube_watchURL_to_playURL($row['resource']);
