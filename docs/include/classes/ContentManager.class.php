@@ -763,6 +763,26 @@ class ContentManager
 		return $sequence_links;
 	}
 
+	// return the javascript of expanding content folder
+	function get_js_expand_folder($content_id) {
+		return '
+		jQuery("#folder"+'.$content_id.').show();
+		jQuery("#tree_icon"+'.$content_id.').attr("src", tree_collapse_icon);
+		jQuery("#tree_icon"+'.$content_id.').attr("alt", "'._AT("collapse").'");
+		jQuery("#tree_icon"+'.$content_id.').attr("title", "'._AT("collapse").'");
+';
+	}
+	
+	// return the javascript of collapsing content folder
+	function get_js_collapse_folder($content_id) {
+		return '
+		jQuery("#folder"+'.$content_id.').hide();
+		jQuery("#tree_icon"+'.$content_id.').attr("src", tree_expand_icon);
+		jQuery("#tree_icon"+'.$content_id.').attr("alt", "'._AT("expand").'");
+		jQuery("#tree_icon"+'.$content_id.').attr("title", "'._AT("expand").'");
+';
+	}
+	
 	/** Generate javascript to hide all root content folders, except the one with current content page
 	 * access: private
 	 * @return print out javascript function initContentMenu()
@@ -787,17 +807,11 @@ function initContentMenu() {
 			echo '
 	if (ATutor.getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
 	{
-		jQuery("#folder"+'.$row['content_id'].').show();
-		jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_collapse_icon);
-		jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("collapse").'");
-		jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("collapse").'");
+'.$this->get_js_expand_folder($row['content_id']).'
 	}
 	else
 	{
-		jQuery("#folder"+'.$row['content_id'].').hide();
-		jQuery("#tree_icon"+'.$row['content_id'].').attr("src", tree_expand_icon);
-		jQuery("#tree_icon"+'.$row['content_id'].').attr("alt", "'._AT("expand").'");
-		jQuery("#tree_icon"+'.$row['content_id'].').attr("title", "'._AT("expand").'");
+'.$this->get_js_collapse_folder($row['content_id']).'
 	}
 ';
 		}
@@ -807,12 +821,25 @@ function initContentMenu() {
 			$current_content_path = $this->getContentPath($_SESSION['s_cid']);
 			
 			for ($i=0; $i < count($current_content_path)-1; $i++)
-				echo '
-	jQuery("#folder"+'.$current_content_path[$i]['content_id'].').show();
-	jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("src", tree_collapse_icon);
-	jQuery("#tree_icon"+'.$current_content_path[$i]['content_id'].').attr("alt", "'._AT("collapse").'");
-	ATutor.setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
+				echo $this->get_js_expand_folder($current_content_path[$i]['content_id']).
+				'	ATutor.setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
 ';
+		} else { // expand the first folder at user's first visit
+			// find the first content folder
+			$sql = "SELECT content_id 
+			          FROM ".TABLE_PREFIX."content c1 
+			         WHERE course_id=".$this->course_id."
+			           AND content_parent_id=0 
+			           AND content_type=".CONTENT_TYPE_FOLDER."
+			           AND exists (SELECT * FROM ".TABLE_PREFIX."content c2 
+			                        WHERE c2.content_parent_id = c1.content_id) 
+			         ORDER BY ordering 
+			         LIMIT 1";
+			$result = mysql_query($sql, $this->db);
+			$row = mysql_fetch_assoc($result);
+			
+			// print out javascript to expand the first content folder
+			echo $this->get_js_expand_folder($row['content_id']);
 		}
 		echo '}'; // end of javascript function initContentMenu()
 	}
