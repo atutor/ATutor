@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<module version="0.1"> 
+    <name lang="en">Glossary</name> 
+    <description lang="en">This module allows the ability to define course-related words in a glossary.  Glossary terms can provide a mouse-over definition within course content using special tags.  Glossary terms can also be added as a step in the content creation/editing process.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>0.1</version> 
+		<privileges>
+			<instructor_privilege>create</instructor_privilege>
+			<admin_privilege></admin_privilege> 
+		</privileges>
+        <date>2005-08-25</date> 
+        <state>stable</state> 
+        <notes>This is a core module.</notes> 
+    </release> 
+</module>

@@ -1,0 +1,945 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html lang="en">
+<head>
+	<title>ATutor Module Documentation</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta name="author" content="Joel Kronenberg/Greg Gay" />
+	<meta name="description" content="ATutor module developer documentation" />
+<style type="text/css">
+
+h1 {
+	background-color: #CCCCCC;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+h2 {
+	background-color: #DDDDDD;
+	padding-left: 10px;
+	margin-bottom: 0px;
+}
+h3 {
+	background-color: #EFEFEF;
+	padding-left: 20px;
+	margin-bottom: 0px;
+}
+h4  { margin-bottom: 0px; }
+p   { margin-top: 0px;    }
+dl  { margin-top: 0px;    }
+kbd {
+	padding: 0px 1px 0px 1px;
+	border-width: 1px 2px 2px 1px;
+	border-style: solid;
+	border-color: #edd #baa #baa #eed;
+	white-space: pre;
+}
+kbd em {
+	font-weight: bold;
+	background-color: #efefef;
+}
+blockquote { font-style: italic; }
+pre.code {
+	background-color: #EEEEFF;
+	padding: 5px;
+	margin-left: 20px;
+	color:#761596;
+    margin-top: 0px;
+}
+.top {
+	float: right;
+	color: green;
+	padding-top: 2px;
+	padding-right: 5px;
+}
+pre {
+	background-color: #EEEEFF;
+	font-family: Courier, monospace;
+	border-left: 1px solid #761596;
+	padding: 0px 0px 0px 10px;
+	color: #333;
+        margin: 0px 0px 10px 20px;
+	font-size: 88%;
+	line-height: 1.2em;
+}
+@media print {
+	h2 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+	}
+	h3 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+		width: 75%;
+	}
+	.top {
+		display: none;
+	}
+
+	pre.code {
+		page-break-inside: avoid;
+	}
+}
+}
+acronym {
+	cursor: help;
+}
+</style>
+
+</style>
+</head>
+<body><h1>Module Development Documentation</h1>
+<ul>
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#structure">Structure</a></li>
+	<ul>
+	<li><a href="#dirname">Directory Name</a></li>
+	<li><a href="#files">Files</a>
+	<ul>
+	<li><a href="#module.xml">module.xml</a></li>
+	<li><a href="#module.php">module.php</a></li>
+	<li><a href="#module.sql">module.sql</a></li>
+	</ul></li>
+	</ul>
+<li><a href="#installation">Installation</a></li>
+	<ul>
+	<li><a href="#module_install">module_install.php</a></li>
+	<li><a href="#privs">Specifying Privileges</a></li>
+	<li><a href="#data_dir">Creating a Data Directory</a></li>
+	<li><a href="#execute">Executing an SQL FILE</a></li>
+	<li><a href="#errors">Generating Error Messages</a></li>
+	<li><a href="#uninstall">Uninstalling a Module</a></li>
+	</ul>
+
+<li><a href="#auth">Authentication &amp; Privileges</a></li>
+<li><a href="#localisation">Localisation</a></li>
+<li><a href="#config">Configuration Options</a></li>
+<li><a href="#styles">Custom Style Sheets</a></li>
+<li><a href="#sidemenu">Side Menu Boxes</a></li>
+<li><a href="#sublinks">Sublinks for Details View</a></li>
+<li><a href="#tools">Student Tools</a></li>
+<li><a href="#groups">Group Tools</a></li>
+<li><a href="#navigation">Navigation &amp; Hierarchy</a></li>
+<li><a href="#delete">Course Deletion</a></li>
+<li><a href="#news">Module News</a></li>
+<li><a href="#content_format">Custom Content Manipulation</a></li>
+<li><a href="#backup">Backing-Up and Restoring</a></li>
+<ul>
+<li><a href="#directories">Directories</a></li>
+<li><a href="#database">Database Tables</a></li>
+</ul>
+<li><a href="#cron">Running Cron/Scheduling</a></li>
+</ul>
+
+<a name="intro"></a>
+<h2>Introduction</h2>
+	<p>ATutor 1.5.2 introduced the concept of modules, providing developers with a framework to implement additional functionality in a coherent and loosely coupled way.</p>
+
+	<p>The framework defines methods for assigning privileges, backing-up and restoring content, deleting course specific content, and adding side menu blocks,  student tools, course management and administrative tools, as well as public tools and other types of added functionality . </p>
+
+	<p>The intent is to allow for the development and distribution of modules independent of the ongoing development and release of ATutor. The module structure does allow for the creation of modules that run software that is not distributed under the <acronym title="GNU Not Unix">GNU</acronym> General Public License, but distributed separately under their own, perhaps commercial licenses.</p>
+
+	<p>The <em>Hello World</em> example module is included with each ATutor distribution for developers who want to investigate how modules work. The module is found in the <kbd>mods/hello_world</kbd> directory. A copy of the Hello World module works well as a starting point for creating a new module, since it implements (in a simple way) just about all the features found in modules. Also see the files from <a href="http://www.atutor.ca/atutor/modules.php">other modules</a> that operate like you expect your module to operate.</p>
+
+<a name="structure"></a>
+<h2>Structure</h2>
+	<p>Modules are stored under ATutor's <kbd>mods</kbd> directory. <em>Core</em> modules are stored in the <kbd>mods/_core</kbd> subdirectory and are made available with every release of ATutor. These modules cannot be disabled by the administrator as they are vital to ATutor's functionality. <em>Standard</em> modules are stored in the <kbd>mods/_standard</kbd> subdirectory and are also made available with every release of ATutor. Standard modules can be disabled by the administrator. <em>Extra</em> modules are stored in the <kbd>mods</kbd> directory and are installed and distributed independently of ATutor. Although the process of developing modules is the same for each type of module, only <em>extra</em> modules can be distributed separately, while <em>core</em> and <em>standard</em> modules are added to the ATutor code repository (i.e. <acronym title="Subversion">SVN</acronym> trunk).</p>
+
+	<p>Whenever a module identifier is needed within code, it should appear in lowercase with spaces converted to underscores.</p>
+
+	<p>The module name, and hence the directory and function names (see below for additional details), must be unique across all possible modules. A module should not be made available if an existing module is already being distributed under that same name. It is up to the module developer to ensure that their module name is unique.</p>
+	<a name="dirname"></a>
+	<h3>Directory Name</h3>
+		<p>The name given to the directory must be chosen carefully. The name is used to namespace the module's function by prefixing required functions with that directory name. For example, a module named <em>Example Maker</em> should be placed in a directory named <kbd>example_maker</kbd> and the delete function would be named <kbd><em>example_maker</em>_delete()</kbd>.</p>
+	<a name="files"></a>
+	<h3>Files</h3>
+		<p>The following files should exist under the module's top level directory: <kbd>mods/<em>module_name</em></kbd>.</p>
+
+		<dl>
+			<dt><kbd>module.php</kbd></dt>
+			<dd>This is the main module file which gets included whenever a page is loaded. <em>Required</em>.</dd>
+
+			<dt><kbd>module.xml</kbd></dt>
+			<dd>This file is used only for identifying the module for distribution and is only used when viewing a module's details. <em>Required</em>.</dd>
+
+			<dt><kbd>module_install.php</kbd></dt>
+			<dd>This file is used when installing the module. <em>Required</em>.</dd>
+
+			<dt><kbd>module_uninstall.php</kbd></dt>
+			<dd>This file is used to remove the module from the system. <em>Required for ATutor  1.6.2+</em>.</dd>
+
+			<dt><kbd>module_backup.php</kbd></dt>
+			<dd>This file is used when backing-up and restoring course content. <em>Optional</em>.</dd>
+
+			<dt><kbd>module_delete.php</kbd></dt>
+			<dd>This file is used when deleting course specific content. <em>Optional</em>.</dd>
+
+
+			<dt><kbd>module_cron.php</kbd></dt>
+			<dd>This file is used to run module related commands at specified intervals. <em>Optional</em>.</dd>
+
+			<dt><kbd>module.sql</kbd></dt>
+			<dd>This file is used to add tables and/or modify data in the ATutor database. Also used to insert language into the <kbd>language_text</kbd> table. <em>Optional</em>.</dd>
+		</dl>
+<a name="module.xml"></a>
+	<h3>The <kbd>module.xml</kbd> File</h3>
+		<p>The <kbd>module.xml</kbd> file is used for displaying information about the module before it is installed and is useful when distributing the module.</p>
+<pre>
+&lt;?xml version="1.0" encoding="ISO-8859-1"?> 
+&lt;module version="0.1"> 
+    &lt;name lang="en">Example Maker&lt;/name> 
+    &lt;description lang="en">This is an example module that makes examples.&lt;/description> 
+    &lt;maintainers>
+        &lt;maintainer> 
+            &lt;name>ATutor Team&lt;/name> 
+            &lt;email>info@atutor.ca&lt;/email> 
+        &lt;/maintainer>
+        &lt;maintainer> 
+            &lt;name>John Doe&lt;/name> 
+            &lt;email>jd@example.com&lt;/email> 
+        &lt;/maintainer>
+    &lt;/maintainers> 
+    &lt;url>http://www.example.com&lt;/url> 
+    &lt;license>BSD&lt;/license> 
+    &lt;release> 
+        &lt;version>0.2&lt;/version> 
+        &lt;date>2005-08-22&lt;/date> 
+        &lt;state>stable&lt;/state> 
+        &lt;notes>Fixes several bugs in previous version.&lt;/notes> 
+    &lt;/release> 
+&lt;/module>
+</pre>
+
+<a name="module.php"></a>
+	<h3>The <kbd>module.php</kbd> File</h3>
+<p>The <kbd>module.php</kbd> file is typically used to set permissions, and to link module components into the ATutor navigation elements, as tool icons, navigation tabs, sub navigation menus, or side menu blocks, as administrator, course management, and student tools. It is also used to link tools to  My Start Page, or to various public pages that appear where a user is browsing the system without being logged in. The <kbd>module.php</kbd> file can also be used to run module specific functionality. It runs everytime a module screen is viewed, loading whatever settings it may contain, or running any scripts that may be required by the module.</p>
+<pre>
+&lt;?php
+/*******
+ * doesn't allow this file to be loaded with a browser.
+ */
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+/******
+ * this file must only be included within a Module obj
+ */
+if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
+
+
+/******
+* modules sub-content to display on course home detailed view
+*/
+$this->_list['hello_world'] = array('title_var'=>'hello_world','file'=>'mods/hello_world/sublinks.php');
+
+/*******
+ * assign the instructor and admin privileges to the constants.
+ */
+define('AT_PRIV_EXAMPLE_MAKER',       $this->getPrivilege());
+define('AT_ADMIN_PRIV_EXAMPLE_MAKER', $this->getAdminPrivilege());
+
+/*******
+ * create a side menu box/stack.
+ */
+$this->_stacks['example_maker'] = array('title_var'=>'example_maker', 'file'=>'mods/example_maker/side_menu.inc.php');
+// ** possible alternative: **
+// $this->addStack('example_maker', array('title_var' => 'example_maker', 'file' => './side_menu.inc.php');
+
+/*******
+ * if this module is to be made available to students on the Home or Main Navigation.
+ */
+$_student_tool = 'mods/example_maker/index.php';
+// ** possible alternative: **
+// $this->addTool('./index.php');
+
+/*******
+ * add the admin pages when needed.
+ */
+if (admin_authenticate(AT_ADMIN_PRIV_EXAMPLE_MAKER, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+	$this->_pages[AT_NAV_ADMIN] = array('mods/example_maker/index_admin.php');
+	$this->_pages['mods/example_maker/index_admin.php']['title_var'] = 'example_maker';
+	$this->_pages['mods/example_maker/index_admin.php']['parent']    = AT_NAV_ADMIN;
+}
+
+/*******
+ * instructor Manage section:
+ */
+$this->_pages['mods/example_maker/index_instructor.php']['title_var'] = 'example_maker';
+$this->_pages['mods/example_maker/index_instructor.php']['parent']   = 'tools/index.php';
+// ** possible alternative: **
+// $this->pages['./index_instructor.php']['title_var'] = 'example_maker';
+// $this->pages['./index_instructor.php']['parent']    = 'tools/index.php';
+
+/*******
+ * student page.
+ */
+$this->_pages['mods/example_maker/index.php']['title_var'] = 'example_maker';
+$this->_pages['mods/example_maker/index.php']['img']       = 'mods/example_maker/example_maker.jpg';
+
+
+/* public pages */
+$this->_pages[AT_NAV_PUBLIC] = array('mods/example_maker/index_public.php');
+$this->_pages['mods/example_maker/index_public.php']['title_var'] = 'example_maker';
+$this->_pages['mods/example_maker/index_public.php']['parent'] = 'login.php';
+$this->_pages['login.php']['children'] = array('mods/example_maker/index_public.php');
+
+/* my start page pages */
+$this->_pages[AT_NAV_START]  = array('mods/example_maker/index_mystart.php');
+$this->_pages['mods/example_maker/index_mystart.php']['title_var'] = 'example_maker';
+$this->_pages['mods/example_maker/index_mystart.php']['parent'] = 'users/index.php';
+$this->_pages['users/index.php']['children'] = array('mods/example_maker/index_mystart.php');
+?>
+</pre>
+<a name="module.sql"></a>
+	<h3>The <kbd>module.sql</kbd> File</h3>
+<p>A very simple <kbd>module.sql</kbd> file such as the following, creates a table for the module, and inserts it's language into the ATutor <kbd>language_text</kbd> table. Module language can then be managed from the ATutor Language Manager. The <kbd>module.sql</kbd> file can contain any number of SQL statements used to add tables or insert data into the ATutor database. </p>
+
+<pre>
+# sql file for example maker module
+
+CREATE TABLE example_maker (
+   `course_id` mediumint(8) unsigned NOT NULL,
+   `value` VARCHAR( 30 ) NOT NULL ,
+   PRIMARY KEY ( `course_id` )
+);
+
+INSERT INTO `language_text` VALUES ('en', '_module','example_maker','Example Maker',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','AT_ERROR_GOES_HERE','Example Maker Error Message',NOW(),'');
+
+</pre>
+<a name="installation"></a>
+<h2>Installation</h2>
+	<p>The <kbd>module_install.php</kbd> script gets executed during the installation process, using the administrator's Install Module feature. If the script's execution results in <kbd>$msg->containsErrors()</kbd> evaluating to <kbd>TRUE</kbd>, then the errors are displayed and the user is prompted to correct them. The process is then repeated until errors are no longer being generated and the module is installed successfully. Ultimately, it is up to the module to determine the logical steps involved in its installation. For example, it might be better to create the data directories before trying to create any database tables since creating the directory may require several attempts. Typically the flow we describe here should be suitable in most cases.</p>
+
+	<p>Theoretically, the install script's execution is wide-open and does not have to adhere to the process outlined below or make use of any special privileges, provided it generates errors as appropriate.</p>
+
+<pre># pseudo-code for installing a module:
+while (there are errors)
+    print the error message
+
+    # inside module_install.php:
+    define the privileges used
+
+    if (create database tables is unsuccessful) then
+        generate an error message
+
+    if (there are no errors AND there is an SQL file) then
+        execute the SQL file
+end while
+
+add the module to the system using the defined privileges
+</pre>
+
+<a name="module_install"></a>
+	<h3>The <kbd>module_install.php</kbd> File</h3>
+<p>The <kbd>module_install.php</kbd> file is typically used to run any installation related files, such as an sql file that sets up a database table, or installs the language for the module. The following is an example module_install.php file</p>
+<pre>
+&lt;?php
+/*******
+ * the line below safe-guards this file from being accessed directly from
+ * a web browser. It will only execute if required from within an ATutor script,
+ * in our case the Module::install() method.
+ */
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+/*******
+ * Note: the many options for these variables are used to decrease confusion.
+ *       TRUE | FALSE | 1 will be the convention.
+ *
+ * $_course_privilege
+ *     specifies the type of instructor privilege this module uses.
+ *     set to empty | FALSE | 0   to disable any privileges.
+ *     set to 1 | AT_PRIV_ADMIN   to use the instructor only privilege.
+ *     set to TRUE | 'new'        to create a privilege specifically for this module:
+ *                                will make this module available as a student privilege.
+ *
+ * $_admin_privilege
+ *    specifies the type of ATutor administrator privilege this module uses.
+ *    set to FALSE | AT_ADMIN_PRIV_ADMIN   to use the super administrator only privilege.
+ *    set to TRUE | 'new'                  to create a privilege specifically for this module:
+ *                                         will make this module available as an administrator privilege.
+ *
+ *
+ * $_cron_interval
+ *    if non-zero specifies in minutes how often the module's cron job should be run.
+ *    set to 0 or not set to disable.
+ */
+$_course_privilege = TRUE; // possible values: FALSE | AT_PRIV_ADMIN | TRUE
+$_admin_privilege  = TRUE; // possible values: FALSE | TRUE
+$_cron_interval    = 35; // run every 30 minutes
+
+
+/********
+ * the following code is used for creating a module-specific directory.
+ * it generates appropriate error messages to aid in its creation.
+ */
+$directory = AT_CONTENT_DIR .'example_maker';
+
+// check if the directory is writeable
+if (!is_dir($directory) && !@mkdir($directory)) {
+	$msg->addError(array('MODULE_INSTALL', '&lt;li>'.$directory.' does not exist. Please create it.&lt;/li>'));
+} else if (!is_writable($directory) && @chmod($directory, 0666)) {
+	$msg->addError(array('MODULE_INSTALL', '&lt;li>'.$directory.' is not writeable. On Unix issue the command &lt;kbd>chmod a+rw&lt;/kbd>.&lt;/li>'));
+}
+
+
+/******
+ * the following code checks if there are any errors (generated previously)
+ * then uses the SqlUtility to run any database queries it needs, ie. to create
+ * its own tables.
+ */
+if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
+	// deal with the SQL file:
+	require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
+	$sqlUtility = new SqlUtility();
+
+	/*
+	 * the SQL file could be stored anywhere, and named anything, "module.sql" is simply
+	 * a convention we're using.
+	 */
+	$sqlUtility->queryFromFile(dirname(__FILE__) . '/module.sql', TABLE_PREFIX);
+}
+
+?>
+</pre>
+
+
+<a name="privs"></a>
+	<h3>Specifying Privileges</h3>
+		<p>Privileges control who has access to the course management and administrative sections.</p>
+		
+		<p>See the Authentication &amp; Privileges section for additional details using the privileges.</p>
+
+		<dl>
+			<dt><kbd>$_course_privilege</kbd></dt>
+			<dd><p>This variable controls access to a course's management section and can take one of the following values:</p>
+				<ul>
+					<li><kbd>TRUE</kbd>: To use a custom assignable privilege level. If a custom privilege is created, the module will appear as an option when assigning privileges to enrolled students.</li>
+					<li><kbd>AT_PRIV_ADMIN</kbd>: To use the instructor privilege. Only the instructor will be given access to the module's management section.</li>
+					<li><kbd>FALSE</kbd>: To disable the privilege if there is no management section for the module.</li>
+				</ul>
+			</dd>
+
+			<dt><kbd>$_admin_privilege</kbd></dt>
+			<dd><p>This variable can take one of the following values:</p>
+				<ul>
+					<li><kbd>TRUE</kbd>: To use a custom assignable privilege level. If a custom privilege is created then the module will appear as an option when assigning privileges to administrators</li>
+					<li><kbd>AT_ADMIN_PRIV_ADMIN</kbd>: To use the super administrator privilege. Only the super administrator will be given access to the module's administration section.</li>
+				</ul>
+			</dd>
+		</dl>
+
+		<p>Note that creating a privilege is not in itself enough to make the module appear in the Manage section! The hierarchy and navigation path to the management page must be set correctly. See the Navigation &amp; Hierarchy section for additional details.</p>
+<a name="data_dir"></a>
+	<h3>Creating a Data Directory</h3>
+		<p>It is best to keep the directory within the <kbd>AT_CONTENT_DIR</kbd> directory as it should already allow the creation of files and directories by the web server. It is then up to the module to create individual course directories as needed.</p>
+<pre>
+$directory = AT_CONTENT_DIR .'example_maker';
+
+// check if the directory is writable
+if (!is_dir($directory) && !@mkdir($directory)) {
+    $msg->addError(array('MODULE_INSTALL', '&lt;li>'
+                         .$directory
+                         .' does not exist. Please create it.&lt;/li>'));
+} else if (!is_writable($directory) && @chmod($directory, 0666)) {
+    $msg->addError(array('MODULE_INSTALL', '&lt;li>'
+                         . $directory
+                         .' is not writable.&lt;/li>'));
+} // else: it was created successfully.
+</pre>
+<a name="execute"></a>
+	<h3>Executing an <acronym title="Structured Query Language">SQL</acronym> File</h3>
+		<p>If the module requires its own database tables or custom language, then it will have to create them itself. The <acronym title="Structured Query Language">SQL</acronym> can either be executed inline using <acronym title="PHP Hypertext Processor">PHP</acronym> database execution directly, or using the <kbd>SQLUtility</kbd> class to execute an external <acronym title="Structured Query Language">SQL</acronym> file. Also see <a href="#module.sql">module.sql</a> for more about creating an SQL file.</p>
+<pre>
+if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
+    // deal with the SQL file:
+    require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
+    $sqlUtility = new SqlUtility();
+    $sqlUtility->queryFromFile(dirname(__FILE__) . '/module.sql', TABLE_PREFIX);
+}
+</pre>
+<a name="errors"></a>
+	<h3>Generating Errors Messages</h3>
+		<p>It is up to the module to generate and check for any errors that occur during the installation. An error message can be generated using <kbd>$msg->addError(array('MODULE_INSTALL', '&lt;li>your error msg goes here&lt;/li>'));</kbd>. Note that the text supplied to the error message is not translated in this case. If the language should be localised, then the appropriate language vairable should replace the text. Something like <kbd>$msg->addError(array('MODULE_INSTALL', 'AT_ERROR_GOES_HERE'));</kbd> . The corresponding SQL INSERT statement should then be found in the <a href="#module.sql">module.sql </a>file, so the language gets added to the <kbd>language_text</kbd> table in ATutor. </p>
+
+		<p>To check if any errors have been generated, use <kbd>$msg->containsErrors()</kbd> which evaluates to <kbd>TRUE</kbd> if a previous error has been generated.</p>
+		
+		<p>See the <a href="guidelines.html#error-feedback-messages">Error and Feedback </a>section of the Developer Documentation for more details about displaying messages.</p>
+
+<a name="uninstall"></a>
+	<h3>Uninstalling a Module</h3>
+<p>As of ATutor 1.6.2 a <kbd>module_uninstall.php</kbd> file is required with each module. This file uses the original module.sql file to deletes any database tables, and any language that may have been installed with <kbd>module.sql</kbd>, and removes any directories used by the module, and deletes the module directory itself.</p>
+
+<pre>
+
+/*******
+ * module_uninstall.php performs reversion of module_install.php
+ */
+
+/*******
+ * the line below safe-guards this file from being accessed directly from
+ * a web browser. It will only execute if required from within an ATutor script,
+ * in our case the Module::uninstall() method.
+ */
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+/********
+ * the following code is used for removing a module-specific directory created in module_install.php.
+ * it generates appropriate error messages to aid in its creation.
+ */
+$directory = AT_CONTENT_DIR .'example_maker';
+
+// check if the directory exists
+if (is_dir($directory)) {
+	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+
+	if (!clr_dir($directory))
+		$msg->addError(array('MODULE_UNINSTALL', '<li>'.$directory.' can not be removed. Please manually remove it.</li>'));
+}
+
+/******
+ * the following code checks if there are any errors (generated previously)
+ * then uses the SqlUtility to run reverted database queries of module.sql, 
+ * ie. "create table" statement in module.sql is run as drop according table.
+ */
+if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
+	// deal with the SQL file:
+	require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
+	$sqlUtility = new SqlUtility();
+
+	/*
+	 * the SQL file could be stored anywhere, and named anything, "module.sql" is simply
+	 * a convention we're using.
+	 */
+	$sqlUtility->revertQueryFromFile(dirname(__FILE__) . '/module.sql', TABLE_PREFIX);
+}
+
+</pre>
+
+<a name="auth"></a>
+<h2>Authentication &amp; Privileges</h2>
+	<p>See the <em>Installation: Specifying Privileges</em> section on creating privileges during the installation process.</p>
+
+	<p>Authentication uses constants for the privilege levels. The privileges should be declared in the <kbd>module.php</kbd> file using the <kbd>$this->getPrivilege()</kbd> and <kbd>$this->getAdminPrivilege()</kbd> methods, respectively.</p>
+
+<pre>
+define('AT_PRIV_FORUMS',       $this->getPrivilege()      );
+define('AT_ADMIN_PRIV_FORUMS', $this->getAdminPrivilege() );
+</pre>
+
+	<p>Once declared, a page can then authenticate against those privileges using either the <kbd>authentication()</kbd> or the <kbd>admin_authenticate()</kbd> functions.</p>
+
+<pre>
+define('AT_INCLUDE_PATH', '../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+// authenticate the administrator forums section:
+admin_authenticate(AT_ADMIN_PRIV_FORUMS);
+</pre>
+<a name="localisation"></a>
+<h2>Localisation</h2>
+	<p>Although a module can be created with all hard-coded language, we recommended you use ATutor's localisation functions. All of ATutor's language is stored in the database, which is then retrieved using the <kbd>_AT()</kbd> function for simple terms and the <kbd>$msg</kbd> object for feedback and error messages.</p>
+
+	<p>Additional details on localising ATutor can be found on the <a href="http://atutor.ca/atutor/docs/translate.php">Thing You Should Know Before Translating</a> and in the <a href="guidelines.html#fn-at">ATutor Developer Documentation</a>.</p>
+
+	<p>Module-specific language should be inserted into the <kbd>language_text</kbd> table during the installation process. The fields in the table are as follows:</p>
+    	     	     	     	     	  
+	<dl>
+		<dt><kbd>language_code</kbd></dt>
+		<dd>The ISO-639-1 language code plus locale.</dd>
+
+		<dt><kbd>variable</kbd></dt>
+		<dd>Set to <kbd>_module</kbd> for modules.</dd>
+
+		<dt><kbd>term</kbd></dt>
+		<dd>The variable used for retrieving the language.</dd>
+
+		<dt><kbd>text</kbd></dt>
+		<dd>The language text.</dd>
+
+		<dt><kbd>revised_date</kbd></dt>
+		<dd>Set to <kbd>NOW()</kbd> for modules.</dd>
+
+		<dt><kbd>context</kbd></dt>
+		<dd>Short description of the language text.</dd>
+	</dl>
+
+<p>Each language item should have a corresponding SQL INSERT line in the module.sql file, that gets inserted into the ATutor <kbd>language_text</kbd> table during installation. Do not include a prefix (e.g. "AT_") on the <kbd>language_text</kbd> table name. The installer will detect the right prefix, and automatically prepend it to tables names. Also see the section <a href="#module.sql">module.sql</a> for information about creating a file to install the module's language.</p>
+<pre>
+# Insert module specific language:
+INSERT INTO `language_text` VALUES ('en',
+                                    '_module',
+                                    'example_maker',
+                                    'Example Maker',
+                                     NOW(),
+                                    'the module title');
+</pre>
+<p>(Introduced in ATutor 1.5.4) On occassion it may be necessary to modify existing ATutor language to accommodate module functionality that alters the way ATutor itself functions by default. For example, when the payments module is installed the message displayed when a student enrolls in a course that requires a payment, needs to include mention of how to make a payment. In the SQL statement below, the second value (i.e. "variable" in the language_text table) is prefixed with "_c" for custom language. Possible custom language variables are _c_msgs, _c_template, and _c_module.</p>
+
+<pre>
+# Insert custom language:
+INSERT INTO `language_text` VALUES ('en', 
+					'_c_msgs',
+					'AT_INFOS_EC_PAYMENTS_TURNED_OFF','
+					Your request has been made. You will be notifed when your request has been approved. If course fees are pending, they will be listed under the <a href="mods/ecomm/index_mystart.php">Payments</a> tab above, where they can be paid.',
+					NOW(),'');
+</pre>
+
+<a name="config"></a>
+<h2>Configuration Options</h2>
+<p>Module configuration options can be stored in the ATutor <kbd>config</kbd> table, and retrieved using a <kbd>$_config[]</kbd> array variable. All module configuration key/value pairs are automatically loaded from the table into global memory while ATutor is running, and can be accessed from any of the module scripts (or from anywhere is ATutor for that matter). The value for a particular configuration option is retrieved by entering its key into the array. To retrieve a URL for the Example Maker module for example,  you might use <kbd>$_config['example_maker']</kbd>. </p>
+<p>In the following example of an <kbd>index_admin.php</kbd> file, the form below accepts a URL to an external application used by the Example Maker module (though it could be any value). In this case imagine a third party application has been installed, and the URL to the application is being stored as a configuration option for the example_maker module. When the form is submitted, <kbd>$_POST['uri']</kbd> is inserted into the config table as the value for the <kbd>example_maker</kbd> key. The following is an example module administrator script used to add/edit a config option for the example_maker module.</p>
+
+<h3>The <kbd>index_admin.php</kbd> File</h3>
+<pre>
+
+&lt;?php
+// make sure user is allowed to see this page (admins only)
+
+admin_authenticate(AT_ADMIN_PRIV_EXAMPLE_MAKER);
+	
+if (isset($_POST['submit'])) {
+	// trim whitespace from the value submitted
+	$_POST['uri'] = trim($_POST['uri']);
+
+	// display an error message if the value is empty
+	if (!$_POST['uri']){
+		$msg->addError('EXAMPLE_MAKER_ADD_EMPTY');
+	}
+	
+	// if no errors, insert the key "example_maker" and value "$_POST['uri']" into the config table	
+	if (!$msg->containsErrors()) {
+		$_POST['uri'] = $addslashes($_POST['uri']);
+		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('example_maker', '$_POST[uri]')";
+		mysql_query($sql, $db);
+		$msg->addFeedback('EXAMPLE_MAKER_URL_SAVED');
+
+		header('Location: '.$_SERVER['PHP_SELF']);
+		exit;
+	}
+}
+
+require (AT_INCLUDE_PATH.'header.inc.php');
+
+/*******
+ *  First check to see if there is a value for the example_maker key $_config['example_maker']
+ *  If there isn't a value then a missing value message is displayed
+ *  The form below that has a single field for submitting a value, in this case a URL
+ *  If the value exists in the config table, then display it in the text field using  $_config['example_maker']
+ */
+	
+?>
+
+&lt;?php if ($_config['example_maker']): ?>
+	&lt;div class="input-form">
+		&lt;div class="row">
+			&lt;p>&lt;?php echo _AT('example_maker_text'); ?>&lt;/p>
+		&lt;/div>
+	&lt;/div>
+&lt;?php else: ?>
+	&lt;div class="input-form">
+		&lt;div class="row">
+			&lt;p>&lt;?php echo _AT('example_maker_missing_url');  ?>&lt;/p>
+		&lt;/div>
+	&lt;/div>
+&lt;?php endif; ?>
+
+&lt;form action="&lt;?php  $_SERVER['PHP_SELF']; ?>" method="post">
+	&lt;div class="input-form">
+		&lt;div class="row">
+			&lt;p>&lt;label for="uri">&lt;?php echo _AT('example_maker_url'); ?>&lt;/label>&lt;/p>
+	
+			&lt;input type="text" name="uri" value="&lt;?php echo $_config['example_maker']; ?>" id="uri" size="60" style="min-width: 65%;" />
+		&lt;/div>
+		&lt;div class="row buttons">
+			&lt;input type="submit" name="submit" value="&lt;?php echo _AT('save'); ?>"  />
+		&lt;/div>
+	&lt;/div>
+&lt;/form>
+</pre>
+
+<a name="styles"></a>
+<h2>Custom Style Sheets</h2>
+	<p>A custom style sheet can be linked into pages by setting <kbd>$_custom_css</kbd> to be the absolute path to the style sheet. This variable must be set on every page that requires that style sheet.</p>
+
+<pre>
+define('AT_INCLUDE_PATH', '../../include/');
+require(AT_INCLUDE_PATH.'vitals.inc.php');
+// using a custom style sheet:
+$_custom_css = $_base_path . 'mods/example_maker/module.css';
+</pre>
+
+<a name="sidemenu"></a>
+<h2>Side Menu Boxes</h2>
+	<p>Side menu boxes generally appear in a column at the side of a course (though this layout can be altered by a theme). A module may implement one or more side menu boxes.</p>
+
+	<p>Side menus are specified using the <kbd>$_module_stacks</kbd> array in <kbd>module.php</kbd>. <kbd>$_module_stacks</kbd> have the attributes <kbd>title_var</kbd> (or <kbd>title</kbd>) and <kbd>file</kbd>. The <kbd>title_var</kbd> value is the language key used for that box; the title will be generated by executing <kbd>_AT($title_var)</kbd>. If <kbd>title</kbd> is set instead, a hard-coded title will be used. The <kbd>file</kbd> attribute specifies the absolute path to the side menu's include file.</p>
+
+	<p>The key to the <kbd>$_module_stacks</kbd> should be the name of the module.</p>
+
+<pre>
+$_module_stacks['example_maker'] = array('title_var' => 'example_maker', 
+                                         'file' => dirname(__FILE__).'\side_menu.inc.php');
+</pre>
+
+	<p>Creating a side menu box involves using the <kbd>$savant</kbd> template object and assigning the output of the box to the <kbd>dropdown_contents</kbd> variable.</p>
+
+<pre>
+&lt;?php global $savant;
+
+$box_content = 'This is my side menu box';
+
+$savant->assign('dropdown_contents', $box_content);
+
+$savant->assign('title', _AT('example_maker'));
+$savant->display('include/box.tmpl.php');
+?>
+</pre>
+<a name="sublinks"></a>
+<h2>Course tool details using <kbd>sublinks.php</kbd></h2>
+
+<p>When viewing the detailed course home page, it is possible to display with each module icon, the latest changes, current information for the module, or just a text description of the module. This information is contained in a module sublinks.php file. The following example sublinks.php is free form PHP that gets a list of the three current tests so they can be accessed directly from the course home page along with the link to the Tests & Survey Tool.</p>
+
+<pre>
+
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+global $_base_path, $include_all, $include_one;
+global $savant;
+global $db;
+
+$tests_limit = 3;		//Maximum number of items to display on the course homepage
+
+$sql = "SELECT test_id, title, UNIX_TIMESTAMP(start_date) AS sd, UNIX_TIMESTAMP(end_date) AS ed FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY end_date DESC LIMIT $tests_limit";
+$result = mysql_query($sql, $db);
+
+if (mysql_num_rows($result) > 0) {
+	while ($row = mysql_fetch_assoc($result)) {
+		if ( ($row['sd'] <= time()) && ($row['ed'] >= time() ))		
+			$tests_list[] = array('sub_url' => $_base_path.url_rewrite('tools/test_intro.php?tid=' . $row['test_id']) , 'sub_text' => $row['title']); 
+	}
+	return $tests_list;	
+} else {
+	return 0;
+}
+
+</pre>
+<a name="tools"></a>
+<h2>Student Tools</h2>
+	<p>Student tools are pages linked from the home page or the main navigation of courses. A module can only implement one student tool. An instructor controls which student tools are available to a course using the <em>Student Tools</em> section found under <em>Manage</em>.</p>
+
+	<p>The tool main page must be specified using the <kbd>$_student_tool</kbd> variable in the <kbd>module.php</kbd> file. The value of that variable must be the relative path to the file from the ATutor base directory (not the module directory). Example: <kbd>$_student_tool = 'mods/example_maker/index.php';</kbd>.</p>
+
+	<p>For the tool to correctly appear its Navigation &amp; Hierarchy must be defined correctly. If the tool is to have an instructor management section then the <em>parent</em> must be specified as being <kbd>tools/index.php</kbd> and the module must have a non-zero privilege level.</p>
+
+<a name="groups"></a>
+<h2>Group Tools</h2>
+	<p>Group tools are student tools that can also be group specific. A module can only implement one group tool. An instructor controls which group tools are available to a each group during the group creation process. Only group tools that are made available to students via the home page or main navigation are available for selection.</p>
+
+	<p>The group tool main page must be specified using the <kbd>$_group_tool</kbd> variable in the <kbd>module.php</kbd> file. The value of that variable must be the relative path to the file from the ATutor base directory (not the module directory). Example: <kbd>$_group_tool = 'mods/example_maker/index.php';</kbd>.</p>
+
+<a name="navigation"></a>
+<h2>Navigation &amp; Hierarchy</h2>
+	<p><em>Every</em> page in ATutor must have an entry in the global <kbd>$_pages</kbd> array where the key to the array is the relative path to the file from ATutor's base directory. Module pages are specified using the <kbd>$_module_pages</kbd> array, which are then merged into the <kbd>$_pages</kbd> array when the <kbd>module.php</kbd> file is loaded. The array supports the following attributes:</p>
+
+	<dl>
+		<dt><kbd>title_var</kbd></dt>
+		<dd>The language variable to be used with <kbd>_AT()</kbd>.</dd>
+
+		<dt><kbd>title</kbd></dt>
+		<dd>The hard-coded version of the language title. If set, overrides the usage of <kbd>_AT(title_var)</kbd>. This version is not language independent.</dd>
+
+		<dt><kbd>parent</kbd></dt>
+		<dd>The relative ATutor path to the parent page. Omit for Student Tools.</dd>
+
+		<dt><kbd>img</kbd></dt>
+		<dd>The relative ATutor path to the icon to use. Only for Student Tools.</dd>
+
+		<dt><kbd>children</kbd></dt>
+		<dd>An array whose values are relative ATutor paths to sub pages.</dd>
+
+		<dt><kbd>guide</kbd></dt>
+		<dd>The the section of the handbook that the module page should link to. Not used for modules at this time.</dd>
+	</dl>
+
+	<p>For pages to appear in the instructor Manage section, their <kbd>parent</kbd> field must be set to <kbd>tools/index.php</kbd>.</p>
+
+<pre>
+$path = 'mods/example_maker/';
+
+// the student tool:
+$_module_pages[$path.'index.php']['title_var'] = 'example_maker';
+$_module_pages[$path.'index.php']['img']       = $path.'icon.gif';
+$_module_pages[$path.'index.php']['children']  = array($path.'sub.php', $path.'more.php');
+
+    $_module_pages[$path.'sub.php']['title_var'] = 'sub_page';
+    $_module_pages[$path.'sub.php']['parent']    = $path.'index.php';
+
+    $_module_pages[$path.'more.php']['title_var'] = 'more_page';
+    $_module_pages[$path.'more.php']['parent']    = $path.'index.php';
+
+// the instructor page:
+$_module_pages[$path . 'inst_index.php']['title_var'] = 'example_maker';
+$_module_pages[$path . 'inst_index.php']['parent']    = 'tools/index.php';
+</pre>
+<a name="delete"></a>
+<h2>Course Deletion</h2>
+	<p>When a course is being deleted, or when a back-up is being restored by overriding (i.e. deleting) existing content, a module has to ensure that the content for that course is also deleted. If the module maintains course data directories, then those directories have to either be emptied or deleted. If the module uses database tables for course content, then it has to delete the appropriate entries for that course.</p>
+
+	<p>The function used to delete the course content for that module must be stored in the <kbd>module_delete.php</kbd> file and named <kbd><em>module_name</em>_delete()</kbd>. The delete function takes a single argument which is the ID of the course to delete.</p>
+
+<pre>
+&lt;?php
+function example_maker_delete($course) {
+    global $db;
+
+    // delete directory
+    $path = AT_CONTENT_DIR . 'example_maker/' . $course . '/';
+    clr_dir($path);
+
+    // delete from database
+    $sql = "DELETE 
+            FROM ".TABLE_PREFIX."example_content 
+            WHERE course_id=$course";
+    mysql_query($sql, $db);
+}
+?>
+</pre>
+
+<a name="news"></a>
+
+<h2>Module News <kbd>module_news.php</kbd></h2>
+<p>In ATutor 2.0 the <strong>Things Current</strong> area of My Start Page was added. It collects changing information from modules and displays it for users so it is one of the first things they see when they login, allowing them to quickly access things like recent forum messages, new news items, or recently added files for download. Things Current scans through all the <kbd>module_news.php</kbd> files, and outputs current activity relevant to each user, and each course. The example below is typical of the type of information that might be output to Things Current, but it can be virtually any data generated by a module. See the Forum module <a href="http://svn.atutor.ca/repos/atutor/trunk/docs/mods/_standard/forums/module_news.php">module_news.php</a> for another more complex example where the latest forum messages are output. </p>
+
+<pre>
+&lt;?php
+/* Typical module_news.php file
+* Rename the function to match the name of the module. Names of all news functions must be unique
+* across all modules installed on a system.
+*/
+
+function mymod_news() {
+	$sql = "SELECT something FROM a table WHERE date &lt; NOW() LIMIT 3";
+	if($result = mysql_query($sql, $db){
+	    while($row = mysql_fetch_assoc($result)){
+		$news[] = $row['something'];
+	     }
+	}
+	return $news;
+}
+
+
+?&gt;
+</pre>
+
+
+
+
+
+
+
+
+
+
+<a name="content_format"></a>
+<h2>Custom content manipulation using <kbd>module_format_content.php</kbd></h2>
+
+<p>ATutor uses the include/lib/output.inc.php file to maniputae how content gets rendered when it is displayed. For example, the [media][/media] get replaced by an appropriate object element inorder to display a given media type. It is possible to extend the output.inc.php rendering of content by creating a <kbd>module_format_content.php</kbd> file containing PHP string replacement functions. </p>
+
+<p> For example, replace a special tag "[black]The font is black.[/black]" with html "&lt;span style="color: black;"&gt;The font is black.&lt;/span&gt;". Also see the <kbd>module_format_content.php</kbd> for the <a href="http://svn.atutor.ca/repos/atutor/trunk/docs/mods/_standard/flowplayer/module_format_content.php">flowplayer module </a>for a more detailed example of content manipulation.</p>
+
+<pre>
+&lt;?php
+/*******
+ * This file extends the content string manipulation. 
+ * Input parameter: global variable $_input. This variable contains the text input 
+ * of the content being displayed.
+ * Output: $_input. Please make sure to assign the manipulated string back to $_input.
+ */
+
+/*******
+ * Global input string. DO NOT CHANGE.
+ */
+global $_input;
+
+/*******
+ * Example, replace special tag "[black][/black]" with html
+ */
+$_input = str_replace('[black]','&lt;span style="color: black;"&gt;',$_input);
+$_input = str_replace('[/black]','&lt;/span&gt;',$_input);
+?>
+</pre>
+<a name="backup"></a>
+<h2>Backing-Up and Restoring</h2>
+	<p>It is possible for a module to include its content when a course backup is being created or restored. Backups support database tables with foreign-key constraints as well as course specific directories.</p>
+<a name="directories"></a>
+	<h3>Directories</h3>
+		<p>A module can backup as many directories as it requires, all specified using the <kbd>$dirs</kbd> array variable.</p>
+
+		<p>The example below uses the special <kbd>?</kbd> token as the place holder for the course ID. When the course is backed-up, the question mark will be replaced with the correct course ID. The key to the array is the unique name of the directory to be used inside the backup archive file. The same information to create the backup is also used to restore it, so no additional details are required.</p>
+<pre>
+$dirs = array();
+$dirs['example_maker/'] = AT_CONTENT_DIR . 'example_maker/?/';
+</pre>
+
+<a name="database"></a>
+	<h3>Database Tables</h3>
+		<p>There are two parts to backing-up and restoring a module's database tables. First, the <acronym title="Structured Query Language">SQL</acronym> queries must be specified using the <kbd>$sql</kbd> array variable and then the restore functions must convert the rows so that they can be inserted into the database tables.</p>
+
+		<p>The example below uses the special <kbd>?</kbd> token as the place holder for the course ID. When the course is backed-up the question-mark will be replaced with the correct course ID. The key to the array is the unique name of the <acronym title="Comma Separated Values">CSV</acronym> file to save in the backup archive, without the extension. The <acronym title="Structured Query Language">SQL</acronym> query itself must only select the fields that will be backed up. If there are foreign key constraints to preserve then the key will have to be retrieved as well so that it can be used when restoring the tables.</p>
+
+<pre>
+$sql = array();
+$sql['example']  = 'SELECT title FROM '.TABLE_PREFIX.'example WHERE course_id=?';
+</pre>
+
+		<p>For each key in the <kbd>$sql</kbd> array there must be a function with the same name, but suffixed with <kbd>_convert</kbd>. The <kbd><em>tbl_name</em>_convert()</kbd> function must return the newly transformed row with respect to the version of ATutor that was used to generate the <acronym title="Comma Separated Values">CSV</acronym> file. The function accepts the following arguments:</p>
+
+		<dl>
+			<dt><kbd>$row</kbd></dt>
+			<dd>An array which represents a single row in the <acronym title="Comma Separated Values">CSV</acronym> file.</dd>
+
+			<dt><kbd>$course_id</kbd></dt>
+			<dd>The course ID which this content should be associated with.</dd>
+			
+			<dt><kbd>$table_id_map</kbd></dt>
+			<dd>An associative array representing previously restored tables and their new keys. Used to preserve foreign key constraints.</dd>
+
+			<dt><kbd>$version</kbd></dt>
+			<dd>The version of ATutor that was used to generate this file.</dd>
+		</dl>
+
+<pre>
+function example_convert($row, $course_id, $table_id_map, $version) {
+    $new_row = array();
+    $new_row[0]  = 0; // auto-increment field
+    $new_row[1]  = $course_id;
+    $new_row[2]  = $row[1]; // the title
+    if (version_compare($version, '1.5.2', '&lt;')) {
+        // this field did not exist prior to 1.5.2
+        $new_row[3] = '';
+    } else {
+        $new_row[3] = $row[2];
+    }
+
+    return $new_row;
+}
+</pre>
+<a name="cron"></a>
+	<h2>Running Cron/Scheduling</h2>
+<p>The <kbd>module_cron.php</kbd> file can be used to run module related functions at specified intervals. The following example doesn't do much of anything..., but you get the idea.  If cron has been enabled in ATutor, all the module_cron.php files from each module are run at the interval specified when the Cron is setup. See the Cron Setup sections in the Administrator Handbook, and in ATutor in the Administrator's System Preferences.</p>
+
+<pre>
+&lt;?php
+/*******
+ * this function named [module_name]_cron is run by the global cron script at the module's specified
+ * interval.
+ */
+
+function hello_world_cron() {
+	global $db;
+	debug('yay i am running!');
+}
+
+?>
+</pre>
+</body>
+</html>

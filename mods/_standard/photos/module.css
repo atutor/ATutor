@@ -1,0 +1,425 @@
+div.topbar{
+	float:left;
+	width: 95%;
+}
+div.paginator{
+	float: right;
+	margin: 0px;
+}
+.paginator ul li{
+	list-style: none;
+}
+.paginator li{
+	padding-right: 0.5em;
+	float: left;
+}
+
+div.summary{
+	float: left;
+	margin-top: 0.5em;
+	width:70%;
+}
+
+div.album_panel{
+	float: left;
+	background: #F7F7F7;
+	border: 1px solid #D2D2D2;	
+	width: 96%;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
+}
+div.album_panel div.photo_wrapper {
+	/* This class is to fix the problem where the images shift
+	 * to the right when there is a border upon selection 
+	 */
+	height: 150px;
+	float: left;
+}
+div.album_panel .photo_frame{
+	float: left;
+	margin: 0.2em;
+	min-height: 140px;
+	min-width: 140px;
+	text-align: center;
+}
+div.album_panel .photo_frame a:focus, div.album_panel .photo_frame a:hover{
+	cursor: pointer;
+	float:left;
+	min-width: 140px;
+	min-height: 140px;
+	background: #FCE6C9;
+}
+div.album_panel .photo_frame img{
+	background: #FFFFFF;
+	border: 1px solid #D2D2D2;
+	padding: 0.2em;
+}
+div.album_panel .album_description{
+	margin: 0.5em;
+	width: 95%;
+	float: left;
+}
+
+div.search_bar {
+	/* background-image: url('images/search_bg.png');
+	background-repeat: no-repeat; */
+	background-color:#ffffff;
+	border:thin solid #cccccc;
+	margin-left: 0.5em;
+	margin-top: 0.5em;
+	height: 27px;
+	width: 180px;
+	float: left;
+	border-radius:.5em;
+	-moz-border-radius:.8em .8em .8em .8em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
+}
+div.search_bar .s{
+	float: left;
+	border: 0px;
+	margin-top: 0.3em;
+	margin-left: 0.5em;
+	width: 148px;
+}
+div.search_bar .s_img{
+	float: right;
+	border: 0px;
+	margin-top: 0.375em;	
+	margin-right: 0.4em;
+}
+
+div.album {
+	background: #FFFFFF;
+	padding:1em;
+	border: 1px solid #D2D2D2;	
+	width: 95%;
+	margin: 0.5em;
+	float: left;
+	border-radius:.5em .5em .5em .5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
+}
+div.album .image{
+	float: left;
+	margin: 0.5em;
+	min-width: 140px;
+}
+div.album img{
+	border-width: 0px;
+}
+div.album .image img.no-image {
+	float: left;
+	width: 130px;
+	height: 97px;
+	background-color: #EFEFEF;
+}
+div.album .info{
+	float: left;
+	width: 70%;
+}
+div.album .info span{
+	float: left;
+	color: #666666;
+}
+div.album .info p{
+	font-size: 0.85em;
+	margin: 0;
+}
+div.album .search_photo_frame{
+	float: left;
+	margin: 0.2em;
+	min-height: 160px;
+	max-height: 160px;
+	max-width: 140px;
+	text-align: center;
+	border: 1px solid #d3d3d3;
+	overflow: hidden;
+}
+div.album .search_slider{
+	float: left;
+	overflow: hidden;
+	position: relative;	/* ie7 */
+}
+div.album .search_slider_left{
+	float: left;
+	width: 10%;
+}
+div.album .search_slider_right{
+	float: right;
+	text-align: right;
+	width: 10%;
+}
+div.album .search_slider ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 99999px;
+	position: relative;
+}
+div.album .search_slider ul li{
+	float: left;
+}
+div.album .search_slider_a{
+	width: 80%;
+}
+div.album .search_slider_p{
+	width: 730px;	/* 146 per frame, 5 frame per row */
+}
+div.album .search_slider_p ul li{
+/*	height: 576px;	/* 144 per frame, 4 row */
+	width: 730px;	/* 146 per frame, 5 frame per row */
+}
+div.album .search_paginator {
+	width: 100%;
+}
+
+div.add_photo{
+	float: left;
+	background: #F7F7F7;
+	border: 1px solid #D2D2D2;	
+	width: 96%;
+	border-radius:.5em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	margin-bottom:.2em;
+}
+div.add_photo ul{
+	margin: 0px;
+	padding: 0px;
+}
+div.add_photo .toggle_uploader{
+	width: 95%;
+	margin: 0.5em;
+}
+div.add_photo div#ajax_uploader{
+	display: none;
+	margin-top: 0.5em;
+}
+div.add_photo .files .tn {
+	max-height: 30px;
+}
+div.add_photo img{
+	border: 0;
+}
+div.add_photo ul li{
+	float: left;
+	padding: 0.2em;
+	list-style: none;
+	width: 100%;
+	height: 100%;
+	border-bottom: 1px solid #ddd;
+/*	display: inline; */
+}
+div.add_photo p.memory_usage {
+	float: right;
+	font-size: 0.9em;
+	color: #5B5B5B;
+}
+
+div.add_profile_photo{
+	float: left;
+	background: #F7F7F7;
+	border: 1px solid #D2D2D2;	
+	width: 96%;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
+	margin-bottom:.2em;
+
+}
+div.add_profile_photo .profile_photo{    
+	float: left;    
+	padding: 0.5em;
+
+}
+div.add_profile_photo .uploader{    
+	float: left;    
+	width: 50%;
+	padding: 0.5em;
+	border-bottom: 1px solid #ddd;
+}	
+
+div.photo_panel{
+	background: #F7F7F7;
+	float: left;
+	border: 1px solid #D2D2D2;
+	text-align: center;
+	width: 95%;
+	padding: 0.5em;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+}
+div.photo_panel img{
+	background: #FFFFFF;
+	border: 1px solid #D2D2D2;
+	padding: 0.2em;
+}
+div.photo_panel div.ordering{
+	float:left;
+}
+div.photo_panel div.paginator{
+	float:right;
+}
+div.photo_panel .flc-inlineEditable{
+	width: 604px;
+	margin: 0 auto;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+}
+div.comment_panel{
+	background: #FFFFFF;
+	float: left;
+	border: 1px solid #D2D2D2;
+	width: 95%;
+	padding:.5em;
+	border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+		-moz-box-shadow:.2em .2em .1em #999999;
+    box-shadow: .2em .2em .1em #999999;
+	margin-top:.2em;
+}
+div.comment_panel .comment_feeds{
+	float: left;
+	width: 50%;
+}
+div.comment_panel .photo_actions{
+	margin: 0.5em;
+	max-width: 49%;
+	background: #F7F7F7;
+	float:right;
+	padding:1em;
+	border:thin solid #cccccc;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+.row textarea#comment_template, textarea#comment_template active{
+	background-color:#eeeeee;
+	border:thin solid #eeeeee;
+	border:thin solid #cccccc;
+	padding:.2em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+.row textarea#comment{
+	background-color:#ffffff;
+	border:thin solid #eeeeee;
+	border:thin solid #cccccc;
+	padding:.2em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+div.comment_panel textarea{
+	width:100%;
+}
+
+div.comment_box{
+	float:left;
+	width:100%;
+	margin: 0.5em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
+	background: #F7F7F7;
+}
+div.comment_box .comment_actions{
+	float: left;
+	margin-top: 1em;
+	font-size: 0.8em; 
+	color: #666666;
+}
+
+div.edit_photo_frame{
+	width: 95%;	
+	float: left;
+	padding: 0.2em;
+	background: #F7F7F7;
+	border:thin solid #cccccc;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+}
+div.edit_photo_box{	
+	float: left;
+	border: 1px solid #D2D2D2;
+	background: white;
+	margin: 0.2em;
+	margin-bottom: 0.8em;
+	padding: 0.8em;
+	width: 94%;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+div.edit_photo_box .info{
+	float: left;
+	width: 60%;
+}
+
+.info textarea{
+	background-color: #eeeeee;
+	border:thin solid #cccccc;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+	margin-top:.2em;
+}
+div.edit_photo_box .info textarea.alt_text{
+	height: 2.5em;
+}
+div.edit_photo_box .info textarea{
+	width: 100%;
+}
+div.edit_photo_box .action{
+	float: right;
+	background: #F7F7F7;
+	min-width: 140px;
+	padding:.2em;
+	border:thin solid #cccccc;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+
+
+/* FLUID Image Reorderer */
+.fl-imageReorderer-item {
+}
+.fl-reorderer-movable-hover a{
+	cursor: pointer;
+	background-color: #ECEECC;
+}
+.fl-reorderer-movable-selected a{
+	border: 2px solid red;
+}
+.fl-reorderer-movable-dragging a{
+	background-color: #ECEECC;
+}
+.fl-reorderer-dropMarker {
+	border: 2px solid red;
+	min-height: 100px;
+	float: left;
+}
+.fl-reorderer-avatar {
+	opacity: 0.6;
+	filter:alpha(opacity=60);
+}
+
+
+/* FLUID Simple Inline Editor */
+.fl-inlineEdit-invitation {
+   background-color: #FFECB3 !important;
+   border: 1px solid #CCC !important;
+}
+.fl-inlineEdit-focus {
+    border: 2px solid #777777;
+}
+
+
+.pa_tool_link{
+
+text-decoration:none;
+}
+
+.pa_tool_image{
+vertical-align:middle;
+margin-right:.5em;
+}

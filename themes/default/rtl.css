@@ -1,0 +1,99 @@
+/* for right to left languages */
+
+html, body {
+	direction: rtl;
+
+}
+
+.img-size-tree {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.45em;
+	width:1.45em;
+	float: right;
+}
+
+div.box {
+	line-height:150%;
+	font-style:normal;
+}
+
+div.menuedit{
+	float:left;
+}
+
+
+.del-content-icon{
+	border:0;
+}
+
+
+#editable_table a{
+	margin-right:.5em;
+
+}
+
+#topnavlist{
+	float:left;
+
+}
+.logoutbar{
+	white-space:nowrap;
+	text-align:left;
+	border-top:1px solid #eeeeee;
+}
+
+.fl-force-right{
+	float:left;
+}
+
+.buttonbox{
+	float:left;
+
+}
+div#breadcrumbs{
+
+	float:right;
+}
+ul.current_list li{
+	width:90%;
+}
+
+.current_box{
+	width:34%;
+}
+
+.my_course_container{
+	width:55%;
+}
+
+#content-tool-links{
+	float:right;
+}
+.details-text{
+	font-style:inherit;
+}
+
+.admin_container{
+	float:left;
+	white-space:normal;
+}
+.page-title{
+
+	margin-top:1em;
+}
+
+.top-tool{
+	width:95%;
+}
+.child-top-tool li{
+	white-space:normal;
+	overflow:visible;
+}
+
+#contentcolumn {
+white-space:normal;
+}
+table.etabbed-table	{
+	padding-right:5em;
+}

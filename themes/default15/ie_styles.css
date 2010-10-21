@@ -1,0 +1,47 @@
+/* IE specific styles */
+
+/*
+div#topnavlistcontainer {
+height:1.3em;
+}
+
+ul#topnavlist {
+	zoom:100%;
+	margin:0px;
+
+}
+
+ul#topnavlist li {
+	zoom:100%;
+	padding-left:0.3em;
+	padding-bottom:0.3em;
+	margin:0px;
+
+}
+ul#topnavlist li a {
+*/
+}
+ul#topnavlist li {
+padding-bottom:-.9em;
+}
+label {
+	zoom:100%;
+	margin:0px;
+}
+
+table.data tfoot input {
+	min-width:0px;
+}
+.outside_box{
+	height:12em;
+	padding:1em;
+
+}
+.details_or{
+	height:10em;
+}
+.buttons input[type=submit]{
+padding:.3em;
+width:auto;
+overflow:visible;
+}

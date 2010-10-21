@@ -1,0 +1,109 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
+
+<head>
+	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
+	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
+	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
+	<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0," />
+	<meta name="apple-mobile-web-app-capable" content="yes"/>
+	<base href="<?php echo $this->content_base_href; ?>" />
+	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
+	<!-- mobile FSS -->
+	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-layout.css" type="text/css"/>
+	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-theme-iphone.css" type="text/css"/>	
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css"/>
+
+	
+	<!--[if IE]>
+	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
+	<![endif]-->
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+		
+<?php echo $this->rtl_css; ?>
+<?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
+	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
+<?php endif; ?>
+	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+	<script src="<?php echo $this->base_path; ?>jscripts/ATutorCourse.js" type="text/javascript"></script>   
+	<script src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iscroll.js" type="text/javascript"></script>
+	<script language="javascript" type="text/javascript">
+	//<!--
+	jQuery.noConflict();
+	//-->
+	</script>
+<script type="text/javascript">
+var myScroll;
+
+function setHeight() {
+	var headerH = document.getElementById('header').offsetHeight;
+	var footerH = document.getElementById('footer').offsetHeight;
+	var wrapperH = window.innerHeight - headerH - footerH;
+	document.getElementById('wrapper').style.height = wrapperH + 'px';
+}
+
+function loaded() {
+	setHeight();
+	myScroll = new iScroll('scroller', { checkDOMChanges: true, fadeScrollbar: false, vScrollbar: true, bounce: false, desktopCompatibility: true });
+}
+
+window.addEventListener('onorientationchange' in window ? 'orientationchange' : 'resize', setHeight, false); //destroy on horizontal? 
+document.addEventListener('touchmove', function(e){ e.preventDefault(); }, false);
+document.addEventListener('DOMContentLoaded', loaded, false);
+</script>
+
+
+<?php echo $this->custom_css; ?>
+</head>
+
+<body>
+<div id="header"><a href="http://cubiq.org/iscroll">iScroll</a></div>
+
+<div id="wrapper">
+	<div id="scroller">
+		<ul id="thelist">
+			<li>Pretty content row 1</li>
+			<li>Pretty content row 2</li>
+
+			<li>Pretty content row 3</li>
+			<li>Pretty content row 4</li>
+			<li>Pretty content row 5</li>
+			<li>Pretty content row 1</li>
+			<li>Pretty content row 2</li>
+
+			<li>Pretty content row 3</li>
+			<li>Pretty content row 4</li>
+			<li>Pretty content row 5</li>
+			<li>Pretty content row 1</li>
+			<li>Pretty content row 2</li>
+
+			<li>Pretty content row 3</li>
+			<li>Pretty content row 4</li>
+			<li>Pretty content row 5</li>
+			<li>Pretty content row 1</li>
+			<li>Pretty content row 2</li>
+
+			<li>Pretty content row 3</li>
+			<li>Pretty content row 4</li>
+			<li>Pretty content row 5</li>
+			<li>Pretty content row 1</li>
+			<li>Pretty content row 2</li>
+
+			<li>Pretty content row 3</li>
+			<li>Pretty content row 4</li>
+			<li>Pretty content row 5</li>
+
+		</ul>
+	</div>
+</div>
+
+<div id="footer"></div>
+<div id="test"><div></div></div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+/* IE specific styles */
+
+ul#topnavlist {
+	zoom:100%;
+	margin:0px;
+}
+
+ul#topnavlist li {
+	zoom:100%;
+	padding:0.3em;
+	padding-bottom:0.3em;
+	margin:0px;
+	margin-bottom:-3px;
+}
+
+label {
+	zoom:100%;
+	margin:0px;
+}
+
+table.data tfoot input {
+	min-width:0px;
+}
+
+#topnavlistcontainer {
+	margin-bottom:-1px;
+}
+
+div#breadcrumbs {
+    /* The path bar, including breadcrumbs and add to favorites */
+    background-color:#efefef;
+}
+.side-menu {
+	background-color:#efefef;
+	padding:0px 5px 0px 5px;
+}
+#header{
+	background-color: #e1ecfe;
+	width:100%;
+}
+
+div#top-links {
+	position: relative;
+	padding-right: 5px;
+	line-height: 170%;
+	margin-top: 3px;
+}
+
+div#topnavlistcontainer {
+    background-color: #e1ecfe;
+}
+.outside_box{
+	height:8.8em;
+}
+ul.current_list{
+float:right;
+width:99%;
+}
