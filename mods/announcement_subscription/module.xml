@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<module version="0.1"> 
+    <name lang="en">Course Announcement Subscription</name> 
+    <description lang="en">This module, when enabled, allows users to subscribe to the newsfeed from course announcements, much like they subscribe to forum threads.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Gøran Berntsen</name> 
+            <email>gorzan@gmail.com</email> 
+        </maintainer>
+    </maintainers> 
+    <url></url> 
+    <license></license> 
+	<release> 
+        <version>1.2</version> 
+        <date>2010-10-25</date> 
+        <state>Stable</state> 
+        <notes>Please note that this module makes changes to some of the ATutor core files on installation. 
+        If you want a notification email to be sent to the user upon subscription/unsubscription, uncomment the appropriate lines in subscribe.php</notes> 
+    </release> 
+</module>
