@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>BSD</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2005-08-22</date> 
+        <version>0.3</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
         <notes>Users must setup a google talk account before they can use this module.</notes> 
     </release> 
