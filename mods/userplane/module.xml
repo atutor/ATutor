@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>BSD</license> 
 	<release> 
-        <version>0.2</version> 
-        <date>2008-11-07</date> 
+        <version>0.4</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
 	<notes>You will need to create a Userplane account at http://www.userplane.com/buy/index.cfm, then through the administrator's UserPlane manager, enter that ID into the UserPlane ID field.  </notes> 
     </release> 
