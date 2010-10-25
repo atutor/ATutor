@@ -11,12 +11,12 @@
     <url>http://atutor.ca</url> 
     <license>GPL</license> 
 	<release> 
-        <version>0.2</version> 
+        <version>0.3</version> 
 		<privileges>
 			<instructor_privilege></instructor_privilege>
 			<admin_privilege></admin_privilege> 
 		</privileges>
-        <date>2007-02-12</date> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
         <notes>A MERLOT key is required to activate this module. See the README included with the module source code for details.</notes> 
     </release> 
