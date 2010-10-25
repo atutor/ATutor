@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>GPL</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2005-08-22</date> 
+        <version>0.3</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
 	<notes>After installating the module, provide the URL to your ePresence server. See the ePresence Web site for further details, downloads, installation instructions, and other documentation. ( http://epresence.tv/ )</notes> 
     </release> 
