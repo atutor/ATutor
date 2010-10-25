@@ -1,0 +1,32 @@
+/* the certify stats */  
+
+.certify_bar-border {
+	width: 150px;
+	height: 18px;
+	background: #fff;
+	border: 1px solid #e0e0e0;
+	margin: 1px;
+	padding: 0;
+	float: left;
+}
+.certify_bar-fill {
+	width: 150px;
+	margin: 0px;
+	padding: 0;
+	background: #fff;
+	float: left;
+}
+.certify_bar-bar {
+	height: 16px;
+	margin: 1px;
+	padding: 0;
+	text-align: center;
+	background: #BACFE5;
+}
+
+span.certify_percent {
+	float: left;
+	margin-right: 5px;
+}
+
+

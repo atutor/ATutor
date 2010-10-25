@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Certify</name> 
+    <description lang="en">With Certify an instructor can create containers which one or more tests can be placed into. The module will keep track of a students progress on the test(s) and when the student have reached the pass score / pass percent of a given test, or collection of tests, the student will be able to download a pdf certificate.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Norwegian Centre for Telemedicine</name> 
+            <email>helsekompetanse@telemed.no</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.no</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.2</version> 
+        <date>2009-03-26</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>

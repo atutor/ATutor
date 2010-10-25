@@ -1,0 +1,18 @@
+CERTIFY
+
+Certify will let you add a certificate to a course. The certificate can contain one or more tests, and when a user has reached the pass score / pass percent for the test(s) bundled in the certificate, the user is allowed to download a pdf certificate.
+
+Before the user has reaced the pass score he or she will see a progress bar under the "Certificates" tab, showing how far he or she is on the way to obtaining the certificate. This progress bar will also take into account score from tests that the student haven't passed yet. This is a design decision to allow us to display better progress report for certificates with only one or two tests.
+
+An instructor (or privileged user) can manage certificates, which means adding them, adding tests to them, and see student status for a given certificate.
+
+That is pretty much it! We are using it in production today, and you can have a look at it in action if you register for the Medical Peace Work course
+
+We have found it to be stable for production use, but there are still some bugs, minor issues and areas for improvement left in it, mainly for admins of it:
+
+    * You can upload a pdf template for each certificate, but there is no way to see which template you are using just yet, and
+    * If you upload a new template you will have to manually delete the old one form the server, as well as any cached files (named typically cert*.pdf (where * is a wildcard). The files are found within the ATutor content folder, in the "certify" folder.
+    * You will need pdftk installed at your (Linux) server! A server admin must typically do this.
+    * And you must manually set the path to pdftk in line 100 in download_certificate.php. Here's the line: $exec = '/usr/bin/pdftk '.$template.' fill_form '.$filename.' output '.$filebase.'pdf flatten';, as you can see here our path to pdftk is "/usr/bin/pdftk ".
+    * There are some tweaks that should be done in the GUI as a radio button isn't selected if you click the table row it belongs to. You will have to hit the actual button!
+    * And probably some more too 
