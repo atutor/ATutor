@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>GNU</license> 
 	<release> 
-        <version>0.3</version> 
-        <date>2009-02-05</date> 
+        <version>0.4</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
 	<notes>Requires Openmeetings server(Red5) be installed on the user's system.  Details can be found at http://code.google.com/p/openmeetings/</notes> 
     </release> 
