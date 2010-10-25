@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>GPL</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2006-09-29</date> 
+        <version>0.2</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
 	<notes>A Cmap server must be running and functioning properly to make use of this module once installed. There is also a client CmapTools that can be installed on the users system so they to can interact with the server for collaborative concept map authoring. See the Cmap site for full details (http://cmap.ihmc.us/) Once the module is installed, go to the Cmap admin tool created in ATutor, and enter the URL to your Cmap server.</notes> 
     </release> 
