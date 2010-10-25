@@ -11,8 +11,8 @@
     <url>http://www.mahara.org</url> 
     <license>BSD</license> 
 	<release> 
-        <version>0.2</version> 
-        <date>2008-06-11</date> 
+        <version>0.4</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
         <notes>This module requires Mahara to be installed first on the same server as ATutor.  Refer to the README file included with the Mahara module source code for more details.</notes> 
     </release> 
