@@ -10,8 +10,8 @@
     </maintainers>
     <license>GPL</license>
     <release>
-        <version>0.4</version>
-        <date>2009-03-20</date>
+        <version>0.5</version>
+        <date>2010-10-25</date>
         <state>stable</state>
         <notes>This module needs an Adobe Connect Server, for commercial support contact Adobe</notes>
     </release>
