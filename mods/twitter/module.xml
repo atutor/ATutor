@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Twitter Search</name> 
+    <description lang="en">A Quick twitter search module.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Shree Kant Bohra</name> 
+            <email>skbohra123@gmail.com</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://www.geekybuddha.org</url> 
+    <license>BSD</license> 
+    <release> 
+        <version>0.1</version> 
+        <date>2010-10-25</date> 
+        <state>stable</state> 
+    </release> 
+</module>
+
