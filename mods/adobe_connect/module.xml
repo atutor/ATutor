@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module version="0.4">
+    <name lang="en">Adobe Connect Integration</name>
+    <description lang="en">This module allows ATutor to connect with an Adobe Connect Server with a Single Sign-On using Adobe Connect API and maintaining user roles.</description>
+    <maintainers>
+        <maintainer>
+            <name>David Monllao</name>
+            <email>david.monllao@urv.cat</email>
+        </maintainer>
+    </maintainers>
+    <license>GPL</license>
+    <release>
+        <version>0.4</version>
+        <date>2009-03-20</date>
+        <state>stable</state>
+        <notes>This module needs an Adobe Connect Server, for commercial support contact Adobe</notes>
+    </release>
+</module>

@@ -1,0 +1,43 @@
+# sql file for adobe connect module
+
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect', 'Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_title', 'Adobe Connect Integration', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_text', 'To access the course Adobe Connect room click on the link below', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_host', 'Adobe Connect Host', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_port', 'Port', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_adminuser', 'Admin username', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_adminpass', 'Admin password', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_folderid', 'Shared meetings folder Identifier', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_module', 'adobe_connect_access', 'Access Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_adobe_connect_saved', 'Changes saved', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_fillall', 'You should fill all config params', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_wrong_member_sess', 'Wrong session member', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_no_access', 'This course hasn\'t Adobe Connect access', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_not_connect', 'Can\'t connect to Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_not_create_room', 'Can\'t create Adobe Connect room', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_not_assign', 'Can\'t assign you to the course room', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_not_roomid', 'Can\'t get Adobe Connect room id', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_not_create_user', 'Can\'t create Adobe Connect user', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_not_user_session', 'Can\'t start an user session', NOW(), '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_adobe_connect_not_roomurl', 'Can\'t get Adobe Connect room URL', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect', 'Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_title', 'Adobe Connect Integration', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_text', 'Para acceder a la sala de Adobe Connect de este curs clica debajo', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_host', 'Host del servidor de Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_port', 'Puerto', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_adminuser', 'Usuario administrador de Adobe Connect Server', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_adminpass', 'Password del usuario administrador', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_folderid', 'Identificador de la carpeta donde crear las salas', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_module', 'adobe_connect_access', 'Acceder a Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_FEEDBACK_adobe_connect_saved', 'Cambios guardados', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_fillall', 'Rellena todos los campos', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_wrong_member_sess', 'Sesión de usuario incorrecta', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_no_access', 'Este curso no tiene acceso a Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_not_connect', 'No se puede conectar al servidor de Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_not_create_room', 'No se puede crear la sala en Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_not_assign', 'No se te puede assignar a la sala de Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_not_roomid', 'No se puede obtener el id de la sala de Adobe Connect de este curso', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_not_create_user', 'No se puede crear tu usuario en Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_not_user_session', 'No se puede iniciar sesión en Adobe Connect', NOW(), '');
+INSERT INTO `language_text` VALUES ('es-es', '_msgs', 'AT_ERROR_adobe_connect_not_roomurl', 'No se puede obtener la URL de la sala', NOW(), '');
+
