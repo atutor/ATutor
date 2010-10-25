@@ -32,8 +32,8 @@
     <url>http://atutor.ca</url> 
     <license>BSD</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2008-01-21</date> 
+        <version>0.2</version> 
+        <date>2010-10-25</date> 
         <state>Beta</state> 
         <notes>This module requires PHP ICONV module to be installed and enabled.</notes> 
     </release> 
