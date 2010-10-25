@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>GPL/ATutor</license> 
 	<release> 
-        <version>1.0</version> 
-        <date>2010-05-18</date> 
+        <version>0.2</version> 
+        <date>2010-10-25</date> 
 	<state>Stable</state> 
 	<notes>See the module's README file for installation and usage instructions.</notes> 
     </release> 
