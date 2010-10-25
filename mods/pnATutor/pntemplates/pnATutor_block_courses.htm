@@ -1,0 +1,26 @@
+<!--[*  $Id: pnATutor_block_courses.htm,v 1.4 2004/02/05 23:43:19 markwest Exp $  *]-->
+<!--[if $loadjava eq 'y']-->
+<div id=overDiv style=position:absolute; visibility:hidden; z-index:1000;></div><script language=JavaScript src="modules/<!--[$modname]-->/pnincludes/overlib_mini.js"><!-- overLIB (c) Erik Bosrup --></script>
+<!--[else]-->
+<div style="text-align:center;">
+<!--[/if]-->
+<!--[section name="items" loop=$items]-->
+<!--[if $usejava eq 'y']-->
+<A HREF="index.php?module=pnATutor&func=view&id=<!--[$items[items].id]-->" onmouseover="return overlib('<!--[$items[items].summary]-->');" onmouseout="return nd()";"><!--[$items[items].title]--></A>
+<!--[else]-->
+<A HREF="index.php?module=pnATutor&func=view&id=<!--[$items[items].id]-->"><!--[$items[items].title]--></A>
+<!--[/if]-->
+<br>
+<!--[/section]-->
+<br>
+<A HREF="<!--[$url1]-->"><!--[$urllink]--></A>
+</div>
+
+
+
+
+
+
+
+
+
