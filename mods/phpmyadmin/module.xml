@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>GPL</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2005-08-22</date> 
+        <version>0.2</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
         <notes>phpMyAdmin must be installed in addition to the module installation. Once the module is installed, you will be asked to provide the URL of your phpMyAdmin installation. The default authentication method in phpMyAdmin is set to http. You can change this method in the config.inc.php file within phpMyAdmin. See instructions in the phpMyAdmin configuration file for other potential editable options.</notes> 
     </release> 
