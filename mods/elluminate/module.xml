@@ -11,9 +11,9 @@
     <url>http://atutor.ca</url> 
     <license>BSD</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2006-07-02</date> 
+        <version>0.3</version> 
+        <date>2010-10-25</date> 
         <state>stable</state> 
-        <notes>Requires Sun Java WebStart on the client's computer. Elluminate must be installed before installing this module. Once the module is installed and enabled, open the Administrator's Elluminate screen to enter the URL, and optional guest password. See the readme file included with the module for further details.</notes> 
+        <notes>Requires Sun Java WebStart on the client's computer. Elluminate must be installed before installing this module. Once the module is installed and enabled, open the Administrator's Elluminate screen to enter the URL, and optional guest password. See the readme file included with the module for further details. If you are using the free 3 room version (vRoom) add the line "header( 'Location: your url here to elluminate' ) ;" (changing the words to a URL of course) somewhere near the top of the index.php file.</notes> 
     </release> 
 </module>
