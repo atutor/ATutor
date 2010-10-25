@@ -11,8 +11,8 @@
     <url>http://atutor.ca</url> 
     <license>BSD</license> 
 	<release> 
-        <version>0.2</version> 
-        <date>2007-05-04</date> 
+        <version>1.0</version> 
+        <date>2010-10-25</date> 
         <state>Beta</state> 
         <notes>See the readme file included with the source code for details about setting up either a Paypal or MiraPay merchant account.</notes> 
     </release> 
