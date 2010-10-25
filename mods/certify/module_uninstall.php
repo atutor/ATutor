@@ -18,7 +18,7 @@ $directory = AT_CONTENT_DIR .'certify';
 
 // check if the directory exists
 if (is_dir($directory)) {
-	require(AT_INCLUDE_PATH.'lib/filemanager.inc.php');
+	require(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 	if (!clr_dir($directory))
 		$msg->addError(array('MODULE_UNINSTALL', '<li>'.$directory.' can not be removed. Please manually remove it.</li>'));
@@ -32,7 +32,7 @@ if (is_dir($directory)) {
 if (!$msg->containsErrors() && file_exists(dirname(__FILE__) . '/module.sql')) {
 	// deal with the SQL file:
 	require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
-	$sqlUtility =& new SqlUtility();
+	$sqlUtility = new SqlUtility();
 
 	/*
 	 * the SQL file could be stored anywhere, and named anything, "module.sql" is simply
