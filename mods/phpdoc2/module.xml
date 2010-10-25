@@ -11,8 +11,8 @@
     <url>http://www.phpdoc.org/</url> 
     <license>LGPL</license> 
 	<release> 
-        <version>0.1</version> 
-        <date>2008-01-28</date> 
+        <version>0.2</version> 
+        <date>2010-10-25</date> 
         <state>testing</state> 
         <notes>In php.ini , you may need to adjust the values of max_execution_time and memory_limit.</notes> 
     </release> 
