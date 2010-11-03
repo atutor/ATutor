@@ -5,9 +5,13 @@
 	$rand = md5(rand(0, time())); 
 	if ($this->rand_key != ''){
 		$last_search = $_POST['search_friends_'.$this->rand_key];
+	} elseif(isset($_GET['search_friends'])) {
+		$last_search = htmlentities_utf8($_GET['search_friends']);
 	} else {
-		$last_search = $_POST['search_friends_'.$rand];	
+		$last_search = html_entity_decode($_POST['search_friends_'.$rand]);
 	}
+	//take out double quotes until there is a way to escape XSS from the ajax script.
+	$last_search = preg_replace('/\"/', '', $last_search);
 ?>
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
 
