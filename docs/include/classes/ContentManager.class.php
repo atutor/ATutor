@@ -836,10 +836,12 @@ function initContentMenu() {
 			         ORDER BY ordering 
 			         LIMIT 1";
 			$result = mysql_query($sql, $this->db);
-			$row = mysql_fetch_assoc($result);
 			
 			// print out javascript to expand the first content folder
-			echo $this->get_js_expand_folder($row['content_id']);
+			if (mysql_num_rows($result)) {
+				$row = mysql_fetch_assoc($result);
+				echo $this->get_js_expand_folder($row['content_id']);
+			}
 		}
 		echo '}'; // end of javascript function initContentMenu()
 	}
