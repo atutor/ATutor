@@ -1,6 +1,7 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
+@set_time_limit(0);
 
 /* atutor default configuration options */
 /* used on: ustep1.php, step3.php, step5.php */
