@@ -21,7 +21,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: language.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	require_once(AT_INCLUDE_PATH . '../mods/_core/languages/classes/Language/LanguageEditor.class.php'); 
+	require_once(AT_INCLUDE_PATH . '../mods/_core/languages/classes/LanguageEditor.class.php'); 
 	
 	if ($languageManager->exists($_POST['code'], $_POST['locale'])) {
 		$msg->addError('LANG_EXISTS');
