@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Proxy Tools</name> 
+    <description lang="en">This is a module to support the externally hosted tools using the IMS Basic LTI specification to launch those tools.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Charles Severance</name> 
+            <email>csev@umich.edu</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.3</version> 
+        <date>2009-07-02</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>

@@ -1,0 +1,131 @@
+Index: docs/themes/default/content.tmpl.php
+===================================================================
+--- docs/themes/default/content.tmpl.php	(revision 10276)
++++ docs/themes/default/content.tmpl.php	(working copy)
+@@ -95,8 +95,20 @@
+ </div>
+ <?php endif; ?>
+ 
++<?php
++if (!empty($this->proxy_ids)): ?>
++<div id="content-proxy" class="input-form">
++        <strong><?php echo _AT('proxy') . ':' ; ?></strong>
++                <?php
++                foreach ($this->proxy_ids as $id ) {
++                    echo '<iframe src="'.AT_BASE_HREF.'mods/basiclti/launch/launch.php?cid='.$id.'" height="1200" width="100%"></iframe>';
++                }
++                ?>
++</div>
++<?php endif; ?>
+ 
++
+ <div id="content-info">
+ 	<?php echo $this->content_info; ?>
+ 
+-</div>
+\ No newline at end of file
++</div>
+Index: docs/content.php
+===================================================================
+--- docs/content.php	(revision 10276)
++++ docs/content.php	(working copy)
+@@ -135,6 +135,16 @@
+ 	$content_forum_ids[] = $content_forum_row;
+ }
+ 
++// For Proxy Tools
++$content_proxy_ids = array();
++$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
++		WHERE content_id=".$cid;
++$contentresult = mysql_query($sql, $db);
++$row = mysql_fetch_assoc($contentresult);
++if ( $row ) {
++    $content_proxy_ids[] = $cid;
++}
++
+ // use any styles that were part of the imported document
+ // $_custom_css = $_base_href.'headstuff.php?cid='.$cid.SEP.'path='.urlEncode($_base_href.$course_base_href.$content_base_href);
+ 
+@@ -167,7 +177,7 @@
+ 
+ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
+ 	//if it has test and forum associated with it, still display it even if the content is empty
+-	if ($content_row['text'] == '' && (empty($content_test_ids) && empty($content_forum_ids))){
++	if ($content_row['text'] == '' && (empty($content_proxy_ids) && empty($content_test_ids) && empty($content_forum_ids))){
+ 		$msg->addInfo('NO_PAGE_CONTENT');
+ 		$savant->assign('body', '');
+ 	} else {
+@@ -225,6 +235,8 @@
+ 				$savant->assign('test_message', '');
+ 				$savant->assign('test_ids', array());
+ 			}
++
++			$savant->assign('proxy_ids', $content_proxy_ids);
+ 	
+ 	                /*TODO***************BOLOGNA***************REMOVE ME**********/
+ 	                //assign forum pages if there are forums associated with this content page
+@@ -253,4 +265,4 @@
+ $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+ 
+ require (AT_INCLUDE_PATH.'footer.inc.php');
+-?>
+\ No newline at end of file
++?>
+Index: docs/mods/_core/editor/editor_tab_functions.inc.php
+===================================================================
+--- docs/mods/_core/editor/editor_tab_functions.inc.php	(revision 10276)
++++ docs/mods/_core/editor/editor_tab_functions.inc.php	(working copy)
+@@ -35,6 +35,7 @@
+ 	$tabs[3] = array('alternative_content', 'alternatives.inc.php',  'l');	
+ 	//Harris: Extended test functionality into content export
+ 	$tabs[4] = array('tests',				'tests.inc.php',		 't');
++	$tabs[5] = array('tools',				'tools.inc.php',		 'o');
+ 	
+ 	return $tabs;
+ }
+@@ -320,6 +321,29 @@
+ 		}
+ 	}
+ 
++	// Add/Update The Tool
++	if ( isset($_POST['toolid']) ) {
++		$toolid = $_POST['toolid'];
++		$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
++			WHERE content_id=".$_POST[cid];
++		$result = mysql_query($sql, $db);
++ 		if ( $toolid == '--none--' ) {
++			$sql = "DELETE FROM ". TABLE_PREFIX . "basiclti_content 
++			           WHERE content_id=".$_POST[cid];
++			$result = mysql_query($sql, $db);
++		} else if ( mysql_num_rows($result) == 0 ) {
++			$sql = "INSERT INTO ". TABLE_PREFIX . "basiclti_content 
++			           SET toolid='".$toolid."', content_id=".$_POST[cid];
++			$result = mysql_query($sql, $db);
++			if ($result===false) $msg->addError('MYSQL_FAILED');
++		} else { 
++			$sql = "UPDATE ". TABLE_PREFIX . "basiclti_content 
++			           SET toolid='".$toolid."' WHERE content_id=".$_POST[cid];
++			$result = mysql_query($sql, $db);
++			if ($result===false) $msg->addError('MYSQL_FAILED');
++		}
++	}
++
+         //TODO*******************BOLOGNA****************REMOVE ME**************/
+          if(isset($_SESSION['associated_forum']) && !$msg->containsErrors()){
+             if($_SESSION['associated_forum']=='none'){
+Index: docs/include/header.inc.php
+===================================================================
+--- docs/include/header.inc.php	(revision 10276)
++++ docs/include/header.inc.php	(working copy)
+@@ -100,7 +100,11 @@
+ 	$savant->assign('user_name', _AT('guest'));
+ }
+ 
++
+ if (!isset($_pages[$current_page])) {
++print_r($_pages);
++echo($current_page);
++exit();
+ 	global $msg;
+ 	$msg->addError('PAGE_NOT_FOUND'); // probably the wrong error
+ 	header('location: '.AT_BASE_HREF.'index.php');
