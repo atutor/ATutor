@@ -35,7 +35,6 @@ function get_tabs() {
 	$tabs[3] = array('alternative_content', 'alternatives.inc.php',  'l');	
 	//Harris: Extended test functionality into content export
 	$tabs[4] = array('tests',				'tests.inc.php',		 't');
-	$tabs[5] = array('tools',				'tools.inc.php',		 'o');
 	
 	return $tabs;
 }
@@ -94,24 +93,68 @@ function isValidURL($url) {
  * @param: $content
  * @return: none
  */
-function populate_a4a($cid, $content){
-	include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/html/resources_parser.inc.php');
-    include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+function populate_a4a($cid, $content, $formatting){
+	global $db, $my_files, $content_base_href, $contentManager;
 	
-    $resources = get_primary_resources($content);
-    
-    if (count($resources) == 0) return;
+	// Defining alternatives is only available for content type "html".
+	// But don't clean up the a4a tables at other content types in case the user needs them back at html.
+	if ($formatting <> 1) return;
 
+	include_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
+	include_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
+	include_once(AT_INCLUDE_PATH.'classes/ContentOutputParser.class.php');	/* for parser */
+	
+	// initialize content_base_href; used in format_content
+	if (!isset($content_base_href)) {
+		$result = $contentManager->getContentPage($cid);
+		// return if the cid is not found
+		if (!($content_row = @mysql_fetch_assoc($result))) return;
+		$content_base_href = $content_row["content_path"].'/';
+	}
+
+	$body = format_content($content, $formatting,array());
+    
+	$handler = new ContentOutputParser();
+	$parser = new XML_HTMLSax();
+	$parser->set_object($handler);
+	$parser->set_element_handler('openHandler','closeHandler');
+	
+	$my_files 		= array();
+	$parser->parse($body);
+	$my_files = array_unique($my_files);
+	
+	foreach ($my_files as $file) {
+		/* filter out full urls */
+		$url_parts = @parse_url($file);
+		
+		// file should be relative to content
+		if ((substr($file, 0, 1) == '/')) {
+			continue;
+		}
+		
+		// The URL of the movie from youtube.com has been converted above in embed_media().
+		// For example:  http://www.youtube.com/watch?v=a0ryB0m0MiM is converted to
+		// http://www.youtube.com/v/a0ryB0m0MiM to make it playable. This creates the problem
+		// that the parsed-out url (http://www.youtube.com/v/a0ryB0m0MiM) does not match with
+		// the URL saved in content table (http://www.youtube.com/watch?v=a0ryB0m0MiM).
+		// The code below is to convert the URL back to original.
+		$file = convert_youtube_playURL_to_watchURL($file);
+		
+		$resources[] = convert_amp($file);  // converts & to &amp;
+	}
+    
     $a4a = new A4a($cid);
     $db_primary_resources = $a4a->getPrimaryResources();
     
     // clean up the removed resources
     foreach ($db_primary_resources  as $primary_rid=>$db_resource){
         //if this file from our table is not found in the $resource, then it's not used.
-        if(in_array($db_resource['resource'], $resources)===false){
-            $a4a->deletePrimaryResource($primary_rid);
+    	if(count($resources) == 0 || !in_array($db_resource['resource'], $resources)){
+        	$a4a->deletePrimaryResource($primary_rid);
         }
     }
+    
+    if (count($resources) == 0) return;
 
 	// insert the new resources
     foreach($resources as $primary_resource)
@@ -201,7 +244,7 @@ function save_changes($redir, $current_tab) {
 			$_REQUEST['cid'] = $cid;
 		}
 		// re-populate a4a tables based on the new content
-		populate_a4a($cid, $orig_body_text);
+		populate_a4a($cid, $orig_body_text, $_POST['formatting']);
 	} 
 	else return;
 	
@@ -317,29 +360,6 @@ function save_changes($redir, $current_tab) {
 			           SET content_id=".$_POST[cid].", type='".CONTENT_PRE_TEST."', item_id=$tid";
 			$result = mysql_query($sql, $db);
 			
-			if ($result===false) $msg->addError('MYSQL_FAILED');
-		}
-	}
-
-	// Add/Update The Tool
-	if ( isset($_POST['toolid']) ) {
-		$toolid = $_POST['toolid'];
-		$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
-			WHERE content_id=".$_POST[cid];
-		$result = mysql_query($sql, $db);
- 		if ( $toolid == '--none--' ) {
-			$sql = "DELETE FROM ". TABLE_PREFIX . "basiclti_content 
-			           WHERE content_id=".$_POST[cid];
-			$result = mysql_query($sql, $db);
-		} else if ( mysql_num_rows($result) == 0 ) {
-			$sql = "INSERT INTO ". TABLE_PREFIX . "basiclti_content 
-			           SET toolid='".$toolid."', content_id=".$_POST[cid];
-			$result = mysql_query($sql, $db);
-			if ($result===false) $msg->addError('MYSQL_FAILED');
-		} else { 
-			$sql = "UPDATE ". TABLE_PREFIX . "basiclti_content 
-			           SET toolid='".$toolid."' WHERE content_id=".$_POST[cid];
-			$result = mysql_query($sql, $db);
 			if ($result===false) $msg->addError('MYSQL_FAILED');
 		}
 	}

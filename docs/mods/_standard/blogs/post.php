@@ -69,7 +69,7 @@ if (!$post_row = mysql_fetch_assoc($result)) {
 	exit;
 }
 
-$_pages['mods/_standard/blogs/post.php']['title'] = AT_PRINT($post_row['title'], 'blog_posts.title') . ($post_row['private'] ? ' - '._AT('private') : '');
+$_pages['mods/_standard/blogs/post.php']['title'] = AT_print($post_row['title'], 'blog_posts.title') . ($post_row['private'] ? ' - '._AT('private') : '');
 $_pages['mods/_standard/blogs/post.php']['parent']    = 'mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id;
 if (query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 	$_pages['mods/_standard/blogs/post.php']['children']  = array('mods/_standard/blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id.SEP.'id='.$id, 'mods/_standard/blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id.SEP.'id='.$id);
@@ -93,7 +93,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	<div class="entry">
 		<h3 class="date"><?php echo get_display_name($post_row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $post_row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
 
-		<p><?php echo AT_PRINT($post_row['body'], 'blog_posts.body'); ?></p>
+		<p><?php echo AT_print($post_row['body'], 'blog_posts.body'); ?></p>
 	</div>
 
 <a name="comments"></a><h2><?php echo _AT('comments'); ?></h2>

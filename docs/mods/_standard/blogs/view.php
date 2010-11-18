@@ -69,13 +69,13 @@ $result = mysql_query($sql, $db);
 <?php if (mysql_num_rows($result)): ?>
 	<?php while (($row = mysql_fetch_assoc($result)) && ($count < $num_posts_per_page)): $count++; ?>
 		<div class="entry">
-			<h2><a href="<?php echo url_rewrite('mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']); ?>"><?php echo AT_PRINT($row['title'], 'blog_posts.title'); ?></a>
+			<h2><a href="<?php echo url_rewrite('mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']); ?>"><?php echo AT_print($row['title'], 'blog_posts.title'); ?></a>
 			<?php if ($row['private']): ?>
 				- <?php echo _AT('private'); ?>
 			<?php endif; ?></h2>
 			<h3 class="date"><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h3>
 
-			<p><?php echo AT_PRINT($row['body'], 'blog_posts.body'); ?></p>
+			<p><?php echo AT_print($row['body'], 'blog_posts.body'); ?></p>
 
 			<p><a href="<?php echo url_rewrite('mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']); ?>#comments"><?php echo _AT('comments_num', $row['num_comments']); ?></a></p>
 			<hr />
