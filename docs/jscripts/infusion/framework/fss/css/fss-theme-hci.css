@@ -1,0 +1,118 @@
+/*
+              High Contrast
+=============================================
+ * Color Schema:
+ *     DEFINITIONS:
+ *         white     : #ffffff
+ *         black     : #000000
+
+ */
+.fl-theme-hci :focus,
+.fl-theme-hci .selectable  {
+   /* themed focus indicator */
+   outline: 0.2em solid #F00;
+}
+
+.fl-theme-hci {color:#fff !important; background-color:#000 !important;}
+.fl-theme-hci div, .fl-theme-hci input {color:#fff !important; background-color:#000 !important;}
+.fl-theme-hci .fl-knockout {background:transparent !important; color:#ffffff;} /* a granular method for basic reset of appearance */
+
+/* Links */
+.fl-theme-hci a  {color: #ffffff !important; font-weight:bold; background-color:#000000 !important;}
+.fl-theme-hci a:hover {color: #000000 !important; background-color:#ffffff !important;}
+.fl-theme-hci a:hover * {color: #000000 !important; background-color:#ffffff !important;}
+
+/* Headers */
+.fl-theme-hci h1,
+.fl-theme-hci h2,
+.fl-theme-hci h3,
+.fl-theme-hci h4,
+.fl-theme-hci h5,
+.fl-theme-hci h6 {color:#ffffff; background-color:#000000; border-color:#ffffff; border-bottom:0.1em dashed #ffffff;}
+
+/* Tables */
+.fl-theme-hci th {border:0.1em solid #ffffff; background-color:#ffffff !important; color:#000000 !important;}
+.fl-theme-hci td {border:0.1em solid #ffffff;}
+.fl-theme-hci .fl-textfield {}
+.fl-theme-hci .fl-textarea {}
+
+/* temp selector to access inline edit input fields (should use a classname but now there is none applied) */
+.fl-theme-hci .fl-inlineEdit-edit {background-color:#ffffff !important; color:#000000 !important; border: 0.1em solid #000000; padding:0.1em; margin:-0.1em;}
+
+/* Helper: Tabs */
+.fl-theme-hci .fl-tabs {border-bottom-color:#ffffff;}
+.fl-theme-hci .fl-tabs li,
+.fl-theme-hci .fl-tabs li *  {border-color:#ffffff; border-bottom-color:#ffffff; }
+.fl-theme-hci .fl-tabs li    {background-color:#ffffff;}
+.fl-theme-hci .fl-tabs li *  {color:#000000 !important; font-weight:bold; background-color:#ffffff !important;text-decoration:none;}
+
+.fl-theme-hci .fl-tabs li:hover,
+.fl-theme-hci .fl-tabs li:hover *,
+.fl-theme-hci .fl-tabs li a:hover {color:#ffffff !important; background-color:#000000 !important;}
+
+.fl-theme-hci .fl-tabs li.fl-tabs-active,
+.fl-theme-hci .fl-tabs li.fl-tabs-active a,
+.fl-theme-hci .fl-tabs li.fl-tabs-active a:hover, 
+
+.fl-theme-hci .fl-tabs li.fl-activeTab,
+.fl-theme-hci .fl-tabs li.fl-activeTab:hover,
+.fl-theme-hci .fl-tabs li.fl-activeTab a,
+.fl-theme-hci .fl-tabs li.fl-activeTab a:hover {background-color: #000000 !important; border-bottom-color:#000000; color:#ffffff !important;}
+.fl-theme-hci .fl-tab-content {background-color:#000000; border:1px solid #fff; border-top:none; color:#ffffff;}
+
+/* Helper: Menu */
+.fl-theme-hci .fl-listmenu, 
+.fl-theme-hci .fl-list-menu {border:1px solid #ffffff; border-bottom-width:2px; background-color:#000000;}
+.fl-theme-hci .fl-listmenu li, 
+.fl-theme-hci .fl-list-menu li,
+.fl-theme-hci .fl-listmenu li a, 
+.fl-theme-hci .fl-list-menu li a  {font-weight:bold; color:#ffffff; background-color:#dfefff; border-color:#ffffff; text-decoration:none;}
+.fl-theme-hci .fl-listmenu a:hover, 
+.fl-theme-hci .fl-list-menu a:hover {background-color:#5a95cf; color:#000000;}
+.fl-theme-hci .fl-listmenu .fl-activemenu, 
+.fl-theme-hci .fl-list-menu .fl-activemenu,
+.fl-theme-hci .fl-listmenu .fl-activemenu:hover, 
+.fl-theme-hci .fl-list-menu .fl-activemenu:hover { background-color: #000000; border-bottom-color:#000000; color:#508cc9;}
+
+/* Helper: Thumbnail Grid */
+.fl-theme-hci .fl-grid {}
+.fl-theme-hci .fl-grid li {}
+.fl-theme-hci .fl-grid .fl-grid-caption {}
+
+/* Helper: buttons */
+.fl-theme-hci .fl-button-right, 
+.fl-theme-hci .fl-button-left, 
+.fl-theme-hci .fl-button-inner {padding:0;}
+
+/* Widget core */
+.fl-theme-hci .fl-widget {background-color:#ffffff !important; border:1px solid #000000;}
+.fl-theme-hci .fl-widget ul {}
+.fl-theme-hci .fl-widget h2 {color:#000000; background-color:#ffffff;}
+.fl-theme-hci .fl-widget a {color:#ffffff;}
+.fl-theme-hci .fl-widget .fl-icon {color:#ffffff; background-image:none; background-color:#000000; text-indent:0; width:auto; height:auto; margin-left:0px; padding:0 2px; display:inline; font-weight:bold;}
+        
+/* Widget titlebar */
+.fl-theme-hci .fl-widget .fl-widget-titlebar {margin-bottom:3px;}
+
+/* Widget options */
+.fl-theme-hci .fl-widget .fl-widget-options {padding:0px;}
+.fl-theme-hci .fl-widget .fl-widget-options ul {} 
+.fl-theme-hci .fl-widget .fl-widget-options li {border-left:1px solid #000000;}
+.fl-theme-hci .fl-widget .fl-widget-options a {color:#000000;}
+.fl-theme-hci .fl-widget .fl-widget-options .icon {}
+.fl-theme-hci .fl-widget .fl-widget-options .viewOptions {}
+.fl-theme-hci .fl-widget .fl-widget-options .toggle {}
+    
+/* Widget content */
+.fl-theme-hci .fl-widget .fl-widget-content {background-color:#000000;}
+
+
+
+/* Component: Progressor */
+.fl-theme-hci .fl-progress-bounds {border-color:#ffffff; background-color:#000000;}
+.fl-theme-hci .fl-progress-fill {color:#000000; background-color:#ffffff;}
+
+/* Component: Uploader */
+
+/* States */
+.fl-theme-hci .fl-reorderer-dropMarker {background-color:#f00 !important;}
