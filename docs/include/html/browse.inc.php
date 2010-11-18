@@ -99,7 +99,7 @@ while ($row = mysql_fetch_assoc($courses_result)) {
 		if (mysql_num_rows($result) == 0 && $_SESSION['member_id'] <> $row['member_id']) {
 			$row['enroll_link'] = $enroll_link;
 		} else if ($row['access'] == 'private') {
-			$enrollment_row = mysql_fetch_assoc($courses_result);
+			$enrollment_row = mysql_fetch_assoc($result);
 			if ($enrollment_row['approved'] == 'n') $row['enroll_link'] = $enroll_link;
 		}
 	}
