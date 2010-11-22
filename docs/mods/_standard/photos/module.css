@@ -387,9 +387,6 @@ div.edit_photo_box .action{
 	cursor: pointer;
 	background-color: #ECEECC;
 }
-.fl-reorderer-movable-selected a{
-	border: 2px solid red;
-}
 .fl-reorderer-movable-dragging a{
 	background-color: #ECEECC;
 }
