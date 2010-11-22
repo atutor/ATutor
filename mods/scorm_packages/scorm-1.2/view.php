@@ -197,7 +197,7 @@ $student_name = $q_row['last_name'] . ', ' . $q_row['first_name'];
 <div id="rte">
 <applet code="ATutorApiAdapterApplet" 
 id="RTE" name="RTE" mayscript="true"
-codebase="<?php echo AT_BASE_HREF?>mods/scorm_packages/scorm-1.2/view.php"
+codebase="<?php echo AT_BASE_HREF?>mods/scorm_packages/scorm-1.2/"
 archive="<?php echo AT_BASE_HREF?>mods/scorm_packages/scorm-1.2/java/ATutorApiAdapterApplet.jar,<?php echo AT_BASE_HREF?>mods/scorm_packages/scorm-1.2/java/PfPLMS-API-adapter-core.jar,<?php echo AT_BASE_HREF?>mods/scorm_packages/scorm-1.2/java/gnu.jar"
 width="0" height="0" >
 <param name="student_id"   value="<?php echo $_SESSION['member_id']?>" />
