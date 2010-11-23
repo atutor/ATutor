@@ -86,8 +86,8 @@ jQuery(document).ready(function () {
 	//the ATutor undo function
 	var undo = function (that, targetContainer) {
 					var markup = "<span class='flc-undo' aria-live='polite' aria-relevant='all'>" +
-					  "<span class='flc-undo-undoContainer'>[<a href='#' class='flc-undo-undoControl'><?php echo _AT('pa_undo'); ?></a>]</span>" +
-					  "<span class='flc-undo-redoContainer'>[<a href='#' class='flc-undo-redoControl'><?php echo _AT('pa_redo'); ?></a>]</span>" +
+					  "<span class='flc-undo-undoContainer'><a href='#' class='flc-undo-undoControl'>[<?php echo _AT('pa_undo'); ?>]</a></span>" +
+					  "<span class='flc-undo-redoContainer'><a href='#' class='flc-undo-redoControl'>[<?php echo _AT('pa_redo'); ?>]</a></span>" +
 					"</span>";
 					var markupNode = jQuery(markup);
 					targetContainer.append(markupNode);
@@ -111,7 +111,6 @@ jQuery(document).ready(function () {
 			modelChanged: function(model, oldModel, source){
 				/* for undo/redo model change */
 				if (model != oldModel && source != undefined){
-					viewNode = source.component.container.children('.flc-inlineEdit-text')[0];
 					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_photos.php';?>", 
 						{"submit":"ajax",
 						 "pid":<?php echo $this->photo_info['id'];?>, 
@@ -152,12 +151,12 @@ jQuery(document).ready(function () {
 			modelChanged: function(model, oldModel, source){
 				/* for undo/redo model change */
 				if (model != oldModel && source != undefined){
-					viewNode = source.component.container.children('.flc-inlineEdit-text')[0];
+					commentID = source.component.locate("text").attr("id");
 					rtn = jQuery.post("<?php echo $_base_path. AT_PA_BASENAME.'edit_comment.php';?>", 
 						{"submit":"submit",
 						 "pid":<?php echo $this->photo_info['id'];?>, 
 						 "aid":<?php echo $this->aid;?>, 
-						 "cid":viewNode.id, 
+						 "cid":commentID, 
 						 "comment":model.value},
 						  function(data){}, 
 						  "json");
