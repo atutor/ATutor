@@ -134,7 +134,7 @@ ATutor.course = ATutor.course || {};
 	};
 	
 	ATutor.course.toggleFolder = function (cid, expand, collapse, course_id) {
-		if (jQuery("#tree_icon"+cid).attr("src") == tree_collapse_icon) {
+		if (jQuery("#tree_icon"+cid).attr("src") == ATutor.course.collapse_icon) {
 			jQuery("#tree_icon"+cid).attr("src", ATutor.course.expand_icon);
 			jQuery("#tree_icon"+cid).attr("alt", expand);
 			jQuery("#tree_icon"+cid).attr("title", expand);

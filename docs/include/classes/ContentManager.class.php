@@ -763,38 +763,14 @@ class ContentManager
 		return $sequence_links;
 	}
 
-	// return the javascript of expanding content folder
-	function get_js_expand_folder($content_id) {
-		return '
-		jQuery("#folder"+'.$content_id.').show();
-		jQuery("#tree_icon"+'.$content_id.').attr("src", tree_collapse_icon);
-		jQuery("#tree_icon"+'.$content_id.').attr("alt", "'._AT("collapse").'");
-		jQuery("#tree_icon"+'.$content_id.').attr("title", "'._AT("collapse").'");
-';
-	}
-	
-	// return the javascript of collapsing content folder
-	function get_js_collapse_folder($content_id) {
-		return '
-		jQuery("#folder"+'.$content_id.').hide();
-		jQuery("#tree_icon"+'.$content_id.').attr("src", tree_expand_icon);
-		jQuery("#tree_icon"+'.$content_id.').attr("alt", "'._AT("expand").'");
-		jQuery("#tree_icon"+'.$content_id.').attr("title", "'._AT("expand").'");
-';
-	}
-	
 	/** Generate javascript to hide all root content folders, except the one with current content page
 	 * access: private
 	 * @return print out javascript function initContentMenu()
 	 */
-	function initMenu(){
+	function getInitMenuJS(){
 		global $_base_path;
 		
-		echo '
-function initContentMenu() {
-	tree_collapse_icon = "'.AT_BASE_HREF.$this->tree_collapse_icon.'";
-	tree_expand_icon = "'.AT_BASE_HREF.$this->tree_expand_icon.'";
-';
+		echo "\n".'ATutor.course.contentMenu.initContentMenu = function() {'."\n";
 		
 		$sql = "SELECT content_id
 		          FROM ".TABLE_PREFIX."content 
@@ -804,26 +780,21 @@ function initContentMenu() {
 
 		// collapse all root content folders
 		while ($row = mysql_fetch_assoc($result)) {
-			echo '
-	if (ATutor.getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1")
-	{
-'.$this->get_js_expand_folder($row['content_id']).'
-	}
-	else
-	{
-'.$this->get_js_collapse_folder($row['content_id']).'
-	}
-';
+			echo 'if (ATutor.getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1") {'."\n".
+			     '	ATutor.course.contentMenu.expandContentFolder('.$row['content_id'].');'."\n".
+			     '} else {'."\n".
+			     '	ATutor.course.contentMenu.collapseContentFolder('.$row['content_id'].');'."\n".
+			     '}'."\n";
 		}
 		
 		// expand the content folder that has current content
 		if (isset($_SESSION['s_cid']) && $_SESSION['s_cid'] > 0) {
 			$current_content_path = $this->getContentPath($_SESSION['s_cid']);
 			
-			for ($i=0; $i < count($current_content_path)-1; $i++)
-				echo $this->get_js_expand_folder($current_content_path[$i]['content_id']).
-				'	ATutor.setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);
-';
+			for ($i=0; $i < count($current_content_path)-1; $i++) {
+				echo '	ATutor.course.contentMenu.expandContentFolder('.$current_content_path[$i]['content_id'].');'."\n";
+				     '	ATutor.setcookie("c'.$_SESSION['course_id'].'_'.$current_content_path[$i]['content_id'].'", "1", 1);'."\n";
+			}
 		} else { // expand the first folder at user's first visit
 			// find the first content folder
 			$sql = "SELECT content_id 
@@ -840,10 +811,10 @@ function initContentMenu() {
 			// print out javascript to expand the first content folder
 			if (mysql_num_rows($result)) {
 				$row = mysql_fetch_assoc($result);
-				echo $this->get_js_expand_folder($row['content_id']);
+				echo '	ATutor.course.contentMenu.expandContentFolder('.$row['content_id'].');'."\n";
 			}
 		}
-		echo '}'; // end of javascript function initContentMenu()
+		echo '}'."\n"; // end of javascript function initContentMenu()
 	}
 	
 	/* @See include/html/dropdowns/menu_menu.inc.php */
@@ -863,7 +834,8 @@ function initContentMenu() {
 
 		$this->start = true;
 		
-		// if change the location of this line, change function switchEditMode(), else condition accordingly
+		// DO NOT change id value "editable_table", which is used in ATutorContentMenu.js 
+		// for the initialization of the inline edit fields
 		echo '<div id="editable_table">';
 		
 		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && !is_mobile_device())
@@ -876,74 +848,36 @@ function initContentMenu() {
 			'<a href="'.$_base_path.'mods/_core/editor/edit_content.php">
 				<img id="img_create_top_content" src="'.$_base_path.'images/page_add.gif" alt="'._AT("add_top_page").'" title="'._AT("add_top_page").'" style="border:0;height:1.2em" />
 			</a>'."\n".
-			'<a href="javascript:void(0)" onclick="javascript:switchEditMode();">
+			'<a href="javascript:void(0)" onclick="javascript:ATutor.course.contentMenu.switchEditMode();">
 				<img id="img_switch_edit_mode" src="'.$_base_path.'images/medit.gif" alt="'._AT("enter_edit_mode").'" title="'._AT("enter_edit_mode").'" style="border:0;height:1.2em" />
 			</a>
 			</div>'."\n";
 		}
 		$this->printMenu($parent_id, $depth, $path, $children, $truncate, $ignore_state);
+		echo '</div>';
 		
 		// javascript for inline editor
-		echo '
-<script type="text/javascript">
+		echo '<script type="text/javascript">
+var ATutor = ATutor || {};
+ATutor.course = ATutor.course || {};
+ATutor.course.contentMenu = ATutor.course.contentMenu || {};
+
+ATutor.course.text_enter_edit_mode = "'._AT("enter_edit_mode").'";
+ATutor.course.text_exit_edit_mode = "'._AT("exit_edit_mode").'";
+ATutor.base_path = "'.$_base_path.'";
+ATutor.course.text_expand = "'._AT("expand").'";
+ATutor.course.text_collapse = "'._AT("collapse").'";
 ';
-		// only expand the content folder that has the current content page
-		$this->initMenu();
+
+		// get the javascript to initialize the expand/collapse of the content folders
+		$this->getInitMenuJS();
+		echo '</script>'."\n";
 		
-		echo '
-function switchEditMode() {
-	title_edit = "'._AT("enter_edit_mode").'";
-	img_edit = "'.$_base_path.'images/medit.gif";
-	
-	title_view = "'._AT("exit_edit_mode").'";
-	img_view = "'.$_base_path.'images/mlock.gif";
-	
-	if (jQuery("#img_switch_edit_mode").attr("src") == img_edit)
-	{
-		jQuery("#img_switch_edit_mode").attr("src", img_view);
-		jQuery("#img_switch_edit_mode").attr("alt", title_view);
-		jQuery("#img_switch_edit_mode").attr("title", title_view);
-		inlineEditsSetup();
-	}
-	else
-	{ // refresh the content navigation to exit the edit mode
-		jQuery.post("'. $_base_path. 'mods/_core/content/refresh_content_nav.php", {}, 
-					function(data) {jQuery("#editable_table").replaceWith(data); initContentMenu();});
-	}
-}
-
-function inlineEditsSetup() {
-	jQuery("#editable_table").find(".inlineEdits").each(function() {
-		jQuery(this).text(jQuery(this).attr("title"));
-	});
-	
-	var tableEdit = fluid.inlineEdits("#editable_table", {
-		selectors : {
-			text : ".inlineEdits",
-			editables : "span:has(span.inlineEdits)"
-		},
-		defaultViewText: "",
-		applyEditPadding: false,
-		useTooltip: true,
-		listeners: {
-			afterFinishEdit : function (newValue, oldValue, editNode, viewNode) {
-				if (newValue != oldValue) 
-				{
-					rtn = jQuery.post("'. $_base_path. 'mods/_core/content/menu_inline_editor_submit.php", { "field":viewNode.id, "value":newValue }, 
-						          function(data) {}, "json");
-				}
-			}
-		}
-	});
-
-	jQuery(".fl-inlineEdit-edit").css("width", "80px")
-
-};
-
-initContentMenu();
-</script>
-';
-		echo '</div>';
+		// Include the javascript that defines functions for side menu "content navigation" operation
+		// Note that this javascript calls on js function ATutor.course.contentMenu.initContentMenu()
+		// that is generated from php function $this->getInitMenuJS(). So, must call the php function
+		// before including this js script.
+		echo '<script src="'.AT_BASE_HREF.'jscripts/ATutorContentMenu.js" type="text/javascript"></script>'."\n";
 	}
 
 	/* @See tools/sitemap/index.php */
