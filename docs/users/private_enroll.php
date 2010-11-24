@@ -86,9 +86,8 @@ if ($_POST['submit']) {
 				}
 			}
 		}
-		require(AT_INCLUDE_PATH.'header.inc.php');
-		$msg->printFeedbacks('APPROVAL_PENDING');
-		require(AT_INCLUDE_PATH.'footer.inc.php');
+		$msg->addFeedback('APPROVAL_PENDING');
+		header('Location: index.php');
 		exit;
 	} else {
 		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $course, 'y', 0, '"._AT('student')."', 0)";
