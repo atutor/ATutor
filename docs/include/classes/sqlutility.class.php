@@ -1,5 +1,16 @@
 <?php
-
+/****************************************************************/
+/* ATutor														*/
+/****************************************************************/
+/* Copyright (c) 2002-2010                                      */
+/* Inclusive Design Institute                                   */
+/* http://atutor.ca                                             */
+/*                                                              */
+/* This program is free software. You can redistribute it and/or*/
+/* modify it under the terms of the GNU General Public License  */
+/* as published by the Free Software Foundation.				*/
+/****************************************************************/
+// $Id: 
 
 class SqlUtility
 {
@@ -130,7 +141,7 @@ class SqlUtility
 	 */
 	function prefixQuery($query, $prefix)
 	{
-		$pattern = "/^(INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
+		$pattern = "/^(REPLACE INTO|INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
 			$replace = "\\1 ".$prefix."\\4\\5";
@@ -186,7 +197,7 @@ class SqlUtility
 					mysql_query($prefixed_query[0],$db);
 				elseif($prefixed_query[1] == 'DROP TABLE')
 					mysql_query($prefixed_query[1] . ' ' .$table,$db);
-        }
+			}
 		}
     return TRUE;
   }
