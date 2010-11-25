@@ -1856,7 +1856,7 @@ div.home_box {
 
 }
 .draggable_selected {
-	background-color: transparent;
+	background-color: lightgrey;
 	cursor: move;
 }
 	

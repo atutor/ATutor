@@ -1989,7 +1989,7 @@ div.home_box {
 	margin-left:1em;
 }
 .draggable_selected {
-	background-color: transparent;
+	background-color: lightgrey;
 	cursor: move;
 }
 
