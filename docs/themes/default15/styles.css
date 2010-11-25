@@ -1387,7 +1387,8 @@ div.home_box {
 	width: 30em;
 	height: 150px;	
 	margin:0;
-	padding-top: 15px;
+	margin-top: 15px;
+	padding-bottom: 20px;
 	margin-left:1em;
 	float:left;
 }
@@ -1397,7 +1398,7 @@ div.home_box {
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
-	width:26em;
+	width:28.5em;
 	height:9.8em;
 	-moz-border-radius:.3em .3em .3em .3em;
 	border-radius: .3em .3em .3em .3em;
@@ -1458,6 +1459,10 @@ div.home_box {
 .details-text a{
 	margin-left:1em;
 	white-space:normal;
+}
+.draggable_selected {
+	background-color: lightgrey;
+	cursor: move;
 }
 /* 1pxgs current box on My Start */
 .current_box{

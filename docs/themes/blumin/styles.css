@@ -133,6 +133,11 @@ div.home_box {
 	background:#e0e0e0;
 	width:28em;
 	height:9.8em;
+	padding: 0.3em;
+	-moz-border-radius:.3em .3em .3em .3em;
+	border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	box-shadow: .1em .1em .2em #999999;
 }
 
 .inside_box{
@@ -1498,21 +1503,18 @@ a.tooltip{
 
 div.home_box {
 	  width: 29em;
-	  margin:0;
-	  padding-top: 15px;
-	  margin-left:1em;
+	  margin-top: 15px;
+	  padding-bottom: 25px;
 	  float:left;
 }
-
 .outside_box{
 	  background: #DEE7EC;
 	  height:9.8em;
+	  width: 27.5em;
 	  padding:.4em;
 	  -moz-border-radius:.3em .3em .3em .3em;
 	  border-radius: .3em .3em .3em .3em;
 }
-
-
 .inside_box{
 	  width:100%;
 	  padding:.1em;
@@ -1554,7 +1556,10 @@ div.home_box {
 .details_text{
 	  margin-left:1em;
 }
-
+.draggable_selected {
+	background-color: lightgrey;
+	cursor: move;
+}
 /* 1pxgs current box on My Start */
 .current_box{
 	  float:left;

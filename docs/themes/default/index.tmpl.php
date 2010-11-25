@@ -87,7 +87,7 @@ if ($this->announcements): ?>
 function print_sublinks($link){
 	global $_base_path;
 ?>
-<div class="details_ol">
+<!--  <div class="details_ol">-->
 	<div class="details_or">
 		<div class="outside_box">
 <?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
@@ -123,7 +123,7 @@ function print_sublinks($link){
 		</div>
 	</div>
 
-</div>
+<!-- </div> -->
 <br style="clear:both;" />
 
 <?php } ?>

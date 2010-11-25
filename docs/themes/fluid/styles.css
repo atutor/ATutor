@@ -1552,18 +1552,22 @@ div.home_box {
 	width: 30em;
 	height: 150px;	
 	margin:0;
-	padding-top: 15px;
+	margin-top: 15px;
+	padding-bottom: 10px;
 	margin-left:1em;
 	float:left;
 }
-
 .outside_box{
 	margin-left:.4em;
+	padding: 0.3em;
 	background:#e0e0e0;
-	width:28em;
+	width:28.5em;
 	height:8.85em;
+	-moz-border-radius:.3em .3em .3em .3em;
+	border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	box-shadow: .1em .1em .2em #999999;
 }
-
 .inside_box{
 	width:100%;
 	margin:auto;
@@ -1574,26 +1578,15 @@ div.home_box {
 .details_or{
 	width:28.8em;
 	height:9.8em;
-	margin:0;
-	background-image:url(../../images/details_r.png);
-	background-position: top right;
-	background-repeat:no-repeat;
 }
 .details_ol{
 	height:9.8em;
-	margin:0px;
 	width:.45em;
-	background-image:url(../../images/details_l.png);
-	background-position: top left;
-	background-repeat:no-repeat;
 }
 .details_ir{
 	width:.5em;
 	height:100%;
 	float:right;
-	background-image:url(../../images/details_ir.png);
-	background-position: top right;
-	background-repeat:no-repeat;
 }
 .details_il{
 	height:100%;
@@ -1610,6 +1603,10 @@ div.home_box {
 }
 .details_text{
 	margin-left:1em;
+}
+.draggable_selected {
+	background-color: #A1C4F8;
+	cursor: move;
 }
 /* jQuery tooltip styles */
 #tooltip{

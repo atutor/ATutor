@@ -1437,15 +1437,22 @@ a.tooltip{
 div.home_box {
 	width: 30em;
 	height: 150px;	
-	padding-top: 15px;
+	margin-top: 15px;
+	padding: 10px;
+	padding-bottom: 27px;
 	margin-left:1em;
 	float:left;
 }
 
 .outside_box{
 	background:#DEECE2;
-	width:28.8em;
+	width:29.3em;
 	height:9.8em;
+	padding: 0.3em;
+	-moz-border-radius:.3em .3em .3em .3em;
+	border-radius: .3em .3em .3em .3em;
+	-moz-box-shadow:.1em .1em .2em #999999;
+	box-shadow: .1em .1em .2em #999999;
 }
 
 .inside_box{
@@ -1453,19 +1460,16 @@ div.home_box {
 	margin:auto;
 	height:52%;
 	margin-left:auto;
-margin-right:auto;
+	margin-right:auto;
 	background:#eeeeee;
 }
 .details_or{
 	width:28.8em;
 	height:9.8em;
-	margin:0;
 }
 .details_ol{
 	height:9.8em;
-	margin:0px;
 	width:.45em;
-
 	background:#DEECE2;
 }
 .details_ir{
@@ -1486,6 +1490,10 @@ margin-right:auto;
 }
 .details_text{
 	margin-left:1em;
+}
+.draggable_selected {
+	background-color: lightgrey;
+	cursor: move;
 }
 
 /* 1pxgs current box on My Start */

@@ -1334,7 +1334,8 @@ a.tooltip{
 div.home_box {
 	width: 30em;
 	height: 150px;	
-	padding-top: 15px;
+	margin-top: 15px;
+	padding-bottom: 13px;
 	margin-left:1em;
 	float:left;
 }
@@ -1342,7 +1343,7 @@ div.home_box {
 .outside_box{
 	margin-left:.4em;
 	background:#e0e0e0;
-	width:28em;
+	width:29.2em;
 	height:9.8em;
 }
 
@@ -1380,8 +1381,10 @@ div.home_box {
 }
 .details_text{
 	margin-left:1em;
-
-
+}
+.draggable_selected {
+	background-color: #788CB3;
+	cursor: move;
 }
 
 /* 1pxgs current box on My Start */

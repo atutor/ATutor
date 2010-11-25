@@ -1856,7 +1856,8 @@ div.menuedit{
 div.home_box {
 	width: 29em;
 	height: 150px;	
-	padding-top: 15px;
+	margin-top: 15px;
+	padding-bottom: 20px;
 	float: left;
 }
 
@@ -1865,7 +1866,7 @@ div.home_box {
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
-	width:26em;
+	width:27.5em;
 	height:9.8em;
 	border-radius:.5em;
 	-moz-border-radius:.3em .3em .3em .3em;
@@ -1891,15 +1892,10 @@ div.home_box {
 .details_or{
 	width:28.8em;
 	height:9.8em;
-	margin:0;
 }
 .details_ol{
-
 	height:9.8em;
-	margin:0px;
 	width:.45em;
-	background-position: top left;
-	background-repeat:no-repeat;
 }
 .details_ir{
 	width:.5em;
