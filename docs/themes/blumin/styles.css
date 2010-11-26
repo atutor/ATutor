@@ -116,70 +116,6 @@ a:visited {
 	color: #384F89;
 	text-decoration: none;
 }
-a:hover {
-
-}
-/* style for home page sublinks view */
-div.home_box {
-	width: 410px;
-	height: 150px;	
-	padding-top: 15px;
-	margin-left:1em;
-	float:left;
-}
-
-.outside_box{
-	margin-left:.4em;
-	background:#e0e0e0;
-	width:28em;
-	height:9.8em;
-	padding: 0.3em;
-	-moz-border-radius:.3em .3em .3em .3em;
-	border-radius: .3em .3em .3em .3em;
-	-moz-box-shadow:.1em .1em .2em #999999;
-	box-shadow: .1em .1em .2em #999999;
-}
-
-.inside_box{
-	width:100%;
-	margin:auto;
-	height:52%;
-	margin-bottom:.2em;
-	background:#eeeeee;
-}
-.details_or{
-	width:28.8em;
-	height:9.8em;
-	margin:0;
-
-}
-.details_ol{
-	height:9.8em;
-	margin:0px;
-	width:.45em;
-
-}
-.details_ir{
-	width:.5em;
-	height:100%;
-	float:right;
-
-}
-.details_il{
-	height:100%;
-	float:left;
-
-}
-.home-title{
-	font-size:12pt;
-}
-.buttonbox{
-	float:right;
-}
-.details_text{
-	margin-left:1em;
-}
-
 .formfieldR {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	color: black;
@@ -1503,14 +1439,16 @@ a.tooltip{
 
 div.home_box {
 	  width: 29em;
-	  margin-top: 15px;
-	  padding-bottom: 25px;
+	  height: 170px;
+	  margin-left: 1em;
+	  margin-bottom: 1em;
+	  padding: 5px;
 	  float:left;
 }
 .outside_box{
 	  background: #DEE7EC;
 	  height:9.8em;
-	  width: 27.5em;
+	  width: 28.3em;
 	  padding:.4em;
 	  -moz-border-radius:.3em .3em .3em .3em;
 	  border-radius: .3em .3em .3em .3em;
@@ -1528,12 +1466,9 @@ div.home_box {
 .details_or{
 	  width:28.8em;
 	  height:9.8em;
-	  margin:0;
-
 }
 .details_ol{
 	  height:9.8em;
-	  margin:0px;
 	  width:.45em;
 	  background:#ffffff;
 }
@@ -1659,13 +1594,11 @@ table.etabbed-table{
 }
 
 .prefs_tab_selected{
-      
       border-top: 1px solid #cccccc;
       border-left: 1px solid #cccccc;
       border-right: 1px solid #cccccc;
       border-bottom:0;
       background-color: #eeeeee;
-      margin: 0px;
       font-weight:bold;
       text-align:center;
       padding: .3em .5em 0em .5em ;
@@ -1677,8 +1610,6 @@ table.etabbed-table{
       box-shadow: .1em .1em .1em #999999;
       display: inline;
 }
-
-
 #top-links-jump{
 	float:right;
 	white-space:nowrap;
@@ -1744,11 +1675,9 @@ ul#content-tool-links img{
 	border:0;
 	white-space: nowrap;
 	background-color: #ffffff;
-	margin: 0px;
 	font-weight:500;
 	text-align:center;
 	padding:0em 0em 0em;
-
 }
 .editor_tab{
 	float:left;
