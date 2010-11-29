@@ -1518,7 +1518,7 @@ width:100%;
     background-color: #FFFFFF;
     border-radius: .3em .3em 0em 0em;
     -moz-border-radius: .3em .3em 0em 0em;
-    padding: 0em .5em 0em .5em ;
+    padding: .2em .5em 0em .5em ;
     -moz-box-shadow:.1em .1em 0 #999999;
     box-shadow: .1em .1em 0 #999999;
     display: inline;
@@ -1537,7 +1537,8 @@ width:100%;
     border-right: 1px solid #cccccc;
     border-bottom:0;
       background-color: #eeeeee;
-    margin: 0px;
+
+	    margin: .5em;
     font-weight:bold;
     text-align:center;
     padding: .3em .5em 0em .5em ;
@@ -1909,6 +1910,8 @@ height:.8em;
 }
 div.logout{
 	  white-space:nowrap;
+	  background-color:#000000;
+	  padding-bottom:.2em;
 	  width:45%;
 	  float:right;
 }
