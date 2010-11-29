@@ -149,28 +149,28 @@ global $addslashes;
  * @return an array of preferences
  */
 function assignDefaultPrefs() {
-global $db, $_config_defaults;      
-        $sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
-        $result = mysql_query($sql, $db);
-        
-        if (mysql_num_rows($result) > 0)
-        {
-            $row_defaults = mysql_fetch_assoc($result);
-            $default = $row_defaults["value"];
-            
-            $temp_prefs = unserialize($default);
-            
-            // Many new preferences are introduced in 1.6.2 that are missing in old admin 
-            // default preference string. Solve this case by completing settings on new
-            // preferences with $_config_defaults
-            foreach (unserialize($_config_defaults['pref_defaults']) as $name => $value) {
-                if (!isset($temp_prefs[$name])) $temp_prefs[$name] = $value;
-            }
-        }
-        else {
-            $temp_prefs = unserialize($_config_defaults['pref_defaults']);
-        }
-        return $temp_prefs;
+	global $db, $_config_defaults;      
+	$sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
+	$result = mysql_query($sql, $db);
+	
+	if (mysql_num_rows($result) > 0)
+	{
+		$row_defaults = mysql_fetch_assoc($result);
+		$default = $row_defaults["value"];
+		
+		$temp_prefs = unserialize($default);
+		            
+		// Many new preferences are introduced in 1.6.2 that are missing in old admin 
+		// default preference string. Solve this case by completing settings on new
+		// preferences with $_config_defaults
+		foreach (unserialize($_config_defaults['pref_defaults']) as $name => $value) {
+			if (!isset($temp_prefs[$name])) $temp_prefs[$name] = $value;
+		}
+	}
+	else {
+		$temp_prefs = unserialize($_config_defaults['pref_defaults']);
+	}
+	return $temp_prefs;
 }
 
 /**
