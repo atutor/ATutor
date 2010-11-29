@@ -24,7 +24,7 @@ function encrypt_password() {
 		<input type="hidden" name="form_password_hidden" value="" />
 		<input type="hidden" name="p" value="<?php echo urlencode($_GET['p']);?>" />
 		<div class="input-form" style="background-color:white;">
-			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('login') ;?></legend>
+			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('returning_user') ;?></legend>
 			<p><?php echo _AT('login_text') ;?></p>
 				<?php if ($_GET['course']): ?>
 					<div class="row">
