@@ -1790,9 +1790,10 @@ a.tooltip{
 
 div.home_box {
 	width: 29em;
-	height: 150px;	
+	height: 130px;	
 	margin-top: 15px;
-	padding-bottom: 20px;
+	padding: 3px;
+	padding-bottom: 10px;
 	float: left;
 }
 
