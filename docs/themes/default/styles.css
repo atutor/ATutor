@@ -17,7 +17,6 @@ body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	margin:0px;
 	margin-top: -10px;
-	font-size: .8em;
 	background-color: #EDE7C2;
 }
 .page_wrapper{
@@ -507,6 +506,7 @@ div#breadcrumbs {
 	font-size: 0.85em;
 	padding:3px;
 	float:left;
+	width:85%;
 }
 h2.page-title {
 	clear:right;
@@ -1068,7 +1068,6 @@ h4.box {
 	border:1px solid #ccc;
 	-moz-box-shadow:.1em .1em .1em #999999;
 	box-shadow: .1em .1em .1em #999999;
-
 }
 
 div.box {
@@ -1191,7 +1190,7 @@ img.headicon	{
 	text-align: right;
 	border:1px solid white;
 }
-div.course div.shortcuts , a {
+div.course div.shortcuts, a {
 	text-align: right;
 	text-decoration:none;
 	clear: left;
@@ -1234,6 +1233,7 @@ div#shortcuts{
 	border-radius: 0em 0em .5em .5em;;
 	-moz-border-radius: 0em 0em .5em .5em;
 	float:right;
+		margin-top:-.2em;
 	-moz-box-shadow:.1em .1em .2em #999999;
 	 box-shadow: .1em .1em  .2em #999999;
 	margin-right:2em;
@@ -1245,16 +1245,19 @@ div#shortcuts{
 	padding:.2em
 }
 #shortcuts ul {
-
-	margin-top: 0pt;
-	margin-bottom: 0pt;
-	margin-left: 0pt;
+float:right;
+	margin-bottom: 0em;
+	margin-left: 0em;
 	list-style-type:  none;
-	padding-left: 0pt; 
+	padding-left: 0em; 
 }
 #shortcuts li{
 	display: inline;
 }
+#shortcuts li a{
+	height:1.3em;
+}
+
 a#guide {
 	background-image: url('images/help.png'); 
 	background-repeat: no-repeat; 
@@ -1268,11 +1271,12 @@ div#guide_box{
 	border-left:thin solid #cccccc;
 	border-right:thin solid #cccccc;
 	border-bottom:thin solid #cccccc;
-	border-radius: 0em 0em .5em .5em;;
+	border-radius: 0em 0em .5em .5em;
 	-moz-border-radius: 0em 0em .5em .5em;
 	-moz-box-shadow:.1em .1em .2em #999999;
 	box-shadow: .1em .1em .2em #999999;
 	float:right;
+	margin-top:-.2em;
 	margin-right:2em;
 	padding-left:.1em;
 	width:auto;
@@ -1450,7 +1454,7 @@ overflow:hidden;
 #contentcolumn {
 	padding-right: 1em;
 	padding-left: 1em;
-overflow:inherit;
+	overflow:inherit;
 }
 
 #leftcolumn{
@@ -2148,6 +2152,11 @@ table.etabbed-table	{
 	padding:0;
 	width:100%;
 	height:2.5em;
+		clear:both;
+	font-size: 0.85em;
+	padding:3px;
+	float:left;
+
 }
 #course_title_container{
 	float:left;
