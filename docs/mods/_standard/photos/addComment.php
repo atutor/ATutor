@@ -16,6 +16,13 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 
+//quit if this is not a member
+if(!(isset($_SESSION['member_id']) && $_SESSION['member_id'] > 0)){
+	$msg->addError('ACCESS_DENIED');
+	header('Location: index.php');
+	exit;
+}
+
 //check what comment this is for. Album or Photo.
 $pid = intval($_POST['pid']);
 $aid = intval($_POST['aid']);
