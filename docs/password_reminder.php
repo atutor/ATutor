@@ -59,8 +59,8 @@ if (isset($_POST['cancel'])) {
 
 		$msg->addFeedback('CONFIRM_EMAIL2');
 		unset($mail);
-
-		$savant->display('password_reminder_feedback.tmpl.php'); 
+		header('Location:index.php');
+		//$savant->display('password_reminder_feedback.tmpl.php'); 
 
 	} else {
 		$msg->addError('EMAIL_NOT_FOUND');
@@ -165,6 +165,7 @@ if (isset($_POST['cancel'])) {
 			$savant->assign('g', $_REQUEST['g']);
 			$savant->assign('h', $_REQUEST['h']);
 			$savant->display('password_change.tmpl.php');
+
 		} 
 	}
 
