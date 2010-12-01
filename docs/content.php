@@ -250,7 +250,6 @@ if($has_text_alternative){
 		$img_path = '../'.$theme_image_path;
 	}else{
 		$img_path = '../images/';
-		echo "not";
 	}
 		$alt_parts['has_text_alternative'] = array('3', $img_path,_AT('apply_text_alternatives'),_AT('stop_apply_text_alternatives'),'pause.png','text_alternative.png');
 }
