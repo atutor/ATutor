@@ -10,46 +10,14 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
+if (!defined('AT_INCLUDE_PATH')) { exit; } 
 
-<?php if ($this->has_text_alternative || $this->has_audio_alternative || $this->has_visual_alternative || $this->has_sign_lang_alternative): ?>
-<div id="alternatives_shortcuts">
-<?php if ($this->has_text_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 3) ? '' : htmlentities_utf8(SEP).'alternative=3'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 3) ? 'pause.png' : 'text_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 3) ? _AT('stop_apply_text_alternatives') : _AT('apply_text_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 3) ? _AT('stop_apply_text_alternatives') : _AT('apply_text_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has text alternative?>
-<?php if ($this->has_audio_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 1) ? '' : htmlentities_utf8(SEP).'alternative=1'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 1) ? 'pause.png' : 'audio_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 1) ? _AT('stop_apply_audio_alternatives') : _AT('apply_audio_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 1) ? _AT('stop_apply_audio_alternatives') : _AT('apply_audio_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has audio alternative?>
-<?php if ($this->has_visual_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 4) ? '' : htmlentities_utf8(SEP).'alternative=4'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 4) ? 'pause.png' : 'visual_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 4) ? _AT('stop_apply_visual_alternatives') : _AT('apply_visual_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 4) ? _AT('stop_apply_visual_alternatives') : _AT('apply_visual_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has visual alternative?>
-<?php if ($this->has_sign_lang_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 2) ? '' : htmlentities_utf8(SEP).'alternative=2'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 2) ? 'pause.png' : 'sign_lang_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 2) ? _AT('stop_apply_sign_lang_alternatives') : _AT('apply_sign_lang_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 2) ? _AT('stop_apply_sign_lang_alternatives') : _AT('apply_sign_lang_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has sign language alternative?>
-</div>
-<?php endif; // END OF displaying alternative shortcut icons?>
-
-<?php 
+// print the AccessForAll alternatives tool bar
+// see /content.php for details of the alt_parts() array
+// images for the toolbar can be customized by adding images of the same name to a theme's images directory
+echo '<div id="alternatives_shortcuts">';
+print_alternative_tools($this->cid,$this->theme_image_path,$this->alt_parts,$this->has_sign_lang_alternative,$this->has_visual_alternative,$this->has_audio_alternative,$this->has_text_alternative);
+echo '</div>';
 if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") 
 	echo $this->content_table;
 ?>
