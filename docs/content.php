@@ -316,11 +316,3 @@ if ($has_text_alternative || $has_audio_alternative || $has_visual_alternative |
 	}
 }
 ?>
-
-
-
-
-
-
-}
-?>
