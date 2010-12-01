@@ -242,6 +242,46 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 	unset($infos);
 }
 
+//Create has_alternatives array for generating the AFA tool bar
+$alt_parts = array();
+$theme_image_path = "themes/".$_SESSION['prefs']['PREF_THEME']."/images/";
+if($has_text_alternative){
+	if(file_exists($theme_image_path.'text_alternative.png')){
+		$img_path = '../'.$theme_image_path;
+	}else{
+		$img_path = '../images/';
+		echo "not";
+	}
+		$alt_parts['has_text_alternative'] = array('3', $img_path,_AT('apply_text_alternatives'),_AT('stop_apply_text_alternatives'),'pause.png','text_alternative.png');
+}
+if($has_audio_alternative){
+	if(is_file($theme_image_path.'audio_alternative.png')){
+		$img_path = '../'.$theme_image_path;
+	}else{
+		$img_path = '../images/';
+	}
+		$alt_parts['has_audio_alternative'] = array('1', $img_path,_AT('apply_audio_alternatives'),_AT('stop_apply_audio_alternatives'),'pause.png','audio_alternative.png');
+}
+if($has_visual_alternative){
+	if(is_file($theme_image_path.'visual_alternative.png')){
+		$img_path = '../'.$theme_image_path;
+	}else{
+		$img_path = '../images/';
+	}
+		$alt_parts['has_visual_alternative'] = array('4', $img_path,_AT('apply_visual_alternatives'),_AT('stop_apply_visual_alternatives'),'pause.png','visual_alternative.png');
+}
+if($has_sign_lang_alternative){
+	if(is_file($theme_image_path.'sign_lang_alternative.png')){
+		$img_path = '../'.$theme_image_path;
+	}else{
+		$img_path = '../images/';
+	}
+		$alt_parts['has_sign_lang_alternative'] = array('2', $img_path,_AT('apply_sign_lang_alternatives'),_AT('stop_apply_sign_lang_alternatives'),'pause.png','sign_lang_alternative.png');
+}
+
+
+$savant->assign('theme_image_path', $has_text_alternative);
+$savant->assign('alt_parts', $alt_parts);
 $savant->assign('content_info', _AT('page_info', AT_date(_AT('inbox_date_format'), $content_row['last_modified'], AT_DATE_MYSQL_DATETIME), $content_row['revision'], AT_date(_AT('inbox_date_format'), $content_row['release_date'], AT_DATE_MYSQL_DATETIME)));
 
 require(AT_INCLUDE_PATH.'header.inc.php');
@@ -252,4 +292,36 @@ $savant->display('content.tmpl.php');
 $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 
 require (AT_INCLUDE_PATH.'footer.inc.php');
+
+
+/**
+* Creates the AccessForAll Toolbar based on the $alt_parts array
+* See the $alt_parts array generated above
+* @param	$cid the content id used to check if alternatiove are available
+* @param	$theme_image_path the path to the theme image directory, checked to see if custom icons exist for the toolbar
+* @param	$alt_parts the array of images, paths, and text used to construct the AFA toolbar
+* @param    $has_sign_lang_alternative returns TRUE if sign alternatives are available for the current cid
+* @param    $has_visual_alternative returns TRUE if visual alternatives are available for the current cid
+* @param    $has_audio_lang_alternative returns TRUE if audio alternatives are available for the current cid
+* @param    $has_sign_lang_alternative returns TRUE if text alternatives are available for the current cidy
+* @author	Greg Gay/Cindy Li
+*/
+
+function print_alternative_tools($cid,$theme_image_path,$alt_parts,$has_sign_lang_alternative,$has_visual_alternative,$has_audio_alternative,$has_text_alternative){
+
+if ($has_text_alternative || $has_audio_alternative || $has_visual_alternative || $has_sign_lang_alternative){
+	foreach ($alt_parts as $alt_part){
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?cid='.$cid.(($_GET['alternative'] == $alt_part['0']) ? '' : htmlentities_utf8(SEP).'alternative='.$alt_part[0]).'">
+			<img src="'.$alt_part[1].(($_GET['alternative'] == $alt_part['0']) ? $alt_part['4'] : $alt_part['5']).'" alt="'.(($_GET['alternative'] == $alt_part['0']) ? $alt_part['3'] : $alt_part['2']).'" title="'.(($_GET['alternative'] == $alt_part['0']) ? $alt_part['3'] : $alt_part['2']).'" border="0" class="img1616"/></a>';
+		} 
+	}
+}
+?>
+
+
+
+
+
+
+}
 ?>
