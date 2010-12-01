@@ -11,7 +11,14 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
-
+<?php
+// print the AccessForAll alternatives tool bar
+// see /content.php for details of the alt_parts() array
+// images for the toolbar can be customized by adding images of the same name to a theme's images directory
+echo '<div id="alternatives_shortcuts">';
+print_alternative_tools($this->cid,$this->theme_image_path,$this->alt_parts,$this->has_sign_lang_alternative,$this->has_visual_alternative,$this->has_audio_alternative,$this->has_text_alternative);
+echo '</div>';
+?>
 <?php if ($this->shortcuts): ?>
 <fieldset id="shortcuts"><legend><?php echo _AT('shortcuts'); ?></legend>
 	<ul>
