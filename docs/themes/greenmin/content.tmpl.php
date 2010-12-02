@@ -16,6 +16,15 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 // see /content.php for details of the alt_infos() array
 // images for the toolbar can be customized by adding images of the same name to a theme's images directory
 ?>
+
+<div id="alternatives_shortcuts">
+<?php 
+	foreach ($this->alt_infos as $alt_info){
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?cid='.$cid.(($_GET['alternative'] == $alt_info['0']) ? '' : htmlentities_utf8(SEP).'alternative='.$alt_info[0]).'">
+			<img src="'.AT_BASE_HREF.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[3] : $alt_info[4]).'" alt="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" title="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" border="0" class="img1616"/></a>';
+	} 
+?>
+</div>
 <div id="alternatives_shortcuts">
 <?php 
 	foreach ($this->alt_infos as $alt_info){

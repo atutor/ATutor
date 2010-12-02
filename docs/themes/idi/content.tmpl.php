@@ -11,6 +11,14 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
+<div id="alternatives_shortcuts">
+<?php 
+	foreach ($this->alt_infos as $alt_info){
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?cid='.$cid.(($_GET['alternative'] == $alt_info['0']) ? '' : htmlentities_utf8(SEP).'alternative='.$alt_info[0]).'">
+			<img src="'.AT_BASE_HREF.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[3] : $alt_info[4]).'" alt="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" title="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" border="0" class="img1616"/></a>';
+	} 
+?>
+</div>
 
 <?php if ($this->shortcuts): ?>
 <fieldset id="shortcuts"><legend><?php echo _AT('shortcuts'); ?></legend>
@@ -21,47 +29,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 	</ul>
 </fieldset>
 <?php endif; ?>
-
-<?php 
-if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") 
-	echo $this->content_table;
-?>
-<?php if ($this->has_text_alternative || $this->has_audio_alternative || $this->has_visual_alternative || $this->has_sign_lang_alternative): ?>
-<div id="alternatives_shortcuts">
-<?php if ($this->has_text_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 3) ? '' : htmlentities_utf8(SEP).'alternative=3'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 3) ? 'pause.png' : 'text_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 3) ? _AT('stop_apply_text_alternatives') : _AT('apply_text_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 3) ? _AT('stop_apply_text_alternatives') : _AT('apply_text_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has text alternative?>
-<?php if ($this->has_audio_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 1) ? '' : htmlentities_utf8(SEP).'alternative=1'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 1) ? 'pause.png' : 'audio_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 1) ? _AT('stop_apply_audio_alternatives') : _AT('apply_audio_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 1) ? _AT('stop_apply_audio_alternatives') : _AT('apply_audio_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has audio alternative?>
-<?php if ($this->has_visual_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 4) ? '' : htmlentities_utf8(SEP).'alternative=4'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 4) ? 'pause.png' : 'visual_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 4) ? _AT('stop_apply_visual_alternatives') : _AT('apply_visual_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 4) ? _AT('stop_apply_visual_alternatives') : _AT('apply_visual_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has visual alternative?>
-<?php if ($this->has_sign_lang_alternative) :?>
-  <a href="<?php echo $_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == 2) ? '' : htmlentities_utf8(SEP).'alternative=2'); ?>">
-    <img src="<?php echo AT_BASE_HREF; ?>images/<?php echo (($_GET['alternative'] == 2) ? 'pause.png' : 'sign_lang_alternative.png'); ?>" 
-      alt="<?php echo (($_GET['alternative'] == 2) ? _AT('stop_apply_sign_lang_alternatives') : _AT('apply_sign_lang_alternatives')); ?>" 
-      title="<?php echo (($_GET['alternative'] == 2) ? _AT('stop_apply_sign_lang_alternatives') : _AT('apply_sign_lang_alternatives')); ?>" 
-      border="0" class="img1616"/>
-  </a>
-<?php endif; // END OF has sign language alternative?>
-</div>
-<?php endif; // END OF displaying alternative shortcut icons?>
 
 <div id="content-text">
 	<?php echo $this->body; ?>
