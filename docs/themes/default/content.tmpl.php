@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; } 
 
 // print the AccessForAll alternatives tool bar
-// see /content.php for details of the alt_parts() array
+// see /content.php for details of the alt_infos() array
 // images for the toolbar can be customized by adding images of the same name to a theme's images directory
 ?>
 <div id="alternatives_shortcuts">

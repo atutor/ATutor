@@ -10,16 +10,20 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
+if (!defined('AT_INCLUDE_PATH')) { exit; } 
 
-<?php
 // print the AccessForAll alternatives tool bar
-// see /content.php for details of the alt_parts() array
+// see /content.php for details of the alt_infos() array
 // images for the toolbar can be customized by adding images of the same name to a theme's images directory
-echo '<div id="alternatives_shortcuts">';
-print_alternative_tools($this->cid,$this->theme_image_path,$this->alt_parts,$this->has_sign_lang_alternative,$this->has_visual_alternative,$this->has_audio_alternative,$this->has_text_alternative);
-echo '</div>';
 ?>
+<div id="alternatives_shortcuts">
+<?php 
+	foreach ($this->alt_infos as $alt_info){
+		echo '<a href="'.$_SERVER['PHP_SELF'].'?cid='.$cid.(($_GET['alternative'] == $alt_info['0']) ? '' : htmlentities_utf8(SEP).'alternative='.$alt_info[0]).'">
+			<img src="'.AT_BASE_HREF.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[3] : $alt_info[4]).'" alt="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" title="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" border="0" class="img1616"/></a>';
+	} 
+?>
+</div>
 
 <?php if ($this->shortcuts): ?>
 <fieldset id="shortcuts"><legend><?php echo _AT('shortcuts'); ?></legend>
