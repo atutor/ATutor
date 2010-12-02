@@ -1370,7 +1370,6 @@ function htmlentities_utf8($str, $use_nl2br=true){
 	return $return;
 }
 
-
 /**
  * Convert all '&' to '&amp;' from the input
  * @param   string  any string input, mainly URLs.
@@ -1408,6 +1407,35 @@ if ( !function_exists('json_decode') ){
     }
 }
 
+/*
+ * Finds the image in the theme image folder first. If the image does not exist, look up in 
+ * core image folder.
+ * @param: The relative path and name to the image. 
+ *         "Relative" means relative to the "image" folder, with subfolders and image name.
+ * @return: The path to the image in the theme folder, if exists. 
+ *          Otherwise, the path to the image in the core image folder.
+ * Example: 
+ *   1. pass in "rtl_tree/tree/collapse.gif"
+ *   2. return the path to this image in the theme folder: include/../themes/default/images/rtl_tree/tree/collapse.gif
+ *      if the theme image does not exist, return the path to the image in the core "image" folder: include/../images/rtl_tree/tree/collapse.gif
+ *      These pathes are relative to ATutor installation directory.
+ */
+function find_image($image_name) {
+	// The returned path is determined by AT_INCLUDE_PATH. If AT_INCLUDE_PATH is undefined, return the parameter itself.
+	if (!defined('AT_INCLUDE_PATH')) return $image_name;
+	
+	// remove leading "/"
+	if (substr($image_name, 0, 1) == "/") $image_name = substr($image_name, 1);
+	
+	$theme_image_folder = AT_INCLUDE_PATH.'../themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/';
+	$atutor_image_folder = AT_INCLUDE_PATH.'../images/';
+	
+	if (file_exists($theme_image_folder.$image_name)) {
+		return $theme_image_folder.$image_name;
+	} else {
+		return $atutor_image_folder.$image_name;
+	}
+}
 
 require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 

@@ -51,56 +51,14 @@ class ContentManager
 		
 		// Look for tree icons for displaying content navigation from theme image folder,
 		// if the icon is not there, look up in atutor root image folder
-		$theme_image_folder = 'themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/';
-		$atutor_image_folder = 'images/';
-		
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.$rtl.'tree/tree_collapse.gif')) {
-			$this->tree_collapse_icon = $theme_image_folder.$rtl.'tree/tree_collapse.gif';
-		} else {
-			$this->tree_collapse_icon = $atutor_image_folder.$rtl.'tree/tree_collapse.gif';
-		}
-
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_expand.gif')) {
-			$this->tree_expand_icon = $theme_image_folder.$rtl.'tree/tree_expand.gif';
-		} else {
-			$this->tree_expand_icon = $atutor_image_folder.$rtl.'tree/tree_expand.gif';
-		}
-		
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_vertline.gif')) {
-			$this->tree_vertline_icon = $theme_image_folder.$rtl.'tree/tree_vertline.gif';
-		} else {
-			$this->tree_vertline_icon = $atutor_image_folder.$rtl.'tree/tree_vertline.gif';
-		}
-		
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_horizontal.gif')) {
-			$this->tree_horizontal_icon = $theme_image_folder.$rtl.'tree/tree_horizontal.gif';
-		} else {
-			$this->tree_horizontal_icon = $atutor_image_folder.$rtl.'tree/tree_horizontal.gif';
-		}
-
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_split.gif')) {
-			$this->tree_split_icon = $theme_image_folder.$rtl.'tree/tree_split.gif';
-		} else {
-			$this->tree_split_icon = $atutor_image_folder.$rtl.'tree/tree_split.gif';
-		}
-		
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_disabled.gif')) {
-			$this->tree_disabled_icon = $theme_image_folder.$rtl.'tree/tree_disabled.gif';
-		} else {
-			$this->tree_disabled_icon = $atutor_image_folder.$rtl.'tree/tree_disabled.gif';
-		}
-	
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_end.gif')) {
-			$this->tree_end_icon = $theme_image_folder.$rtl.'tree/tree_end.gif';
-		} else {
-			$this->tree_end_icon = $atutor_image_folder.$rtl.'tree/tree_end.gif';
-		}
-	
-		if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_space.gif')) {
-			$this->tree_space_icon = $theme_image_folder.$rtl.'tree/tree_space.gif';
-		} else {
-			$this->tree_space_icon = $atutor_image_folder.$rtl.'tree/tree_space.gif';
-		}
+		$this->tree_collapse_icon = find_image($rtl.'tree/tree_collapse.gif');
+		$this->tree_expand_icon = find_image($rtl.'tree/tree_expand.gif');
+		$this->tree_vertline_icon = find_image($rtl.'tree/tree_vertline.gif');
+		$this->tree_horizontal_icon = find_image($rtl.'tree/tree_horizontal.gif');
+		$this->tree_split_icon = find_image($rtl.'tree/tree_split.gif');
+		$this->tree_disabled_icon = find_image($rtl.'tree/tree_disabled.gif');
+		$this->tree_end_icon = find_image($rtl.'tree/tree_end.gif');
+		$this->tree_space_icon = find_image($rtl.'tree/tree_space.gif');
 	}
 
 	function initContent( ) {
