@@ -103,7 +103,7 @@ font-size:1.0em !important;
 
 <!-- top help/search/login links -->
 <div id="top-links">
-<a href="http://www.inclusivedesign.ca"><img src="<?php echo $this->base_path; ?>themes/blumin/images/IDI.png" alt="IDI Logo" style="text-align:right;border:0;"/></a>
+<a href="http://www.inclusivedesign.ca"><img src="<?php echo $this->base_path; ?>themes/idi/images/IDI.png" alt="IDI Logo" style="text-align:right;border:0;"/></a>
 
 <div id="top-links-jump">
 <!-- back to start page -->
