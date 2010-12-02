@@ -1054,7 +1054,10 @@ INSERT INTO `themes` VALUES ('Blumin', '2.0', 'blumin', 'Desktop', NOW(), 'This 
 INSERT INTO `themes` VALUES ('Greenmin', '2.0', 'greenmin', 'Desktop', NOW(), 'This is the plone look-alike theme in green.', 1);
 INSERT INTO `themes` VALUES ('ATutor 1.5', '2.0', 'default15', 'Desktop', NOW(), 'This is the 1.5 series default theme.', 1);
 INSERT INTO `themes` VALUES ('ATutor 1.6', '2.0', 'default16', 'Desktop', NOW(), 'This is the 1.6 series default theme.', 1);
+INSERT INTO `themes` VALUES ('IDI Theme', '2.0', 'idi', 'Desktop', '2010-12-02', 'The theme created for the IDI course server.', '1');
 INSERT INTO `themes` VALUES ('Mobile', '2.0', 'mobile', 'Mobile', NOW(), 'This is the default theme for mobile devices.', 3);
+
+
 
 # --------------------------------------------------------
 # Table structure for table `users_online`
