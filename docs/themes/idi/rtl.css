@@ -1,0 +1,109 @@
+/* for right to left languages */
+html, body {
+	direction: rtl;
+}
+
+.img-size-tree {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.45em;
+	width:1.45em;
+	float: right;
+}
+
+div.box {
+	line-height:150%;
+}
+
+div.menuedit{
+margin-top:-1.5em;
+float:left;
+}
+
+
+.del-content-icon{
+/* float:left; */
+border:0;
+}
+
+
+#editable_table a{
+margin-right:.5em;
+
+}
+
+#logoutbar{
+float:left;
+text-align:left;
+
+}
+
+.fl-force-right{
+float:left;
+}
+
+.buttonbox{
+float:left;
+
+}
+div#breadcrumbs{
+
+float:right;
+}
+ul.current_list li{
+ width:90%;
+}
+
+.current_box{
+width:34%;
+}
+
+.my_course_container{
+width:55%;
+}
+
+#content-tool-links{
+  float:right;
+}
+
+#breadcrumbs{
+  width:100%;
+}
+h1#section-title{
+  float:right;
+
+}
+
+#topnavlist{
+  clear:both;
+}
+
+#top-links-jump{
+  float:left;
+}
+
+
+.admin_container{
+float:left;
+white-space:normal;
+}
+.page-title{
+
+margin-top:1em;
+}
+
+.top-tool{
+width:95%;
+}
+.child-top-tool li{
+white-space:normal;
+overflow:visible;
+}
+
+#contentcolumn {
+white-space:normal;
+
+}
+table.etabbed-table{
+margin-right: 4em;
+}
