@@ -745,7 +745,7 @@ function embed_media($text) {
 	for ($i=0;$i<count($media_replace);$i++){
 		foreach($media_matches[$i] as $media)
 		{
-			
+			//debug($media);
 			//find width and height for each matched media
 			if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
 			{
@@ -769,6 +769,7 @@ function embed_media($text) {
 		}
 	}
 	return $text;
+
 }
 
 function make_clickable($text) {
@@ -931,10 +932,14 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 						("/(\[\?\])$term(\[\/\?\])/i",
 						'<a href="'.$simple.'glossary.html#'.urlencode($original_term).'" target="body" class="at-term">\\2</a>',
 						$input);
-			} else {
+			} else {/*
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
-						'\\2<sup><a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">?</a></sup>',$input);
+						'\\2<sup><a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">?</a></sup>',$input);*/
+
+				$input = preg_replace
+						("/(\[\?\])$term(\[\/\?\])/i",
+						'<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">\\2</a>',$input);
 			}
 		}
 	} else if (!$user_glossary) {
