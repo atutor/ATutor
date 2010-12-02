@@ -1789,15 +1789,17 @@ a.tooltip{
 	padding-right:.2em;
 	padding-bottom:.2em;
 	text-decoration:none;
+	border-bottom:1px dashed;
+
 }
 /* style for home page modules "detail view" */
 
 div.home_box {
-	width: 29em;
-	height: 130px;	
-	margin-top: 15px;
+	width: 26em;
+	height: 166px;	
+	margin-top: .4em;
 	padding: 3px;
-	padding-bottom: 10px;
+	padding-bottom: .4em;
 	float: left;
 }
 
@@ -1806,13 +1808,14 @@ div.home_box {
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
-	width:27.5em;
+	width:25.5em;
 	height:9.8em;
 	-moz-border-radius:.3em .3em .3em .3em;
 	border-radius: .3em .3em .3em .3em;
 	-moz-box-shadow:.1em .1em .2em #999999;
 	box-shadow: .1em .1em .2em #999999;
 	padding:.2em;
+
 }
 
 .inside_box{
@@ -1821,7 +1824,7 @@ div.home_box {
 	padding:.3em;
 	width:95%;
 	margin:auto;
-	height:52%;
+	height:50%;
 	margin-bottom:.2em;
 	font-size:80%;
 	border-radius:.5em;
@@ -1831,6 +1834,7 @@ div.home_box {
 .details_or{
 	width:28.8em;
 	height:9.8em;
+
 }
 .details_ol{
 	height:9.8em;

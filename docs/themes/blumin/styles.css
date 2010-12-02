@@ -1433,6 +1433,7 @@ a.tooltip{
 	padding-right:.2em;
 	padding-bottom:.2em;
 	text-decoration:none;
+		border-bottom:1px dashed;
 }
 
 /* style for home page modules "detail view" */

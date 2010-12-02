@@ -156,9 +156,10 @@ width:18em;
 padding-left:1em;
 padding-right:2em;
 }
-
+/* the * prefix targets IE7, dangerous hack but necessary */
+/* to target IE6 use _ and to target IE8 and below use a trailing \9 before the style's closing semicolon */
 .fl-force-right{
-margin-top: -1.5em;
+*margin-top:-1.2em;
 }
 #contentcolumn {
 overflow:hidden;

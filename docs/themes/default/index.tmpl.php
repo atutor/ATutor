@@ -62,6 +62,7 @@ if($this->view_mode==0){
 } // end of if
 
 if ($this->announcements): ?>
+
 <h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
 	<?php foreach ($this->announcements as $item): ?>
 		<div class="news">
