@@ -7,7 +7,7 @@
 	$from			= htmlentities_utf8($this->from);
 	$to				= htmlentities_utf8($this->to);
 ?>
-<script type="text/javascript" src="jscripts/calendar.js"></script>
+<script type="text/javascript" src="jscripts/lib/calendar.js"></script>
 <script type="text/javascript"> 
 <!--
 	//overwrite calendar dates range settings.

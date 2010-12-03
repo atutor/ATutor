@@ -11,7 +11,7 @@
 	$to			 = htmlentities_utf8($this->to);
 	$description = htmlentities_utf8($this->description, false);
 ?>
-<script type='text/javascript' src='jscripts/calendar.js'></script>
+<script type='text/javascript' src='jscripts/lib/calendar.js'></script>
 <script type="text/javascript"> 
 <!--
 	//overwrite calendar dates range settings.

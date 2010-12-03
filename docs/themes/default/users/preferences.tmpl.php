@@ -24,7 +24,7 @@ if ($current_tab == 1)
 {
 	global $_custom_head, $onload;
 	
-	$_custom_head = "<script language=\"JavaScript\" src=\"jscripts/TILE.js\" type=\"text/javascript\"></script>";
+	$_custom_head = "<script language=\"JavaScript\" src=\"jscripts/lib/TILE.js\" type=\"text/javascript\"></script>";
 	$onload = "setPreviewFace(); setPreviewSize(); setPreviewColours();";
 }
 

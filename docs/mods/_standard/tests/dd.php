@@ -52,9 +52,9 @@ for ($i=0; $i < 10; $i++) {
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $myLang->getCharacterSet(); ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2007 by http://atutor.ca" />
 	<base href="<?php echo AT_BASE_HREF . $content_base_href; ?>" />
-	<script type="text/javascript" src="<?php echo AT_BASE_HREF; ?>jscripts/jquery.js"></script>
-	<script type="text/javascript" src="<?php echo AT_BASE_HREF; ?>jscripts/interface.js"></script>
-	<script type="text/javascript" src="<?php echo AT_BASE_HREF; ?>jscripts/wz_jsgraphics.js"></script>
+	<script type="text/javascript" src="<?php echo AT_BASE_HREF; ?>jscripts/lib/dd_question/jquery.js"></script>
+	<script type="text/javascript" src="<?php echo AT_BASE_HREF; ?>jscripts/lib/dd_question/interface.js"></script>
+	<script type="text/javascript" src="<?php echo AT_BASE_HREF; ?>jscripts/lib/dd_question/wz_jsgraphics.js"></script>
 	<link rel="stylesheet" href="<?php echo AT_BASE_HREF; ?>themes/default/styles.css" type="text/css" />
 <style type="text/css">
 * {

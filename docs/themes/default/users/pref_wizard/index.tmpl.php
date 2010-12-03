@@ -9,7 +9,7 @@ global $msg;
         <meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
         <title><?php echo SITE_NAME; ?> : <?php echo _AT('preferences'); ?></title>
         <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-		<script src="<?php echo $_base_path; ?>jscripts/TILE.js" type="text/javascript"></script>
+		<script src="<?php echo $_base_path; ?>jscripts/lib/TILE.js" type="text/javascript"></script>
         <link rel="shortcut icon" href="<?php echo $_base_path; ?>favicon.ico" type="image/x-icon" />
         <link rel="stylesheet" href="<?php echo $_base_path ?>jscripts/infusion/framework/fss/css/fss-layout.css" type="text/css" />       
         <link rel="stylesheet" href="<?php echo $_base_path; ?>themes/default/styles.css" type="text/css" />
