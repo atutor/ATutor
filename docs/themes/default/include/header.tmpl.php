@@ -67,6 +67,9 @@ global $system_courses, $_custom_css, $db;
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
+	<!--[if IE8]>
+	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
+	<![endif]-->
     <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 <link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
 
@@ -207,16 +210,17 @@ global $system_courses, $_custom_css, $db;
 
 </div>
 
-<div class="crumbcontainer">
 	  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 		  <!-- the bread crumbs -->
+		<div class="crumbcontainer">
 		  <div id="breadcrumbs">
 			  <?php foreach ($this->path as $page): ?>
 				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
 			  <?php endforeach; ?> <?php echo $this->page_title; ?>
 		  </div>
+	  <?php } else { ?>
+	   <div class="crumbcontainer" style="padding-bottom:1.2em;">
 	  <?php } ?>
-
 		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
       <div id="guide_box">
 			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
