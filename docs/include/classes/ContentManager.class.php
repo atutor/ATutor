@@ -51,14 +51,14 @@ class ContentManager
 
 		// Look for tree icons for displaying content navigation from theme image folder,
 		// if the icon is not there, look up in atutor root image folder
-		$this->tree_collapse_icon = find_image($rtl.'tree/tree_collapse.gif');
-		$this->tree_expand_icon = find_image($rtl.'tree/tree_expand.gif');
-		$this->tree_vertline_icon = find_image($rtl.'tree/tree_vertline.gif');
-		$this->tree_horizontal_icon = find_image($rtl.'tree/tree_horizontal.gif');
-		$this->tree_split_icon = find_image($rtl.'tree/tree_split.gif');
-		$this->tree_disabled_icon = find_image($rtl.'tree/tree_disabled.gif');
-		$this->tree_end_icon = find_image($rtl.'tree/tree_end.gif');
-		$this->tree_space_icon = find_image($rtl.'tree/tree_space.gif');
+		$this->tree_collapse_icon = find_image($rtl.'tree/tree_collapse.gif', '');
+		$this->tree_expand_icon = find_image($rtl.'tree/tree_expand.gif', '');
+		$this->tree_vertline_icon = find_image($rtl.'tree/tree_vertline.gif', '');
+		$this->tree_horizontal_icon = find_image($rtl.'tree/tree_horizontal.gif', '');
+		$this->tree_split_icon = find_image($rtl.'tree/tree_split.gif', '');
+		$this->tree_disabled_icon = find_image($rtl.'tree/tree_disabled.gif', '');
+		$this->tree_end_icon = find_image($rtl.'tree/tree_end.gif', '');
+		$this->tree_space_icon = find_image($rtl.'tree/tree_space.gif', '');
 	}
 
 	function initContent( ) {

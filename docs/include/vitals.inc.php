@@ -1410,8 +1410,12 @@ if ( !function_exists('json_decode') ){
 /*
  * Finds the image in the theme image folder first. If the image does not exist, look up in 
  * core image folder.
- * @param: The relative path and name to the image. 
- *         "Relative" means relative to the "image" folder, with subfolders and image name.
+ * @param: image_name - The relative path and name to the image. 
+ *             "Relative" means relative to the "image" folder, with subfolders and image name.
+ *         actual_relative_path - Used when find_image() is called, for example in a class,
+ *             which is then called by different scripts that give different AT_INCLUDE_PATH. However,
+ *             the path to the image itself is consistent regardless of the caller script. This value
+ *             should be the consistent relative path to the image itself.
  * @return: The path to the image in the theme folder, if exists. 
  *          Otherwise, the path to the image in the core image folder.
  * Example: 
@@ -1420,20 +1424,22 @@ if ( !function_exists('json_decode') ){
  *      if the theme image does not exist, return the path to the image in the core "image" folder: include/../images/rtl_tree/tree/collapse.gif
  *      These pathes are relative to ATutor installation directory.
  */
-function find_image($image_name) {
+function find_image($image_name, $actual_relative_path = AT_INCLUDE_PATH) {
 	// The returned path is determined by AT_INCLUDE_PATH. If AT_INCLUDE_PATH is undefined, return the parameter itself.
 	if (!defined('AT_INCLUDE_PATH')) return $image_name;
 	
 	// remove leading "/"
 	if (substr($image_name, 0, 1) == "/") $image_name = substr($image_name, 1);
 	
-	$theme_image_folder = AT_INCLUDE_PATH.'../themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/';
-	$atutor_image_folder = AT_INCLUDE_PATH.'../images/';
+	$theme_image_folder = 'themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/';
+	$atutor_image_folder = 'images/';
 	
-	if (file_exists($theme_image_folder.$image_name)) {
-		return $theme_image_folder.$image_name;
+	// Use the path that is relative to AT_INCLUDE_PATH in the caller script, to check the existence of the image
+	// but the return path is based on the pass-in actual path parameter.
+	if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.$image_name)) {
+		return $actual_relative_path.$theme_image_folder.$image_name;
 	} else {
-		return $atutor_image_folder.$image_name;
+		return $actual_relative_path.$atutor_image_folder.$image_name;
 	}
 }
 

@@ -20,8 +20,8 @@
 // if the icon is not there, look up in atutor root image folder
 global $rtl;
 
-$tree_collapse_icon = AT_BASE_HREF.find_image($rtl.'tree/tree_collapse.gif');
-$tree_expand_icon = AT_BASE_HREF.find_image($rtl.'tree/tree_expand.gif');
+$tree_collapse_icon = AT_BASE_HREF.find_image($rtl.'tree/tree_collapse.gif', '');
+$tree_expand_icon = AT_BASE_HREF.find_image($rtl.'tree/tree_expand.gif', '');
 		
 ?>
 ATutor = ATutor || {};
