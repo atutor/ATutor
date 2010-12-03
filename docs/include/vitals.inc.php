@@ -1428,6 +1428,9 @@ function find_image($image_name, $actual_relative_path = AT_INCLUDE_PATH) {
 	// The returned path is determined by AT_INCLUDE_PATH. If AT_INCLUDE_PATH is undefined, return the parameter itself.
 	if (!defined('AT_INCLUDE_PATH')) return $image_name;
 	
+	// string concanation cannot be used at assigning parameter default value
+	if ($actual_relative_path == AT_INCLUDE_PATH) $actual_relative_path .= '../';
+	
 	// remove leading "/"
 	if (substr($image_name, 0, 1) == "/") $image_name = substr($image_name, 1);
 	
