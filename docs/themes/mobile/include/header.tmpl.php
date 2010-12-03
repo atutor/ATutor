@@ -125,14 +125,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		
 
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
-	<script src="<?php echo $this->base_path; ?>jscripts/ATutorCourse.js" type="text/javascript"></script>   
 	<script language="javascript" type="text/javascript">
 	//<!--
 	jQuery.noConflict();
 	//-->
 	</script>
+	<script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
 <?php if (($wurflObj->getDeviceCapability("mobile_browser")=="Safari")): ?>	
 
 <?php endif; ?>

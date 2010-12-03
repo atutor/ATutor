@@ -60,4 +60,4 @@ ATutor.course = ATutor.course || {};
      });
 })();
 
-
+ATutor.addJavascript(ATutor.base_href+"jscripts/lib/jquery.autoHeight.js");

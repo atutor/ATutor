@@ -496,4 +496,22 @@ ATutor.users.preferences = ATutor.users.preferences || {};
     	});
     };
     
+    /*
+     * Allow adding javascript from javascript
+     * @param: jsname - the javascript to include. Make sure the path to the js file is correct
+     *         tagToAppendJS - Optional. The tag where you want the js file to be included. For example: head, body
+     * Refrence: http://javascript.about.com/library/bladdjs.htm
+     */
+    ATutor.addJavascript = function(jsname,tagToAppendJS) {
+    	// set the default 
+    	if (tagToAppendJS === undefined) {
+    		tagToAppendJS = 'head';
+    	}
+    	var th = document.getElementsByTagName(tagToAppendJS)[0];
+    	var s = document.createElement('script');
+    	s.setAttribute('type','text/javascript');
+    	s.setAttribute('src',jsname);
+    	th.appendChild(s);
+    }
+
 })();
