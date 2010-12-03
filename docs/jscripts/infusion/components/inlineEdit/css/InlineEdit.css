@@ -1,0 +1,33 @@
+.fl-inlineEdit-edit {margin:-2px; padding:0;}
+
+
+/* Base Appearance & States Appearance */
+.fl-inlineEdit-tooltip {
+    position    : absolute;
+    background  : #CCC;
+    border      : 1px solid #999;
+    font        : normal 75% sans-serif;
+    padding     : 3px 5px;
+}
+
+/* :hover */
+.fl-inlineEdit-invitation {
+    border      : 1px solid #999;
+    background  : lightyellow;
+    cursor      : pointer;
+    /*margin      : -1px;*/
+}
+
+.fl-inlineEdit-richText-invitation {
+    background  : lightyellow;
+    cursor      : pointer;
+}
+
+/* :focus */ 
+.fl-inlineEdit-focus{
+    
+}
+
+
+/* Themed Appearance + Themed States */
+
