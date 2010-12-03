@@ -78,7 +78,7 @@ ATutor.course.contentMenu = ATutor.course.contentMenu || {};
 		}
 		else
 		{ // refresh the content navigation to exit the edit mode
-			jQuery.post(ATutor.base_path+"mods/_core/content/refresh_content_nav.php", {}, 
+			jQuery.post(ATutor.base_path+"refresh_content_nav.php", {}, 
 						function(data) {jQuery("#editable_table").replaceWith(data); ATutor.course.contentMenu.initContentMenu();});
 		}
 	};

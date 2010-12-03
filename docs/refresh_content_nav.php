@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
-define('AT_INCLUDE_PATH', '../../../include/');
+define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 global $contentManager;

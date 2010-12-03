@@ -20,20 +20,8 @@
 // if the icon is not there, look up in atutor root image folder
 global $rtl;
 
-$theme_image_folder = 'themes/'.$_SESSION['prefs']['PREF_THEME'].'/images/';
-$atutor_image_folder = 'images/';
-
-if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.$rtl.'tree/tree_collapse.gif')) {
-	$tree_collapse_icon = AT_BASE_HREF.$theme_image_folder.$rtl.'tree/tree_collapse.gif';
-} else {
-	$tree_collapse_icon = AT_BASE_HREF.$atutor_image_folder.$rtl.'tree/tree_collapse.gif';
-}
-
-if (file_exists(AT_INCLUDE_PATH.'../'.$theme_image_folder.'tree/tree_expand.gif')) {
-	$tree_expand_icon = AT_BASE_HREF.$theme_image_folder.$rtl.'tree/tree_expand.gif';
-} else {
-	$tree_expand_icon = AT_BASE_HREF.$atutor_image_folder.$rtl.'tree/tree_expand.gif';
-}
+$tree_collapse_icon = AT_BASE_HREF.find_image($rtl.'tree/tree_collapse.gif');
+$tree_expand_icon = AT_BASE_HREF.find_image($rtl.'tree/tree_expand.gif');
 		
 ?>
 ATutor = ATutor || {};
