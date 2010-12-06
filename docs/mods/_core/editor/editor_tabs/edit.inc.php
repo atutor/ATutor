@@ -72,42 +72,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     
     <div class="fl-container fl-fix">
       <ul id="content-tool-links">
-        <li><img id="previewtool" class="fl-col clickable" src="<?php echo AT_BASE_HREF.'images/preview.png'?>" title="<?php echo _AT('preview').' - '._AT('new_window'); ?>" alt="<?php echo _AT('preview').' - '._AT('new_window'); ?>" height="30" width="30" /><?php echo _AT('preview'); ?></li>
-        <li><img id="accessibilitytool" class="fl-col" src="" title="" alt="" height="30" width="30" /><?php echo _AT('accessibility'); ?></li>
-        <li><img id="headtool" class="fl-col" src="" title="" alt="" height="30" width="30" /><?php echo _AT('customized_head'); ?></li>
-        <li><img id="pastetool" class="fl-col" title="" src="" alt="" height="30" width="30"/><?php echo _AT('paste'); ?></li> 
-        <li><img id="filemantool" class="fl-col" title="" src="" alt="" height="30" width="30" /><?php echo _AT('files'); ?></li>
-           
-<!-- ******** Tool Manager ******* -->
-<?php
-    $count = 0;
-    foreach($all_tools as $tool) {
-        if($tool['tool_file'] != '' && $tool['table'] != '') {
-            $sql_assoc = "SELECT * FROM ".TABLE_PREFIX.$tool['table']." WHERE content_id='$cid'";
-            $result_assoc = mysql_query($sql_assoc,$db);
-
-            if($num_row = mysql_num_rows($result_assoc)){
-                $tool['alt'] = $tool['title'].' '._AT('added');
-            } else {
-                $tool['alt'] = $tool['title'].' '._AT('none');
-            }
-
-            $count++; 
-?>
-            <!-- TODO LAW note problem here with one tool_file variable for multiple tools -->
-           	<script type="text/javascript" language="javascript">
-           	//<!--
-               	ATutor.mods.editor.tool_file = "<?php if(isset($tool['tool_file'])) echo $tool['tool_file'] ?>";
-           	//-->
-           	</script>
-           	<li><img class="fl-col clickable tool" src="<?php echo $tool['img']; ?>" alt="<?php echo $tool['alt']; ?>" title="<?php echo $tool['title']; ?>" height="30" width="30" /><?php echo $tool['title']?></li>
-<?php 
+        <?php 
+        foreach ($_content_tools as $tool) {
+        	echo '<li><img id="'.$tool["id"].'" class="'.$tool["class"].'" title="'.$tool['title'].'" src="'.$tool['src'].'" alt="'.$tool['alt'].'" height="30" width="30" />'.$tool["text"].'</li>'."\n";
         }
-    }
-?>
+        ?>
       </ul>
-
-<!-- ****** end Tool Manager ***** -->
    	</div> <!-- end toolbar -->
 
 	<!-- Customized head -->

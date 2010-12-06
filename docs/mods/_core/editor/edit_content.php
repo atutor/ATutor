@@ -98,11 +98,34 @@ if ($cid) {
 }
 
 if($current_tab == 0) {
-    $_custom_head .= '
+	global $_content_tools;
+	
+	$_custom_head .= '
     <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
     <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
-    <script type="text/javascript" src="'.$_base_path.'mods/_core/editor/js/edit.js"></script>
     ';
+	$_content_tools = is_array($_content_tools) ? $_content_tools : array();
+	
+	$current_tool_pos = 0;
+	$_content_tools[] = array("id"=>"previewtool", 
+	                          "class"=>"fl-col clickable", 
+	                          "src"=>AT_BASE_HREF."images/preview.png",
+	                          "title"=>_AT('preview').' - '._AT('new_window'),
+	                          "alt"=>_AT('preview').' - '._AT('new_window'),
+	                          "text"=>_AT('preview'), 
+	                          "js"=>AT_BASE_HREF."mods/_core/editor/js/edit.js",
+	                          "position"=>++$current_tool_pos);
+	
+	$_content_tools[] = array("id"=>"accessibilitytool", "class"=>"fl-col", "text"=>_AT('accessibility'), "position"=>++$current_tool_pos);
+	$_content_tools[] = array("id"=>"headtool", "class"=>"fl-col", "text"=>_AT('customized_head'), "position"=>++$current_tool_pos);
+	$_content_tools[] = array("id"=>"pastetool", "class"=>"fl-col", "text"=>_AT('paste'), "position"=>++$current_tool_pos);
+	$_content_tools[] = array("id"=>"filemantool", "class"=>"fl-col", "text"=>_AT('files'), "position"=>++$current_tool_pos);
+
+	foreach ($_content_tools as $tool) {
+    	if (isset($tool["js"])) {
+    		$_custom_head .= '<script type="text/javascript" src="'.$tool["js"].'"></script>'."\n";
+    	}
+    }
 }
 
 if ($cid) {
@@ -157,7 +180,7 @@ if ($current_tab == 0 || $current_tab == 3)
     load_editor($simple, false, "none");    
 }
 
-//TODO*************BOLOGNA****************REMOVE ME**************/
+// Generate the last content tool elements
 //loading toolbar for insert discussion topic or web link into the content
 if ($current_tab == 0){
     if(authenticate(AT_PRIV_CONTENT,AT_PRIV_RETURN)){
@@ -177,14 +200,45 @@ if ($current_tab == 0){
                     break;
                 }
             }
-            if(!$check)
-                $all_tools[]=$main;
-            else
+            if(!$check && $main['tool_file'] != '' && $main['table'] != '') {
+            	$_content_tools[] = array("class"=>"fl-col clickable tool", 
+				                          "src"=>$main['img'], 
+				                          "alt"=>$main['alt'],
+				                          "title"=>$main['title'],
+				                          "text"=>$main['title'],
+            	                          "position"=>++$current_tool_pos);
+    
+		    	if(isset($main['tool_file'])) {
+		    		echo '<!-- TODO LAW note problem here with one tool_file variable for multiple tools -->'."\n";
+				    echo '  <script type="text/javascript" language="javascript">'."\n";
+				    echo '  //<!--'."\n";
+				    echo '  ATutor.mods.editor.tool_file = "'. $main['tool_file'].'";'."\n";
+				    echo '  //-->'."\n";
+				    echo '  </script>'."\n";
+		    	}
+            	
+            }
+            else {
                 $check=false;
+            }
         }
     }
 }
 
+// The customized function to sort multi-dimentional array $_content_tools
+function compare($x, $y) {
+	if (!isset($x["position"])) return 1;
+	if (!isset($y["position"])) return -1;
+	if ( $x["position"] == $y["position"] )
+		return 0;
+	else if ( $x["position"] < $y["position"] )
+		return -1;
+	else
+		return 1;
+}
+
+// Sort $_content_tools. Always append the element with empty "position" to the end of the result array.
+usort($_content_tools, 'compare');
 
 $cid = intval($_REQUEST['cid']);
 $pid = intval($_REQUEST['pid']);
@@ -402,8 +456,8 @@ $pid = intval($_REQUEST['pid']);
 
 <div>
 	<?php output_tabs($current_tab, $changes_made); ?>
-
 </div>
+
 <span style="clear:both;"/></span>
 <div class="input-form">
 

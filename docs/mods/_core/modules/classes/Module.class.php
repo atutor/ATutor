@@ -167,9 +167,12 @@ class Module {
 	var $_properties; // array from xml
 	var $_cron_interval; // cron interval
 	var $_cron_last_run; // cron last run date stamp
+	var $_content_tools; // content tool icons on "edit content" page
 
 	// constructor
 	function Module($row) {
+		global $_content_tools;
+		
 		if (is_array($row)) {
 			$this->_directoryName   = $row['dir_name'];
 			$this->_status          = $row['status'];
@@ -194,6 +197,7 @@ class Module {
 			$this->_display_defaults= 0;
 			$this->_type            = AT_MODULE_TYPE_EXTRA; // standard/core are installed by default
 		}
+		$this->_content_tools   = array();
 	}
 
 	// statuses
@@ -216,7 +220,7 @@ class Module {
 
 	function load() {
 		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
-			global $_modules, $_pages, $_stacks, $_list, $_tool;  // $_list is for sublinks on "detail view"
+			global $_modules, $_pages, $_stacks, $_list, $_tool, $_content_tools;  // $_list is for sublinks on "detail view"
 
 			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
 
@@ -235,7 +239,11 @@ class Module {
 				$_list = array_merge((array)$_list, $this->_list);			
 			}
 
-                        //TODO***********BOLOGNA***********REMOVE ME***********/
+			if(isset($this->_content_tools)) {
+				$_content_tools = array_merge((array)$_content_tools, $this->_content_tools);			
+			}
+			
+			//TODO***********BOLOGNA***********REMOVE ME***********/
                         //tool manager (content editing)
 			if(isset($this->_tool)) {
 				$_tool = array_merge((array)$_tool, $this->_tool);
