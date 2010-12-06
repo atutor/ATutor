@@ -8,4 +8,5 @@ CREATE TABLE `hello_world` (
 );
 
 INSERT INTO `language_text` VALUES ('en', '_module','hello_world','Hello World',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','hello_world_tool','Hello World Content Tool',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','hello_world_text','A sample Hello World text for detailed homepage.',NOW(),'');

@@ -77,6 +77,15 @@ $this->_pages[AT_NAV_START]  = array('mods/hello_world/index_mystart.php');
 $this->_pages['mods/hello_world/index_mystart.php']['title_var'] = 'hello_world';
 $this->_pages['mods/hello_world/index_mystart.php']['parent'] = AT_NAV_START;
 
+/* The element of content tool bar that is displayed on "Edit Content" => "Content" tab */
+$this->_content_tools[] = array("id"=>"helloworld_tool", 
+                                "class"=>"fl-col clickable", 
+                                "src"=>AT_BASE_HREF."mods/hello_world/hello_world.jpg",
+                                "title"=>_AT('hello_world_tool'),
+                                "alt"=>_AT('hello_world_tool'),
+                                "text"=>_AT('hello_world'), 
+                                "js"=>AT_BASE_HREF."mods/hello_world/content_tool_action.js");
+
 function hello_world_get_group_url($group_id) {
 	return 'mods/hello_world/index.php';
 }
