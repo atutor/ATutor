@@ -16,8 +16,17 @@ $page = 'sitemap';
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/student_tools/classes/StudentToolsUtil.class.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+function print_one_menu_item($text) {
+	echo '<br />';
+	echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="img-size-tree" />';
+	echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" />';
+	echo '<img src="images/'.$rtl.'tree/tree_horizontal.gif" alt="" class="img-size-tree" />';
+	echo '&nbsp;'.$text;
+}
 ?>
 <div id="container" style="padding:2em; width:90%;">
 <?php
@@ -32,6 +41,7 @@ foreach ($_current_modules as $module) {
 
 	if (substr($module, -14) == 'forum/list.php') {
 		$forums = get_forums($_SESSION['course_id']);
+		
 		if (is_array($forums)) {
 			foreach ($forums as $state=>$rows) {
 				$count = 0;
@@ -50,11 +60,21 @@ foreach ($_current_modules as $module) {
 				}
 			} 
 		} else {
-			echo '<br />';
-			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="img-size-tree" />';
-			echo '<img src="images/'.$rtl.'tree/tree_vertline.gif" alt="" class="img-size-tree" />';
-			echo '<img src="images/'.$rtl.'tree/tree_end.gif" alt="" class="img-size-tree" />';
-			echo _AT('no_forums');
+			print_one_menu_item(_AT('no_forums'));
+		}
+	}
+	
+	// display the turned-on student tools
+	if (substr($module, -23) == 'student_tools/index.php') {
+		$student_tools = StudentToolsUtil::getStudentTools($_SESSION['course_id']);
+		
+		if (count($student_tools) == 0) {
+			print_one_menu_item(_AT("no_student_tools"));
+		} else {
+			foreach (get_home_navigation($student_tools) as $link) {
+				$text = '<a href="'.$link['url'].'">'. $link['title'].'</a>';
+				print_one_menu_item($text);
+			}
 		}
 	}
 }

@@ -12,16 +12,11 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require ('classes/StudentToolsUtil.class.php');
 
-$fha_student_tools = array();
+$fha_student_tools = StudentToolsUtil::getStudentTools($_SESSION['course_id']);
 
-$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) {
-	$fha_student_tools = explode('|', $row['links']);
-}
-
-if($fha_student_tools[0] == "" ){
+if(count($fha_student_tools) == "" ){
 	$msg->addInfo('NO_TOOLS_FOUND');
 }
 
