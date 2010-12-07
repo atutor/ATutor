@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
 	<?php if (isset($_REQUEST['reply'])): ?>
 		<div class="row">
 			<label for="body"><?php echo _AT('forum_reply_to'); ?></label><br />
-			<textarea cols="45" name="replytext" rows="5"><?php echo htmlentities_utf8($saved_post['body']); ?></textarea>
+			<textarea cols="45" name="replytext" rows="5"><?php echo $saved_post['body']; ?></textarea>
 		</div>
 
 	<?php endif; ?>
