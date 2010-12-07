@@ -10,11 +10,13 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
+
 define('AT_INCLUDE_PATH', 'include/');
 @ob_end_clean();
 header("Content-Encoding: none");
 
 $_user_location	= 'public';
+$nophoto_flag = false;  //true if no profile photo exists
 
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/mime.inc.php');
@@ -29,8 +31,6 @@ if (isset($_GET['size']) && $_GET['size'] == 'o') {
 }
 
 $file = AT_CONTENT_DIR . 'profile_pictures/' . $size .'/'. $id .'.';
-
-
 $extensions = array('gif', 'jpg', 'png');
 
 foreach ($extensions as $extension) {
@@ -41,10 +41,12 @@ foreach ($extensions as $extension) {
 
 //if file does not exist, quit.
 if (!file_exists($file)){
-	return;
+	$file = AT_INCLUDE_PATH.'../images/nophoto.gif';
+	$nophoto_flag = true;
 } 
 
 $pathinfo = pathinfo($file);
+
 $ext = $pathinfo['extension'];
 if ($ext == '') {
 	$ext = 'application/octet-stream';
@@ -54,10 +56,8 @@ if ($ext == '') {
 
 $real = realpath($file);
 
-if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
-
-	header('Content-Disposition: filename="'.$size.$id.'.'.$pathinfo['extension'].'"');
-	
+if ($nophoto_flag || (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR))) {
+	header('Content-Disposition: filename="'.$size.$id.'.'.$pathinfo['extension'].'"');	
 	/**
 	 * although we can check if mod_xsendfile is installed in apache2
 	 * we can't actually check if it's enabled. also, we can't check if
@@ -77,6 +77,7 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 	@readfile($real);
 	exit;
 } else {
+
 	header('HTTP/1.1 404 Not Found', TRUE);
 	exit;
 }
