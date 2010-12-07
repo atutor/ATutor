@@ -31,68 +31,84 @@ table.data tfoot input {
 	min-width:0px;
 
 }
-table.data {
-	float:left;
-	clear:right;
-	margin-left:2em;
 
-}
 #topnavlistcontainer {
 	margin-bottom:-1px;
+	margin-top:-2em;
+	position:absolute;
+	left:0px;
+	top:62px;
+	border-bottom:0;
 }
 
 #header{
 	height: 5.0em;
-margin-bottom:.1em;
+	margin-bottom:.1em;
 }
 
 div#top-links{
-
-float:right;
+	float:right;
 }
 
 div#top-links a:active{
 	color:black;
 	background-color:#F6EAD6;
+
 }
 
 .outside_box{
 	height:9.6em;
 }
 
-ul#topnavlist {
-	margin-left:5px;
-	height:1.5em;
-
-}
 ul#topnavlist li {
-	white-space: nowrap;
-	list-style: none;
-	display: inline;
-	height:auto;
+
+	*display: inline;
 }
-ul#topnavlist li a.selected {
-    /* The selected tab. There's only one of these */
-	color: #555;
-	font-weight: normal;
-	border-radius:.3em .3em 0em 0em;
-	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .2em 1.8em .2em .1.8em;
-}
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active, ul#subnavlist strong {
-	margin-top:-3px;
-	margin-right:1em;
-}
+
 ul#subnavlist li {
-	zoom:100%;
-	margin-top:3px;
-	max-width:12em;
-	margin-right:2em;
-	display: inline;
+	*display: inline;
+	margin-right:.5em;
 }
 fieldset.group_form{
 	padding:.5em;
+	padding-bottom:2em;
+	min-height:150px;
 }
+
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:35px;
+}
+.tab-spacer{
+	*width:10px;
+}
+.editor_tab{
+	zoom:100%;
+	*width:auto;	
+	*display: inline-block;
+	*clear: left;
+	*padding: 0 30px 0 5px;
+}
+.editor_buttontab {
+	zoom:100%;
+	clear:both;
+padding-right:1em;
+}
+
+.editor_tab_selected{
+	*width:auto;
+}
+
+.etabbed-list-container{
+	*height:1.9em;
+}
+.etabbed-list{
+	*height:1.8em;
+	*padding-top:.4em;
+}
+
+
+
 ul.folders {
 	list-style: disc url(../../images/folder.gif) outside;
 	font-family: Verdana, Helevetica, Arial, sans-serif;
@@ -142,14 +158,19 @@ div#top-links {
 	margin-top:0em;
 }
 #course_title_container{
-margin-top:1em;
+margin-top:-1em;
+
+}
+h1#section-title {
+	*margin-top:.5em;
+	
 }
 div#guide_box{
-width:15%;
+*width:12%;
 
 }
 #shortcuts{
-
+*width:12%;
 }
 #side-menu ul{
 width:18em;
@@ -163,4 +184,8 @@ padding-right:2em;
 }
 #contentcolumn {
 overflow:hidden;
+}
+
+.logoutbar{
+margin-top:-.2em;	
 }

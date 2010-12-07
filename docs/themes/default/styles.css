@@ -640,9 +640,8 @@ a#editor-link.on {
 /* for data tables */
 
 table.data {
-	clear:right;
 	border: 1px solid #cccccc;
-	width: 95%; 
+	width: 98%; 
 	margin-left: auto; 
 	margin-right: auto;
 	border-radius:.5em;
@@ -979,7 +978,6 @@ div.paging li a:hover, div.paging li a.current {
 	/* background-image: url('images/pencil_top_ds.png'); */
 	background-position: 99% 99%;
 	background-repeat: no-repeat;
-
 }
 
 #header a{
@@ -1473,14 +1471,14 @@ overflow:hidden;
 
 /** forum stuff **/
 #forum-thread li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
-#forum-thread li.even { background-color: #F7F3ED; border-top: none; }
-#forum-thread li.odd { background-color: #fff; }
+#forum-thread li.even { background-color: #F7F3ED; border-top: none;  margin-top:.5em;}
+#forum-thread li.odd { background-color: #fff; margin-top:1em;}
 div.forum-post-author { float:left; width:150px; padding:8px 10px; }
 div.forum-post-author a.title {font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
 div.forum-post-author img.profile-picture { border: 2px solid #F7F3ED; text-align:right;}
 div.forum-post-content { margin-left: 150px; padding: 5px 0px 18px 18px;}
 div.forum-post-content h3 { font-weight: 500; float:left;clear:right; }
-div.forum-post-ctrl { float: right; padding-right: 5px; color: #a1a1a1;}
+div.forum-post-ctrl { float: right; padding: 5px; margin-top:-.7em;margin-right:.2em;color: #a1a1a1; border:1px solid #cccccc;-moz-border-radius:.3em;border-radius:.3em;}
 div.forum-post-ctrl a { text-decoration: none; }
 div.forum-post-ctrl span { color: black; background-color: #fefdc2; padding: 3px; }
 div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED; }
@@ -1506,15 +1504,15 @@ div#topnavlistcontainer {
 	clear:both;
 	height:auto;
 
+
 }
 
 ul#topnavlist {
 	padding: 0;
 	margin-right: auto;
 	margin-left: auto;
-	margin-bottom: 3px;
+	margin-bottom: -2px;
 	margin-top: 0px;
-	margin-bottom:0px;
 
 }
 
@@ -1671,6 +1669,7 @@ fieldset.group_form{
 	border:1px #6D7B8D solid;
    	min-height: 170px;
 	padding:.5em;
+	background-color:#ffffff;
 
 } 
 legend.group_form{
@@ -1832,7 +1831,7 @@ div.home_box {
 	padding:.2em;
 }
 .details_or{
-	width:28.8em;
+	width:25.8em;
 	height:9.8em;
 
 }
@@ -1912,7 +1911,7 @@ ul#subnavlist li {
 	padding: 0em .5em .6em .5em ;
 }
 
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, 		ul#subnavlist li:hover{
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
   	color: black;
 	text-decoration:none;
 	background-color: #E6E6E6;
@@ -1964,7 +1963,7 @@ tr.odd {
 	box-shadow: 0;
 }
 .editor_tab{
-	float:left;
+
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
@@ -1998,7 +1997,6 @@ tr.odd {
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.4em;
-
 }
 .editor_tab input[type=submit]{
 	height:1.2em;
@@ -2009,6 +2007,7 @@ tr.odd {
 	margin-left:1em;
 	width:30%; 
 	padding:.5em;
+	padding-left:1em;
 	border: 1px solid #cccccc;
 	border-radius: .5em .5em .5em .5em;
 	-moz-border-radius: .5em .5em .5em .5em;
@@ -2052,20 +2051,84 @@ table.etabbed-table	{
 }
 /* Preference Editor tabs */
 .etabbed-list-container {
-
 	font-size:10pt;
-	width:95%;
+	width:65%;
 
 }
 .etabbed-list{
+	margin-bottom:-.4em;
+	height:1.8em;
+	width:80%;
 
-	width:100%;
 }
 .prefs-tab-spacer {
 	background-color: transparent;
 	width: 1em;
 }
+
 .prefs_buttontab {
+	height:1.4em;
+	background-color: #ffffff;
+	border-left:0;
+	border-right:0;
+	border-bottom:0;
+	border-top:  1px solid #ffffff;
+
+/*	color:#000555;
+	font-size:0pt;
+	white-space: nowrap;
+	background-color: #ffffff;
+	border:0;
+	font-weight:500;
+	padding:0em 0em -.3em -.4em;
+	border-radius:.3em;
+	-moz-border-radius: .3em .3em .3em .3em;*/
+
+}
+.prefs_tab{
+	height:1.5em;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 0;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #FFFFFF;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: .2em .2em 0em .3em;
+	display: inline;
+	margin-left:.5em;
+		font-weight:bold;
+	text-decoration:none;
+}
+    
+.prefs_buttontab:hover, .prefs_tab:hover {
+	background-color: #eeeeee;
+}
+
+.prefs_tab_selected{
+    height:1.8em;
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom:0;
+	text-align:center;
+	white-space: nowrap;
+	background-color: #eeeeee;
+	border-radius:.3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: .2em .2em 0em .5em;
+	padding: .2em .2em 0em .3em;
+	display: inline;
+	margin-left:.5em;
+	font-weight:bold;
+	text-decoration:none;
+	
+}
+
+
+/*.prefs_buttontab {
 	color:#000555;
 	font-size:0pt;
 	white-space: nowrap;
@@ -2117,7 +2180,8 @@ table.etabbed-table	{
 	-moz-box-shadow:.1em .1em .0 #999999;
 	box-shadow: .1em .1em .1em #999999;
 	display: inline;
-}
+}*/
+
 .admin_container{
 	border:1px solid #cccccc;
 	border-radius:.5em;
@@ -2315,7 +2379,8 @@ div .search_form {
 }
 
 div .search_form .row{
-	background-color: #DEDEC0;
+/*	background-color: #DEDEC0;*/
+		background-color: #ffffff;
 	padding: 8px;
 }
 div .button {
