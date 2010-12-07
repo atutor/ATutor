@@ -296,6 +296,13 @@ if ($_config['time_zone']) {
 	$contentManager->initContent();
 /**************************************************/
 
+if (!file_exists(AT_INCLUDE_PATH.'../sha-1factory.js')) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->printErrors('MISSING_SHA1');
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
+
 if (isset($_user_location) && ($_user_location == 'users') && $_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)) {
 	$_SESSION['course_id'] = 0;
 }
