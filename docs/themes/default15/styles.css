@@ -34,6 +34,7 @@ p {
 	margin-top: 0px;
 	margin-left: 5px;
 	margin-right: 0px;
+	white-space:normal;
 } 
 
 
@@ -427,12 +428,13 @@ div#member-links {
 	padding-right:5px;
 }
 
-h2.page-title {
+ h2.page-title { 
 	margin-bottom: 10px;
-	margin-top: 4px;
+	margin-top: -1em;
 	margin-left: 5px;
 	border-bottom: 1px solid #f0f0f0;
 	clear: left;
+	width:90%;
 }
 
 h1 {
@@ -1134,7 +1136,8 @@ ul#topnavlist {
 	margin-left: auto;
 	margin-bottom: 3px;
 	margin-top: 0px;
-	white-space: nowrap;
+		display: inline-block;
+
 }
 
 ul#topnavlist li {
@@ -1385,7 +1388,7 @@ a.tooltip{
 }
 /* style for home page sublinks view */
 div.home_box {
-	width: 30em;
+	width: 25.5em;
 	height: 150px;	
 	margin:0;
 	margin-top: 15px;
@@ -1399,7 +1402,7 @@ div.home_box {
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
-	width:28.5em;
+	width:25.5em;
 	height:9.8em;
 	-moz-border-radius:.3em .3em .3em .3em;
 	border-radius: .3em .3em .3em .3em;
@@ -1422,7 +1425,7 @@ div.home_box {
 	padding:.2em;
 }
 .details_or{
-	width:28.8em;
+	width:25.8em;
 	height:9.8em;
 	margin:0;
 }
@@ -1796,7 +1799,7 @@ ul.social_inline_menu{
 	margin:auto;
 }
 div.social-wrapper{
-	border:thin solid #cccccc; 
+	border:1px solid #cccccc; 
 	width:95%;
 	padding:.5em;
 	margin:auto;
@@ -1838,9 +1841,7 @@ div.social-wrapper{
 /* Content editor tabs */
 /* Content editor wrapper div */
 .editor_wrapper{
-	border:1px solid #cccccc;
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em .5em .5em;
+
 	padding: .1em .5em .1em .5em ;
 }
 
@@ -1934,4 +1935,15 @@ height:.8em;
 .box fl-clear{
 float:left;
 display:none;
+}
+/* sequence links */
+div#sequence-links {
+	float:right;
+	margin-top:-.5em;
+	margin-bottom:-3em;
+
+
+}
+div#sequence-links a {
+	text-decoration: none;
 }

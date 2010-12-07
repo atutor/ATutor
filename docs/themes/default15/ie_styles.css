@@ -1,29 +1,17 @@
 /* IE specific styles */
 
-/*
-div#topnavlistcontainer {
-height:1.3em;
-}
-
-ul#topnavlist {
-	zoom:100%;
-	margin:0px;
-
-}
-
 ul#topnavlist li {
-	zoom:100%;
-	padding-left:0.3em;
-	padding-bottom:0.3em;
-	margin:0px;
+	*display: inline;
+}
+ul#topnavlist{
+clear:both;	
+	padding-top:1em;
+}
+#topnavlistcontainer{
+	padding-top:.5em;
+height:2.2em;	
+}
 
-}
-ul#topnavlist li a {
-*/
-}
-ul#topnavlist li {
-padding-bottom:-.9em;
-}
 label {
 	zoom:100%;
 	margin:0px;
@@ -33,14 +21,35 @@ table.data tfoot input {
 	min-width:0px;
 }
 .outside_box{
-	height:12em;
+	height:9.8em;
 	padding:0.5em;
+	margin-left:-1em;
 }
-.details_or{
-	height:10em;
-}
+
 .buttons input[type=submit]{
-padding:.3em;
-width:auto;
-overflow:visible;
+	padding:.3em;
+	width:auto;
+	overflow:visible;
+}
+div.home_box{
+	width:25.5em;
+	height:9.8em;
+	margin-left:1.5em;
+}
+
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:55px;
+}
+
+div#sub-navigation {
+	margin-top:-1em;
+	*height:1.8em;
+}
+div#sequence-links {
+
+	*margin-top:1.6em;
+
+
+
 }

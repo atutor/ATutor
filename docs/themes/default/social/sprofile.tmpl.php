@@ -107,7 +107,7 @@
 
 
 			</dl>
-		</div>
+		</div><br />
 		<?php if (!empty($this->representation)){ ?>
 			<br /><div  class="headingbox" style="margin-right:1em;"><h4><?php echo _AT('representation'); ?></h4></div>
 			<div class="contentbox" style="margin-right:1em;">

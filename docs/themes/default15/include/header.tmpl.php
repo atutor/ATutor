@@ -132,7 +132,7 @@ global $system_courses;
 	<span style="white-space:nowrap;font-size:smaller;padding-top:150px;">
 	<?php foreach ($this->path as $page): ?>
 		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> &raquo; 
-	<?php endforeach; ?> <?php echo $this->page_title; ?>
+	<?php endforeach; ?> <?php echo $this->page_title; ?></span>
 </div>
 <?php } ?>
 
@@ -214,7 +214,7 @@ global $system_courses;
 	    </div>
 
 
-	<div style="float:right;padding-top:7px;" id="sequence-links">
+	<div id="sequence-links">
 	<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 		<?php if ($this->sequence_links['resume']): ?>
 				<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.gif" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img-size-ascdesc" /></a>
@@ -229,6 +229,7 @@ global $system_courses;
 	<?php } ?>
 		&nbsp;
 	</div>
+<br style="clear:both;">
 	<?php endif; ?>
 	<h2 class="page-title"><?php echo htmlspecialchars($this->page_title, ENT_COMPAT, "UTF-8"); ?></h2>
 
