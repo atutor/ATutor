@@ -248,6 +248,20 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 				$savant->assign('forum_message', '');
 				$savant->assign('forum_ids', array());
 			}
+
+			// get the content that the standard and add-on modules want to display on the content page
+			$module_status_bits = AT_MODULE_STATUS_ENABLED;
+			$module_type_bits = AT_MODULE_TYPE_STANDARD + AT_MODULE_TYPE_EXTRA;
+			
+			$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits, $sort = TRUE);
+			$module_contents = '';
+			foreach($module_list as $key=>$obj) {
+				$module_content = $obj->getContent();
+				if (!empty($module_content)){
+					$module_contents .= '<div id="'.str_replace('/', '-', $key).'" class="content-from-module">'.$module_content.'</div>';
+				}
+			}
+			if ($module_contents <> '') $savant->assign('module_contents', $module_contents);
 		}	
 	}
 } else {

@@ -1402,9 +1402,10 @@ div#content-text li {
 	margin-left: 15pt;
 }
 
-div#content-test {	
+div#content-test, div.content-from-module {	
 	float: left;
 	margin-top: 2em;
+	margin-bottom: 2em;
 	padding-right: 5pt;
 	width: 80%;
 }

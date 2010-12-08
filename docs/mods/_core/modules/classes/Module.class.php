@@ -220,7 +220,7 @@ class Module {
 
 	function load() {
 		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
-			global $_modules, $_pages, $_stacks, $_list, $_tool, $_content_tools;  // $_list is for sublinks on "detail view"
+			global $_modules, $_pages, $_stacks, $_list, $_tool, $_content_tools, $_callbacks;  // $_list is for sublinks on "detail view"
 
 			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
 
@@ -241,6 +241,10 @@ class Module {
 
 			if(isset($this->_content_tools)) {
 				$_content_tools = array_merge((array)$_content_tools, $this->_content_tools);			
+			}
+			
+			if(isset($this->_callbacks)) {
+				$_callbacks = array_merge((array)$_callbacks, $this->_callbacks);			
 			}
 			
 			//TODO***********BOLOGNA***********REMOVE ME***********/
@@ -668,7 +672,6 @@ class Module {
 
 	}
 
-
 	/**
 	 * Get the latest news from the Module. 
 	 * @access	public
@@ -700,6 +703,25 @@ class Module {
 				return $fnctn($course_id);
 			}
 		}
+	}
+	
+	/**
+	 * Get the output that this module wants to add onto content page. 
+	 * @access	public
+	 * @author	Cindy Li 
+	 * @date	Dec 7, 2010
+	 */
+	function getContent(){
+		if (file_exists(AT_MODULE_PATH . $this->_directoryName.'/moduleCallbacks.class.php') &&
+		    isset($this->_callbacks[$this->_directoryName])) 
+		{
+			require(AT_MODULE_PATH . $this->_directoryName.'/moduleCallbacks.class.php');
+			if (method_exists($this->_callbacks[$this->_directoryName], "appendContent")) {
+				eval('$output = '.$this->_callbacks[$this->_directoryName]."::appendContent();");
+				return $output;
+			}
+		}
+		return NULL;
 	}
 	
 	private function convertContent164($course_id) {
