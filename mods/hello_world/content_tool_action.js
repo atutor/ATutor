@@ -1,4 +1,9 @@
-/* The javascript is used in module.php @ $this->_content_tools["js"] */
+/**
+ * This javascript is to perform the functionalities that are required to implement
+ * the add-on content tool. 
+ * 
+ * Register this javascript @ module.php => $this->_content_tools["js"] 
+ */
 
 /*global jQuery*/
 /*global ATutor */
