@@ -86,6 +86,14 @@ $this->_content_tools[] = array("id"=>"helloworld_tool",
                                 "text"=>_AT('hello_world'), 
                                 "js"=>AT_BASE_HREF."mods/hello_world/content_tool_action.js");
 
+/*******
+ * Register the entry of the callback class. Make sure the class name is properly namespaced, 
+ * for instance, prefixed with the module name, to enforce its uniqueness.
+ * This class must be defined in "ModuleCallbacks.class.php".
+ * This class contains the static methods to append content to "view content" page.
+ */
+$this->_callbacks['hello_world'] = 'HelloWorldCallbacks';
+
 function hello_world_get_group_url($group_id) {
 	return 'mods/hello_world/index.php';
 }
