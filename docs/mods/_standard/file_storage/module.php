@@ -26,15 +26,15 @@ $this->_pages['mods/_standard/file_storage/comments.php']['title_var'] = 'commen
 $this->_pages['mods/_standard/file_storage/comments.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/comments.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
-$this->_pages['mods/_standard/file_storage/edit.php']['title_var'] = 'edit';
+$this->_pages['mods/_standard/file_storage/edit.php']['title_var'] = 'file_storage_edit_file';
 $this->_pages['mods/_standard/file_storage/edit.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/edit.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
-$this->_pages['mods/_standard/file_storage/edit_folder.php']['title_var'] = 'edit';
+$this->_pages['mods/_standard/file_storage/edit_folder.php']['title_var'] = 'file_storage_edit_folder';
 $this->_pages['mods/_standard/file_storage/edit_folder.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/edit_folder.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
-$this->_pages['mods/_standard/file_storage/move.php']['title_var'] = 'move';
+$this->_pages['mods/_standard/file_storage/move.php']['title_var'] = 'file_storage_move';
 $this->_pages['mods/_standard/file_storage/move.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/move.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
@@ -42,7 +42,7 @@ $this->_pages['mods/_standard/file_storage/assignment.php']['title_var'] = 'hand
 $this->_pages['mods/_standard/file_storage/assignment.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/assignment.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
-$this->_pages['mods/_standard/file_storage/new.php']['title_var'] = 'new_file';
+$this->_pages['mods/_standard/file_storage/new.php']['title_var'] = 'file_storage_new_file';
 $this->_pages['mods/_standard/file_storage/new.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/new.php']['children'] = array(); // empty array creates a "back to" link to index.php
 
