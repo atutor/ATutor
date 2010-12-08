@@ -90,7 +90,7 @@ $this->_content_tools[] = array("id"=>"helloworld_tool",
  * Register the entry of the callback class. Make sure the class name is properly namespaced, 
  * for instance, prefixed with the module name, to enforce its uniqueness.
  * This class must be defined in "ModuleCallbacks.class.php".
- * This class contains the static methods to append content to "view content" page.
+ * This class contains the static method to append content to "view content" page.
  */
 $this->_callbacks['hello_world'] = 'HelloWorldCallbacks';
 
