@@ -77,7 +77,17 @@ $this->_pages[AT_NAV_START]  = array('mods/hello_world/index_mystart.php');
 $this->_pages['mods/hello_world/index_mystart.php']['title_var'] = 'hello_world';
 $this->_pages['mods/hello_world/index_mystart.php']['parent'] = AT_NAV_START;
 
-/* The element of content tool bar that is displayed on "Edit Content" => "Content" tab */
+/*******
+ * Use the following array to define a tool to be added to the Content Editor's icon toolbar. 
+ * id = a unique identifier to be referenced by javascript or css, prefix with the module name
+ * class = reference to a css class in the module.css or the primary theme styles.css to style the tool icon etc
+ * src = the src attribute for an HTML img element, referring to the icon to be embedded in the Content Editor toolbar
+ * title = reference to a language token rendered as an HTML img title attribute
+ * alt = reference to a language token rendered as an HTML img alt attribute
+ * text = reference to a language token rendered as the text of a link that appears below the tool icon
+ * js = reference to the script that provides the tool's functionality
+ */
+
 $this->_content_tools[] = array("id"=>"helloworld_tool", 
                                 "class"=>"fl-col clickable", 
                                 "src"=>AT_BASE_HREF."mods/hello_world/hello_world.jpg",
@@ -90,7 +100,7 @@ $this->_content_tools[] = array("id"=>"helloworld_tool",
  * Register the entry of the callback class. Make sure the class name is properly namespaced, 
  * for instance, prefixed with the module name, to enforce its uniqueness.
  * This class must be defined in "ModuleCallbacks.class.php".
- * This class contains the static method to append content to "view content" page.
+ * This class is an API that contains the static methods to act on core functions.
  */
 $this->_callbacks['hello_world'] = 'HelloWorldCallbacks';
 
