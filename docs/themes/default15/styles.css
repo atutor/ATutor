@@ -1878,16 +1878,16 @@ float:right;
 }
 
 .del-content-icon{
-	  border:0;
-height:.8em;
+	border:0;
+	height:.8em;
 }
 .current-content{
-	  color:green;
+	color:green;
 }
 
 .box fl-clear{
-float:left;
-display:none;
+	float:left;
+	display:none;
 }
 /* sequence links */
 div#sequence-links {

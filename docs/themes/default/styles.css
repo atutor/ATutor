@@ -2104,9 +2104,7 @@ table.etabbed-table	{
 	text-decoration:none;
 }
     
-.prefs_buttontab:hover, .prefs_tab:hover {
-	background-color: #eeeeee;
-}
+
 
 .prefs_tab_selected{
     height:1.8em;
@@ -2533,3 +2531,5 @@ height:3.5em;
 width:3.5em;
 font-size:100%;
 }
+
+
