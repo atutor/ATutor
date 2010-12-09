@@ -88,6 +88,7 @@ div.search_bar .s_img{
 	float: right;
 	border: 0px;
 	margin-top: 0.375em;	
+	margin-top: -1.4em\9; /* the \9 to accomodate IE 7&8 */
 	margin-right: 0.4em;
 }
 
