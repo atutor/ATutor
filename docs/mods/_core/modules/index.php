@@ -13,7 +13,7 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-admin_authenticate(AT_ADMIN_PRIV_ADMIN);
+admin_authenticate(AT_ADMIN_PRIV_MODULES);
 
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 

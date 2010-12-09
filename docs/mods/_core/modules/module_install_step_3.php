@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-admin_authenticate(AT_ADMIN_PRIV_ADMIN);
+admin_authenticate(AT_ADMIN_PRIV_MODULES);
 
 $module_folder = '../../../mods/';
 
