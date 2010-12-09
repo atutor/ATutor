@@ -15,23 +15,23 @@ RewriteRule (.*)/ib/1$ $1/?ib=1 [L]
 #Forums rules
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?$ go.php/$1/forum/view.php/fid/$2/pid/$3/ [L]
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?$ go.php/$1/forums/forum/view.php/fid/$2/pid/$3/ [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/(([0-9]+)\.html)$ go.php/$1/forum/view.php/fid/$2/pid/$3/page/$4 [L]
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/(([0-9]+)\.html)$ go.php/$1/forums/forum/view.php/fid/$2/pid/$3/page/$4 [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/?$ go.php/$1/forum/index.php/fid/$2/ [L]
+RewriteRule (.*)/forum/([0-9]+)/?$ go.php/$1/forums/forum/index.php/fid/$2/ [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/([0-9]+)/([0-9+])\.html$ go.php/$1/forum/index.php/fid/$2/page/$3 [L]
+RewriteRule (.*)/forum/([0-9]+)/([0-9+])\.html$ go.php/$1/forums/forum/index.php/fid/$2/page/$3 [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule (.*)/forum/?$ go.php/$1/forum/list.php [L]
+RewriteRule (.*)/forum/?$ go.php/$1/forums/forum/list.php [L]
 
 #Content rule
 RewriteCond     %{REQUEST_FILENAME}     !-f
