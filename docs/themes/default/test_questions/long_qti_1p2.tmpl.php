@@ -46,4 +46,17 @@
 					</response_str>
 				</flow>
 			</presentation>
+		<?php if ($this->row['feedback']): ?>
+			<itemfeedback ident="FEEDBACK">
+				<solution>
+					<solutionmaterial>
+						<flow_mat>
+							<material>
+								<mattext texttype="text/html"><?php echo $this->row['feedback']; ?></mattext>
+							</material>
+						</flow_mat>
+					</solutionmaterial>
+				</solution>
+			</itemfeedback>
+		<?php endif; ?>
 		</item>
