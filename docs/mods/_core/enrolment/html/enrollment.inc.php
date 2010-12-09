@@ -314,7 +314,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <ul id="subnavlist">
 	<?php for ($i = 0; $i< $num_tabs; $i++): ?>
 		<?php if ($current_tab == $i): ?>
-			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></strong></a></li>
+			<li class="active"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></strong></a></li>
 		<?php else: ?>
 			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>"><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></a></li>
 		<?php endif; ?>
