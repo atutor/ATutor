@@ -29,6 +29,7 @@ div.album_panel{
 	-moz-border-radius: .5em .5em .5em .5em;
 	-moz-box-shadow:.2em .2em .1em #999999;
     box-shadow: .2em .2em .1em #999999;
+	padding:.3em;
 }
 div.album_panel div.photo_wrapper {
 	/* This class is to fix the problem where the images shift
