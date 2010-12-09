@@ -29,89 +29,89 @@ function isValidDate($date)
     return false;
 }
 
-function display_test_info($row)
+function display_test_info($row, $anonymous)
 {
-		global $random, $num_questions, $total_weight, $questions, $total_score, $table_content, $csv_content;
-		global $passscore, $passpercent;
-		global $q_sql, $db;
+	global $random, $num_questions, $total_weight, $questions, $total_score, $table_content, $csv_content;
+	global $passscore, $passpercent;
+	global $q_sql, $db;
 
-		$row['login'] = $row['login'] ? $row['login'] : '- '._AT('guest').' -';
-		$table_content .= '<tr>';
+	$row['login'] = $row['login'] ? $row['login'] : '- '._AT('guest').' -';
+	$table_content .= '<tr>';
+		
+	if($anonymous == 1){
+			$table_content .= '<td align="center">'._AT('anonymous').'</td>';
+			$csv_content .= quote_csv(_AT('anonymous')).', ';
+	}else{
+			$table_content .= '<td align="center">'.$row['login'].'</td>';
+			$csv_content .= quote_csv($row['login']).', ';
+	}
+	$startend_date_format=_AT('startend_date_format');
+	$table_content .= '<td align="center">'.AT_date($startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
+	$csv_content .= quote_csv($row['date_taken']).', ';
+
+	if ($passscore <> 0)
+	{
+		$table_content .= '<td align="center">'.$passscore.'</td>';
+		$csv_content .= $passscore.', ';
+	}
+	elseif ($passpercent <> 0)
+	{
+		$table_content .= '<td align="center">'.$passpercent.'%</td>';
+		$csv_content .= $passpercent . '%, ';
+	}
+	else
+	{
+		$table_content .= '<td align="center">'._AT('na').'</td>';
+		$csv_content .= _AT('na') . ', ';
+	}
+
+	$table_content .= '<td align="center">'.$row['final_score'].'/'.$total_weight.'</td>';
+	$csv_content .= $row['final_score'].'/'.$total_weight;
+
+	$total_score += $row['final_score'];
+
+	$answers = array(); /* need this, because we dont know which order they were selected in */
+
+	//get answers for this test result
+	$sql = "SELECT question_id, score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$row[result_id] AND question_id IN ($q_sql)";
+	$result2 = mysql_query($sql, $db);
+	if ($result2){
+		while ($row2 = mysql_fetch_assoc($result2)) {
+			$answers[$row2['question_id']] = $row2['score'];
+		}
+	}
+	//print answers out for each question
+	for($i = 0; $i < $num_questions; $i++) {
+		$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
+		$table_content .= '<td align="center">';
+
+		if ($answers[$questions[$i]['question_id']] == '') {
+			$table_content .= '<span style="color:#ccc;">-</span>';
+			$csv_content .= ', -';
+		} else {
+			$table_content .= $answers[$questions[$i]['question_id']];
+			$csv_content .= ', '.$answers[$questions[$i]['question_id']];
 			
-		if($anonymous == 1){
-				$table_content .= '<td align="center">'._AT('anonymous').'</td>';
-				$csv_content .= quote_csv(_AT('anonymous')).', ';
-		}else{
-				$table_content .= '<td align="center">'.$row['login'].'</td>';
-				$csv_content .= quote_csv($row['login']).', ';
-		}
-		$startend_date_format=_AT('startend_date_format');
-		$table_content .= '<td align="center">'.AT_date($startend_date_format, $row['date_taken'], AT_DATE_MYSQL_DATETIME).'</td>';
-		$csv_content .= quote_csv($row['date_taken']).', ';
-
-		if ($passscore <> 0)
-		{
-			$table_content .= '<td align="center">'.$passscore.'</td>';
-			$csv_content .= $passscore.', ';
-		}
-		elseif ($passpercent <> 0)
-		{
-			$table_content .= '<td align="center">'.$passpercent.'%</td>';
-			$csv_content .= $passpercent . '%, ';
-		}
-		else
-		{
-			$table_content .= '<td align="center">'._AT('na').'</td>';
-			$csv_content .= _AT('na') . ', ';
-		}
-
-		$table_content .= '<td align="center">'.$row['final_score'].'/'.$total_weight.'</td>';
-		$csv_content .= $row['final_score'].'/'.$total_weight;
-
-		$total_score += $row['final_score'];
-
-		$answers = array(); /* need this, because we dont know which order they were selected in */
-
-		//get answers for this test result
-		$sql = "SELECT question_id, score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$row[result_id] AND question_id IN ($q_sql)";
-		$result2 = mysql_query($sql, $db);
-		if ($result2){
-			while ($row2 = mysql_fetch_assoc($result2)) {
-				$answers[$row2['question_id']] = $row2['score'];
+			if ($random) {
+				$questions[$i]['count']++;
 			}
 		}
-		//print answers out for each question
-		for($i = 0; $i < $num_questions; $i++) {
-			$questions[$i]['score'] += $answers[$questions[$i]['question_id']];
-			$table_content .= '<td align="center">';
+		$table_content .= '</td>';
+	}
 
-			if ($answers[$questions[$i]['question_id']] == '') {
-				$table_content .= '<span style="color:#ccc;">-</span>';
-				$csv_content .= ', -';
-			} else {
-				$table_content .= $answers[$questions[$i]['question_id']];
-				$csv_content .= ', '.$answers[$questions[$i]['question_id']];
-				
-				if ($random) {
-					$questions[$i]['count']++;
-				}
-			}
-			$table_content .= '</td>';
-		}
-
-		$table_content .= '</tr>';
+	$table_content .= '</tr>';
+	
+	// append guest information into CSV content if the test is taken by a guest
+	if (substr($row['member_id'], 0, 2) == 'g_' || substr($row['member_id'], 0, 2) == 'G_')
+	{
+		$sql = "SELECT * FROM ".TABLE_PREFIX."guests WHERE guest_id='".$row['member_id']. "'";
+		$result3 = mysql_query($sql, $db);
+		$row3 = mysql_fetch_assoc($result3);
 		
-		// append guest information into CSV content if the test is taken by a guest
-		if (substr($row['member_id'], 0, 2) == 'g_' || substr($row['member_id'], 0, 2) == 'G_')
-		{
-			$sql = "SELECT * FROM ".TABLE_PREFIX."guests WHERE guest_id='".$row['member_id']. "'";
-			$result3 = mysql_query($sql, $db);
-			$row3 = mysql_fetch_assoc($result3);
-			
-			$csv_content .= ', '.quote_csv($row3['name']) . ', '.quote_csv($row3['organization']). ', '.quote_csv($row3['location']). ', '.quote_csv($row3['role']). ', '.quote_csv($row3['focus']);
-		}
-		
-		$csv_content .= "\n";
+		$csv_content .= ', '.quote_csv($row3['name']) . ', '.quote_csv($row3['organization']). ', '.quote_csv($row3['location']). ', '.quote_csv($row3['role']). ', '.quote_csv($row3['focus']);
+	}
+	
+	$csv_content .= "\n";
 }
 
 function quote_csv($line) {
@@ -244,9 +244,8 @@ if ($row = mysql_fetch_assoc($result)) {
 	
 	$sql2	= "SELECT anonymous FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
 	$result2	= mysql_query($sql2, $db);
-	while($row2 =mysql_fetch_array($result2)){
-			$anonymous = $row2['anonymous'];
-	}
+	$row2 =mysql_fetch_array($result2);
+	$anonymous = $row2['anonymous'];
 
 	while ($row = mysql_fetch_assoc($result))
 	{
@@ -259,14 +258,14 @@ if ($row = mysql_fetch_assoc($result)) {
 		    $_POST['student_type'] == 'passed' &&
 		    (($passscore<>0 && $row['final_score']>=$passscore) ||
 			   ($passpercent<>0 && ($row['final_score']/$total_weight*100)>=$passpercent)))
-			display_test_info($row);
+			display_test_info($row, $anonymous);
 		elseif ($_POST['student_type'] == 'all' ||
 		        $_POST['student_type'] == 'failed' &&
 		        (($passscore<>0 && $row['final_score']<$passscore) ||
 			       ($passpercent<>0 && ($row['final_score']/$total_weight*100)<$passpercent)))
-			display_test_info($row);
+			display_test_info($row, $anonymous);
 		elseif ($_POST['student_type'] == 'all')
-			display_test_info($row);
+			display_test_info($row, $anonymous);
 	}
 	
 	$table_content .= '</tbody>';
