@@ -245,7 +245,7 @@ echo '<div id="container"><br />';
 			echo '	<input type="hidden" name="show_bread_crumbs" value="'.$_SESSION['prefs']['PREF_SHOW_BREAD_CRUMBS'].'" />'."\n\r";
 	}
 
-	echo '<fieldset>';
+	echo '<fieldset class="group_form">';
 	include(AT_INCLUDE_PATH .'../users/'.$tabs[$current_tab][1]);
 	echo '</fieldset>';
 //	include(getcwd().'/'.$tabs[$current_tab][1]);

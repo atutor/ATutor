@@ -16,6 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 // see /content.php for details of the alt_infos() array
 // images for the toolbar can be customized by adding images of the same name to a theme's images directory
 ?>
+<?php  if (!empty($this->alt_infos)){ ?>
 <div id="alternatives_shortcuts">
 <?php 
 	foreach ($this->alt_infos as $alt_info){
@@ -24,6 +25,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	} 
 ?>
 </div>
+<?php } ?>
 <?php 
 if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") {
 	echo $this->content_table;

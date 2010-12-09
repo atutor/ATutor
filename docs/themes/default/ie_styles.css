@@ -34,10 +34,10 @@ table.data tfoot input {
 
 #topnavlistcontainer {
 	margin-bottom:-1px;
-	margin-top:-2em;
-	position:absolute;
-	left:0px;
-	top:62px;
+
+/*	*position:absolute;
+	*left:0px;
+	*top:62px;*/
 	border-bottom:0;
 }
 
@@ -61,7 +61,7 @@ div#top-links a:active{
 }
 
 ul#topnavlist li {
-
+margin-bottom:-3em;
 	*display: inline;
 }
 

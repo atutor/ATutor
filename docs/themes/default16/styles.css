@@ -8,7 +8,7 @@ body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	margin:0px;
 	margin-top: -10px;
-	font-size: small;
+/*	font-size: small;*/
 	background-color: white;
 }
 
@@ -1144,7 +1144,7 @@ div#menutoggle{
 
 /* login page */
 div.column {
-	border: 1px solid #6F7172;
+
 	float: left;
 	width: 45%;
 	margin: 5px;
@@ -1319,16 +1319,18 @@ div#topnavlistcontainer {
 	background-repeat: no-repeat;
 }
 ul#topnavlist {
+
 	padding-top: 5px;
-	white-space: nowrap;
 	margin-top: 0px;
 	margin-left:5px;
-	margin-left:5px;
+	position:absolute;
+	top:4.8em;
 }
 
 ul#topnavlist li {
+
 	list-style: none;
-	display: inline;
+	display: inline-block;
 	margin: 0px;
 }
 
@@ -1336,22 +1338,29 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
     background-color: #E6E6E6;
     color: black;
 	text-decoration:none;
+			-moz-box-shadow:.2em .0em .2em .0em #999999;
+	box-shadow: .2em .0em .2em #999999;
+
 }
 
 ul#topnavlist li a {
     /* The normal, unselected tabs. They are all links */
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
     color: #555;
 	font-weight:bold;
     height: 1.5em;
-    padding: 0em 2em 0em;
+    padding: .2em 2em 0em 2em;
    	text-decoration:none;
 	background-color:white;
 }
 
-ul#topnavlist li a.selected {
+ul#topnavlist li a.active {
     /* The selected tab. There's only one of these */
     color: #555;
-    font-weight: normal;
+	border:1px solid #ffffff;
+		-moz-box-shadow:.2em .0em .2em .0em #999999;
+	box-shadow: .2em .0em .2em #999999;
 }
 
 ol#tools>li:hover {
@@ -1501,7 +1510,6 @@ div#menutoggle{
 
 }
 .editor_tab{
-	float:left;
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
@@ -1556,7 +1564,7 @@ div#menutoggle{
 ul.current_list{
       line-height:2em; 
       list-style-type:none;
-      margin-left:-3em;
+      margin-left:-2.5em;
 }
 .current_list img{
       vertical-align:middle;
@@ -1853,7 +1861,7 @@ div.menuedit{
 
 /* Detailed view styles */
 div.home_box {
-	width: 29em;
+	width: 26.5em;
 	height: 150px;	
 	margin-top: 15px;
 	padding-bottom: 20px;
@@ -1865,7 +1873,7 @@ div.home_box {
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
-	width:27.5em;
+	width:25.5em;
 	height:9.8em;
 	border-radius:.5em;
 	-moz-border-radius:.3em .3em .3em .3em;
@@ -1889,7 +1897,7 @@ div.home_box {
 	padding:.2em;
 }
 .details_or{
-	width:28.8em;
+	width:25.5em;
 	height:9.8em;
 }
 .details_ol{
@@ -2202,4 +2210,84 @@ a.tooltip{
 	padding-bottom:.2em;
 	text-decoration:none;
 		border-bottom:1px dashed;
+}
+
+fieldset.group_form{
+	width:98%;
+
+	border:1px #70A1CA solid;
+   	min-height: 180px;
+	padding:.5em;
+	background-color:transparent;
+
+} 
+fieldset.group_form legend{
+	border:1px #70A1CA solid;
+	background-color: #F4F9FE;
+	font-weight: 600;
+	color: black;
+	padding-left: 1em;
+	padding-right: 1em;
+	border-radius:.2em;
+	-moz-border-radius: .2em .2em .2em .2em;
+}
+
+div#subnavlistcontainer {
+	width:95%;
+	margin:auto;
+	height:auto;
+
+}
+div#subnavbacktopage {
+	padding-top:5px;
+	padding-left:20px;
+	float:left;
+}
+
+div.toolcontainer{
+	width:95%;
+	margin:auto;
+	border:1px solid #e8e8e8;
+	padding-top:1em;
+	padding-bottom:1em;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+}
+
+ul#subnavlist {
+	padding-top: 4px;
+	margin-top: 0px;
+	font-family: Verdana,Helvetica,Arial,serif;
+	font-size:.8em;
+
+
+}
+
+ul#subnavlist li {
+  	background-color: #FFFFFF;
+	list-style: none;
+	display: inline-block;
+	font-weight:700;
+	text-align:center;
+	border-top:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	height:1.0em;	
+	padding: 0em .5em .6em .5em ;
+}
+
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
+  	color: black;
+	text-decoration:none;
+	background-color: #E6E6E6;
+}
+
+ul#subnavlist li a {
+    /* The normal, unselected tabs. They are all links */
+   	color: #555;
+    	height: 1.5em;
+   	text-decoration:underline;
+	font-weight:500;
 }

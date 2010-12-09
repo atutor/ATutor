@@ -1333,7 +1333,7 @@ a.tooltip{
 
 /* style for home page sublinks view */
 div.home_box {
-	width: 30em;
+	width: 25.5em;
 	height: 150px;	
 	margin-top: 15px;
 	padding-bottom: 13px;
@@ -1344,8 +1344,9 @@ div.home_box {
 .outside_box{
 	margin-left:.4em;
 	background:#e0e0e0;
-	width:29.2em;
-	height:9.8em;
+	width:25.5em;
+	height:9.3em;
+	padding:.2em;
 }
 
 .inside_box{
@@ -1356,7 +1357,7 @@ div.home_box {
 	background:#eeeeee;
 }
 .details_or{
-	width:28.8em;
+	width:25.4em;
 	height:9.8em;
 	margin:0;
 }
@@ -1918,3 +1919,63 @@ div.logout{
 div.bypass{
 	  height:1px;
 }
+div#subnavlistcontainer {
+	width:95%;
+	margin:auto;
+	height:auto;
+
+}
+div#subnavbacktopage {
+	padding-top:5px;
+	padding-left:20px;
+	float:left;
+}
+
+div.toolcontainer{
+	width:95%;
+	margin:auto;
+	border:1px solid #e8e8e8;
+	padding-top:1em;
+	padding-bottom:1em;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+}
+
+ul#subnavlist {
+	padding-top: 4px;
+	margin-top: 0px;
+	font-family: Verdana,Helvetica,Arial,serif;
+	font-size:.8em;
+
+
+}
+
+ul#subnavlist li {
+  	background-color: #FFFFFF;
+	list-style: none;
+	display: inline-block;
+	font-weight:700;
+	text-align:center;
+	border-top:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	height:1.0em;	
+	padding: 0em .5em .6em .5em ;
+}
+
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
+  	color: black;
+	text-decoration:none;
+	background-color: #E6E6E6;
+}
+
+ul#subnavlist li a {
+    /* The normal, unselected tabs. They are all links */
+   	color: #555;
+    	height: 1.5em;
+   	text-decoration:underline;
+	font-weight:500;
+}
+

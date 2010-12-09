@@ -11,6 +11,7 @@ ul#topnavlist li {
 	padding-bottom:0.3em;
 	margin:0px;
 	margin-bottom:-3px;
+	*display: inline;
 }
 
 label {
@@ -28,4 +29,65 @@ table.data tfoot input {
 
 #header{
 	height: 7.2em;
+}
+.fl-force-right{
+	*margin-left:-1em;
+	*margin-top:-1em;
+}
+
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:45px;
+}
+.tab-spacer{
+	*width:10px;
+}
+.editor_tab{
+	*zoom:100%;
+	*width:auto;	
+	*display: inline-block;
+	*clear: left;
+	*padding: 0 5px 0 5px;
+}
+.editor_buttontab {
+	*zoom:100%;
+	*clear:both;
+*padding-right:1em;
+}
+
+.editor_tab_selected{
+	*width:auto;
+}
+
+.etabbed-list-container{
+	*height:1.9em;
+}
+.etabbed-list{
+	*height:1.8em;
+	*padding-top:.4em;
+}
+ul.current_list{
+	*margin-left:0;
+}
+ul#subnavlist {
+	*margin-bottom:0;
+}
+ul#subnavlist li {
+	*display: inline;
+	*margin-right:.3em;
+	*margin-bottom:-.2em;
+}
+
+table.data {
+	*border:0;
+} 
+
+table.data th {
+	*border:0;
+}
+div.search_bar .s_img{
+	float: right;
+	border: 0px;
+	margin-top: -2em;	
+	margin-right: 0.4em;
 }

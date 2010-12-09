@@ -4,12 +4,13 @@ ul#topnavlist li {
 	*display: inline;
 }
 ul#topnavlist{
-clear:both;	
+	clear:both;	
 	padding-top:1em;
 }
 #topnavlistcontainer{
 	padding-top:.5em;
-height:2.2em;	
+	height:2.35em;	
+	*height:2.2em;
 }
 
 label {
@@ -41,15 +42,28 @@ table.etabbed-table	{
 	*table-layout:fixed;
 	*margin-left:55px;
 }
+.etabbed-list{
+	*padding-top:.3em;
+}
 
 div#sub-navigation {
 	margin-top:-1em;
 	*height:1.8em;
 }
+ul#subnavlist li {
+	*display: inline;
+	*margin-right:.3em;
+}
+ul#subnavlist {
+	margin-bottom:0;
+}
 div#sequence-links {
 
 	*margin-top:1.6em;
-
-
-
+}
+ul.current_list{
+	*margin-left:0;
+}
+#details_view{
+	margin-bottom:2em;
 }

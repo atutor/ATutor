@@ -243,29 +243,56 @@ global $system_courses, $_custom_css,$db;
 		<?php endif; ?>
 
 	<!-- the page title -->
+	<a name="content" title="<?php echo _AT('content'); ?>"></a>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
+	<?php global $msg; $msg->printAll(); $_base_href;?>
 
-	<a name="content"></a>
-	<?php global $msg; $msg->printAll(); ?>
+	<?php if (count($this->sub_level_pages) > 0): ?>
 
-
-<?php if ($this->sub_level_pages): ?>
-	<br /><div id="sub-navigation">
-		<?php if (isset($this->back_to_page)): ?>
-			<a href="<?php echo $this->back_to_page['url']; ?>" id="back-to"><?php echo _AT('back_to').' '.$this->back_to_page['title']; ?></a> | 
-		<?php endif; ?>
-
-		<?php $num_pages = count($this->sub_level_pages); ?>
-		<?php for ($i=0; $i<$num_pages; $i++): ?>
-			<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-				<strong><?php echo $this->sub_level_pages[$i]['title']; ?></strong>
+<!-- <div id="topnavlistcontainer">
+	<ul id="topnavlist">
+		<?php $accesscounter = 0; //initialize ?>
+		<?php foreach ($this->top_level_pages as $page): ?>
+			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+			<?php if ($page['url'] == $this->current_top_level_page): ?>
+				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
 			<?php else: ?>
-				<a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a>
+				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
 			<?php endif; ?>
-			<?php if ($i < $num_pages-1): ?>
-				|
-			<?php endif; ?>
-		<?php endfor; ?>
-	</div>
+			<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+		<?php endforeach; ?>
+	</ul>
+</div> -->
 
-<?php endif; ?>
+		<div id="subnavlistcontainer">
+			<div id="subnavbacktopage">
+			<?php if (isset($this->back_to_page)): ?>
+				<a href="<?php echo $this->back_to_page['url']; ?>">
+				<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;" class="img1111"/></a>&nbsp;
+			<?php endif; ?>
+			</div>
+
+			<ul id="subnavlist">
+			<?php $num_pages = count($this->sub_level_pages); 
+
+
+
+?>
+			<?php for ($i=0; $i<$num_pages; $i++): ?>
+				
+				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
+				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></li>
+				<?php else: ?>
+					<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></a></li>
+				<?php endif; ?>
+				<?php if ($i < $num_pages-1): 
+					echo " ";?>
+				<?php endif; ?>
+			<?php endfor; ?>
+			</ul>
+		</div>
+	<?php endif; ?>
+
+<!-- the main navigation. in our case, tabs -->
