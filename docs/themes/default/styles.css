@@ -1289,10 +1289,9 @@ div#content-text li {
 	margin-left: 15pt;
 }
 
-div#content-test, div.content-from-module {	
+div#content-test {	
 	float: left;
 	margin-top: 2em;
-	margin-bottom: 2em;
 	padding-right: 5pt;
 	width: 80%;
 }
@@ -1576,7 +1575,8 @@ ol#tools>li:hover {
 	list-style: none;
 	padding: 2px 2px 2px 5px;
 	margin-bottom: 5px; 
-	margin-left:-3em;
+	margin-left:-1em;
+	margin-right:1em;
 	line-height: 200%; 
 	background-color: #fdfdfd; 
 	border-bottom: 1px solid #efefef; 
