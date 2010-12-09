@@ -175,9 +175,6 @@ define('AT_DEFAULT_PREFS',  isset($_config['prefs_default']) ? $_config['prefs_d
 $_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['home_defaults_2'] : '');
 $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
 
-require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
-require(AT_INCLUDE_PATH.'lib/utf8.php');			//UTF-8 multibyte library
-
 //set the timezone, php 5.3+ problem. http://atutor.ca/atutor/mantis/view.php?id=4409
 date_default_timezone_set('UTC');
 
@@ -295,6 +292,9 @@ if ($_config['time_zone']) {
 	$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['p_course']);
 	$contentManager->initContent();
 /**************************************************/
+
+require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
+require(AT_INCLUDE_PATH.'lib/utf8.php');			//UTF-8 multibyte library
 
 if (!file_exists(AT_INCLUDE_PATH.'../sha-1factory.js')) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
