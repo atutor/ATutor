@@ -161,10 +161,12 @@ if ($cid) {
 if (($current_tab == 0) || ($_current_tab == 3)) {
     if ($_POST['formatting'] == null){ 
         // this is a fresh load from just logged in
-	    if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) {
+	    if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 0) { // plain text in text area
 			$_POST['formatting'] = 0;
-		} else {
+		} else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 1) { // html with text area
 			$_POST['formatting'] = 1;
+	    } else if ($_SESSION['prefs']['PREF_CONTENT_EDITOR'] == 2) { // html with visual editor
+			$_POST['formatting'] = 3;
 		}
     }
 }

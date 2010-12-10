@@ -37,6 +37,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             <input type="radio" name="formatting" value="1" id="html" <?php if ($_POST['formatting'] == 1) { echo 'checked="checked"'; } ?> />
             <label for="html"><?php echo _AT('html'); ?></label>
        
+            <input type="radio" name="formatting" value="3" id="html_visual_editor" <?php if ($_POST['formatting'] == 3) { echo 'checked="checked"'; } ?> />
+            <label for="html"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
+       
             <input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> />
             <label for="weblink"><?php echo _AT('weblink'); ?></label>
        </span>

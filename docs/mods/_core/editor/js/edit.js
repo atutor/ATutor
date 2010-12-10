@@ -23,6 +23,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 (function () {
     var hiddenClass = "hidden";
     var enabledClass = "clickable";
+    var textAreaId = "body_text";
     
     var hideIt = function (theElement, hiddenElement) {
         theElement.addClass(hiddenClass);
@@ -45,11 +46,19 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 
     //click function to launch accessibility validation window
     var launchAChecker = function () {
+    	var body_content;
+    	
+    	if (jQuery("#html_visual_editor").attr("checked")) {
+    		body_content = tinyMCE.activeEditor.getContent();
+    	} else {
+    		body_content = jQuery("#"+textAreaId).val();
+    	}
+    	
     	var theCode = '<html><body onLoad="document.accessform.submit();"> \n';
 		theCode += '<h1>'+ATutor.mods.editor.processing_text+' .....</h1>\n';
 		theCode += '<form action="'+ATutor.base_href+'mods/_core/editor/accessibility.php?popup=1" name="accessform" method="post"> \n';
 		theCode += '<input type="hidden" name="cid" value="'+jQuery("input[name=cid]").val()+'" /> \n';
-       	theCode += '<textarea name="body_text" style="display:none">' + tinyMCE.activeEditor.getContent() + '</textarea>\n';
+		theCode += '<textarea name="body_text" style="display:none">' + body_content + '</textarea>\n';
 		theCode += '<input type="submit" style="display:none" /></form> \n';  
 		theCode += '</body></html> \n';
 		accessWin = window.open('', 'accessibilityWin',  'menubar=0,scrollbars=1,resizable=1,width=600,height=600');
@@ -147,7 +156,14 @@ ATutor.mods.editor = ATutor.mods.editor || {};
         var displaypaste = jQuery(displaypasteId);
         var textArea = jQuery("#textSpan");
         var weblink = jQuery("#weblinkSpan");
-        var textAreaId = "body_text";
+        
+        // turn on/off visual editor based on the selected formatting tool
+        if (jQuery("#html_visual_editor").attr("checked") && !tinyMCE.get(textAreaId)) {
+       		tinyMCE.execCommand('mceAddControl', false, textAreaId);
+        } else if (tinyMCE.get(textAreaId)) {
+        	tinyMCE.execCommand('mceRemoveControl', false, textAreaId);
+        }
+        
         if (jQuery("#weblink").attr("checked")) {
             disableTool(accessibilityTool);
             disableTool(headTool);
@@ -156,12 +172,9 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             
             hideIt(head, displayhead);
             hideIt(paste, displaypaste);
-            if (tinyMCE.get(textAreaId)) {
-            	tinyMCE.execCommand('mceRemoveControl', false, textAreaId);
-            }
             textArea.hide();
             weblink.show();
-        } else if (jQuery("#html").attr("checked")) {
+        } else if (jQuery("#html").attr("checked") || jQuery("#html_visual_editor").attr("checked")) {
             enableTool(accessibilityTool);
             enableTool(headTool);
             enableTool(pasteTool);
@@ -169,9 +182,6 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             
             setDisplay(head, displayhead);
             setDisplay(paste, displaypaste);
-            if (ATutor.mods.editor.editor_pref !== '1' && !tinyMCE.get(textAreaId)) {
-           		tinyMCE.execCommand('mceAddControl', false, textAreaId);
-            }
             weblink.hide();
             textArea.show();
         } else {
@@ -183,9 +193,6 @@ ATutor.mods.editor = ATutor.mods.editor || {};
             hideIt(head, displayhead);
             setDisplay(paste, displaypaste);
             weblink.hide();
-            if (tinyMCE.get(textAreaId)) {
-            	tinyMCE.execCommand('mceRemoveControl', false, textAreaId);
-            }
             textArea.show();
         }	
     };
@@ -203,10 +210,10 @@ ATutor.mods.editor = ATutor.mods.editor || {};
     	});
         if (jQuery("#weblink").attr("checked")) {
     		theCode += '<input type="hidden" name="weblink_text" value="'+jQuery("#weblink_text").val()+'" /> \n';
-        } else if (jQuery("#html").attr("checked")) {
+        } else if (jQuery("#html_visual_editor").attr("checked")) {
         	theCode += '<textarea name="body_text" style="display:none">' + tinyMCE.activeEditor.getContent() + '</textarea>\n';
         } else {
-        	theCode += '<textarea name="body_text" style="display:none">' + jQuery("#body_text").val() + '</textarea>\n';
+        	theCode += '<textarea name="body_text" style="display:none">' + jQuery("#"+textAreaId).val() + '</textarea>\n';
         }
 		theCode += '<input type="submit" style="display:none" /></form> \n';  
 		theCode += '</body></html> \n';
