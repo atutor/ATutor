@@ -38,7 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
             <label for="html"><?php echo _AT('html'); ?></label>
        
             <input type="radio" name="formatting" value="3" id="html_visual_editor" <?php if ($_POST['formatting'] == 3) { echo 'checked="checked"'; } ?> />
-            <label for="html"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
+            <label for="html_visual_editor"><?php echo _AT('html') . ' - '. _AT('visual_editor'); ?></label>
        
             <input type="radio" name="formatting" value="2" id="weblink" <?php if ($_POST['formatting'] == 2) { echo 'checked="checked"'; } ?> />
             <label for="weblink"><?php echo _AT('weblink'); ?></label>
