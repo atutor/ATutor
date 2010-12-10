@@ -46,7 +46,7 @@ function encrypt_password() {
 <?php
 if($_config['allow_registration'] ==1){
 ?>
-	<div class="column">
+	<div class="column" style="margin-top:0;">
 		<form action="registration.php" method="get">
 
 			<fieldset class="group_form"><legend class="group_form"><?php echo _AT('new_user') ;?></legend>

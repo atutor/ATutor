@@ -8,7 +8,7 @@ table.etabbed-table	{
 }
 .etabbed-list{
 	padding-top:.3em;
-	margin-bottom:-.2em;
+
 }
 .editor_tab{
 	*zoom:100%;
@@ -28,6 +28,12 @@ table.etabbed-table	{
 
 .editor_tab_selected{
 	*width:auto;
+}
+.prefs_buttontab{
+	margin-bottom:.2em;
+}
+.prefs_tab_selected{
+	margin-bottom:-.1em;
 }
 
 td.tab-spacer {
@@ -59,9 +65,11 @@ p{
 .header{
 	background-image: url('images/pub_default.jpg'); 
 	background-repeat: no-repeat; 
-	background-position:left top;
-	height:8em;
+	background-position/*\**/:0 30px\9;
+	height:10.5em;
+	*height:7.5em;
 	margin-bottom:2em;
+	margin-top:-2em;
 	text-align:right;
 }
 
@@ -87,3 +95,15 @@ h1.section-title {
 	clear:both;
 	white-space:nowrap;
 }
+div#member-links{
+
+	background-color: #788CB3;
+}
+#breadcrumbs{
+	*clear:left;
+	*margin-top:2em;
+}
+div .button {
+	*overflow:visible;
+}
+

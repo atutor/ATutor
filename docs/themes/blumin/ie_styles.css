@@ -26,7 +26,30 @@ table.data tfoot input {
 	height:9.6em;
 }
 .buttons input[type=submit]{
-padding:.3em;
-width:auto;
-overflow:visible;
+	padding:.3em;
+	width:auto;
+	overflow:visible;
+}
+.prefs_buttontab{
+	*margin-top:1em;	
+}
+ul.current_list{
+	  *margin-left:0;
+}
+
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:50px;
+}
+.tab-spacer{
+	*width:10px;
+}
+.fl-force-right{
+	*margin-top:-1.2em;
+}
+
+ul#subnavlist li {
+	*display: inline;
+	*margin-left:.5em;
+
 }

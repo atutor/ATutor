@@ -101,6 +101,7 @@ div.toc{
 	background-color: #EBEDF6;
 	font-weight: bold;
 	border:  #354A81  solid 1px;
+	
 }
 
 input.button {
@@ -115,6 +116,7 @@ input.button {
 input.button:hover {
 	background-color: #f5f5ff;
 	border: 1px solid blue;
+
 }
 
 /* page breakline */
@@ -1590,7 +1592,7 @@ div .button {
 }
 div .button:hover{
 	background-color: #cccccc;
-	color: #ffffff;
+	color: #000000;
 }
 
 /* Side menu */
@@ -1843,7 +1845,7 @@ height:.8em;
 }
 div.logout{
 	  white-space:nowrap;
-	  background-color:#000000;
+	  background-color:#788CB3;;
 	  padding-bottom:.2em;
 	  width:45%;
 	  float:right;
@@ -1928,7 +1930,6 @@ fieldset.group_form legend{
 	padding-left: 1em;
 	padding-right: 1em;
 	border-radius:.2em;
-
 	-moz-border-radius: .2em .2em .2em .2em;
 }
 div.input-form{

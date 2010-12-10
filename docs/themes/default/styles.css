@@ -2074,6 +2074,7 @@ table.etabbed-table	{
 	border-right:0;
 	border-bottom:0;
 	border-top:  1px solid #ffffff;
+	
 
 /*	color:#000555;
 	font-size:0pt;
@@ -2087,7 +2088,7 @@ table.etabbed-table	{
 
 }
 .prefs_tab{
-	height:1.5em;
+	height:1.6em;
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
@@ -2097,7 +2098,7 @@ table.etabbed-table	{
 	background-color: #FFFFFF;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .2em .2em 0em .3em;
+	padding: .3em .2em 0em .3em;
 	display: inline;
 	margin-left:.5em;
 		font-weight:bold;

@@ -3,8 +3,9 @@ div.input-form {
 	max-width: 90%;
 	margin-left:auto; 
 	margin-right:auto;
-	border: 1px solid #f0f0f0;
+/*	border: 1px solid #f0f0f0;*/
 	margin-bottom: 20px;
+	padding:.2em;
 }
 
 div.input-form div.row h3 {
