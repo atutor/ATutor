@@ -227,6 +227,22 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		}
 	}
 
+	/* fixed the typo of "fuild" theme that was introduced in 1.6.1 : */
+	if (version_compare($_POST['step1']['new_version'], '1.6.0', '>')) {
+		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes 
+		           SET title='Fluid', dir_name='fluid'
+		         WHERE dir_name='fuild'";
+		mysql_query($sql, $db);
+		
+		$sql = 'UPDATE '.$_POST['step1']['tb_prefix'].'config 
+		           SET value=replace(value, \':"fuild";\', \':"fluid";\') 
+		         WHERE name=\'pref_defaults\'';
+		mysql_query($sql, $db);
+
+		$sql = 'UPDATE '.$_POST['step1']['tb_prefix'].'members 
+		           SET preferences=replace(preferences, \':"fuild";\', \':"fluid";\')';
+		mysql_query($sql, $db);
+	}
 
 	if (!isset($errors)) {
 		unset($errors);

@@ -253,10 +253,11 @@ if ($_config['time_zone']) {
 		// get default
 		$default_theme = get_default_theme();
 		
-		if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name']) || $default_theme == '') {
-			$default_theme = array('dir_name' => get_system_default_theme());
-		}
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+	}
+	
+	if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) || $_SESSION['prefs']['PREF_THEME'] == '') {
+		$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
 	}
 	
 	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
