@@ -112,7 +112,7 @@ if ($_POST['formatting'] <> 1)
 		$sql = "SELECT * FROM ".TABLE_PREFIX."resource_types";
 		$resource_types_result = mysql_query($sql, $db);
 		
-		echo '<table class="data" rules="all" style="width:100%">'."\n";
+		echo '<table class="data" rules="all">'."\n";
 		echo '  <thead>'."\n";
 		echo '  <tr>'."\n";
 		echo '    <th rowspan="2" id="header1">'._AT('original_resource').'</th>'."\n";
@@ -218,6 +218,7 @@ if ($_POST['formatting'] <> 1)
 		echo '  </tbody>'."\n";
 		echo '</table>'."\n";
 	}
+		echo '<br style="clear:both;"/>'."\n";
 ?>
 
 <script type="text/javascript">
