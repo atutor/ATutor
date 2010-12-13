@@ -3,7 +3,7 @@ div.input-form {
 	max-width:90%;
 	margin-left:auto; 
 	margin-right:auto;
-	border: 1px solid #f0f0f0;
+/*	border: 1px solid #f0f0f0;*/
 	margin-bottom: 20px;
 }
 
@@ -13,7 +13,7 @@ div.input-form div.row h3 {
 
 
 div.input-form div.row {
-	background-color: #fdfdfd;
+	background-color: #F7FAF7;
 	padding:8px;
 }
 
@@ -43,14 +43,14 @@ div.input-form textarea:focus {
 }
 
 div.input-form input[type=text], div.input-form input[type=password] {
-	border: 1px solid #999;
-	background-color: white;
+	border: 1px solid  #4F7643;
+	background-color: #DEECE2;
 	padding: 2px;
 	max-width: 60%;
 }
 
 div.input-form input:focus {
-	border: 1px solid blue;
+	border: 1px solid  #4F7643;
 	padding: 2px
 }
 
@@ -59,8 +59,8 @@ div.input-form div.buttons {
 	padding:8px;
 }
 div.input-form div.buttons input {
-	border: 1px solid #999;
-	background-color: white;
+	border: 1px solid #4F7643;
+	background-color:#DEECE2;
 	padding: 2px;
 	padding-left: 10px;
 	padding-right: 10px;
@@ -69,5 +69,5 @@ div.input-form div.buttons input {
 }
 div.input-form div.buttons input:hover {
 	background-color: #f5f5ff;
-	border: 1px solid blue;
+	border: 1px solid #4F7643;
 }

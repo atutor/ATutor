@@ -22,13 +22,45 @@ label {
 table.data tfoot input {
 	min-width:0px;
 }
-.outside_box{
-	height:9.6em;
-}
 
 .buttons input[type=submit]{
-padding:.3em;
-width:auto;
-overflow:visible;
+	padding:.3em;
+	width:auto;
+	overflow:visible;
+}
+div#guide_box{
+	*width:10em;
+
+}
+input.prefs_buttontab[type=submit]{
+	*height:1.2em;	
 }
 
+.etabbed-list-container{
+	border-bottom:1px solid #DEECE2;
+}
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:55px;
+
+}
+.etabbed-list{
+	*padding-top:.5em;
+
+}
+ul.current_list{
+      margin-left:0;
+}
+
+.tab-spacer{
+	*width:10px;
+}
+
+ul#subnavlist li {
+	display:inline;
+	margin-left:.5em;
+}
+.fl-force-right{
+	*margin-top:-1.2em;
+	*margin-right:.2em;
+}

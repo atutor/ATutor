@@ -29,6 +29,9 @@ table.data tfoot input {
 div#breadcrumbs {
     /* The path bar, including breadcrumbs and add to favorites */
     background-color:#efefef;
+	*margin-left: 2em;
+	*margin-top:-1.6em;
+	*height:1.2em;
 }
 .side-menu {
 	background-color:#efefef;
@@ -44,6 +47,11 @@ div#top-links {
 	padding-right: 5px;
 	line-height: 170%;
 	margin-top: 3px;
+	*margin-bottom:-2em;
+}
+.etabbed-list{
+	*padding-top:.3em;
+
 }
 
 div#topnavlistcontainer {
@@ -53,6 +61,35 @@ div#topnavlistcontainer {
 	height:8.8em;
 }
 ul.current_list{
-float:right;
-width:99%;
+	float:right;
+	width:99%;
+}
+div#guide_box{
+	*width:10em;
+
+}
+ul#subnavlist li {
+	*display:inline;
+	*margin-left:.5em;
+	
+}
+.fl-force-right{
+	*margin-top:-1.2em;
+	*margin-right:.2em;
+}
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:55px;
+
+}
+.etabbed-list{
+	*padding-top:.5em;
+
+}
+.tab-spacer{
+	*width:10px;
+}
+
+.editor_tab{
+	height:1.5em\9;
 }

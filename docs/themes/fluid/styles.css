@@ -541,7 +541,7 @@ table.data {
 } 
 
 table.data th {
-	background-color: #E6E6E6;
+	background-color: #F2F7FE;
 	padding: 3px;
 	white-space: nowrap;
 }
@@ -581,7 +581,7 @@ table.data tbody tr.selected {
 }
 
 table.data tfoot {
-	background-color: #F7F3ED;
+	background-color: #F2F7FE;
 	/*border-top: 1px solid #B8AE9C;*/
 }
 
@@ -854,7 +854,7 @@ div.paging li a:hover, div.paging li a.current {
 }
 
 #header{
-	background-color: white;
+	background-color: #e1ecfe;
 	/*background-image: url(images/pencil_top.gif);
 	background-position: right bottom;
 	background-repeat: no-repeat;*/
@@ -1311,7 +1311,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 
 div#topnavlistcontainer {
-    background-color: white;
+	background-color: #e1ecfe;
 	/*background-image: url(images/pencil_bottom.gif);
 	background-position:  top right;
 	background-repeat: no-repeat;*/
@@ -1347,11 +1347,7 @@ ul#topnavlist li a {
 	border-left:1px solid #a1c4f8;
 	border-right:1px solid #a1c4f8;
 	border-top:1px solid #a1c4f8;	
-/*
-	border-left:1px solid #ccc;
-	border-right:1px solid #ccc;
-	border-top:1px solid #ccc;	
-*/
+
 }
 
 ul#topnavlist li a.selected {
@@ -1519,7 +1515,7 @@ dl.browse-course dd {
 
 fieldset.group_form{
 	margin:1em;
-	border:thin #6D7B8D solid;
+	border:1px #6D7B8D solid;
    	min-height: 160px;
 	width:90%;
 	padding:.5em;
@@ -1550,8 +1546,8 @@ fieldset#toc {
 
 /* style for home page sublinks view */
 div.home_box {
-	width: 30em;
-	height: 150px;	
+	width: 25.8em;
+	height: 8.5em;	
 	margin:0;
 	margin-top: 15px;
 	padding-bottom: 10px;
@@ -1562,7 +1558,7 @@ div.home_box {
 	margin-left:.4em;
 	padding: 0.3em;
 	background:#e0e0e0;
-	width:28.5em;
+	width:25.5em;
 	height:8.85em;
 	-moz-border-radius:.3em .3em .3em .3em;
 	border-radius: .3em .3em .3em .3em;
@@ -1576,26 +1572,7 @@ div.home_box {
 	margin-bottom:.2em;
 	background:#eeeeee;
 }
-.details_or{
-	width:28.8em;
-	height:9.8em;
-}
-.details_ol{
-	height:9.8em;
-	width:.45em;
-}
-.details_ir{
-	width:.5em;
-	height:100%;
-	float:right;
-}
-.details_il{
-	height:100%;
-	float:left;
-	background-image:url(../../images/details_il.png);
-	background-position: top left;
-	background-repeat:no-repeat;
-}
+
 .home-title{
 	font-size:12pt;
 }
@@ -1646,7 +1623,7 @@ a.tooltip{
 ul.current_list{
       line-height:2em; 
       list-style-type:none;
-      margin-left:-3em;
+      margin-left:-2em;
 }
 .current_list img{
       vertical-align:middle;
@@ -1671,83 +1648,18 @@ div#menutoggle{
 	-moz-box-shadow:.2em .2em .2em #999999;
 	 box-shadow: .2em .2em  .2em #999999;
 }
-/* Preference Editor tabs */
-/* Preferences tabs */
 
-/*
-table.etabbed-table	{
-	padding-left:5em;
-	font-size:10pt;
-	width:90%;
-	margin-left:auto;
-	margin-right:auto;
-}
-.prefs-tab-spacer {
-	background-color: transparent;
-	width: 5px;
-}
-.prefs_buttontab {
-	color:#555;
-	font-size:10pt;
-	white-space: nowrap;
-	background-color: #ffffff;
-	margin: 0px;
-	border:0;
-	font-weight:500;
-	padding:0em 0em 0em;
-	border-radius:.3em;
-	-moz-border-radius: .3em .3em .3em .3em;
-
-}
-.prefs_tab{
-	border-top: 1px solid #cccccc;
-	border-left: 1px solid #cccccc;
-	border-right: 1px solid #cccccc;
-	text-align: center;
-	white-space: nowrap;
-	margin-left:2em;
-	background-color: #FFFFFF;
-	border-radius:.3em;
-	-moz-border-radius: .3em .3em 0em 0em;
-	padding: 0em .2em 0em .2em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
-	}
-	
-.prefs_buttontab:hover, .prefs_tab:hover {
-  	background-color: #eeeeee;
-}
-.prefs_tab_selected{
-	border-top: 1px solid #cccccc;
-	border-left: 1px solid #cccccc;
-	border-right: 1px solid #cccccc;
-	border-bottom:0;
-  	background-color: #eeeeee;
-	margin: 0px;
-	font-weight:bold;
-	text-align:center;
-	padding: 0em .2em 0em .2em ;
-	white-space: nowrap;
-	text-decoration:none;
-	border-radius:.3em;
-	-moz-border-radius: .3em .3em 0em 0em;
-	-moz-box-shadow:.2em .2em .2em #999999;
-    box-shadow: .2em .0em .2em #999999;
-}
-
-*/
 /* Preference Editor tabs */
 .etabbed-list-container {
 
     font-size:10pt;
     width:85%;
-margin-left:auto;
-margin-right:auto;
+	margin-left:auto;
+	margin-right:auto;
 
 }
 .etabbed-list{
-
-width:100%;
+	width:100%;
 }
 .prefs-tab-spacer {
     background-color: transparent;
@@ -1756,7 +1668,7 @@ width:100%;
 .prefs_buttontab {
     color:#000555;
     white-space: nowrap;
-    background-color: #ffffff;
+    background-color: #F2F7FE;
     margin-bottom: .5px;
     border:0;
     font-weight:500;
@@ -1773,19 +1685,17 @@ width:100%;
     border-right: 1px solid #cccccc;
     text-align: center;
     white-space: nowrap;
-    background-color: #FFFFFF;
+    background-color:#F2F7FE;
     border-radius: .3em .3em 0em 0em;
     -moz-border-radius: .3em .3em 0em 0em;
     padding: .2em .5em 0em .5em ;
-    -moz-box-shadow:.1em .1em 0 #999999;
-    box-shadow: .1em .1em 0 #999999;
     display: inline;
     padding-bottom: .9px;
     margin: .5em;
 }
     
 .prefs_buttontab:hover, .prefs_tab:hover {
-      background-color: #eeeeee;
+      background-color: #A1C4F8;
 }
 
 .prefs_tab_selected{
@@ -1794,7 +1704,7 @@ width:100%;
     border-left: 1px solid #cccccc;
     border-right: 1px solid #cccccc;
     border-bottom:0;
-      background-color: #eeeeee;
+      background-color: #A1C4F8;
     margin: 0px;
     font-weight:bold;
     text-align:center;
@@ -1803,8 +1713,6 @@ width:100%;
     text-decoration:none;
     border-radius:.3em;
     -moz-border-radius: .3em .3em 0em 0em;
-    -moz-box-shadow:.1em .1em .0 #999999;
-    box-shadow: .1em .1em .1em #999999;
     display: inline;
 }
 
@@ -2047,7 +1955,7 @@ div#shortcuts{
 	font-size:10pt;
 	border:0;
 	white-space: nowrap;
-	background-color: #ffffff;
+	background-color: #F2F7FE;
 	margin: 0px;
 	font-weight:500;
 	text-align:center;
@@ -2063,14 +1971,14 @@ div#shortcuts{
 	margin-bottom:-.5em;
 	text-align: center;
 	white-space: nowrap;
-	background-color: #ffffff;
+	background-color: #F2F7FE;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: 0em .2em .0em .2em ;
-	height:1.4em;
+	height:1.3em;
 }
 .editor_tab:hover, .editor_tab input[type=submit]:hover{
-	background-color:#eeeeee;
+	background-color: #A1C4F8;
 }
 
 .editor_tab_selected{
@@ -2079,7 +1987,7 @@ div#shortcuts{
 	border-right: 1px solid #cccccc;
 	border-bottom:0;
 	padding: .0em .3em .1em .2em ;
-  	background-color: #eeeeee;
+  	background-color: #A1C4F8;
 	font-weight:bold;
 	text-align:center;
 	white-space: nowrap;
@@ -2128,4 +2036,72 @@ height:.8em;
 float:right;
 text-align:right;
 text-transform: lowercase;
+}
+#subnav a{
+color:#ffffff;
+font-weight:bold;
+text-decoration:underline;
+}
+div#subnavlistcontainer {
+	width:95%;
+	margin:auto;
+	height:auto;
+
+
+}
+div#subnavbacktopage {
+	padding-top:5px;
+	padding-left:20px;
+	float:left;
+}
+
+div.toolcontainer{
+	width:95%;
+	margin:auto;
+	border:1px solid #e8e8e8;
+	padding-top:1em;
+	padding-bottom:1em;
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+}
+
+ul#subnavlist {
+	padding-top: 4px;
+	margin-top: 0px;
+	font-size:.8em;
+	
+
+
+}
+
+ul#subnavlist li {
+  	background-color: #F2F7FE;
+	list-style: none;
+	display: inline-block;
+	font-weight:700;
+	text-align:center;
+	border-top:1px solid #cccccc;
+	border-left:1px solid #cccccc;
+	border-right:1px solid #cccccc;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	height:1.0em;	
+	padding: 0em .5em .6em .5em ;
+}
+
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
+  	color: black;
+	text-decoration:none;
+	background-color: #A1C4F8;
+}
+
+ul#subnavlist li a {
+    /* The normal, unselected tabs. They are all links */
+   	color: #555;
+    	height: 1.5em;
+   	text-decoration:underline;
+	font-weight:500;
+}
+.fl-container{
+background-color:#F7FAF7;	
 }
