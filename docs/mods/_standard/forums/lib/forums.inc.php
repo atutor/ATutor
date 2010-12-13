@@ -49,21 +49,39 @@ function get_forums($course) {
 		}
 	}
 		
-	// retrieve the group forums:
+	// retrieve the group forums if course is given
 
-	if (!$_SESSION['groups']) {
+	if (!$_SESSION['groups'] || !$course) {
 		return $forums;
 	}
 
-	$groups =  implode(',',$_SESSION['groups']);
-
-	$sql = "SELECT F.*, G.group_id FROM ".TABLE_PREFIX."forums_groups G INNER JOIN ".TABLE_PREFIX."forums F USING (forum_id) WHERE G.group_id IN ($groups) ORDER BY F.title";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		$row['title'] = get_group_title($row['group_id']);
-		$forums['group'][] = $row;
+	// filter out the groups that do not belong to the given course
+	foreach ($_SESSION['groups'] as $group) {
+		$sql = "SELECT * FROM ".TABLE_PREFIX."groups g, ". TABLE_PREFIX."groups_types gt
+		         WHERE g.group_id=".$group."
+		           AND g.type_id = gt.type_id
+		           AND gt.course_id=".$course;
+		$result = mysql_query($sql, $db);
+		
+		if (mysql_num_rows($result) > 0){
+			$groups = $group .',';
+		}
 	}
-
+	if (isset($groups)) {
+		$groups = substr($groups, 0, -1);
+		$sql = "SELECT F.*, G.group_id FROM ".TABLE_PREFIX."forums_groups G 
+		         INNER JOIN ".TABLE_PREFIX."forums F 
+		         USING (forum_id) 
+		         WHERE G.group_id IN ($groups) 
+		         ORDER BY F.title";
+		
+		$result = mysql_query($sql, $db);
+		while ($row = mysql_fetch_assoc($result)) {
+			$row['title'] = get_group_title($row['group_id']);
+			$forums['group'][] = $row;
+		}
+	}
+	
 	return $forums;	
 }
 
