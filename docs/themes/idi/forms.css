@@ -3,7 +3,6 @@ div.input-form {
 	max-width: 90%;
 	margin-left:auto; 
 	margin-right:auto;
-	border: 1px solid #DEE7EC;
 	margin-bottom: 20px;
 }
 
@@ -30,6 +29,7 @@ div.input-form input {
 div.input-form textarea {
 	border: 1px solid #999;
 	width: 98%;
+		*width:400px;
 	background-color: white;
 	padding: 2px;
 	margin-right: 2px;
@@ -59,6 +59,7 @@ div.input-form div.buttons {
 }
 div.input-form div.buttons input {
 	border: 1px solid #999;
+	background-color: transparent;
 	padding: 2px;
 	padding-left: 10px;
 	padding-right: 10px;

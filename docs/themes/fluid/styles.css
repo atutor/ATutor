@@ -40,7 +40,6 @@ h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
     margin: 0;
     padding-top: 0.5em;
-    /*border-bottom: 1px solid #B8AE9C;*/
 }
 
 h1 {
@@ -185,7 +184,6 @@ hr {
 	border: 1px #ACCFCC solid;
 }
 
-
 select.dropdown {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 }
@@ -269,7 +267,6 @@ td.selected{
 	padding: 2px;
 }
 
-
 .unsaved {
 	color: red;
 	background-color: #FFFDE0;
@@ -280,51 +277,6 @@ td.selected{
 	margin: 10px;
 }
 
-
-/* the side menu 
-td.dropdown-heading {
-	background-color: #DBFDD4;
-	color: #595241;
-	border-left: 1px solid #ECFEEA;
-	border-right: 1px solid #ECFEEA;
-	border-top: 1px solid #ECFEEA;
-	font-weight: bold;
-	padding: 2px;
-}
-
-td.dropdown-heading a, td.dropdown-heading a:hover, td.dropdown-heading a:visited {
-	text-decoration: none;
-}
-
-td.dropdown-heading.closed {
-	border-bottom: 1px solid #ECFEEA;
-}
-
-td.dropdown {
-	padding: 2px;
-	background-color: white;
-	color: black;
-	border-left: 1px solid #ECFEEA;
-	border-right: 1px solid #ECFEEA;
-	border-bottom: 1px solid #ECFEEA;
-	font-weight: normal;
-}
-td.dropdown a, td.dropdown a:visited  {
-	color: #595241;
-	text-decoration: none;
-}
-td.dropdown a:hover {
-	color: #595241;
-	text-decoration: underline;
-}
-td.dropdown.cell {
-	border-bottom: 0px;
-}
-td.dropdown strong {
-	color: #2A6C28;
-} */
-
-/* added for 1.4.2: */
 .results {
 	padding-left: 20px;
 }
@@ -357,8 +309,6 @@ p.search-description {
 	padding: 2px;
 }
 
-/***************************************************************/
-/* NEW STUFF */
 
 table.tabbed-table {
 	width: 100%;
@@ -609,15 +559,11 @@ table.data tfoot input {
 	border:  #AAA  solid 1px;
 }
 
-
-
 /* used for static tables with no form elements: */
 table.data.static tbody tr:hover {
 	background-color: transparent;
 	cursor: auto;
 }
-
-
 
 /* course browser: */
 
@@ -816,7 +762,8 @@ form {
 
 
 optgroup {
-	/*font-size: small;*/
+	
+	
 }
 
 /* packing */
@@ -855,9 +802,6 @@ div.paging li a:hover, div.paging li a.current {
 
 #header{
 	background-color: #e1ecfe;
-	/*background-image: url(images/pencil_top.gif);
-	background-position: right bottom;
-	background-repeat: no-repeat;*/
 	height : 5.7em;
 }
 
@@ -876,7 +820,7 @@ div.paging li a:hover, div.paging li a.current {
 	background-image:url(images/tl_corner.gif);
 	background-position: top left;
 	background-repeat: no-repeat;
-padding:0;
+	padding:0;
 }
 div.top {
     /* Top space */
@@ -1064,8 +1008,6 @@ fieldset#shortcuts {
 	padding-left: 10pt;
 }
 
-
-
 fieldset {
 	margin-bottom: 10pt;
 }
@@ -1082,8 +1024,8 @@ fieldset {
 
 a#guide {
 	background-image: url('../default/images/help.png'); 
-background-repeat: no-repeat; 
-background-position: 2px 2px;
+	background-repeat: no-repeat; 
+	background-position: 2px 2px;
 	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
@@ -1205,10 +1147,6 @@ ul#home-links li a img {
 	background-color: #F7F3ED;
 	text-decoration: none;
 	margin-left: 4px;
-/*
-	-moz-border-radius-topright: 4px;
-	-moz-border-radius-topleft: 4px;
-*/
 	white-space: nowrap;
 }
 
@@ -1257,29 +1195,11 @@ dl#public-profile dd {
 	float: left;
 }
 
-*/
-/*#contentcolumn {
-	margin-left: 0.5em;
-	padding-right: 5px;
-}
-#contentcolumn_shiftright {
-	margin-left: 17em;
-}
-
-#leftcolumn{
-	float: left;
-	width: 16em;
-	margin-left: 5px;
-	margin-top:-10px;
-}*/
-
 .sidebox fieldset {
 	border:0px;
 }
 
 #footer{
-	/*position:absolute;
-	bottom:0px;*/
 	clear: left;
 	width: 100%;
 	text-align: center;
@@ -1312,9 +1232,6 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 div#topnavlistcontainer {
 	background-color: #e1ecfe;
-	/*background-image: url(images/pencil_bottom.gif);
-	background-position:  top right;
-	background-repeat: no-repeat;*/
 }
 ul#topnavlist {
 	padding-top: 5px;
@@ -1343,7 +1260,6 @@ ul#topnavlist li a {
     padding: 0.2em 2em 0em;
    	text-decoration:none;
 	background-color:#f2f7fe;
-
 	border-left:1px solid #a1c4f8;
 	border-right:1px solid #a1c4f8;
 	border-top:1px solid #a1c4f8;	
@@ -1382,10 +1298,12 @@ ol#tools>li:hover {
 	line-height: 200%; 
 	background-color: #fdfdfd; 
 	border-bottom: 1px solid #efefef; 
-	/* -moz-border-radius: 4px;  */
-	border: 1px solid #eeeeff;}
+	border: 1px solid #eeeeff;
+}
 
-li.top-tool a {  font-weight: bold; } /* ol#tools>li>a */ 
+li.top-tool a {  
+	font-weight: bold;
+}
 
 li.child-tool a { 
 	font-size: x-small;
@@ -1410,20 +1328,6 @@ li.child-tool {
 	font-size: x-small;
 }
 
-/* to modify  tool icons on the course home page */
-/*
-#icon-color-filter{
-	width:3.9em;
-	height:3.85em;
-	background-color:#000000;
-	-moz-opacity:0.5;
-	  filter:alpha(opacity=10);
-	opacity:.10;
-	margin-top:-3.85em;
-	margin-left:1.90em;
-
-}
-*/
 .img-size-home {
 	height:3.85em;
 	width:3.9em;
@@ -1604,7 +1508,7 @@ a.tooltip{
 	padding-right:.2em;
 	padding-bottom:.2em;
 	text-decoration:none;
-		border-bottom:1px dashed;
+	border-bottom:1px dashed;
 }
 /* fluid reorderer */
 .grab{
@@ -1960,7 +1864,6 @@ div#shortcuts{
 	font-weight:500;
 	text-align:center;
 	padding:0em 0em 0em;
-
 }
 .editor_tab{
 	float:left;
@@ -2020,7 +1923,7 @@ ul#content-tool-links img{
 	padding-left: 10px;
 }
 .fl-force-right{
-float:right;
+	float:right;
 }
 .hidden {
     display: none;
@@ -2029,18 +1932,18 @@ float:right;
     cursor: pointer;    
 }
 .del-content-icon{
-	  border:0;
-height:.8em;
+	border:0;
+	height:.8em;
 }
 #logoutbar{
-float:right;
-text-align:right;
-text-transform: lowercase;
+	float:right;
+	text-align:right;
+	text-transform: lowercase;
 }
 #subnav a{
-color:#ffffff;
-font-weight:bold;
-text-decoration:underline;
+	color:#ffffff;
+	font-weight:bold;
+	text-decoration:underline;
 }
 div#subnavlistcontainer {
 	width:95%;
@@ -2069,9 +1972,6 @@ ul#subnavlist {
 	padding-top: 4px;
 	margin-top: 0px;
 	font-size:.8em;
-	
-
-
 }
 
 ul#subnavlist li {
@@ -2098,10 +1998,10 @@ ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#
 ul#subnavlist li a {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
-    	height: 1.5em;
+    height: 1.5em;
    	text-decoration:underline;
 	font-weight:500;
 }
 .fl-container{
-background-color:#F7FAF7;	
+	background-color:#F7FAF7;	
 }

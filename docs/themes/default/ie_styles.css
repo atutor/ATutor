@@ -61,7 +61,7 @@ div#top-links a:active{
 }
 
 ul#topnavlist li {
-margin-bottom:-3em;
+	margin-bottom:-3em;
 	*display: inline;
 }
 

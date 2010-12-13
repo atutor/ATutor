@@ -34,6 +34,7 @@ div.input-form input {
 div.input-form textarea {
 	border: 1px solid #595241;
 	width: 98%;
+	*width:400px;
 	padding: 2px;
 	margin-right: 2px;
 }

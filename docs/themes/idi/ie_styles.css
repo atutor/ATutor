@@ -26,7 +26,49 @@ table.data tfoot input {
 	height:9.6em;
 }
 .buttons input[type=submit]{
-padding:.3em;
-width:auto;
-overflow:visible;
+	padding:.3em;
+	width:auto;
+	overflow:visible;
+}
+#top-links-jump{
+	*margin-top:-5em;
+}
+ul.current_list{
+	 *margin-left:0em;
+}
+
+.etabbed-list{
+	*padding-top:.5em;
+}
+.prefs_tab{
+	*padding-top:.2em;
+}
+div.home_box {
+	 margin-bottom:2em;
+}
+.fl-force-right{
+	*margin-top:-1.2em;
+	*margin-right:.2em;
+}
+ul#subnavlist li {
+	*display: inline;
+	*margin-left:.5em;
+}
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:55px;
+
+}
+.etabbed-list{
+	*padding-top:.5em;
+}
+.tab-spacer{
+	*width:10px;
+}
+div.input-form textarea {
+	*width:400px;
+
+}
+ul#topnavlist{
+	*margin-bottom:-.2em;
 }
