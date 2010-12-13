@@ -28,7 +28,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ctitle"><strong><?php echo _AT('title');  ?></strong></label>
 		<input type="text" name="title" id="ctitle" size="60" class="formfield" value="<?php echo ContentManager::cleanOutput($_POST['title']); ?>" />
         </span>
-        <span class="nowrap">
+       <br /> <span class="nowrap">
         <label for="formatting_radios"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><strong><?php echo _AT('formatting'); ?></strong></label>
         <span id="formatting_radios">
             <input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] == 0) { echo 'checked="checked"'; } ?> />
