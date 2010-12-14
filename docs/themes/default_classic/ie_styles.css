@@ -63,14 +63,11 @@ p{
 }
 
 .header{
-	background-image: url('images/pub_default.jpg'); 
-	background-repeat: no-repeat; 
-	background-position/*\**/:0 30px\9;
+	background-position/*\**/:0 8px\9;
+	*background-position:0px -25px;
 	height:10.5em;
-	*height:7.5em;
-	margin-bottom:2em;
-	margin-top:-2em;
-	text-align:right;
+	*height:10.8em;
+	*margin-top:0;
 }
 
 ul.current_list{
@@ -96,7 +93,6 @@ h1.section-title {
 	white-space:nowrap;
 }
 div#member-links{
-
 	background-color: #788CB3;
 }
 #breadcrumbs{
@@ -106,4 +102,6 @@ div#member-links{
 div .button {
 	*overflow:visible;
 }
-
+textarea#body_text{
+	*width:600px;
+}
