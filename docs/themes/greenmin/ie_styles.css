@@ -64,3 +64,6 @@ ul#subnavlist li {
 	*margin-top:-1.2em;
 	*margin-right:.2em;
 }
+textarea#body_text{
+	*width:600px;
+}

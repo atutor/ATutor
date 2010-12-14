@@ -1476,7 +1476,7 @@ div.home_box {
 .outside_box{
 	  background: #DEE7EC;
 	  width: 24.3em;
-	  height:8.0em;
+	  height:8.5em;
 	  padding:.4em;
 	  border:1px solid #8CACBB;
 	  -moz-border-radius:.3em .3em .3em .3em;
@@ -1487,10 +1487,9 @@ div.home_box {
 	  width:100%;
 	  padding:.1em;
 	  margin:auto;
-	  height:52%;
+	  height:55%;
 	  -moz-border-radius:.3em .3em .3em .3em;
 	  border-radius: .3em .3em .3em .3em;
-	  margin-bottom:.2em;
 	  background:#ffffff;
 }
 

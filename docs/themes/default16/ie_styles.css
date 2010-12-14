@@ -91,3 +91,6 @@ div.search_bar .s_img{
 	margin-top: -2em;	
 	margin-right: 0.4em;
 }
+textarea#body_text{
+	*width:600px;
+}

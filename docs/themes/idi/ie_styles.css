@@ -23,7 +23,7 @@ table.data tfoot input {
 	min-width:0px;
 }
 .outside_box{
-	height:9.6em;
+	height:9.0em;
 }
 .buttons input[type=submit]{
 	padding:.3em;
@@ -71,4 +71,7 @@ div.input-form textarea {
 }
 ul#topnavlist{
 	*margin-bottom:-.2em;
+}
+textarea#body_text{
+	*width:600px;
 }

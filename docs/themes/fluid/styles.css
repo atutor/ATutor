@@ -491,7 +491,7 @@ table.data {
 } 
 
 table.data th {
-	background-color: #F2F7FE;
+	background-color: #E1ECFE;
 	padding: 3px;
 	white-space: nowrap;
 }
@@ -512,7 +512,7 @@ table.data tbody {
 
 table.data tbody th {
 	text-align: left;
-	background-color: #F7F3ED;
+	background-color: #F2F7FE;
 	cursor: auto;
 }
 
@@ -940,7 +940,7 @@ div.box h4 {
 }
 
 div.box .even {
-    background-color: #F7F3ED;
+    background-color: #F2F7FE;
 }
 
 div.box .odd {

@@ -90,18 +90,17 @@ global $system_courses, $_custom_css, $_base_path;
 
 <?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 <!-- the bread crumbs -->
-<div id="breadcrumbs">
-	<?php foreach ($this->path as $page): ?>
-		<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> &raquo; 
-	<?php endforeach; ?> <?php echo $this->page_title; ?>
+	<div id="breadcrumbs">
+		<?php foreach ($this->path as $page): ?>
+			<a href="<?php echo $page['url']; ?>" title="<?php echo _AT('back_to').' '.$page['title']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> &raquo; 
+		<?php endforeach; ?> <?php echo $this->page_title; ?>
+	</div><!-- end bredcrumbs div -->
+		<?php } ?>
+</div><!-- end member-links div -->
 
-	<?php } ?>
-  
-   </div><!-- end member-links div -->
-</div><!-- end bredcrumbs div -->
 <div class="header">
     <?php if ($_SESSION['valid_user']) : 
-	    echo '<span style="font-size:small;font-weight:bold;padding-left:5px;">'.stripslashes(SITE_NAME).'</span>'; 
+	    echo '<span class="site-name">'.stripslashes(SITE_NAME).'</span>'; 
     endif; ?>
     <h1 class="section-title">
 

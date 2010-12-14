@@ -95,3 +95,6 @@ table.etabbed-table	{
 fieldset.group_form{
 	*margin-left:1em;
 }
+textarea#body_text{
+	*width:600px;
+}

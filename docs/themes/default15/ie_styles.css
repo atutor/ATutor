@@ -67,3 +67,6 @@ ul.current_list{
 #details_view{
 	margin-bottom:2em;
 }
+textarea#body_text{
+	*width:600px;
+}

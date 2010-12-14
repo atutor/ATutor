@@ -51,5 +51,7 @@ table.etabbed-table	{
 ul#subnavlist li {
 	*display: inline;
 	*margin-left:.5em;
-
+}
+textarea#body_text{
+	*width:600px;
 }
