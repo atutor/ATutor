@@ -96,4 +96,8 @@ white-space:normal;
 }
 table.etabbed-table	{
 	padding-right:5em;
+	*margin-right:4em;
+}
+#subnavlist{
+	*margin-right:4em;
 }

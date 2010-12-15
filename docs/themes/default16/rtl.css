@@ -91,4 +91,31 @@ white-space:normal;
 }
 table.etabbed-table	{
 	padding-right:5em;
+	margin-right:5em;
+}
+
+table.data tfoot tr:first-child td {
+	padding: 5px;
+	background-image: url('images/arrow_rtl.gif');
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+	margin-left: 40px;
+}
+table.data tfoot input{
+	margin-right:2.2em;
+}
+div#sub-navigation{
+	margin-top:.5em;
+}
+h2.page-title{
+	*margin-top:.5em;
+}
+a#back-to {
+	background-position: 100% 100%;
+}
+ul.etabbed-list{
+	margin-right:5em;	
+}
+#subnavlist{
+	margin-right:5em;	
 }

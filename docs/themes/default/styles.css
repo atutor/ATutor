@@ -7,10 +7,8 @@ html,body{
 	padding-left:1em;
 	color:gray;
 	white-space:nowrap;
-	margin-left:1em;
+	margin-left:.8em;
 	float:left;
-
-
 }
 /* main body attributes */
 body {
@@ -1793,7 +1791,7 @@ a.tooltip{
 /* style for home page modules "detail view" */
 
 div.home_box {
-	width: 26em;
+	width: 25em;
 	height: 166px;	
 	margin-top: .4em;
 	padding: 3px;
@@ -1806,7 +1804,7 @@ div.home_box {
 	background: #eeeeee;
 	padding:.2em;
 	margin-left:.4em;
-	width:25.5em;
+	width:24.5em;
 	height:9.8em;
 	-moz-border-radius:.3em .3em .3em .3em;
 	border-radius: .3em .3em .3em .3em;
@@ -1829,24 +1827,7 @@ div.home_box {
 	-moz-border-radius:.5em;
 	padding:.2em;
 }
-.details_or{
-	width:25.8em;
-	height:9.8em;
 
-}
-.details_ol{
-	height:9.8em;
-	width:.45em;
-}
-.details_ir{
-	width:.5em;
-	height:100%;
-	float:right;
-}
-.details_il{
-	height:100%;
-	float:left;
-}
 .home-title{
 	font-size:90%;
 	font-weight:bold;

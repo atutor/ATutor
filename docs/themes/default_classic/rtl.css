@@ -78,36 +78,61 @@ div#member-links{
       width:99%;
 }
 div#header{
-
-background-position:right top;
+	background-position:right top;
 }
 .section-title{
-float:left;
-margin-left:250px;
+	float:left;
+	margin-left:250px;
 }
 
 .admin_container{
-float:left;
-clear:both;
-white-space:normal;
+	float:left;
+	clear:left;
+	white-space:normal;
 }
-.page-title{
 
-margin-top:1em;
+.page-title{
+	margin-top:1em;
 }
 
 .top-tool{
-width:95%;
+	width:95%;
 }
 .child-top-tool li{
-white-space:normal;
-overflow:visible;
+	white-space:normal;
+	overflow:visible;
 }
 
 #contentcolumn {
-white-space:normal;
+	white-space:normal;
 
 }
+
+/* IE 7 adjustments for RTL Languages */
 table.etabbed-table	{
 	padding-right:5em;
+
+}
+table.data tfoot tr:first-child td {
+	padding: 5px;
+	background-image: url('../default/images/arrow_rtl.gif');
+	background-repeat: no-repeat;
+	background-position: 99% 50%;
+	margin-left: 40px;
+}
+table.data tfoot input{
+	margin-right:2em;
+}
+ul#subnavlist{
+	*margin-right:4em;
+}
+
+fieldset.group_form{
+	*margin-right:0;
+}
+table.etabbed-table	{
+	*margin-right:4em;
+}
+.etabbed-list{
+	*margin-right:4em;
 }

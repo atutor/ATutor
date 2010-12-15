@@ -699,7 +699,7 @@ img.headicon {
 .header{
 	background-image: url('images/pub_default.jpg'); 
 	background-repeat: no-repeat; 
-	background-position:0px 18px;
+	background-position:0px .5em;
 	margin-top: .8em;
 	height:10.5em;
 	text-align:right;

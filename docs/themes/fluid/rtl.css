@@ -16,14 +16,14 @@ div.box {
 }
 
 div.menuedit{
-float:left;
-margin-top:-1.5em;
+	float:left;
+	margin-top:-1.5em;
 }
 
 
 .del-content-icon{
 /* float:left; */
-border:0;
+	border:0;
 }
 
 
@@ -32,63 +32,73 @@ margin-right:.5em;
 
 }
 
-
 #logoutbar{
-text-align:left;
-float:left;
-text-transform: lowercase;
+	text-align:left;
+	float:left;
+	text-transform: lowercase;
 }
 
 .fl-force-right{
-float:left;
+	float:left;
 
 }
 
 .buttonbox{
-float:left;
+	float:left;
 
 }
 ul.current_list li{
- width:90%;
+	width:90%;
 }
 
 .current_box{
-width:34%;
+	width:34%;
 }
 
 .my_course_container{
-width:55%;
+	width:55%;
 }
 
 #content-tool-links{
-float:right;
+	float:right;
 }
 
 #home-links{
-float:right;
+	float:right;
 }
 
 .admin_container{
-float:left;
-white-space:normal;
+	float:left;
+	white-space:normal;
 }
 .page-title{
 
-margin-top:1em;
+	margin-top:1em;
 }
 
 .top-tool{
-width:95%;
+	width:95%;
 }
 .child-top-tool li{
-white-space:normal;
-overflow:visible;
+	white-space:normal;
+	overflow:visible;
 }
 
 #contentcolumn {
-white-space:normal;
+	white-space:normal;
 }
 
 table.etabbed-table	{
+	*margin-right:5em;
 	padding-right:5em;
+}
+
+.column fieldset.group_form input#login, input#pass, input.button{
+	*margin-right:2em;	
+}
+.column fieldset.group_form{
+	*margin:1em;	
+}
+#subnavlist{
+	*margin-right:5em;	
 }

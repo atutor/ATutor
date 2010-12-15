@@ -1367,7 +1367,9 @@ dl.browse-course dd {
 	padding:0px 5px 0px 5px;
 	overflow: hidden;
 }
-
+#fluid-id-4{
+	width:75%;
+}
 #side-menu h3 {
 	color:black; 
 	font-size:smaller; 
