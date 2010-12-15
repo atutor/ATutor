@@ -323,28 +323,30 @@ class UrlRewrite  {
 	function getPath(){
 		//for 2.0, most of the paths are moved  into mods/_standard
 		//map the paths.
-		$hmap = array (					 										
-					'/glossary'		=>	'mods/_core',
-					'/groups'		=>	'mods/_core',
-					'/imscp'		=>	'mods/_core',
-					'/blogs'		=>	'mods/_standard',
-					'/chat'			=>	'mods/_standard',
-					'/directory'	=>	'mods/_standard',
-					'/faq'			=>	'mods/_standard',					
-					'/file_storage'	=>	'mods/_standard',
-					'/forums/forum'	=>	'mods/_standard',
-					'/google_search'=>	'mods/_standard',
-					'/gradebook'	=>	'mods/_standard',
-					'/links'		=>	'mods/_standard',
-					'/photos'		=>	'mods/_standard',
-					'/polls'		=>	'mods/_standard',
-					'/sitemap'		=>	'mods/_standard',
-					'/social'		=>	'mods/_standard',
-					'/student_tools'=>	'mods/_standard',
-					'/tile_search'  =>	'mods/_standard',
-					'/tests'		=>	'mods/_standard',
-					'/tracker'		=>	'mods/_standard',
-					'/reading_list'	=>	'mods/_standard'					
+        //TODO: Add regex into the path, ie. /social/* means all folders under social.
+        $hmap = array (
+                    '/glossary'		=>	'mods/_core',
+                    '/groups'		=>	'mods/_core',
+                    '/imscp'		=>	'mods/_core',
+                    '/blogs'		=>	'mods/_standard',
+                    '/chat'			=>	'mods/_standard',
+                    '/directory'	=>	'mods/_standard',
+                    '/faq'			=>	'mods/_standard',
+                    '/file_storage'	=>	'mods/_standard',
+                    '/forums/forum'	=>	'mods/_standard',
+                    '/google_search'=>	'mods/_standard',
+                    '/gradebook'	=>	'mods/_standard',
+                    '/links'		=>	'mods/_standard',
+                    '/photos'		=>	'mods/_standard',
+                    '/polls'		=>	'mods/_standard',
+                    '/sitemap'		=>	'mods/_standard',
+                    '/social'		=>	'mods/_standard',
+                    '/social/groups'=>	'mods/_standard',
+                    '/student_tools'=>	'mods/_standard',
+                    '/tile_search'  =>	'mods/_standard',
+                    '/tests'		=>	'mods/_standard',
+                    '/tracker'		=>	'mods/_standard',
+                    '/reading_list'	=>	'mods/_standard'
 				);
 
 		if ($this->path != ''){

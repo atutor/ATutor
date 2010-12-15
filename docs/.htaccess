@@ -91,9 +91,14 @@ RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
 RewriteRule ^([^/]+)/([^/^.]+)/?$ go.php/$1/$2.php [L]
 
+#This handles multi-level directory (adds index.php to the add if it ends with a /)
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
-RewriteRule ^([^/]+)/(((mods)/[^/^.]+)|([^/^.]+))/([^/^.]+)/?$ go.php/$1/$2/$6.php [L]
+RewriteRule ^([^/]+)/(([^/^.]+)/)+([^/^.]+)/$ go.php/$1/$2/$4/index.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/([^/^.]+)/([^/^.]+)/?$ go.php/$1/$2/$3.php [L]
 
 RewriteCond     %{REQUEST_FILENAME}     !-f
 RewriteCond     %{REQUEST_FILENAME}     !-d
