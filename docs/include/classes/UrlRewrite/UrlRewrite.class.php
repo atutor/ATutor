@@ -325,6 +325,7 @@ class UrlRewrite  {
 		//map the paths.
         //TODO: Add regex into the path, ie. /social/* means all folders under social.
         $hmap = array (
+                    '/content'      =>  'mods/_core',
                     '/glossary'		=>	'mods/_core',
                     '/groups'		=>	'mods/_core',
                     '/imscp'		=>	'mods/_core',
