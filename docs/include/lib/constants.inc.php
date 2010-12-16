@@ -207,7 +207,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'2.0.1');
+define('VERSION',		'2.0.2');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
