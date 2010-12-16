@@ -24,4 +24,3 @@ foreach ($media_matches as $media_match) {
 }
 
 ?>
-
