@@ -186,10 +186,10 @@ if (!isset($_POST['submit'])) {
 		echo '<select name="time_zone">';	
 			echo '<option value="0">'._AT('none').'</option>';
 		foreach ($utc_timezones as $zone => $offset){
-			if(($offset[1]-$local_offset) == $_config['time_zone']){
-			echo '<option value="'.($offset[1]-$local_offset).'" selected="selected">'.$offset[0].'</option>';
+			if(($offset[1]) == $_config['time_zone']){
+			echo '<option value="'.($offset[1]).'" selected="selected">'.$offset[1].'</option>';
 			}else{
-			echo '<option value="'.($offset[1]-$local_offset).'">'.$offset[0].'</option>';
+			echo '<option value="'.($offset[1]).'">'.$offset[1].'</option>';
 
 			}
 		}

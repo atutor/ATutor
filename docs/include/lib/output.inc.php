@@ -1412,10 +1412,11 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 */
 function apply_timezone($timestamp){
 	global $_config;
-
+/*
 	if($_config['time_zone']){
 		$timestamp = ($timestamp + ($_config['time_zone']*3600));
 	}
+*/
 
 	if(isset($_SESSION['prefs']['PREF_TIMEZONE'])){
 		$timestamp = ($timestamp + ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
