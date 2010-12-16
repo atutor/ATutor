@@ -28,7 +28,7 @@ if (isset($_POST['delete'])){
 	if (isset($_POST['apps']) && !empty($_POST['apps'])){
 		//need confirm box
 		$apps->deleteApplications($_POST['apps']);
-		$msg->addFeedback('GADGET_REMOVED_SUCCESSFULLY');		
+		$msg->addFeedback('GADGET_REMOVED_SUCCESSFULLY');
 	} else {
 		//cannot be empty
 		$msg->addError('GADGET_DELETED_CANNOT_BE_EMPTY');
@@ -40,6 +40,6 @@ $all_apps = $apps->listApplications();
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('all_apps', $all_apps);
-$savant->display('admin/delete_applications.tmpl.php');
+$savant->display('social/admin/delete_applications.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
