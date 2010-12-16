@@ -131,7 +131,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		
 		if ($row['locked'] != 1) {
-				echo '<a href="'.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id']).'" title="'.$full_subject.'">'.$row['subject'].'</a>';
+				echo '<a href="'.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id']).'" title="'.AT_print($full_subject, 'forums_threads.subject').'">'.$row['subject'].'</a>';
 
 			if ($row['locked'] == 2) {
 				echo ' <i class="spacer">('._AT('post_lock').')</i>';
@@ -146,7 +146,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		if ($num_pages_2 > 1) {
 			echo ' <small class="spacer">( Page: ';
 			for ($i=2; $i<=$num_pages_2; $i++) {
-				echo '<a href="'.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'page='.$i).'" title="'.$full_subject.'">'.$i.'</a>';
+				echo '<a href="'.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$fid.SEP.'pid='.$row['post_id'].SEP.'page='.$i).'" title="'.AT_print($full_subject, 'forums_threads.subject').'">'.$i.'</a>';
 
 				if ($i<$num_pages_2){
 					echo ' | ';

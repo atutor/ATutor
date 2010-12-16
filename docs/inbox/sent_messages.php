@@ -86,7 +86,7 @@ if (isset($_GET['view']) && $_GET['view']) {
 		</div>
 
 		<div class="forum-post-content">
-			<h3><?php echo AT_Print(htmlspecialchars($row['subject'], ENT_COMPAT, "UTF-8"), 'messages.subject'); ?></h3>
+			<h3><?php echo AT_print($row['subject'], 'messages.subject'); ?></h3>
 			<div>
 				<div class="forum-post-ctrl">
 					<a href="inbox/send_message.php?forward=<?php echo $_GET['view']; ?>"><?php echo _AT('forward'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
@@ -95,11 +95,10 @@ if (isset($_GET['view']) && $_GET['view']) {
 			</div>
 
 			<div class="body">
-				<p><?php echo AT_print(htmlspecialchars($row['body'], ENT_COMPAT, "UTF-8"), 'messages.body'); ?></p>
+				<p><?php echo AT_print($row['body'], 'messages.body'); ?></p>
 			</div>
 			<div style="clear: both; font-size:0.1em"></div>
 		</div>
-	</div>
 	</li>
 	</ul>
 	<?php

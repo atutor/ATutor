@@ -312,11 +312,11 @@ $_field_formatting['course_cats.cat_name']		= AT_FORMAT_NONE;
 
 $_field_formatting['courses.*']				    = AT_FORMAT_ALL & ~AT_FORMAT_EMOTICONS & ~AT_FORMAT_ATCODES & ~AT_FORMAT_LINKS & ~AT_FORMAT_IMAGES;
 
-$_field_formatting['forums.title']				= AT_FORMAT_NONE;
-$_field_formatting['forums.description']		= AT_FORMAT_ALL;
+$_field_formatting['forums.title']				= AT_FORMAT_NONE | AT_FORMAT_QUOTES;
+$_field_formatting['forums.description']		= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
 
-$_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
-$_field_formatting['forums_threads.body']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
+$_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
+$_field_formatting['forums_threads.body']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 
 $_field_formatting['glossary.word']				= AT_FORMAT_NONE;
 $_field_formatting['glossary.definition']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
@@ -325,8 +325,8 @@ $_field_formatting['instructor_approvals.notes']= AT_FORMAT_NONE;
 
 $_field_formatting['members.*']                 = AT_FORMAT_NONE; /* wildcards are okay */
 
-$_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_IMAGES;
-$_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES + AT_FORMAT_ATCODES;
+$_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_IMAGES | AT_FORMAT_QUOTES;
+$_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES + AT_FORMAT_ATCODES | AT_FORMAT_QUOTES;
 
 $_field_formatting['news.title']				= AT_FORMAT_EMOTICONS | AT_FORMAT_LINKS & ~AT_FORMAT_HTML;
 $_field_formatting['news.body']					= AT_FORMAT_ALL;
