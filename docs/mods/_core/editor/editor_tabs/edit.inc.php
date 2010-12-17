@@ -111,7 +111,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
     <div class="row">
         <span id="textSpan">
-            <label for="body_text"><strong><?php echo _AT('body');  ?></strong></label>
+            <label for="body_text"><strong><?php echo _AT('body');  ?></strong></label><br />
 		    <textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']);?></textarea>
 		</span>
 		<span id="weblinkSpan">	
