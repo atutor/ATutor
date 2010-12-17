@@ -73,23 +73,34 @@ if (!$obj->isEmpty()){
  * @param	array	consist of all the pathinfo variables in querystring format
  */
 function save2Get($var_query){
-	if (empty($var_query) || !is_array($var_query))
-		return;
-	foreach($var_query as $k=>$v){
-		if ($k=='page_to_load'){
-			continue;
-		}
+    if (empty($var_query) || !is_array($var_query))
+        return;
 
-		//If mod_rewrite is on, the page# will be shown as <page#>.html.
-		//in this case, parse the page number out.
-		if ($k=='page'){
-			if (preg_match('/(.*)\.html$/', $v, $matches)==1){
-				$v = $matches[1];
-			}
-		}
-		$_GET[$k] = $v;
-		$_REQUEST[$k] = $v;
-	}
+    //recreate URL querystring so we can use the PHP function - parse_str() later on
+    foreach($var_query as $k=>$v){
+        if ($k=='page_to_load'){
+            continue;
+        }
+
+        //If mod_rewrite is on, the page# will be shown as <page#>.html.
+        //in this case, parse the page number out.
+        if ($k=='page'){
+            if (preg_match('/(.*)\.html$/', $v, $matches)==1){
+                $v = $matches[1];
+            }
+        }
+        $temp[] = $k . '=' . $v;
+    }
+    $var_query = implode(SEP, $temp);
+    parse_str($var_query, $output); //convert querystring to php array
+
+    //saves it to both GET and REQUEST
+    //TODO: Would overwrite POST value that has the same GET name within REQUEST. Fix this.
+    //Avoid the use of REQUEST in the code.
+    foreach($output as $k=>$v){
+        $_GET[$k] = $v;
+        $_REQUEST[$k] = $v;
+    }
 }
 
 /**

@@ -32,7 +32,7 @@ if (mysql_num_rows($result) > 0) {
 			}
 	
 			$link_title = $row['title'].$last_updated;
-			$list[] = '<a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.htmlentities(SEP).'oid='.$row['group_id'], AT_PRETTY_URL_IS_HEADER).'"'.
+			$list[] = '<a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP. SEP .'oid='.$row['group_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 			          (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
 			          validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
 		}

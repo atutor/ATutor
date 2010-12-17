@@ -47,13 +47,13 @@ while ($row = mysql_fetch_assoc($result)) {
 			$last_updated = '';
 		}
 
-		echo '<li class="top-tool" style="position:relative;"><a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.htmlentities(SEP).'oid='.$row['group_id']).'">'.$row['title'].$last_updated.'</a>';
+		echo '<li class="top-tool" style="position:relative;"><a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP. SEP .'oid='.$row['group_id']).'">'.$row['title'].$last_updated.'</a>';
 		
 		// Check if subscribed and make appropriate button
 		if ($sub->is_subscribed('blog',$_SESSION['member_id'],$row['group_id'])){
-			echo '<a style="float:right;clear:right;padding-right:20px;" href="'.$_SERVER['PHP_SELF'].'?group_id='.$row['group_id'].htmlentities(SEP).'subscribe=unset"><img border="0" src="'.AT_BASE_HREF.'images/unsubscribe-envelope.png" alt="" /> '._AT('blog_unsubscribe').'</a>';
+			echo '<a style="float:right;clear:right;padding-right:20px;" href="'.$_SERVER['PHP_SELF'].'?group_id='.$row['group_id']. SEP .'subscribe=unset"><img border="0" src="'.AT_BASE_HREF.'images/unsubscribe-envelope.png" alt="" /> '._AT('blog_unsubscribe').'</a>';
 		} else {
-			echo '<a style="float:right;clear:right;padding-right:20px;" href="'.$_SERVER['PHP_SELF'].'?group_id='.$row['group_id'].htmlentities(SEP).'subscribe=set"><img border="0" src="'.AT_BASE_HREF.'images/subscribe-envelope.png" alt="" /> '._AT('blog_subscribe').'</a>';
+			echo '<a style="float:right;clear:right;padding-right:20px;" href="'.$_SERVER['PHP_SELF'].'?group_id='.$row['group_id']. SEP .'subscribe=set"><img border="0" src="'.AT_BASE_HREF.'images/subscribe-envelope.png" alt="" /> '._AT('blog_subscribe').'</a>';
 		}
 		echo '</li>';
 		$blogs = true;
