@@ -229,7 +229,29 @@ if ($_config['check_version']) {
 				<dd><?php echo $num_users; ?></dd>
 
 				<dt><?php echo _AT('atutor_version'); ?>:</dt>
-				<dd><?php echo _AT('atutor_version_text', VERSION, urlencode(VERSION)); ?></dd>
+                <?php
+                    require('../svn.php');
+                    if (!empty($svn_data)) {
+                        $svn_data   = explode("\n", $svn_data);
+                        if (substr($svn_data[1], 0, 1) == 'r') {
+                            $svn_data = $svn_data[1];
+                        } else if (substr($svn_data[2], 0, 1) == 'r') {
+                            $svn_data = $svn_data[2];
+                        }
+
+                        if (count($svn_data) > 1) {
+                            $build = 'unknown';
+                            $build_date = date('Y-m-d H:i:s');
+                        } else {
+                            $svn_data   = explode(' ', $svn_data);
+
+                            $build      = $svn_data[0];
+                            $build_date = $svn_data[4] .' '. $svn_data[5];
+                        }
+                        $build_str = '(' . $build . ' - '.$build_date . ')';
+                    }
+                ?>
+				<dd><?php echo _AT('atutor_version_text', VERSION . $build_str, urlencode(VERSION)); ?></dd>
 
 				<dt><?php echo _AT('php_version'); ?>:</dt>
 				<dd><?php echo PHP_VERSION; ?></dd>

@@ -11,6 +11,9 @@
 
 // $Id$
 
+/* If this file is from the trunk, it is *supposed* to have comments only. */
+/* http://atutor.ca/atutor/mantis/view.php?id=4669 */
+
 /* created by the bundle script.                     */
 /* the resulting file will look something like this: */
 /* $svn_data = '
