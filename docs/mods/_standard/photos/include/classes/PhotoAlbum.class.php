@@ -174,6 +174,7 @@ class PhotoAlbum {
 	 * @param	int			permission, 0 for private, 1 for shared
 	 * @param	int			album author
 	 * @param	int			OPTIONAL, Photo cover for this album
+     * @return  int         album_id, FALSE if failed.
 	 */
 	function createAlbum($name, $location, $description, $type, $permission, $member_id, $photo_id=0){
 		global $addslashes, $db;
@@ -197,7 +198,10 @@ class PhotoAlbum {
 			$sql = "INSERT INTO ".TABLE_PREFIX."pa_course_album (course_id, album_id) VALUES ($_SESSION[course_id], $aid)";
 			$result = mysql_query($sql, $db);
 		}
-		return $result;
+        if (!$result) {
+            return false;
+        }
+		return $aid;
 	}
 
 	/** 
