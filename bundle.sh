@@ -8,7 +8,7 @@
 set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor_$now"
 set bundle = "ATutor"
-set svndir = "http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/docs/"
+set svndir = "http://svn.atutor.ca/repos/atutor/trunk/docs/"
 set svnexec = "svn"
 
 echo "\033[1mATutor Bundle Script [for CVS 1.3.1+] \033[0m"
@@ -89,7 +89,7 @@ sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $atut
 sleep 1
 
 echo -n "<?php "'$svn_data = '"'" >> $atutor_dir/ATutor/svn.php
-$svnexec log  -q -r HEAD http://atutorsvn.atrc.utoronto.ca/repos/atutor/trunk/  >> $atutor_dir/ATutor/svn.php
+$svnexec log  -q -r HEAD http://svn.atutor.ca/repos/atutor/trunk/  >> $atutor_dir/ATutor/svn.php
 echo -n "';?>" >> $atutor_dir/ATutor/svn.php
 
 echo "\nTargz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
