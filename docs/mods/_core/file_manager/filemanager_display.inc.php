@@ -499,18 +499,22 @@ function insertFile(fileName, pathTo, ext, ed_pref) {
 
 function insertLink(html, ed_pref)
 {
-    if (window.opener) {
-        var isNotVisual = (jQuery('#html:checked').val() !== null) && (ed_pref === '1');
-    }
+	var isVisual = false;
+	
+	if (window.opener) {
+		if (typeof window.opener.jQuery("#html_visual_editor:checked").val() !== "undefined") {
+			isVisual = true;
+		}
+	}
 
-	if (!window.opener || !isNotVisual) {
+	if (!window.opener || isVisual) {
 		if (!window.opener && window.parent.tinyMCE)
 			window.parent.tinyMCE.execCommand('mceInsertContent', false, html);
 		else
 			if (window.opener && window.opener.tinyMCE)
 				window.opener.tinyMCE.execCommand('mceInsertContent', false, html);
 	} else {
-			insertAtCursor(window.opener.document.form.body_text, html);
+		insertAtCursor(window.opener.document.form.body_text, html);
 	}
 }
 
