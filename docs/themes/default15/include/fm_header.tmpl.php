@@ -48,3 +48,5 @@ global $system_courses;
 <br /><br /><div align="right"><a href="javascript:window.close()"><?php echo _AT('close_window'); ?></a></div>
 <a name="content"></a>
 <?php global $msg; $msg->printAll(); ?>
+<div class="input-form">
+<div class="row" style="border:thin solid blue;">
