@@ -52,12 +52,13 @@ $this->_pages['mods/_core/imscp/export.php']['text']      = _AT('export_content_
 $this->_pages['mods/_core/imscp/export.php']['guide']     = 'general/?p=export_content.php';
 
 
-if (!isset($_GET['cid']) && !isset($_POST['cid']))
+if (!isset($_GET['cid']) && !isset($_POST['cid'])) {
 	$this->_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'add_content_folder';
-else
+} else {
 	$this->_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'edit_content_folder';
+}
+
 $this->_pages['mods/_core/editor/edit_content_folder.php']['parent']    = 'mods/_core/content/index.php';
-$this->_pages['mods/_core/editor/edit_content_folder.php']['guide']     = 'instructor/?p=creating_editing_content_folder.php';
 
 $this->_pages['mods/_core/editor/delete_content.php']['title_var'] = 'delete_content';
 $this->_pages['mods/_core/editor/delete_content.php']['parent']    = 'mods/_core/content/index.php';

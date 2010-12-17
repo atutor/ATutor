@@ -132,7 +132,6 @@ if ($section == 'admin'){
 			'chat.php',
 			'content.php' => array(
 									'creating_editing_content.php' => array(
-				'creating_editing_content_folder.php',
 				'content_edit.php',
 				'content_properties.php',								'glossary_terms.php',
 				'content_preview.php',
