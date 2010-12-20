@@ -142,7 +142,8 @@ if (isset($this_login, $this_password)) {
 		}
 		
 		$_SESSION['first_login'] = false;
-		if ($row['last_login'] == null || $row['last_login'] == '' || $row['last_login'] == '0000-00-00 00:00:00') {
+		if ($row['last_login'] == null || $row['last_login'] == '' || $row['last_login'] == '0000-00-00 00:00:00' 
+            || $_config['pref_defaults'] == $row['preferences']) {
 		    $_SESSION['first_login'] = true;
 		}
 
