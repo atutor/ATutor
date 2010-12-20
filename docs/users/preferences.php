@@ -72,6 +72,11 @@ if (is_mobile_device()) {
 	assign_session_prefs(unserialize(stripslashes($row['preferences'])));
 }
 
+if ($_SESSION['first_login']) {
+    $_SESSION['prefs']['PREF_MODIFIED'] = 1;    //flag to indicate that this preference has been changed.
+    save_prefs();
+}
+
 unset($_SESSION['first_login']);
 $sql	= "SELECT inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 $result = mysql_query($sql, $db);
