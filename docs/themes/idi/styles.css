@@ -1177,7 +1177,7 @@ div#guide_box{
 	border-left:thin solid #cccccc;
 	border-right:thin solid #cccccc;
 	border-bottom:thin solid #cccccc;
-	border-radius: 0em 0em .5em .5em;;
+	border-radius: 0em 0em .5em .5em;
 	-moz-border-radius: 0em 0em .5em .5em;
 	height:1.5em;
 	float:right;
@@ -1193,6 +1193,32 @@ div#content-text {
 div#content-text li {
 	margin-left: 15pt;
 }
+
+div#content-test {	
+	float: left;
+	margin-top: 2em;
+	padding-right: 5pt;
+	width: 80%;
+	background-color:#DEE7EC;
+	border:1px solid #8CACBB;
+		border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+}
+div#content-test ol{	
+	margin-right: 5pt;
+	list-style:none;
+}
+
+div#content-test ol ul li{
+	list-style: none;
+	padding: 0px 2px 0px 15px;
+	margin-bottom: 1px; 
+	line-height: 200%; 
+	background-color: #fdfdfd; 
+	border-bottom: 1px solid #efefef; 
+	border: 1px solid #eeeeff;
+}
+
 
 div#content-info {
 	margin: 5pt;

@@ -52,7 +52,42 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "")
 <div id="content-text">
 	<?php echo $this->body; ?>
 </div>
+<?php if (!empty($this->test_ids)): ?>
+<div id="content-test" class="input-form">
+	<ol>
+		<strong><?php echo _AT('tests') . ':' ; ?></strong>
+		<li class="top-tool"><?php echo $this->test_message; ?></li>
+		<ul class="tools">
+		<?php 
+			foreach ($this->test_ids as $id => $test_obj){
+				echo '<li><a href="'.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$test_obj['test_id'], AT_PRETTY_URL_IS_HEADER).'">'.
+					AT_print($test_obj['title'], 'tests.title').'</a><br /></li>';
+			}
+		?>
+		</ul>
+	</li></ol>
+</div>
+<?php endif; ?>
 
+<?php
+
+if (!empty($this->forum_ids)): ?>
+<div id="content-test" class="input-form">
+    <ol>
+        <strong><?php echo _AT('forums') . ':' ; ?></strong>
+        <li class="top-tool"><?php echo $this->forum_message; ?></li>
+            <ul class="tools">
+                <?php
+                foreach ($this->forum_ids as $id => $forum_obj) {
+                    echo '<li><a href="'.url_rewrite('mods/_standard/forums/forum/index.php?fid='.$forum_obj['forum_id'], AT_PRETTY_URL_IS_HEADER).'">'.
+                        AT_print($forum_obj['title'], 'forums.title').'</a><br /></li>';
+                }
+                ?>
+            </ul>
+        </li>
+    </ol>
+</div>
+<?php endif; ?>
 <div id="content-info">
 	<?php echo $this->content_info; ?>
 </div>
