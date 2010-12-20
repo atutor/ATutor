@@ -196,7 +196,16 @@ if (($course === 0) && $_SESSION['valid_user']) {
 		$th = get_default_theme();
 		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
 	}
-
+    /* http://atutor.ca/atutor/mantis/view.php?id=4587
+     * 	for users with no enrolled courses, default to the Browse Bourses screen instead of My Courses. 
+     */
+    $sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'course_enrollment WHERE member_id='.$_SESSION['member_id'];
+    $result = mysql_query($sql, $db);
+    $row = mysql_fetch_assoc($result);
+    if ($row['count'] == 0) {
+        header('Location: users/browse.php');
+        exit;
+    }
 	header('Location: users/index.php');
 	exit;
 } else if (($course === 0) && !$_SESSION['valid_user']) { // guests
