@@ -711,13 +711,13 @@ class Module {
 	 * @author	Cindy Li 
 	 * @date	Dec 7, 2010
 	 */
-	function getContent(){
-		if (file_exists(AT_MODULE_PATH . $this->_directoryName.'/moduleCallbacks.class.php') &&
+	function getContent($cid){
+		if (file_exists(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php') &&
 		    isset($this->_callbacks[$this->_directoryName])) 
 		{
-			require(AT_MODULE_PATH . $this->_directoryName.'/moduleCallbacks.class.php');
+			require(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php');
 			if (method_exists($this->_callbacks[$this->_directoryName], "appendContent")) {
-				eval('$output = '.$this->_callbacks[$this->_directoryName]."::appendContent();");
+				eval('$output = '.$this->_callbacks[$this->_directoryName]."::appendContent($cid);");
 				return $output;
 			}
 		}
