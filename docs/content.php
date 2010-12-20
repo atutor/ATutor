@@ -256,7 +256,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits, $sort = TRUE);
 			$module_contents = '';
 			foreach($module_list as $key=>$obj) {
-				$module_content = $obj->getContent();
+				$module_content = $obj->getContent($cid);
 				if (!empty($module_content)){
 					$module_contents .= '<div id="'.str_replace('/', '-', $key).'" class="content-from-module">'.$module_content.'</div>';
 				}
