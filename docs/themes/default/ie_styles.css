@@ -12,18 +12,17 @@
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
-
-height:6em;
-border:thin solid black;
+	position:absolute;
+	top:5.3em;
 }
 
 ul#topnavlist li {
 	zoom:100%;
 	padding:0.3em;
-	margin:0px;
 	margin-bottom:-3px;
 	border-bottom:0;
-				*display:inline;
+	min-height:3.5em;
+
 }
 
 label {

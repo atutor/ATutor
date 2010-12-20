@@ -1309,8 +1309,6 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 /** inbox stuff - reuses some of the forum layout **/
 #inbox-msg li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; width: 95%; list-style: none; min-height: 11em;}
 
-
-
 div#topnavlistcontainer {
     background-color: #1D2326;
 	background-image: url(images/pencil_bottom.gif);
