@@ -443,6 +443,90 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 		'input[type=image].fl-force-right {' +
 		'BG_COLOR FG_COLOR' +
 		'}' +
+  		'.page_wrapper {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		 '.input-form {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		 '.group_form {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'#topnavlist li a{' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'#topnavlist li a{' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'#subnavlist li {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.album_panel {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.album {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.add_profile_photo {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.comment_panel {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.photo_actions {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.etabbed-list li {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'input[type=submit] {' +
+		'BORDER FG_COLOR' +
+		'}' +
+		'input[type=reset] {' +
+		'BORDER FG_COLOR' +
+		'}' +
+		'input[type=text] {' +
+		'BORDER FG_COLOR' +
+		'}' +
+		'input[type=file] {' +
+		'BORDER FG_COLOR' +
+		'}' +
+		'textarea {' +
+		'BORDER FG_COLOR' +
+		'}' +
+		'.data {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.current_box {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.box {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.outside_box {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.inside_box {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.forum-paginator {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'#forum-thread li {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.forum-post-ctrl {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.profile-picture {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.dropdown {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
+		'.dropdown-heading {' +
+   		'BORDER FG_COLOR;' +
+  		'}' +
 		/** Armin 23.09.2010 */
 		'ul.recent_item {' +
 		'BG_COLOR FG_COLOR' +
@@ -459,6 +543,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 		'div.site-name {' +
 		'BG_COLOR FG_COLOR' +
 		'}' +
+		
 		/** Armin 23.09.2010 */ 
     	'-->' +
     	'</style>';
@@ -472,9 +557,12 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 		var bg_color_style = bg_color ? 'background-color: #' + bg_color + ' !important;\n' : '';
 		var fg_color_style = fg_color ? 'color: #' + fg_color + ' !important;\n' : '';
 		var hl_color_style = hl_color ? 'background-color: #' + hl_color + '! important;\n' : '';
-				
-		var pref_style = ATutor.users.preferences.user_styles.replace(/FONT_FAMILY/g, font_style).replace(/FONT_SIZE/g, font_size_style).replace(/BG_COLOR/g, bg_color_style).replace(/FG_COLOR/g, fg_color_style).replace(/HL_COLOR/g, hl_color_style);
-	    jQuery('#pref_style').replaceWith(pref_style);
+		var bd_color_style = fg_color ? 'border-color: #' + fg_color + '! important;\n' : '';	
+		
+		//var pref_style = ATutor.users.preferences.user_styles.replace(/FONT_FAMILY/g, font_style).replace(/FONT_SIZE/g, font_size_style).replace(/BG_COLOR/g, bg_color_style).replace(/FG_COLOR/g, fg_color_style).replace(/HL_COLOR/g, hl_color_style);
+	   var pref_style = ATutor.users.preferences.user_styles.replace(/FONT_FAMILY/g, font_style).replace(/FONT_SIZE/g, font_size_style).replace(/BG_COLOR/g, bg_color_style).replace(/FG_COLOR/g, fg_color_style).replace(/HL_COLOR/g, hl_color_style).replace(/BORDER/g, bd_color_style);
+	   
+	   jQuery('#pref_style').replaceWith(pref_style);
 	    if (window.opener) jQuery('#pref_style', window.opener.document).replaceWith(pref_style);
 	};
 	
