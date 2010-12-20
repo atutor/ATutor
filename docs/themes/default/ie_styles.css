@@ -12,7 +12,9 @@
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
-		*display:inline;
+
+height:6em;
+border:thin solid black;
 }
 
 ul#topnavlist li {
@@ -21,7 +23,7 @@ ul#topnavlist li {
 	margin:0px;
 	margin-bottom:-3px;
 	border-bottom:0;
-
+				*display:inline;
 }
 
 label {
