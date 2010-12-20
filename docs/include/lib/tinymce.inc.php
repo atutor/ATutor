@@ -85,7 +85,7 @@ echo 'theme: "advanced",
 
     //these are the simple tools used on the content editor page
     var simpleToolBars = {
-        theme_advanced_buttons1 : "swap_toolbar_complex,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,pasteword,link,unlink,|,acheck",
+        theme_advanced_buttons1 : "swap_toolbar_complex,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,pasteword,link,unlink,|,image,|,acheck",
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 : "",
         theme_advanced_buttons4 : ""
