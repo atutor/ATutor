@@ -432,8 +432,7 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 	<form method="post" action="<?php echo 'mods/_standard/file_storage/index.php'.$owner_arg_prefix; ?>" enctype="multipart/form-data" name="form0">
 	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
-	<div style="margin-left:auto; margin-right:auto;width: 75%;">
-		<div style="" >
+	<div style="margin-left:auto; margin-right:auto;width: 95%;">
 			<div class="input-form" style="width: 48%; float: right;" >
 				<div class="row">
 					<h3><a href="mods/_standard/file_storage/index.php" onclick="javascript:toggleform('c_folder'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'" onfocus="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
@@ -450,7 +449,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			</div>
 	
 	
-			<div class="input-form" style="float: left; width: 45%;">
+			<div class="input-form" style="float: left; width: 48%;">
 				<div class="row">
 					<h3><a href="mods/_standard/file_storage/index.php" onclick="javascript:toggleform('upload'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'" onfocus="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
 				</div>
@@ -469,8 +468,7 @@ while ($row = mysql_fetch_assoc($result)) {
 					</div>
 				</div>
 			</div>
-	
-		</div>
+
 	</div>
 	</form>
 
@@ -510,7 +508,7 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 	}
 }
 ?>
-<div style="float:left; clear:right; width:95%;">
+<div style="margin-left:auto;margin-right:auto; clear:both;width:95%;">
 <form method="get" action="<?php echo url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER);?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
 <input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
