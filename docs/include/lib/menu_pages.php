@@ -250,14 +250,12 @@ $_pages['users/preferences.php']['guide']  = 'general/?p=preferences.php';
 $_pages['users/pref_wizard/index.php']['title_var']  = 'preferences';
 $_pages['users/pref_wizard/index.php']['parent'] = AT_NAV_START;
 
-
+$_pages['enroll.php']['title_var']  = 'enroll';
+$_pages['enroll.php']['parent'] = 'users/browse.php';
 
 /* course pages */
 $_pages['index.php']['title_var']  = 'course_home';
 $_pages['index.php']['parent'] = AT_NAV_COURSE;
-
-$_pages['enroll.php']['title_var']  = 'enroll';
-$_pages['enroll.php']['parent'] = AT_NAV_COURSE;
 
 /* instructor pages: */
 $_pages['tools/index.php']['title_var'] = 'manage';
