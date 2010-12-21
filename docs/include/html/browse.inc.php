@@ -118,6 +118,11 @@ $has_categories = false;
 if ($categories_select != '<option value="0"></option>') {
 	$has_categories = true;
 }
+
+if ($_SESSION['first_login']) {
+    $msg->addInfo(array('FIRST_PREFS', $_base_path.'users/pref_wizard/index.php'));
+}
+
 $savant->assign('cats', $cats);
 $savant->assign('num_results', $num_results);
 $savant->assign('has_categories', $has_categories);
