@@ -401,14 +401,12 @@ div#warning {
 	font-weight: bold;
 }
 
-/***************************************************************/
-/* NEW STUFF */
 
 a#back-to {
 	padding-left: 20px;
-	background-image: url('../default/images/back.gif');
+/*	background-image: url('../default/images/back.gif');
 	background-repeat: no-repeat;
-	background-position: 0px 0px;
+	background-position: 0px 0px;*/
 	height:1.45em;
 	width:1.45em;
 }
