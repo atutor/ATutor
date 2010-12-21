@@ -191,10 +191,10 @@ class PhotoAlbum {
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."pa_albums (name, location, description, type_id, member_id, permission, photo_id, created_date, last_updated) VALUES ('$name', '$location', '$description', $type, $member_id, $permission, $photo_id, NOW(), NOW())";
 		$result = mysql_query($sql, $db);
+        $aid = mysql_insert_id();
 
 		//if course album, add a record.
-		if ($type==AT_PA_TYPE_COURSE_ALBUM){
-			$aid = mysql_insert_id();
+		if ($type==AT_PA_TYPE_COURSE_ALBUM){			
 			$sql = "INSERT INTO ".TABLE_PREFIX."pa_course_album (course_id, album_id) VALUES ($_SESSION[course_id], $aid)";
 			$result = mysql_query($sql, $db);
 		}
