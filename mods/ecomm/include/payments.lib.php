@@ -1,6 +1,16 @@
 <?php
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2010                                              */
+/* Inclusive Design Institute                                           */
+/* http://atutor.ca                                                     */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
 
+if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /**
 * Collects purchase information for PayPal -
@@ -78,6 +88,496 @@ function mirapay_authenticate_user_response( ) {
 	}
 }
 
+function beanstream_print_form($payment_id, $amount, $course_id) {
+
+ 	global $_config, $db, $addslashes;
+	if($_config['ec_gateway'] == 'BeanStream'){
+	$mtid = mysql_insert_id($db);
+	$mkey = md5($mtid.$amount.$password);
+	$sql = "SELECT * from ".TABLE_PREFIX."members";
+	//echo $sql;
+		//$mkey = md5($payment_id.$amount.$_config['ec_password']);
+	$result = mysql_query($sql, $db);
+
+	while($row = mysql_fetch_assoc($result)){
+				$member['firstname'] = $row['first_name'];
+				$member['lastname'] = $row['last_name'];
+				$member['email'] = $row['email'];
+				//$member['organization'] = $row['organization'];
+				$member['address'] = $row['address'];
+				$member['postal'] = $row['postal'];
+				$member['province'] = $row['province'];
+				$member['city'] = $row['city'];
+				$member['telephone'] = $row['phone'];
+				$member['country'] = $row['country'];
+			}
+	
+	$firstname = $addslashes($member['firstname']);
+	$lastname = $addslashes( $member['lastname']);
+	$email = $addslashes( $member['email']);
+	$address = $addslashes($member['address']);
+	$postal = $addslashes($member['postal']);
+	$telephone = $addslashes($member['telephone']);
+	$country = $addslashes($member['country']);
+	$province = $addslashes($member['province']);
+	$city = $addslashes($member['city']);
+	$payment_id = $_SESSION['course_title'];
+	?>
+	<div style="float:left; border:thin solid black; padding:1em; -moz-border-radius:.5em;">
+	<form method="post" action="<?php echo $_config['ec_uri']; ?>">
+	<!-- stored  for history -->
+	<input type="hidden"  name="firstname" value="<?php echo $firstname; ?>">
+	<input type="hidden"  name="lastname" value="<?php echo $lastname; ?>">
+	<input type="hidden"  name="ordName" value="<?php echo $firstname.' '.$lastname; ?>">
+	<input type="hidden"  name="trnCardOwner" value="<?php echo $firstname.' '.$lastname; ?>">
+
+	<input type="hidden"  name="organization" value="<?php echo $organization; ?>">
+	
+	<?php 
+
+	if($address == ''){
+	    $more_info = '<label for="address">'._AT('street_address').'</label>:<br /> <input type="text" value="" size="40" name="ordAddress1" id="address"><br />';
+	}else{ ?>
+		<input type="hidden"  name="ordAddress1" value="<?php echo $address; ?>">
+	<?php }	?>
+	
+	<?php 
+	if($city == ''){
+	    $more_info .= '<label for="city">'._AT('city').'</label>:<br /> <input type="text" value="" size="20" name="ordCity" id="city"><br />';
+	}else{ ?>
+		<input type="hidden"  name="ordCity" value="<?php echo $city; ?>">
+	<?php }	?>
+	
+	<?php 
+	    $more_info .= '<label for="provstate">'._AT('ec_province').'</label>:<br /> 
+			<select name="ordProvince" id="provstate">	
+			<optgroup label="">
+			<option value="--">--choose--</option>
+			<option value="--">Outside U.S./Canada</option>
+			</optgroup>
+			<optgroup label="Canadian Provinces">
+			<option value="AB">Alberta</option>						
+			<option value="BC">British Columbia</option>						
+			<option value="MB">Manitoba</option>						
+			<option value="NB">New Brunswick</option>
+			<option value="NL">Newfoundland and Labrador</option>						
+			<option value="NT">Northwest Territories</option>						
+			<option value="NS">Nova Scotia</option>						
+			<option value="NU">Nunavut</option>						
+			<option value="ON">Ontario</option>						
+			<option value="Z2">Other</option>						
+			<option value="PE">Prince Edward Island</option>						
+			<option value="QC">Quebec</option>						
+			<option value="SK">Saskatchewan</option>						
+			<option value="YT">Yukon</option>
+			</optgroup>
+			<optgroup label="U.S. States">						
+			<option value="AL">Alabama</option>						
+			<option value="AK">Alaska</option>						
+			<option value="AS">American Samoa</option>
+			<option value="AZ">Arizona</option>						
+			<option value="AR">Arkansas</option>						
+			<option value="CA">California</option>						
+			<option value="CO">Colorado</option>					
+			<option value="CT">Connecticut</option>						
+			<option value="DE">Delaware</option>						
+			<option value="DC">District of Columbia</option>						
+			<option value="FM">Federated States of Micronesia</option>						
+			<option value="FL">Florida</option>						
+			<option value="GA">Georgia</option>						
+			<option value="GU">Guam</option>						
+			<option value="HI">Hawaii</option>						
+			<option value="ID">Idaho</option>						
+			<option value="IL">Illinois</option>						
+			<option value="IN">Indiana</option>						
+			<option value="IA">Iowa</option>						
+			<option value="KS">Kansas</option>						
+			<option value="KY">Kentucky</option>						
+			<option value="LA">Louisiana</option>						
+			<option value="ME">Maine</option>						
+			<option value="MH">Marshall Islands</option>						
+			<option value="MD">Maryland</option>						
+			<option value="MA">Massachusetts</option>						
+			<option value="MI">Michigan</option>						
+			<option value="MN">Minnesota</option>						
+			<option value="MS">Mississippi</option>						
+			<option value="MO">Missouri</option>						
+			<option value="MT">Montana</option>						
+			<option value="NE">Nebraska</option>						
+			<option value="NV">Nevada</option>						
+			<option value="NH">New Hampshire</option>						
+			<option value="NJ">New Jersey</option>						
+			<option value="NM">New Mexico</option>						
+			<option value="NY">New York</option>						
+			<option value="NC">North Carolina</option>						
+			<option value="ND">North Dakota</option>
+			<option value="MP">Northern Mariana Islands</option>
+			<option value="OH">Ohio</option>
+			<option value="OK">Oklahoma</option>						
+			<option value="OR">Oregon</option>						
+			<option value="Z1">Other</option>						
+			<option value="PW">Palau</option>						
+			<option value="PA">Pennsylvania</option>						
+			<option value="PR">Puerto Rico</option>						
+			<option value="RI">Rhode Island</option>						
+			<option value="SC">South Carolina</option>						
+			<option value="SD">South Dakota</option>						
+			<option value="TN">Tennessee</option>						
+			<option value="TX">Texas</option>						
+			<option value="UT">Utah</option>						
+			<option value="VT">Vermont</option>
+			<option value="VI">Virgin Islands</option>
+			<option value="VA">Virginia</option>						
+			<option value="WA">Washington</option>						
+			<option value="WV">West Virginia</option>						
+			<option value="WI">Wisconsin</option>						
+			<option value="WY">Wyoming</option>
+			</optgroup>
+						
+			</select><br />';
+	    
+		?>
+
+	<?php 
+	if($postal == ''){
+	    $more_info .= '<label for="postal">'._AT('ec_postal').'</label>:<br /> <input type="text" value="" size="20" name="ordPostalCode" id="postal"><br />';
+	}else{ ?>
+		<input type="hidden"  name="ordPostalCode" value="<?php echo $postal; ?>">
+	<?php }	?>
+	
+	<?php 
+	if($telephone == ''){
+	    $more_info .= '<label for="telephone">'._AT('ec_telephone').'</label>:<br /> <input type="text" value="" size="20" name="ordPhoneNumber" id="telephone"><br />';
+	}else{ ?>
+		<input type="hidden"  name="ordPhoneNumber" value="<?php echo $telephone; ?>">
+	<?php }	?>
+
+	<?php 
+	    $more_info .= '<label for="country">Country</label>:<br /> 
+	    <select name="ordCountry" id="country">
+			<option value="">--choose--</option>
+			<option value="AF">Afghanistan</option>
+			<option value="AL">Albania</option>
+			<option value="DZ">Algeria</option>
+			<option value="AS">American Samoa</option>
+			<option value="AD">Andorra</option>
+			<option value="AG">Angola</option>
+			<option value="AI">Anguilla</option>
+			<option value="AG">Antigua &amp; Barbuda</option>
+			<option value="AR">Argentina</option>
+			<option value="AA">Armenia</option>
+			<option value="AW">Aruba</option>
+			<option value="AU">Australia</option>
+			<option value="AT">Austria</option>
+			<option value="AZ">Azerbaijan</option>
+			<option value="BS">Bahamas</option>
+			<option value="BH">Bahrain</option>
+			<option value="BD">Bangladesh</option>
+			<option value="BB">Barbados</option>
+			<option value="BY">Belarus</option>
+			<option value="BE">Belgium</option>
+			<option value="BZ">Belize</option>
+			<option value="BJ">Benin</option>
+			<option value="BM">Bermuda</option>
+			<option value="BT">Bhutan</option>
+			<option value="BO">Bolivia</option>
+			<option value="BL">Bonaire</option>
+			<option value="BA">Bosnia &amp; Herzegovina</option>
+			<option value="BW">Botswana</option>
+			<option value="BR">Brazil</option>
+			<option value="BC">British Indian Ocean Ter</option>
+			<option value="BN">Brunei</option>
+			<option value="BG">Bulgaria</option>
+			<option value="BF">Burkina Faso</option>
+			<option value="BI">Burundi</option>
+			<option value="KH">Cambodia</option>
+			<option value="CM">Cameroon</option>
+			<option value="CA">Canada</option>
+			<option value="IC">Canary Islands</option>
+			<option value="CV">Cape Verde</option>
+			<option value="KY">Cayman Islands</option>
+			<option value="CF">Central African Republic</option>
+			<option value="TD">Chad</option>
+			<option value="CD">Channel Islands</option>
+			<option value="CL">Chile</option>
+			<option value="CN">China</option>
+			<option value="CI">Christmas Island</option>
+			<option value="CS">Cocos Island</option>
+			<option value="CO">Colombia</option>
+			<option value="CC">Comoros</option>
+			<option value="CG">Congo</option>
+			<option value="CK">Cook Islands</option>
+			<option value="CR">Costa Rica</option>
+			<option value="CT">Cote D\'Ivoire</option>
+			<option value="HR">Croatia</option>
+			<option value="CU">Cuba</option>
+			<option value="CB">Curacao</option>
+			<option value="CY">Cyprus</option>
+			<option value="CZ">Czech Republic</option>
+			<option value="DK">Denmark</option>
+			<option value="DJ">Djibouti</option>
+			<option value="DM">Dominica</option>
+			<option value="DO">Dominican Republic</option>
+			<option value="TM">East Timor</option>
+			<option value="EC">Ecuador</option>
+			<option value="EG">Egypt</option>
+			<option value="SV">El Salvador</option>
+			<option value="GQ">Equatorial Guinea</option>
+			<option value="ER">Eritrea</option>
+			<option value="EE">Estonia</option>
+			<option value="ET">Ethiopia</option>
+			<option value="FA">Falkland Islands</option>
+			<option value="FO">Faroe Islands</option>
+			<option value="FJ">Fiji</option>
+			<option value="FI">Finland</option>
+			<option value="FR">France</option>
+			<option value="GF">French Guiana</option>
+			<option value="PF">French Polynesia</option>
+			<option value="FS">French Southern Ter</option>
+			<option value="GA">Gabon</option>
+			<option value="GM">Gambia</option>
+			<option value="GE">Georgia</option>
+			<option value="DE">Germany</option>
+			<option value="GH">Ghana</option>
+			<option value="GI">Gibraltar</option>
+			<option value="GB">Great Britain</option>
+			<option value="GR">Greece</option>
+			<option value="GL">Greenland</option>
+			<option value="GD">Grenada</option>
+			<option value="GP">Guadeloupe</option>
+			<option value="GU">Guam</option>
+			<option value="GT">Guatemala</option>
+			<option value="GN">Guinea</option>
+			<option value="GY">Guyana</option>
+			<option value="HT">Haiti</option>
+			<option value="HW">Hawaii</option>
+			<option value="HN">Honduras</option>
+			<option value="HK">Hong Kong</option>
+			<option value="HU">Hungary</option>
+			<option value="IS">Iceland</option>
+			<option value="IN">India</option>
+			<option value="ID">Indonesia</option>
+			<option value="IA">Iran</option>
+			<option value="IQ">Iraq</option>
+			<option value="IR">Ireland</option>
+			<option value="IM">Isle of Man</option>
+			<option value="IL">Israel</option>
+			<option value="IT">Italy</option>
+			<option value="JM">Jamaica</option>
+			<option value="JP">Japan</option>
+			<option value="JO">Jordan</option>
+			<option value="KZ">Kazakhstan</option>
+			<option value="KE">Kenya</option>
+			<option value="KI">Kiribati</option>
+			<option value="NK">Korea North</option>
+			<option value="KS">Korea South</option>
+			<option value="KW">Kuwait</option>
+			<option value="KG">Kyrgyzstan</option>
+			<option value="LA">Laos</option>
+			<option value="LV">Latvia</option>
+			<option value="LB">Lebanon</option>
+			<option value="LS">Lesotho</option>
+			<option value="LR">Liberia</option>
+			<option value="LY">Libya</option>
+			<option value="LI">Liechtenstein</option>
+			<option value="LT">Lithuania</option>
+			<option value="LU">Luxembourg</option>
+			<option value="MO">Macau</option>
+			<option value="MK">Macedonia</option>
+			<option value="MG">Madagascar</option>
+			<option value="MY">Malaysia</option>
+			<option value="MW">Malawi</option>
+			<option value="MV">Maldives</option>
+			<option value="ML">Mali</option>
+			<option value="MT">Malta</option>
+			<option value="MH">Marshall Islands</option>
+			<option value="MQ">Martinique</option>
+			<option value="MR">Mauritania</option>
+			<option value="MU">Mauritius</option>
+			<option value="ME">Mayotte</option>
+			<option value="MX">Mexico</option>
+			<option value="MI">Midway Islands</option>
+			<option value="MD">Moldova</option>
+			<option value="MC">Monaco</option>
+			<option value="MN">Mongolia</option>
+			<option value="MS">Montserrat</option>
+			<option value="MA">Morocco</option>
+			<option value="MZ">Mozambique</option>
+			<option value="MM">Myanmar</option>
+			<option value="NA">Nambia</option>
+			<option value="NU">Nauru</option>
+			<option value="NP">Nepal</option>
+			<option value="AN">Netherland Antilles</option>
+			<option value="NL">Netherlands (Holland, Europe)</option>
+			<option value="NV">Nevis</option>
+			<option value="NC">New Caledonia</option>
+			<option value="NZ">New Zealand</option>
+			<option value="NI">Nicaragua</option>
+			<option value="NE">Niger</option>
+			<option value="NG">Nigeria</option>
+			<option value="NW">Niue</option>
+			<option value="NF">Norfolk Island</option>
+			<option value="NO">Norway</option>
+			<option value="OM">Oman</option>
+			<option value="PK">Pakistan</option>
+			<option value="PW">Palau Island</option>
+			<option value="PS">Palestine</option>
+			<option value="PA">Panama</option>
+			<option value="PG">Papua New Guinea</option>
+			<option value="PY">Paraguay</option>
+			<option value="PE">Peru</option>
+			<option value="PH">Philippines</option>
+			<option value="PO">Pitcairn Island</option>
+			<option value="PL">Poland</option>
+			<option value="PT">Portugal</option>
+			<option value="PR">Puerto Rico</option>
+			<option value="QA">Qatar</option>
+			<option value="ME">Republic of Montenegro</option>
+			<option value="RS">Republic of Serbia</option>
+			<option value="RE">Reunion</option>
+			<option value="RO">Romania</option>
+			<option value="RU">Russia</option>
+			<option value="RW">Rwanda</option>
+			<option value="NT">St Barthelemy</option>
+			<option value="EU">St Eustatius</option>
+			<option value="HE">St Helena</option>
+			<option value="KN">St Kitts-Nevis</option>
+			<option value="LC">St Lucia</option>
+			<option value="MB">St Maarten</option>
+			<option value="PM">St Pierre &amp; Miquelon</option>
+			<option value="VC">St Vincent &amp; Grenadines</option>
+			<option value="SP">Saipan</option>
+			<option value="SO">Samoa</option>
+			<option value="AS">Samoa American</option>
+			<option value="SM">San Marino</option>
+			<option value="ST">Sao Tome &amp; Principe</option>
+			<option value="SA">Saudi Arabia</option>
+			<option value="SN">Senegal</option>
+			<option value="SC">Seychelles</option>
+			<option value="SL">Sierra Leone</option>break;
+			<option value="SG">Singapore</option>
+			<option value="SK">Slovakia</option>
+			<option value="SI">Slovenia</option>
+			<option value="SB">Solomon Islands</option>
+			<option value="OI">Somalia</option>
+			<option value="ZA">South Africa</option>
+			<option value="ES">Spain</option>
+			<option value="LK">Sri Lanka</option>
+			<option value="SD">Sudan</option>
+			<option value="SR">Suriname</option>
+			<option value="SZ">Swaziland</option>
+			<option value="SE">Sweden</option>
+			<option value="CH">Switzerland</option>
+			<option value="SY">Syria</option>
+			<option value="TA">Tahiti</option>
+			<option value="TW">Taiwan</option>
+			<option value="TJ">Tajikistan</option>
+			<option value="TZ">Tanzania</option>
+			<option value="TH">Thailand</option>
+			<option value="TG">Togo</option>
+			<option value="TK">Tokelau</option>
+			<option value="TO">Tonga</option>
+			<option value="TT">Trinidad &amp; Tobago</option>
+			<option value="TN">Tunisia</option>
+			<option value="TR">Turkey</option>
+			<option value="TU">Turkmenistan</option>
+			<option value="TC">Turks &amp; Caicos Is</option>
+			<option value="TV">Tuvalu</option>
+			<option value="UG">Uganda</option>
+			<option value="UA">Ukraine</option>
+			<option value="AE">United Arab Emirates</option>
+			<option value="GB">United Kingdom</option>
+			<option value="US">United States of America</option>
+			<option value="UY">Uruguay</option>
+			<option value="UZ">Uzbekistan</option>
+			<option value="VU">Vanuatu</option>
+			<option value="VS">Vatican City State</option>
+			<option value="VE">Venezuela</option>
+			<option value="VN">Vietnam</option>
+			<option value="VB">Virgin Islands (Brit)</option>
+			<option value="VA">Virgin Islands (USA)</option>
+			<option value="WK">Wake Island</option>
+			<option value="WF">Wallis &amp; Futana Is</option>
+			<option value="YE">Yemen</option>
+			<option value="ZR">Zaire</option>
+			<option value="ZM">Zambia</option>
+			<option value="ZW">Zimbabwe</option>
+			</select><br />
+	    
+	    <br />';
+?>
+
+	<input type="hidden"  name="receipt" value="<?php echo $receipt; ?>">
+	<input type="hidden"  name="project" value="<?php echo $project; ?>">
+	<input type="hidden"  name="comment" value="<?php echo $comment; ?>">
+	<input type="hidden"  name="trnType" value="<?php echo $comment; ?>">
+	<input type="hidden"  name="tmp_amount" value="<?php echo $tmp_amount; ?>">
+	
+	<input type="hidden"  name="trnOrderNumber" value="<?php echo $mtid; ?>">
+	<input type="hidden"  name="ref2" value="<?php echo $payment_id; ?>">
+	<input type="hidden"  name="ref1" value="<?php echo $invoice_id; ?>">
+	<input type="hidden"  name="ref3" value="<?php echo $invoice; ?>">
+	<input type="hidden"  name="ref4" value="<?php echo $course_id; ?>">
+	<input type="hidden" name="merchant_id" value="<?php echo $_config['ec_vendor_id']; ?>">
+	<input type="hidden"  name="MKEY" value="<?php echo $mkey; ?>">
+	<input type="hidden"  name="trnAmount" value="<?php echo $amount; ?>">
+	
+	<input type="hidden" name="approvedPage"  value="<?php echo AT_BASE_HREF; ?>mods/ecomm/success_beanstream.php"/>
+	<input type="hidden" name="declinedPage"     value="<?php echo AT_BASE_HREF; ?>mods/ecomm/failure_beanstream.php"/>
+
+	
+	<input type="hidden"  name="errorPage" value="<?php echo AT_BASE_HREF; ?>mods/ecomm/error_beanstream.php">
+	<input type="hidden"  name="ordEmailAddress" value="<?php echo $email; ?>">
+	<?php
+	if($more_info != ''){
+	  echo _AT('ec_more_info_required');
+	  echo $more_info;
+	}
+	
+	?>
+	
+	
+	<label for="cardnum"><?php echo _AT('ec_cc_number'); ?></label>
+	<input type="text" name="trnCardNumber" id="cardnum" value="<?php echo $cardnumber; ?>">	<br /><br />
+	<label for="expmonth"><?php echo _AT('ec_cc_expiry_month'); ?></label>
+	<select name="trnExpMonth" id="expmonth">
+	<option value="01"><?php echo _AT('date_jan'); ?></option>
+	<option value="02"><?php echo _AT('date_feb'); ?></option>
+	<option value="03"><?php echo _AT('date_mar'); ?></option>
+	<option value="04"><?php echo _AT('date_apr'); ?></option>
+	<option value="05"><?php echo _AT('date_may'); ?></option>
+	<option value="06"><?php echo _AT('date_jun'); ?></option>
+	<option value="07"><?php echo _AT('date_jul'); ?></option>
+	<option value="08"><?php echo _AT('date_aug'); ?></option>
+	<option value="09"><?php echo _AT('date_sep'); ?></option>
+	<option value="10"><?php echo _AT('date_oct'); ?></option>
+	<option value="11"><?php echo _AT('date_nov'); ?></option>
+	<option value="12"><?php echo _AT('date_dec'); ?></option>
+	</select>
+	 <label for="expyear"><?php echo _AT('ec_cc_expiry_year'); ?></label>
+	<select name="trnExpYear" id="expyear">
+	<option value="10">2010</option>
+	<option value="11">2011</option>
+	<option value="12">2012</option>
+	<option value="13">2013</option>
+	<option value="14">2014</option>
+
+	</select><br /><br />
+	  <label for="cvd"><?php echo _AT('ec_cc_cvd_number'); ?></label>
+	  <input type="test"  name="trnCardCvd" size = "4" value="<?php echo $cvd; ?>"> <small><?php echo _AT('ec_cc_cvd_number'); ?></strong><br /><br />
+	
+
+			
+			<input type="submit" name="confirm" class="button" value="<?php echo _AT('ec_paybycredit'); ?>"/> 
+			<img src="<?php echo $_base_path; ?>mods/ecomm/images/visa_42x27.gif" title="<?php echo _AT('ec_acceptvisa'); ?>" alt="<?php echo _AT('ec_acceptvisa'); ?>" align="middle" /> <img src="<?php echo $_base_path; ?>mods/ecomm/images/mc_42x27.gif" title="<?php echo _AT('ec_acceptmastercard'); ?>" alt="<?php echo _AT('ec_acceptmastercard'); ?>" align="middle" />
+		</form>
+		  
+	</div><br style="clear:both;"/>
+	<?php
+
+	}
+}
+
 function approve_payment($payment_id, $transaction_id) {
 	global $db, $system_courses, $_config, $msg;
 
@@ -98,7 +598,8 @@ function approve_payment($payment_id, $transaction_id) {
 	if ($course_fee_row['auto_approve'] == '1'){
 		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE member_id=$member_id AND course_id=$course_id";
 		mysql_query($sql, $db);
-		$msg->addFeedback('EC_PAYMENT_CONFIRMED_AUTO');
+		$auto_link_login = array('EC_PAYMENT_CONFIRMED_AUTO',$course_id);
+		$msg->addFeedback($auto_link_login);
 	} else {
 		$msg->addFeedback('EC_PAYMENT_CONFIRMED_MANUAL');
 	}
