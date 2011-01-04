@@ -1,1 +1,0 @@
-INSERT INTO `language_text` VALUES ('en', '_module','flowplayer','FlowPlayer',NOW(),'');

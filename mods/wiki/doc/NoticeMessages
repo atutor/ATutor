@@ -1,5 +1,0 @@
-PHPs E_NOTICE flag to error_reporting() in fact means _DEBUGing messages.
-While you can have it enabled on production sites (indeed I have a few),
-this is not recommended and because ewiki+ sometimes emits lots of it, you
-should keep it disabled - error_reporting(0).
-

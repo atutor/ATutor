@@ -1,4 +1,0 @@
-ATutor Service Provider Interface, SPI.
-In simplicity, these files provide services for the gadgets.  
-
-Check shindig/php/src/social/spi/*Service.php for more Details

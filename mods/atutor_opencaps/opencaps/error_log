@@ -1,1 +1,0 @@
-[15-Aug-2010 23:56:54] PHP Warning:  Cannot modify header information - headers already sent by (output started at /home/filoa3/public_html/a2/ATutor/mods/AtOpenCaps/opencaps/include/classes/project_class.php:186) in /home/filoa3/public_html/a2/ATutor/mods/AtOpenCaps/opencaps/include/classes/system_class.php on line 94
