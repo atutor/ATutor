@@ -1,4 +1,15 @@
 <?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2010                                              */
+/* Inclusive Design Institute                                           */
+/* http://atutor.ca                                                     */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -20,11 +31,12 @@ if ($this_course_fee = mysql_fetch_assoc($result)) {
 	header('location: index.php');
 	exit;
 }
-
+$course_id = intval($_REQUEST['course_id']);
+$member_id = intval($_SESSION['member_id']);
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 ///Check if a partial payment has already been made so the balance can be calculated
-$sql4 = "SELECT SUM(amount) AS total_amount FROM ".TABLE_PREFIX."payments WHERE course_id='$_REQUEST[course_id]' AND approved=1 AND member_id=$_SESSION[member_id]";
+$sql4 = "SELECT SUM(amount) AS total_amount FROM ".TABLE_PREFIX."payments WHERE course_id='$course_id' AND approved=1 AND member_id=$member_id";
 $result4 = mysql_query($sql4, $db);
 if ($row4 = mysql_fetch_assoc($result4)) {
 	$amount_paid = number_format($row4['total_amount'],2);

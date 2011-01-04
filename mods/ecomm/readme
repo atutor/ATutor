@@ -14,6 +14,10 @@ Or
 It can be used with your PayPal account
 https://www.paypal.com/cgi-bin/webscr 
 
+Or
+
+You can connect to a Beamstream server
+https://www.beanstream.com/scripts/process_transaction.asp
 
 ---------------
 MiraPay Test Account
@@ -59,6 +63,43 @@ For security purpose Instant Payment Notification (IPN) must be setup with your 
 
 
 http://www.mysite.com/ATutor/mods/ecomm/response_ipn.php?secret=payment01
+
+
+--------------------
+Beanstream Setup
+You will need to setup a Beanstream sandbox and merchant account at:
+https://www.beanstream.com/public/index.asp
+
+1. Once your Beanstream account is setup, in the administrator's Settings area of the Payments module enter the beanstream credit card processing location. This location is the same for your production system and sandbox. 
+
+https://www.beanstream.com/scripts/process_transaction.asp
+
+2. Enter the 9 digit Mercant ID assigned by Beanstrem into the "Vendor ID" field of the Payment Settings
+
+3. Enter the password assigned by Beanstream in the filed below the Vendor ID field.
+
+4. Set the other configuration options according to your requirements, described in more detail in the Installation & Setup instructions below.
+
+Use your sandbox account to setup the module and do you testing, and once everything is functioning as it should, switch the Vendor ID and password to those for you production beanstream account.
+
+In most cases Beanstream will create a sandbook area first, and when your ready, switch the account to live, using the same information previously used for the sandbox. You might however, request that another sandbox account be created once the initial account becomes live.
+
+The following credit card num,bers can be used for testing. Note that the expiry date for any of these is any time into the future.
+
+Visa - Use CVD/CVV code 123
+Approved 4030000010001234
+Approved $100 Limit 4504481742333
+Approved VBV 4123450131003312 with VBV passcode 12345
+Declined 4003050500040005
+
+MasterCard - Use CVD/CVV code 123
+Approved 5100000010001004
+Approved 5194930004875020
+Approved 5123450000002889
+Approved 3D Secure 5123450000000000 passcode 12345
+Declined 5100000020002000
+
+For additional information, contact Beanstream for a copy of the Beanstream API documentation.
 
 
 
