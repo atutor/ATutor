@@ -109,7 +109,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if ($this->mobile_device_type == ANDROID_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/android.css" type="text/css"/>
 	<?php endif; ?>
-	<?php if ($this->mobile_device_type == IPOD_DEVICE): ?>
+	<?php if ($this->mobile_device_type == IPOD_DEVICE || $this->mobile_device_type == IPHONE_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
 	<?php endif; ?>
 	<!-- Armin 25.08.2010: Detect BLACKBERRY_DEVICE and use blackberry.css-->
