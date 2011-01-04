@@ -94,9 +94,8 @@ function beanstream_print_form($payment_id, $amount, $course_id) {
 	if($_config['ec_gateway'] == 'BeanStream'){
 	$mtid = mysql_insert_id($db);
 	$mkey = md5($mtid.$amount.$password);
-	$sql = "SELECT * from ".TABLE_PREFIX."members";
-	//echo $sql;
-		//$mkey = md5($payment_id.$amount.$_config['ec_password']);
+	$sql = "SELECT * from ".TABLE_PREFIX."members WHERE member_id = $_SESSION[member_id]";
+
 	$result = mysql_query($sql, $db);
 
 	while($row = mysql_fetch_assoc($result)){
