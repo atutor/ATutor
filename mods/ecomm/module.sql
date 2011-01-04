@@ -38,6 +38,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_postal','Postal/Zip Code
 INSERT INTO `language_text` VALUES ('en', '_module','ec_telephone','Telephone',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_country','Country',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_comments','Comments',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_message','%s has registered in the course %s. To review the payment, login to ATutor as an Administrator then click on the Payments tab.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_invalid_fields','The following fields are invalid',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_requirements','Requirements to proceed',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_requirements_ssl','SSL enabled, with 128-bit encryption. ',NOW(),'');
@@ -71,10 +72,13 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_currency','Currency ',NO
 INSERT INTO `language_text` VALUES ('en', '_module','ec_currency_symbol','Currency Symbol ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_currency_other','Other Currency ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_gateway','Payment Gateway ',NOW(),'');
-
 INSERT INTO `language_text` VALUES ('en', '_module','ec_course_fee','Fee to charge for this course ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_auto_approve','Auto approve enrollment when fee has been paid ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_made','Course Fees Received ',NOW(),'');
+
+INSERT INTO `language_text` VALUES ('en', '_module','ec_enrollpay_confirmed_manual','Your payment has been received, and you have been enrolled in <strong>%s</strong>. You should receive confirmation by email, and access to the course, once approved by the instructor. ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_enrollpay_confirmed_auto','Your payment has been received, and you have been enrolled in <strong>%s</strong>. You can now <a href="login.php?course=%s">login to the course</a>. ',NOW(),'');
+
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_mail_instruction','Course fees have been received for the course: %s. Login as the course instructor and review the payment through the Manage tab, then choose Payments. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_mail_instruction','Course fees have been recieved for course %. Login to the Payments utility to review the payment, and to approved the enrollment if Auto Approve Enrollment has not been set. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_payment_made','Fees Received ',NOW(),'');
@@ -113,10 +117,18 @@ INSERT INTO `language_text` VALUES ('en', '_module','ec_date_picker','Select a d
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_email','EMail notification of payments to: (if different from the ATutor contact email, set in System Preferences)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_contact_address','Address where cheques should be sent. (leave empty to disabled cheque payments)',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','ec_date_picker','The table below shows by default the past 30 payments. Use the date selectors to select a specific date range.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_cc_number','Credit Card Number',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_cc_expiry_month','Expiry Month',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_cc_expiry_year','Expiry Year',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_more_info_required','<strong>The following additional information is needed to complete your payment request:</strong><br/>',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_province','State/Province',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_cc_cvd_number','Card CVD Number',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_cc_cvd_info','(3 or 4 digit number on the back of the card)',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','ec_cc_cvd_number','Card CVD Number',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_PAID_COURSES','You have not enrolled in any courses that require fees to be paid. <a href="./users/browse.php">Browse</a> courses. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_ADD_SAVED','Payment settings were successfully saved. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_NO_STUDENTS_ENROLLED','No students have requested enrollment. ',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_PAYMENT_CONFIRMED_AUTO','Your payment has been received, and your course enrollment has been approved. You may now login to the course. ',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_PAYMENT_CONFIRMED_AUTO','Your payment has been received, and your course enrollment has been approved. You may now <a href="login.php?course=%s" style="color:red;">login to the course</a>. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_PAYMENT_CONFIRMED_MANUAL','Your payment has been received. You will receive a notice by email when your enrollment in the course has been manually approved. ',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_SAVED','Course payment settings have been saved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_EC_COURSE_PAYMENT_SETTINGS_NOT_SAVED','Unable to save course payment settings. Contact your system administrator to report the problem',NOW(),'');
@@ -125,5 +137,4 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_EC_PAYMENTS_TURNED_O
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_INVOICE_NOT_FOUND','Invoice number cannot be found.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_EC_INVOICE_APPROVED','Invoice number has already been approved.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ACTION_PENDING_CC_CONFIRM','Your enrollment is conditional on your credit card payment being approved',NOW(),'');
-
-
+REPLACE INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_APPROVAL_PENDING','Your enrolment request has been made. To complete your enrolment, open the <a href="mods/ecomm/index.php" style="color:red;">Payments tab</a> above, then click on <a href="mods/ecomm/index.php" style="color:red;">Make Payment</a> next to the listing for the course you enrolled in.',NOW(),'');
