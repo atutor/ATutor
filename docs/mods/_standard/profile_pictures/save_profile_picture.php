@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.					   */
 /***********************************************************************/
 
-$member_id = $_SESSION['member_id'];
+if (!isset($member_id) || $member_id == 0) $member_id = $_SESSION['member_id'];
 
 function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src_x=0, $src_y=0) {
 	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);

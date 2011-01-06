@@ -12,10 +12,13 @@
 /***********************************************************************/
 // $Id$
 // $Id$
-define('AT_INCLUDE_PATH', '../include/');
+define('AT_INCLUDE_PATH', '../../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 $member_id = intval($_GET['member_id']);
 
-require(AT_INCLUDE_PATH.'../mods/_standard/profile_picture/html/profile_picture.inc.php'); ?>
+require('../save_profile_picture.php');
+
+require(AT_INCLUDE_PATH.'../mods/_standard/profile_pictures/html/profile_picture.inc.php'); 
+?>

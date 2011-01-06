@@ -14,6 +14,18 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+$gd_info = gd_info();
+$supported_images = array();
+if ($gd_info['GIF Create Support']) {
+	$supported_images[] = 'gif';
+}
+if ($gd_info['JPG Support'] || $gd_info['JPEG Support']) {
+	$supported_images[] = 'jpg';
+}
+if ($gd_info['PNG Support']) {
+	$supported_images[] = 'png';
+};
 ?>
 
 <form method="post" enctype="multipart/form-data" action="<?php echo $_SERVER['PHP_SELF']; ?>?member_id=<?php echo $member_id; ?>" name="form">
