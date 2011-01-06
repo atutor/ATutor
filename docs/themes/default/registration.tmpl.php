@@ -167,7 +167,7 @@ function encrypt_password()
 				<a href="get_profile_img.php?id=<?php echo $_POST['member_id'].SEP.'size=o'; ?>"><?php print_profile_img($_POST['member_id']); ?></a>
 				<input type="checkbox" name="profile_pic_delete" value="1" id="profile_pic_delete" /><label for="profile_pic_delete"><?php echo _AT('delete'); ?></label>
 			<?php else: ?>
-				<?php echo _AT('none'); ?> <a href="admin/profile_picture.php?member_id=<?php echo $_POST['member_id']; ?>"><?php echo _AT('add'); ?></a>
+				<?php echo _AT('none'); ?> <a href="mods/_standard/profile_pictures/admin/profile_picture.php?member_id=<?php echo $_POST['member_id']; ?>"><?php echo _AT('add'); ?></a>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
