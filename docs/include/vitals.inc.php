@@ -233,7 +233,7 @@ if ($_config['time_zone']) {
 
 	// set default template paths:
 	$savant = new Savant2();
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/'.get_system_default_theme().'/');
+	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
 	//if user has requested theme change, make the change here
 	if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
