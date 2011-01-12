@@ -87,7 +87,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<select name="existing" id="title">
 
 			<?php while ($row = mysql_fetch_assoc($file_result)): ?>
-				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo htmlentities_utf8($row['title']); ?></option>
+				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo AT_print($row['title'], 'input.text'); ?></option>
 			<?php endwhile; ?>
 		
 		</select>
@@ -107,7 +107,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>	
 	
 	<div class="row">
-	<label for="comment"><?php  echo _AT('comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo htmlentities_utf8($rowreading['comment']);  ?>" />
+	<label for="comment"><?php  echo _AT('comment'); ?>:</label><input type="text" id="comment" size="75" name="comment" value="<?php echo AT_print($rowreading['comment'], 'reading_list.comment');  ?>" />
 	</div>
 
 <h3><?php echo _AT('rl_read_by_date'); ?></h3>

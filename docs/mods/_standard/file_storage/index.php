@@ -258,7 +258,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 		$hidden_vars['folders'] = $folders;
 		$rows = fs_get_folder_by_id($_GET['folders'], $owner_type, $owner_id);
 		foreach ($rows as $row) {
-			$dir_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/folder.gif" height="18" width="20" alt="" title="" /> '.htmlentities_utf8($row['title']).'</li>';
+			$dir_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/folder.gif" height="18" width="20" alt="" title="" /> '.AT_print($row['title'], 'input.text').'</li>';
 		}
 		$msg->addConfirm(array('DIR_DELETE', $dir_list_to_print), $hidden_vars);
 	}
@@ -539,21 +539,21 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 			<?php if ($file_storage_groups): ?>
 				<optgroup label="<?php echo _AT('groups'); ?>">
 					<?php foreach ($file_storage_groups as $group): ?>
-						<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo htmlentities_utf8($group['title']); ?></option>
+						<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo AT_print($group['title'], 'input.text'); ?></option>
 					<?php endforeach; ?>
 				</optgroup>
 			<?php endif; ?>
 			<?php if (count($my_assignments) != 0) : ?>
 				<optgroup label="<?php echo _AT('assignments'); ?>">
 					<?php foreach ($my_assignments as $my_assignment): ?>
-						<option value="<?php echo WORKSPACE_ASSIGNMENT; ?>_<?php echo $my_assignment['assignment_id']; ?>_my" <?php if ($owner_type == WORKSPACE_ASSIGNMENT && $owner_id == $my_assignment['assignment_id']) { echo 'selected="selected"'; } ?>><?php echo htmlentities_utf8($my_assignment['title']); ?></option>
+						<option value="<?php echo WORKSPACE_ASSIGNMENT; ?>_<?php echo $my_assignment['assignment_id']; ?>_my" <?php if ($owner_type == WORKSPACE_ASSIGNMENT && $owner_id == $my_assignment['assignment_id']) { echo 'selected="selected"'; } ?>><?php echo AT_print($my_assignment['title'], 'input.text'); ?></option>
 					<?php endforeach; ?>
 				</optgroup>
 			<?php endif; ?>
 			<?php if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN) && count($file_storage_assignments) != 0) : ?>
 				<optgroup label="<?php echo _AT('assignments'); ?>">
 					<?php foreach ($file_storage_assignments as $assignment): ?>
-						<option value="<?php echo WORKSPACE_ASSIGNMENT; ?>_<?php echo $assignment['assignment_id']; ?>" <?php if ($owner_type == WORKSPACE_ASSIGNMENT && $owner_id == $assignment['assignment_id']) { echo 'selected="selected"'; } ?>><?php echo htmlentities_utf8($assignment['title']); ?></option>
+						<option value="<?php echo WORKSPACE_ASSIGNMENT; ?>_<?php echo $assignment['assignment_id']; ?>" <?php if ($owner_type == WORKSPACE_ASSIGNMENT && $owner_id == $assignment['assignment_id']) { echo 'selected="selected"'; } ?>><?php echo AT_print($assignment['title'], 'input.text'); ?></option>
 					<?php endforeach; ?>
 				</optgroup>
 			<?php endif; ?>
@@ -575,10 +575,10 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 			echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.$folder); ?>"><?php echo _AT('home'); ?></a>
 		<?php foreach ($folder_path as $folder_info): ?>
 			<?php if ($folder_info['folder_id'] == $folder_id): ?>
-				» <?php echo htmlentities_utf8($folder_info['title']); ?>
+				» <?php echo AT_print($folder_info['title'], 'input.text'); ?>
 				<?php $parent_folder_id = $folder_info['parent_folder_id']; ?>
 			<?php else: ?>
-				» <a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.$folder_info['folder_id']); ?>"><?php echo htmlentities_utf8($folder_info['title']); ?></a>
+				» <a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.$folder_info['folder_id']); ?>"><?php echo AT_print($folder_info['title'], 'input.text'); ?></a>
 			<?php endif; ?>
 		<?php endforeach; ?>
 	</td>
@@ -620,7 +620,7 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 		<tr onmousedown="document.form['f<?php echo $folder_info['folder_id']; ?>'].checked = !document.form['f<?php echo $folder_info['folder_id']; ?>'].checked; rowselectbox(this, document.form['f<?php echo $folder_info['folder_id']; ?>'].checked, 'checkbuttons(false)');" id="r_<?php echo $folder_info['folder_id']; ?>_1">
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <label for="f<?php echo $folder_info['folder_id']; ?>"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.
-			$folder_info['folder_id']); ?>"><?php echo htmlentities_utf8($folder_info['title']); ?></a></label></td>
+			$folder_info['folder_id']); ?>"><?php echo AT_print($folder_info['title'], 'input.text'); ?></a></label></td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>

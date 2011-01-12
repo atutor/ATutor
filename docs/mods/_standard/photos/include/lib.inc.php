@@ -12,21 +12,6 @@
 /***********************************************************************/
 // $Id$
 
-/**
- * Convert all input to htmlentities output, in UTF-8.
- * @param	string	input to be convert
- * @param	boolean	true if we wish to change all carrier returns to a <br/> tag, false otherwise.
- * TODO: use htmlentities_utf8 in social when this become a standard module.
- */
-function htmlentities_utf82($str, $use_nl2br=true){
-	$return = htmlentities($str, ENT_QUOTES, 'UTF-8');
-	if ($use_nl2br){
-		return nl2br($return);
-	} 
-	return $return;
-}
-
-
 /** 
  * Generate album path padding by using album_id + album_created_date
  */

@@ -27,16 +27,16 @@
 
 		<?php         if($this->profile['occupation']){ ?>
 			<dt><?php echo _AT('occupation'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['occupation']); ?></dd>
+			<dd><?php echo AT_print($this->profile['occupation'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->profile['expertise']){ ?>
 			<dt><?php echo _AT('expertise'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['expertise']); ?></dd>
+			<dd><?php echo AT_print($this->profile['expertise'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if ($this->relationship==AT_SOCIAL_FRIENDS_VISIBILITY || $this->relationship==AT_SOCIAL_OWNER_VISIBILITY): ?>
 			<?php if($this->profile['email']): ?>
 			<dt><?php echo _AT('email'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['email']); ?></dd>
+			<dd><?php echo AT_print($this->profile['email'], 'social.profile'); ?></dd>
 			<?php endif; ?>
 			<?php endif; ?>
 			<?php if($this->profile['gender']!='n'){ ?>
@@ -49,59 +49,59 @@
 			<?php }?>
 			<?php if($this->profile['phone']){ ?>
 			<dt><?php echo _AT('phone'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['phone']); ?></dd>
+			<dd><?php echo AT_print($this->profile['phone'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->profile['country']){ ?>
 			<dt><?php echo _AT('country'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['country']); ?></dd>
+			<dd><?php echo AT_print($this->profile['country'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->profile['postal']){ ?>
 			<dt><?php echo _AT('street_address'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['postal']); ?></dd>
+			<dd><?php echo AT_print($this->profile['postal'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->profile['interests']){ ?>
 			<dt><?php echo _AT('interests'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['interests']); ?></dd>
+			<dd><?php echo AT_print($this->profile['interests'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->profile['associations']){ ?>
 			<dt><?php echo _AT('associations'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['associations']); ?></dd>
+			<dd><?php echo AT_print($this->profile['associations'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->profile['awards']){ ?>
 			<dt><?php echo _AT('awards'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['awards']); ?></dd>
+			<dd><?php echo AT_print($this->profile['awards'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->profile['others']){ ?>
 			<dt><?php echo _AT('others'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->profile['others']); ?></dd>
+			<dd><?php echo AT_print($this->profile['others'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_weight']){ ?>
 			<dt><?php echo _AT('per_weight'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->personal['per_weight']); ?></dd>
+			<dd><?php echo AT_print($this->personal['per_weight'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_height']){ ?>
 			<dt><?php echo _AT('per_height'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->personal['per_height']); ?></dd>
+			<dd><?php echo AT_print($this->personal['per_height'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_hair']){ ?>
 			<dt><?php echo _AT('per_hair'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->personal['per_hair']); ?></dd>
+			<dd><?php echo AT_print($this->personal['per_hair'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_eyes']){ ?>
 			<dt><?php echo _AT('per_eyes'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->personal['per_eyes']); ?></dd>
+			<dd><?php echo AT_print($this->personal['per_eyes'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_ethnicity']){ ?>
 			<dt><?php echo _AT('per_ethnicity'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->personal['per_ethnicity']); ?></dd>
+			<dd><?php echo AT_print($this->personal['per_ethnicity'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_languages']){ ?>
 			<dt><?php echo _AT('per_languages'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->personal['per_languages']); ?></dd>
+			<dd><?php echo AT_print($this->personal['per_languages'], 'social.profile'); ?></dd>
 			<?php }?>
 			<?php if($this->personal['per_disabilities']){ ?>
 			<dt><?php echo _AT('per_disabilities'); ?></dt><br />
-			<dd><?php echo htmlentities_utf8($this->personal['per_disabilities']); ?></dd>
+			<dd><?php echo AT_print($this->personal['per_disabilities'], 'social.profile'); ?></dd>
 			<?php }?>
 
 
@@ -112,14 +112,13 @@
 			<br /><div  class="headingbox" style="margin-right:1em;"><h4><?php echo _AT('representation'); ?></h4></div>
 			<div class="contentbox" style="margin-right:1em;">
 
-				<?php 	foreach($this->representation as $row=>$value){  ?>
+				<?php foreach($this->representation as $row=>$value){  ?>
 				<dl class="public-profile">
-				<dt><?php echo _AT('name') . ':' ?></dt> <br /><dd> <?php echo htmlentities_utf8($value['rep_name']); ?></dd>
-
-				<dt><?php echo _AT('title') . ': ' ?></dt> <br /><dd> <?php echo htmlentities_utf8($value['rep_title']); ?></dd>
-				<dt><?php echo _AT('phone') . ':' ?></dt><br /> <dd> <?php echo htmlentities_utf8($value['rep_phone']);?></dd>
-				<dt><?php echo _AT('email') . ': ' ?></dt><br /> <dd> <?php echo  htmlentities_utf8($value['rep_email']); ?></dd>	
-				<dt><?php echo _AT('street_address') . ': ' ?></dt> <br /><dd> <?php echo htmlentities_utf8($value['rep_address']); ?></dd>
+				<dt><?php echo _AT('name') . ':' ?></dt> <br /><dd> <?php echo AT_print($value['rep_name'], 'social.profile'); ?></dd>
+				<dt><?php echo _AT('title') . ': ' ?></dt> <br /><dd> <?php echo AT_print($value['rep_title'], 'social.profile'); ?></dd>
+				<dt><?php echo _AT('phone') . ':' ?></dt><br /> <dd> <?php echo AT_print($value['rep_phone'], 'social.profile');?></dd>
+				<dt><?php echo _AT('email') . ': ' ?></dt><br /> <dd> <?php echo  AT_print($value['rep_email'], 'social.profile'); ?></dd>	
+				<dt><?php echo _AT('street_address') . ': ' ?></dt> <br /><dd> <?php echo AT_print($value['rep_address'], 'social.profile'); ?></dd>
 				</dl>
 			
 			<?php } ?>
@@ -132,10 +131,10 @@
 
 				<?php 	foreach($this->contact as $row=>$value){  ?>
 				<dl class="public-profile">
-				<dt><?php echo _AT('name') . ':' ?></dt> <br /><dd> <?php echo htmlentities_utf8($value['con_name']); ?></dd>
-				<dt><?php echo _AT('phone') . ':' ?></dt> <br /><dd> <?php echo htmlentities_utf8($value['con_phone']);?></dd>
-				<dt><?php echo _AT('email') . ': ' ?></dt><br /> <dd> <?php echo  htmlentities_utf8($value['con_email']); ?></dd>
-				<dt><?php echo _AT('street_address') . ': ' ?></dt><br /> <dd> <?php echo htmlentities_utf8($value['con_address']); ?></dd>
+				<dt><?php echo _AT('name') . ':' ?></dt> <br /><dd> <?php echo AT_print($value['con_name'], 'social.profile'); ?></dd>
+				<dt><?php echo _AT('phone') . ':' ?></dt> <br /><dd> <?php echo AT_print($value['con_phone'], 'social.profile');?></dd>
+				<dt><?php echo _AT('email') . ': ' ?></dt><br /> <dd> <?php echo  AT_print($value['con_email'], 'social.profile'); ?></dd>
+				<dt><?php echo _AT('street_address') . ': ' ?></dt><br /> <dd> <?php echo AT_print($value['con_address'], 'social.profile'); ?></dd>
 				</dl>
 			
 			<?php } ?>
@@ -162,9 +161,9 @@
 					<tbody>
 					<?php
 						foreach($this->education as $edu){
-							echo '<tr><td>'.htmlentities_utf8($edu['university']).'</td>';
-							echo '<td>'.htmlentities_utf8($edu['degree'].'/'.$edu['field']).'</td>';
-							echo '<td>'.htmlentities_utf8($edu['from'].'-'.$edu['to']).'</td></tr>';
+							echo '<tr><td>'.AT_print($edu['university'], 'social.profile').'</td>';
+							echo '<td>'.AT_print($edu['degree'].'/'.$edu['field'], 'social.profile').'</td>';
+							echo '<td>'.AT_print($edu['from'].'-'.$edu['to'], 'social.profile').'</td></tr>';
 						}							
 					?>
 					</tbody>
@@ -189,9 +188,9 @@
 					<tbody>
 					<?php
 						foreach($this->position as $pos){
-							echo '<tr><td>'.htmlentities_utf8($pos['company']).'</td>';
-							echo '<td>'.htmlentities_utf8($pos['title']).'</td>';
-							echo '<td>'.htmlentities_utf8($pos['from'].'-'.$pos['to']).'</td></tr>';
+							echo '<tr><td>'.AT_print($pos['company'], 'social.profile').'</td>';
+							echo '<td>'.AT_print($pos['title'], 'social.profile').'</td>';
+							echo '<td>'.AT_print($pos['from'].'-'.$pos['to'], 'social.profile').'</td></tr>';
 						}							
 					?>
 					</tbody>
@@ -217,7 +216,7 @@
 						if ($is_http==0){
 							$sites['url'] = 'http://' . $sites['url'];
 						}
-						echo '<tr><td>'.htmlentities_utf8($sites['site_name']).'</td>';
+						echo '<tr><td>'.AT_print($sites['site_name'], 'social.profile').'</td>';
 						echo '<td><a href="'.$sites['url'].'" target="user_profile_site">'.$sites['url'].'</a></td></tr>';
 					}							
 				?>

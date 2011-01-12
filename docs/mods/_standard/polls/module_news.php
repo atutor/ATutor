@@ -33,8 +33,8 @@ function polls_news() {
 							'course'=>$system_courses[$row['course_id']]['title'],
 							'thumb'=>'images/home-polls_sm.png',
 							'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/polls/index.php#'.$row['poll_id']).'"'.
-									(strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
-									validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
+									(strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($row['question'], 'polls.question').'"' : '') .'>'. 
+									AT_print(validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'polls.question') .'</a>');
 		}
 	}
 	return $news;

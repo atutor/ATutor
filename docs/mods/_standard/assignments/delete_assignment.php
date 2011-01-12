@@ -46,7 +46,7 @@ $result = mysql_query($sql, $db);
 
 if ($row = mysql_fetch_assoc($result)){
 	$hidden_vars['assignment_id'] = $_GET['id'];
-	$confirm = array('DELETE_ASSIGNMENT', htmlentities_utf8($row['title']));
+	$confirm = array('DELETE_ASSIGNMENT', AT_print($row['title'], 'assignment.title'));
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 }

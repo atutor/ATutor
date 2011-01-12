@@ -2,14 +2,14 @@
 	global $addslashes;
 
 	//escape all strings
-	$university  = htmlentities_utf8($this->university);
-	$country	 = htmlentities_utf8($this->country);
-	$province	 = htmlentities_utf8($this->province);
-	$degree		 = htmlentities_utf8($this->degree);
-	$field		 = htmlentities_utf8($this->field);
-	$from		 = htmlentities_utf8($this->from);
-	$to			 = htmlentities_utf8($this->to);
-	$description = htmlentities_utf8($this->description, false);
+	$university  = AT_print($this->university, 'input.text');
+	$country	 = AT_print($this->country, 'input.text');
+	$province	 = AT_print($this->province, 'input.text');
+	$degree		 = AT_print($this->degree, 'input.text');
+	$field		 = AT_print($this->field, 'input.text');
+	$from		 = AT_print($this->from, 'input.text');
+	$to			 = AT_print($this->to, 'input.text');
+	$description = AT_print($this->description, 'input.text');
 ?>
 <script type='text/javascript' src='jscripts/lib/calendar.js'></script>
 <script type="text/javascript"> 

@@ -63,7 +63,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$hidden_vars['link_id'] = $link_id;
 		$hidden_vars['cat_id'] = $row['cat_id'];
 		
-		$confirm = array('DELETE_LINK', AT_print(htmlentities_utf8($row['LinkName']), 'resource_links.LinkName'));
+		$confirm = array('DELETE_LINK', AT_print($row['LinkName'], 'resource_links.LinkName');
 		$msg->addConfirm($confirm, $hidden_vars);
 		
 		$msg->printConfirm();

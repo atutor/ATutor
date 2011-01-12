@@ -79,21 +79,21 @@
 				      $course_icon = 'images/courses/'.$row['icon'];
 			      }
 		      ?>
-			      <a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" style="float:left;margin-right:.5em;"/></a>
+			      <a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><img src="<?php echo $course_icon; ?>" class="headicon" alt="<?php echo  htmlentities_utf8($row['title']); ?>" style="float:left;margin-right:.5em;"/></a>
 		      <?php } ?>
 		</td>
 		<td>
-				<h3><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?></a></h3>
+				<h3><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities_utf8($row['title']); ?></a></h3>
 		</td>
 		<td>
 			<?php if ($row['description']): ?>
-				<div style="height:6.4em;" title="<?php echo htmlentities($row['description']);?>"><?php echo substr(nl2br(htmlentities($row['description'], ENT_QUOTES, 'UTF-8')),0,150); 
+				<div style="height:6.4em;" title="<?php echo htmlentities($row['description']);?>"><?php echo substr(htmlentities_utf8($row['description'], true),0,150); 
 				if(strlen($row['description']) > 150){
 				echo "...";
 				}
 				?>&nbsp;</div>
 			<?php else: ?>
-				<div style="height:6.4em;clear:right;" title="<?php echo htmlentities($row['description']);?>">&nbsp;</div>
+				<div style="height:6.4em;clear:right;" title="<?php echo htmlentities_utf8($row['description']);?>">&nbsp;</div>
 			<?php endif; ?>
 		</td>
 		<td>

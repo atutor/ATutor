@@ -22,18 +22,18 @@ if (!$_SESSION['valid_user']) {
 $msg->printErrors();
 
 if (isset($_POST['submit'])) {
-	$subject	= htmlentities_utf8($_POST['subject']);
-	$body		= htmlentities_utf8($_POST['body']);
+//	$subject	= htmlentities_utf8($_POST['subject']);
+//	$body		= htmlentities_utf8($_POST['body']);
 	$parent_id	= $_POST['parent_id'];
 	$parent_name	= $_POST['parent_name'];
 	//post reply is set when there is an error occuring.
 	if ($_POST['reply']!=''){
 		$saved_post['body'] = $_POST['replytext'];
-		$reply_hidden = '<input name="reply" type="hidden" value="'.$_REQUEST['reply'].'" />';
+		$reply_hidden = '<input name="reply" type="hidden" value="'.AT_print($_REQUEST['reply'], 'input.text').'" />';
 	}
 } else if (isset($_GET['reply']) && $_GET['reply'] != '') {
 	$subject = $saved_post['subject'];
-	$reply_hidden = '<input name="reply" type="hidden" value="'.$_REQUEST['reply'].'" />';
+	$reply_hidden = '<input name="reply" type="hidden" value="'.AT_print($_REQUEST['reply'], 'input.text').'" />';
 
 	if (substr($subject, 0, 3) != 'Re:') {
 		$subject = 'Re: '.$subject;
@@ -55,12 +55,12 @@ if (isset($_POST['submit'])) {
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('post_message'); ?></legend>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input type="text" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($subject)); ?>" id="subject" />
+		<input type="text" maxlength="80" name="subject" size="36" value="<?php echo AT_print($subject, 'input.text'); ?>" id="subject" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="45" name="body" rows="10" id="body"><?php echo $body; ?></textarea>
+		<textarea cols="45" name="body" rows="10" id="body"><?php echo AT_print($_POST['body'], 'input.text'); ?></textarea>
 
 		<small class="spacer"><br />&middot; <?php echo _AT('forum_links'); ?><br />
 		&middot; <?php echo _AT('forum_email_links'); ?><br />

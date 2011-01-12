@@ -47,7 +47,7 @@ $result = mysql_query($sql,$db);
 if ($row = mysql_fetch_assoc($result)) {
 	$hidden_vars['id'] = $_GET['id'];
 
-	$confirm = array('DELETE_FAQ_TOPIC', htmlentities_utf8($row['name']));
+	$confirm = array('DELETE_FAQ_TOPIC', AT_print($row['name'], 'faqs.topic'));
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 } else {

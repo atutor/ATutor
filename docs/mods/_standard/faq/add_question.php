@@ -85,18 +85,18 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="topic"><?php  echo _AT('topic'); ?></label><br />
 		<select name="topic_id" id="topic">
 			<?php while ($row = mysql_fetch_assoc($result)): ?>
-				<option value="<?php echo $row['topic_id']; ?>"<?php if (isset($_POST['topic_id']) && ($row['topic_id'] == $_POST['topic_id'])) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['name']); ?></option>
+				<option value="<?php echo $row['topic_id']; ?>"<?php if (isset($_POST['topic_id']) && ($row['topic_id'] == $_POST['topic_id'])) { echo ' selected="selected"'; } ?>><?php echo AT_print($row['name'], 'input.text'); ?></option>
 			<?php endwhile; ?>
 		</select>
 	</div>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php  echo _AT('question'); ?></label><br />
-		<input type="text" name="question" size="50" id="question" value="<?php if (isset($_POST['question'])) echo htmlentities_utf8($stripslashes($_POST['question']));  ?>" />
+		<input type="text" name="question" size="50" id="question" value="<?php if (isset($_POST['question'])) echo AT_print($stripslashes($_POST['question']), 'input.text');  ?>" />
 
 	</div>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="answer"><?php  echo _AT('answer'); ?></label><br />
-		<textarea name="answer" cols="45" rows="3" id="answer" style="width:90%;"><?php if (isset ($_POST['answer'])) echo htmlentities_utf8($stripslashes($_POST['answer']));  ?></textarea>
+		<textarea name="answer" cols="45" rows="3" id="answer" style="width:90%;"><?php if (isset ($_POST['answer'])) echo AT_print($stripslashes($_POST['answer']), 'text.input');  ?></textarea>
 	</div>
 
 

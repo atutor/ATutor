@@ -62,7 +62,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<tr>
 			<td valign="top" align="right" class="row1"><label for="body<?php echo $i; ?>"><strong><?php echo _AT('glossary_definition');  ?>:</strong></label></td>
 			<td class="row1">
-				<textarea name="glossary_defs[<?php echo $word[$i]; ?>]" class="formfield" cols="55" rows="4" id="body<?php echo $i; ?>"><?php 
+				<textarea name="glossary_defs[<?php echo AT_print($word[$i], 'glossary.word'); ?>]" class="formfield" cols="55" rows="4" id="body<?php echo $i; ?>"><?php 
 					echo ContentManager::cleanOutput($current_defn); 
 		
 		?></textarea></td>
@@ -72,7 +72,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			<td class="row1"><?php
 
 				if ($num_glossary > 1) {
-					echo '<select name="related_term['.$word[$i].']" id="r'.$i.'">';
+					echo '<select name="related_term['.AT_print($word[$i], 'glossary.word').']" id="r'.$i.'">';
 					echo '<option value="0"></option>';
 					foreach ($glossary_ids as $id => $term) {
 						if ($term == $word[$i]) {
@@ -82,7 +82,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 						if ($_POST['related_term'][$word[$i]] == $id) {
 							echo ' selected="selected"';
 						}
-						echo '>'.urldecode($term).'</option>';
+						echo '>'.AT_print(urldecode($term), 'glossary.word').'</option>';
 					}
 					echo '</select>';
 				} else {

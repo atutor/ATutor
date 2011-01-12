@@ -137,7 +137,7 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
-echo '<h2>'.htmlentities_utf8($type_row['title']).'</h2>';
+echo '<h2>'.AT_print($type_row['title'], 'groups.title').'</h2>';
 
 
 if (isset($_GET['gid'])) {
@@ -192,7 +192,7 @@ $count = 0;
 				<select name="groups[<?php echo $row['member_id']; ?>]" id="m<?php echo $row['member_id']; ?>" onchange="javascript:hirow(this, <?php echo $count; ?>);">
 					<option value="0"></option>
 					<?php foreach ($tmp_groups as $group => $title): ?>
-						<option value="<?php echo $group; ?>" <?php if ($groups_members[$row['member_id']] == $group) { echo 'selected="selected"'; } ?>><?php echo htmlspecialchars($title); ?></option>
+						<option value="<?php echo $group; ?>" <?php if ($groups_members[$row['member_id']] == $group) { echo 'selected="selected"'; } ?>><?php echo AT_print($title, 'groups.title'); ?></option>
 					<?php endforeach; ?>
 				</select>
 			</td>

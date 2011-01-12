@@ -69,9 +69,9 @@ uasort($all_comments, 'cmp');
 //assign proper link to the comment list.
 foreach($all_comments as $comment){
 	if (isset($comment['photo_id'])){
-		$list[] = _AT('comment').': <a href="'.$_base_href.AT_PA_BASENAME.'photo.php?aid='.$comment['album_id'].SEP.'pid='.$comment['photo_id'].'">'.htmlentities_utf82($comment['comment']).'</a>';
+		$list[] = _AT('comment').': <a href="'.$_base_href.AT_PA_BASENAME.'photo.php?aid='.$comment['album_id'].SEP.'pid='.$comment['photo_id'].'">'.AT_print($comment['comment'], 'photos.comment').'</a>';
 	} elseif (isset($comment['album_id'])){
-		$list[] = _AT('comment').': <a href="'.$_base_href.AT_PA_BASENAME.'albums.php?id='.$comment['album_id'].'">'.htmlentities_utf82($comment['comment']).'</a>';
+		$list[] = _AT('comment').': <a href="'.$_base_href.AT_PA_BASENAME.'albums.php?id='.$comment['album_id'].'">'.AT_print($comment['comment'], 'photos.comment').'</a>';
 	}
 	if (++$cnt >= $record_limit) break;
 }

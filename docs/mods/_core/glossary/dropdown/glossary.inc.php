@@ -39,19 +39,16 @@ if ($result && ($row = mysql_fetch_array($result))) {
 		$count = 0;
 
 		$glossary_key_lower = array_change_key_case($glossary);
-
 		foreach ($words as $k => $v) {
 			$original_v = $v;
-			$v = $strtolower(urlencode($v));	//array_change_key_case change everything to lowercase, including encoding. 
-
+			$v = $strtolower($v);	//array_change_key_case change everything to lowercase, including encoding. 
 			if (isset($glossary_key_lower[$v]) && $glossary_key_lower[$v] != '') {
-
 				$v_formatted = urldecode(array_search($glossary_key_lower[$v], $glossary));
 
-				$def = htmlentities(AT_print($glossary_key_lower[$v], 'glossary.definition'), ENT_QUOTES, 'UTF-8');
+				$def = AT_print($glossary_key_lower[$v], 'glossary.definition');
 
 				$count++;
-				echo '<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_v).'#term" title="'.addslashes($v_formatted).': '.$def.'">';
+				echo '<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_v).'#term" title="'.htmlentities_utf8($v_formatted).': '.$def.'">';
 				if ($strlen($original_v) > 26 ) {
 					$v_formatted = $substr($v_formatted, 0, 26-4).'...';
 				}

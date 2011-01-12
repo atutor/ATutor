@@ -101,7 +101,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				echo '<label for="c'.$row['backup_id'].'_'.$row['course_id'].'">'.$row['file_name'].'</label></td>';
 				echo '<td>'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
 				echo '<td align="right">'.get_human_size($row['file_size']).'</td>';
-				echo '<td>'.htmlentities_utf8($row['description']).'</td>';
+				echo '<td>'.AT_print($row['description'], 'backups.description').'</td>';
 				echo '</tr>';
 				$num_backups ++;
 			}

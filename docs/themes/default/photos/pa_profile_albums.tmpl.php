@@ -3,7 +3,7 @@
 	<?php if ($this->action_permission || $this->album_info['type_id']==AT_PA_TYPE_COURSE_ALBUM): ?>
 	<div class="add_profile_photo">
 	    <div class="profile_photo">
-		    <img src="<?php echo 'get_profile_img.php?id='.$_SESSION['member_id'].SEP.'size=p';?>" title="<?php echo htmlentities_utf82(AT_print(get_display_name($_SESSION['member_id']), 'members.full_name')); ?>" alt="<?php _AT('profile_picture');?>" />
+		    <img src="<?php echo 'get_profile_img.php?id='.$_SESSION['member_id'].SEP.'size=p';?>" title="<?php echo AT_print(get_display_name($_SESSION['member_id']), 'members.full_name'); ?>" alt="<?php _AT('profile_picture');?>" />
 		</div>
 
 		<div class="uploader">
@@ -46,13 +46,13 @@
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo): ?>
 		<div class="photo_frame">
-			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf82($photo['description'], false); ?>" alt="<?php echo htmlentities_utf82($photo['alt_text']);?>" /></a>
+			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo AT_print($photo['description'], 'photo_albums.description'); ?>" alt="<?php echo AT_print($photo['alt_text'], 'photo_albums.alt_text');?>" /></a>
 		</div>
 		<?php endforeach; ?>
 		<!-- end loop -->
 		<div class="album_description">
-			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.htmlentities_utf82($this->album_info['location']) .'<br/>';?>
-			<?php echo htmlentities_utf82($this->album_info['description']);?></p>
+			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.AT_print($this->album_info['location'], 'albums.location') .'<br/>';?>
+			<?php echo AT_print($this->album_info['description'], 'albums.description');?></p>
 		</div>		
 		<?php else: ?>
 		<div class="edit_photo_box">
@@ -78,13 +78,13 @@
 					<!-- TODO: Profile link and img -->
 					<?php if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']): ?>
 					<div class="flc-inlineEditable">
-						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
-						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo htmlentities_utf82($comment_array['comment']);?></span>
+						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo AT_print(get_display_name($comment_array['member_id']), 'members.full_name'); ?></a></strong>
+						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo AT_print($comment_array['comment'], 'photo_albums.comment');?></span>
 					</div>
 					<?php else: ?>
 					<div>
-						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
-						<?php echo htmlentities_utf82($comment_array['comment'], true);?>
+						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo AT_print(get_display_name($comment_array['member_id']), 'members.full_name'); ?></a></strong>
+						<?php echo htmlentities_utf8($comment_array['comment'], true);?>
 					</div>
 					<?php endif; ?>
 					<div class="comment_actions">

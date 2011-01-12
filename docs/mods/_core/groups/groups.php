@@ -29,7 +29,7 @@ $result = mysql_query($sql, $db);
 echo '<ol id="tools">';
 
 while ($row = mysql_fetch_assoc($result)) {
-	echo '<li class="top-tool">'.htmlentities_utf8($row['title']) . ' ';
+	echo '<li class="top-tool">'.AT_print($row['title'], 'groups.title') . ' ';
 
 	$modules = explode('|', $row['modules']);
 	asort($modules);

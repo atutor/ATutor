@@ -31,11 +31,11 @@ $sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSI
 $result = mysql_query($sql, $db);
 if ($row = mysql_fetch_assoc($result)){ 
 	$row['type']		= intval($row['type']);
-	$row['title']		= htmlentities_utf8($row['title']);
-	$row['author']		= htmlentities_utf8($row['author']);
-	$row['publisher']	= htmlentities_utf8($row['publisher']);
-	$row['date']		= htmlentities_utf8($row['date']);
-	$row['comments']	= htmlentities_utf8($row['comments']);
+	$row['title']		= AT_print($row['title'], 'input.text');
+	$row['author']		= AT_print($row['author'], 'input.text');
+	$row['publisher']	= AT_print($row['publisher'], 'input.text');
+	$row['date']		= AT_print($row['date'], 'input.text');
+	$row['comments']	= AT_print($row['comments'], 'input.text');
 
 	if ($row['type'] == RL_TYPE_BOOK): ?>
 	<div class="input-form">

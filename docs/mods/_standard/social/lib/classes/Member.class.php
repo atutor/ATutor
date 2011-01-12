@@ -506,7 +506,7 @@ class Member {
 		if ($result){
 			while($row = mysql_fetch_assoc($result)){
 				//escape XSS
-				$row['url'] = htmlentities($row['url']);
+				$row['url'] = htmlentities_utf8($row['url']);
 				
 				//index row entry
 				$websites[] = $row;

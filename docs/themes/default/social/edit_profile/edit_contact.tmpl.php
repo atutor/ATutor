@@ -2,10 +2,10 @@
 	global $addslashes;
 
 	//escape all strings
-	$con_name  	 = htmlentities_utf8($this->con_name);
-	$con_phone	 = htmlentities_utf8($this->con_phone);
-	$con_email	 = htmlentities_utf8($this->con_email);
-	$con_address	 = htmlentities_utf8($this->con_address);
+	$con_name       = AT_print($this->con_name, 'input.text');
+	$con_phone      = AT_print($this->con_phone, 'input.text');
+	$con_email      = AT_print($this->con_email, 'input.text');
+	$con_address    = AT_print($this->con_address, 'input.text');
 
 ?>
 

@@ -62,8 +62,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		foreach ($all_forums['shared'] as $forum) {
 			echo '<tr onmousedown="document.form[\'f'.$forum['forum_id'].'\'].checked = true; rowselect(this);"  id="r_'.$forum['forum_id'].'">';
 			echo '<td><input type="radio" name="id" value="'. $forum['forum_id'].'" id="f'.$forum['forum_id'].'"></td>';
-			echo '	<td><label for="f'.$forum['forum_id'].'">' . htmlentities_utf8($forum['title']) . '</label></td>';
-			echo '	<td>' . htmlentities_utf8($forum['description']) . '</td>';
+			echo '	<td><label for="f'.$forum['forum_id'].'">' . AT_print($forum['title'], 'forums.title') . '</label></td>';
+			echo '	<td>' . AT_print($forum['description'], 'forums.description') . '</td>';
 			echo '	<td>';
 
 			$courses = array();
@@ -92,8 +92,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<?php foreach ($all_forums['nonshared'] as $forum) : ?>
 		<tr onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['forum_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>" /></td>
-			<td><label for="f<?php echo $forum['forum_id']; ?>"><?php echo htmlentities_utf8($forum['title']); ?></label></td>
-			<td><?php echo htmlentities_utf8($forum['description']); ?></td>
+			<td><label for="f<?php echo $forum['forum_id']; ?>"><?php echo AT_print($forum['title'], 'forums.title'); ?></label></td>
+			<td><?php echo AT_print($forum['description'], 'forums.description'); ?></td>
 			<td><?php echo $system_courses[$forum['course_id']]['title']; ?></td>
 		</tr>
 	<?php endforeach; ?>

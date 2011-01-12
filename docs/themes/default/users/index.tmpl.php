@@ -16,7 +16,7 @@
     <tr class="<?php if ($counter %2) { echo 'odd'; } else { echo 'even'; } ?>">
     <td>
       <?php if ($row['icon'] == ''): ?>
-			      <img src="images/clr.gif" class="icon" border="1" width="79" height="79" alt="<?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" />
+			      <img src="images/clr.gif" class="icon" border="1" width="79" height="79" alt="<?php echo htmlentities_utf8($row['title']); ?>" />
 	      <?php else: 
 			      echo $link;  
 
@@ -39,7 +39,7 @@
 			    $dir = "images/courses/".$row['icon'];
 		    }
 		    ?>
-		    <img src="<?php echo $dir; ?>" class="icon" border="0" alt="<?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?>" />
+		    <img src="<?php echo $dir; ?>" class="icon" border="0" alt="<?php echo htmlentities_utf8($row['title']); ?>" />
 				    <?php echo $link2; ?>
 		    <?php endif; ?>
 
@@ -136,7 +136,7 @@
 	<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=1"><?php echo _AT('show_pages'); ?></a>
     <?php }else if($newscount > 0){ ?>
 	<a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo _AT('show_all'); ?></a>
-    <?php }else{
+    <?php } else {
 	    echo _AT('none_found');
 	  }?>
 <br /><br />

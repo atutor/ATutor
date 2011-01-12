@@ -89,7 +89,7 @@ if (isset($_GET['q'])){
 				break;
 			}
 			//double encode the value because the .submit() function will decode the first level. 
-			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_friends\').value=\''.htmlentities(printSocialNameForConnection($member_id, true)).'\'; document.getElementById(\'search_friends_form\').submit();">'.printSocialNameForConnection($member_id, false).'</a><br/>';
+			echo '<a href="javascript:void(0);" onclick="document.getElementById(\'search_friends\').value=\''.htmlentities_utf8(printSocialNameForConnection($member_id, true)).'\'; document.getElementById(\'search_friends_form\').submit();">'.printSocialNameForConnection($member_id, false).'</a><br/>';
 			$counter++;
 		}
 		echo '</div>';

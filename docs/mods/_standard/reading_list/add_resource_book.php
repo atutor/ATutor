@@ -109,12 +109,12 @@ if ($id && !isset($_POST['submit'])){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)){
-		$title     = htmlentities_utf8($row['title']);
-		$author    = htmlentities_utf8($row['author']);
-		$publisher = htmlentities_utf8($row['publisher']);
-		$date      = htmlentities_utf8($row['date']); 
-		$comments  = htmlentities_utf8($row['comments']);
-		$isbn      = htmlentities_utf8($row['id']);
+		$title     = AT_print($row['title'], 'input.text');
+		$author    = AT_print($row['author'], 'input.text');
+		$publisher = AT_print($row['publisher'], 'input.text');
+		$date      = AT_print($row['date'], 'input.text'); 
+		$comments  = AT_print($row['comments'], 'input.text');
+		$isbn      = AT_print($row['id'], 'input.text');
 	}
 	// change title of page to 'edit book resource' (default is 'add book resource')
 	$_pages['mods/_standard/reading_list/add_resource_book.php']['title_var'] = 'rl_edit_resource_book';

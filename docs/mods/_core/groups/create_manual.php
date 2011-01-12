@@ -113,17 +113,17 @@ while ($row = mysql_fetch_assoc($result)) {
 				</select>
 				<strong><?php echo _AT('or'); ?></strong>
 			<?php endif; ?>
-			<label for="new"><?php echo _AT('new_type'); ?></label> <input type="text" name="new_type" value="<?php echo htmlentities_utf8($_POST['new_type']); ?>" id="new" size="30" maxlength="40" />
+			<label for="new"><?php echo _AT('new_type'); ?></label> <input type="text" name="new_type" value="<?php echo AT_print($_POST['new_type'], 'groups.type'); ?>" id="new" size="30" maxlength="40" />
 		</div>
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="prefix"><?php echo _AT('title'); ?></label><br />
-			<input type="text" name="prefix" id="prefix" value="<?php echo htmlentities_utf8($_POST['prefix']); ?>" size="20" maxlength="40" />
+			<input type="text" name="prefix" id="prefix" value="<?php echo AT_print($_POST['prefix'], 'prefix'); ?>" size="20" maxlength="40" />
 		</div>
 
 		<div class="row">
 			<label for="description"><?php echo _AT('description'); ?></label><br />
-			<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlentities_utf8($_POST['description']); ?></textarea>
+			<textarea name="description" id="description" cols="10" rows="2"><?php echo AT_print($_POST['description'], 'groups.description'); ?></textarea>
 		</div>
 
 		<div class="row">

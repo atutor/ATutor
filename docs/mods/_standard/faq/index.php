@@ -24,7 +24,7 @@ $result  = mysql_query($sql, $db);
 	<ul style="list-style: none;">
 		<?php do { ?>
 			<li style="font-weight: bold; margin-bottom: 10px;">
-				<?php echo $row['name']; ?>
+				<?php echo AT_print($row['name'], 'faqs.topic'); ?>
 				<?php 
 					$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
 					$entry_result = mysql_query($entry_sql, $db);
@@ -33,8 +33,8 @@ $result  = mysql_query($sql, $db);
 
 					<?php do { ?>
 						<li style="font-weight: normal">
-							<h3><?php echo htmlentities_utf8($entry_row['question']); ?></h3>
-							<p><?php echo htmlentities_utf8($entry_row['answer']);?></p>
+							<h3><?php echo AT_print($entry_row['question'], 'faqs.question'); ?></h3>
+							<p><?php echo AT_print($entry_row['answer'], 'faqs.answer');?></p>
 						</li>
 						<?php $counter++; ?>
 					<?php } while ($entry_row = mysql_fetch_assoc($entry_result)) ?>

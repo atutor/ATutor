@@ -120,12 +120,12 @@ if (!($forum = @get_forum($_GET['forum']))) {
 <div class="input-form">
 	<div class="row">
 		<label for="title"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php  echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="40" id="title" value="<?php echo htmlentities_utf8($forum['title']); ?>" />
+		<input type="text" name="title" size="40" id="title" value="<?php echo AT_print($forum['title'], 'input.text'); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="45" rows="5" id="body" wrap="wrap"><?php echo htmlentities_utf8($forum['description']); ?></textarea>
+		<textarea name="description" cols="45" rows="5" id="body" wrap="wrap"><?php echo AT_print($forum['description'], 'input.text'); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -147,9 +147,9 @@ if (!($forum = @get_forum($_GET['forum']))) {
 			$result = mysql_query($sql, $db);
 			while ($row = mysql_fetch_assoc($result)) {
 				if (in_array($row['course_id'], $courses) ) {
-					echo '<option value="'.$row['course_id'].'" selected="selected">'.htmlentities_utf8($row['title']).'</option>';		
+					echo '<option value="'.$row['course_id'].'" selected="selected">'.AT_print($row['title'], 'input.text').'</option>';		
 				} else {
-					echo '<option value="'.$row['course_id'].'">'.$row['title'].'</option>';
+					echo '<option value="'.$row['course_id'].'">'.AT_print($row['title'], 'input.text').'</option>';
 				}
 			}
 			?></select>

@@ -303,6 +303,13 @@ define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS
 							   + AT_FORMAT_CONTENT_DIR);
 
 $_field_formatting = array();
+$_field_formatting['assignment.title']          = AT_FORMAT_QUOTES;
+
+$_field_formatting['backups.description']       = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
+
+$_field_formatting['blog_posts.body']           = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
+$_field_formatting['blog_posts.title']          = AT_FORMAT_NONE | AT_FORMAT_QUOTES;
+$_field_formatting['blog_posts_comments.comment'] = AT_FORMAT_ALL & ~AT_FORMAT_HTML;
 
 $_field_formatting['content.keywords']			= AT_FORMAT_NONE;
 $_field_formatting['content.title']				= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
@@ -311,31 +318,40 @@ $_field_formatting['content.text']				= AT_FORMAT_ALL;
 $_field_formatting['course_cats.cat_name']		= AT_FORMAT_NONE;
 
 $_field_formatting['courses.*']				    = AT_FORMAT_ALL & ~AT_FORMAT_EMOTICONS & ~AT_FORMAT_ATCODES & ~AT_FORMAT_LINKS & ~AT_FORMAT_IMAGES;
+$_field_formatting['courses.banner']            = AT_FORMAT_ALL;
+
+$_field_formatting['faqs.topic']                 = AT_FORMAT_NONE | AT_FORMAT_QUOTES;
+$_field_formatting['faqs.question']              = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
+$_field_formatting['faqs.answer']                = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 
 $_field_formatting['forums.title']				= AT_FORMAT_NONE | AT_FORMAT_QUOTES;
-$_field_formatting['forums.description']		= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
+$_field_formatting['forums.description']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 
 $_field_formatting['forums_threads.subject']	= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 $_field_formatting['forums_threads.body']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 
-$_field_formatting['glossary.word']				= AT_FORMAT_NONE;
-$_field_formatting['glossary.definition']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML;
+$_field_formatting['glossary.word']				= AT_FORMAT_QUOTES;
+$_field_formatting['glossary.definition']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
+
+$_field_formatting['groups.*']                  = AT_FORMAT_QUOTES;
 
 $_field_formatting['instructor_approvals.notes']= AT_FORMAT_NONE;
 
-$_field_formatting['members.*']                 = AT_FORMAT_NONE; /* wildcards are okay */
+$_field_formatting['members.*']                 = AT_FORMAT_QUOTES; /* wildcards are okay */
 
 $_field_formatting['messages.subject']			= AT_FORMAT_EMOTICONS + AT_FORMAT_IMAGES | AT_FORMAT_QUOTES;
 $_field_formatting['messages.body']				= AT_FORMAT_EMOTICONS + AT_FORMAT_LINKS + AT_FORMAT_IMAGES + AT_FORMAT_ATCODES | AT_FORMAT_QUOTES;
 
-$_field_formatting['news.title']				= AT_FORMAT_EMOTICONS | AT_FORMAT_LINKS & ~AT_FORMAT_HTML;
+$_field_formatting['news.title']				= AT_FORMAT_EMOTICONS | AT_FORMAT_LINKS & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 $_field_formatting['news.body']					= AT_FORMAT_ALL;
 
-$_field_formatting['resource_categories.CatName']= AT_FORMAT_NONE;
+$_field_formatting['resource_categories.CatName']= AT_FORMAT_QUOTES;
 $_field_formatting['resource_categories.Url']	= AT_FORMAT_NONE;
-$_field_formatting['resource_links.LinkName']	= AT_FORMAT_NONE;
+$_field_formatting['resource_links.LinkName']	= AT_FORMAT_QUOTES;
 $_field_formatting['resource_links.Description']= AT_FORMAT_NONE;
-$_field_formatting['resource_links.SubmitName']= AT_FORMAT_NONE;
+$_field_formatting['resource_links.SubmitName']= AT_FORMAT_QUOTES;
+
+$_field_formatting['reading_list.*']            = AT_FORMAT_QUOTES;
 
 $_field_formatting['tests.title']				= AT_FORMAT_ALL;
 $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
@@ -344,18 +360,18 @@ $_field_formatting['themes.title']				= AT_FORMAT_NONE;
 
 $_field_formatting['tests_answers.answer']		= AT_FORMAT_NONE;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
-$_field_formatting['tests_questions.*']			= AT_FORMAT_ALL;
-
+$_field_formatting['tests_questions.*']			= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
 $_field_formatting['tests_questions_categories.title']	= AT_FORMAT_NONE;
 
-$_field_formatting['polls.*']            = AT_FORMAT_ALL;
+$_field_formatting['photo_albums.*']            = AT_FORMAT_QUOTES;
+$_field_formatting['photos.*']                  = AT_FORMAT_QUOTES;
 
-$_field_formatting['blog_posts.body']	     = AT_FORMAT_ALL & ~AT_FORMAT_HTML;
-$_field_formatting['blog_posts.title']	     = AT_FORMAT_NONE;
+$_field_formatting['polls.*']                   = AT_FORMAT_QUOTES;
 
-$_field_formatting['blog_posts_comments.comment'] = AT_FORMAT_ALL & ~AT_FORMAT_HTML;
+$_field_formatting['social.*']                  = AT_FORMAT_QUOTES;
 
-$_field_formatting['courses.banner'] = AT_FORMAT_ALL;
+$_field_formatting['input.*']                   = AT_FORMAT_QUOTES; /* All input should have '<' and quotes escaped.
+
 
 if (isset($_GET['cid'])) {
 	$cid = intval($_GET['cid']);

@@ -118,9 +118,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $sql = "SELECT * from ".TABLE_PREFIX."forums_threads WHERE post_id = '$pid'";
 $result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)){
-	$title = htmlentities_utf8($row['subject']);
-}
+$row = mysql_fetch_assoc($result);
+$title = AT_print($row['subject'], 'forums_threads.subject');
+
 
 $hidden_vars['fid']  = $_GET['fid'];
 $hidden_vars['pid']  = $_GET['pid'];

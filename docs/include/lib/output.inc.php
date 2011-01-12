@@ -373,6 +373,7 @@ function _AT() {
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_QUOTES)) {
 			$input = str_replace('"', '&quot;', $input);
+            $input = str_replace('\'', '&apos;', $input);
 		}
 
 		if (query_bit($_field_formatting[$name], AT_FORMAT_CONTENT_DIR)) {
@@ -410,8 +411,6 @@ function _AT() {
 		if (query_bit($_field_formatting[$name], AT_FORMAT_IMAGES)) {
 			$input = trim(image_replace(' ' . $input . ' '));
 		}
-
-	
 		return $input;
 	}
 
@@ -926,18 +925,20 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 			$v = str_replace("\n", '<br />', $v);
 			$v = str_replace("\r", '', $v);
 
-			/* escape special characters */
-			$k = preg_quote($k);
-
 			$k = str_replace('&lt;', '<', $k);
 			$k = str_replace('/', '\/', $k);
 
 			$original_term = $k;
 			$term = $original_term;
+             if (!$html) {
+                $term = str_replace('<', '&lt;', $term);
+            }
 
-	 		$term = '(\s*'.$term.'\s*)';
+	 		/* escape special characters */
+            $term = preg_quote($term);
+            $term = '(\s*'.$term.'\s*)';
 			$term = str_replace(' ','((<br \/>)*\s*)', $term); 
-
+			
 			$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');		
 			if ($simple) {
 				$input = preg_replace
@@ -948,10 +949,9 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
 						'\\2<sup><a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">?</a></sup>',$input);*/
-
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
-						'<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">\\2</a>',$input);
+						'<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.htmlentities_utf8($original_term).': '.$def.'">\\2</a>',$input);
 			}
 		}
 	} else if (!$user_glossary) {

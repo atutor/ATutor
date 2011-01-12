@@ -28,15 +28,15 @@
 			$photo_info = $pa->getPhotoInfo($row['photo_id']); 
 			if (!empty($photo_info)):
 			?>
-			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($row['name']); ?>" /></a>
+			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$row['id'].SEP.'pid='.$row['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo AT_print($photo_info['description'], 'input.text'); ?>" alt="<?php echo AT_print($row['name'], 'input.text'); ?>" /></a>
 			<?php else: ?>
 			<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><img src="" class="no-image" title="<?php echo _AT('pa_no_image'); ?>" alt="<?php echo _AT('pa_no_image'); ?>" /></a>
 			<?php endif; //image ?>
 			</div>
 			<div class="info">
-				<h4><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><?php echo htmlentities_utf82($row['name']); ?></a></h4>
-				<p><?php echo htmlentities_utf82($row['description']); ?></p>
-				<p><?php echo _AT('location').': '.htmlentities_utf82($row['location']); ?></p>
+				<h4><a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$row['id'];?>"><?php echo AT_print($row['name'], 'photo_albums.name'); ?></a></h4>
+				<p><?php echo AT_print($row['description'], 'photo_albums.description'); ?></p>
+				<p><?php echo _AT('location').': '.AT_print($row['location'], 'photo_albums.location'); ?></p>
 				<!-- If this is shared album, display the author -->
 				<?php if (isset($this->isSharedAlbum)): ?>
 				<p><?php echo _AT('created_by').': '.AT_print(get_display_name($row['member_id']), 'members.full_name'); ?></p>

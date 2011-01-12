@@ -56,7 +56,7 @@ if ($_POST['submit_yes']) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars['id'] = $id;
-$msg->addConfirm(array('PA_DELETE_ALBUM', htmlentities_utf82($info['name'])), $hidden_vars);
+$msg->addConfirm(array('PA_DELETE_ALBUM', AT_print($info['name'], 'photo_albums.name')), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');

@@ -13,7 +13,7 @@ if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
 		$list[] = '<a href="'.url_rewrite('mods/_standard/links/index.php?view='.$row['link_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 		          (strlen($row['LinkName']) > SUBLINK_TEXT_LEN ? ' title="'.$row['LinkName'].'"' : '') .'>'. 
-		          validate_length($row['LinkName'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
+		          AT_print(validate_length($row['LinkName'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'resource_links.LinkName') .'</a>'; 
 	}
 	return $list;	
 } else {

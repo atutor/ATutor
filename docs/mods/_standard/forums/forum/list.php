@@ -56,7 +56,7 @@ if ($num_shared || $num_nonshared || $num_groups) {
 
 		foreach ($forums as $row) : ?>
 			<tr>
-				<td><a href="<?php echo url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id']); ?>"><?php echo htmlentities_utf8($row['title']); ?></a> <?php
+				<td><a href="<?php echo url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id']); ?>"><?php echo AT_print($row['title'], 'forums.title'); ?></a> <?php
 					// patch has added the two icons below
 					if ($_SESSION['enroll']) {
 						$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";
@@ -70,7 +70,7 @@ if ($row1 = mysql_fetch_row($result1)) {
 							<br /><img border="0" src="'.AT_BASE_HREF.'images/subscribe-envelope.png" alt="" /> '._AT('subscribe1').'</a>';
 						}
 					} ?>
-					<p><?php echo htmlentities_utf8($row['description']); ?></p>
+					<p><?php echo AT_print($row['description'], 'forums.description'); ?></p>
 				</td>
 				<td align="center" valign="top"><?php echo $row['num_topics']; ?></td>
 				<td align="center" valign="top"><?php echo $row['num_posts']; ?></td>

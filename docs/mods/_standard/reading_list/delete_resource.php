@@ -48,7 +48,7 @@ $result = mysql_query($sql, $db);
 
 if ($row = mysql_fetch_assoc($result)){
 	$hidden_vars['id'] = $resource_id;
-	$confirm = array('RL_DELETE_RESOURCE', htmlentities_utf8($row['title']));
+	$confirm = array('RL_DELETE_RESOURCE', AT_print($row['title'], 'reading_list.title'));
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 }

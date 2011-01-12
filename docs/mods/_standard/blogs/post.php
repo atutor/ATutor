@@ -69,7 +69,7 @@ if (!$post_row = mysql_fetch_assoc($result)) {
 	exit;
 }
 
-$_pages['mods/_standard/blogs/post.php']['title'] = AT_print($post_row['title'], 'blog_posts.title') . ($post_row['private'] ? ' - '._AT('private') : '');
+$_pages['mods/_standard/blogs/post.php']['title'] = $post_row['title'] . ($post_row['private'] ? ' - '._AT('private') : '');
 $_pages['mods/_standard/blogs/post.php']['parent']    = 'mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id;
 if (query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 	$_pages['mods/_standard/blogs/post.php']['children']  = array('mods/_standard/blogs/edit_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id.SEP.'id='.$id, 'mods/_standard/blogs/delete_post.php?ot='.BLOGS_GROUP.SEP.'oid='.$owner_id.SEP.'id='.$id);

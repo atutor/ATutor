@@ -17,11 +17,11 @@
 		<?php endif; ?>
 		<div style="clear:both"></div>
 
-		<img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id'].SEP.'size=o'.SEP.'ph='.getPhotoFilePath($this->photo_info['id'], '', $this->photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($this->photo_info['description'], false); ?>" alt="<?php echo htmlentities_utf82($this->photo_info['alt_text']) ;?>" />
+		<img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id'].SEP.'size=o'.SEP.'ph='.getPhotoFilePath($this->photo_info['id'], '', $this->photo_info['created_date']);?>" title="<?php echo AT_print($this->photo_info['description'], 'input.text'); ?>" alt="<?php echo AT_print($this->photo_info['alt_text'], 'input.text') ;?>" />
 		<?php if ($this->action_permission): ?>
-		<div class="flc-inlineEditable"><span class="flc-inlineEdit-text"><?php echo htmlentities_utf82($this->photo_info['description']);?></span></div>
+		<div class="flc-inlineEditable"><span class="flc-inlineEdit-text"><?php echo AT_print($this->photo_info['description'], 'photos.description');?></span></div>
 		<?php else : ?>
-		<div><span><?php echo htmlentities_utf82($this->photo_info['description'], true);?></span></div>
+		<div><span><?php echo htmlentities_utf8($this->photo_info['description'], true);?></span></div>
 		<?php endif; ?>
 	</div>
 
@@ -34,13 +34,13 @@
 					<!-- TODO: Profile link and img -->
 					<?php if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']): ?>
 					<div class="flc-inlineEditable">
-						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
-						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo htmlentities_utf82($comment_array['comment']);?></span>
+						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo AT_print(get_display_name($comment_array['member_id']), 'members.full_name'); ?></a></strong>
+						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo AT_print($comment_array['comment'], 'photos.comment');?></span>
 					</div>
 					<?php else: ?>
 					<div>
-						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
-						<?php echo htmlentities_utf82($comment_array['comment'], true);?>
+						<a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><strong><?php echo AT_print(get_display_name($comment_array['member_id']), 'members.full_name'); ?></a></strong>
+						<?php echo htmlentities_utf8($comment_array['comment'], true);?>
 					</div>
 					<?php endif; ?>
 

@@ -160,17 +160,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('groups_create_automatic'); ?></legend>
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="type"><?php echo _AT('groups_type'); ?></label><br />
-			<input type="text" name="type_title" id="type" value="<?php echo htmlentities_utf8($_POST['type_title']); ?>" size="30" maxlength="60" />
+			<input type="text" name="type_title" id="type" value="<?php echo AT_print($_POST['type_title'], 'groups.type'); ?>" size="30" maxlength="60" />
 		</div>
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="prefix"><?php echo _AT('group_prefix'); ?></label><br />
-			<input type="text" name="prefix" id="prefix" value="<?php echo htmlentities_utf8($_POST['prefix']); ?>" size="20" maxlength="40" />
+			<input type="text" name="prefix" id="prefix" value="<?php echo AT_print($_POST['prefix'], 'groups.prefix'); ?>" size="20" maxlength="40" />
 		</div>
 
 		<div class="row">
 			<label for="description"><?php echo _AT('default_description'); ?></label><br />
-			<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlentities_utf8($_POST['description']); ?></textarea>
+			<textarea name="description" id="description" cols="10" rows="2"><?php echo AT_print($_POST['description'], 'groups.description'); ?></textarea>
 		</div>
 
 		<div class="row">

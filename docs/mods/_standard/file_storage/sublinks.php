@@ -18,8 +18,8 @@ if (mysql_num_rows($result) > 0) {
 		}
 
 		$list[] = '<a href="'.url_rewrite('mods/_standard/file_storage/index.php?download=1'.SEP.'files[]='. $row['file_id'], AT_PRETTY_URL_IS_HEADER).'"'.
-		          (strlen($filetext) > SUBLINK_TEXT_LEN ? ' title="'.$filetext.'"' : '') .'>'. 
-		          validate_length($filetext, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
+		          (strlen($filetext) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($filetext, 'text.input').'"' : '') .'>'. 
+		          AT_print(validate_length($filetext, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'text.input') .'</a>';
 	}
 	return $list;	
 } else {

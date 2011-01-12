@@ -100,17 +100,17 @@ $row['modules'] = explode('|', $row['modules']);
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
-		<h3><?php echo htmlentities_utf8($type_row['title']); ?></h3>
+		<h3><?php echo AT_print($type_row['title'], 'groups.title'); ?></h3>
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" value="<?php echo htmlspecialchars($row['title']); ?>" size="20" maxlength="40" />
+		<input type="text" name="title" id="title" value="<?php echo AT_print($row['title'], 'groups.title'); ?>" size="20" maxlength="40" />
 	</div>
 
 	<div class="row">
 		<label for="description"><?php echo _AT('description'); ?>:</label><br />
-		<textarea name="description" id="description" cols="10" rows="2"><?php echo htmlspecialchars($row['description']); ?></textarea>
+		<textarea name="description" id="description" cols="10" rows="2"><?php echo AT_print($row['description'], 'groups.description'); ?></textarea>
 	</div>
 
 	<div class="row">

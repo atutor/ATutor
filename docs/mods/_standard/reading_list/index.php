@@ -39,7 +39,7 @@ $result = mysql_query($sql, $db);
 			$id = $row['resource_id'];
 			$row['date_start'] = htmlentities_utf8($row['date_start']);
 			$row['date_end'] = htmlentities_utf8($row['date_end']);
-			$row['comment'] = htmlentities_utf8($row['comment']);
+			$row['comment'] = AT_print($row['comment'], 'reading_list.comment');
 
 			$sql = "SELECT title, type, url FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 			$resource_result = mysql_query($sql, $db);
@@ -62,7 +62,7 @@ $result = mysql_query($sql, $db);
 				}?>
 				</td>
 
-				<td><a href="<?php echo url_rewrite('mods/_standard/reading_list/display_resource.php?id='.$id); ?>" title="<?php echo _AT('rl_view_resource_details')?>" ><?php echo htmlentities_utf8($resource_row['title']); ?></a>		
+				<td><a href="<?php echo url_rewrite('mods/_standard/reading_list/display_resource.php?id='.$id); ?>" title="<?php echo _AT('rl_view_resource_details')?>" ><?php echo AT_print($resource_row['title'], 'reading_list.title'); ?></a>		
 				</td>
 				<td><?php echo _AT ($row['required']); ?></td>
 				<td><?php echo $row['comment']; ?></td>

@@ -119,7 +119,7 @@ $_POST['formatting'] = intval($row['formatting']);
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" value="<?php echo htmlentities_utf8(stripslashes($row['title'])); ?>" size="40">
+		<input type="text" name="title" id="title" value="<?php echo AT_print($row['title'], 'input.text'); ?>" size="40">
 	</div>
 
 	<div class="row">
@@ -141,7 +141,7 @@ $_POST['formatting'] = intval($row['formatting']);
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
-		<textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo htmlentities_utf8($row['body']); ?></textarea>
+		<textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($row['body'], 'input.text'); ?></textarea>
 	</div>
 
 	<div class="row buttons">

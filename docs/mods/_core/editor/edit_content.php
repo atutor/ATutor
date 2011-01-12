@@ -349,7 +349,7 @@ $pid = intval($_REQUEST['pid']);
 	if (is_array($word)) {
 		/* update $_POST['glossary_defs'] with any new/changed terms */
 		for($i=0; $i<$num_terms; $i++) {
-			$word[$i] = htmlentities_utf8($word[$i]);
+//			$word[$i] = htmlentities_utf8($word[$i]);
 			if (!isset($_POST['glossary_defs'][$word[$i]])) {
 				$_POST['glossary_defs'][$word[$i]] = $glossary[$word[$i]];
 			}
@@ -364,11 +364,11 @@ $pid = intval($_REQUEST['pid']);
 				unset($_POST['glossary_defs'][$w]);
 				continue;
 			}
-			echo '<input type="hidden" name="glossary_defs['.$w.']" value="'.htmlspecialchars(stripslashes($d)).'" />';
+			echo '<input type="hidden" name="glossary_defs['.AT_print($w, 'glossary.word').']" value="'.AT_print($d, 'glossary.definition').'" />';
 		}
 		if (isset($_POST['related_term'])) {
 			foreach($_POST['related_term'] as $w => $d) {
-				echo '<input type="hidden" name="related_term['.$w.']" value="'.$d.'" />';
+				echo '<input type="hidden" name="related_term['.AT_print($w, 'glossary.word').']" value="'.AT_print($d, 'glossary.definition').'" />';
 			}
 		}
 	}

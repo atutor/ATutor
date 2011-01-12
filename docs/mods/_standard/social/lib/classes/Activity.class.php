@@ -144,7 +144,7 @@ class Activity{
 		$row = mysql_fetch_assoc($result);
 		
 		$msg = _AT("has_added_app", url_rewrite(AT_SOCIAL_BASENAME.'applications.php?app_id='.$app_id, AT_PRETTY_URL_IS_HEADER),
-			htmlentities($row['title']));
+			htmlentities_utf8($row['title']));
 		return $msg;
 	 }
 }

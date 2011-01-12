@@ -92,7 +92,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<ul style="list-style: none">
 		<?php foreach($all_forums['nonshared'] as $row): ?>
 			<li>
-				<input type="radio" name="new_fid" value="<?php echo $row['forum_id']; ?>" id="f<?php echo $row['forum_id']; ?>" <?php if ($row['forum_id'] == $_REQUEST['fid']) { echo 'checked="checked"'; } ?> /><label for="f<?php echo $row['forum_id']; ?>"><?php echo htmlentities_utf8($row['title']); ?></label>
+				<input type="radio" name="new_fid" value="<?php echo $row['forum_id']; ?>" id="f<?php echo $row['forum_id']; ?>" <?php if ($row['forum_id'] == $_REQUEST['fid']) { echo 'checked="checked"'; } ?> /><label for="f<?php echo $row['forum_id']; ?>"><?php echo AT_print($row['title'], 'forums.title'); ?></label>
 			</li>
 		<?php endforeach; ?>
 		</ul>

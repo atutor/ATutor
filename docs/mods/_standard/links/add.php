@@ -100,7 +100,7 @@ if (empty($categories)) {
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="40" id="title" value="<?php echo htmlentities_utf8($_POST['title']); ?>"/>
+		<input type="text" name="title" size="40" id="title" value="<?php echo AT_print($_POST['title'], 'input.text'); ?>"/>
 	</div>
 
 	<div class="row">
@@ -120,12 +120,12 @@ if (empty($categories)) {
 	
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="url"><?php echo _AT('url'); ?></label><br />
-		<input type="text" name="url" size="40" id="url" value="<?php echo htmlentities_utf8($_POST['url']); ?>" />
+		<input type="text" name="url" size="40" id="url" value="<?php echo AT_print($_POST['url'], 'input.text'); ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="description"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="55" rows="2" id="description" ><?php echo htmlentities_utf8($_POST['description']); ?></textarea>
+		<textarea name="description" cols="55" rows="2" id="description" ><?php echo AT_print($_POST['description'], 'input.text'); ?></textarea>
 	</div>
 	
 	<div class="row buttons">

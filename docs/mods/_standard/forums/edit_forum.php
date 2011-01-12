@@ -79,7 +79,7 @@ $msg->printErrors();
 
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="body" cols="45" rows="2" id="body" wrap="wrap"><?php echo htmlentities_utf8($row['description']); ?></textarea>
+		<textarea name="body" cols="45" rows="2" id="body" wrap="wrap"><?php echo AT_print($row['description'], 'input.text'); ?></textarea>
 	</div>
 
 	<div class="row">

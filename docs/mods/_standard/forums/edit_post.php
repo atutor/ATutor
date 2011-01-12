@@ -130,7 +130,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="65" name="body" rows="10" id="body"><?php echo htmlentities_utf8($post_row['body']); ?></textarea>
+		<textarea cols="65" name="body" rows="10" id="body"><?php echo AT_print($post_row['body'], 'text.input'); ?></textarea>
 	</div>
 	
 	<div class="row">

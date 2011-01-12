@@ -39,13 +39,13 @@
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo): ?>
 		<div class="photo_frame">
-			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf82($photo['description'], false); ?>" alt="<?php echo htmlentities_utf82($photo['alt_text']);?>" /></a>
+			<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$this->album_info['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$this->album_info['id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo AT_print($photo['description'], 'photos.description'); ?>" alt="<?php echo AT_print($photo['alt_text'], 'photos.alt_text');?>" /></a>
 		</div>
 		<?php endforeach; ?>
 		<!-- end loop -->
 		<div class="album_description">
-			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.htmlentities_utf82($this->album_info['location']) .'<br/>';?>
-			<?php echo htmlentities_utf82($this->album_info['description']);?></p>
+			<p><?php if($this->album_info['location']!='') echo _AT('location').': '.AT_print($this->album_info['location'], 'photo_albums.location') .'<br/>';?>  
+			<?php echo AT_print($this->album_info['description'], 'photo_albums.description');?></p>
 		</div>		
 		<?php else: ?>
 		<div class="edit_photo_box">
@@ -71,13 +71,13 @@
 					<!-- TODO: Profile link and img -->
 					<?php if ($this->action_permission || $comment_array['member_id']==$_SESSION['member_id']): ?>
 					<div class="flc-inlineEditable">
-						<strong><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
-						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo htmlentities_utf82($comment_array['comment']);?></span>
+						<strong><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><?php echo AT_print(get_display_name($comment_array['member_id']), 'members.full_name'); ?></a></strong>
+						<span class="flc-inlineEdit-text" id="<?php echo $comment_array['id'];?>" ><?php echo AT_print($comment_array['comment'], 'photo_albums.comment');?></span>
 					</div>
 					<?php else: ?>
 					<div>
-						<strong><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><?php echo htmlentities_utf82(AT_print(get_display_name($comment_array['member_id']), 'members.full_name')); ?></a></strong>
-						<?php echo htmlentities_utf82($comment_array['comment'], true);?>
+						<strong><a href="profile.php?id=<?php echo $comment_array['member_id'];?>"><?php echo AT_print(get_display_name($comment_array['member_id']), 'members.full_name'); ?></a></strong>
+						<?php echo htmlentities_utf8($comment_array['comment'], true);?>
 					</div>
 					<?php endif; ?>
 					<div class="comment_actions">

@@ -47,7 +47,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			$last_updated = '';
 		}
 
-		echo '<li class="top-tool" style="position:relative;"><a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP. SEP .'oid='.$row['group_id']).'">'.$row['title'].$last_updated.'</a>';
+		echo '<li class="top-tool" style="position:relative;"><a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP. SEP .'oid='.$row['group_id']).'">'.AT_print($row['title'], 'blog_posts.title').$last_updated.'</a>';
 		
 		// Check if subscribed and make appropriate button
 		if ($sub->is_subscribed('blog',$_SESSION['member_id'],$row['group_id'])){

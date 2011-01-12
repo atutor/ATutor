@@ -52,7 +52,7 @@ if (mysql_num_rows($result) == 0) {
 	$hidden_vars['delete_poll'] = TRUE;
 	$hidden_vars['pid'] = $_GET['pid'];
 
-	$confirm = array('DELETE_POLL', AT_print(htmlentities_utf8($row['question']), 'polls.question'));
+	$confirm = array('DELETE_POLL', AT_print($row['question'], 'polls.question'));
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 

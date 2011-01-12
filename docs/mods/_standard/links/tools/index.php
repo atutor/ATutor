@@ -144,7 +144,7 @@ if (!empty($categories)) {
 		<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['link_id'];?>">
 			<td width="10"><input type="radio" name="link_id" value="<?php echo $row['link_id'].'-'.$row['owner_type'].'-'.$row['owner_id']; ?>" id="m<?php echo $row['link_id']; ?>" /></td>
 			<td><label for="m<?php echo $row['link_id']; ?>"><?php echo AT_print($row['LinkName'], 'resource_links.LinkName'); ?></label></td>
-			<td><?php echo AT_print(htmlentities_utf8($row['name']), 'resource_links.CatName'); ?></td>
+			<td><?php echo AT_print($row['name'], 'resource_links.CatName'); ?></td>
 			<td><?php echo AT_print($row['SubmitName'], 'resource_links.SubmitName'); ?></td>
 
 			<td align="center"><?php 

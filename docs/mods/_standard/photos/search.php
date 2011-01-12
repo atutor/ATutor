@@ -41,7 +41,7 @@ $offset = ($page-1) * AT_PA_ALBUMS_PER_PAGE;
 $albums = $pa->getSharedAlbums(true, $offset);
 
 include (AT_INCLUDE_PATH.'header.inc.php'); 
-$savant->assign('search_input', htmlentities($_POST['pa_search'], ENT_QUOTES, 'UTF-8'));
+$savant->assign('search_input', AT_print($_POST['pa_search'], 'input.text'));
 $savant->assign('albums', $search_results[0]);
 $savant->assign('photos', $search_results[1]);
 //$savant->assign('page', $page);

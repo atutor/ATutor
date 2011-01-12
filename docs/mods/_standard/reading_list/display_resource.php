@@ -34,12 +34,12 @@ if (!$row = mysql_fetch_assoc($result)) {
 }
 
 $row['type']		= intval($row['type']);
-$row['title']		= htmlentities_utf8($row['title']);
-$row['author']		= htmlentities_utf8($row['author']);
-$row['publisher']	= htmlentities_utf8($row['publisher']);
-$row['date']		= htmlentities_utf8($row['date']);
-$row['id']			= htmlentities_utf8($row['id']);
-$row['comments']	= htmlentities_utf8($row['comments']);
+$row['title']		= AT_print($row['title'], 'readling_list.title');
+$row['author']		= AT_print($row['author'], 'readling_list.author');
+$row['publisher']	= AT_print($row['publisher'], 'readling_list.publisher');
+$row['date']		= AT_print($row['date'], 'readling_list.date');
+$row['id']			= AT_print($row['id'], 'readling_list.id');
+$row['comments']	= AT_print($row['comments'], 'readling_list.comments');
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" method="get" name="form">

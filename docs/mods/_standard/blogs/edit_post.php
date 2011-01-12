@@ -37,8 +37,6 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = htmlspecialchars($_POST['title']);
-		$_POST['body']  = htmlspecialchars($_POST['body']);
 		$_POST['private'] = abs($_POST['private']);
 		$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET private=$_POST[private], title='$_POST[title]', body='$_POST[body]', date=date WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
 		mysql_query($sql, $db);
@@ -80,11 +78,11 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <div class="input-form">
 	<div class="row">
 		<label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" value="<?php echo $post_row['title']; ?>" size="50" />
+		<input type="text" name="title" id="title" value="<?php echo AT_print($post_row['title'], 'input.text'); ?>" size="50" />
 	</div>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea name="body" id="body" cols="40" rows="10"><?php echo $post_row['body']; ?></textarea>
+		<textarea name="body" id="body" cols="40" rows="10"><?php echo AT_print($post_row['body'], 'input.text'); ?></textarea>
 	</div>
 
 	<div class="row">	

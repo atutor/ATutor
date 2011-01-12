@@ -138,12 +138,12 @@ $msg->printErrors();
 	
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="url"><?php echo _AT('url'); ?></label><br />
-		<input type="text" name="url" size="40" id="url" value="<?php echo htmlentities_utf8($_POST['url']); ?>" />
+		<input type="text" name="url" size="40" id="url" value="<?php echo AT_print($_POST['url'], 'input.text'); ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="description"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="55" rows="5" id="description" style="width:90%;"><?php echo htmlentities_utf8($_POST['description']); ?></textarea>
+		<textarea name="description" cols="55" rows="5" id="description" style="width:90%;"><?php echo AT_print($_POST['description'], 'input.text'); ?></textarea>
 	</div>
 
 	<div class="row">

@@ -2,7 +2,7 @@
 <form action="" name="create_album" method="post">
 	<div class="row">
 		<div class="left_row"><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="album_name"><?php echo _AT('pa_album_name'); ?></label></div>
-		<input id="album_name" name="album_name" type="text" value="<?php echo htmlentities($this->album_info['name']);?>" />
+		<input id="album_name" name="album_name" type="text" value="<?php echo AT_print($this->album_info['name'], 'input.text');?>" />
 	</div>
 	<?php
 	//if the user has the privilege to create course albums, then allow them to choose
@@ -20,11 +20,11 @@
 	</div>
 	<div class="row">
 		<div class="left_row"<label for="album_location"><?php echo _AT('pa_album_location'); ?></label></div>
-		<input id="album_location" name="album_location" type="text" value="<?php echo htmlentities_utf82($this->album_info['location']);?>"/>
+		<input id="album_location" name="album_location" type="text" value="<?php echo AT_print($this->album_info['location'], 'input.text');?>"/>
 	</div>
 	<div class="row">
 		<div class="left_row"<label for="album_description"><?php echo _AT('pa_album_description'); ?></label></div>
-		<textarea id="album_description" name="album_description"><?php echo htmlentities_utf82($this->album_info['description'],false);?></textarea>
+		<textarea id="album_description" name="album_description"><?php echo AT_print($this->album_info['description'], 'input.text');?></textarea>
 	</div>
 	<div class="row">
 		<input type="hidden" name="aid" value="<?php echo $this->album_info['id']; ?>" />

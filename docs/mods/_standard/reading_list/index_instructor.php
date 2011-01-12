@@ -142,9 +142,9 @@ $result = mysql_query($sql, $db);
 				}else {
 					echo AT_Date(_AT('rl_date_format'), $row['date_end'], AT_DATE_MYSQL_DATETIME);
 				}?></td>
-				<td><label for="t<?php echo $row['reading_id'];?>"><strong><?php echo htmlentities_utf8($resource_row['title']); ?></strong></label></td>
+				<td><label for="t<?php echo $row['reading_id'];?>"><strong><?php echo AT_print($resource_row['title'], 'reading_list.title'); ?></strong></label></td>
 				<td><?php echo _AT ($row['required']); ?></td>
-				<td><?php echo htmlentities_utf8($row['comment']); ?></td>
+				<td><?php echo AT_print($row['comment'], 'reading_list.comment'); ?></td>
 				</tr>
 
 			<?php } ?>

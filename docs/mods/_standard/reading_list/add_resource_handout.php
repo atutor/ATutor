@@ -103,10 +103,10 @@ if ($id && !isset($_POST['submit'])){
 	$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
 	$result = mysql_query($sql, $db);
 	if ($row = mysql_fetch_assoc($result)){
-		$title    = htmlentities_utf8($row['title']);
-		$author   = htmlentities_utf8($row['author']);
-		$date     = htmlentities_utf8($row['date']);
-		$comments = htmlentities_utf8($row['comments']);
+		$title    = AT_print($row['title'], 'input.text');
+		$author   = AT_print($row['author'], 'input.text');
+		$date     = AT_print($row['date'], 'input.text');
+		$comments = AT_print($row['comments'], 'input.text');
 	}
 	// change title of page to 'edit handout resource' (default is 'add handout resource')
 	$_pages['mods/_standard/reading_list/add_resource_handout.php']['title_var'] = 'rl_edit_resource_handout';

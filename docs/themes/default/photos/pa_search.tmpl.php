@@ -38,11 +38,11 @@
 				<li>
 				<div class="search_photo_frame">
 					<?php if (!empty($photo_info)): ?>
-					<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$album['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$album['id'].SEP.'pid='.$album['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo htmlentities_utf82($photo_info['description']); ?>" alt="<?php echo htmlentities_utf82($album['name']); ?>" /></a>
+					<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$album['id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$album['id'].SEP.'pid='.$album['photo_id'].SEP.'ph='.getPhotoFilePath($photo_info['id'], '', $photo_info['created_date']);?>" title="<?php echo AT_print($photo_info['description'], 'input.text'); ?>" alt="<?php echo AT_print($album['name'], 'input.text'); ?>" /></a>
 					<?php else: ?>
 					<a href="<?php echo AT_PA_BASENAME.'albums.php?id='.$album['id'];?>"><img class="no-image" title="<?php echo _AT('pa_no_image'); ?>" alt="<?php echo _AT('pa_no_image'); ?>" /></a>
 					<?php endif; //album ?>
-					<span><?php echo $album['name']; ?></span>
+					<span><?php echo AT_print($album['name'], 'photo_albums.name'); ?></span>
 				</div>
 				</li>
 				<?php endforeach; ?>
@@ -89,7 +89,7 @@
 				$loop_counter++;				
 			?>
 			<div class="photo_frame">
-				<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$photo['album_id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$photo['album_id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo htmlentities_utf82($photo['description'], false); ?>" alt="<?php echo htmlentities_utf82($photo['alt_text']);?>" /></a>
+				<a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$photo['id'].SEP.'aid='.$photo['album_id'];?>"><img src="<?php echo AT_PA_BASENAME.'get_photo.php?aid='.$photo['album_id'].SEP.'pid='.$photo['id'].SEP.'ph='.getPhotoFilePath($photo['id'], '', $photo['created_date']);?>" title="<?php echo AT_print($photo['description'], 'input.text'); ?>" alt="<?php echo AT_print($photo['alt_text'], 'input.text');?>" /></a>
 			</div>
 			<?php 
 				if ($loop_counter>=AT_PA_PHOTO_SEARCH_PER_PAGE) {

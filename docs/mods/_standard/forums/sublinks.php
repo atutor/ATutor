@@ -13,23 +13,23 @@ $cnt = 0;               // count number of returned forums
 $all_forums = get_forums($_SESSION['course_id']);
 
 foreach ($all_forums as $shared => $forums) {
-	if (is_array($forums)) {
+    if (is_array($forums)) {
 
-		foreach($forums as $row) {
-			if ($cnt >= $record_limit) break 2;
-			$cnt++;
+        foreach($forums as $row) {
+            if ($cnt >= $record_limit) break 2;
+            $cnt++;
 
-			$link_title = $row['title'].' ('.AT_DATE('%F %j, %g:%i',$row['last_post'],AT_DATE_MYSQL_DATETIME).')';
-			$list[] = '<a href="'.url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id'], AT_PRETTY_URL_IS_HEADER).'"'.
-			          (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
-			          validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
-		}
-	}
+            $link_title = AT_print($row['title'], 'forums.title').' ('.AT_DATE('%F %j, %g:%i',$row['last_post'],AT_DATE_MYSQL_DATETIME).')';
+            $list[] = '<a href="'.url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id'], AT_PRETTY_URL_IS_HEADER).'"'.
+                      (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.$link_title.'"' : '') .'>'. 
+                      validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
+        }
+    }
 }
 
 if (count($list) > 0) {
-	return $list;
+    return $list;
 } else {
-	return 0;
+    return 0;
 }
 ?>

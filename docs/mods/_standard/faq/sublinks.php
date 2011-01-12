@@ -12,8 +12,8 @@ $result = mysql_query($sql, $db);
 if (mysql_num_rows($result) > 0) {
 	while ($row = mysql_fetch_assoc($result)) {
 		$list[] = '<a href="'.url_rewrite('faq/index.php#'.$row['entry_id'], AT_PRETTY_URL_IS_HEADER).'"'.
-		          (strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.$row['question'].'"' : '') .'>'. 
-		          validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 
+		          (strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($row['question'], 'faqs.question').'"' : '') .'>'. 
+		          AT_print(validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'faqs.question') .'</a>'; 
 	}
 	return $list;	
 } else {

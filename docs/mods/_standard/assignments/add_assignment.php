@@ -251,7 +251,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_assignment'); ?></legend>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php  echo _AT('title'); ?></label><br/>
-		<input type="text" name="title" size="50" id="title" value="<?php echo htmlentities_utf8($title); ?>" />
+		<input type="text" name="title" size="50" id="title" value="<?php echo AT_print($title, 'assignment.title'); ?>" />
 	</div>
 
 	<div class="row">
