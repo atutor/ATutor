@@ -28,7 +28,6 @@ CREATE TABLE `admin_log` (
   KEY `login` (`login`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 # Table structure for table `assignments`
 # since 1.5.3
@@ -62,7 +61,6 @@ CREATE TABLE `backups` (
   KEY `course_id` (`course_id`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 ## Table for `blog_posts`
 
@@ -78,7 +76,6 @@ CREATE TABLE `blog_posts` (
   `body` TEXT,
   PRIMARY KEY  (`post_id`)
 ) ENGINE = MyISAM;
-
  
 # --------------------------------------------------------
 ## Table for `blog_posts_comments`
@@ -155,12 +152,12 @@ CREATE TABLE `course_cats` (
 # --------------------------------------------------------
 # Table structure for table `course_tests_assoc`
 # since 1.6.2
+
 CREATE TABLE `content_tests_assoc` (
   `content_id` INTEGER UNSIGNED NOT NULL,
   `test_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`content_id`, `test_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 
 # --------------------------------------------------------
@@ -170,8 +167,7 @@ CREATE TABLE `content_forums_assoc` (
 `content_id` INTEGER UNSIGNED NOT NULL,
 `forum_id` INTEGER UNSIGNED NOT NULL,
 PRIMARY KEY ( `content_id` , `forum_id` )
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # --------------------------------------------------------
 # Table structure for table `course_enrollment`
@@ -185,8 +181,6 @@ CREATE TABLE `course_enrollment` (
   `last_cid` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`member_id`,`course_id`)
 ) ENGINE = MyISAM;
-
-
 
 # --------------------------------------------------------
 # Table structure for table `course_stats`
@@ -243,6 +237,7 @@ CREATE TABLE `faq_topics` (
 
 # --------------------------------------------------------
 # Table structure for table `faq_entries`
+
 CREATE TABLE `faq_entries` (
   `entry_id` mediumint(8) NOT NULL auto_increment,
   `topic_id` mediumint(8) NOT NULL default '0',
@@ -255,15 +250,14 @@ CREATE TABLE `faq_entries` (
 
 # --------------------------------------------------------
 # Table structure for table `feeds`
+
 CREATE TABLE `feeds` (
   `feed_id` mediumint(8) unsigned NOT NULL auto_increment,
   `url` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`feed_id`)
-) ;
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `file_storage_groups`
 # added 1.5.3
 
@@ -272,7 +266,7 @@ CREATE TABLE `file_storage_groups` (
   PRIMARY KEY ( `group_id` )
 ) ENGINE = MyISAM;
 
-#
+# --------------------------------------------------------
 # Table structure for table `files`
 # added 1.5.3
 
@@ -293,8 +287,6 @@ CREATE TABLE `files` (
 ) ENGINE = MyISAM;
 
 # --------------------------------------------------------
-
-#
 # Table structure for table `files_comments`
 # added 1.5.3
 
@@ -322,7 +314,6 @@ CREATE TABLE `folders` (
   PRIMARY KEY  (`folder_id`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 # Table structure for table `forums`
 
@@ -336,7 +327,6 @@ CREATE TABLE `forums` (
   `mins_to_edit` SMALLINT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`forum_id`)
 ) ENGINE = MyISAM;
-
 
 # --------------------------------------------------------
 # Table structure for table `forums_accessed`
@@ -359,7 +349,6 @@ CREATE TABLE `forums_courses` (
   KEY `course_id` (`course_id`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 # Table structure for table `forums_groups`
 
@@ -379,7 +368,6 @@ CREATE TABLE `forums_subscriptions` (
   member_id mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`forum_id`,`member_id`)
 ) ENGINE = MyISAM;
-
 
 # --------------------------------------------------------
 # Table structure for table `forums_threads`
@@ -424,7 +412,6 @@ CREATE TABLE `groups` (
   PRIMARY KEY  (`group_id`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 # Table structure for table `groups_members`
 
@@ -447,6 +434,7 @@ CREATE TABLE `groups_types` (
 
 # --------------------------------------------------------
 # Table structure for table `guests` (since 1.6.2)
+
 CREATE TABLE `guests` (
   `guest_id` VARCHAR(10) NOT NULL,
   `name` VARCHAR(255),
@@ -461,16 +449,15 @@ CREATE TABLE `guests` (
 # Table structure for table `handbook_notes`
 
 CREATE TABLE `handbook_notes` (
-`note_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
-`date` TIMESTAMP NOT NULL,
-`section` VARCHAR( 15 ) NOT NULL default '',
-`page` VARCHAR( 50 ) NOT NULL default '',
-`approved` tinyint NOT NULL default 0,
-`email` VARCHAR( 50 ) NOT NULL default '',
-`note` TEXT ,
-PRIMARY KEY ( `note_id` )
+  `note_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
+  `date` TIMESTAMP NOT NULL,
+  `section` VARCHAR( 15 ) NOT NULL default '',
+  `page` VARCHAR( 50 ) NOT NULL default '',
+  `approved` tinyint NOT NULL default 0,
+  `email` VARCHAR( 50 ) NOT NULL default '',
+  `note` TEXT ,
+  PRIMARY KEY ( `note_id` )
 ) ENGINE = MyISAM;
-
 
 # --------------------------------------------------------
 # Table structure for table `instructor_approvals`
@@ -481,7 +468,6 @@ CREATE TABLE `instructor_approvals` (
   `notes` TEXT ,
   PRIMARY KEY  (`member_id`)
 ) ENGINE = MyISAM;
-
 
 CREATE TABLE `languages` (
   `language_code` varchar(20) NOT NULL default '',
@@ -499,7 +485,6 @@ CREATE TABLE `languages` (
 #
 
 INSERT INTO `languages` VALUES ('en', 'utf-8', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3);
-    
 
 # Table structure for table `links_categories`
 
@@ -512,7 +497,6 @@ CREATE TABLE `links_categories` (
   PRIMARY KEY  (`cat_id`),
   KEY `owner_id` (`owner_id`)
 ) ENGINE = MyISAM ;
-
 
 # --------------------------------------------------------
 # Table structure for table `links`
@@ -687,9 +671,6 @@ INSERT INTO `modules` VALUES ('_core/tool_manager', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/modules', 2, 0, 8192, 0, 0);
 INSERT INTO `modules` VALUES('_standard/vimeo', 2, 0, 1, 0, 0);
 
-
-
-
 # --------------------------------------------------------
 # Table structure for table `news`
 
@@ -707,6 +688,7 @@ CREATE TABLE `news` (
 # --------------------------------------------------------
 
 # Table structure for table `polls`
+
 CREATE TABLE `polls` (
   `poll_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
   `course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
@@ -748,7 +730,6 @@ CREATE TABLE `mail_queue` (
 ) ENGINE = MyISAM;
 
 # --------------------------------------------------------
-
 # Table structure for table `polls_members`
 
 CREATE TABLE `polls_members` (
@@ -758,7 +739,6 @@ CREATE TABLE `polls_members` (
 ) ENGINE = MyISAM;
 
 # --------------------------------------------------------
-
 # Table structure for table `related_content`
 CREATE TABLE `related_content` (
   `content_id` mediumint(8) unsigned NOT NULL default '0',
@@ -832,7 +812,6 @@ CREATE TABLE `tests` (
   PRIMARY KEY  (`test_id`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 # Table structure for table `tests_answers`
 
@@ -846,7 +825,6 @@ CREATE TABLE `tests_answers` (
   PRIMARY KEY  (`result_id`,`question_id`,`member_id`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 # Table structure for table `tests_groups`
 
@@ -856,7 +834,6 @@ CREATE TABLE `tests_groups` (
   PRIMARY KEY (`test_id`,`group_id`),
   KEY `test_id` (`test_id`)
 ) ENGINE = MyISAM;
-
 
 # --------------------------------------------------------
 # Table structure for table `tests_questions`
@@ -958,7 +935,6 @@ CREATE TABLE `themes` (
   PRIMARY KEY  (`title`)
 ) ENGINE = MyISAM;
 
-
 # --------------------------------------------------------
 # Table structure for table `patches`
 # since 1.6.1
@@ -978,8 +954,7 @@ CREATE TABLE `patches` (
   `author` VARCHAR(255) NOT NULL,
   `installed_date` datetime NOT NULL,
 	PRIMARY KEY  (`patches_id`)
-);
-
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `patches_files`
@@ -992,7 +967,7 @@ CREATE TABLE `patches_files` (
 	`name` TEXT,
 	`location` VARCHAR(250) NOT NULL default '',
 	PRIMARY KEY  (`patches_files_id`)
-);
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `patches_files_actions`
@@ -1005,13 +980,12 @@ CREATE TABLE `patches_files_actions` (
 	`code_from` TEXT,
 	`code_to` TEXT,
 	PRIMARY KEY  (`patches_files_actions_id`)
-);
-
-
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # New tables for patch creator
 # since 1.6.1
+
 CREATE TABLE `myown_patches` (
 	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`atutor_patch_id` VARCHAR(20) NOT NULL default '',
@@ -1021,14 +995,14 @@ CREATE TABLE `myown_patches` (
   `status` varchar(20) NOT NULL default '',
   `last_modified` datetime NOT NULL,
 	PRIMARY KEY  (`myown_patch_id`)
-);
+) ENGINE = MyISAM ;
 
 CREATE TABLE `myown_patches_dependent` (
 	`myown_patches_dependent_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
 	`myown_patch_id` MEDIUMINT UNSIGNED NOT NULL,
 	`dependent_patch_id` VARCHAR(50) NOT NULL default '',
 	PRIMARY KEY  (`myown_patches_dependent_id`)
-);
+) ENGINE = MyISAM ;
 
 CREATE TABLE `myown_patches_files` (
 	`myown_patches_files_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -1040,11 +1014,7 @@ CREATE TABLE `myown_patches_files` (
 	`code_to` TEXT,
 	`uploaded_file` TEXT,
 	PRIMARY KEY  (`myown_patches_files_id`)
-);
-
-
-
-
+) ENGINE = MyISAM ;
 
 # insert the default theme
 INSERT INTO `themes` VALUES ('ATutor', '2.0.2', 'default', 'Desktop', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2);
@@ -1056,8 +1026,6 @@ INSERT INTO `themes` VALUES ('ATutor 1.5', '2.0.2', 'default15', 'Desktop', NOW(
 INSERT INTO `themes` VALUES ('ATutor 1.6', '2.0.2', 'default16', 'Desktop', NOW(), 'This is the 1.6 series default theme.', 1);
 INSERT INTO `themes` VALUES ('IDI Theme', '2.0.2', 'idi', 'Desktop', '2010-12-02', 'The theme created for the IDI course server.', '1');
 INSERT INTO `themes` VALUES ('Mobile', '2.0.2', 'mobile', 'Mobile', NOW(), 'This is the default theme for mobile devices.', 3);
-
-
 
 # --------------------------------------------------------
 # Table structure for table `users_online`
@@ -1078,7 +1046,7 @@ CREATE TABLE `auto_enroll` (
    `associate_string` VARCHAR(10) NOT NULL,
    `name` VARCHAR( 50 ) NOT NULL default '',
    PRIMARY KEY ( `auto_enroll_id` )
-);
+) ENGINE = MyISAM ;
 
 # --------------------------------------------------------
 # Table structure for table `auto_enroll_courses`
@@ -1088,10 +1056,10 @@ CREATE TABLE `auto_enroll_courses` (
    `auto_enroll_id` MEDIUMINT UNSIGNED NOT NULL default 0,
    `course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
    PRIMARY KEY ( `auto_enroll_courses_id` )
-);
+) ENGINE = MyISAM ;
 
+# Setup Table for Access4All
 
-#Setup Table for Access4All
 CREATE TABLE `primary_resources` (
   `primary_resource_id` mediumint(8) unsigned NOT NULL auto_increment,
   `content_id` mediumint(8) unsigned NOT NULL default '0',
@@ -1143,9 +1111,9 @@ INSERT INTO `config` (`name`, `value`) VALUES('transformable_uri', 'http://local
 INSERT INTO `config` (`name`, `value`) VALUES('transformable_web_service_id', '90c3cd6f656739969847f3a99ac0f3c7');
 INSERT INTO `config` (`name`, `value`) VALUES('transformable_oauth_expire', '93600');
 
-#End Access4All setup 
+# End Access4All setup 
 
-# sql file for gradebook module
+# Tables for gradebook module
 
 CREATE TABLE `grade_scales` (
    `grade_scale_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -1153,7 +1121,7 @@ CREATE TABLE `grade_scales` (
    `scale_name` VARCHAR(255) NOT NULL default '',
    `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
    PRIMARY KEY ( `grade_scale_id` )
-);
+) ENGINE = MyISAM ;
 
 CREATE TABLE `grade_scales_detail` (
    `grade_scale_id` mediumint(8) unsigned NOT NULL,
@@ -1161,7 +1129,7 @@ CREATE TABLE `grade_scales_detail` (
    `percentage_from` MEDIUMINT NOT NULL default '0',
    `percentage_to` MEDIUMINT NOT NULL default '0',
    PRIMARY KEY (`grade_scale_id`, `scale_value`)
-);
+) ENGINE = MyISAM ;
 
 CREATE TABLE `gradebook_tests` (
    `gradebook_test_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
@@ -1172,14 +1140,14 @@ CREATE TABLE `gradebook_tests` (
    `due_date` datetime NOT NULL default '0000-00-00 00:00:00',
    `grade_scale_id` mediumint(8) unsigned NOT NULL default '0',
    PRIMARY KEY ( `gradebook_test_id` )
-);
+) ENGINE = MyISAM ;
 
 CREATE TABLE `gradebook_detail` (
    `gradebook_test_id` mediumint(8) unsigned NOT NULL,
    `member_id` mediumint(8) unsigned NOT NULL default '0',
    `grade` VARCHAR(255) NOT NULL default '',
    PRIMARY KEY (`gradebook_test_id`, `member_id`)
-);
+) ENGINE = MyISAM ;
 
 INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (1, 0, 'Letter Grade', now());
 INSERT INTO `grade_scales` (grade_scale_id, member_id, scale_name, created_date) values (2, 0, 'Competency 1', now());
@@ -1202,17 +1170,16 @@ INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from,
 
 #  END gradebook SQL
 
-# Create table for standalone student tools page
+# Tables for standalone student tools page
 
 CREATE TABLE `fha_student_tools` (
    `course_id` mediumint(8) unsigned NOT NULL,
    `links` TEXT ,
    `home_view` tinyint NOT NULL DEFAULT 1,
    PRIMARY KEY ( `course_id` )
-);
+) ENGINE = MyISAM ;
 
-
-# Setup tables for Social Networking module
+# Tables for Social Networking module
 # Activities
 CREATE TABLE `social_activities` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -1221,8 +1188,7 @@ CREATE TABLE `social_activities` (
   `title` TEXT,
   `created_date` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Applications/ Gagdets table
 CREATE TABLE `social_applications` (
@@ -1240,8 +1206,7 @@ CREATE TABLE `social_applications` (
   `views` TEXT,
   `last_updated` TIMESTAMP NOT NULL,
   PRIMARY KEY (`url`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Application Settings, like storing the perference string.
 CREATE TABLE `social_application_settings` (
@@ -1250,16 +1215,14 @@ CREATE TABLE `social_application_settings` (
   `name` VARCHAR(255) NOT NULL,
   `value` TEXT,
   PRIMARY KEY (`application_id`, `member_id`, `name`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Application members mapping
 CREATE TABLE `social_members_applications` (
   `member_id` INTEGER UNSIGNED NOT NULL,
   `application_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`member_id`, `application_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Friends table
 CREATE TABLE `social_friends` (
@@ -1267,8 +1230,7 @@ CREATE TABLE `social_friends` (
   `friend_id` INTEGER UNSIGNED NOT NULL,
   `relationship` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`member_id`, `friend_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Friend requests table
 CREATE TABLE `social_friend_requests` (
@@ -1276,8 +1238,7 @@ CREATE TABLE `social_friend_requests` (
   `friend_id` INTEGER UNSIGNED NOT NULL,
   `relationship` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`member_id`, `friend_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Person Positions (jobs)
 CREATE TABLE `social_member_position` (
@@ -1289,8 +1250,7 @@ CREATE TABLE `social_member_position` (
   `to` VARCHAR(10) NOT NULL DEFAULT 0,
   `description` TEXT,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Person education 
 CREATE TABLE `social_member_education` (
@@ -1305,8 +1265,7 @@ CREATE TABLE `social_member_education` (
   `to` VARCHAR(10) NOT NULL DEFAULT 0,
   `description` TEXT,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Person related web sites
 CREATE TABLE `social_member_websites` (
@@ -1315,8 +1274,7 @@ CREATE TABLE `social_member_websites` (
   `url` VARCHAR(255) NOT NULL,
   `site_name` VARCHAR(255),
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Tracks visitor counts
 CREATE TABLE `social_member_track` (
@@ -1324,8 +1282,7 @@ CREATE TABLE `social_member_track` (
   `visitor_id` INTEGER UNSIGNED NOT NULL,
   `timestamp` TIMESTAMP NOT NULL,
   PRIMARY KEY (`member_id`, `visitor_id`, `timestamp`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Person additional information cojoint with the members table
 CREATE TABLE `social_member_additional_information` (
@@ -1336,8 +1293,7 @@ CREATE TABLE `social_member_additional_information` (
   `awards` TEXT,
   `others` TEXT,
   PRIMARY KEY (`member_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # New Social Tables
 CREATE TABLE `social_member_contact` (
@@ -1346,10 +1302,9 @@ CREATE TABLE `social_member_contact` (
   `con_name` varchar(200) NOT NULL,
   `con_phone` varchar(15) NOT NULL,
   `con_email` varchar(50) NOT NULL,
-  `con_address` text NOT NULL,
+  `con_address` text,
   PRIMARY KEY  (`contact_id`)
 ) ENGINE=MyISAM ;
-
 
 CREATE TABLE `social_member_representation` (
   `rep_id` int(10) unsigned NOT NULL auto_increment,
@@ -1358,11 +1313,9 @@ CREATE TABLE `social_member_representation` (
   `rep_title` varchar(50) NOT NULL,
   `rep_phone` varchar(15) NOT NULL,
   `rep_email` varchar(50) NOT NULL,
-  `rep_address` text NOT NULL,
+  `rep_address` text,
   PRIMARY KEY  (`rep_id`)
 ) ENGINE=MyISAM ;
-
-
 
 CREATE TABLE `social_member_personal` (
   `per_id` int(10) unsigned NOT NULL auto_increment,
@@ -1382,8 +1335,7 @@ CREATE TABLE `social_privacy_preferences` (
   `member_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `preferences` TEXT,
   PRIMARY KEY (`member_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Social Group tables
 CREATE TABLE `social_groups` (
@@ -1397,52 +1349,45 @@ CREATE TABLE `social_groups` (
   `created_date` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
   `last_updated` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `social_groups_activities` (
   `activity_id` INTEGER UNSIGNED NOT NULL,
   `group_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`activity_id`, `group_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `social_groups_members` (
   `group_id` INTEGER UNSIGNED NOT NULL,
   `member_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`group_id`, `member_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `social_groups_invitations` (
   `sender_id` INTEGER UNSIGNED NOT NULL,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `group_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`sender_id`, `member_id`, `group_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `social_groups_requests` (
   `sender_id` INTEGER UNSIGNED NOT NULL,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `group_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`sender_id`, `member_id`, `group_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 CREATE TABLE `social_groups_types` (
   `type_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `title` VARCHAR(127) NOT NULL,
   PRIMARY KEY (`type_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # CREATE TABLE `social_groups_forums` (
 #   `group_id` INTEGER UNSIGNED NOT NULL,
 #   `forum_id` INTEGER UNSIGNED NOT NULL,
 #   PRIMARY KEY (`group_id`, `forum_id`)
-# )
-# ENGINE = MyISAM;
+# ) ENGINE = MyISAM;
 
 # Groups message board
 CREATE TABLE `social_groups_board` (
@@ -1454,15 +1399,12 @@ CREATE TABLE `social_groups_board` (
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
 
-
 # Settings
 CREATE TABLE `social_user_settings` (
   `member_id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `app_settings` TEXT,
   PRIMARY KEY (`member_id`)
-)
-ENGINE = MyISAM;
-
+) ENGINE = MyISAM;
 
 #====== Initial Data ========
 INSERT INTO social_groups_types SET title='business', type_id=1;
@@ -1517,8 +1459,8 @@ CREATE TABLE `content_prerequisites` (
 CREATE TABLE `oauth_client_servers` (
   `oauth_server_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,
   `oauth_server` VARCHAR(255) NOT NULL default '',
-  `consumer_key` TEXT NOT NULL ,
-  `consumer_secret` TEXT NOT NULL ,
+  `consumer_key` TEXT,
+  `consumer_secret` TEXT,
   `expire_threshold` INT NOT NULL default 0,
   `create_date` datetime NOT NULL,
   PRIMARY KEY ( `oauth_server_id` ),
@@ -1533,14 +1475,13 @@ CREATE TABLE `oauth_client_tokens` (
   `oauth_server_id` MEDIUMINT UNSIGNED NOT NULL,
   `token` VARCHAR(50) NOT NULL default '',
   `token_type` VARCHAR(50) NOT NULL NOT NULL default '',
-  `token_secret` TEXT NOT NULL,
+  `token_secret` TEXT,
   `member_id` mediumint(8) unsigned NOT NULL ,
   `assign_date` datetime NOT NULL,
   PRIMARY KEY ( `oauth_server_id`, `token` )
 ) ENGINE = MyISAM;
 
 # END Adding feature of oauth client
-
 
 # -------------- Photo Album Module Setup ----------------
 
@@ -1549,7 +1490,7 @@ CREATE TABLE `pa_albums` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(255) NOT NULL,
   `location` VARCHAR(255) NOT NULL,
-  `description` TEXT NOT NULL,
+  `description` TEXT,
   `permission` TINYINT(1) UNSIGNED NOT NULL,
   `member_id` INTEGER UNSIGNED NOT NULL,
   `photo_id` INTEGER UNSIGNED NOT NULL,
@@ -1557,8 +1498,7 @@ CREATE TABLE `pa_albums` (
   `created_date` DATETIME NOT NULL,
   `last_updated` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Photos Table
 CREATE TABLE `pa_photos` (
@@ -1572,38 +1512,34 @@ CREATE TABLE `pa_photos` (
   `created_date` DATETIME NOT NULL,
   `last_updated` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Course Album Table
 CREATE TABLE `pa_course_album` (
   `course_id` INTEGER UNSIGNED,
   `album_id` INTEGER UNSIGNED,
   PRIMARY KEY (`course_id`, `album_id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Photo Album Comments
 CREATE TABLE `pa_album_comments` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `album_id` INTEGER UNSIGNED NOT NULL,
   `member_id` INTEGER UNSIGNED NOT NULL,
-  `comment` TEXT NOT NULL,
+  `comment` TEXT,
   `created_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Photo Comments
 CREATE TABLE `pa_photo_comments` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   `photo_id` INTEGER UNSIGNED NOT NULL,
   `member_id` INTEGER UNSIGNED NOT NULL,
-  `comment` TEXT NOT NULL,
+  `comment` TEXT,
   `created_date` DATETIME NOT NULL,
   PRIMARY KEY (`id`)
-)
-ENGINE = MyISAM;
+) ENGINE = MyISAM;
 
 # Initiali Config
 INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
