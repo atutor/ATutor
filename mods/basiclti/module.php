@@ -4,8 +4,8 @@
  */
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-error_reporting(E_ALL & ~E_NOTICE);
-ini_set("display_errors", 1);
+//error_reporting(E_ALL & ~E_NOTICE);
+//ini_set("display_errors", 1);
 
 /******
  * this file must only be included within a Module obj
