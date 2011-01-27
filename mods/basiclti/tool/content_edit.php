@@ -182,5 +182,15 @@ if ( $basiclti_tool_row !== false ) {
 </legend>
 </form>
 </div>
-<?php echo("<hr><pre>\n");print_r($basiclti_tool_row); echo("\n</pre>\n"); ?>
+<?php 
+if($basiclti_tool_row){
+	echo '<h3>'.$basiclti_tool_row['title'].' Settings</h3>';
+	echo '<ul style="list-style-type:none;">';
+	foreach($basiclti_tool_row as $title=>$setting){
+		echo '<li>'.$title.' = '.$setting.'</li>';
+	}
+	echo '</ul>';
+}
+//echo("<hr><pre>\n");print_r($basiclti_tool_row); echo("\n</pre>\n"); 
+?>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
