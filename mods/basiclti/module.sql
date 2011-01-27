@@ -124,3 +124,5 @@ INSERT INTO `language_text` VALUES ('en', '_module','bl_count','Usage Count',NOW
 INSERT INTO `language_text` VALUES ('en', '_module','bl_choose_tool','Choose Tool',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','proxy','Learning Activity',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','about_content_tools','Select from the available external tools, one that can be associated with this content page as a learning activity. Or, though  Manage>IMS Basic LTI add your own external tools to make them available here.',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_BASICLTI_SAVED','External tool added as a Learning Activity for this content page.',NOW(),'');
+
