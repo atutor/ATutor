@@ -84,14 +84,14 @@ $this->_pages['mods/basiclti/index.php']['title_var'] = 'basiclti';
 $this->_pages['mods/basiclti/index.php']['img']       = 'mods/basiclti/basiclti.jpg';
 
 /* public pages */
-$this->_pages[AT_NAV_PUBLIC] = array('mods/basiclti/index_public.php');
-$this->_pages['mods/basiclti/index_public.php']['title_var'] = 'basiclti';
-$this->_pages['mods/basiclti/index_public.php']['parent'] = AT_NAV_PUBLIC;
+//$this->_pages[AT_NAV_PUBLIC] = array('mods/basiclti/index_public.php');
+//$this->_pages['mods/basiclti/index_public.php']['title_var'] = 'basiclti';
+//$this->_pages['mods/basiclti/index_public.php']['parent'] = AT_NAV_PUBLIC;
 
 /* my start page pages */
-$this->_pages[AT_NAV_START]  = array('mods/basiclti/index_mystart.php');
-$this->_pages['mods/basiclti/index_mystart.php']['title_var'] = 'basiclti';
-$this->_pages['mods/basiclti/index_mystart.php']['parent'] = AT_NAV_START;
+//$this->_pages[AT_NAV_START]  = array('mods/basiclti/index_mystart.php');
+//$this->_pages['mods/basiclti/index_mystart.php']['title_var'] = 'basiclti';
+//$this->_pages['mods/basiclti/index_mystart.php']['parent'] = AT_NAV_START;
 /* The element of content tool bar that is displayed on "Edit Content" => "Content" tab */
 
 $this->_content_tools[] = array("id"=>"basiclti_tool",
