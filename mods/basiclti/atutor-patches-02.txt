@@ -1,0 +1,49 @@
+Index: content.php
+===================================================================
+--- content.php	(revision 10558)
++++ content.php	(working copy)
+@@ -256,7 +256,7 @@
+ 			$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits, $sort = TRUE);
+ 			$module_contents = '';
+ 			foreach($module_list as $key=>$obj) {
+-				$module_content = $obj->getContent();
++				$module_content = $obj->getContent($cid);
+ 				if (!empty($module_content)){
+ 					$module_contents .= '<div id="'.str_replace('/', '-', $key).'" class="content-from-module">'.$module_content.'</div>';
+ 				}
+@@ -280,4 +280,4 @@
+ $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+ 
+ require (AT_INCLUDE_PATH.'footer.inc.php');
+-?>
+\ No newline at end of file
++?>
+Index: mods/_core/modules/classes/Module.class.php
+===================================================================
+--- mods/_core/modules/classes/Module.class.php	(revision 10558)
++++ mods/_core/modules/classes/Module.class.php	(working copy)
+@@ -711,13 +711,13 @@
+ 	 * @author	Cindy Li 
+ 	 * @date	Dec 7, 2010
+ 	 */
+-	function getContent(){
+-		if (file_exists(AT_MODULE_PATH . $this->_directoryName.'/moduleCallbacks.class.php') &&
++	function getContent($cid){
++		if (file_exists(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php') &&
+ 		    isset($this->_callbacks[$this->_directoryName])) 
+ 		{
+-			require(AT_MODULE_PATH . $this->_directoryName.'/moduleCallbacks.class.php');
++			require(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php');
+ 			if (method_exists($this->_callbacks[$this->_directoryName], "appendContent")) {
+-				eval('$output = '.$this->_callbacks[$this->_directoryName]."::appendContent();");
++				eval('$output = '.$this->_callbacks[$this->_directoryName]."::appendContent($cid);");
+ 				return $output;
+ 			}
+ 		}
+@@ -862,4 +862,4 @@
+ 		}
+ 	}
+ }
+-?>
+\ No newline at end of file
++?>

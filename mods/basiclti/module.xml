@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">External Tools</name> 
+    <description lang="en">This is a module to support externally hosted tools using the IMS Basic LTI specification to launch those tools.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Charles Severance</name> 
+            <email>csev@umich.edu</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2010-12-22</date> 
+        <state>alpha</state> 
+        <notes></notes> 
+    </release> 
+</module>

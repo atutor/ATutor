@@ -1,0 +1,13 @@
+
+Need an ondelete callback from the content system.
+
+Add timeplacement based on the typical patterns of time
+in ATutor.
+
+Longer term for CC 1.1 support:
+
+Add support for XML Descriptor import
+
+Add support for global per url keys.
+
+
