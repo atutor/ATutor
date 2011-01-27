@@ -26,19 +26,6 @@ require(AT_INCLUDE_PATH.'../mods/basiclti/include/constants.inc.php');
 $savant->addPath('template', AT_BL_INCLUDE.'html/');
 
 /*******
- * create a side menu box/stack.
- */
-$this->_stacks['basiclti'] = array('title_var'=>'basiclti', 'file'=>'mods/basiclti/side_menu.inc.php');
-
-// the text to display on module "detail view" when sublinks are not available
-$this->_pages['mods/basiclti/index.php']['text']      = _AT('basiclti_text');
-
-/*******
- * if this module is to be made available to students on the Home or Main Navigation.
- */
-$_group_tool = $_student_tool = 'mods/basiclti/index.php';
-
-/*******
  * add the admin pages when needed.
  */
 if (admin_authenticate(AT_ADMIN_PRIV_BASICLTI, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
@@ -77,22 +64,6 @@ if ( authenticate(AT_PRIV_BASICLTI, TRUE) ) {
 	$this->_pages['mods/basiclti/tool/instructor_delete.php']['parent'] = 'mods/basiclti/index_instructor.php';
 }
 
-/*******
- * student page.
- */
-$this->_pages['mods/basiclti/index.php']['title_var'] = 'basiclti';
-$this->_pages['mods/basiclti/index.php']['img']       = 'mods/basiclti/basiclti.jpg';
-
-/* public pages */
-//$this->_pages[AT_NAV_PUBLIC] = array('mods/basiclti/index_public.php');
-//$this->_pages['mods/basiclti/index_public.php']['title_var'] = 'basiclti';
-//$this->_pages['mods/basiclti/index_public.php']['parent'] = AT_NAV_PUBLIC;
-
-/* my start page pages */
-//$this->_pages[AT_NAV_START]  = array('mods/basiclti/index_mystart.php');
-//$this->_pages['mods/basiclti/index_mystart.php']['title_var'] = 'basiclti';
-//$this->_pages['mods/basiclti/index_mystart.php']['parent'] = AT_NAV_START;
-/* The element of content tool bar that is displayed on "Edit Content" => "Content" tab */
 
 $this->_content_tools[] = array("id"=>"basiclti_tool",
                                 "class"=>"fl-col clickable",
