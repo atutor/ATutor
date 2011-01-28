@@ -1,34 +1,68 @@
-Wed Dec 22 08:50:48 EST 2010
+##########################################
+# External Tools Module Readme file: #####
+##########################################
+This is an alpha version of an ATutor Basic LTI Integration module. 
 
-Hi this is a alpha version of an ATutor Basic LTI Integration.
+It allows ATutor administrators and instructors to link external tools into ATutor, and to
+associate those tools with content as learning activities.
 
-First check this out from 
+The current development source code is located at:
+http://svn.atutor.ca/repos/atutor/trunk/mods/basiclti/
 
-https://source.sakaiproject.org/contrib//csev/trunk/atutor/basiclti/
+More about the BasicLTI Standard
+http://www.imsglobal.org/lti/
 
-And place this into:
-
-/atutor/docs/mods/basiclti
-
-In your ATutor distribution.
-
-Here is a video of it all working:
-
+Here are a couple videos with more information:
 http://www.vimeo.com/18074396
+http://vimeo.com/14100773
 
-Here are the steps in ATutor after the software 
-(1) Install the Module from the Admin Modules Tab and Enable it
-(2) Under the Proxy Tools tab creat a new tool with the standard stuff
-    http://www.imsglobal.org/developers/BLTI/tool.php
-    lmsng.school.edu
-    secet
-(3) Make a course.  Go into content and add a new content item.  Give it a title
-and then select the "Tools" tab after "Surveys and Tests" - you should be able to 
-pick the prxy tool you just built.   Press Save and Close and it should launch.
+Intallation
+1. Download the External Tools (BasicLTI TBD) Module from atutor.ca (or import it directly from atutor.ca via the Admin Module Manager if it's listed there)
+2. Follow the instructions presented by the module installer to install the module.
+3. Once installed, enable the module where it is listed in the Module Manager. This will create an External Tools Tab from where BasicLTI compatible external tools can be managed.
 
-I wanted to put it in content so it looks as much as possible like what
-I expect IMS Common Cartridge 1.1 will look like since AT already has a 
-nice imscc 1.0 import.
+Setup A New External Tool (Administrator)
+1. Title:  Enter a name for the tool being created in the title field
+2. ToolID: Create an ID for the tool that will be unique across all tools on the system (e.g. demo_tool.ocadu.ca) any unique string will do
+3. Description: Describe the tool, its function, and how it might be used.
+4. Tool Launch URL: Copy the URL of the tool's BasicLTI launch location. Ensure there is no space at the end of the URL (see the Sample LTI Tool below for demo purposes)
+5. Enter the Tool Key and secret
+6. Set various options and Save
 
-/Chuck
+Add a Tool to Course Content (Instructor)
+1. Create a new content page and save it or edit an existing page.
+2. Click on the External Tool icon in the content editor toolbar while editing that page.
+3. Select from the available tools to add it as a Learning Activity.
+4. Save the content page, and close the content editor.
+5. The tool appears 
+
+Or,
+
+Setup a New Tool (Instructor)
+1. Under the Manage Tab, click on Create External Tool in the External Tools section
+2. Fill in the required fields, as described above for Administrators.
+3. Set the optional settings below and Save
+4. Follow the steps above to Add a Tool to Course Content, to use your new tool.
+
+Useful Resources
+BasicLTI Certification
+http://www.imsglobal.org/developers/alliance/LTI/blti-cert/lmscert.cfm
+
+Sample LTI Tool for Testing/Demo Purposes
+http://www.imsglobal.org/developers/BLTI/tool.php
+key: lmsng.school.edu
+secret: secret
+
+Tools Currently with BasicLTI Provider Capability
+QuestionMark
+http://www.questionmark.com/
+Noteflight
+http://www.noteflight.com/
+Wimba
+http://www.wimba.com/
+Elluminate
+http://www.elluminate.com/
+
+
+
 
