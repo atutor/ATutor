@@ -48,7 +48,13 @@ class BasicLTICallbacks {
 		$myurl = AT_BASE_HREF.'mods/basiclti/launch/launch.php?cid='.$cid;
 		if ( $basiclti_tool_row['launchinpopup'] == 1 ||
 		   ( $basiclti_tool_row['launchinpopup'] == 2 && $basiclti_content_row['launchinpopup'] == 1 ) ) {
-			return '<script type="text/javascript">window.open("'.$myurl.'");</script>'."\n";
+			// return '<script type="text/javascript">window.open("'.$myurl.'");</script>'."\n";
+				/*****************
+				*	The ID in the next bit of is temporary until we can add the box style to ATutor and
+				*	change the ID value to content-tool. In the meantime this will fail validation if tools and
+				*   tests or forums are also present for the content page
+				**********************/
+				return '<div class="input-form" id="content-test"><ol><strong>'._AT('proxy').'</strong><ul class="tools"><li><a href="" onclick="ATutor.poptastic(\''.$myurl.'\'); return false;"'.'>'.$basiclti_tool_row['title'].'</a> ('._AT('new_window').')</li></ul></ol></div>'."\n";
 		} else {
 			return '<iframe src="'.$myurl.'" height="'.$height.'" width="100%"></iframe>'."\n";
 		}

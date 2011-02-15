@@ -15,6 +15,8 @@ if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg))
     $toolid = $_POST['toolid']; // Escaping is done in the at_form_util code
     $sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
             WHERE content_id=".$_POST[cid]." AND course_id=".$_SESSION[course_id];
+
+
     $result = mysql_query($sql, $db);
     if ( $toolid == '--none--' ) {
         $sql = "DELETE FROM ". TABLE_PREFIX . "basiclti_content 
@@ -30,6 +32,8 @@ if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg))
             $sql = "INSERT INTO ". TABLE_PREFIX . "basiclti_content 
                        SET toolid='".$toolid."', content_id=".$_POST[cid].",
                              course_id=".$_SESSION[course_id];
+
+debug($sql);
             $result = mysql_query($sql, $db);
             if ($result===false) {
                 $msg->addError('MYSQL_FAILED');
@@ -38,6 +42,7 @@ if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg))
             }
 
     } else if ( $result !== false ) {
+
             $gradebook_test_id = 0;
             $basiclti_content_row = mysql_fetch_assoc($result);
             $placementsecret = $basiclti_content_row['placementsecret'];
@@ -184,7 +189,7 @@ if ( $basiclti_tool_row !== false ) {
 </div>
 <?php 
 if($basiclti_tool_row){
-	echo '<h3>'.$basiclti_tool_row['title'].' Settings</h3>';
+	echo '<h3>'.$basiclti_tool_row['title'].' '._AT('bl_settings').'</h3>';
 	echo '<ul style="list-style-type:none;">';
 	foreach($basiclti_tool_row as $title=>$setting){
 		echo '<li>'.$title.' = '.$setting.'</li>';

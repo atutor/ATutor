@@ -57,6 +57,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','basiclti','External Tools',
 INSERT INTO `language_text` VALUES ('en', '_module','basiclti_text','Support for integrating External Tools that support IMS Basic Learning Tools Interoperability..',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_create','Create External Tool',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_view','External Tool Settings',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','bl_settings','Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_delete','Deleting External Tool',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_edit','Deleting External Tool',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_toolid_header','ToolID',NOW(),'');
@@ -125,4 +126,4 @@ INSERT INTO `language_text` VALUES ('en', '_module','bl_choose_tool','Choose Too
 INSERT INTO `language_text` VALUES ('en', '_module','proxy','Learning Activity',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','about_content_tools','Select from the available external tools, one that can be associated with this content page as a learning activity. Or, though  Manage>IMS Basic LTI add your own external tools to make them available here.',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_BASICLTI_SAVED','External tool added as a Learning Activity for this content page.',NOW(),'');
-
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_BASICLTI_DELETED','External tool removed as a Learning Activity from this content page.',NOW(),'');

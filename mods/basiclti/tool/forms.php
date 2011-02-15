@@ -10,7 +10,7 @@ $blti_instructor_form = array(
 	'resourcekey:text:label=bl_resourcekey:required=true:size=80',
 	'password:text:required=true:label=bl_password:size=80',
 	'preferheight:integer:label=bl_preferheight:size=80',
-        'allowpreferheight:radio:label=bl_allowpreferheight:choices=off,on',
+        'preferheight:radio:label=bl_allowpreferheight:choices=off,on',
 	'launchinpopup:radio:label=bl_launchinpopup:choices=off,on,content',
 	'debuglaunch:radio:label=bl_debuglaunch:choices=off,on,content',
 	'sendname:radio:label=bl_sendname:choices=off,on,content',

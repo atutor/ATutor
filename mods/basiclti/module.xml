@@ -14,6 +14,6 @@
         <version>0.1</version> 
         <date>2010-12-22</date> 
         <state>alpha</state> 
-        <notes></notes> 
+		<notes>This module is an experimental implementation of the IMS Basic LTI that extends the ATutor content editor. Feedback, bug reports, etc. should be posted to the atutor.ca &lt;a href="http://atutor.ca/forums/">developer or modules forums&lt;/a>. Be sure to review the README file included with the module (linked above) for more about setting up BasicLTI remote tools in ATutor. </notes> 
     </release> 
 </module>

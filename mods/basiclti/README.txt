@@ -34,7 +34,7 @@ Add a Tool to Course Content (Instructor)
 2. Click on the External Tool icon in the content editor toolbar while editing that page.
 3. Select from the available tools to add it as a Learning Activity.
 4. Save the content page, and close the content editor.
-5. The tool appears 
+5. The tool appears at the bottom of the page as a link that opens a popup window.
 
 Or,
 
@@ -63,6 +63,12 @@ http://www.wimba.com/
 Elluminate
 http://www.elluminate.com/
 
+###############
+Known issues in this release
+-missing labels for radio buttons in the admin's table listing tools that have been created. Better, in addition to the Label, make the table row toggle the radio.
+-missing error message when a button is clicked in the admin table listing tools, when a tool radio  has not been selected
+- should the view button in the admin's tool listing table display the actual tool instead of the tool settings. Would be more useful I think, given clicking the edit button displays the same information. Or maybe display settings above, and open the tool below in a frame.
+- when "allow frame height to change" setting is enabled, the frame hieght gets set to 0, effectively hiding the tool when added to a page
 
 
 
