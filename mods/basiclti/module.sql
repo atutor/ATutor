@@ -2,7 +2,9 @@
 
 # More Language entries at the end
 
-CREATE TABLE `basiclti_tools` (
+drop table AT_basiclti_tools;
+drop table AT_basiclti_content;
+CREATE TABLE `AT_basiclti_tools` (
 	`id` mediumint(10) NOT NULL AUTO_INCREMENT,
 	`toolid` varchar(32) NOT NULL,
 	`course_id` mediumint(10) NOT NULL DEFAULT '0',
@@ -21,35 +23,35 @@ CREATE TABLE `basiclti_tools` (
 	`allowroster` mediumint(1) NOT NULL DEFAULT '0',
 	`allowsetting` mediumint(1) NOT NULL DEFAULT '0',
 	`allowcustomparameters` mediumint(1) NOT NULL DEFAULT '0',
-	`customparameters` varchar(2048) NOT NULL,
-	`organizationid` varchar(64) NOT NULL,
-	`organizationurl` varchar(255) NOT NULL,
-	`organizationdescr` varchar(255) NOT NULL,
+	`customparameters` text,
+	`organizationid` varchar(64),
+	`organizationurl` varchar(255),
+	`organizationdescr` varchar(255),
 	`launchinpopup` mediumint(1) NOT NULL DEFAULT '0',
 	`debuglaunch` mediumint(1) NOT NULL DEFAULT '0',
-        PRIMARY KEY ( `id`, `toolid` )
+	PRIMARY KEY ( `id`, `toolid` )
 );
 
-CREATE TABLE `basiclti_content` (
+CREATE TABLE `AT_basiclti_content` (
 	`id` mediumint(10) NOT NULL AUTO_INCREMENT,
 	`content_id` mediumint(10) NOT NULL DEFAULT '0',
 	`course_id` mediumint(10) NOT NULL DEFAULT '0',
-	`toolid` varchar(32) NOT NULL,
+	`toolid` varchar(32) NOT NULL DEFAULT '',
 	`preferheight` mediumint(4) NOT NULL DEFAULT '0',
 	`sendname` mediumint(1) NOT NULL DEFAULT '0',
 	`sendemailaddr` mediumint(1) NOT NULL DEFAULT '0',
 	`gradebook_test_id` mediumint(10) NOT NULL DEFAULT '0',
 	`allowroster` mediumint(1) NOT NULL DEFAULT '0',
 	`allowsetting` mediumint(1) NOT NULL DEFAULT '0',
-	`customparameters` varchar(2048) NOT NULL,
+	`customparameters` text,
 	`launchinpopup` mediumint(1) NOT NULL DEFAULT '0',
 	`debuglaunch` mediumint(1) NOT NULL DEFAULT '0',
-	`placementsecret` varchar(1023) NOT NULL,
+	`placementsecret` varchar(1023),
 	`timeplacementsecret` mediumint(10) NOT NULL DEFAULT '0',
-	`oldplacementsecret` varchar(1023) NOT NULL,
-	`setting` text(8192) NOT NULL,
-	`xmlimport` text(16384) NOT NULL,
-        PRIMARY KEY ( `id`, `course_id`, `content_id` )
+	`oldplacementsecret` varchar(1023),
+	`setting` text(8192),
+	`xmlimport` text(16384),
+	PRIMARY KEY ( `id`, `course_id`, `content_id` )
 );
 
 # Language Entries
