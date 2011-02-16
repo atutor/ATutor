@@ -5,6 +5,30 @@ admin_authenticate(AT_ADMIN_PRIV_BASICLTI);
 
 require_once('forms.php');
 
+$_POST['form_basiclti'] = $addslashes($_POST['form_basiclti']);
+$_POST['title'] = $addslashes($_POST['title']);
+$_POST['toolid'] = $addslashes($_POST['toolid']);
+$_POST['description'] = $addslashes($_POST['description']);
+$_POST['toolurl'] = $addslashes($_POST['toolurl']);
+$_POST['resourcekey'] = $addslashes($_POST['resourcekey']);
+$_POST['password'] = $addslashes($_POST['password']);
+$_POST['preferheight'] = intval($_POST['preferheight']);
+$_POST['allowpreferheight'] = intval($_POST['allowpreferheight']);
+$_POST['launchinpopup'] = intval($_POST['launchinpopup']);
+$_POST['debuglaunch'] = intval($_POST['debuglaunch']);
+$_POST['sendname'] = intval($_POST['sendname']);
+$_POST['sendemailaddr'] = intval($_POST['sendemailaddr']);
+$_POST['acceptgrades'] = intval($_POST['acceptgrades']);
+$_POST['allowroster'] = intval($_POST['allowroster']);
+$_POST['allowsetting'] = intval($_POST['allowsetting']);
+$_POST['allowcustomparameters'] = intval($_POST['allowcustomparameters']);
+$_POST['customparameters'] = $addslashes($_POST['customparameters']);
+$_POST['organizationid'] = $addslashes($_POST['organizationid']);
+$_POST['organizationurl'] = $addslashes($_POST['organizationurl']);
+$_POST['organizationdescr'] = $addslashes($_POST['organizationdescr']);
+$_POST['submit'] = $addslashes($_POST['submit']);
+
+
 if (isset($_POST['cancel'])) {
         $msg->addFeedback('CANCELLED');
         header('Location: '.AT_BASE_HREF.'mods/basiclti/index_admin.php');
@@ -25,6 +49,8 @@ if (isset($_POST['cancel'])) {
             $result = mysql_query($sql, $db) or die(mysql_error());
             write_to_log(AT_ADMIN_LOG_INSERT, 'basiclti_create', mysql_affected_rows($db), $sql);
             $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+
+
             header('Location: '.AT_BASE_HREF.'mods/basiclti/index_admin.php');
             exit;
         }

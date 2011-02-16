@@ -4,13 +4,13 @@ require_once('../lib/at_form_util.php');
 
 $blti_instructor_form = array(
 	'title:text:label=bl_title:required=true:size=25',
-        'toolid:id:label=bl_toolid:required=true:size=16',
+	'toolid:id:label=bl_toolid:required=true:size=16',
 	'description:textarea:label=bl_description:required=true:rows=2:cols=25',
 	'toolurl:url:label=bl_toolurl:required=true:size=80',
 	'resourcekey:text:label=bl_resourcekey:required=true:size=80',
 	'password:text:required=true:label=bl_password:size=80',
 	'preferheight:integer:label=bl_preferheight:size=80',
-        'preferheight:radio:label=bl_allowpreferheight:choices=off,on',
+	'allowpreferheight:radio:label=bl_allowpreferheight:choices=off,on',
 	'launchinpopup:radio:label=bl_launchinpopup:choices=off,on,content',
 	'debuglaunch:radio:label=bl_debuglaunch:choices=off,on,content',
 	'sendname:radio:label=bl_sendname:choices=off,on,content',
@@ -18,7 +18,7 @@ $blti_instructor_form = array(
 	'acceptgrades:radio:label=bl_acceptgrades:choices=off,on',
 	'allowroster:radio:label=bl_allowroster:choices=off,on,content',
 	'allowsetting:radio:label=bl_allowsetting:choices=off,on,content',
-        'allowcustomparameters:radio:label=bl_allowcustomparameters:choices=off,on',
+    'allowcustomparameters:radio:label=bl_allowcustomparameters:choices=off,on',
 	'customparameters:textarea:label=bl_customparameters:rows=5:cols=25',
         );
 

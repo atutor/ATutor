@@ -22,7 +22,7 @@ if (isset($_POST['submit_no'])) {
         $msg->addFeedback('CANCELLED');
         header('Location: ../index_admin.php');
         exit;
-} else if (isset($_POST['step']) && ($_POST['step'] == 2) && isset($_POST['submit_yes'])) {
+} else if (isset($_POST['submit_yes'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."basiclti_tools WHERE id = ".$tool.";";
 	$result = mysql_query($sql, $db) or die(mysql_error());
         write_to_log(AT_ADMIN_LOG_DELETE, 'basiclti_delete', mysql_affected_rows($db), $sql);
@@ -34,15 +34,18 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 if (!isset($_POST['step'])) {
-        $hidden_vars['step']   = 1;
+        $hidden_vars['step']   = 2;
         $hidden_vars['id'] = $tool;
         $msg->addConfirm(array('DELETE_TOOL_1', $row['title']), $hidden_vars);
         $msg->printConfirm();
-} else if ($_POST['step'] == 1) {
+} 
+/*
+
+else if ($_POST['step'] == 1) {
         $hidden_vars['step']   = 2;
         $hidden_vars['id'] = $tool;
         $msg->addConfirm(array('DELETE_TOOL_2', $row['title']), $hidden_vars);
         $msg->printConfirm();
-}
+}*/
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 

@@ -12,6 +12,9 @@ if (isset($_GET['view'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
     header('Location: tool/admin_delete.php?id='.$_GET['id']);
     exit;
+} else if ($_GET['delete'] ||$_GET['edit'] || $_GET['view'] && !isset($_GET['id'])){
+	$msg->addError("NO_ITEM_SELECTED");
+
 }
 
 require (AT_INCLUDE_PATH.'header.inc.php');
@@ -43,7 +46,7 @@ $result = mysql_query($sql, $db) or die(mysql_error());
         <tbody>
                 <?php while($row = mysql_fetch_array($result)) { ?><tr>
  		<td><input type="radio" name="id" value="<?php echo $row['id']; ?>" id="m<?php echo $row['id']; ?>" /></td>
-                <td><?php echo $row['title']; ?></td>
+                <td><label for="m<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></td>
                 <td><?php echo $row['toolid']; ?></td>
                 <td><?php echo $row['description']; ?></td>
                 <td><?php echo $row['cnt']; ?></td>
