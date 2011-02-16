@@ -12,7 +12,8 @@ $sql['basiclti_tools']  = 'SELECT * FROM '.TABLE_PREFIX.'basiclti_tools WHERE co
 
 function basiclti_content_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
-	$new_row[0]  = $row[0];
+	//$new_row[0]  = $row[0];
+	$new_row[0]  = 0;
 	$new_row[1]  = $table_id_map['content'][$row[1]];
 	$new_row[2] =  $course_id;
 	$new_row[3]  = $row[3];          //
@@ -36,7 +37,8 @@ function basiclti_content_convert($row, $course_id, $table_id_map, $version) {
 }
 function basiclti_tools_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
-	$new_row[0]  = $row[0];          //
+	//$new_row[0]  = $row[0];          //
+	$new_row[0]  = 0;          //
 	$new_row[1]  = $row[1];          //
 	$new_row[2]  = $course_id;
 	$new_row[3]  = $row[3];          //

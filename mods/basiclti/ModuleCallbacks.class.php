@@ -50,7 +50,7 @@ class BasicLTICallbacks {
 		   ( $basiclti_tool_row['launchinpopup'] == 2 && $basiclti_content_row['launchinpopup'] == 1 ) ) {
 			// return '<script type="text/javascript">window.open("'.$myurl.'");</script>'."\n";
 				/*****************
-				*	The ID in the next bit of is temporary until we can add the box style to ATutor and
+				*	The ID in the next bit is temporary until we can add the box style to ATutor and
 				*	change the ID value to content-tool. In the meantime this will fail validation if tools and
 				*   tests or forums are also present for the content page
 				**********************/
