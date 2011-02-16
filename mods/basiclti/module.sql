@@ -2,9 +2,7 @@
 
 # More Language entries at the end
 
-drop table AT_basiclti_tools;
-drop table AT_basiclti_content;
-CREATE TABLE `AT_basiclti_tools` (
+CREATE TABLE `basiclti_tools` (
 	`id` mediumint(10) NOT NULL AUTO_INCREMENT,
 	`toolid` varchar(32) NOT NULL,
 	`course_id` mediumint(10) NOT NULL DEFAULT '0',
@@ -32,7 +30,7 @@ CREATE TABLE `AT_basiclti_tools` (
 	PRIMARY KEY ( `id`, `toolid` )
 );
 
-CREATE TABLE `AT_basiclti_content` (
+CREATE TABLE `basiclti_content` (
 	`id` mediumint(10) NOT NULL AUTO_INCREMENT,
 	`content_id` mediumint(10) NOT NULL DEFAULT '0',
 	`course_id` mediumint(10) NOT NULL DEFAULT '0',
