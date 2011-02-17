@@ -48,7 +48,7 @@ $result = mysql_query($sql, $db) or die(mysql_error());
         <tbody>
                 <?php while($row = mysql_fetch_array($result)) { ?><tr>
  		<td><input type="radio" name="id" value="<?php echo $row['id']; ?>" id="m<?php echo $row['id']; ?>" /></td>
-                <td><?php echo $row['title']; ?></td>
+                <td><label for="m<?php echo $row['id']; ?>"><?php echo $row['title']; ?></label></td>
                 <td><?php echo $row['toolid']; ?></td>
                 <td><?php echo $row['description']; ?></td>
                 <td><?php echo $row['cnt']; ?></td>
