@@ -17,6 +17,8 @@ if (isset($_GET['view'], $_GET['id'])) {
 } else if (isset($_GET['delete'], $_GET['id'])) {
     header('Location: tool/instructor_delete.php?id='.$_GET['id']);
     exit;
+}  else if ($_GET['delete'] ||$_GET['edit'] || $_GET['view'] && !isset($_GET['id'])){
+	$msg->addError("NO_ITEM_SELECTED");
 }
 
 require (AT_INCLUDE_PATH.'header.inc.php');
