@@ -63,11 +63,16 @@ http://www.wimba.com/
 Elluminate
 http://www.elluminate.com/
 
+A list BasicLTI conformant system can be found at:
+http://www.imsglobal.org/cc/statuschart.html
+
 ###############
 Known issues in this release
--missing error message when a button is clicked in the admin table listing tools, when a tool radio  has not been selected
 - should the view button in the admin's tool listing table display the actual tool instead of the tool settings. Would be more useful I think, given clicking the edit button displays the same information. Or maybe display settings above, and open the tool below in a frame.
-- when "allow frame height to change" setting is enabled, the frame hieght gets set to 0, effectively hiding the tool when added to a page
 
-
+- course backups need to be rethought. There is currently no backup support for external; tools. 
+	Issues:
+	If/How to export Admin created tools in a course backup, so they will render in other systems without disclosing authentication/tool account info to instructors, who may not have license to access a tool outside it originally licenced environment?
+	How to import course level tools in backups, and reset course_id and cid to the new content ids created
+	How to reset the toolid to make it unique when importing BasicLTI tools in a backup into a course.
 
