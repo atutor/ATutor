@@ -5,6 +5,24 @@ authenticate(AT_PRIV_BASICLTI);
 
 require_once('forms.php');
 
+;
+// Filter all GET data //
+$_POST['framed'] = intval($_POST['framed']);
+$_POST['popup'] = intval($_POST['popup']);
+$_POST['cid'] = intval($_POST['cid']);
+
+// Filter all POST data //
+$_POST['toolid'] = $addslashes($_POST['toolid']);
+$_POST['cid'] = intval($_POST['cid']);
+$_POST['preferheight'] = intval($_POST['preferheight']);
+$_POST['launchinpopup'] = intval($_POST['launchinpopup']);
+$_POST['debuglaunch'] = intval($_POST['debuglaunch']);
+$_POST['sendname'] = intval($_POST['sendname']);
+$_POST['sendemailaddr'] = intval($_POST['sendemailaddr']);
+$_POST['allowroster'] = intval($_POST['allowroster']);
+$_POST['allowsetting'] = intval($_POST['allowsetting']);
+$_POST['customparameters'] = $addslashes($_POST['customparameters']);
+
 if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) {
     $msg->addFeedback('NEED_COURSE_ID');
     exit;
@@ -33,7 +51,6 @@ if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg))
                        SET toolid='".$toolid."', content_id=".$_POST[cid].",
                              course_id=".$_SESSION[course_id];
 
-debug($sql);
             $result = mysql_query($sql, $db);
             if ($result===false) {
                 $msg->addError('MYSQL_FAILED');
@@ -192,7 +209,12 @@ if($basiclti_tool_row){
 	echo '<h3>'.$basiclti_tool_row['title'].' '._AT('bl_settings').'</h3>';
 	echo '<ul style="list-style-type:none;">';
 	foreach($basiclti_tool_row as $title=>$setting){
-		echo '<li>'.$title.' = '.$setting.'</li>';
+		if($title == "password" && $basiclti_tool_row['course_id'] == 0){
+			// Hide the tool password if its not an instructor created tool //
+			echo '<li>'.$title.' = #########</li>';
+		} else {
+			echo '<li>'.$title.' = '.$setting.'</li>';
+		}
 	}
 	echo '</ul>';
 }
