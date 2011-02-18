@@ -209,10 +209,12 @@ if($basiclti_tool_row){
 	echo '<h3>'.$basiclti_tool_row['title'].' '._AT('bl_settings').'</h3>';
 	echo '<ul style="list-style-type:none;">';
 	foreach($basiclti_tool_row as $title=>$setting){
-		if($title == "password" && $basiclti_tool_row['course_id'] == 0){
+		if($title == "password" || $title == "resourcekey" && $basiclti_tool_row['course_id'] == 0){
 			// Hide the tool password if its not an instructor created tool //
-			echo '<li>'.$title.' = #########</li>';
+			// Don't print out the key or password id its an admin added tool
+			continue;
 		} else {
+
 			echo '<li>'.$title.' = '.$setting.'</li>';
 		}
 	}

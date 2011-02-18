@@ -11,7 +11,7 @@ if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) {
 require_once('forms.php');
 
 // Filter all POST data //
-if($_POST['submit']) {
+if($_POST['submit']){
 	$_POST['form_basiclti'] = $addslashes($_POST['form_basiclti']);
 	$_POST['title'] = $addslashes($_POST['title']);
 	$_POST['toolid'] = $addslashes($_POST['toolid']);
@@ -29,10 +29,11 @@ if($_POST['submit']) {
 	$_POST['allowroster'] = intval($_POST['allowroster']);
 	$_POST['allowsetting'] = intval($_POST['allowsetting']);
 	$_POST['allowcustomparameters'] = intval($_POST['allowcustomparameters']);
-	$_POST['customparameters'] = $addslashes($_POST['customparameters']);
+	// this param won't take $addslashes. Some other form of filter is needed here before V1.0 goes out.
+	//$_POST['customparameters'] = $addslashes($_POST['customparameters']);
 	$_POST['submit'] = $addslashes($_POST['submit']);
-}
 
+}
 $tool = intval($_REQUEST['id']);
 
 if (isset($_POST['cancel'])) {
