@@ -59,7 +59,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','bl_create','Create External
 INSERT INTO `language_text` VALUES ('en', '_module','bl_view','External Tool Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_settings','Settings',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_delete','Deleting External Tool',NOW(),'');
-INSERT INTO `language_text` VALUES ('en', '_module','bl_edit','Deleting External Tool',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','bl_edit','Edit External Tool',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_toolid_header','ToolID',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_count','Use Count',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','bl_content_title','External Tool Settings',NOW(),'');
