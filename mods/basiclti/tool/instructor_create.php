@@ -24,7 +24,7 @@ if($_POST['submit']){
 	$_POST['allowroster'] = intval($_POST['allowroster']);
 	$_POST['allowsetting'] = intval($_POST['allowsetting']);
 	$_POST['allowcustomparameters'] = intval($_POST['allowcustomparameters']);
-	$_POST['customparameters'] = $addslashes($_POST['customparameters']);
+	//$_POST['customparameters'] = $addslashes($_POST['customparameters']);
 	$_POST['submit'] = $addslashes($_POST['submit']);
 }
 if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) {

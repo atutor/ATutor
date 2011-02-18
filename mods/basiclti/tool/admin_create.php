@@ -23,7 +23,7 @@ if($_POST['submit']){
 	$_POST['allowroster'] = intval($_POST['allowroster']);
 	$_POST['allowsetting'] = intval($_POST['allowsetting']);
 	$_POST['allowcustomparameters'] = intval($_POST['allowcustomparameters']);
-	$_POST['customparameters'] = $addslashes($_POST['customparameters']);
+//	$_POST['customparameters'] = $addslashes($_POST['customparameters']);
 	$_POST['organizationid'] = $addslashes($_POST['organizationid']);
 	$_POST['organizationurl'] = $addslashes($_POST['organizationurl']);
 	$_POST['organizationdescr'] = $addslashes($_POST['organizationdescr']);
