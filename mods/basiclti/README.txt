@@ -141,9 +141,21 @@ using these services and you would like to provide the entire course roster to t
 This option allows the external tool to store up to 8K of data in the content item.  Typically the external tool uses this area for a resource 
 setting or perhaps a playlist as selected by the user. In particular it does not allow a separate 8K setting for each user for a content item. This option may be specified for a tool by the administrator, or the administrator may allow the instructor to specify this option.
 
-Custom Parameters
+#Custom Parameters
 Sometimes the external tool requires that you send additional custom parameters along with the launch. The typical use of this would be to specify an ISBN number for a book associated with the launch or to select a particular content item within a content repository.   Different tools will use this capability differently.  Typically these will be specified as a keyword and a value such as
 
 isbn=929293939
 
 These values may be set by the administrator or the administrator may allow the instructor to set these values in content items.
+
+#######################
+#Additional Administrator Options
+#######################
+#Organization Identifier (typically DNS)
+This is typically the domain name of the organization hosting ATutor such as www.ocad.ca - this field is optional.
+
+#Organization URL
+This is typically the URL of the starting page for the learning management system such as http://atutor.ocad.ca - this field is optional.
+
+#Organization Description
+This is a short one-line textual description of the organization hosting ATutor such as "The Ontario College of Art & Design" - this field is optional
