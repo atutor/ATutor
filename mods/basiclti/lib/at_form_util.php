@@ -208,6 +208,7 @@ function at_get_field_value($fieldvalue, $type = false) {
        $fieldvalue = $fieldvalue.'';
     } else if ( $type == 'radio' || $type == 'integer') {
         if ( strlen($fieldvalue) < 1 ) $fieldvalue = '0';
+        else $fieldvalue = intval($fieldvalue);
     } else {
         $fieldvalue = "'".$addslashes($fieldvalue)."'";
     }

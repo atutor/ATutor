@@ -5,28 +5,6 @@ authenticate(AT_PRIV_BASICLTI);
 
 require_once('forms.php');
 
-if($_POST['submit']){
-	// Filter all POST data //
-	$_POST['form_basiclti'] = $addslashes($_POST['form_basiclti']);
-	$_POST['title'] = $addslashes($_POST['title']);
-	$_POST['toolid'] = $addslashes($_POST['toolid']);
-	$_POST['description'] = $addslashes($_POST['description']);
-	$_POST['toolurl'] = $addslashes($_POST['toolurl']);
-	$_POST['resourcekey'] = $addslashes($_POST['resourcekey']);
-	$_POST['password'] = $addslashes($_POST['password']);
-	$_POST['preferheight'] = intval($_POST['preferheight']);
-	$_POST['allowpreferheight'] = intval($_POST['allowpreferheight']);
-	$_POST['launchinpopup'] = intval($_POST['launchinpopup']);
-	$_POST['debuglaunch'] = intval($_POST['debuglaunch']);
-	$_POST['sendname'] = intval($_POST['sendname']);
-	$_POST['sendemailaddr'] = intval($_POST['sendemailaddr']);
-	$_POST['acceptgrades'] = intval($_POST['acceptgrades']);
-	$_POST['allowroster'] = intval($_POST['allowroster']);
-	$_POST['allowsetting'] = intval($_POST['allowsetting']);
-	$_POST['allowcustomparameters'] = intval($_POST['allowcustomparameters']);
-	//$_POST['customparameters'] = $addslashes($_POST['customparameters']);
-	$_POST['submit'] = $addslashes($_POST['submit']);
-}
 if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) {
     $msg->addFeedback('NEED_COURSE_ID');
     exit;
@@ -39,8 +17,9 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['form_basiclti']) && isset($_POST['submit'])) {
 
     if ( at_form_validate($blti_instructor_form, $msg) ) {
-        $sql = "SELECT count(*) cnt FROM ".TABLE_PREFIX."basiclti_tools WHERE toolid = '".
-                mysql_real_escape_string($_POST['toolid'])."' AND course_id = ". $_SESSION['course_id'];
+        global $addslashes;
+    	$sql = "SELECT count(*) cnt FROM ".TABLE_PREFIX."basiclti_tools WHERE toolid = '".
+                $addslashes($_POST['toolid'])."' AND course_id = ". $_SESSION['course_id'];
         $result = mysql_query($sql, $db) or die(mysql_error());
         $row = mysql_fetch_assoc($result);
 

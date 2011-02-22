@@ -11,18 +11,6 @@ $_POST['framed'] = intval($_POST['framed']);
 $_POST['popup'] = intval($_POST['popup']);
 $_POST['cid'] = intval($_POST['cid']);
 
-// Filter all POST data //
-$_POST['toolid'] = $addslashes($_POST['toolid']);
-$_POST['cid'] = intval($_POST['cid']);
-$_POST['preferheight'] = intval($_POST['preferheight']);
-$_POST['launchinpopup'] = intval($_POST['launchinpopup']);
-$_POST['debuglaunch'] = intval($_POST['debuglaunch']);
-$_POST['sendname'] = intval($_POST['sendname']);
-$_POST['sendemailaddr'] = intval($_POST['sendemailaddr']);
-$_POST['allowroster'] = intval($_POST['allowroster']);
-$_POST['allowsetting'] = intval($_POST['allowsetting']);
-$_POST['customparameters'] = $addslashes($_POST['customparameters']);
-
 if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) {
     $msg->addFeedback('NEED_COURSE_ID');
     exit;

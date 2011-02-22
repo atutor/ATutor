@@ -38,8 +38,9 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['form_basiclti'], $tool)) {
 
     if ( at_form_validate($blti_admin_form, $msg) ) {
+    	global $addslashes;
         $sql = "SELECT count(*) cnt FROM ".TABLE_PREFIX."basiclti_tools WHERE toolid = '".
-                mysql_real_escape_string($_POST['toolid'])."' AND id != $tool;";
+                $addslashes($_POST['toolid'])."' AND id != $tool;";
         $result = mysql_query($sql, $db) or die(mysql_error());
         $row = mysql_fetch_assoc($result);
 
