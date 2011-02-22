@@ -11,29 +11,6 @@ if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) {
 require_once('forms.php');
 
 // Filter all POST data //
-if($_POST['submit']){
-	$_POST['form_basiclti'] = $addslashes($_POST['form_basiclti']);
-	$_POST['title'] = $addslashes($_POST['title']);
-	$_POST['toolid'] = $addslashes($_POST['toolid']);
-	$_POST['description'] = $addslashes($_POST['description']);
-	$_POST['toolurl'] = $addslashes($_POST['toolurl']);
-	$_POST['resourcekey'] = $addslashes($_POST['resourcekey']);
-	$_POST['password'] = $addslashes($_POST['password']);
-	$_POST['preferheight'] = intval($_POST['preferheight']);
-	$_POST['allowpreferheight'] = intval($_POST['allowpreferheight']);
-	$_POST['launchinpopup'] = intval($_POST['launchinpopup']);
-	$_POST['debuglaunch'] = intval($_POST['debuglaunch']);
-	$_POST['sendname'] = intval($_POST['sendname']);
-	$_POST['sendemailaddr'] = intval($_POST['sendemailaddr']);
-	$_POST['acceptgrades'] = intval($_POST['acceptgrades']);
-	$_POST['allowroster'] = intval($_POST['allowroster']);
-	$_POST['allowsetting'] = intval($_POST['allowsetting']);
-	$_POST['allowcustomparameters'] = intval($_POST['allowcustomparameters']);
-	// this param won't take $addslashes. Some other form of filter is needed here before V1.0 goes out.
-	//$_POST['customparameters'] = $addslashes($_POST['customparameters']);
-	$_POST['submit'] = $addslashes($_POST['submit']);
-
-}
 $tool = intval($_REQUEST['id']);
 
 if (isset($_POST['cancel'])) {
