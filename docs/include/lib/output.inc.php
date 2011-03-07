@@ -935,7 +935,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
             }
 
 	 		/* escape special characters */
-            $term = preg_quote($term);
+            $term = preg_quote($term, "/");
             $term = '(\s*'.$term.'\s*)';
 			$term = str_replace(' ','((<br \/>)*\s*)', $term); 
 			
@@ -950,7 +950,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 						("/(\[\?\])$term(\[\/\?\])/i",
 						'\\2<sup><a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">?</a></sup>',$input);*/
 				$input = preg_replace
-						("/(\[\?\])".preg_quote($term, "/")."(\[\/\?\])/i",
+						("/(\[\?\])".$term."(\[\/\?\])/i",
 						'<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.htmlentities_utf8($original_term).': '.$def.'">\\2</a>',$input);
 			}
 		}
