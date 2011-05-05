@@ -1,0 +1,1 @@
+<?php require(AT_INCLUDE_PATH . 'html/search.inc.php');?>
