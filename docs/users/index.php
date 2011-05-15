@@ -112,5 +112,6 @@ usort($all_news, 'all_news_cmp');
 $savant->assign('all_news', $all_news);
 $savant->assign('courses', $courses);
 
+
 $savant->display('users/index.tmpl.php');
 ?>

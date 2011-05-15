@@ -25,17 +25,21 @@ echo "cpID\torder\t cID";
 
 $sql    = "SELECT content_id, content_parent_id, ordering, course_id FROM ".TABLE_PREFIX."content ORDER BY course_id, content_parent_id, ordering";
 $result = mysql_query($sql, $db);
+
+
 while ($row = mysql_fetch_assoc($result)) {
 	if ($current_course_id != $row['course_id']) {
 		echo "\n\n-- course id $row[course_id]\n\n";
 		$current_course_id = $row['course_id'];
 		unset($current_parent_id);
 		unset($ordering);
+		
 	}
 	echo $row['content_parent_id'] . "\t" . $row['ordering'] . "\t" . $row['content_id'];
 	if ($current_parent_id != $row['content_parent_id']) {
 		$current_parent_id = $row['content_parent_id'];
 		$ordering = 1;
+		
 	}
 
 	if ($row['ordering'] != $ordering) {
@@ -43,14 +47,20 @@ while ($row = mysql_fetch_assoc($result)) {
 		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=$ordering WHERE content_id=$row[content_id]";
 		mysql_query($sql, $db);
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'content', mysql_affected_rows($db), $sql);
+		
 	}
 
 	 echo "\n";
 
 	$ordering++;
+	
 }
 
-echo' </pre></div>';
+$savant->assign('ordering', $ordering);
+$savant->assign('content_id', $content_id);	
+$savant->assign('content_parent_id', $content_parent_id);
 
+echo' </pre></div>';
+$savant->display('admin/fix_content.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
