@@ -203,5 +203,5 @@ $sql	= "SELECT M.*, B.login, B.first_name, B.second_name, B.last_name FROM ".TAB
 $result = mysql_query($sql, $db);
 $savant->assign('num_results', $num_results);
 $savant->assign('num_pages', $num_pages);
-$savant->display('admin/courses/master_list.tmpl.php');
+$savant->display('admin/users/master_list.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
