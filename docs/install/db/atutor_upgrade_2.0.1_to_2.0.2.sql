@@ -15,7 +15,7 @@ UPDATE `themes` SET `version` = '2.0.2' WHERE `title` = 'ATutor 1.5';
 UPDATE `themes` SET `version` = '2.0.2' WHERE `title` = 'Mobile';
 UPDATE `themes` SET `version` = '2.0.2' WHERE `title` = 'ATutor 1.6';
 
-# A mapping table between photo album and atutor's groups
+# A mapping table between photo album and atutor groups
 CREATE TABLE `pa_groups` (
   `group_id` INTEGER UNSIGNED NOT NULL,
   `album_id` INTEGER UNSIGNED NOT NULL,
