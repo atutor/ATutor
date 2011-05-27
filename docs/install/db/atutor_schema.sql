@@ -649,6 +649,7 @@ INSERT INTO `modules` VALUES ('_standard/farchive',      2, 4194304, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/social',	 2, 8388608, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/photos',	 2, 16777216, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/flowplayer',	 2, 33554432, 0, 0, 0);
+INSERT INTO `modules` VALUES('_standard/basiclti', 2, 67108864, 16384, 0, 0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4, 0, 0);
 INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8, 0, 0);
@@ -670,7 +671,7 @@ INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, 2048, 0, 0);
 INSERT INTO `modules` VALUES ('_core/tool_manager', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/modules', 2, 0, 8192, 0, 0);
 INSERT INTO `modules` VALUES('_standard/vimeo', 2, 0, 1, 0, 0);
-INSERT INTO `modules` VALUES('_standard/basiclti', 2, 0, 1, 0, 0);
+
 # --------------------------------------------------------
 # Table structure for table `news`
 
