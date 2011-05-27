@@ -59,7 +59,7 @@ CREATE TABLE `basiclti_tools` (
 	`launchinpopup` mediumint(1) NOT NULL DEFAULT '0',
 	`debuglaunch` mediumint(1) NOT NULL DEFAULT '0',
 	PRIMARY KEY ( `id`, `toolid` )
-);
+) ENGINE = MyISAM;
 
 CREATE TABLE `basiclti_content` (
 	`id` mediumint(10) NOT NULL AUTO_INCREMENT,
@@ -81,7 +81,7 @@ CREATE TABLE `basiclti_content` (
 	`setting` text(8192),
 	`xmlimport` text(16384),
 	PRIMARY KEY ( `id`, `course_id`, `content_id` )
-);
+) ENGINE = MyISAM;
 # Add BasicLTI to modules
 INSERT INTO `modules` VALUES('_standard/basiclti', 2, 67108864, 16384, 0, 0);
 
