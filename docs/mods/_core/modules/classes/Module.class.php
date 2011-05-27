@@ -713,11 +713,11 @@ class Module {
 	 */
 	function getContent($cid){
 		if (file_exists(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php') &&
-		    isset($this->_callbacks[$this->_directoryName])) 
+		    isset($this->_callbacks[basename($this->_directoryName)])) 
 		{
 			require(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php');
-			if (method_exists($this->_callbacks[$this->_directoryName], "appendContent")) {
-				eval('$output = '.$this->_callbacks[$this->_directoryName]."::appendContent($cid);");
+			if (method_exists($this->_callbacks[basename($this->_directoryName)], "appendContent")) {
+				eval('$output = '.$this->_callbacks[basename($this->_directoryName)]."::appendContent($cid);");
 				return $output;
 			}
 		}
