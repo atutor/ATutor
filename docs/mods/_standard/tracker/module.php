@@ -16,8 +16,11 @@ $_pages['mods/_core/content/index.php']['children'][]  = 'mods/_standard/tracker
 
 $_pages['mods/_standard/tracker/tools/index.php']['title_var'] = 'content_usage';
 $_pages['mods/_standard/tracker/tools/index.php']['parent']    = 'mods/_core/content/index.php';
-$_pages['mods/_standard/tracker/tools/index.php']['children']  = array('mods/_standard/tracker/tools/student_usage.php', 'mods/_standard/tracker/tools/reset.php');
+$_pages['mods/_standard/tracker/tools/index.php']['children']  = array('mods/_standard/tracker/tools/student_usage.php', 'mods/_standard/tracker/tools/reset.php','mods/_standard/tracker/tools/export.php');
 $_pages['mods/_standard/tracker/tools/index.php']['guide']     = 'instructor/?p=content_usage.php';		
+
+	//$_pages['mods/_standard/tracker/tools/page_student_stats.php']['title_var']  = 'page_stats';
+	//$_pages['mods/_standard/tracker/tools/page_student_stats.php']['parent'] = 'mods/_standard/tracker/tools/index.php';
 
 	$_pages['mods/_standard/tracker/tools/student_usage.php']['title_var']  = 'member_stats';
 	$_pages['mods/_standard/tracker/tools/student_usage.php']['parent'] = 'mods/_standard/tracker/tools/index.php';
