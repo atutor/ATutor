@@ -31,79 +31,60 @@ include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-?>
-<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="" rules="groups" style="width: 90%">
-<thead>
-<tr>
-	<th scope="col">&nbsp;</th>
-	<th scope="col"><?php echo _AT('title');       ?></th>
-	<th scope="col"><?php echo _AT('description'); ?></th>
-	<th scope="col"><?php echo _AT('courses');     ?></th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-	<td colspan="4"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
-</tr>
-</tfoot>
-<tbody>
-<tr>
-	<th colspan="4"><?php echo _AT('shared_forums'); ?></th>
-</tr>
-<?php
 
 
 	$all_forums    = get_forums(0);
 	$num_shared    = count($all_forums['shared']);
 	$num_nonshared = count($all_forums['nonshared']);
 
+	$shared_forums = array();
+	$i = 0;
+		
 	if ($num_shared) {
 		foreach ($all_forums['shared'] as $forum) {
-			echo '<tr onmousedown="document.form[\'f'.$forum['forum_id'].'\'].checked = true; rowselect(this);"  id="r_'.$forum['forum_id'].'">';
-			echo '<td><input type="radio" name="id" value="'. $forum['forum_id'].'" id="f'.$forum['forum_id'].'"></td>';
-			echo '	<td><label for="f'.$forum['forum_id'].'">' . AT_print($forum['title'], 'forums.title') . '</label></td>';
-			echo '	<td>' . AT_print($forum['description'], 'forums.description') . '</td>';
-			echo '	<td>';
+			$shared_forums[$i]["id"] = $forum['forum_id'];
+			$shared_forums[$i]["title"] = AT_print($forum['title'], 'forums.title');   
+			$shared_forums[$i]["desc"] = AT_print($forum['description'], 'forums.description');
 
-			$courses = array();
+			$courses = array();//create an empty array
 			$sql = "SELECT F.course_id FROM ".TABLE_PREFIX."forums_courses F WHERE F.forum_id=$forum[forum_id]";
 			$c_result = mysql_query($sql, $db);
 			while ($course = mysql_fetch_assoc($c_result)) {
 				$courses[] = $system_courses[$course['course_id']]['title'];
 			}
 			natcasesort($courses);
-			echo implode(', ', $courses);
-			echo '</td>';
-			echo '</tr>';
+			$shared_forums[$i]["courses"] = $courses;
+			 
+		
+			
+			
+			$i++;
+
 		}
 	} else {
 		echo '<tr>';
 		echo '	<td colspan="4"><strong>' . _AT('no_forums') . '</strong></td>';
 		echo '</tr>';
 	}
-?>
-</tbody>
-<tbody>
-	<tr>
-		<th colspan="4"><?php echo _AT('unshared_forums'); ?></th>
-	</tr>
-<?php if ($num_nonshared) : ?>
-	<?php foreach ($all_forums['nonshared'] as $forum) : ?>
-		<tr onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['forum_id']; ?>">
-			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>" /></td>
-			<td><label for="f<?php echo $forum['forum_id']; ?>"><?php echo AT_print($forum['title'], 'forums.title'); ?></label></td>
-			<td><?php echo AT_print($forum['description'], 'forums.description'); ?></td>
-			<td><?php echo $system_courses[$forum['course_id']]['title']; ?></td>
-		</tr>
-	<?php endforeach; ?>
-<?php else: ?>
-	<tr>
-		<td colspan="4"><strong><?php echo _AT('no_forums'); ?></strong></td>
-	</tr>
-<?php endif; ?>
-</tbody>
-</table>
-</form>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+$nonshared_forums = array();
+$i = 0;
+
+if ($num_nonshared) {
+	foreach ($all_forums['nonshared'] as $forum) {
+		$nonshared_forums[$i]["forum_id"] = $forum['forum_id'];
+		$nonshared_forums[$i]["title"] = AT_print($forum['title'], 'forums.title');
+		$nonshared_forums[$i]["desc"] = AT_print($forum['description'], 'forums.description');
+		
+		$i++;
+	}
+}
+
+$savant->assign('system_courses', $system_courses);
+$savant->assign('num_nonshared', $num_nonshared);
+$savant->assign('courses', $courses);
+$savant->assign('shared_forums', $shared_forums);
+$savant->assign('nonshared_forums', $nonshared_forums);
+$savant->assign('all_forums', $all_forums);
+$savant->display('admin/courses/forums.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
