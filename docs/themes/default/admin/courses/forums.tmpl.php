@@ -30,13 +30,7 @@ foreach ($this->shared_forums as $forum) {
     <td><input type="radio" name="id" value= "<?php echo $forum['id']; ?>" id="f<?php echo $forum['id']; ?>"</td>
 	<td><label for="f<?php echo $forum['id']; ?>"> <?php echo	AT_print($forum['title'], 'forums.title'); ?>  </label></td>
 	<td><?php echo AT_print($forum['desc'], 'forums.description'); ?></td>
-	<td><?php foreach ($this->courses as $key => $value) { echo " $value "; echo "<br />\n";} ?></td>
-
-<?php 	
-	foreach ($forum["courses"] as $course) {
-		
-	} ?>
-<!--  	echo implode(', ', $courses); -->
+	<td> <?php foreach ($forum["courses"] as $course) {echo $course. "  ";} ?>
 	</td>
 	</tr>
 <?php }?>
