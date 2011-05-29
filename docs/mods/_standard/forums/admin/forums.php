@@ -54,9 +54,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 			natcasesort($courses);
 			$shared_forums[$i]["courses"] = $courses;
-			 
-		
-			
 			
 			$i++;
 
