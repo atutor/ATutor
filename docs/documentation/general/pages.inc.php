@@ -26,5 +26,6 @@
 	$_pages['pa_albums.php']				= 'Albums';
 	$_pages['pa_photo.php']					= 'Photo';
 	$_pages['pa_comments.php']				= 'Comments';
+	$_pages['assignment_dropbox.php']				= 'Assignment Dropbox';
 
 ?>
