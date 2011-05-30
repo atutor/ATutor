@@ -617,7 +617,7 @@ CREATE TABLE `messages_sent` (
 CREATE TABLE `modules` (  
   `dir_name` VARCHAR( 50 ) NOT NULL default '',  
   `status` TINYINT NOT NULL default 0,
-  `privilege` INT UNSIGNED NOT NULL default 0,  
+  `privilege` BIGINT UNSIGNED NOT NULL default 0,  
   `admin_privilege` MEDIUMINT UNSIGNED NOT NULL default 0, 
   `cron_interval` SMALLINT UNSIGNED DEFAULT '0' NOT NULL ,
   `cron_last_run` INT UNSIGNED DEFAULT '0' NOT NULL,
@@ -649,7 +649,8 @@ INSERT INTO `modules` VALUES ('_standard/farchive',      2, 4194304, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/social',	 2, 8388608, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/photos',	 2, 16777216, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/flowplayer',	 2, 33554432, 0, 0, 0);
-INSERT INTO `modules` VALUES('_standard/basiclti', 2, 67108864, 16384, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/basiclti', 2, 67108864, 16384, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/assignment_dropbox', 2, 134217728, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4, 0, 0);
 INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8, 0, 0);
@@ -1542,7 +1543,18 @@ CREATE TABLE `pa_photo_comments` (
   PRIMARY KEY (`id`)
 ) ENGINE = MyISAM;
 
-# Initiali Config
+# A mapping table between photo album and atutor groups
+#######################
+# This table is not currently being used, to be implemented later
+#######################
+CREATE TABLE `pa_groups` (
+  `group_id` INTEGER UNSIGNED NOT NULL,
+  `album_id` INTEGER UNSIGNED NOT NULL,
+  PRIMARY KEY (`group_id`, `album_id`)
+) ENGINE = MyISAM;
+
+
+# Initial Config
 INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
 
 # -------------- Photo Album Module Ends -----------------
