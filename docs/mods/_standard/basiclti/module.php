@@ -35,6 +35,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_BASICLTI, TRUE) || admin_authenticate(AT_AD
 	$this->_pages['mods/_standard/basiclti/index_admin.php']['children']    = array('mods/_standard/basiclti/tool/admin_create.php');
        $this->_pages['mods/_standard/basiclti/tool/admin_create.php']['title_var'] = 'bl_create';
        $this->_pages['mods/_standard/basiclti/tool/admin_create.php']['parent'] = 'mods/_standard/basiclti/index_admin.php';
+       $this->_pages['mods/_standard/basiclti/tool/admin_create.php']['guide'] = 'admin/?p=basiclti_external_tools.php';
        $this->_pages['mods/_standard/basiclti/tool/admin_view.php']['title_var'] = 'bl_view';
        $this->_pages['mods/_standard/basiclti/tool/admin_view.php']['parent'] = 'mods/_standard/basiclti/index_admin.php';
        $this->_pages['mods/_standard/basiclti/tool/admin_edit.php']['title_var'] = 'bl_edit';
