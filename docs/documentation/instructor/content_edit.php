@@ -181,8 +181,8 @@ Sometimes the external tool requires that you send additional custom parameters 
 </ul>	
 
 <h3>BasicLTI (external tools) Resources</h3>
-<p>Sample LTI Tool for Testing/Demo Purposes<br />
-<a href="http://www.imsglobal.org/developers/BLTI/tool.php">http://www.imsglobal.org/developers/BLTI/tool.php</a><br />
+<p>Sample LTI Tool for Testing/Demo Purposes. Copy this URL, and its associated key and secret, into the corresponding fields in the Create External Tool screen to setup a simple demonstration tool.<br />
+http://www.imsglobal.org/developers/BLTI/tool.php<br />
 key: lmsng.school.edu<br />
 secret: secret<br />
 </p>
