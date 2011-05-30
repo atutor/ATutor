@@ -82,8 +82,24 @@ CREATE TABLE `basiclti_content` (
 	`xmlimport` text(16384),
 	PRIMARY KEY ( `id`, `course_id`, `content_id` )
 ) ENGINE = MyISAM;
+
 # Add BasicLTI to modules
 INSERT INTO `modules` VALUES('_standard/basiclti', 2, 67108864, 16384, 0, 0);
+# Add Assignment Dropbox to modules
+INSERT INTO `modules` VALUES('_standard/assignment_dropbox', 2, 134217728, 0, 0, 0);
 
 # -------------- External Tools/BasicLTI  Ends -----------------
 
+# -------------- Update theme version, not changes in this release ---------
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'ATutor';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'Fluid';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'ATutor Classic';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'Blumin';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'Greenmin';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'ATutor 1.5';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'Mobile';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'ATutor 1.6';
+UPDATE `themes` SET `version` = '2.0.3' WHERE `title` = 'IDI Theme';
+
+# more modules now, need space for bigger privilege numbers
+ALTER TABLE `modules` CHANGE `privilege` `privilege` BIGINT( 20 ) UNSIGNED NOT NULL DEFAULT '0';
