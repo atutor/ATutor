@@ -38,4 +38,5 @@
 	$_pages['patcher.php']                       = 'Patcher';
 	$_pages['create_patches.php']                = 'Create Patches';
 	$_pages['troubleshooting.php']               = 'Troubleshooting';
+	$_pages['basiclti_external_tools.php']       = 'External Tools';
 ?>
