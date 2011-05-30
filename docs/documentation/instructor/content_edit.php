@@ -179,4 +179,33 @@ Sometimes the external tool requires that you send additional custom parameters 
 </li>
 
 </ul>	
+
+<h3>BasicLTI (external tools) Resources</h3>
+<p>Sample LTI Tool for Testing/Demo Purposes<br />
+<a href="http://www.imsglobal.org/developers/BLTI/tool.php">http://www.imsglobal.org/developers/BLTI/tool.php</a><br />
+key: lmsng.school.edu<br />
+secret: secret<br />
+</p>
+
+<h4>Tools Currently with BasicLTI Provider Capability</h4>
+<ul>
+<li>QuestionMark<br />
+<a href="http://www.questionmark.com/">http://www.questionmark.com/</a></li>
+<li>Noteflight<br />
+<a href="http://www.noteflight.com/">http://www.noteflight.com/</a></li>
+<li>Wimba<br />
+http://www.wimba.com/</a></li>
+<li>Elluminate<br />
+<a href="http://www.elluminate.com/">http://www.elluminate.com/</a></li>
+</ul>
+
+<p>A current list of BasicLTI conformant systems can be found at:<br />
+<a href="http://www.imsglobal.org/cc/statuschart.html">http://www.imsglobal.org/cc/statuschart.html</a></p>
+<p>
+More about the BasicLTI Standard
+<a href="http://www.imsglobal.org/lti/">http://www.imsglobal.org/lti/</a></p>
+
+<p>Here are a couple videos with more information:<br />
+<a href="http://www.vimeo.com/18074396">http://www.vimeo.com/18074396</a><br />
+<a href="http://vimeo.com/14100773">http://vimeo.com/14100773</a></p>
 <?php require('../common/body_footer.inc.php'); ?>
