@@ -20,5 +20,5 @@ CREATE TABLE `pa_groups` (
   `group_id` INTEGER UNSIGNED NOT NULL,
   `album_id` INTEGER UNSIGNED NOT NULL,
   PRIMARY KEY (`group_id`, `album_id`)
-) ENGINE = MyISAM
+) ENGINE = MyISAM;
 
