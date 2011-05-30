@@ -111,6 +111,7 @@ if ($section == 'admin'){
 										'categories.php'
 										),
 				'modules.php',
+				'basiclti_external_tools.php',
 				'patcher.php' => array(
 										'create_patches.php'
 										),
