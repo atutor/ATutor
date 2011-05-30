@@ -356,7 +356,8 @@ class UrlRewrite  {
                     '/tile_search'  =>	'mods/_standard',
                     '/tests'		=>	'mods/_standard',
                     '/tracker'		=>	'mods/_standard',
-                    '/reading_list'	=>	'mods/_standard'
+                    '/reading_list'	=>	'mods/_standard',
+                    '/assignment_dropbox'	=>	'mods/_standard'
 				);
 
 		if ($this->path != ''){
