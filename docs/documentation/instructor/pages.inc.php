@@ -7,6 +7,7 @@
     $_pages['side_menu.php']                     = 'Side Menu';
     $_pages['announcements.php']                 = 'Announcements';
     $_pages['assignments.php']		   	 = 'Assignments';
+    $_pages['assignment_dropbox.php']		   	 = 'Assignment Dropbox';
     $_pages['backups.php']                       = 'Backups';
     $_pages['creating_restoring.php']            = 'Creating &amp; Restoring Backups';
     $_pages['downloading_uploading.php']         = 'Downloading &amp; Uploading Backups';
