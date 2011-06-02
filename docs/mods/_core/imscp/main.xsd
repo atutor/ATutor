@@ -6,6 +6,7 @@
     xmlns:imscp     ="http://www.imsglobal.org/xsd/imscc/imscp_v1p1"
     xmlns:imslom    ="http://ltsc.ieee.org/xsd/imscc/LOM"
     xmlns:lom       ="http://ltsc.ieee.org/xsd/LOM"
+	xmlns:voc       ="http://ltsc.ieee.org/xsd/LOM/vocab"
     xmlns:cc        ="http://www.imsglobal.org/xsd/imsccauth_v1p0"
     xmlns:qti	    ="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"
     xmlns:wl	    ="http://www.imsglobal.org/xsd/imswl_v1p0"
@@ -15,7 +16,7 @@
     elementFormDefault  ="qualified"
     attributeFormDefault="unqualified"   
     >
-   
+   <!--
     <xs:import namespace ="http://www.imsglobal.org/xsd/imscc/imscp_v1p1" schemaLocation = "imscp_v1p2_localised.xsd"                     />
     <xs:import namespace ="http://ltsc.ieee.org/xsd/imscc/LOM"            schemaLocation = "domainProfile_1/lomLoose_localised.xsd"       />
     <xs:import namespace ="http://ltsc.ieee.org/xsd/LOM"                  schemaLocation = "domainProfile_2/lomLoose_localised.xsd"       />
@@ -24,4 +25,14 @@
     <xs:import namespace ="http://www.imsglobal.org/xsd/imswl_v1p0"	  schemaLocation = "domainProfile_5/imswl_v1p0_localised.xsd"     />    
     <xs:import namespace ="http://www.imsglobal.org/xsd/imsdt_v1p0"	  schemaLocation = "domainProfile_6/imsdt_v1p0_localised.xsd"     />    
     <xs:import namespace ="http://www.atutor.ca/xsd/glossary"		  schemaLocation = "glossary.xsd"				  />	
+	-->
+    <xs:import namespace ="http://www.imsglobal.org/xsd/imscc/imscp_v1p1" schemaLocation = "imscp_v1p2_localised.xsd"                     />
+    <xs:import namespace ="http://ltsc.ieee.org/xsd/imscc/LOM"            schemaLocation = "domainProfile_1/lomLoose_localised.xsd"       />
+	<xs:import namespace ="http://ltsc.ieee.org/xsd/LOM"                  schemaLocation = "domainProfile_2/lomLoose_localised.xsd"       />
+	<xs:import namespace ="http://ltsc.ieee.org/xsd/LOM/vocab"            schemaLocation = "domainProfile_2/vocab/loose.xsd"       />
+    <xs:import namespace ="http://www.imsglobal.org/xsd/imsccauth_v1p0"   schemaLocation = "domainProfile_0/imsccauth_v1p0_localised.xsd" />
+    <xs:import namespace ="http://www.imsglobal.org/xsd/ims_qtiasiv1p2"   schemaLocation = "domainProfile_4/ims_qtiasiv1p2_localised.xsd" />
+    <xs:import namespace ="http://www.imsglobal.org/xsd/imswl_v1p0"	  schemaLocation = "domainProfile_5/imswl_v1p0_localised.xsd"     />    
+    <xs:import namespace ="http://www.imsglobal.org/xsd/imsdt_v1p0"	  schemaLocation = "domainProfile_6/imsdt_v1p0_localised.xsd"     />    
+    <xs:import namespace ="http://www.atutor.ca/xsd/glossary"		  schemaLocation = "glossary.xsd"				  />
 </xs:schema>
