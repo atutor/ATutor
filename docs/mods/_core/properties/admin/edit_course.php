@@ -47,7 +47,7 @@ if ($isadmin){
 if (!$course){
 	$Backup = new Backup($db);
 
-			if ($this->isadmin) {
+			if ($isadmin) {
 				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
 			} else {
 				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";
