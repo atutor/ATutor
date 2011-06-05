@@ -39,7 +39,26 @@ $msg->printAll();
 $course = intval($_REQUEST['course']);
 $isadmin   = TRUE;
 
+if ($isadmin){
+	$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
+	$result = mysql_query($sql, $db);
+	//$savant->assign('result', $result);
+}
+if (!$course){
+	$Backup = new Backup($db);
 
+			if ($this->isadmin) {
+				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+			} else {
+				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";
+			}
+
+			$result2 = mysql_query($sql, $db);
+}
+
+$savant->assign('isadmin', $isadmin);
+$savant->assign('course', $course);
+$savant->assign('result', $result);
 require(AT_INCLUDE_PATH.'../mods/_core/courses/html/course_properties.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
