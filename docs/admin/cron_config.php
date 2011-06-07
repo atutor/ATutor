@@ -10,16 +10,5 @@ if (!isset($_config['cron_key']) || !$_config['cron_key']) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-?>
-
-<div class="input-form">
-	<div class="row">
-		<p><?php echo _AT('cron_url_usage'); ?></p>
-	</div>
-	<div class="row">
-		<?php echo _AT('cron_url'); ?><br />
-		<code><?php echo AT_BASE_HREF; ?>admin/cron.php?k=<?php echo $_config['cron_key']; ?></code>
-	</div>
-</div>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+$savant->display('admin/cron_config.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
