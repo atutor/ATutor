@@ -10,5 +10,5 @@ if (!isset($_config['cron_key']) || !$_config['cron_key']) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('admin/cron_config.tmpl.php');
+$savant->display('admin/system_preferences/cron_config.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
