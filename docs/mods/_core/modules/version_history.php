@@ -91,83 +91,8 @@ else if ($_POST['download'])
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $msg->printErrors();
-?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<div class="input-form">
-
-<?php 
-?>
-<input type="hidden" name="id" value="<?php echo $id; ?>" />
-<table class="data" summary="" style="width: 100%" rules="cols">
-<thead>
-	<tr>
-		<th scope="col">&nbsp;</th>
-		<th scope="col"><?php echo _AT('version');?></th>
-		<th scope="col"><?php echo _AT('publish_date');?></th>
-		<th scope="col"><?php echo _AT('state');?></th>
-		<th scope="col"><?php echo _AT('maintainers');?></th>
-		<th scope="col"><?php echo _AT('notes');?></th>
-	</tr>
-</thead>
-
-<tfoot>
-<tr>
-	<td colspan="6">
-		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
-	</td>
-</tr>
-</tfoot>
-
-<tbody>
-<?php 
-$num_of_versions = count($module_list_array[$id]['history']);
-
-if ($num_of_versions == 0)
-{
-?>
-
-<tr>
-	<td colspan="7">
-<?php 
-	echo _AT('none_found');
-?>
-	</td>
-</tr>
-
-<?php 
-}
-else
-{
-	// display version list
-	if(is_array($module_list_array[$id]['history']))
-	{
-		for ($i=0; $i < $num_of_versions; $i++)
-		{
-?>
-	<tr onmousedown="document.form['m<?php echo $i; ?>'].checked = true; rowselect(this);"  id="r_<?php echo $i; ?>">
-		<td><input type="radio" name="vid" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" /></td>
-		<td><label for="m<?php echo $i; ?>"><?php echo $module_list_array[$id]["name"] . ' ' .$module_list_array[$id]['history'][$i]["version"]; ?></label></td>
-		<td><?php echo $module_list_array[$id]['history'][$i]["date"]; ?></td>
-		<td><?php echo $module_list_array[$id]['history'][$i]["state"]; ?></td>
-		<td><?php echo $module_list_array[$id]['history'][$i]["maintainer"]; ?></td>
-		<td><?php echo $module_list_array[$id]['history'][$i]["notes"]; ?></td>
-	</tr>
-
-<?php 
-		}
-	}
-
-?>
-</tbody>
-
-<?php 
-}
-?>
-</table>
-
-</div>
-</form>
-
-<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+$savant->assign('id', $id);
+$savant->assign('module_list_array', $module_list_array);
+$savant->display('admin/modules/version_history.tmpl.php');
+require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
