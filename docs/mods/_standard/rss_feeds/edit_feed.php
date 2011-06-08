@@ -78,6 +78,6 @@ if ($feed_id != '') {
 $onload = 'document.form.title.focus();';
 
 require (AT_INCLUDE_PATH.'header.inc.php');
-
+$savant->assign('feed_id', $feed_id);
 $savant->display('admin/system_preferences/edit_feed.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
