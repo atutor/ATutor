@@ -33,26 +33,9 @@ if (!file_exists($cache_file) || ((time() - filemtime($cache_file)) > 21600) ) {
 }
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<div class="input-form">
-	<div class="row">
-		<h3><?php if (file_exists($title_file)) { readfile($title_file); } ?></h3>
-	</div>
-
-	<div class="row">
-		<?php if (file_exists($cache_file) && filesize($cache_file) > 0) { 
-			readfile($cache_file); 
-			echo '<p><br /><small>'._AT('new_window').'</small></p>';
-		} else {
-			echo _AT('no_content_avail');
-		}?>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="back" value="<?php echo _AT('back'); ?>" />
-	</div>
-</div>
-</form>
-
-<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php 
+$savant->assign('cache_file', $cache_file);
+$savant->assign('title_file', $title_file);
+$savant->display('admin/system_preferences/preview.tmpl.php');
+require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
