@@ -1,6 +1,6 @@
 <?php global $stripslashes;?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
-	<input type="hidden" name="fid" value="<?php echo $feed_id; ?>" />
+	<input type="hidden" name="fid" value="<?php echo $this->feed_id; ?>" />
 	<div class="input-form" style="width:95%">
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
