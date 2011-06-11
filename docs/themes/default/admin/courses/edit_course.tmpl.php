@@ -1,6 +1,6 @@
 <?php 
-global $languageManager;
-global $_config;
+global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
+
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form" enctype="multipart/form-data">
 	<input type="hidden" name="form_course" value="true" />
