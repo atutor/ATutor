@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="1.0"> 
+    <name lang="en">MediaWiki Integration</name> 
+	<description lang="en">This module integrates MediaWiki with ATutor, creating a single sign-on, and making MediaWiki available as a single shared wiki used as a course tool across all courses.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>1.0</version> 
+        <date>2011-06-14</date> 
+        <state>Stable</state> 
+        <notes> Be sure to read the README file for the module for details on setting up single sign-on. While usable without single sign-on, it needs to be setup manually. You will be required to enable the module once installed, then enter the URL to MediaWiki through the MediaWiki tab added once enabled. </notes> 
+    </release> 
+</module>

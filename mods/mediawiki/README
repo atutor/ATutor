@@ -1,0 +1,95 @@
+## MediaWiki Integration module for ATutor
+
+####################
+
+This module allows you to manage MediaWiki as a course tool and open MediaWiki in an iframe within ATutor courses, and MyStart areas. It is a community wiki, meaning all users in all courses can access it. It also creates a single sign-on. When a user logs into ATutor, they  are automatically logged into Mediawiki.
+
+**MediaWiki needs to be installed and configured before installing this module. See the MediaWiki documentation for instructions on installing and configuring it. MediaWiki needs to be installed on the same server as ATutor, though it may be installed in its own database.
+
+http://www.mediawiki.org/wiki/Installation
+
+
+####################
+Installing the ATutor MediaWiki Module:
+
+1. Unzip the atutor_mediawiki.x.x.x.zip module file into the ATutor mods/ directory to create a "mediawiki/" directory.
+2. Login to ATutor as the admin, click on the Modules tab then click Install Modules. Mediawiki should be listed. Select it and press the Install button.
+3. Follow the installer instructions.
+4. Once the module is installed, select the Mediawiki module now listed in the available modules in the Module Manager, then press the Enable button. This inserts another main navigation tab above.
+5. Click the MediaWiki tab then enter the URL to the base directory under which Mediawiki is run (e.g. http://myserver.com/mediawiki/ , including the trailing slash), then press the Save button. MediaWiki should then appear below.
+6. Next set the database access information for MediaWiki in the mw_config.php file in the  module directory (e.g mods/mediawiki), then save the file. This information is required if you intended on using the module detailed view to display recent changes in the wiki on the course home page, or on the student tools page.
+
+
+#####################
+Authenticate MediaWiki Users from the ATutor Members table (Single Sign-on)
+
+This section is optional. If not implented, users will need to create an account on MediaWiki, and they'll need to manually login.
+
+To remove the need to setup separate accounts in MediaWiki and ATutor, you can install the Auth viaMySQL extention. This effectively creates a single sign-on between ATutor and MediaWiki based on ATutor member accounts.
+
+Extention details can be found at:
+http://www.mediawiki.org/wiki/Extension:Auth_viaMySQL
+(Just for information about the extension's origin. Instead follow the instructions below)
+
+Note that you will probably want to install this extension before you start using MediaWiki with ATutor. Otherwise you may have conflicts between ATutor users and independent Mediawiki users owbership of content. The only account that should exist before installing the extension is the admin account created during the MediaWiki installation.
+
+Copy Auth_viaMySQL.php, CacheTimer_viaMySQL.php, and  MySQLActiveUser.php from the ATutor MediaWiki module directory (mods/mediawiki/MySQL_Auth/) to the MediaWiki installation directory as follows:
+
+MediaWiki/extensions/Auth_viaMySQL/Auth_viaMySQL.php
+MediaWiki/extensions/Auth_viaMySQL/CacheTimer_viaMySQL.php
+MediaWiki/MySQLActiveUser.php
+
+(**You'll probably need to create the extensions/Auth_viaMySQL directory, and depending on how MediaWiki was installed, you may need root access to do that and to copy the files into the MediaWiki directory)
+
+After the files are copied to the MediaWiki installation directory, copy the following code and paste it immediately before the first instance of the "$msg->addFeedback('LOGIN_SUCCESS');" statement of the login.php file located in the root directory of ATutor. This sets the MediaWiki authentication cookie for student and instructor users, but not for admin users. The admin user must login manually using the "MediaWiki Login" link under the MediaWiki tab in the admin area, using the admin login information created during the MediaWiki installation.
+
+#####
+# adjust the path in the first line below to the location of your MediaWiki installation directory. 
+
+	$mediawiki_install_path = "/var/lib/mediawiki/";
+	require_once($mediawiki_install_path.'MySQLActiveUser.php');
+	global $MySQLActiveUserData ;
+	global $db ;
+
+	$userName = $_POST['login'] ;
+	$command = "SELECT * FROM ".TABLE_PREFIX."members WHERE login='".$userName."';" ;
+	$result = mysql_query($command, $db);
+	$account = mysql_fetch_assoc($result) ;
+	if ($account)
+	{
+		$current_mw_timecode = gmdate( 'YmdHis' ) ;
+		$MySQLActiveUserData->set_cookie($account['login'],
+											$account['member_id'],
+											$account['password'],
+											$account['email'],
+											$current_mw_timecode) ;
+	}
+#####
+
+Copy the following code and paste it immediately after the "require(AT_INCLUDE_PATH.'vitals.inc.php');" statement of the logout.php file located in the root directory of ATutor. This deletes the MediaWiki authentication cookie when a user logs out of ATutor.
+
+#####
+# adjust the path in the first line below to the location of your MediaWiki installation directory. 
+
+	$mediawiki_install_path = "/var/lib/mediawiki/";
+	require_once($mediawiki_install_path.'MySQLActiveUser.php');
+	global $MySQLActiveUserData ;
+	$MySQLActiveUserData->clear_cookie() ;
+
+#####
+
+Add the following lines to the end of the MediaWiki LocalSettings.php file
+
+#####
+
+	require_once($IP."/extensions/Auth_viaMySQL/Auth_viaMySQL.php");
+	require_once($IP."/extensions/Auth_viaMySQL/CacheTimer_viaMySQL.php");
+
+	$local_var_login_time = CacheTimer_viaMySQL() ;
+	$wgCacheEpoch = max( $wgCacheEpoch, $local_var_login_time ) ;
+	$wgCachePages = false ;
+
+#####
+
+
+
