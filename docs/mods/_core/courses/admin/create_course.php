@@ -38,10 +38,16 @@ $msg->printAll();
 
 $course = 0;
 $isadmin   = TRUE;
+$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
+$result = mysql_query($sql, $db);
+
+$savant->assign('row', $row);
+$savant->assign('result', $result);
+$savant->assign('course', $course);
+$savant->assign('isadmin', $isadmin);
+
 
 require(AT_INCLUDE_PATH.'../mods/_core/courses/html/course_properties.inc.php');
-
-
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
 
