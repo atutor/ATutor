@@ -98,107 +98,22 @@ $month = intval($_GET['month']);
 		$last_month = $month - 1;
 		$last_year  = $year;
 	}
+//$short_name = $month_name_con['en'][$this->month-1]; 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-?>
-	<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="" align="center">
-	<tr>
-		<th colspan="2" class="cyan"><small class="bigspacer"><?php
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?month='.($last_month).SEP.'year='.$last_year.'">';
-			echo ' '.AT_date('%F', $last_month, AT_DATE_INDEX_VALUE ); ?></a> |</small>
-			<?php echo AT_date('%F', $month, AT_DATE_INDEX_VALUE ); ?> <small class="bigspacer">| <?php
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?month='.$next_month.SEP.'year='.$next_year.'">';
-			echo AT_date('%F', $next_month, AT_DATE_INDEX_VALUE); ?> </a></small></th>
-	</tr>
-<?php
-		if (($num_days == 0) || ($empty)) {
-			echo '<tr>';
-			echo '<td class="row1" colspan="2">'._AT('no_month_data').'</td>';
-			echo '</tr>';
-			echo '</table>';
-			require(AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
-?>
-	<tr>
-		<td class="row1" valign="top" align="right"><strong><?php echo _AT('total'); ?>:</strong></td>
-		<td class="row1"><?php echo $total_logins; ?></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" valign="top" align="right"><strong><?php echo _AT('maximum'); ?>:</strong></td>
-		<td class="row1"><?php echo $max_total_logins; ?></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-
-	<tr>
-		<td class="row1" valign="top" align="right"><strong><?php echo _AT('minimum'); ?>:</strong></td>
-		<td class="row1"><?php
-		if ($min_total_logins < 99999999) {
-			echo $min_total_logins; 
-		} else {
-			echo '0';
-		} ?></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" valign="top" align="right"><strong><?php   echo _AT('average'); ?>:</strong></td>
-		<td class="row1"><?php echo number_format($avg_total_logins, 1); ?> <?php   echo _AT('per_day'); ?></td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-
-	<tr>
-		<td class="row1" valign="top" align="right"><strong><?php   echo _AT('graph'); ?>:</strong></td>
-		<td class="row1">
-			<table border="0" cellspacing="0" cellpadding="0">
-			<tr>
-				<td valign="top" class="graph1"><small><?php echo $max_total_logins; ?></small></td>
-
-<?php
-			foreach ($days as $day => $logins) {
-			$dd++;
-				echo '<td valign="bottom" class="graph"><img src="images/clr.gif" height="'.(($max_total_logins*$multiplyer_height) % $block_height + $block_height).'" width="10" alt="" /><br /><img src="images/blue.gif" height="'.($logins[0]*$multiplyer_height).'" width="9" alt="'.$logins[0].' '._AT('guests').' ('.($logins[0]+$logins[1]).' '._AT('total').')" /><br /><img src="images/red.gif" height="'.($logins[1]*$multiplyer_height).'" width="9" alt="'.$logins[1].' '._AT('members').' ('.($logins[1]+$logins[0]).' '._AT('total').')" /><br /><small>'.$dd.'&nbsp;</small></td>';
-
-			} while ($row = mysql_fetch_array($result));
-?>
-
-			</tr>
-			<tr>
-				<td valign="top"><small>0</small></td>
-			</tr>
-			</table>
-
-			<small><?php  echo _AT('legend'); ?>: <img src="images/red.gif" height="10" width="10" alt="<?php echo _AT('red_members'); ?>" /> <?php   echo _AT('members'); ?>,
-				<img src="images/blue.gif" height="10" width="10" alt="<?php echo _AT('blue_guests'); ?>" /> <?php echo _AT('guests'); ?>.</small>
-		</td>
-	</tr>
-	<tr><td height="1" class="row2" colspan="2"></td></tr>
-	<tr>
-		<td class="row1" valign="top" align="right"><strong><?php echo _AT('raw_data'); ?>:</strong></td>
-		<td class="row1" align="center">
-	
-		<table class="data static" summary="" rules="cols">
-		<thead>
-		<tr>
-			<th scope="col"><?php echo _AT('date');    ?></th>
-			<th scope="col"><?php echo _AT('guests');  ?></th>
-			<th scope="col"><?php echo _AT('members'); ?></th>
-		</tr>
-		</thead>
-		<tbody>
-		<?php $short_name = $month_name_con['en'][$month-1]; ?>
-		<?php foreach ($days as $day => $logins):?>
-			<tr>
-				<td><?php echo $short_name.' '.$day; ?></td>
-				<td><?php echo $logins[0]; ?></td>
-				<td><?php echo $logins[1]; ?></td>
-			</tr>
-		<?php endforeach; ?>
-		<tbody>
-		</table>
-
-		</td>
-	</tr>
-	</table>
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+$savant->assign('last_month', $last_month);
+$savant->assign('last_year', $last_year);
+$savant->assign('month', $month);
+$savant->assign('next_month', $next_month);
+$savant->assign('next_year', $next_year);
+$savant->assign('num_days', $num_days);
+$savant->assign('empty', $empty);
+$savant->assign('total_logins', $total_logins);
+$savant->assign('min_total_logins', $min_total_logins);
+$savant->assign('max_total_logins', $max_total_logins);
+$savant->assign('avg_total_logins', $avg_total_logins);
+$savant->assign('days', $days);
+$savant->assign('result', $result);
+$savant->assign('short_name', $short_name);
+$savant->display('instructor/statistics/course_stats.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
