@@ -140,7 +140,7 @@ function encrypt_password()
 			} else {
 				$uncon = ' checked="checked"';
 			}?>
-			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
+			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" />
 			<div class="row">
 				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('account_status'); ?><br />
 
@@ -230,7 +230,7 @@ function encrypt_password()
 	</div>
 </fieldset>
 	<div class="row buttons">
-		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="encrypt_password()" class="button"/>
+		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" onclick="encrypt_password()" class="button"/>
 		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="button" />
 	</div>
 </div>
