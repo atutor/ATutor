@@ -7,9 +7,11 @@
 	</div>
 	
 	<div class="row">
-		<?php echo _AT('master_not_in_list'); ?><br />
+		<fieldset>
+		<legend><?php echo _AT('master_not_in_list'); ?></legend>
 		<input type="radio" name="override" id="o0" value="0" checked="checked" /><label for="o0"><?php echo _AT('leave_unchanged'); ?></label>
 		<input type="radio" name="override" id="o1" value="1" /><label for="o1"><?php echo _AT('disable');     ?></label>
+		</fieldset>
 	</div>
 
 	<div class="row buttons">
@@ -25,12 +27,14 @@
 		</div>
 
 		<div class="row">
-			<?php echo _AT('account_status'); ?><br />
+			<fieldset>
+			<legend><?php echo _AT('account_status'); ?></legend>
 			<input type="radio" name="status" value="1" id="s0" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('not_created'); ?></label> 
 
 			<input type="radio" name="status" value="2" id="s1" <?php if ($_GET['status'] == 2) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('created'); ?></label> 
 
 			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label> 
+			</fieldset>
 		</div>
 
 		<div class="row">
@@ -63,7 +67,7 @@
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
 
-<table summary="" class="data" rules="cols" style="width: 60%;">
+<table summary="Table lists results by Student ID, Login Name, First Name, Second Name, and Last Name." class="data" rules="cols" style="width: 60%;">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -127,5 +131,6 @@
 		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php endif; ?>
+
 </table>
 </form>
