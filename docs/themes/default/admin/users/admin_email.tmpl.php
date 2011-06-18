@@ -4,10 +4,12 @@
 
 <div class="input-form">
 	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo  _AT('to'); ?><br />
+	<fieldset>
+<legend><span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo  _AT('to'); ?></legend>
 		<input type="radio" name="to" value="3" checked="checked" id="all" /><label for="all"><?php echo _AT('all_users'); ?></label>  
 	  <input type="radio" name="to" value="1" id="inst" <?php if ($_POST['to'] == AT_STATUS_INSTRUCTOR) { echo 'checked="checked"'; } ?> /><label for="inst"><?php echo  _AT('instructors'); ?></label>
 	  <input type="radio" name="to" value="2" id="stud" <?php if ($_POST['to'] == AT_STATUS_STUDENT) { echo 'checked="checked"'; } ?> /><label for="stud"><?php echo  _AT('students'); ?></label>
+	</fieldset>
 	</div>
 
 	<div class="row">
