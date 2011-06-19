@@ -1,4 +1,4 @@
-<table summary="" class="data" rules="cols" align="center">
+<table summary="Date and login name associated with an action in a database table" class="data" rules="cols" align="center">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('date');           ?></th>
