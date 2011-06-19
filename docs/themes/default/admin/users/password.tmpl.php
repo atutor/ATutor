@@ -10,12 +10,12 @@
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password1"><?php echo _AT('password'); ?></label><br />
-			<input type="password" name="password1" id="password1" size="15" />
+			<input type="password" title="password" name="password1" id="password1" size="15" />
 		</div>
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password2"><?php echo _AT('confirm_password'); ?></label><br />
-			<input type="password" name="confirm_password" id="confirm_password" size="15" />
+			<input type="password" title="confirm password" name="confirm_password" id="confirm_password" size="15" />
 		</div>
 
 		<div class="row buttons">
