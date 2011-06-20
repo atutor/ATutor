@@ -35,7 +35,7 @@
 		<form method="get" action="mods/_core/users/instructor_requests.php">
 			<div class="row">
 				<h3><?php echo _AT('instructor_requests'); ?></h3>
-				<p><?php echo _AT('instructor_requests_text', $this->row['cnt']); ?></p>
+				<p><?php echo _AT('instructor_requests_text', $this->row); ?></p>
 			</div>
 
 			<div class="row buttons">
