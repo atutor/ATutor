@@ -177,12 +177,11 @@ if ($row['cnt'] == 0) {
 $sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
 $result = mysql_query($sql, $db);
 
-$group_type_rows = array(); //empty array.
-
+$group_type_rows = array(); 
 
 while ($row = mysql_fetch_assoc($result)) {  
 	//While a row of data exists, put the fields "title" and "type_id", into $row as an associative array. 
-	
+
     $group_type_rows[$row['type_id']] = $row; 
     //save the first SQL result set ($row) into $group_type_rows. Use type_id as the key to map each row
      
@@ -193,6 +192,7 @@ while ($row = mysql_fetch_assoc($result)) {
     while($group_rows = mysql_fetch_assoc($group_result)) {
         $group_type_rows[$row['type_id']]['group_type_row'][] = $group_rows;
     }
+
 }
 
 $savant->assign('group_type_rows', $group_type_rows);
