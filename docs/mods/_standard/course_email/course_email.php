@@ -173,59 +173,30 @@ if ($row['cnt'] == 0) {
 	exit;
 }
 
+//fetch groups names, same as first out of loop query. 
+$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
+$result = mysql_query($sql, $db);
+
+$group_type_rows = array(); //empty array.
+
+
+while ($row = mysql_fetch_assoc($result)) {  
+	//While a row of data exists, put the fields "title" and "type_id", into $row as an associative array. 
+	
+    $group_type_rows[$row['type_id']] = $row; 
+    //save the first SQL result set ($row) into $group_type_rows. Use type_id as the key to map each row
+     
+    
+    $sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
+    $group_result = mysql_query($sql, $db);
+    //second loop adds a child array to our $group_type_rows created above to store the data
+    while($group_rows = mysql_fetch_assoc($group_result)) {
+        $group_type_rows[$row['type_id']]['group_type_row'][] = $group_rows;
+    }
+}
+
+$savant->assign('group_type_rows', $group_type_rows);
+$savant->display('instructor/course_email/course_email.tmpl.php');
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="course" value="<?php echo $course; ?>" />
-
-<div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('course_email'); ?></legend>
-	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
-		<?php echo  _AT('to'); ?><br />
-		<input type="checkbox" name="to_assistants" value="1" id="assistants" <?php if ($_POST['to_assistants']=='1') { echo 'checked="checked"'; } ?> /><label for="assistants"><?php echo  _AT('assistants'); ?></label>
-		<input type="checkbox" name="to_enrolled" value="1" id="enrolled" <?php if ($_POST['to_enrolled']=='1') { echo 'checked="checked"'; } else { echo 'checked="checked"'; } ?> /><label for="enrolled"><?php echo  _AT('enrolled'); ?></label>
-		<input type="checkbox" name="to_unenrolled" value="1" id="unenrolled" <?php if ($_POST['to_unenrolled']=='1') { echo 'checked="checked"'; } ?> /><label for="unenrolled"><?php echo  _AT('unenrolled'); ?></label>
-		<input type="checkbox" name="to_alumni" value="1" id="alumni" <?php if ($_POST['to_alumni']=='1') { echo 'checked="checked"'; } ?> /><label for="alumni"><?php echo  _AT('alumni'); ?></label>
-
-		<?php
-		$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
-		$result = mysql_query($sql, $db);
-		?>
-		<?php if ($row = mysql_fetch_assoc($result)): ?>
-			<br /><br />
-			<?php echo _AT('or_groups'); ?>:<br />
-			<select name="groups[]" multiple="multiple" size="10" style="padding-right: 5px">
-				<?php do { ?>
-					<optgroup label="<?php echo $row['title']; ?>">
-						<?php 
-							$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
-							$group_result = mysql_query($sql, $db);
-						?>
-						<?php while ($group_row = mysql_fetch_assoc($group_result)): ?>
-							<option value="<?php echo $group_row['group_id']; ?>"><?php echo $group_row['title']; ?></option>
-						<?php endwhile; ?>
-					</optgroup>
-				<?php } while ($row = mysql_fetch_assoc($result)); ?>
-			</select>
-		<?php endif; ?>
-	</div>
-
-	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input type="text" name="subject" size="60" id="subject" value="<?php echo $_POST['subject']; ?>" />
-	</div>
-
-	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="55" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
-	</div>
-
-	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /> 
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
-	</div>
-	</fieldset>
-</div>
-</form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
