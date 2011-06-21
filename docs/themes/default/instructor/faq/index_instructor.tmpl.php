@@ -1,4 +1,4 @@
-
+<?php debug($_REQUEST);?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <table class="data" style="width: 90%;">
