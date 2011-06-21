@@ -88,6 +88,7 @@ Add the following lines to the end of the MediaWiki LocalSettings.php file
 	$local_var_login_time = CacheTimer_viaMySQL() ;
 	$wgCacheEpoch = max( $wgCacheEpoch, $local_var_login_time ) ;
 	$wgCachePages = false ;
+        $wgEditPageFrameOptions='SAMEORIGIN';
 
 #####
 
