@@ -25,7 +25,7 @@
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email"><?php echo _AT('email'); ?></label><br />
-		<input type="text" name="email" id="email" size="30" value="<?php echo htmlspecialchars($_POST['email']); ?>" />
+		<input type="text" name="email" id="email" size="25" value="<?php echo htmlspecialchars($_POST['email']); ?>" />
 	</div>
 
 	<div class="row">
