@@ -56,6 +56,14 @@ while ($row = mysql_fetch_assoc($result)) {
 	}
 }
 
-$savant->assign('faq_topics', $faq_topics);
-$savant->display('instructor/faq/index_instructor.tmpl.php');
+
+
+if ($_SESSION['id'] > 0){
+	$savant->assign('faq_topics', $faq_topics);	
+}
+else {
+	$savant->assign('faq_topics', $faq_topics);	
+	$savant->display('instructor/faq/index_instructor.tmpl.php');
+}
+
 require(AT_INCLUDE_PATH.'footer.inc.php');  ?>
