@@ -42,53 +42,20 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $counter = 1;
 $sql	 = "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
 $result  = mysql_query($sql, $db);
-?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<table class="data" style="width: 90%;">
-<thead>
-<tr>
-	<th>&nbsp;</th>
-	<th style="width: 100%;"><?php echo _AT('name'); ?></th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-	<td colspan="2"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> 
-				    <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
-</tr>
-</tfoot>
-<?php if ($row = mysql_fetch_assoc($result)) : ?>
-<tbody>
-		<?php do { ?>
-			<tr onmousedown="document.form['t<?php echo $row['topic_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['topic_id']; ?>_0">
-				<th style="border-top:1pt solid #e0e0e0;"><input type="radio" name="item" id="t<?php echo $row['topic_id']; ?>" value="<?php echo $row['topic_id']; ?>" /></th>
-				<th style="border-top:1pt solid #e0e0e0;"><?php echo AT_print($row['name'], 'faqs.topic'); ?></th>
-			</tr>
-			<?php 
-				$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
-				$entry_result = mysql_query($entry_sql, $db);
-			?>
+$faq_topics = array(); 
+while ($row = mysql_fetch_assoc($result)) { 
+	
+	$faq_topics[$row['topic_id']] = $row;
+	$entry_sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$row[topic_id] ORDER BY question";
+	$entries = mysql_query($entry_sql, $db);
+	
+	while ($entry_result = mysql_fetch_assoc($entries))
+	{
+		$faq_topics[$row['topic_id']]['entry_rows'][] = $entry_result;
+	}
+}
 
-			<?php if ($entry_row = mysql_fetch_assoc($entry_result)) : do { ?>
-				<tr onmousedown="document.form['q<?php echo $entry_row['entry_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['topic_id']; ?>_<?php echo $entry_row['entry_id']; ?>">
-					<td><input type="radio" name="item" id="q<?php echo $entry_row['entry_id']; ?>" value="<?php echo $entry_row['entry_id']; ?>q" /></td>
-					<td><?php echo AT_print($entry_row['question'], 'faqs.question'); ?></td>
-				</tr>
-			<?php } while ($entry_row = mysql_fetch_assoc($entry_result)); else: ?>
-				<tr>
-					<td>&nbsp;</td>
-					<td><?php echo _AT('no_questions'); ?></td>
-				</tr>
-			<?php endif; ?>
-		<?php } while($row = mysql_fetch_assoc($result)); ?>
-</tbody>
-<?php else: ?>
-	<tr>
-		<td colspan="2"><strong><?php echo _AT('none_found'); ?></strong></td>
-	</tr>
-<?php endif; ?>
-</table>
-</form>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php');  ?>
+$savant->assign('faq_topics', $faq_topics);
+$savant->display('instructor/faq/index_instructor.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php');  ?>
