@@ -196,9 +196,20 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 	<ul class="fl-tabs" id="home-guide">
-
-		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li>
-		<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
+	<!--  CHECK TO SEE IF USER IS A STUDENT -->
+<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
+		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+<?php endif;?>		
+	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
+<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):?>
+		<li><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
+<?php endif;?>
+	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
+<?php if($_SESSION['is_admin'] == 1): ?>
+		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+<?php endif;?>
+	
+<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
 		<li>
 	    	<div id="guide_box">
 				<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
