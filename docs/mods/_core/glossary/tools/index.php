@@ -58,26 +58,7 @@ if($num_pages > 1) {
 		}
 	}
 }
-?>
 
-<form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
-<table class="data" summary="" rules="cols" style="width: 90%;">
-<thead>
-<tr>
-	<th scope="col">&nbsp;</th>
-	<th scope="col"><?php echo _AT('glossary_term'); ?></th>
-	<th scope="col"><?php echo _AT('glossary_definition'); ?></th>
-	<th scope="col"><?php echo _AT('glossary_related'); ?></th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-	<td colspan="4"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
-</tr>
-</tfoot>
-<tbody>
-<?php
 if(!empty($gloss_results)) {
 	foreach ($gloss_results as $row) {	
 		//get related term name
@@ -90,33 +71,13 @@ if(!empty($gloss_results)) {
 			}
 		}
 
-		/* replaced w/ validate_length()
-		$def_trunc = $substr($row['definition'], 0, 70);
-		if ($strlen($def_trunc) < $strlen($row['definition'])) {
-			$def_trunc .= ' &#8230;';
-		}
-		*/
 		$def_trunc = validate_length($row['definition'], 70, VALIDATE_LENGTH_FOR_DISPLAY);
-	?>
-			<tr onmousedown="document.form['m<?php echo $row['word_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['word_id']; ?>">
-				<td valign="top" width="10"><input type="radio" name="word_id" value="<?php echo $row['word_id']; ?>" id="m<?php echo $row['word_id']; ?>" /></td>
-				<td valign="top"><label for="m<?php echo $row['word_id']; ?>"><?php echo AT_print($row['word'], 'glossary.word'); ?></label></td>
-				<td style="whitespace:nowrap;"><?php echo AT_print($def_trunc, 'glossary.definition'); ?></td>
-				<td valign="top"><?php echo AT_print($related_word, 'glossary.word'); ?></td>
-			</tr>
-<?php 
-	} 				
-} else {
-?>
-	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
-	</tr>
-<?php
-}					
-?>
+		$gloss_results_row[] = $row;
+	}
+}
+$savant->assign('gloss_results_row', $gloss_results_row);
+$savant->assign('related_word', $related_word);
+$savant->assign('def_trunc', $def_trunc);	
 
-</tbody>
-</table>
-</form>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+$savant->display('instructor/glossary/index.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
