@@ -1,0 +1,15 @@
+div#helloworld {
+	border: 1px solid #ccc;
+	padding: 10px;
+	width: 50%;
+	margin-right: auto;
+	margin-left: auto;
+	background-color: #efefef;
+	color: #444;
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#frame_set{
+	border:none;
+}

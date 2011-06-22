@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Wordpress Integration</name> 
+    <description lang="en">This module integrate wordpress with ATutor, opening it in an iframe either as a course tool, or as My Start Page Blog. With the Wordpress external DB authentication plugin installed, available in the wp_plugins directory of the module, it synchronizes Wordpress users with ATutor members. See the README file for additional details.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>1.0</version> 
+        <date>2011-06-21</date> 
+        <state>beta</state> 
+        <notes>Once installed, enable the module then under the new Wordpress tab, enter the URL to the base directory in which Wordpress is installed.</notes> 
+    </release> 
+</module>

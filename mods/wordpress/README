@@ -1,0 +1,28 @@
+## WordPress Integration module for ATutor
+
+####################
+
+**Wordpress needs to be installed and configured before installing this module. See the Wordpress documentation for instruction on installing and configuring Wordpress.
+
+http://codex.wordpress.org/Installing_WordPress
+
+
+####################
+Installation the ATutor WordPress Module:
+1. Unzip the atutor_wordpress.x.x.x.zip file into the ATutor mods/ directory to create a "wordpress directory.
+2. Login to ATutor as the admin, click on the Modules tab then click Install Modules. Wordpress should be listed. Select it and press the Install button.
+3. Follow the installer instructions.
+4. Once the module is installed, select the WordPress module now listed in the available modules in the module manager, then press the Enable button. This inserts another main navigation tab above.
+5. Click the WordPress tab then enter the URL to the base directory under which WordPress is installed, then press the Save button. WordPress should then appear below.
+6. Next set the database access information for WordPress in the wp_config.php file in the module directory, then save the file. This information is required if you intended on using the module detailed view to display recent posts on a course home page, or student tools page.
+
+#####################
+Authenticate Wordpress Users from ATutor Members
+To remove the need to setup separate accounts in WordPress and ATutor, you can install the WordPress External DB  Authentication plugin. 
+
+Plugin details can be found at:
+http://wordpress.org/extend/plugins/external-database-authentication/
+
+Note that this is not a single sign-on, but rather just a way to ensure anyone registered in ATutor, is automatically registered in Wordpress. When a users logs into Wordpress for the first time, the member information in ATutor is copied over to WordPress. If you find you are unable to login with an account you know esits in ATutor, review the cookies you have set in your browser, and remove and WordPress related ones. Then try to login again.
+
+Note also that you will probably want to install this Wordpress plugin before you start using Wordpress with ATutor. Otherwise you will need to recreate any Wordpress accounts in ATutor.
