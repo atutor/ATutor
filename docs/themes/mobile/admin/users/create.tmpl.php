@@ -1,3 +1,4 @@
+
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="form_password_hidden" value="" />
 <input type="hidden" name="password_error" value="" />
