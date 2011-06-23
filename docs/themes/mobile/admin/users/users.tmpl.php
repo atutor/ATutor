@@ -52,6 +52,7 @@
 	</div>
 </form>
 <?php print_paginator($this->page, $this->num_results, $this->page_string . SEP . $this->order .'='. $col, $this->results_per_page); ?>
+<?php echo "<br>";?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
 <input type="hidden" name="search" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
@@ -64,23 +65,36 @@
 		<col />
 		<col class="sort" />
 		<col span="<?php echo 5 + $col_counts; ?>" />
-
+	<?php elseif($col == 'public_field'): ?>
+		<col span="<?php echo 1 + $col_counts; ?>" />
+		<col class="sort" />
+		<col span="6" />
 	<?php elseif($col == 'first_name'): ?>
 		<col span="<?php echo 2 + $col_counts; ?>" />
 		<col class="sort" />
 		<col span="5" />
-	
+	<?php elseif($col == 'second_name'): ?>
+		<col span="<?php echo 3 + $col_counts; ?>" />
+		<col class="sort" />
+		<col span="4" />
 	<?php elseif($col == 'last_name'): ?>
 		<col span="<?php echo 4 + $col_counts; ?>" />
 		<col class="sort" />
 		<col span="3" />
-
+	<?php elseif($col == 'email'): ?>
+		<col span="<?php echo 5 + $col_counts; ?>" />
+		<col class="sort" />
+		<col span="2" />
 	<?php elseif($col == 'status'): ?>
 		<col span="<?php echo 6 + $col_counts; ?>" />
 		<col class="sort" />
 		<col />
-	
-
+	<?php elseif($col == 'last_login'): ?>
+		<col span="<?php echo 7 + $col_counts; ?>" />
+		<col class="sort" />
+	<?php elseif($col == 'creation_date'): ?>
+		<col span="<?php echo 8 + $col_counts; ?>" />
+		<col class="sort" />
 	<?php endif; ?>
 </colgroup>
 <thead>
@@ -88,9 +102,10 @@
 	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
 
 	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('login_name');      ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=first_name<?php echo $page_string; ?>"><?php echo _AT('first_name'); ?></a></th>
 	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>	
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
+	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
+	
 </tr>
 
 </thead>
@@ -103,7 +118,7 @@
 			<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, true)): ?>
 				<input type="submit" name="enrollment" value="<?php echo _AT('enrollment'); ?>" />
 			<?php endif; ?>
-			
+			<span style="padding:0px 10px">|</span> 
 			
 			<select name="change_status">
 				<option value="-2"><?php echo _AT('more_options'); ?></option>
@@ -130,11 +145,9 @@
 				<td><?php echo $row['login']; ?></td>
 				
 				<?php $startend_date_longs_format=_AT('startend_date_longs_format'); ?>
-				<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
 				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
-		
+				<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
 				<td><?php echo get_status_name($row['status']); ?></td>
-			
 				
 			</tr>
 		<?php endwhile; ?>
