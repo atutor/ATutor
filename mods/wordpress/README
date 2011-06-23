@@ -14,15 +14,15 @@ Installation the ATutor WordPress Module:
 3. Follow the installer instructions.
 4. Once the module is installed, select the WordPress module now listed in the available modules in the module manager, then press the Enable button. This inserts another main navigation tab above.
 5. Click the WordPress tab then enter the URL to the base directory under which WordPress is installed, then press the Save button. WordPress should then appear below.
-6. Next set the database access information for WordPress in the wp_config.php file in the module directory, then save the file. This information is required if you intended on using the module detailed view to display recent posts on a course home page, or student tools page.
+6. Next set the database access information for WordPress in the wp_config.php file in the module directory, then save the file. This information is required for the module detailed view to display recent posts on a course home page, or student tools page.
 
 #####################
 Authenticate Wordpress Users from ATutor Members
-To remove the need to setup separate accounts in WordPress and ATutor, you can install the WordPress External DB  Authentication plugin. 
+To remove the need to setup separate accounts in WordPress and ATutor, you can install the WordPress External DB  Authentication plugin. A copy of the plugin is available in the modules' wp_plugin directory. For details on how to install the plugin, see the link below.
 
 Plugin details can be found at:
 http://wordpress.org/extend/plugins/external-database-authentication/
 
-Note that this is not a single sign-on, but rather just a way to ensure anyone registered in ATutor, is automatically registered in Wordpress. When a users logs into Wordpress for the first time, the member information in ATutor is copied over to WordPress. If you find you are unable to login with an account you know esits in ATutor, review the cookies you have set in your browser, and remove and WordPress related ones. Then try to login again.
+Note that this is not a single sign-on, but rather just a way to ensure anyone registered in ATutor, is automatically registered in Wordpress. When a user logs into Wordpress for the first time, the member information in ATutor is copied over to WordPress. If you find you are unable to login with an account you know exists in ATutor, review the cookies you have set in your browser, and remove any WordPress related ones. Then try to login again. This problem can occur when you are using more than one ATutor account to access Wordpress.
 
-Note also that you will probably want to install this Wordpress plugin before you start using Wordpress with ATutor. Otherwise you will need to recreate any Wordpress accounts in ATutor.
+Note also that you will probably want to install this ATutor Wordpress plugin before you start using Wordpress. Otherwise you will need to recreate any Wordpress accounts in ATutor. Once the module is installed, Wrodpress users are no longer able to modify their Wordpress account information.
