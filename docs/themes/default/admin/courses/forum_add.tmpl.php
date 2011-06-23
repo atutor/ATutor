@@ -9,7 +9,7 @@
 
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="45" rows="2" id="body" wrap="wrap"><?php echo $_POST['description']; ?></textarea>
+		<textarea name="description" cols="45" rows="2" id="body" ><?php echo $_POST['description']; ?></textarea>
 	</div>
 
 	<div class="row">
