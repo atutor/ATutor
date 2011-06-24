@@ -65,17 +65,17 @@
 		<col span="2" />
 		<col class="sort" />
 		<col span="3" />
-	<?php elseif($this->col == 'second_name'): ?>
-		<col span="3" />
+	<?php //elseif($this->col == 'second_name'): ?>
+		<!--  REMOVED FOR MOBILE <col span="3" />
 		<col class="sort" />
-		<col span="2" />
+		<col span="2" />-->
 	<?php elseif($this->col == 'last_name'): ?>
 		<col span="4" />
 		<col class="sort" />
 		<col />
-	<?php elseif($this->col == 'email'): ?>
-		<col span="5" />
-		<col class="sort" />
+	<?php //elseif($this->col == 'email'): ?>
+		<!-- REMOVED FOR MOBILE <col span="5" />
+		<col class="sort" /> -->
 	<?php endif; ?>
 </colgroup>
 <thead>
@@ -86,11 +86,11 @@
 
 	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=first_name<?php echo $this->page_string_w_tab;?>"><?php echo _AT('first_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=second_name<?php echo $this->page_string_w_tab;?>"><?php echo _AT('second_name'); ?></a></th>
+<!-- 	<th scope="col"><a href="<?php //echo $_SERVER['PHP_SELF']; ?>?<?php //echo $this->orders[$this->order]; ?>=second_name<?php // echo $this->page_string_w_tab;?>"><?php //echo _AT('second_name'); ?></a></th> -->
 
 	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=last_name<?php echo $this->page_string_w_tab;?>"><?php echo _AT('last_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=email<?php echo $this->page_string_w_tab;?>"><?php echo _AT('email'); ?></a></th>
+<!--	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=email<?php echo $this->page_string_w_tab;?>"><?php echo _AT('email'); ?></a></th> -->
 </tr>
 </thead>
 <tfoot>
@@ -125,9 +125,9 @@
 			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>
 			<td><?php echo AT_print($row['login'], 'members.login'); ?></td>
 			<td><?php echo AT_print($row['first_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['second_name'], 'members.name'); ?></td>
+			<!-- REMOVED FOR MOBILE <td><?php // echo AT_print($row['second_name'], 'members.name'); ?></td> -->
 			<td><?php echo AT_print($row['last_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
+			<!-- REMOVED FOR MOBILE<td><?php // echo AT_print($row['email'], 'members.email'); ?></td> -->
 		</tr>
 	<?php endwhile; ?>
 <?php else: ?>
