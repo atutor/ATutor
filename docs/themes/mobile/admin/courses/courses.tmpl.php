@@ -43,18 +43,18 @@
 		<col span="2" />
 		<col class="sort" />
 		<col span="5" />
-	<?php elseif($col == 'access'): ?>
-		<col span="3" />
+	<?php// elseif($col == 'access'): ?>
+		<!-- REMOVED FOR MOBILE <col span="3" />
 		<col class="sort" />
-		<col span="4" />
-	<?php elseif($col == 'created_date'): ?>
-		<col span="4" />
+		<col span="4" /> -->
+	<?php //elseif($col == 'created_date'): ?>
+		<!-- REMOVED FOR MOBILE<col span="4" />
 		<col class="sort" />
-		<col span="3" />
-	<?php elseif($col == 'cat_name'): ?>
-		<col span="5" />
+		<col span="3" />-->
+	<?php //elseif($col == 'cat_name'): ?> 
+		<!-- REMOVED FOR MOBILE<col span="5" />
 		<col class="sort" />
-		<col span="2" />
+		<col span="2" /> -->
 	<?php endif; ?>
 </colgroup>
 <thead>
@@ -62,11 +62,11 @@
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=title<?php echo $page_string; ?>"><?php echo _AT('title');               ?></a></th>
 	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('Instructor');          ?></a></th>
-	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=access<?php echo $page_string; ?>"><?php echo _AT('access');             ?></a></th>
-	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=created_date<?php echo $page_string; ?>"><?php echo _AT('created_date'); ?></a></th>
-	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=cat_name<?php echo $page_string; ?>"><?php echo _AT('category'); ?></a></th>
+<!-- REMOVEED FOR MOBILE	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php // echo $this->orders[$this->order]; ?>=access<?php echo $page_string; ?>"><?php echo _AT('access');             ?></a></th> -->
+<!-- 	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php //echo $this->orders[$this->order]; ?>=created_date<?php //echo $page_string; ?>"><?php // echo _AT('created_date'); ?></a></th> -->
+<!-- 	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php //echo $this->orders[$this->order]; ?>=cat_name<?php //echo $page_string; ?>"><?php //echo _AT('category'); ?></a></th> -->
 	<th scope="col"><?php echo _AT('enrolled'); ?></th>
-	<th scope="col"><?php echo _AT('alumni'); ?></th>
+<!-- 	<th scope="col"><?php //echo _AT('alumni'); ?></th> -->
 </tr>
 </thead>
 <tfoot>
@@ -84,11 +84,11 @@
 			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 			<td><label for="m<?php echo $row['course_id']; ?>"><?php echo AT_print($row['title'], 'courses.title'); ?></label></td>
 			<td><?php echo AT_print($row['login'],'members.login'); ?></td>
-			<td><?php echo _AT($row['access']); ?></td>
-			<td><?php echo AT_date($startend_date_long_format, $row['created_date'], AT_DATE_UNIX_TIMESTAMP); ?></td>
-			<td><?php echo ($row['cat_name'] ? $row['cat_name'] : '-')?></td>
+		<!-- REMOVED FOR MOBILE	<td><?php //echo _AT($row['access']); ?></td> -->
+		<!-- 	<td><?php //echo AT_date($startend_date_long_format, $row['created_date'], AT_DATE_UNIX_TIMESTAMP); ?></td> -->
+		<!--	<td><?php //echo ($row['cat_name'] ? $row['cat_name'] : '-')?></td>-->
 			<td><?php echo ($this->enrolled[$row['course_id']]['y'] ? $this->enrolled[$row['course_id']]['y'] : 0); ?></td>
-			<td><?php echo ($this->enrolled[$row['course_id']]['a'] ? $this->enrolled[$row['course_id']]['a'] : 0); ?></td>
+		<!-- 	<td><?php //echo ($this->enrolled[$row['course_id']]['a'] ? $this->enrolled[$row['course_id']]['a'] : 0); ?></td> -->
 		</tr>
 	<?php endwhile; ?>
 <?php else: ?>
