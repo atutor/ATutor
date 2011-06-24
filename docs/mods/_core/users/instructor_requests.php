@@ -81,8 +81,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $sql	= "SELECT M.login, M.first_name, M.last_name, M.email, M.member_id, A.* FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."instructor_approvals A WHERE A.member_id=M.member_id ORDER BY M.login";
 $result = mysql_query($sql, $db);
 $num_pending = mysql_num_rows($result);
-?>
 
-<?php 
+$savant->assign('result', $result);
+$savant->assign('num_pending', $num_pending);
 $savant->display('admin/users/instructor_requests.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
