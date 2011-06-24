@@ -1,4 +1,4 @@
-hi I'm an administrator
+
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="tab" value="<?php echo $this->current_tab; ?>"/>
