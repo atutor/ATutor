@@ -54,7 +54,8 @@ if ($_config['allow_instructor_requests'] && admin_authenticate(AT_ADMIN_PRIV_US
 	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
 			$result = mysql_query($sql, $db);
 			$row    = mysql_fetch_assoc($result);
-			$savant->assign('row', $row);
+			$instructor_row[] = $row;
+			$savant->assign('row_instructor', $row);
 }
 
 
@@ -157,5 +158,6 @@ $savant->assign('path_length', $path_length);
 $savant->assign('pages', $_pages);
 $savant->assign('db_size', $_config['db_size']);
 $savant->assign('du_size', $_config['du_size']);
+$savant->assign('row', $row);
 $savant->display('admin/index.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
