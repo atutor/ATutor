@@ -5,7 +5,7 @@
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('title');       ?></th>
-	<th scope="col"><?php echo _AT('description'); ?></th>
+	<!-- REMOVED FOR MOBILE<th scope="col"><?php// echo _AT('description'); ?></th> -->
 	<th scope="col"><?php echo _AT('courses');  
 	   ?></th>
 </tr>
@@ -29,7 +29,7 @@ foreach ($this->shared_forums as $forum) {
     <tr onmousedown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['id']; ?>">
     <td><input type="radio" name="id" value= "<?php echo $forum['id']; ?>" id="f<?php echo $forum['id']; ?>"</td>
 	<td><label for="f<?php echo $forum['id']; ?>"> <?php echo	AT_print($forum['title'], 'forums.title'); ?>  </label></td>
-	<td><?php echo AT_print($forum['desc'], 'forums.description'); ?></td>
+	<!-- REMOVED FOR MOBILE<td><?php // echo AT_print($forum['desc'], 'forums.description'); ?></td> -->
 	<td> <?php foreach ($forum["courses"] as $course) {echo $course. "  ";} ?>
 	</td>
 	</tr>
@@ -45,7 +45,7 @@ foreach ($this->shared_forums as $forum) {
 		<tr onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['forum_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>" /></td>
 			<td><label for="f<?php echo $forum['forum_id']; ?>"><?php echo AT_print($forum['title'], 'forums.title'); ?></label></td>
-			<td><?php echo AT_print($forum['description'], 'forums.description'); ?></td>
+			<!-- REMOVED FOR MOBILE <td><?php // echo AT_print($forum['description'], 'forums.description'); ?></td> -->
 			<td><?php echo $this->system_courses[$forum['course_id']]['title']; ?></td>
 		</tr>
 	<?php endforeach; ?>
