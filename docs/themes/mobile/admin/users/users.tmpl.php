@@ -103,7 +103,6 @@
 
 	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('login_name');      ?></a></th>
 	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
 	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
 	
 </tr>
@@ -117,9 +116,7 @@
 			<input type="submit" name="password" value="<?php echo _AT('password'); ?>" />
 			<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, true)): ?>
 				<input type="submit" name="enrollment" value="<?php echo _AT('enrollment'); ?>" />
-			<?php endif; ?>
-			<span style="padding:0px 10px">|</span> 
-			
+			<?php endif; ?>	
 			<select name="change_status">
 				<option value="-2"><?php echo _AT('more_options'); ?></option>
 				<optgroup label="<?php echo _AT('status'); ?>">
@@ -146,7 +143,6 @@
 				
 				<?php $startend_date_longs_format=_AT('startend_date_longs_format'); ?>
 				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
-				<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
 				<td><?php echo get_status_name($row['status']); ?></td>
 				
 			</tr>
