@@ -54,10 +54,8 @@
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('module_name'); ?></th>
-	<th scope="col"><?php echo _AT('type'); ?></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
-	<th scope="col"><?php echo _AT('cron'); ?></th>
-	<th scope="col"><?php echo _AT('directory_name'); ?></th>
+
 </tr>
 </thead>
 <tfoot>
@@ -80,15 +78,7 @@
 	<tr onmousedown="document.form['t_<?php echo $i; ?>'].checked = true; rowselect(this);" id="r_<?php echo $i; ?>">
 		<td valign="top"><input type="radio" id="t_<?php echo $i; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
 		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $i; ?>"><?php echo $module->getName(); if ($readme <> '') echo '&nbsp;<a href="#" onclick="ATutor.poptastic(\''.AT_BASE_HREF.'mods/'.$dir_name.'/'.$readme.'\');return false;">'._AT('view_readme').'</a>'; ?></label></td>
-		<td valign="top"><?php
-			if ($module->isCore()) {
-				echo '<strong>'._AT('core').'</strong>';
-			} else if ($module->isStandard()) {
-				echo _AT('standard');
-			} else {
-				echo _AT('extra');
-			}
-			?></td>
+
 		<td valign="top"><?php
 			if ($module->isEnabled()) {
 				echo _AT('enabled');
@@ -100,14 +90,7 @@
 				echo '<strong>'._AT('disabled').'</strong>';
 			}
 			?></td>
-		<td valign="top" align="center">
-			<?php if ($module->getCronInterval()): ?>
-				<?php echo _AT('minutes', $module->getCronInterval()); ?>
-			<?php else: ?>
-				-
-			<?php endif; ?>
-		</td>
-		<td valign="top"><code><?php echo $dir_name; ?>/</code></td>
+		
 	</tr>
 <?php endforeach; ?>
 <?php if (!$this->keys): ?>
