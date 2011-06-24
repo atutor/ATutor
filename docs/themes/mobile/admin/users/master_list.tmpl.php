@@ -1,3 +1,4 @@
+
 <form name="importForm" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data">
 <div class="input-form">
 	<div class="row">
@@ -23,7 +24,7 @@
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
 		<div class="row">
-			<h3><?php echo _AT('results_found', $num_results); ?></h3>
+			<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
 		</div>
 
 		<div class="row">
@@ -73,8 +74,6 @@
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('student_id'); ?></th>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>
-	<th scope="col"><?php echo _AT('first_name'); ?></th>
-	<th scope="col"><?php echo _AT('second_name'); ?></th>
 	<th scope="col"><?php echo _AT('last_name'); ?></th>
 </tr>
 </thead>
@@ -85,7 +84,7 @@
 </tr>
 </tfoot>
 <tbody>
-	<?php while($row = mysql_fetch_assoc($result)): ?>
+	<?php while($row = mysql_fetch_assoc($this->result)): ?>
 		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
 			<td><input type="radio" name="id" value="<?php 
 				if ($row['member_id']) {
@@ -102,20 +101,7 @@
 					echo '-';
 				}
 				?></td>
-			<td><?php
-				if ($row['member_id']) {
-					echo $row['first_name'];
-				} else {
-					echo '-';
-				}
-				?></td>
-			<td><?php
-				if ($row['member_id']) {
-					echo $row['second_name'];
-				} else {
-					echo '-';
-				}
-				?></td>
+
 			<td><?php
 				if ($row['member_id']) {
 					echo $row['last_name'];
