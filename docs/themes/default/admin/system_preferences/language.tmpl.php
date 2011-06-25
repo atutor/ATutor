@@ -1,7 +1,7 @@
 <?php global $languageManager;?>
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table summary="" class="data" rules="cols">
+<table summary="ATutor langauge names in English and translated"; class="data" rules="cols">
 <colgroup>
 	<col />
 	<col class="sort" />
