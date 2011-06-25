@@ -31,7 +31,7 @@
 					$language = current($codes);
 					if (!$languageManager->exists($language->getCode()) && ($language->getStatus() == AT_LANG_STATUS_PUBLISHED)) {
 						if (!$found) {
-							echo '<select name="language">';
+							echo '<select name="language" title="language">';
 							$found = true;
 						}
 						echo '<option value="'.$language->getCode().'">'.$language->getEnglishName().' - '.$language->getNativeName().'</option>';
