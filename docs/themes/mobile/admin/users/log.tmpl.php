@@ -1,4 +1,6 @@
-<table summary="Date and login name associated with an action in a database table" class="data" rules="cols" align="center">
+<div class="table-surround">
+<table summary="Date and login name associated with an action in a database table" class="data" >
+
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('date');           ?></th>
@@ -11,7 +13,7 @@
 <?php if (mysql_num_rows($this->result) > 0) : ?>
 	<?php while ($row = mysql_fetch_assoc($this->result)): ?>
 		<?php $offset++; ?>
-		<tr onmousedown="document.location='<?php echo AT_BASE_HREF; ?>mods/_core/users/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>'" title="<?php echo _AT('view_details'); ?>">
+		<tr onkeydown="document.location='<?php echo AT_BASE_HREF; ?>mods/_core/users/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>'" onmousedown="document.location='<?php echo AT_BASE_HREF; ?>mods/_core/users/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>'" title="<?php echo _AT('view_details'); ?>">
 			<td><a href="<?php echo AT_BASE_HREF; ?>mods/_core/users/admins/detail_log.php?offset=<?php echo $offset.SEP.'p='.$page.SEP.'login='.$_GET['login']; ?>"><?php echo $row['time']; ?></a></td>
 			<!-- <td><?php echo $row['login']; ?></td> -->
 			<!--  <td><?php echo $this->operations[$row['operation']]; ?></td>-->
@@ -25,3 +27,4 @@
 <?php endif; ?>
 </tbody>
 </table>
+</div>
