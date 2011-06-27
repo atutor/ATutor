@@ -23,7 +23,7 @@
 <?php
 	if ($row = mysql_fetch_assoc($this->result)) {
 		do {
-			echo '<tr onmousedown="document.form[\'i'.$row['member_id'].'\'].checked = true;rowselect(this);" id="r_'.$row['member_id'].'">';
+			echo '<tr onkeydown ="document.form[\'i'.$row['member_id'].'\'].checked = true;rowselect(this);" onmousedown="document.form[\'i'.$row['member_id'].'\'].checked = true;rowselect(this);" id="r_'.$row['member_id'].'">';
 			echo '<td><input type="radio" name="id" value="'.$row['member_id'].'" id="i'.$row['member_id'].'" /></td>';
 			echo '<td><label for="i'.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</label></td>';
 			// REMOVED FOR MOBILE
