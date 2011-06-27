@@ -33,7 +33,7 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="" rules="cols">
+<table class="data" summary="List of courses by title, instructor, access, category, creation date, enrollment, and alumni." rules="cols">
 <colgroup>
 	<?php if ($col == 'title'): ?>
 		<col />
@@ -80,7 +80,7 @@
 <tbody>
 <?php if ($this->num_rows): ?>
 	<?php while ($row = mysql_fetch_assoc($this->result)): ?>
-		<tr onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['course_id']; ?>">
+		<tr onkeydown="document.form['m<?php echo $row['course_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['course_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 			<td><label for="m<?php echo $row['course_id']; ?>"><?php echo AT_print($row['title'], 'courses.title'); ?></label></td>
 			<td><?php echo AT_print($row['login'],'members.login'); ?></td>
