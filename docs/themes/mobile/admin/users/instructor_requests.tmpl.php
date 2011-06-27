@@ -1,13 +1,14 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="" rules="cols">
+<div class="table-surround">
+<table class="data" summary="Table listing instructor requets" >
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('login_name');     ?></th>
-	<th scope="col"><?php echo _AT('first_name');   ?></th>
-	<th scope="col"><?php echo _AT('last_name');    ?></th>
-	<th scope="col"><?php echo _AT('email');        ?></th>
+	<!-- REMOVED FOR MOBILE <th scope="col"><?php echo _AT('first_name');   ?></th>-->
+	<!-- <th scope="col"><?php echo _AT('last_name');    ?></th>  -->
+	<!--  <th scope="col"><?php echo _AT('email');        ?></th> -->
 	<th scope="col"><?php echo _AT('notes');        ?></th>
 </tr>
 </thead>
@@ -25,9 +26,10 @@
 			echo '<tr onmousedown="document.form[\'i'.$row['member_id'].'\'].checked = true;rowselect(this);" id="r_'.$row['member_id'].'">';
 			echo '<td><input type="radio" name="id" value="'.$row['member_id'].'" id="i'.$row['member_id'].'" /></td>';
 			echo '<td><label for="i'.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</label></td>';
-			echo '<td>'.AT_print($row['first_name'], 'members.first_name').'</td>';
-			echo '<td>'.AT_print($row['last_name'], 'members.last_name').'</td>';
-			echo '<td>'.AT_print($row['email'], 'members.email').'</td>';
+			// REMOVED FOR MOBILE
+			// echo '<td>'.AT_print($row['first_name'], 'members.first_name').'</td>';
+		    // echo '<td>'.AT_print($row['last_name'], 'members.last_name').'</td>';
+			// echo '<td>'.AT_print($row['email'], 'members.email').'</td>';
 			
 			echo '<td>'.AT_print($row['notes'], 'instructor_approvals.notes').'</td>';
 
@@ -39,4 +41,5 @@
 ?>
 </tbody>
 </table>
+</div>
 </form>
