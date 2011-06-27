@@ -106,7 +106,7 @@ function encrypt_password()
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email"><?php echo _AT('email_address'); ?></label><br />
-		<input id="email" name="email" type="text" size="30" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" /><br />
+		<input id="email" name="email" type="text" size="30" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
 		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email'] || !isset($_POST['submit'])) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
 	</div>
 
@@ -175,8 +175,8 @@ function encrypt_password()
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 		<input type="hidden" name="old_student_id" value="<?php echo $_POST['old_student_id']; ?>" />
 		<div class="row">
-			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-				<input type="text" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
+			<label for="student_id" value="student id"><?php echo _AT('student_id'); ?></label><br />
+				<input type="text" id="student_id" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
 		</div>
 		<div class="row">
 			<input type="checkbox" id="overwrite" name="overwrite" value="1" <?php if ($_POST['overwrite']) { echo 'checked="checked"'; } ?> /><label for="overwrite"><?php echo _AT('overwrite_master');?></label>
