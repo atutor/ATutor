@@ -67,8 +67,8 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
-
-<table summary="Table lists results by Student ID, Login Name, First Name, Second Name, and Last Name." class="data" rules="cols" >
+<div class="table-surround">
+<table summary="Table lists results by Student ID, Login Name, First Name, Second Name, and Last Name." class="data"  >
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -85,7 +85,7 @@
 </tfoot>
 <tbody>
 	<?php while($row = mysql_fetch_assoc($this->result)): ?>
-		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
+		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" onkeydown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
 			<td><input type="radio" name="id" value="<?php 
 				if ($row['member_id']) {
 					echo $row['member_id'];
@@ -119,4 +119,5 @@
 <?php endif; ?>
 
 </table>
+</div>
 </form>
