@@ -86,7 +86,7 @@
 </tfoot>
 <tbody>
 	<?php while($row = mysql_fetch_assoc($this->result)): ?>
-		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
+		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" onkeydown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
 			<td><input type="radio" name="id" value="<?php 
 				if ($row['member_id']) {
 					echo $row['member_id'];
