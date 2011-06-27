@@ -176,7 +176,7 @@ function encrypt_password()
 		<input type="hidden" name="old_student_id" value="<?php echo $_POST['old_student_id']; ?>" />
 		<div class="row">
 			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-				<input type="text" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
+				<input type="text" id="student_id" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
 		</div>
 		<div class="row">
 			<input type="checkbox" id="overwrite" name="overwrite" value="1" <?php if ($_POST['overwrite']) { echo 'checked="checked"'; } ?> /><label for="overwrite"><?php echo _AT('overwrite_master');?></label>
