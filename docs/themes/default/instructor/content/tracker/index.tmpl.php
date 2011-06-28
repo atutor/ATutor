@@ -14,7 +14,7 @@
 	</ul>
 </div>
 
-<table class="data" rules="cols" summary="">
+<table class="data" rules="cols" summary="Usage, including Visits, Unique Visits, average duration, and total duration, of content pages">
 <colgroup>
 	<?php if ($this->col == 'total_hits'): ?>
 		<col />
