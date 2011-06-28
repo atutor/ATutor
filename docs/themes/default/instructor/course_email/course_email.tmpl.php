@@ -24,8 +24,6 @@
 				<?php endforeach; ?>
 			</select>
 		<?php endif; ?>
-		
-		<?php debug($this->group_type_rows);?>
 	</div>
 
 	<div class="row">
