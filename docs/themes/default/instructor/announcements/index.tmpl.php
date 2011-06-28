@@ -1,5 +1,5 @@
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="" rules="cols">
+<table class="data" summary="Title and date of annoucements" rules="cols">
 <colgroup>
 	<?php if ($this->col == 'title'): ?>
 		<col />
@@ -25,7 +25,7 @@
 <tbody>
 	<?php if ($row = mysql_fetch_assoc($this->result)): ?>
 		<?php do { ?>
-			<tr onmousedown="document.form['n<?php echo $row['news_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['news_id']; ?>">
+			<tr onkeydown="document.form['n<?php echo $row['news_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['n<?php echo $row['news_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['news_id']; ?>">
 			
 				<td><input type="radio" name="aid" value="<?php echo $row['news_id']; ?>" id="n<?php echo $row['news_id']; ?>" /></td>
 				
