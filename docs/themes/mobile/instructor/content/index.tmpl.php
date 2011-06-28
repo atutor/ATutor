@@ -44,7 +44,7 @@
 <tbody>
 	<?php if (!empty($this->content)): ?>
 		<?php foreach ($this->content as $row): ?>
-			<tr  onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['content_id']; ?>">
+			<tr onkeydown="document.form['c<?php echo $row['content_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['c<?php echo $row['content_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['content_id']; ?>">
 				<td><input type="radio" name="ctid" value="<?php echo $row['content_id']; ?>" id="c<?php echo $row['content_id']; ?>" /></td>
 				<td><?php echo $row['ordering']; ?></td>
 				<td><label for="c<?php echo $row['content_id']; ?>"><?php echo AT_print($row['title'], 'content.title'); ?></label></td>
