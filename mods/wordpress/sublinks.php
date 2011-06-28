@@ -11,32 +11,26 @@ require('wp_connect.php');
 
 global $db_wp;
 
-
-
 $link_limit = 3;		// Number of links to be displayed on "detail view" box
-$sql = "SELECT ID, post_title, guid FROM ".WP_DB_PREFIX."posts ORDER BY post_modified DESC LIMIT $link_limit";
+$sql = "SELECT ID, post_title, guid FROM ".WP_DB_PREFIX."posts WHERE post_status = 'publish' ORDER BY post_modified DESC LIMIT $link_limit";
 
-//$sql = "SELECT hello_world_id, value FROM ".TABLE_PREFIX."hello_world WHERE course_id=".$_SESSION[course_id].
-//       " ORDER BY value LIMIT $link_limit";
-if(!$result = mysql_query($sql, $db_wp)){
-	echo _AT('wordpress_no_db_info');
-	return 0;
-
+$result = mysql_query($sql, $db_wp);
+$wp_posts = array();
+$i = 1;
+while($row = mysql_fetch_assoc($result)){
+	$wp_posts[$i] = $row;
+	$i++;
 }
 
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
-		/****
-		* SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY are defined in include/lib/constance.lib.inc
-		* SUBLINK_TEXT_LEN determins the maxium length of the string to be displayed on "detail view" box.
-		*****/
-		$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('mods/wordpress/index.php?p='. $row['ID']).'"'.
-		          (strlen($row['value']) > SUBLINK_TEXT_LEN ? ' title="'.$row['value'].'"' : '') .'>'. 
-		          validate_length($row['post_title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
+if($wp_posts != ''){
+	foreach($wp_posts as $key=>$value){
+	$list[] = '<a href="'.AT_BASE_HREF.url_rewrite('mods/wordpress/index.php?p='. $value['ID']).'"'.
+					(strlen($row['value']) > SUBLINK_TEXT_LEN ? ' title="'.$row['value'].'"' : '') .'>'. 
+					validate_length($value['post_title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
 	}
-	return $list;	
+	return $list;
 } else {
-	return 0;
+ 	return 0; 
 }
 
 ?>

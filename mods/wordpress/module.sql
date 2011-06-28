@@ -15,6 +15,7 @@ INSERT INTO `language_text` VALUES ('en', '_module','wordpress_host_url','WordPr
 INSERT INTO `language_text` VALUES ('en', '_module','wordpress_db_name','WordPress Database Name',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','wordpress_db_port','WordPress Database Port',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','wordpress_db_user','WordPress Database User',NOW(),'');
+INSERT INTO `language_text` VALUES ('en', '_module','wordpress_update','WordPress Update',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','wordpress_db_pwd','WordPress Database Password',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','wordpress_db_prefix','WordPress Database Table Prefix',NOW(),'');
 INSERT INTO `language_text` VALUES ('en', '_module','wordpress_save','Save',NOW(),'');
