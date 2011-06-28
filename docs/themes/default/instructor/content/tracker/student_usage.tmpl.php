@@ -25,7 +25,7 @@
 
 <?php if ($_GET['id']) : ?>
 
-	<table class="data static" rules="cols" summary="">
+	<table class="data static" rules="cols" summary="View the usage of a specific student">
 	<thead>
 	<tr>
 		<th scope="col"><?php echo _AT('page'); ?></th>
