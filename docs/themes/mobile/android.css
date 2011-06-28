@@ -165,7 +165,8 @@ p a {
 }
 
 p a:visited {
-	color: #3F2670;
+/*	color: #3F2670;*/
+	color: #4C566C;
     background-color: transparent;
 }
 p a:active {
@@ -436,7 +437,8 @@ td.selected{
 }
 
 .tab a:link, .etab a:visited {
-	color: black;
+	/*color: black;*/
+	color: #4C566C;
 	background-color: white;
 
 }
@@ -497,7 +499,8 @@ td.dropdown {
 	font-weight: normal;
 }
 td.dropdown a, td.dropdown a:visited  {
-	color: #595241;
+	/*color: #595241;*/
+	color: #4C566C;
 	text-decoration: none;
 }
 td.dropdown a:hover {
@@ -602,7 +605,8 @@ table.tabbed-table th.selected {
 }
 
 table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
-	color: black;
+	/*color: black;*/
+	color: #4C566C;
 	text-decoration: none;
 }
 .preference-buttons-container{
@@ -788,18 +792,19 @@ a#editor-link.on {
 }
 
 
-/* for data tables */
+/* for data tables 
 table.data {
 	width: 95%; 
 	margin: 0 auto;
 	padding: 0;
 	color: black;
+	font-size: .8em;
 	text-align: left;
 	-webkit-border-radius:5px;
-	border: #6D7B8D 1px solid;
+	border-right: #6D7B8D 5px solid;
 
 } 
-/* contains the headings */
+/* contains the headings 
 table.data th {
 
 	padding: 0.188em;
@@ -816,7 +821,7 @@ table.data tbody {
 	border-top: 1px solid #B8AE9C;
 	border-bottom: 1px solid #B8AE9C;
 }
-/*headings text*/
+/*headings text
 table.data tbody th {
 	text-align: left;
 
@@ -829,7 +834,8 @@ table.data td {
 	font-style: normal;
 }
 table.data td a:link, a:visited{
-	color: black;
+	/*color: black;
+	color: #4C566C;
 }
 table.data tbody tr:hover {
 	background-color: #efefef;
@@ -854,6 +860,91 @@ table.data tfoot tr:first-child td {
 
 table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 	border-top: 1px solid #B8AE9C;
+	padding: 0.313em;
+	background-image: none;
+	padding-left: 0;
+
+} */
+
+
+/* for data tables */
+.table-surround {
+	border: #A9ADB0 1px solid;
+	border: #cccccc 1px solid;
+	-webkit-border-radius:5px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	
+}
+
+table.data {
+	margin:0;
+	width:100%;
+	padding: 0;
+	color: black;
+	font-size: .8em;
+	text-align: left;
+	background-color: transparent;
+} 
+/* contains the headings */
+table.data th {
+
+	padding: 0.188em;
+}
+
+table.data th a {
+	color: #595241;
+	background-image: url('../default/images/sort.gif');
+	background-repeat: no-repeat;
+	background-position: right;
+}
+
+table.data tbody {
+/*
+	border-top: 1px solid #B8AE9C;
+	border-bottom: 1px solid #B8AE9C;
+	*/
+}
+/*headings text*/
+table.data tbody th {
+	text-align: left;
+
+}
+
+table.data td {
+	padding: 0.188em;
+	color: black;
+	font-size: .875em;
+	font-style: normal;
+}
+table.data td a:link, a:visited{
+	/*color: black;*/
+	color: #4C566C
+}
+table.data tbody tr:hover {
+	background-color: #efefef;
+	cursor: pointer;
+}
+
+table.data tbody tr.selected {
+	background-color: #E9F4F3;
+	cursor: auto;
+	border: 5px solid #E9F4F3;
+}
+
+table.data tfoot {
+	background-color: #F7F3ED;
+}
+
+table.data tfoot tr:first-child td {
+	padding: 0.313em;
+	background-image: url('images/arrow_ltr.gif');
+	background-repeat: no-repeat;
+	background-position: .25em 0.313em;
+}
+
+table.data.static tfoot td, table.data.static tfoot tr:first-child td {
+	/*border-top: 1px solid #B8AE9C;*/
 	padding: 0.313em;
 	background-image: none;
 	padding-left: 0;
@@ -1117,7 +1208,8 @@ optgroup {
 
 /* paging*/
 div.paging {
-
+	margin-top: 1em;
+	text-align: center;
 }
 div.paging ul {
     list-style: none;
@@ -1127,7 +1219,6 @@ div.paging ul {
 	margin-bottom: 1em;
 }
 div.paging li { 
-	float: left;
 	display: inline; 
 	padding-left: 0.125em; 
 	padding-right: 0.125em;
@@ -1145,10 +1236,9 @@ div.paging li a {
 }
 
 div.paging li a:hover, div.paging li a.current {
-   background-color: #5B8E88;
    border-left: 1px solid #000;
    border-right: 1px solid #000;
-   color: white;
+   color: black;
 }
 
 #tl_corner{
@@ -1255,7 +1345,8 @@ div.box a:link {
 }
 
 div.box a:visited {
-	color: #2A6C28;
+	/* color: #2A6C28;*/
+	color: #4C566C;
 	text-decoration: none;
 }
 
@@ -2033,11 +2124,11 @@ ul#topnavlist li a  {
 /*	Sub naviaation list */
 
 div.toolcontainer{
-	width:90%;
-	margin:auto;
-	border:thin solid #e8e8e8;
-	padding-top:1em;
-	padding-bottom:1em;
+	border: #A9ADB0 1px solid;
+	border: #cccccc 1px solid;
+	-webkit-border-radius:5px;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 ul#subnavlist {
