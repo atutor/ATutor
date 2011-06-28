@@ -430,7 +430,8 @@ td.selected{
 }
 
 .tab a:link, .etab a:visited {
-	color: black;
+	/* color: black;*/
+	color: #4C566C;
 	background-color: white;
 
 }
@@ -489,7 +490,8 @@ td.dropdown {
 	font-weight: normal;
 }
 td.dropdown a, td.dropdown a:visited  {
-	color: #595241;
+	/* color: #595241; */
+	color: #4C566C;
 	text-decoration: none;
 }
 td.dropdown a:hover {
@@ -591,7 +593,8 @@ table.tabbed-table th.selected {
 }
 
 table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
-	color: black;
+	/* color: black;*/
+	color: #4C566C;
 	text-decoration: none;
 }
 
@@ -784,15 +787,23 @@ a#editor-link.on {
 
 
 /* for data tables */
+.table-surround {
+	border: #A9ADB0 1px solid;
+	border: #cccccc 1px solid;
+	-webkit-border-radius:5px;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	
+}
+
 table.data {
-	width: 95%; 
-	margin: 0 auto;
+	margin:0;
+	width:100%;
 	padding: 0;
 	color: black;
+	font-size: .8em;
 	text-align: left;
-	-webkit-border-radius:5px;
-	border: #6D7B8D 1px solid;
-
+	background-color: transparent;
 } 
 /* contains the headings */
 table.data th {
@@ -808,8 +819,10 @@ table.data th a {
 }
 
 table.data tbody {
+/*
 	border-top: 1px solid #B8AE9C;
 	border-bottom: 1px solid #B8AE9C;
+	*/
 }
 /*headings text*/
 table.data tbody th {
@@ -824,7 +837,8 @@ table.data td {
 	font-style: normal;
 }
 table.data td a:link, a:visited{
-	color: black;
+	/*color: black;*/
+	color: #4C566C
 }
 table.data tbody tr:hover {
 	background-color: #efefef;
@@ -834,6 +848,7 @@ table.data tbody tr:hover {
 table.data tbody tr.selected {
 	background-color: #E9F4F3;
 	cursor: auto;
+	border: 5px solid #E9F4F3;
 }
 
 table.data tfoot {
@@ -848,7 +863,7 @@ table.data tfoot tr:first-child td {
 }
 
 table.data.static tfoot td, table.data.static tfoot tr:first-child td {
-	border-top: 1px solid #B8AE9C;
+	/*border-top: 1px solid #B8AE9C;*/
 	padding: 0.313em;
 	background-image: none;
 	padding-left: 0;
@@ -872,11 +887,11 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 table.data tfoot input {
 	background-color: #efefef;
 	font-weight: normal;
-	border:  #AAA  solid 1px;
+	/*border:  #AAA  solid 1px;*/
 }
 table.data tfoot input:focus {
 	background-color: #FFDAB9;
-	border:  #AAA  solid 1px;
+	/*border:  #AAA  solid 1px;*/
 }
 
 
@@ -1100,7 +1115,8 @@ optgroup {
 
 /* paging*/
 div.paging {
-
+	margin-top: 1em;
+	text-align: center;
 }
 div.paging ul {
     list-style: none;
@@ -1110,7 +1126,6 @@ div.paging ul {
 	margin-bottom: 1em;
 }
 div.paging li { 
-	float: left;
 	display: inline; 
 	padding-left: 0.125em; 
 	padding-right: 0.125em;
@@ -1128,10 +1143,9 @@ div.paging li a {
 }
 
 div.paging li a:hover, div.paging li a.current {
-   background-color: #5B8E88;
    border-left: 1px solid #000;
    border-right: 1px solid #000;
-   color: white;
+   color: black;
 }
 
 #tl_corner{
@@ -1999,11 +2013,11 @@ ul#topnavlist li a  {
 
 
 div.toolcontainer{
-	width:90%;
-	margin:auto;
-	border:thin solid #e8e8e8;
-	padding-top:1em;
-	padding-bottom:1em;
+	border: #A9ADB0 1px solid;
+	border: #cccccc 1px solid;
+	-webkit-border-radius:5px;
+	margin-top: 1em;
+	margin-bottom: 1em;
 }
 
 ul#subnavlist {
