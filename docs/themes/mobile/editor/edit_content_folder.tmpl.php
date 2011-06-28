@@ -63,7 +63,7 @@ if ($this->shortcuts):
 		<th scope="col"><?php echo _AT('status');         ?></th>
 		<th scope="col"><?php echo _AT('result_release'); ?></th>
 		<th scope="col"><?php echo _AT('pass_score');	  ?></th>
-		<th scope="col"><?php echo _AT('assigned_to');	  ?></th>
+		<!-- REMOVED FOR MOBILE <th scope="col"><?php// echo _AT('assigned_to');	  ?></th>-->
 	</tr>
 	</thead>
 	<tbody>
@@ -81,7 +81,7 @@ if ($this->shortcuts):
 		<!-- <td><?php echo $row['availability']; ?></td> -->
 		<td><?php echo $row['result_release']; ?></td>
 		<td><?php echo $row['pass_score']; ?></td>
-		<td><?php echo $row['assign_to']; ?></td>
+		<!-- REMOVED FOR MOBILE <td><?php echo $row['assign_to']; ?></td>-->
 	</tr>
 	<?php } ?>
 	</tbody>
