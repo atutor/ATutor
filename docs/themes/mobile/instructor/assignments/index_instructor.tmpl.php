@@ -1,6 +1,7 @@
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<table class="data" style="width: 90%;" rules="cols">
+<div class="table-surround">
+<table class="data">
 <colgroup>
 	<?php if ($this->sort == 'title'): ?>
 		<col />
@@ -37,7 +38,7 @@
 </tfoot>
 <tbody>
 	<?php do { ?>
-		<tr onmousedown="document.form['a<?php echo $row['assignment_id']; ?>'].checked = true; rowselect(this);" id="a_<?php echo $row['assignment_id']; ?>_0">
+		<tr onkeydown="document.form['a<?php echo $row['assignment_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['a<?php echo $row['assignment_id']; ?>'].checked = true; rowselect(this);" id="a_<?php echo $row['assignment_id']; ?>_0">
 		
 		<td><input type="radio" id="a<?php echo $row['assignment_id']; ?>" name="assignment" value="<?php echo $row['assignment_id']; ?>" 
 
@@ -74,4 +75,5 @@
 	</tr>
 <?php endif; ?>
 </table>
+</div>
 </form>
