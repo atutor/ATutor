@@ -13,7 +13,7 @@
 	</div>
 
 		
-<table class="data static" summary="" rules="cols">
+<table class="data static" summary="Create a course list by first name, last name, and email.">
 <thead>
 <tr>
 	<th>&nbsp;</th>
