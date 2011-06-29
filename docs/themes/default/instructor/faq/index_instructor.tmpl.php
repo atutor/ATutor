@@ -1,7 +1,7 @@
 
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<table class="data" style="width: 90%;">
+<table class="data" summary="View and edit frequently asked questions for the course" style="width: 90%;">
 <thead>
 <tr>
 	<th>&nbsp;</th>
