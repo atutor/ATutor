@@ -1,6 +1,7 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table summary="" class="data" rules="cols" align="left" style="width: 90%;">
+<div class="table-surround">
+<table summary="List of administrators' login name, real name, and account status" class="data" >
 <colgroup>
 	<?php if ($col == 'login'): ?>
 		<col />
@@ -48,7 +49,7 @@
 	</tr>
 <?php } else {
 		while ($row = mysql_fetch_assoc($this->result)): ?>
-			<tr onmousedown="document.form['m<?php echo $row['login']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['login']; ?>">
+			<tr onkeydown="document.form['m<?php echo $row['login']; ?>'].checked = true;rowselect(this);" onmousedown="document.form['m<?php echo $row['login']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['login']; ?>">
 				<td><input type="radio" name="login" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>" /></td>
 				<td><label for="m<?php echo $row['login']; ?>"><?php echo $row['login'];      ?></label></td>
 				<td><?php echo $row['real_name'];  ?></td>
@@ -74,4 +75,5 @@
 	<?php } ?>
 </tbody>
 </table>
+</div>
 </form>
