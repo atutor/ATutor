@@ -182,9 +182,9 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 					<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
 					<?php if ($page['url'] == $this->current_top_level_page): ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>" class="flc-screenNavigator-backButton"><?php echo $page['title']; ?></a>  </li>
+						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>" class=""><?php echo $page['title']; ?></a>  </li>
 					<?php else: ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>" class="flc-screenNavigator-backButton"><?php echo $page['title']; ?></a></li>
+						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>" class=""><?php echo $page['title']; ?></a></li>
 					<?php endif; ?>
 				
 					<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
@@ -201,7 +201,9 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 <?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
-<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):?>
+<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
+if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
+
 		<li><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
 <?php endif;?>
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
