@@ -1460,6 +1460,7 @@ fieldset {
 	width:95%;
 	margin:0 auto;
 	border:thin #6D7B8D solid;
+	border: thin #A9ADB0 solid;
 	margin-bottom: 1em;
 }
 #shortcuts legend {
