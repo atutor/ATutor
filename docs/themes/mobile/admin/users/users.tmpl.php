@@ -1,12 +1,19 @@
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
-		<div class="row">
+		
 			<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
-		</div>
-
+			<a id="results-hide-show-link" href="javascript:void(0);" tabindex="1">Refine Results</a>
+		
+	
+		
+	<div id="results-hide-show" role="search"  aria-live="assertive">
+	<div id="results-display">
+	
+		
 		<div class="row">
-			<?php echo _AT('account_status'); ?><br />
+		<fieldset>
+			<legend><?php echo _AT('account_status'); ?></legend>
 			<input type="radio" name="status" value="0" id="s0" <?php if ($_GET['status'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('disabled'); ?></label> 
 
 			<input type="radio" name="status" value="1" id="s1" <?php if ($_GET['status'] == 1) { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('unconfirmed'); ?></label> 
@@ -16,16 +23,18 @@
 			<input type="radio" name="status" value="3" id="s3" <?php if ($_GET['status'] == 3) { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('instructor'); ?></label>
 
 			<input type="radio" name="status" value="" id="s" <?php if ($_GET['status'] === '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+		</fieldset>
 		</div>
 
 		<div class="row">
 			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('login_name').', '._AT('first_name').', '._AT('second_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
-
-			<input type="text" name="search" id="search" size="40" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
-			<br/>
-			<?php echo _AT('search_match'); ?>:
+			<fieldset><legend><?php echo _AT('search_match'); ?>:</legend>
 			<input type="radio" name="include" value="all" id="match_all" <?php echo $checked_include_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label> 
 			<input type="radio" name="include" value="one" id="match_one" <?php echo $checked_include_one; ?> /><label for="match_one"><?php echo _AT('search_any_word'); ?></label>
+			</fieldset>
+			<input type="text" name="search" id="search" size="40" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+			<br/>
+		
 		</div>
 
 		<?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
@@ -41,7 +50,9 @@
 				<option value="-1">- <?php echo _AT('select'); ?> -</option>
 				<option value="1" <?php if($_GET['last_login_have']=='1') { echo 'selected="selected"';}?>><?php echo _AT('have'); ?></option>
 				<option value="0" <?php if(isset($_GET['last_login_have']) && $_GET['last_login_have']=='0') { echo 'selected="selected"';}?>><?php echo _AT('have_not'); ?></option>
-			</select> <?php echo _AT('logged_in_within'); ?>: <input type="text" name="last_login_days" size="3" value="<?php echo htmlspecialchars($_GET['last_login_days']); ?>" /> <?php echo _AT('days'); ?> <br />
+			</select> 
+			
+		<label for="last_login_days"><?php echo _AT('logged_in_within'); ?>:</label> <input type="text" id="last_login_days" name="last_login_days" size="3" value="<?php echo htmlspecialchars($_GET['last_login_days']); ?>" /> <?php echo _AT('days'); ?> <br />
 			
 		</div>
 
@@ -50,7 +61,12 @@
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
 	</div>
+	</div> <!-- end #results-display -->
+	</div> <!-- end #results-hide-show -->
+	
 </form>
+
+
 <?php print_paginator($this->page, $this->num_results, $this->page_string . SEP . $this->order .'='. $col, $this->results_per_page); ?>
 <?php echo "<br>";?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -118,8 +134,9 @@
 			<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, true)): ?>
 				<input type="submit" name="enrollment" value="<?php echo _AT('enrollment'); ?>" />
 			<?php endif; ?>	
-			<select name="change_status">
-				<option value="-2"><?php echo _AT('more_options'); ?></option>
+			<label for="change_status"><?php echo _AT('more_options'); ?></label>
+			<select name="change_status" id="change_status">
+			<!-- REMOVED FOR MOBILE	<option value="-2"><?php echo _AT('more_options'); ?></option> -->
 				<optgroup label="<?php echo _AT('status'); ?>">
 					<option value="<?php echo AT_STATUS_STUDENT; ?>"><?php echo _AT('student'); ?></option>
 					<option value="<?php echo AT_STATUS_INSTRUCTOR; ?>"><?php echo _AT('instructor'); ?></option>	
