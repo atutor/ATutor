@@ -1,12 +1,18 @@
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
-		<div class="row">
+		
 			<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
-		</div>
-
+			<a id="results-hide-show-link" href="javascript:void(0);" tabindex="1">Refine Results</a>
+		
+	
+		
+	<div id="results-hide-show" role="search"  aria-live="assertive">
+	<div id="results-display">
+	
 		<div class="row">
-			<?php echo _AT('access'); ?><br />
+		<fieldset>
+			<legend><?php echo _AT('access'); ?></legend>
 
 			<input type="radio" name="access" value="0" id="s0" <?php if ($_GET['access'] == 0) { echo 'checked="checked"'; } ?> /><label for="s0"><?php echo _AT('public'); ?></label> 
 
@@ -15,6 +21,7 @@
 			<input type="radio" name="access" value="2" id="s2" <?php if ($_GET['access'] == 2) { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('private'); ?></label>
 
 			<input type="radio" name="access" value="" id="s" <?php if ($_GET['access'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+		</fieldset>
 		</div>
 
 		<div class="row">
@@ -27,6 +34,8 @@
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
 	</div>
+	</div> <!-- end #results-display -->
+	</div> <!-- end #results-hide-show -->
 </form>
 
 <?php print_paginator($this->page, $this->num_results, $this->page_string . SEP . $this->order .'='. $col, $this->results_per_page); ?>
