@@ -1,7 +1,7 @@
 <?php global $languageManager;?>
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-
-<table summary="ATutor langauge names in English and translated" class="data" rules="cols">
+<div class="table-surround">
+<table summary="ATutor langauge names in English and translated" class="data">
 <colgroup>
 	<col />
 	<col class="sort" />
@@ -44,4 +44,5 @@
 	<?php endforeach; ?>
 </tbody>
 </table>
+</div>
 </form>
