@@ -1,10 +1,15 @@
 
+
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<div class="input-form">
-		<div class="row">
-			<h3><?php echo _AT('results_found', count($this->keys));?>
-			</h3>
-		</div>
+		
+			<h3><?php echo _AT('results_found', count($this->keys)); ?></h3>
+			<a id="results-hide-show-link" href="javascript:void(0);" tabindex="1">Refine Results</a>
+		
+	
+		
+	<div id="results-hide-show" role="search"  aria-live="assertive">
+	<div id="results-display">
 
 		<div class="row">
 			<?php echo _AT('type'); ?><br />
@@ -32,6 +37,8 @@
 			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
 		</div>
 	</div>
+	</div> <!-- end #results-display -->
+	</div> <!-- end #results-hide-show -->
 </form>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
