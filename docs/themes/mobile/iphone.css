@@ -133,9 +133,9 @@ body,ul,li {
     ); 
 }
 
-div#content-link-container{
+div#content-link-container{/*
 	background-color:#F5F5F5;
-	padding:.375em;
+	padding:.375em;*/
 	border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 2px;
 }
@@ -268,6 +268,7 @@ a:link, a:visited  {
 	color: #4C566C;
 	text-decoration: underline;
 }
+
 a:hover {
 	color: #4C566C;
 	text-decoration: underline;
@@ -964,8 +965,8 @@ div#feedback, div#info {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 0.313em;
-	padding-left: 0.313em;
-	padding-right: 0.313em;
+	margin-bottom: 0.313em;
+	padding: 0.313em;
 	font-family: Helvetica, Arial, sans-serif;
 	-webkit-border-radius:5px;
 	border: 1px solid #17B506;
@@ -1019,6 +1020,8 @@ div.news span.date {
 
 .news{
 	padding: 0;
+	margin-bottom: 1em;
+	margin-top: 1em;
 }
 /* home page links */
 div.home-link {
@@ -1096,12 +1099,18 @@ div.required {
 div#content_text {
 	margin-left: 0.313em;
 }
-/*needs to be set to display: none so drawer can open */
-#content{
 
+#content{
+/*
 	padding-top:.5em;
 	margin-top: .5em;
 	background-color: #F5F5F5;
+	*/
+	border: #A9ADB0 1px solid;
+	border: #cccccc 1px solid;
+	-webkit-border-radius:5px;
+	/*-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;*/
 }
 form {
 	display:inline;
@@ -1194,7 +1203,9 @@ div.tabs a:hover, div.tabs a.active {
 
 .headingbox a{
 	color: #4C566C;
-	text-decoration:underline;
+}
+.headingbox a:link, .headingbox a:visited{
+	text-decoration: none;
 }
 div.box {
 }
@@ -1979,7 +1990,7 @@ ul.folder{
 }
 
 
-/*	top navigation */
+/*	hiding/showing top navigation and results-display */
 
 #topnavlist-link {
 	color: white;
@@ -1995,6 +2006,10 @@ ul#topnavlist {
 	background-color: white;
 }
 
+div#results-display{
+	display: none;
+}
+
 ul#topnavlist li {
 	padding: 0;
 	margin: 0;
@@ -2003,8 +2018,19 @@ ul#topnavlist li a.active {
 	color: black;
 	font-style: italic;
 	}
+	
 ul#topnavlist li a:hover, ul#topnavlist li a:focus {
-	color: black;
+	/*Replicates mobile FSS list highlighting, currently there's a bug:
+		see:	http://issues.fluidproject.org/browse/FLUID-4313
+	/*border: 1px solid #e0e0e0;*/
+	background-color: #e6e6e6;
+	color: black; 	
+	
+ 	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    -webkit-tap-highlight-color:url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
 }
 
 ul#topnavlist li a  {
@@ -2056,9 +2082,14 @@ li {
 }
 
 ol#tools>li:hover, ol#tools>li:hover a {
-	border: 1px solid #e0e0e0;
+	/*border: 1px solid #e0e0e0;*/
 	background-color: #e6e6e6;
 	color: black; 	
+	
+ 	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+  
 }
 
 
