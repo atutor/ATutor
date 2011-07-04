@@ -70,7 +70,9 @@ jQuery('#content_link').click(function(e) {
 $this->onload .= "});
 ";
 
-// open/close navigational menu 
+
+// open/close header navigational menu 
+
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#topnavlist').hide();}); 
@@ -79,6 +81,15 @@ jQuery('#topnavlist-link').click(function(e) {
   jQuery('#topnavlist').slideToggle();
 });
 ";
+
+//hide and show results	
+$this->onload .= "
+jQuery('#results-hide-show-link').click(function(e) {
+  e.stopPropagation();
+  jQuery('#results-display').slideToggle();";
+$this->onload .= "});
+";
+	
 
 // Hide the addressbar
 $this->onload .= "
@@ -173,7 +184,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<div id="navigation-bar">
 	<!--  this should be a button on its own  -->
 		<?php if ($this->current_sub_level_page): ?>
-		<div id="topnavlistcontainer" role="navigation" aria-live="assertive" >
+		<div id="topnavlistcontainer" role="menu" aria-live="assertive" >
 		<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 			<ul id="topnavlist"  class="fl-list-menu">
 				<?php $accesscounter = 0; //initialize ?>
@@ -182,13 +193,17 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 					<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
 					<?php if ($page['url'] == $this->current_top_level_page): ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>" class=""><?php echo $page['title']; ?></a>  </li>
+						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>" class="flc-screenNavigator-backButton"><?php echo $page['title']; ?></a>  </li>
 					<?php else: ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>" class=""><?php echo $page['title']; ?></a></li>
+						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>" class="flc-screenNavigator-backButton"><?php echo $page['title']; ?></a></li>
 					<?php endif; ?>
 				
 					<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+					
 				<?php endforeach; ?>
+				<?php if(!$this->just_social): ?>
+				<li role="menuitem"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
+				<?php endif; ?> 
 			</ul>
 		</div>
 		<?php endif; ?>
