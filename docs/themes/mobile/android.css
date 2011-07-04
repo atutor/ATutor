@@ -1,16 +1,14 @@
-/* Style is optimized for Android 2.2, tested on an HTC Dream device. 
-Note that -webkit properties create errors in the CSS validator. 
+/* Style is optimized for iphone. Note that -webkit properties 
+create errors in the CSS validator. 
 Classes beginning with ".fl-" are overriding Mobile FSS, 
 see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
 for more details. 
 */
-
 html, body{
 	height: 100%;
 }
 #main{
-	padding-bottom: 
-	2.3em;
+	padding-bottom: 2.3em;
 	overflow: auto;
 }
 
@@ -30,6 +28,7 @@ body,ul,li {
 	padding:0;
 	font-size:1.063em;
 }
+
 #header-section-title {
 	text-align: center;
 	background-image: -webkit-gradient(linear, left top, left bottom,
@@ -39,16 +38,13 @@ body,ul,li {
     color-stop(0.5, #6d8cb3),
     to(#4b6b90)
     ); 
-	
-	
 }
+
 .fl-theme-iphone .fl-navbar{
 	border: none;
 	border-top: none;
 }
-.fl-tabs{
 
-}
 .fl-navbar a{
 	font-size: 0.969em;
 	background-image: -webkit-gradient(linear, left top, left bottom,
@@ -59,6 +55,7 @@ body,ul,li {
     to(#4b6b90)
     ); 
 }
+
 .fl-navbar .fl-tabs {
 	padding-top: .3em;
 	padding-bottom: .3em;
@@ -73,12 +70,14 @@ body,ul,li {
 	background-color: #4b6b90;
 	height: 2.5em; 
 }
+
 #navigation-bar{
  	height: 2.5em; 
     border-bottom: .5px solid black;
     padding-bottom: .3em;
      
 }
+
 #wrapper{
 	width:100%;
 	overflow:hidden;
@@ -93,7 +92,8 @@ body,ul,li {
 	color: #4C566C;
 	color: white;
 }
-/*this CSS creates a button that looks exactlty like a Mobile FSS tab.*/
+
+/*this CSS creates a button that looks exactly like a Mobile FSS tab.*/
 .navigation-bar-button{
     border-width:5px;
     -webkit-border-radius: 5px;
@@ -103,7 +103,7 @@ body,ul,li {
 	position: relative;
 	top: .69em; 
 	left: 0.188em; 
-    /* Default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
+    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -114,7 +114,7 @@ body,ul,li {
     -webkit-border-left-image: none;
     -webkit-background-origin: border;
     -webkit-background-clip: border;
-    /* To mimick the mobile FSS scolor scheme (iphone) uncomment these lines 
+    /* to mimick the mobile FSS scolor scheme (iphone) uncomment these lines 
 	background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#9aafca),
         color-stop(0.5, #6d8cb3),
@@ -133,9 +133,9 @@ body,ul,li {
     ); 
 }
 
-div#content-link-container{
+div#content-link-container{/*
 	background-color:#F5F5F5;
-	padding:.375em;
+	padding:.375em;*/
 	border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 2px;
 }
@@ -151,6 +151,7 @@ div#content-link-container{
 	display: inline;
 
 }
+
 /* main body attributes */
 p {
     text-align: left;
@@ -165,8 +166,7 @@ p a {
 }
 
 p a:visited {
-/*	color: #3F2670;*/
-	color: #4C566C;
+	color: #3F2670;
     background-color: transparent;
 }
 p a:active {
@@ -217,12 +217,10 @@ h5 {
 }
 
 
-
 /* Preferences tabs */
 .etabbed-list-container	{
 	padding:0;
 	margin: 0;
-	font-size:inherit;
 	width:70%;
 	clear: left;
 	height: 3em;
@@ -231,23 +229,17 @@ h5 {
 .prefs_buttontab {
 	padding:0;
 	margin: 0;
-	color: #4C566C;
 	white-space: nowrap;
-	background-color: #ffffff;
-	margin-bottom: .5px;
-	border:0;
-	font-weight:500; 
-	text-decoration: underline;
 }
 .prefs_tab{
-	padding:0.7em 0 0;
+	padding:0.5em 0.3em 0;
 	margin: 0;
 	white-space: nowrap;
     display: inline;
 }
 
 .prefs_tab_selected{  
-	padding:0.9em 0 0;
+	padding:0.7em 0.3em 0;
 	margin: 0;
 	margin: 0px;
 	font-weight:bold;
@@ -255,6 +247,7 @@ h5 {
 	white-space: nowrap;
     display: inline;
 }
+
 
 
 /*  Table of content attributes*/
@@ -275,6 +268,7 @@ a:link, a:visited  {
 	color: #4C566C;
 	text-decoration: underline;
 }
+
 a:hover {
 	color: #4C566C;
 	text-decoration: underline;
@@ -437,7 +431,7 @@ td.selected{
 }
 
 .tab a:link, .etab a:visited {
-	/*color: black;*/
+	/* color: black;*/
 	color: #4C566C;
 	background-color: white;
 
@@ -467,9 +461,7 @@ td.selected{
 }
 
 
-
 /* the side menu */
-/* the side menu heading */
 td.dropdown-heading {
 	background-color: #DBFDD4;
 	color: #595241;
@@ -499,7 +491,7 @@ td.dropdown {
 	font-weight: normal;
 }
 td.dropdown a, td.dropdown a:visited  {
-	/*color: #595241;*/
+	/* color: #595241; */
 	color: #4C566C;
 	text-decoration: none;
 }
@@ -546,11 +538,8 @@ p.search-description {
 	padding: 0.125em;
 }
 
-/* preferences */
+/*preferences*/
 
-.input-form{
-	width: 100%;
-}
 .input-form 
 table.tabbed-table {
 	width: 100%;
@@ -605,10 +594,12 @@ table.tabbed-table th.selected {
 }
 
 table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
-	/*color: black;*/
+	/* color: black;*/
 	color: #4C566C;
 	text-decoration: none;
 }
+
+
 .preference-buttons-container{
 	background-color: red;
 	height: 2.5em;
@@ -619,6 +610,14 @@ table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
 div.preference-buttons-container li{
 	display: inline; 
 	float: right;
+}
+
+.prefs_tab_selected{
+	font-style: italic;
+	width: 10%;
+}
+.prefs_tab{
+	width: 10%;
 }
 
 .etabbed-table{
@@ -644,7 +643,7 @@ div.preference-buttons-container li{
 }
 #display-settings-preview{
 	width:90%;
-	height:20em;
+	height:20em; 
 	margin: 0 auto;
 }
 #feedback{
@@ -752,10 +751,6 @@ div#top-links {
 div#top-links a:link, div#top-links a:visited {
 	text-decoration:none;
 }
-div#top-links a:focus{
-	/*color:black;
-	background-color:#F6EAD6;*/
-}
 
 #jumpmenu:focus{
 	background-color:#F6EAD6;
@@ -790,81 +785,6 @@ a#editor-link.on {
 	background-repeat: no-repeat;
 	background-position: 0 0.125em;
 }
-
-
-/* for data tables 
-table.data {
-	width: 95%; 
-	margin: 0 auto;
-	padding: 0;
-	color: black;
-	font-size: .8em;
-	text-align: left;
-	-webkit-border-radius:5px;
-	border-right: #6D7B8D 5px solid;
-
-} 
-/* contains the headings 
-table.data th {
-
-	padding: 0.188em;
-}
-
-table.data th a {
-	color: #595241;
-	background-image: url('../default/images/sort.gif');
-	background-repeat: no-repeat;
-	background-position: right;
-}
-
-table.data tbody {
-	border-top: 1px solid #B8AE9C;
-	border-bottom: 1px solid #B8AE9C;
-}
-/*headings text
-table.data tbody th {
-	text-align: left;
-
-}
-
-table.data td {
-	padding: 0.188em;
-	color: black;
-	font-size: .875em;
-	font-style: normal;
-}
-table.data td a:link, a:visited{
-	/*color: black;
-	color: #4C566C;
-}
-table.data tbody tr:hover {
-	background-color: #efefef;
-	cursor: pointer;
-}
-
-table.data tbody tr.selected {
-	background-color: #E9F4F3;
-	cursor: auto;
-}
-
-table.data tfoot {
-	background-color: #F7F3ED;
-}
-
-table.data tfoot tr:first-child td {
-	padding: 0.313em;
-	background-image: url('images/arrow_ltr.gif');
-	background-repeat: no-repeat;
-	background-position: .25em 0.313em;
-}
-
-table.data.static tfoot td, table.data.static tfoot tr:first-child td {
-	border-top: 1px solid #B8AE9C;
-	padding: 0.313em;
-	background-image: none;
-	padding-left: 0;
-
-} */
 
 
 /* for data tables */
@@ -968,11 +888,11 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 table.data tfoot input {
 	background-color: #efefef;
 	font-weight: normal;
-	border:  #AAA  solid 1px;
+	/*border:  #AAA  solid 1px;*/
 }
 table.data tfoot input:focus {
 	background-color: #FFDAB9;
-	border:  #AAA  solid 1px;
+	/*border:  #AAA  solid 1px;*/
 }
 
 
@@ -1045,8 +965,8 @@ div#feedback, div#info {
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 0.313em;
-	padding-left: 0.313em;
-	padding-right: 0.313em;
+	margin-bottom: 0.313em;
+	padding: 0.313em;
 	font-family: Helvetica, Arial, sans-serif;
 	-webkit-border-radius:5px;
 	border: 1px solid #17B506;
@@ -1071,19 +991,7 @@ div#help {
 	background-color: #E9F4F3;
 	color: #024C41;
 }
-/*
-div#info {
-	width: 50%;
-	margin-left: auto;
-	margin-right: auto;
-	margin-top:  0.938em;
-	margin-bottom:  0.938em;
-	border: 1px solid #B8AE9C;
-	padding: 0.313em;
-	background-color: #EFE6FF;
-	color: #595241;
-	font-weight: bold;
-} */
+
 
 div#warning {
 	width: 95%;
@@ -1191,12 +1099,18 @@ div.required {
 div#content_text {
 	margin-left: 0.313em;
 }
-/*needs to be set to display: none so drawer can open */
+
 #content{
-	display: none;
+/*
 	padding-top:.5em;
 	margin-top: .5em;
 	background-color: #F5F5F5;
+	*/
+	border: #A9ADB0 1px solid;
+	border: #cccccc 1px solid;
+	-webkit-border-radius:5px;
+	/*-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;*/
 }
 form {
 	display:inline;
@@ -1250,16 +1164,9 @@ div.paging li a:hover, div.paging li a.current {
 	background-repeat: no-repeat;
 	padding:0;
 }
-div.top {
-    /* Top space
-    background-color: #595241;
-	color: #FFF;
-    margin: 0;
-    padding: 0;
-	padding-top:0.563em; */
-}
+
 div.tabs {
-	/* Navigational Plone Tabs */
+	/* Navigational Plone Tabs(tm), implemented by customizing the a tag - they are surprisingly elegant. The power of CSS runs strong in these :) */
     background-color: transparent;
 	border-collapse: collapse;
 	border-bottom: 1px solid #B8AE9C;
@@ -1349,8 +1256,7 @@ div.box a:link {
 }
 
 div.box a:visited {
-	/* color: #2A6C28;*/
-	color: #4C566C;
+	color: #2A6C28;
 	text-decoration: none;
 }
 
@@ -1464,7 +1370,7 @@ fieldset {
 	width:95%;
 	margin:0 auto;
 	border:thin #6D7B8D solid;
-	border: thin #A9ADB0 solid;
+	border:thin #A9ADB0 solid;
 	margin-bottom: 1em;
 }
 #shortcuts legend {
@@ -1784,7 +1690,6 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:5px;
 }
-
 li.top-tool a {  font-weight: bold; } /* ol#tools>li>a */ 
 
 li.child-tool a { 
@@ -1803,7 +1708,6 @@ ul.child-top-tool:before {
 	content: " : ";
 }
 
-/* ol#tools>li>ul>li, */ 
 li.child-tool {
 	display: inline;
 	margin-right: 0.313em;
@@ -1859,11 +1763,8 @@ dl.browse-course dd {
 
 /*  form fields grouping for WCAG 2.0 conformance*/
 
-.group_form{
-
-}
 fieldset.group_form{
-	
+	width:95%;
 	margin:0 auto;
 	margin-bottom: 1em;
 	border: 1px #6D7B8D solid;
@@ -1935,8 +1836,6 @@ h2.alternatives_to{
 	margin-top: 0.75em;
 	font-size: 90%;
 	color: #A50707;
-
-/*	position: relative;*/
 }
 
 div.alternative_box{
@@ -1946,7 +1845,6 @@ div.alternative_box{
 	padding: 0.313em;
 	min-width: 9.375em;
 	background-color: #fff;
-/*	position: relative;*/
 }
 
 div.alternative_box legend {
@@ -2012,7 +1910,6 @@ div.home_box {
 	padding: 0;
 	height:9.8em;
 }
-
 
 .inside_box{
 	width:100%;
@@ -2092,7 +1989,8 @@ ul.folder{
 	padding:0em;
 }
 
-/*	Top navlist */
+
+/*	hiding/showing top navigation and results-display */
 
 #topnavlist-link {
 	color: white;
@@ -2108,6 +2006,10 @@ ul#topnavlist {
 	background-color: white;
 }
 
+div#results-display{
+	display: none;
+}
+
 ul#topnavlist li {
 	padding: 0;
 	margin: 0;
@@ -2116,9 +2018,10 @@ ul#topnavlist li a.active {
 	color: black;
 	font-style: italic;
 	}
+	
 ul#topnavlist li a:hover, ul#topnavlist li a:focus {
 	/*Replicates mobile FSS list highlighting, currently there's a bug:
-	see:	http://issues.fluidproject.org/browse/FLUID-4313
+		see:	http://issues.fluidproject.org/browse/FLUID-4313
 	/*border: 1px solid #e0e0e0;*/
 	background-color: #e6e6e6;
 	color: black; 	
@@ -2128,7 +2031,6 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus {
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
     -webkit-tap-highlight-color:url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-	
 }
 
 ul#topnavlist li a  {
@@ -2136,8 +2038,6 @@ ul#topnavlist li a  {
  	text-decoration: none;
 }
 
-
-/*	Sub naviaation list */
 
 div.toolcontainer{
 	border: #A9ADB0 1px solid;
@@ -2162,13 +2062,17 @@ ul#subnavlist li {
 ul#subnavlist li#test{
 	display: none;
 }
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{ /*
+  	color: black;
+	text-decoration:none;*/
+}
 
 ul#subnavlist li a, ul#subnavlist li a:visited {
 	color: #4C566C;
 }
 
 
-/* List attributes */
+/* list attributes */
 ul {
 	list-style: none;
 }
@@ -2176,8 +2080,8 @@ li {
 	color: black;
 	list-style: none;
 }
+
 ol#tools>li:hover, ol#tools>li:hover a {
-	/*Replicates mobile FSS list highlighting*/
 	/*border: 1px solid #e0e0e0;*/
 	background-color: #e6e6e6;
 	color: black; 	
@@ -2185,15 +2089,16 @@ ol#tools>li:hover, ol#tools>li:hover a {
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+  
 }
 
-#subnavigation, #subnavigation a:link, #subnavigation a:visited{
-}
 
-#contentwrapper{
-	background-color: white;
-	overflow:auto;
-	padding-bottom: 1em;
+#content-contentwrapper{
+	height:100%;
+    position:relative;	
+	z-index:1000;			
+	width:100%;
+	overflow:hidden;
 }
 
 #leftcolumn{
@@ -2206,7 +2111,6 @@ ol#tools>li:hover, ol#tools>li:hover a {
 #copyright{
 	font-size: 0.5em;
 }
-
 #gototop{
 	text-align: center;
 	color: #4B6B90;
@@ -2281,9 +2185,9 @@ div .divider {
 	font-size:.8em;
 }
 
-
 div.contentbox, input-form{
 
+	padding:.5em;
 	background-color: #ffffff;
     overflow:hidden;
     border: #A9ADB0 solid 1px;
@@ -2310,6 +2214,7 @@ div.social-wrapper{
 	width: 100%;
 }
 
+
 .contentbox-a{
     width: 100%;
 }
@@ -2321,4 +2226,6 @@ div.logo{
 float:left;
 clear:right;
 margin-left:2em;}
+
+
 
