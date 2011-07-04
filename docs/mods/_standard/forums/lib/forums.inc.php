@@ -258,7 +258,7 @@ function delete_forum($forum_id) {
 }
 
 function print_entry($row) {
-	global $page,$system_courses, $forum_info;
+	global $page, $system_courses, $forum_info;
 	static $counter;
 	$counter++;
 
