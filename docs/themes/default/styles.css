@@ -2509,5 +2509,9 @@ height:3.5em;
 width:3.5em;
 font-size:100%;
 }
-
+/*social networking box on admin page */
+#social_networking{
+padding: 1em;
+margin: 0;
+}
 
