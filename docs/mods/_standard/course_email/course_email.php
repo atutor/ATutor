@@ -177,6 +177,7 @@ if ($row['cnt'] == 0) {
 $sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
 $result = mysql_query($sql, $db);
 
+
 $group_type_rows = array(); 
 
 while ($row = mysql_fetch_assoc($result)) {  
