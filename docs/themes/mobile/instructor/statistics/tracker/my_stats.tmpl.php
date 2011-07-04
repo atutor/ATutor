@@ -1,5 +1,6 @@
 <?php global $contentManager;?>
-<table class="data static" rules="cols" summary="">
+<div class="table-surround">
+<table class="data static" summary="">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('page'); ?></th>
@@ -39,4 +40,5 @@
 	?>
 </tbody>
 </table>
+</div>
 
