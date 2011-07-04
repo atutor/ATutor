@@ -1,15 +1,19 @@
 <?php if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
-	<?php if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?>
-			<div id="gototop">		
+
+<?php //if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?>
+		<!-- 	GO TO TOP LINK REMOVED FOR MOBILE
+		<div id="gototop">		
 				<br />
 				<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#navigation-contentwrapper" title="<?php echo _AT('goto_content'); ?> Alt-c" ><?php echo _AT('goto_top'); ?>
 				<img src="<?php echo $this->base_path; ?>themes/mobile/images/arrow-up.png" alt="<?php echo _AT('goto_top'); ?> Alt-c" border="0"/> 
 				
 				</a>
 			</div>  
-		<?php endif; ?> 
+		 -->
+<?php // endif; ?> 
+
 </div> <!-- end innner-contentwrapper -->	
-</div> <!-- end contentcolumn? -->
+</div> <!-- end contentcolumn -->
 </div> <!-- end contentwrapper -->
 </div> <!-- end main -->
 </div> <!-- end wrapper -->
