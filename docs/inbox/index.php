@@ -74,18 +74,14 @@ if (isset($_GET['view']) && $_GET['view']) {
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
-?>
 
-<?php
 // since Inbox isn't a module, it can't have a cron job.
 // so, we delete the expires sent messages with P =  1/7.
 if (!rand(0, 6)) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND TO_DAYS(date_sent) < (TO_DAYS(NOW()) - {$_config['sent_msgs_ttl']}) LIMIT 100";
 	mysql_query($sql, $db);
 }
-?>
 
-<?php 
 $savant->assign('result', $result);
 $savant->assign('result_messages', $result_messages);
 $savant->display('inbox/inbox.tmpl.php');
