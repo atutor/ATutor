@@ -87,7 +87,7 @@ echo '<div id="container"><br />';
 			echo '	<input type="hidden" name="show_guide" value="'.$_POST['show_guide'].'" />'."\n\r";
 		else if (isset($_SESSION['prefs']['PREF_SHOW_GUIDE']))
 			echo '	<input type="hidden" name="show_guide" value="'.$_SESSION['prefs']['PREF_SHOW_GUIDE'].'" />'."\n\r";
-		
+	
 		if (isset($_POST['content_editor']))
 			echo '	<input type="hidden" name="content_editor" value="'.$_POST['content_editor'].'" />'."\n\r";
 		else if (isset($_SESSION['prefs']['PREF_CONTENT_EDITOR']))
@@ -274,6 +274,8 @@ else  // user login
 <?php
 if($_SESSION['course_id'] == "-1"){
 echo '</div>';
+
 }
+
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

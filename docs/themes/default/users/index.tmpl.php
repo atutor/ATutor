@@ -1,15 +1,13 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <div id="my_courses_container">
-
 <table class="data" style="width:100%;">
 <tr><th></th>
 <th><?php echo _AT('course'); ?></th>
 <th><?php echo _AT('instructor'); ?></th>
 <th><?php echo _AT('status'); ?></th>
-<th><?php echo _AT('shortcuts'); echo $title; ?></th>
+<th><?php echo _AT('shortcuts'); ?></th>
 </tr>
-
 <?php foreach ($this->courses as $row):
 	static $counter;
 	$counter++;
@@ -96,8 +94,7 @@
 <?php endforeach; ?>
 </table>
 </div>
-Hello world
-<?php echo $this->all_news; ?>
+
 <div class="current_box">
 <div class="current_head"> <h3><?php echo _AT('things_current'); ?></h3></div>
     <?php
