@@ -30,7 +30,8 @@
 ?>
 	
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form" >
-<table class="data" summary="" rules="rows" width="55%">
+<div class="table-surround">
+<table class="data" summary="" >
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -83,7 +84,8 @@
 		echo '</label></td>';
 	
 		echo '<td valign="middle" align="left" nowrap="nowrap">';
-		echo AT_date(_AT('inbox_date_format'),  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
+		echo AT_date(_AT('forum_date_format'),  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
+		//echo AT_date(_AT('%D',  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 		echo '</tr>';
 	} while ($row = mysql_fetch_assoc($this->result)); ?>
@@ -94,4 +96,5 @@
 <?php endif; ?>
 </tbody>
 </table>
+</div>
 </form>
