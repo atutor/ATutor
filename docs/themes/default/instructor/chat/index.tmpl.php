@@ -4,7 +4,7 @@
 	
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-	<table class="data" rules="cols" summary="">
+	<table class="data" rules="cols" summary="List of transcripts for chat">
 	<colgroup>
 		<?php if ($this->col == 'name'): ?>
 			<col />
@@ -40,7 +40,7 @@
 
 	<tbody>
 	<?php foreach ($this->tran_files as $file => $date) { ?>
-		<tr onmousedown="document.form['<?php echo $file; ?>'].checked = true; rowselect(this);" id="r_<?php echo $file; ?>">
+		<tr onkeydown="document.form['<?php echo $file; ?>'].checked = true; rowselect(this);" onmousedown="document.form['<?php echo $file; ?>'].checked = true; rowselect(this);" id="r_<?php echo $file; ?>">
 			<td><input type="radio" name="file" value="<?php echo $file; ?>" id="<?php echo $file; ?>" /></td>
 
 			<td><label for="<?php echo $file; ?>"><?php echo $file; ?></label></td>
