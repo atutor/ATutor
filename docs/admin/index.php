@@ -55,7 +55,7 @@ if ($_config['allow_instructor_requests'] && admin_authenticate(AT_ADMIN_PRIV_US
 			$result = mysql_query($sql, $db);
 			$row    = mysql_fetch_assoc($result);
 			$instructor_row[] = $row;
-			$savant->assign('row_instructor', $row);
+			$savant->assign('row_instructor', $instructor_row);
 }
 
 
