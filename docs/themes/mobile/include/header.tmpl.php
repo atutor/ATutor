@@ -243,7 +243,7 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 	
 	
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
-		<div id="content-link-container" role="navigation" aria-live="assertive">
+		<div id="content-link-container" role="navigation" aria-live="assertive" class="fl-list-menu">
 		<a id="content_link" href="javascript:void(0);"><?php echo _AT("content_navigation"); ?></a>
 		<div id="content" style=" display: none; position: relative; z-index: 1;">
 		<?php $contentManager->printMainMenu(); ?>
