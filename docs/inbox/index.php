@@ -63,35 +63,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_GET['view']) && $_GET['view']) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE message_id=$_GET[view] AND to_member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
+	$result_messages = mysql_query($sql, $db);
 
-	if ($row = mysql_fetch_assoc($result)) {
-?>
-	<ul id="inbox-msg">
-	<li>
-		<div class="forum-post-author">
-			<a href="profile.php?id=<?php echo $row['from_member_id']; ?>" class="title"><?php echo get_display_name($row['from_member_id']); ?></a><br />
-			<?php print_profile_img($row['from_member_id']); ?>
-		</div>
-
-		<div class="forum-post-content">
-			<h3><?php echo AT_print($row['subject'], 'messages.subject'); ?></h3>
-			<div>
-				<div class="forum-post-ctrl">
-					<a href="inbox/send_message.php?reply=<?php echo $_GET['view']; ?>"><?php echo _AT('reply'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
-				</div>
-				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME); ?></p>
-			</div>
-
-			<div class="body">
-				<p><?php echo AT_print($row['body'], 'messages.body'); ?></p>
-			</div>
-		</div>
-
-	</li>
-	</ul><br /><br />
-	<?php
-	}
 } else if (isset($_POST['delete'], $_POST['id'])) {
 	$hidden_vars['ids'] = implode(',', $_POST['id']);
 
@@ -102,72 +75,6 @@ if (isset($_GET['view']) && $_GET['view']) {
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
 $result = mysql_query($sql,$db);
 ?>
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form" >
-<table class="data" summary="" rules="rows" width="55%">
-<thead>
-<tr>
-	<th scope="col">&nbsp;</th>
-	<th scope="col">&nbsp;</th>
-	<th scope="col" ><?php echo _AT('from');   ?></th>
-	<th scope="col" ><?php echo _AT('subject');?></th>
-	<th scope="col" ><?php echo _AT('date');   ?></th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-	<td colspan="5"><input type="submit" name="delete" value="<?php echo _AT('delete'); ?>"/></td>
-</tr>
-</tfoot>
-<tbody>
-<?php if ($row = mysql_fetch_assoc($result)): ?>
-	<?php do { ?>
-		<?php if ($row['message_id'] == $_GET['view']): ?>
-			<tr class="selected">
-		<?php else: ?>
-			<tr onmousedown="document.form['m<?php echo $row['message_id']; ?>'].checked = !document.form['m<?php echo $row['message_id']; ?>'].checked; rowselectbox(this, document.form['m<?php echo $row['message_id']; ?>'].checked, '');" id="r_<?php echo $row['message_id']; ?>_1">
-		<?php endif; ?>
-		<td><input type="checkbox" name="id[]" value="<?php echo $row['message_id']; ?>" id="m<?php echo $row['message_id']; ?>" <?php if (isset($_POST['id']) && in_array($row['message_id'], $_POST['id'])) { echo 'checked="checked"'; } ?> title="<?php echo _AT('delete').': '.AT_print($row['subject'], 'messages.subject');?>" onmouseup="this.checked=!this.checked" /></td>
-		<td valign="middle">
-		<?php
-		if ($row['new'] == 1)	{
-			echo _AT('new');
-		} else if ($row['replied'] == 1) {
-			echo _AT('replied');
-		}
-		echo '</td>';
-
-		$name = get_display_name($row['from_member_id']);
-
-		echo '<td align="left" valign="middle">';
-
-		if ($_GET['view'] != $row['message_id']) {
-			echo $name;
-		} else {
-			echo '<strong>'.$name.'</strong>';
-		}
-		echo '</td>';
-
-		echo '<td><label for="m'.$row['message_id'].'">';
-		if ($_GET['view'] != $row['message_id']) {
-			echo '<a href="'.$_SERVER['PHP_SELF'].'?view='.$row['message_id'].'">'.AT_print($row['subject'], 'messages.subject').'</a>';
-		} else {
-			echo '<strong>'.AT_print($row['subject'], 'messages.subject').'</strong>';
-		}
-		echo '</label></td>';
-	
-		echo '<td valign="middle" align="left" nowrap="nowrap">';
-		echo AT_date(_AT('inbox_date_format'),  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
-		echo '</td>';
-		echo '</tr>';
-	} while ($row = mysql_fetch_assoc($result)); ?>
-<?php else: ?>
-	<tr>
-		<td colspan="5"><?php echo _AT('none_found'); ?></td>
-	</tr>
-<?php endif; ?>
-</tbody>
-</table>
-</form>
 
 <?php
 // since Inbox isn't a module, it can't have a cron job.
@@ -178,4 +85,8 @@ if (!rand(0, 6)) {
 }
 ?>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php 
+$savant->assign('result', $result);
+$savant->assign('result_messages', $result_messages);
+$savant->display('inbox/inbox.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
