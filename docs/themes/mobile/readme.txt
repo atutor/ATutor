@@ -10,9 +10,11 @@ Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.htm
 	
 GLOBAL TASKS & BUGS (for all devices)----------------------------------------------------------------
 - A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php
-- MOBILE FSS BUG: Create a workaround to deal with Mobile FSS bug (navigation UL doesn't highlight upon tap). See: http://issues.fluidproject.org/browse/FLUID-4313
+- MOBILE FSS BUG: Create a workaround to deal with Mobile FSS bug (navigation UL doesn't highlight upon tap). 
+    See: http://issues.fluidproject.org/browse/FLUID-4313
     Currently, override (e.g. of "ul#topnavlist li a:hover, ul#topnavlist li a:focus" rule) doesn't work. 
-- Instructor user: Content menu open/close stays highlighted after close - touch highlighting. 
+- Instructor user: Content menu open/close stays highlighted after close - touch highlighting. July 7/2011
+- Disable highlighting for navigation button July 7/2011
 - Instructor user: remove on keydowns (only present on index pages) 
 - Instructor user: Improve styling: /docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup
 - a11y/html-check the Instructor mobile pages. 
@@ -20,7 +22,7 @@ GLOBAL TASKS & BUGS (for all devices)-------------------------------------------
 - Admin user: Improve styling: http://localhost/GSoC2011/docs/admin/error_logging.php
 - Is there a way to handle long names so they don't break the styling:  e.g.: /docs/admin/cron_config.php 
 - Done ? Create course / Edit course / Course properties for admin / instructor users. 
-- default student leader: preferences. 
+- default student: preferences. 
 - Take commented-out visited link code and erase from android.css and iphone.css
 - Student user: properties page isn't themed. Why? 
 - template groups/ social networking. 
