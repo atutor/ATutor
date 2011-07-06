@@ -66,6 +66,7 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 $this->onload .= "
 jQuery('#content_link').click(function(e) {
   e.stopPropagation();
+  
   jQuery('#content').slideToggle();";
 $this->onload .= "});
 ";
@@ -264,7 +265,7 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 		<div class="sequence-links">
 		<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 			<?php if ($this->sequence_links['resume']): ?>
-					<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo $this->sequence_links['resume']['title']; ?></a>
+					<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?></a>
 			<?php else:
 				if ($this->sequence_links['previous']): ?>
 					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" class="previous-next" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> </a>
