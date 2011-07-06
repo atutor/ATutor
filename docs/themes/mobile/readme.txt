@@ -26,6 +26,7 @@ GLOBAL TASKS & BUGS (for all devices)-------------------------------------------
 - Take commented-out visited link code and erase from android.css and iphone.css
 - Student user: properties page isn't themed. Why? 
 - template groups/ social networking. 
+- scrub documentation/comments
 
 
 iPHONE TASKS / BUGS / INFO ----------------------------------------------------------------
