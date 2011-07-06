@@ -1,14 +1,14 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <div id="my_courses_container">
-<ul class="my-courses-list-ul" style="padding:0">
+<ol id="tools">
 
 <?php foreach ($this->courses as $row):
 	static $counter;
 	$counter++;
 ?>
 
-<li class="my-courses-list">
+<li class="top-tool">
   <?php echo '<a href="'.url_rewrite('bounce.php?course=' . $row['course_id']) . '"> '.htmlentities($row['title']).'</a>' ?>
   <?php if ($row['last_cid']): ?>
 	 	  <a class="my-courses-resume" href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo $_base_href;  ?>themes/default/images/resume.png" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" /></a>
