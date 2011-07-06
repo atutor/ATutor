@@ -243,7 +243,7 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 	
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
 		<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-		<a id="content_link" href="javascript:void(0);"><?php echo _AT("content_navigation"); ?></a>
+		<a id="content_link" href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
 		<div id="content" style=" display: none; position: relative; z-index: 1;">
 		<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript">
@@ -254,11 +254,7 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 	<?php endif; ?>
 <div id="inner-contentwrapper" class="fl-container">
 
-	
-
-
-	<div id="contentcolumn">	
-		<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
+	<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
 			<!-- style="margin-left:0.5em;width:99%;" -->
 		<?php endif; ?>
 		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
@@ -278,6 +274,10 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 			&nbsp;
 		</div> <!-- end sequence-links -->
 		<?php endif; ?>
+
+
+	<div id="contentcolumn">	
+		
 
 	<!-- the page title -->
 	<a name="content" title="<?php echo _AT('content'); ?>"></a>
