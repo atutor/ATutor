@@ -74,7 +74,7 @@ body,ul,li {
 #navigation-bar{
  	height: 2.5em; 
     border-bottom: .5px solid black;
-    padding-bottom: .3em;
+   /* padding-bottom: .3em;*/
      
 }
 
@@ -133,14 +133,27 @@ body,ul,li {
     ); 
 }
 
-div#content-link-container{/*
+div#content-link-container{/*REMOVE
 	background-color:#F5F5F5;
-	padding:.375em;*/
+	padding:.375em;
 	border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 2px;
+	
+	border: #A9ADB0 solid 1px;
+	-webkit-border-radius: 2px;
+	padding: 1em;
+ 	padding-left: 0.313em;
+ 	text-decoration: none;*/
+ 	border: #A9ADB0 solid 1px;
+ 
 }
+
 #content_link{
 	display: block;
+	text-decoration: none;
+	padding-bottom: 12px;
+  	padding-left: 8px;
+    padding-top: 12px;
 }
 #home-guide{
 	position: absolute;
@@ -264,7 +277,7 @@ p.toc{
 
 
 /* link attributes */
-a:link, a:visited  {
+a:link, /*a:visited*/ a:focus  {
 	color: #4C566C;
 	text-decoration: underline;
 }
@@ -1016,6 +1029,7 @@ div.news p {
 div.news span.date {
 	font-family:Helevetica, Arial, sans-serif;
 	color: #4C566C;	
+	font-size: .5em;
 }
 
 .news{
@@ -1051,10 +1065,7 @@ div.home-link img {
 
 /* sequence links */
 div#sequence-links {
-	
-	margin-top: 0.625em;
-	padding-right: 0.313em;
-	padding-top:0.438em;
+
 }
 div#sequence-links a {
 	text-decoration: none;
@@ -1105,12 +1116,13 @@ div#content_text {
 	padding-top:.5em;
 	margin-top: .5em;
 	background-color: #F5F5F5;
-	*/
+	
 	border: #A9ADB0 1px solid;
 	border: #cccccc 1px solid;
 	-webkit-border-radius:5px;
-	/*-webkit-border-bottom-right-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
 	-webkit-border-bottom-left-radius: 5px;*/
+	padding-top: .313em;
 }
 form {
 	display:inline;
@@ -1791,9 +1803,16 @@ legend.group_form{
 
 
 /* highlight active links for WCAG 2.0 conformance */
-a:active,a:hover,a:focus{
+a:active, a:hover,a:focus{
 	background-color:#F6EAD6;
 	color:#000000;
+	
+	background-color: #e6e6e6; 	
+ 	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+  
+}
 }
 
 
@@ -2089,7 +2108,7 @@ ol#tools>li:hover, ol#tools>li:hover a {
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-  
+  	
 }
 
 
@@ -2116,7 +2135,7 @@ ol#tools>li:hover, ol#tools>li:hover a {
 	color: #4B6B90;
 }
 
- #tools{
+#tools{
 	margin: 0 auto;
 	padding: 0.375em;
 }
