@@ -1,6 +1,6 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="" rules="groups" style="width: 90%">
+<table class="data" summary="Course forums" rules="groups" style="width: 90%">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -26,7 +26,7 @@ foreach ($this->shared_forums as $forum) {
 
 ?>
 <!--     <tr onmousedown="document.form[\'f'.$forum['forum_id'].'\'].checked = true; rowselect(this);"  id="r_'.$forum['forum_id'].'"></tr> -->      
-    <tr onmousedown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['id']; ?>">
+    <tr onkeydown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['id']; ?>">
     <td><input type="radio" name="id" value= "<?php echo $forum['id']; ?>" id="f<?php echo $forum['id']; ?>"</td>
 	<td><label for="f<?php echo $forum['id']; ?>"> <?php echo	AT_print($forum['title'], 'forums.title'); ?>  </label></td>
 	<td><?php echo AT_print($forum['desc'], 'forums.description'); ?></td>
@@ -42,7 +42,7 @@ foreach ($this->shared_forums as $forum) {
 	</tr>
 <?php if ($this->num_nonshared) : ?>
 	<?php foreach ($this->all_forums['nonshared'] as $forum) : ?>
-		<tr onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['forum_id']; ?>">
+		<tr onkeydown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['f<?php echo $forum['forum_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['forum_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $forum['forum_id']; ?>" id="f<?php echo $forum['forum_id']; ?>" /></td>
 			<td><label for="f<?php echo $forum['forum_id']; ?>"><?php echo AT_print($forum['title'], 'forums.title'); ?></label></td>
 			<td><?php echo AT_print($forum['description'], 'forums.description'); ?></td>
