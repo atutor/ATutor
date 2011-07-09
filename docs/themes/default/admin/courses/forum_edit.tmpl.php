@@ -1,6 +1,6 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="edit_this->forum" value="true">
-	<input type="hidden" name="forum" value="<?php echo $_REQUEST['forum']; ?>">
+	<input type="hidden" name="edit_this->forum" value="true" />
+	<input type="hidden" name="forum" value="<?php echo $_REQUEST['forum']; ?>"/>
 
 <div class="input-form">
 	<div class="row">
@@ -10,7 +10,7 @@
 
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="45" rows="5" id="body" wrap="wrap"><?php echo AT_print($this->forum['description'], 'input.text'); ?></textarea>
+		<textarea name="description" cols="45" rows="5" id="body" ><?php echo AT_print($this->forum['description'], 'input.text'); ?></textarea>
 	</div>
 
 	<div class="row">
