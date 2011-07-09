@@ -114,7 +114,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<!-- mobile FSS -->
 	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-layout.css" type="text/css"/>
 	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-theme-iphone.css" type="text/css"/>	
-	
 
 
 <?php if ($this->is_mobile_device == true): ?>
@@ -128,7 +127,11 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if ($this->mobile_device_type == BLACKBERRY_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/blackberry.css" type="text/css"/>
 	<?php endif; ?>
+	<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
+	<?php endif; ?>
 <?php endif; ?>
+
 
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
@@ -143,9 +146,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	//-->
 	</script>
 	<script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
-<?php if (($wurflObj->getDeviceCapability("mobile_browser")=="Safari")): ?>	
 
-<?php endif; ?>
 	
 <?php echo $this->rtl_css; ?>
 <?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
