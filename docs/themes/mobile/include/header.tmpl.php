@@ -76,7 +76,7 @@ $this->onload .= "});
 
 $this->onload .= "
 jQuery(document).click(function () {
-jQuery('#topnavlist').hide();}); 
+jQuery('#topnavlist').slideUp(600);}); 
 jQuery('#topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#topnavlist').slideToggle();
@@ -195,9 +195,9 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 					<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
 					<?php if ($page['url'] == $this->current_top_level_page): ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>" class="flc-screenNavigator-backButton"><?php echo $page['title']; ?></a>  </li>
+						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
 					<?php else: ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>" class="flc-screenNavigator-backButton"><?php echo $page['title']; ?></a></li>
+						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
 					<?php endif; ?>
 				
 					<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
