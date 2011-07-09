@@ -4,7 +4,7 @@
 	<?php 
 	$this->path_length = strlen($this->base_path);
 
-	echo '<ul id="tools" class="fl-list-menu fl-list-thumbnails">';
+	echo '<ul class="fl-list-menu ">';
 	foreach ($this->top_level_pages as $page_info) {
 		echo '<li><a href="' . $page_info['url'] . '">' . $page_info['title'] . '</a>  ';
 
@@ -22,8 +22,6 @@
 	echo '</ul>';
 	
 ?>
-
-
 
 
 <div class="" style="">
@@ -61,9 +59,12 @@
 	<div class="input-form">
 		<form method="get" action="mods/_core/users/instructor_requests.php">
 			
-				<h3><?php echo _AT('instructor_requests'); ?></h3>
-				<p><?php echo _AT('instructor_requests_text', $this->row['cnt']); ?></p>
-			
+			<h3><?php echo _AT('instructor_requests'); ?></h3>
+				
+				<?php foreach($this->row_instructor as $key => $value): ?>
+				
+				<p><?php echo _AT('instructor_requests_text', $value['cnt']); ?></p>
+				<?php endforeach;?>
 			
 
 			<div class="row buttons">
