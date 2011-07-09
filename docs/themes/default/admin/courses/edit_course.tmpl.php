@@ -1,7 +1,9 @@
+
 <?php 
 global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 
 ?>
+<?php //echo _AT('available_immediately'); ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form" enctype="multipart/form-data">
 	<input type="hidden" name="form_course" value="true" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $_config['prof_pic_max_file_size']; ?>" />
@@ -87,9 +89,9 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 						break;
 			}
 			?>
-		<label><input type="radio" name="content_packaging" value="none" id="none" <?php echo $none; ?> /><?php echo _AT('content_packaging_none'); ?></label><br />
-		<label><input type="radio" name="content_packaging" value="top" id="ctop"  <?php echo $top; ?> /><?php  echo _AT('content_packaging_top'); ?></label><br />
-		<label><input type="radio" name="content_packaging" value="all" id="all" <?php echo $all; ?> /><?php  echo _AT('content_packaging_all'); ?></label>
+		<label for="none" ><input type="radio" name="content_packaging" value="none" id="none" <?php echo $none; ?> /><?php echo _AT('content_packaging_none'); ?></label><br />
+		<label for="ctop"><input type="radio" name="content_packaging" value="top" id="ctop"  <?php echo $top; ?> /><?php  echo _AT('content_packaging_top'); ?></label><br />
+		<label for="all"><input type="radio" name="content_packaging" value="all" id="all" <?php echo $all; ?> /><?php  echo _AT('content_packaging_all'); ?></label>
 	</div>
 
 	<div class="row">
@@ -103,8 +105,8 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 					$rss_no = ' checked="checked"';
 				}
 		?>
-		<label><input type="radio" name="rss" value="1" id="rss_y" <?php echo $rss_yes; ?> /><?php echo _AT('enable_syndicate'); ?></label><br />
-		<label><input type="radio" name="rss" value="0" id="rss_n"  <?php echo $rss_no; ?> /><?php  echo _AT('disable_syndicate'); ?></label>
+		<label for="rss_y"><input type="radio" name="rss" value="1" id="rss_y" <?php echo $rss_yes; ?> /><?php echo _AT('enable_syndicate'); ?></label><br />
+		<label for="rss_n"><input type="radio" name="rss" value="0" id="rss_n"  <?php echo $rss_no; ?> /><?php  echo _AT('disable_syndicate'); ?></label>
 	</div>
 
 	<div class="row">
@@ -233,7 +235,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 			<option value="1" selected="selected"><?php echo _AT('create_basic'); ?></option>
 			<?php 
 			
-			if ($course_row = mysql_fetch_assoc($result2)) {
+			if ($course_row = mysql_fetch_assoc($result)) {
 				do {
 					$Backup->setCourseID($course_row['course_id']);
 					$list = $Backup->getAvailableList();
@@ -245,7 +247,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 						}
 						echo '</optgroup>';
 					}
-				} while ($course_row = mysql_fetch_assoc($result2));
+				} while ($course_row = mysql_fetch_assoc($result));
 			}
 			?>
 			</select>
@@ -281,6 +283,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 		<input type="radio" id="c_default" name="quota" value="<?php echo AT_COURSESIZE_DEFAULT; ?>" onclick="disableOther();" <?php echo $c_def;?> /><label for="c_default"> <?php echo _AT('default') . ' ('.get_human_size($MaxCourseSize).')'; ?></label> <br />
 		<input type="radio" id="c_unlim" name="quota" value="<?php echo AT_COURSESIZE_UNLIMITED; ?>" onclick="disableOther();" <?php echo $c_unlim;?>/><label for="c_unlim"> <?php echo _AT('unlimited'); ?></label> <br />
 		<input type="radio" id="c_other" name="quota" value="2" onclick="enableOther();" <?php echo $c_oth;?>/><label for="c_other"> <?php echo _AT('other'); ?> </label> - 
+		<label for="quota_entered">Quota Entered</label>
 		<input type="text" id="quota_entered" name="quota_entered" <?php echo $c_oth2?> value="<?php if ($this->row['max_quota']!=AT_COURSESIZE_UNLIMITED && $this->row['max_quota']!=AT_COURSESIZE_DEFAULT) { echo bytes_to_megabytes($this->row['max_quota']); } ?>" size="4" /> <?php echo _AT('mb'); ?>
 	</div>
 
@@ -303,6 +306,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 		<input type="radio" id="f_default" name="filesize" value="<?php echo AT_FILESIZE_DEFAULT; ?>" onclick="disableOther2();" <?php echo $f_def;?> /><label for="f_default"> <?php echo _AT('default') . ' ('.get_human_size($MaxFileSize).')'; ?></label> <br />
 		<input type="radio" id="f_maxallowed" name="filesize" value="<?php echo AT_FILESIZE_SYSTEM_MAX; ?>" onclick="disableOther2();" <?php echo $f_max;?>/><label for="f_maxallowed"> <?php echo _AT('max_file_size_system') . ' ('.get_human_size($max_allowed).')'; ?></label> <br />
 		<input type="radio" id="f_other" name="filesize" value="2" onclick="enableOther2();" <?php echo $f_oth;?>/><label for="f_other"> <?php echo _AT('other'); ?> </label> - 
+		<label for="filesize_entered">Filesize entered</label>
 		<input type="text" id="filesize_entered" name="filesize_entered" <?php echo $f_oth2?> value="<?php if ($this->row['max_file_size']!=AT_FILESIZE_DEFAULT && $this->row['max_file_size']!=AT_FILESIZE_SYSTEM_MAX) { echo bytes_to_megabytes($this->row['max_file_size']); } ?>" size="4" /> <?php echo _AT('mb'); ?>
 	</div>
 
@@ -409,7 +413,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	</div>
             <!-- div class="row" style="float:right;width:40%;">
             <?php echo _AT('upload_icon'); ?><br />
-                <input type="file" name="customicon" id="customicon" value="<?php echo $_POST['customicon']; ?>"/><br />
+            	<label for="customicon"><input type="file" name="customicon" title="custom icon" id="customicon" value="<?php echo $_POST['customicon']; ?>"/></label><br />
                 <small><?php echo _AT('upload_icon_text'); ?></small>
             </div -->
 
