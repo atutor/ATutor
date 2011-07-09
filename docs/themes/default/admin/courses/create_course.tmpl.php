@@ -1,5 +1,5 @@
 
-<?php global $languageManager, $_config;
+<?php global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form" enctype="multipart/form-data">
