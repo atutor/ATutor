@@ -5,16 +5,18 @@ Date:		December 2009
 
 
 Installing:	 See section "Installing a New Theme" in the themes_readme.txt file located in the themes/ top directory.
-
 Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.html.
 	
 	
 GLOBAL TASKS & BUGS (all devices) ----------------------------------------------------------------
 
+- strip down iphone.css
 
 - RE-CHECK DEFAULT/USERS/DEFAULT_PREFERENCES.TMPL.PHP
 - A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
 - A11Y TASKhtml-check the Instructor mobile pages. (August)
+- Remove redundant styles from iphone.css  ***In Process
+- Update color scheme of android.css (not a priority) 
 - MOBILE FSS BUG: Create a workaround for Mobile FSS bug  ***In Process
     See: http://issues.fluidproject.org/browse/FLUID-4313
     - white list arrow should change color >
@@ -27,9 +29,7 @@ GLOBAL TASKS & BUGS (all devices) ----------------------------------------------
 - Admin user: Improve styling: http://localhost/GSoC2011/docs/admin/error_logging.php
 - Is there a way to handle long names so they don't break the styling:  e.g.: /docs/admin/cron_config.php 
 - Done ? Create course / Edit course / Course properties for admin / instructor users. 
-- default student leader: preferences. 
 - Take commented-out visited link code and erase from android.css and iphone.css
-- Student user: properties page isn't themed. Why? 
 - template groups/ social networking (e.g. 
 /mods/_standard/social/index_public.php)
 
