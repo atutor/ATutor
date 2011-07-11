@@ -30,6 +30,6 @@ if (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE) {
 	$button_state = 'disabled="disabled"';
 }
 
- 
+$savant->assign('button_state', $button_state); 
 $savant->display('admin/system_preferences/language_translate.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
