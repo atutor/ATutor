@@ -107,7 +107,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
-	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
@@ -119,16 +118,20 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <?php if ($this->is_mobile_device == true): ?>
 	<?php if ($this->mobile_device_type == ANDROID_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/android.css" type="text/css"/>
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<?php endif; ?>
 	<?php if ($this->mobile_device_type == IPOD_DEVICE || $this->mobile_device_type == IPHONE_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<?php endif; ?>
 	<!-- Armin 25.08.2010: Detect BLACKBERRY_DEVICE and use blackberry.css-->
 	<?php if ($this->mobile_device_type == BLACKBERRY_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/blackberry.css" type="text/css"/>
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<?php endif; ?>
 	<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
+	<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />
 	<?php endif; ?>
 <?php endif; ?>
 
