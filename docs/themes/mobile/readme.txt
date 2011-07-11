@@ -1,33 +1,3 @@
-The content directory and config.inc.php file seem to have been committed. They should not exist in SVN. They get generated when ATutor is bundled into a distribution. You can remove those from your branch. You probably have to svn del them from your working version, which will break your installation, then do a fresh checkout and install again to continue working.
-
->> The main admin modules screen is missing Type, Cron, and Directory Name columns
-
-The admin's Translate screen, the translate button is enabled when translation is turned off in vitals.inc.php It should be greyed out, so maybe a style or bit of js is missing from the template.
-
-On the admin's home page in the Instructor requests box, the word Array appears where a number should be appearing.
------
-
-That's all I could find. I did not test all functionality, but rather compared the screens in the checkout from your branch and from the trunk. Things look pretty consistent, except for the few things listed above. Also viewed in themes other than default (IDI theme). We'll need to spend some more time later testing functionality to make sure everything still works.
-
-greg
-
-Get fresh: 
-/constants.inc.php
-/vitals.inc.php
-developer/theme documentation
-header.tmpl.php's. -- make sure "hide and show results" is there. 
-
-
-http://www.kevinleary.net/mobile-user-detect-php-iphone-ipad-blackberry-android/
-<!--  Device detection for now -->
-<?php if (($wurflObj->getDeviceCapability("is_tablet")=="true")): ?>	
-<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
-<?php endif; ?>
-
-
-
-
-
 
 
 Theme:		1.6.4 Mobile Theme
@@ -40,13 +10,22 @@ Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.htm
 	
 	
 GLOBAL TASKS & BUGS (for all devices)----------------------------------------------------------------
-- A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php
-- MOBILE FSS BUG: Create a workaround to deal with Mobile FSS bug (navigation UL doesn't highlight upon tap). See: http://issues.fluidproject.org/browse/FLUID-4313
-    Currently, override (e.g. of "ul#topnavlist li a:hover, ul#topnavlist li a:focus" rule) doesn't work. 
+
+- Remove content directory and config.inc.php file in SVN
+- The main admin modules screen is missing Type, Cron, and Directory Name columns *** DONE
+- The admin's Translate screen, the translate button is enabled when translation is turned off in vitals.inc.php It should be greyed out, so maybe a style or bit of js is missing from the template.
+- On the admin's home page in the Instructor requests box reads "array"  *** DONE
+- RE-CHECK DEFAULT/USERS/DEFAULT_PREFERENCES.TMPL.PHP
+- A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
+- A11Y TASKhtml-check the Instructor mobile pages. (August)
+- MOBILE FSS BUG: Create a workaround for Mobile FSS bug  ***In Process
+    See: http://issues.fluidproject.org/browse/FLUID-4313
+    - white list arrow should change color >
+    - top navigation bar "home" & "help" buttons should highlight. 
+    
 - Instructor user: Content menu open/close stays highlighted after close - touch highlighting. 
 - Instructor user: remove on keydowns (only present on index pages) 
 - Instructor user: Improve styling: /docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup
-- a11y/html-check the Instructor mobile pages. 
 - Admin user: Improve styling: /docs/mods/_core/courses/admin/default_mods.php 
 - Admin user: Improve styling: http://localhost/GSoC2011/docs/admin/error_logging.php
 - Is there a way to handle long names so they don't break the styling:  e.g.: /docs/admin/cron_config.php 
@@ -54,21 +33,12 @@ GLOBAL TASKS & BUGS (for all devices)-------------------------------------------
 - default student leader: preferences. 
 - Take commented-out visited link code and erase from android.css and iphone.css
 - Student user: properties page isn't themed. Why? 
-- template groups/ social networking. 
-- in admin, check to see if /docs/mods/_core/modules/index.php displays OK
-
-ISSUES TO ADDRESS BEFORE NEXT COMMITT ----------------------------------------------------------------
-The content directory and config.inc.php file seem to have been committed. They should not exist in SVN. They get generated when ATutor is bundled into a distribution. You can remove those from your branch. You probably have to svn del them from your working version, which will break your installation, then do a fresh checkout and install again to continue working.
-
-The main admin modules screen is missing Type, Cron, and Directory Name columns
-
-The admin's Translate screen, the translate button is enabled when translation is turned off in vitals.inc.php It should be greyed out, so maybe a style or bit of js is missing from the template.
-
-On the admin's home page in the Instructor requests box, the word Array appears where a number should be appearing.
+- template groups/ social networking (e.g. 
+/mods/_standard/social/index_public.php)
 
 
 STUDENT VIEW TABLET TASKS / BUGS / INFO ----------------------------------------------------------------
-- implement device detection
+- implement device detection ***DONE
 - create list of pages that need templating. 
 
 
@@ -85,7 +55,7 @@ Fix styling of "refine results" link after it has been opened/closed.  Sync styl
 
 ANDROID TASKS / BUGS / INFO ----------------------------------------------------------------
 localhost: 10.0.2.2.
-emulator: /Users/alisonbenjamin/Documents/ATutor\ Design/android-sdk-mac_86/tools/android
+local Android emulator: /Users/alisonbenjamin/Documents/ATutor\ Design/android-sdk-mac_86/tools/android
 
 BLACKBERRY TASKS / BUGS / INFO ----------------------------------------------------------------
 http://stackoverflow.com/questions/61449/how-do-i-access-the-host-from-vmware-fusion
