@@ -1,7 +1,5 @@
-/* Style is optimized for iphone. Note that -webkit properties 
-create errors in the CSS validator. 
-Classes beginning with ".fl-" are overriding Mobile FSS, 
-see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
+/* Style is optimized for iphone. Note that -webkit properties create errors in the CSS validator. 
+Classes beginning with ".fl-" are overriding Mobile FSS, see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
 for more details. 
 */
 html, body{
@@ -118,18 +116,10 @@ body,ul,li {
     -webkit-border-left-image: none;
     -webkit-background-origin: border;
     -webkit-background-clip: border;
-    /* to mimick the mobile FSS scolor scheme (iphone) uncomment these lines 
-	background-image: -webkit-gradient(linear, left top, left bottom,
-     	from(#9aafca),
-        color-stop(0.5, #6d8cb3),
-        color-stop(0.50, #4b6b90),
-        to(#4b6b90)
-    );*/
 }
 
 .navigation-bar-button a:hover, .navigation-bar-button a:active, .navigation-bar-button a:focus{
 	background-color: white;
-
 }
 
 .fl-theme-iphone .fl-tabs li{
@@ -142,19 +132,8 @@ body,ul,li {
     ); 
 }
 
-div#content-link-container{/*REMOVE
-	background-color:#F5F5F5;
-	padding:.375em;
-	border: #A9ADB0 solid 1px;
-	-webkit-border-radius: 2px;
-	
-	border: #A9ADB0 solid 1px;
-	-webkit-border-radius: 2px;
-	padding: 1em;
- 	padding-left: 0.313em;
- 	text-decoration: none;*/
+div#content-link-container{
  	border: #A9ADB0 solid 1px;
- 
 }
 
 #content_link{
@@ -164,6 +143,7 @@ div#content-link-container{/*REMOVE
   	padding-left: 8px;
     padding-top: 12px;
 }
+
 #home-guide{
 	position: absolute;
 	top: .45em;
@@ -171,7 +151,6 @@ div#content-link-container{/*REMOVE
  	font-size: 17px;/*keep this in px*/
 	white-space:nowrap;
 	display: inline;
-
 }
 
 /* main body attributes */
@@ -239,7 +218,7 @@ h5 {
 }
 
 
-/* Preferences tabs */
+/* Preferences tabs  REMOVE
 .etabbed-list-container	{
 	padding:0;
 	margin: 0;
@@ -268,11 +247,11 @@ h5 {
 	text-align:center;
 	white-space: nowrap;
     display: inline;
-}
+}*/
 
 
 
-/*  Table of content attributes*/
+/*  Table of content attributes REMOVE
 p.toc{
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	background-color: #E9F4F3;
@@ -283,7 +262,7 @@ p.toc{
 	margin-right: 3em;
 	border: 1px #ACCFCC solid;
 } 
-
+*/
 
 /* link attributes */
 a:link, /*a:visited*/ a:focus  {
@@ -298,22 +277,6 @@ a:hover {
 a:active {
 	color: #ffffff;
 	text-decoration: underline;
-}
-/* align text to the left */
-.left {
-	text-align: left;
-}
-
-a.dropdown-title {
-	color: white;
-	font-weight: normal;
-	text-decoration: none;
-}
-
-
-/* table border */
-.tableborder {
-	border: 1px #595241 solid;
 }
 
 /* main submit button */
@@ -342,35 +305,6 @@ a.dropdown-title {
 	border:  #ACCFCC  solid 1px;
 }
 
-/* date attributes */
-small.date {
-	font-family: Verdana, Helevetica, Arial, sans-serif;
-	color: #595241;	
-	margin-bottom: 0; 
-	margin-top: 0;
-	margin-left: 0.313em;
-	margin-right: 0;
-	font-size:1em;
-}
-
-/* page breakline */
-hr {
-	color: #ACCFCC;
-	background-color: white;
-	height: .063em;
-}
-
-/* message box styles */
-
-/* Editor box small */
-.editorsmallbox {
-	font-family: Verdana, Helevetica, Arial, sans-serif;
-	background-color: #E9F4F3;
-	padding: 0.125em;
-	padding-right: .188em;
-	border: 1px #ACCFCC solid;
-}
-
 /* Editor box large */
 .editorlargebox {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
@@ -382,26 +316,6 @@ hr {
 	padding-bottom: .4em;
 	border: 1px #ACCFCC solid;
 }
-
-
-select.dropdown {
-	font-family: Verdana, Helevetica, Arial, sans-serif;
-}
-
-.highlight, a.highlight {
-	background-color: #5B8E88;
-	color: white;
-}
-
-a .highlight{
-	background-color: #5B8E88;
-	color: white;
-}
-
-.center {
-	text-align: center;
-}
-
 
 /* edit content tabs */
 .buttontab {
@@ -1419,14 +1333,6 @@ fieldset {
 #guide a:hover{
 	
 }
-div#content-text {
-	padding-right: 5pt;
-	line-height:150%;
-}
-
-div#content-text li {
-	margin-left: 15pt;
-}
 
 div#content-test, div.content-from-module {	
 	float: left;
@@ -1434,26 +1340,6 @@ div#content-test, div.content-from-module {
 	margin-bottom: 2em;
 	padding-right: 5pt;
 	width: 80%;
-}
-div#content-test ol{	
-	margin-right: 5pt;;	
-}
-
-div#content-test ol ul li{
-	list-style: none;
-	padding: 0 0.125em 0  0.938em;
-	margin-bottom: 0.063em; 
-	line-height: 200%; 
-	background-color: #fdfdfd; 
-	border-bottom: 1px solid #efefef; 
-	border: 1px solid #eeeeff;
-}
-
-div#content-info {
-	margin: 5pt;
-	font-size: small;
-	color: #b8ae9c;
-	clear: both;
 }
 
 div#container {
@@ -1464,67 +1350,9 @@ div#container {
 	width: 95%;
 }
 
-div#menutoggle{
-	text-align: right; 
-	padding-bottom: 0.625em; 
-	padding-right: 0.625em; 
-	float: left; 
-	margin-top: 0.625em; 
-	padding-right: 0.313em; 
-	font-size:0.95em;
-}
-
-
-/* login page */
-div.column {
-	float: left;
-	width: 45%;
-	margin: 0.313em;
-	min-width: 10.625em;
-}
-
-div.column h3 {
-	background-color: #F6EAD6;
-	border-bottom: .05em solid #6F7172;
-	font-size: small;
-	display:block;
-	color:black;
-	font-weight:600;	
-	padding-left:0.5em;
-}
-
-div.insidecol {
-   min-height: 10.625em;
-   height: 10.625em;
-   padding:0.313em;
-}
-
-
 /* index page */
 ul#home-links, ul#home-detail-links {
 	list-style: none;
-}
-ul#home-links li {
-	
-	display: inline;
-	float: left;
-	padding: 0.8em;
-	text-align: center;
-	margin: 0.1em;
-	width: 8.5em;
-	height: 7.0em;
-	padding-left:0;
-
-}
-ul#home-links li a {
-	text-decoration: none;
-	border: 1px transparent;
-	font-weight: bold;
-}
-ul#home-links li a img {
-	border: 0;
-	display: block;
-	padding-left:1.563em;
 }
 
 /*my start page */
@@ -1572,9 +1400,7 @@ ul#home-links li a img {
 	padding-top: .5em;
 }
 .fl-list-menu {
-
 }
-
 .current_box{
 	max-width: 100%;
 }
@@ -1586,10 +1412,8 @@ ul#home-links li a img {
 	list-style-type: none;
 	padding:0;
 	margin:0;
-
 }
 .current_list img{
-
 }
 
 #show-all{
@@ -1637,15 +1461,6 @@ ul#home-links li a img {
 }
 /* profile page */
 
-dl#public-profile {
-	width: 100%;
-	
-}
-
-dl#public-profile {
-	width: 100%;
-	
-}
 dl#public-profile dt {
 	float: left;
 	width: 90%;
@@ -1682,7 +1497,6 @@ dd{
     margin: 0;
 }
 
-
 /** forum stuff **/
 #forum-thread li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
 #forum-thread li.even { background-color: #F7F3ED; border-top: none; }
@@ -1714,8 +1528,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:5px;
 }
-li.top-tool a {  font-weight: bold; } /* ol#tools>li>a */ 
-
+	
 li.child-tool a { 
 	font-size: x-small;
 	font-weight: normal; 
@@ -1728,9 +1541,6 @@ ul.child-top-tool {
 	margin-left: 0;
 	display: inline;
 }
-ul.child-top-tool:before {
-	content: " : ";
-}
 
 li.child-tool {
 	display: inline;
@@ -1738,29 +1548,16 @@ li.child-tool {
 	font-size: x-small;
 }
 
-.img-size-home {
-	height:3.85em;
-	width:3.9em;
-}
 
 /* browse courses */
 div.browse-course {
-	width: 28em;
 	padding-bottom: 0.625em;
-	background-color: #fffaf0;
-	border:1px #6F7172 solid;
-	font-size:9pt;
-	min-height:18em;
-	margin:auto;
-	margin-left:1em;
-	margin-top:1em;
 }
 
 dl.browse-course {
 	width: 90%;
 	padding-bottom: 0.625em;
 	background-color: #fffaf0;
-
 	margin:auto;
 	margin-left:1em;
 }
@@ -1803,16 +1600,6 @@ legend.group_form{
 	border: 1px #6D7B8D solid;
 	-webkit-border-radius:5px;
 }
-/* file storage */
-
-#fsfloat1{
-	float:right;
-}
-#fsfloat2{
-	float:right;
-	width:48%;
-}
-
 
 /* highlight active links for WCAG 2.0 conformance */
 a:active, a:hover, a:focus{
@@ -1821,8 +1608,6 @@ a:active, a:hover, a:focus{
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
   
 }
-
-
 
 /*Added by Silvia */
 div.column_primary {
@@ -2233,14 +2018,6 @@ div.social-wrapper{
 	width: 100%;
 }
 
-
-.contentbox-a{
-    width: 100%;
-}
-.contentbox-b{
-    padding-bottom:0.2em;
-}
- 
 div.logo{
 float:left;
 clear:right;
