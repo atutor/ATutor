@@ -23,7 +23,7 @@ body,ul,li {
 
 #header{
 	width:100%;
-	height:1.063em;
+	height:1.2em;
 	line-height:2.813em;
 	padding:0;
 	font-size:1.063em;
@@ -32,12 +32,14 @@ body,ul,li {
 #header-section-title {
 	text-align: center;
 	background-image: -webkit-gradient(linear, left top, left bottom,
-   	from(#4b6b90),
+   	from(#6d8cb3),
     color-stop(0.5, #6d8cb3),
     color-stop(0.50, #4b6b90),
     color-stop(0.5, #6d8cb3),
     to(#4b6b90)
     ); 
+  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6d8cb3), to(#4b6b90));
+
 }
 
 .fl-theme-iphone .fl-navbar{
@@ -74,7 +76,7 @@ body,ul,li {
 #navigation-bar{
  	height: 2.5em; 
     border-bottom: .5px solid black;
-   /* padding-bottom: .3em;*/
+   /*padding-bottom: .3em;*/
      
 }
 
@@ -91,6 +93,8 @@ body,ul,li {
 	font-size: 90%;
 	color: #4C566C;
 	color: white;
+	margin-bottom: 1em;
+	
 }
 
 /*this CSS creates a button that looks exactly like a Mobile FSS tab.*/
@@ -121,6 +125,11 @@ body,ul,li {
         color-stop(0.50, #4b6b90),
         to(#4b6b90)
     );*/
+}
+
+.navigation-bar-button a:hover, .navigation-bar-button a:active, .navigation-bar-button a:focus{
+	background-color: white;
+
 }
 
 .fl-theme-iphone .fl-tabs li{
@@ -814,7 +823,7 @@ table.data {
 	margin:0;
 	width:100%;
 	padding: 0;
-	color: black;
+	color: #4C566C;
 	font-size: .8em;
 	text-align: left;
 	background-color: transparent;
@@ -854,6 +863,9 @@ table.data td a:link, a:visited{
 	/*color: black;*/
 	color: #4C566C
 }
+
+/*should table.data tbody tr:hover  and table.data tbody tr.selected  highlighting
+be improved to sync with Mobile FSS highlighting */
 table.data tbody tr:hover {
 	background-color: #efefef;
 	cursor: pointer;
@@ -1803,17 +1815,13 @@ legend.group_form{
 
 
 /* highlight active links for WCAG 2.0 conformance */
-a:active, a:hover,a:focus{
-	background-color:#F6EAD6;
-	color:#000000;
-	
-	background-color: #e6e6e6; 	
+a:active, a:hover, a:focus{
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
   
 }
-}
+
 
 
 /*Added by Silvia */
@@ -2022,7 +2030,7 @@ ul#topnavlist {
 	position: relative;
 	top: 1.2em;
 	z-index: 1;
-	background-color: white;
+	/*background-color: white;*/
 }
 
 div#results-display{
@@ -2033,22 +2041,15 @@ ul#topnavlist li {
 	padding: 0;
 	margin: 0;
 }
-ul#topnavlist li a.active {
-	color: black;
-	font-style: italic;
-	}
 	
-ul#topnavlist li a:hover, ul#topnavlist li a:focus {
-	/*Replicates mobile FSS list highlighting, currently there's a bug:
-		see:	http://issues.fluidproject.org/browse/FLUID-4313
-	/*border: 1px solid #e0e0e0;*/
-	background-color: #e6e6e6;
-	color: black; 	
-	
- 	color: #fff;
+ul#topnavlist>li:hover,
+ul#topnavlist>li:hover a, 
+ul#topnavlist>li:active,
+ul#topnavlist>li:active a,
+ul#topnavlist>li:focus, 
+ul#topnavlist>li:focus a {
+	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-    -webkit-tap-highlight-color:url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
 }
 
@@ -2059,7 +2060,6 @@ ul#topnavlist li a  {
 
 
 div.toolcontainer{
-	border: #A9ADB0 1px solid;
 	border: #cccccc 1px solid;
 	-webkit-border-radius:5px;
 	margin-top: 1em;
@@ -2245,6 +2245,25 @@ div.logo{
 float:left;
 clear:right;
 margin-left:2em;}
+
+/*mobile FSS overrides */
+.fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a:hover, 
+.fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a:focus,
+.fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a:active {
+	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+  
+}
+.fl-list-menu a:hover,
+.fl-list-menu a:focus,
+.fl-list-menu a:active {
+	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+  
+}
+
 
 
 
