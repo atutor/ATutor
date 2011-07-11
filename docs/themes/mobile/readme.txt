@@ -9,11 +9,11 @@ Installing:	 See section "Installing a New Theme" in the themes_readme.txt file 
 Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.html.
 	
 	
-GLOBAL TASKS & BUGS (for all devices)----------------------------------------------------------------
+GLOBAL TASKS & BUGS (all devices) ----------------------------------------------------------------
 
 - rm content directory and config.inc.php file in SVN *** DONE
 - The main admin modules screen is missing Type, Cron, and Directory Name columns *** DONE
-- The admin's Translate screen, the translate button is enabled when translation is turned off in vitals.inc.php It should be greyed out, so maybe a style or bit of js is missing from the template.
+- The admin's Translate screen, the translate button is enabled when translation is turned off in vitals.inc.php 
 - On the admin's home page in the Instructor requests box reads "array"  *** DONE
 - RE-CHECK DEFAULT/USERS/DEFAULT_PREFERENCES.TMPL.PHP
 - A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
