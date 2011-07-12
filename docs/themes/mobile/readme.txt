@@ -1,7 +1,7 @@
 
 
 Theme:		1.6.4 Mobile Theme
-Date:		December 2009
+Date:		
 
 
 Installing:	 See section "Installing a New Theme" in the themes_readme.txt file located in the themes/ top directory.
@@ -9,8 +9,6 @@ Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.htm
 	
 	
 GLOBAL TASKS & BUGS (all devices) ----------------------------------------------------------------
-
-- strip down iphone.css
 
 - RE-CHECK DEFAULT/USERS/DEFAULT_PREFERENCES.TMPL.PHP
 - A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
