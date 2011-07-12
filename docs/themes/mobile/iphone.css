@@ -192,11 +192,8 @@ h1 {
 h2 {
     font-size: 150%;
 }
-h2.sidebox{
-    font-size: 110%;
-}
+
 h3 {
-    font-size: 130%;
 	padding: 0;
 }
 h3.browse-courses{
@@ -205,20 +202,12 @@ h3.browse-courses{
 	clear: none;
 	display: inline;
 }
+
 h3 a {
     font-size: 100%;
 }
-h4 {
-    font-size: 120%;
-}
 
-
-h5 {
-    font-size: 100%;
-}
-
-
-/* Preferences tabs  REMOVE
+/* Preferences tabs */
 .etabbed-list-container	{
 	padding:0;
 	margin: 0;
@@ -247,22 +236,8 @@ h5 {
 	text-align:center;
 	white-space: nowrap;
     display: inline;
-}*/
+}
 
-
-
-/*  Table of content attributes REMOVE
-p.toc{
-	font-family: Verdana, Helevetica, Arial, sans-serif;
-	background-color: #E9F4F3;
-	padding: .6em;
-	margin-bottom: .6em;
-	margin-top: 0em;
-	margin-left: 1em;
-	margin-right: 3em;
-	border: 1px #ACCFCC solid;
-} 
-*/
 
 /* link attributes */
 a:link, /*a:visited*/ a:focus  {
@@ -270,14 +245,6 @@ a:link, /*a:visited*/ a:focus  {
 	text-decoration: underline;
 }
 
-a:hover {
-	color: #4C566C;
-	text-decoration: underline;
-}
-a:active {
-	color: #ffffff;
-	text-decoration: underline;
-}
 
 /* main submit button */
 .button {
@@ -360,42 +327,11 @@ td.selected{
 	border-left: 1px #B8AE9C solid;
 	border-right: 1px #B8AE9C solid;
 }
-.econtainer{
-	background-color: #fffaf0;
-	border:1px #6F7172 solid;
-	margin-left:.5em;
-}
 
 .tab a:link, .etab a:visited {
-	/* color: black;*/
 	color: #4C566C;
 	background-color: white;
-
 }
-.tab a:hover {
-	color: black;
-	background-color: white;
-}
-
-.etabself {
-	background-color: #6F7172;
-
-	text-align: center;
-	font-weight: bold;
-	padding: 0.125em;
-}
-
-
-.unsaved {
-	color: red;
-	background-color: #FFFDE0;
-	font-weight: bold;
-}
-.saved {
-	background-color: #FFFDE0;
-	margin: 0.625em;
-}
-
 
 /* the side menu */
 td.dropdown-heading {
@@ -404,16 +340,6 @@ td.dropdown-heading {
 	border-left: 1px solid #ECFEEA;
 	border-right: 1px solid #ECFEEA;
 	border-top: 1px solid #ECFEEA;
-	font-weight: bold;
-	padding: 0.125em;
-}
-
-td.dropdown-heading a, td.dropdown-heading a:hover, td.dropdown-heading a:visited {
-	text-decoration: none;
-}
-
-td.dropdown-heading.closed {
-	border-bottom: 1px solid #ECFEEA;
 }
 
 /* the side menu content */
@@ -427,19 +353,12 @@ td.dropdown {
 	font-weight: normal;
 }
 td.dropdown a, td.dropdown a:visited  {
-	/* color: #595241; */
 	color: #4C566C;
 	text-decoration: none;
 }
 td.dropdown a:hover {
 	color: #595241;
 	text-decoration: underline;
-}
-td.dropdown.cell {
-	border-bottom: 0;
-}
-td.dropdown strong {
-	color: #2A6C28;
 }
 
 /* added for 1.4.2: */
@@ -453,15 +372,6 @@ h5.search-results {
 	margin-top: 1em;
 	padding-top: 3em;
 	margin-left: 0.313em;
-}
-
-small.search-info {
-	color: #595241;
-}
-
-p.search-description {
-	background-color: #FFFCE5;
-	color: #595241;
 }
 
 .test-box {
@@ -1601,7 +1511,18 @@ legend.group_form{
 	-webkit-border-radius:5px;
 }
 
-/* highlight active links for WCAG 2.0 conformance */
+/* highlight active links for WCAG 2.0 conformance 
+a:hover {
+	color: #4C566C;
+	text-decoration: underline;
+}
+a:active {
+	color: #ffffff;
+	text-decoration: underline;
+}
+
+
+*/
 a:active, a:hover, a:focus{
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
