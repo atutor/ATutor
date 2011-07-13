@@ -722,7 +722,7 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 /* add borders to row in Required Information, Personal Information*/
 .row{
 	padding:.375em 0;
-	border-bottom: 1px #cccccc solid;
+	/*border-bottom: 1px #cccccc solid;*/
 	font-size: 0.938em;
 }
 #last-row, .row-buttons, #last-row1, .row-blurb{
