@@ -15,10 +15,10 @@
 /* This is the default configuration file for the default theme. */
 
 /* The theme's name. */
-	$_theme['name'] = 'Tablet1';
+	$_theme['name'] = 'tablet1';
 
 /* The theme's version number. */
-	$_theme['version'] = '0.1';
+	$_theme['version'] = '1';
 
 /* Which version of ATutor is this theme intended for. */
 	$_theme['atutor-version'] = '2.0';
