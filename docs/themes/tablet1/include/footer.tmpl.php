@@ -27,8 +27,8 @@
 		<?php } ?>
 			&nbsp;
 		</div>
-
-<div id="footer">
+</div> <!-- end content -->
+<div data-role="footer">
 	<br /><br />
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>

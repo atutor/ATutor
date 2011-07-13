@@ -53,8 +53,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // will have to be moved to the header.inc.php
 global $system_courses, $_custom_css, $db;
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+?>
+<!-- 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+ -->
+ 
+<!DOCTYPE html > 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
@@ -63,23 +67,17 @@ global $system_courses, $_custom_css, $db;
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
-	<!--[if IE]>
-	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
-	<![endif]-->
-	<!--[if IE8]>
-	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
-	<![endif]-->
     <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
-
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/jquery.mobile-1.0b1.css" type="text/css"/>
 <?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 <?php endif; ?>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/jquery.mobile-1.0b1.css" type="text/css"/>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	<!-- update -->
+	<script src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
+	<script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	
 	<script language="javascript" type="text/javascript">
 	//<!--
 	jQuery.noConflict();
@@ -90,20 +88,23 @@ global $system_courses, $_custom_css, $db;
     <?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
-<body onload="<?php echo $this->onload; ?>">
-<div class="page_wrapper">
-<div id="header">
-<div class="bypass">
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
-	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo htmlentities_utf8($_REQUEST['cid']);  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
-</div>	
+<body onload="<?php echo $this->onload; ?>" >
+<div date-role="page">
+<div data-role="header" data-theme="b" class="b">
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
 	else:
 		echo '<br />';	
 	endif; ?>
+</div>
+<div data-role="content">
+	<div class="bypass">
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
+	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo htmlentities_utf8($_REQUEST['cid']);  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+	</div>	
+
 
 	<div id="top-links"> <!-- top help/search/login links -->
 			  <div id="top-links-jump">
@@ -174,7 +175,7 @@ global $system_courses, $_custom_css, $db;
 	</div>
 
 
-</div>
+
 
 <div id="topnavlistcontainer">
 <!-- the main navigation. in our case, tabs -->
