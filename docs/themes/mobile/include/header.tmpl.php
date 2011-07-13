@@ -110,11 +110,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" /> 
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
-	<!-- mobile FSS -->
+	<!-- mobile fss -->	
 	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-layout.css" type="text/css"/>
 	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-theme-iphone.css" type="text/css"/>	
-
-
+	
 <?php if ($this->is_mobile_device == true): ?>
 	<?php if ($this->mobile_device_type == ANDROID_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/android.css" type="text/css"/>
@@ -130,20 +129,20 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<?php endif; ?>
 	<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/jquery.mobile-1.0b1.css" type="text/css"/>
 	<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />
 	<?php endif; ?>
 <?php endif; ?>
 
-
-	<!--[if IE]>
-	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
-	<![endif]-->
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 		
-
+	<!-- Fluid Infusion -->
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+	<script src="<?php echo $this->base_path;?>jscripts/jQueryMobile/jquery.mobile-1.0b1.min.js" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
+
 	//<!--
 	jQuery.noConflict();
 	//-->
@@ -160,7 +159,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 <?php echo $this->custom_css; ?>
 </head>
-<body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone">
+<body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone ui-mobile-viewport">
 
 <div id="wrapper">
 <div id="main">
@@ -314,6 +313,5 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 				</ul>
 			</div>
 	<?php endif; ?>
-
 
 
