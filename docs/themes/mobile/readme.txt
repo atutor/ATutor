@@ -10,7 +10,7 @@ Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.htm
 	
 GLOBAL TASKS & BUGS (all devices) ----------------------------------------------------------------
 
-- RE-CHECK DEFAULT/USERS/DEFAULT_PREFERENCES.TMPL.PHP
+- default.preferences.tmpl.php 
 - A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
 - A11Y TASKhtml-check the Instructor mobile pages. (August)
 - Remove redundant styles from iphone.css  ***In Process
@@ -25,15 +25,12 @@ GLOBAL TASKS & BUGS (all devices) ----------------------------------------------
 - Instructor user: Improve styling: /docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup
 - Admin user: Improve styling: /docs/mods/_core/courses/admin/default_mods.php 
 - Admin user: Improve styling: http://localhost/GSoC2011/docs/admin/error_logging.php
-- Is there a way to handle long names so they don't break the styling:  e.g.: /docs/admin/cron_config.php 
 - Done ? Create course / Edit course / Course properties for admin / instructor users. 
-- Take commented-out visited link code and erase from android.css and iphone.css
-- template groups/ social networking (e.g. 
-/mods/_standard/social/index_public.php)
+- template groups/ social networking (e.g. /mods/_standard/social/index_public.php)
 
 
 STUDENT VIEW TABLET TASKS / BUGS / INFO ----------------------------------------------------------------
-- implement device detection ***DONE
+- implement device detection ***DONE (in mobile/)
 - create list of pages that need templating. 
 
 
