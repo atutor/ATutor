@@ -91,11 +91,12 @@ jQuery('#results-hide-show-link').click(function(e) {
 $this->onload .= "});
 ";
 	
-
 // Hide the addressbar
 $this->onload .= "
 setTimeout(function() { window.scrollTo(0, 1) }, 100);
 ";
+
+
 
 ?>
 
@@ -131,7 +132,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/iphone.css" type="text/css"/>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/jquery.mobile-1.0b1.css" type="text/css"/>
+	
 	<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />
 	<?php endif; ?>
 <?php endif; ?>
@@ -184,11 +185,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <div id="contentwrapper">
 
 <!--  Note: ARIA roles cause XHTML validation errors because the XHTML DTD does not yet support ARIA. Use ARIA anyway -->
+
 <div id="navigation-contentwrapper">
-	<div id="navigation-bar">
+<div id="navigation-bar">
 	<!--  this should be a button on its own  -->
 		<?php if ($this->current_sub_level_page): ?>
-		<div id="topnavlistcontainer" role="menu" aria-live="assertive" >
+		<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
 		<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 			<ul id="topnavlist"  class="fl-list-menu">
 				<?php $accesscounter = 0; //initialize ?>
@@ -214,10 +216,11 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	</div>
 
 
+
 	<ul class="fl-tabs" id="home-guide">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 <?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
-		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li><a class="hover-fl-tabs" href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 <?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 <?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
