@@ -164,86 +164,85 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 <div id="wrapper">
 <div id="main">
-<div id="header">
+	<div id="header">
 
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
-	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
+		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
-	<div id="header-section-title">
-		<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
-				echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
-			endif; ?> --> 
+		<div id="header-section-title">
+			<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
+					echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
+				endif; ?> --> 
 			<h1 id="section-title"><?php echo $this->section_title; ?>
-			<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
+				<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 				<!-- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>-->
-			<?php endif; ?>
-			</h1>
-	</div>
-</div> <!--  END HEADER -->
-
-
-<div id="contentwrapper">
-
-<!--  Note: ARIA roles cause XHTML validation errors because the XHTML DTD does not yet support ARIA. Use ARIA anyway -->
-
-<div id="navigation-contentwrapper">
-<div id="navigation-bar">
-	<!--  this should be a button on its own  -->
-		<?php if ($this->current_sub_level_page): ?>
-		<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
-		<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-			<ul id="topnavlist"  class="fl-list-menu">
-				<?php $accesscounter = 0; //initialize ?>
-				<?php foreach ($this->top_level_pages as $page): ?>
-					<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-					<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-					<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-					<?php if ($page['url'] == $this->current_top_level_page): ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
-					<?php else: ?>
-						<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
-					<?php endif; ?>
-				
-					<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-					
-				<?php endforeach; ?>
-				<?php if(!$this->just_social): ?>
-				<li role="menuitem"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
-				<?php endif; ?> 
-			</ul>
+				<?php endif; ?>
+				</h1>
 		</div>
-		<?php endif; ?>
-	</div>
+	</div> <!--  END HEADER -->
+
+
+	<div id="contentwrapper">
+
+	<!--  Note: ARIA roles cause XHTML validation errors because the XHTML DTD does not yet support ARIA. Use ARIA anyway -->
+
+	<div id="navigation-contentwrapper">
+	<div id="navigation-bar">
+		<!--  this should be a button on its own  -->
+			<?php if ($this->current_sub_level_page): ?>
+			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
+			<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+				<ul id="topnavlist"  class="fl-list-menu">
+					<?php $accesscounter = 0; //initialize ?>
+					<?php foreach ($this->top_level_pages as $page): ?>
+						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+						<?php if ($page['url'] == $this->current_top_level_page): ?>
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+						<?php else: ?>
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+						<?php endif; ?>
+				
+						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+					
+					<?php endforeach; ?>
+					<?php if(!$this->just_social): ?>
+					<li role="menuitem"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
+					<?php endif; ?> 
+				</ul>
+			</div>
+			<?php endif; ?>
+		</div>
 
 
 
 	<ul class="fl-tabs" id="home-guide">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
-<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
+	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
 		<li><a class="hover-fl-tabs" href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
-<?php endif;?>		
+	<?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
-<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
-if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
-
+	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
+		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
 		<li><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
-<?php endif;?>
+	<?php endif;?>
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
-<?php if($_SESSION['is_admin'] == 1): ?>
+	<?php if($_SESSION['is_admin'] == 1): ?>
 		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
-<?php endif;?>
+	<?php endif;?>
 	
-<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-		<li>
-	    	<div id="guide_box">
-				<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
+	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
+			<li>
+		    	<div id="guide_box">
+					<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
       		
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
-      		</div>
-		</li>
-		<?php endif; ?>
-	</ul>
-</div><!--  END navigation-contentwrapper -->
+				  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
+      			</div>
+			</li>
+			<?php endif; ?>
+		</ul>
+	</div><!--  END navigation-contentwrapper -->
 	<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
 	
 	
@@ -252,31 +251,30 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 		<a id="content_link" href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
 		<div id="content" style=" display: none; position: relative; z-index: 1;">
 		<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript">
-			
-				</script>
+				<script language="javascript" type="text/javascript"></script>
 		</div>
 		</div>
 	<?php endif; ?>
-<div id="inner-contentwrapper" class="fl-container">
 
-	<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
-			<!-- style="margin-left:0.5em;width:99%;" -->
-		<?php endif; ?>
-		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-		<div class="sequence-links">
-		<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-			<?php if ($this->sequence_links['resume']): ?>
-					<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?></a>
-			<?php else:
-				if ($this->sequence_links['previous']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" class="previous-next" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> </a>
-				<?php endif;
-				if ($this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>" class="previous-next"  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?></a>
-				<?php endif; ?>
+		<div id="inner-contentwrapper" class="fl-container">
+
+			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
+				<!-- style="margin-left:0.5em;width:99%;" -->
 			<?php endif; ?>
-		<?php } ?>
+			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+			<div class="sequence-links">
+			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
+				<?php if ($this->sequence_links['resume']): ?>
+						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?></a>
+				<?php else:
+					if ($this->sequence_links['previous']): ?>
+						<a href="<?php echo $this->sequence_links['previous']['url']; ?>" class="previous-next" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> </a>
+					<?php endif;
+					if ($this->sequence_links['next']): ?>
+						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class="previous-next"  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?></a>
+					<?php endif; ?>
+			<?php endif; ?>
+			<?php } ?>
 			&nbsp;
 		</div> <!-- end sequence-links -->
 		<?php endif; ?>
@@ -285,36 +283,36 @@ if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN)
 	<div id="contentcolumn">	
 		
 
-	<!-- the page title -->
-	<a name="content" title="<?php echo _AT('content'); ?>"></a>
-	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
+		<!-- the page title -->
+		<a name="content" title="<?php echo _AT('content'); ?>"></a>
+		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 	
-	<?php global $msg; $msg->printAll(); $_base_href;?>
+		<?php global $msg; $msg->printAll(); $_base_href;?>
 	
-	<!-- the sub navigation -->
-	<?php if (count($this->sub_level_pages) > 0): ?>
-			<div id="subnavlistcontainer">
-				<div id="subnavbacktopage">
-				<?php if (isset($this->back_to_page)): ?>
-					<a href="<?php echo $this->back_to_page['url']; ?>">
-					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
-				<?php endif; ?>
-				</div>
-
-				<ul id="subnavlist">
-				<?php $num_pages = count($this->sub_level_pages); ?>
-				<?php for ($i=0; $i<$num_pages; $i++): ?>				
-					<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-						<li id="test" ><?php echo $this->sub_level_pages[$i]['title']; ?></li>
-					<?php else: ?>
-						<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+		<!-- the sub navigation -->
+		<?php if (count($this->sub_level_pages) > 0): ?>
+				<div id="subnavlistcontainer">
+					<div id="subnavbacktopage">
+					<?php if (isset($this->back_to_page)): ?>
+						<a href="<?php echo $this->back_to_page['url']; ?>">
+						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
 					<?php endif; ?>
-				<?php if ($i < $num_pages-1): 
-					echo " ";?>
-				<?php endif; ?>
-				<?php endfor; ?>
-				</ul>
-			</div>
-	<?php endif; ?>
+					</div>
+
+					<ul id="subnavlist">
+					<?php $num_pages = count($this->sub_level_pages); ?>
+					<?php for ($i=0; $i<$num_pages; $i++): ?>				
+						<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
+						<li id="test" ><?php echo $this->sub_level_pages[$i]['title']; ?></li>
+						<?php else: ?>
+						<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+						<?php endif; ?>
+					<?php if ($i < $num_pages-1): 
+						echo " ";?>
+					<?php endif; ?>
+					<?php endfor; ?>
+					</ul>
+				</div> <!--  end subnavlistcontainer -->
+		<?php endif; ?>
 
 
