@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -239,9 +239,11 @@ if ($_config['time_zone']) {
 	if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
 	    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
 	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
+	    
 	} else if ($_POST['set_default']) {
 	    $_SESSION['prefs']['PREF_THEME'] = 'default';
 	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
+	    
 	}
 	
 	// Reset PREF_THEME when:
@@ -254,10 +256,12 @@ if ($_config['time_zone']) {
 		$default_theme = get_default_theme();
 		
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+		
 	}
 	
 	if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) || $_SESSION['prefs']['PREF_THEME'] == '') {
 		$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
+	
 	}
 	
 	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
@@ -266,6 +270,7 @@ if ($_config['time_zone']) {
 		if ($_SESSION['course_id'] == -1) {
 			if ($_SESSION['prefs']['PREF_THEME'] == '' || !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
 				$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
+				
 			}
 		} else {
 			//check if enabled
@@ -280,13 +285,15 @@ if ($_config['time_zone']) {
 					$default_theme = array('dir_name' => get_system_default_theme());
 				}
 				$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+				
 			}
 		}
 	}
 	
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 	require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
-
+	
+	
 	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 	$msg = new Message($savant);
 
@@ -1475,4 +1482,5 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
     $_custom_head .= '<script type="text/javascript" src="'.$_base_path.'jscripts/ATutorCourse.js"></script>';
 }
+
 ?>
