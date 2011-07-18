@@ -166,6 +166,7 @@ class MyHandler {
 							'form'		=> 'action',
 							'input'		=> 'src',
 							'iframe'	=> 'src',
+							'source'	=> 'src',
 							'embed'		=> 'src',
 							'param'		=> 'value');
 	
