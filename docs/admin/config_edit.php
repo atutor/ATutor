@@ -183,7 +183,7 @@ if (!isset($_POST['submit'])) {
 		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.3
 		global $utc_timezones; // set in include/lib/constants.inc.php
 		$local_offset = ((date(Z)/3600));
-		echo '<select name="time_zone">';	
+		echo '<select name="time_zone" id="time_zone">';	
 			echo '<option value="0">'._AT('none').'</option>';
 		foreach ($utc_timezones as $zone => $offset){
 			if(($offset[1]) == $_config['time_zone']){
@@ -321,7 +321,7 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	</div>
 
 	<div class="row">
-		<label for="cache"><?php echo _AT('latex_server'); ?></label><br />
+		<label for="latex_server"><?php echo _AT('latex_server'); ?></label><br />
 		<input type="text" name="latex_server" id="latex_server" size="40" value="<?php if (!empty($_POST['latex_server'])) { echo $stripslashes(htmlspecialchars($_POST['latex_server'])); } else { echo $_config['latex_server']; } ?>"  />
 	</div>
 
@@ -350,7 +350,7 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		<?php echo _AT('enable_mail_queue'); ?> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['enable_mail_queue'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<?php echo _AT('mail_queue_cron'); ?><br />
 		<?php if (!$_config['last_cron'] || (time() - (int) $_config['last_cron'] > 2 * 60 * 60)): ?>
-			<input type="radio" name="enable_mail_queue" value="1" disabled="disabled" /><?php echo _AT('enable'); ?> <input type="radio" name="enable_mail_queue" value="0" id="mq_n" checked="checked" /><label for="mq_n"><?php echo _AT('disable'); ?></label>
+			<input type="radio" name="enable_mail_queue" value="1" disabled="disabled" id="mq_y"  /><label for="mq_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="enable_mail_queue" value="0" id="mq_n" checked="checked" /><label for="mq_n"><?php echo _AT('disable'); ?></label>
 		<?php else: ?>
 			<input type="radio" name="enable_mail_queue" value="1" id="mq_y" <?php if($_config['enable_mail_queue']) { echo 'checked="checked"'; }?>  /><label for="mq_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="enable_mail_queue" value="0" id="mq_n" <?php if(!$_config['enable_mail_queue']) { echo 'checked="checked"'; }?>  /><label for="mq_n"><?php echo _AT('disable'); ?></label>
 		<?php endif; ?>
