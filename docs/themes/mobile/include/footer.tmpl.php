@@ -1,16 +1,6 @@
 <?php if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 <?php if ($this->mobile_device_type != IPAD_DEVICE): ?><!-- begin footer template for iphone, android, and blackberry -->
-<?php //if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?>
-		<!-- 	GO TO TOP LINK REMOVED FOR MOBILE
-		<div id="gototop">		
-				<br />
-				<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#navigation-contentwrapper" title="<?php echo _AT('goto_content'); ?> Alt-c" ><?php echo _AT('goto_top'); ?>
-				<img src="<?php echo $this->base_path; ?>themes/mobile/images/arrow-up.png" alt="<?php echo _AT('goto_top'); ?> Alt-c" border="0"/> 
-				
-				</a>
-			</div>  
-		 -->
-<?php // endif; ?> 
+
 
 </div> <!-- end innner-contentwrapper -->	
 </div> <!-- end contentcolumn -->
@@ -59,17 +49,7 @@
 </body>
 <?php endif;?><!--  end footer template for iphone, android and blackberry -->
 <?php if ($this->mobile_device_type == IPAD_DEVICE): ?> <!-- start footer template for ipad/talets -->
-<?php //if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?>
-		<!-- 	GO TO TOP LINK REMOVED FOR MOBILE
-		<div id="gototop">		
-				<br />
-				<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#navigation-contentwrapper" title="<?php echo _AT('goto_content'); ?> Alt-c" ><?php echo _AT('goto_top'); ?>
-				<img src="<?php echo $this->base_path; ?>themes/mobile/images/arrow-up.png" alt="<?php echo _AT('goto_top'); ?> Alt-c" border="0"/> 
-				
-				</a>
-			</div>  
-		 -->
-<?php // endif; ?> 
+
 
 </div> <!-- end innner-contentwrapper -->	
 </div> <!-- end contentcolumn -->
@@ -95,10 +75,10 @@
 				<?php endif; ?>
 			<?php endif; ?>
 		<?php endif; ?>
-		<!--  SEARCH MOVED TO #topnavlist 
+		
 		<?php if(!$this->just_social): ?>
 			<li><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
-		<?php endif; ?> -->
+		<?php endif; ?> 
 		<li><a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a></li>
 
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>					 
@@ -109,6 +89,7 @@
 </ul>			
  </div>			
 </div>
+
 <div class="type-interior ui-page ui-body-c ui-page-active"> <!-- jQueryMobile only -->
 	<script language="javascript" type="text/javascript">
 //<!--
