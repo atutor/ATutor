@@ -11,7 +11,7 @@
 ?>
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
 
-<div class="input-form" style="float:right; width:34%;padding:1em;min-height:4.5em;">
+<div class="input-form">
 	<div class="contentrow">
 		<h3><?php echo _AT('search_for_friends'); ?></h3>
 		<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index_public.php');?>" method="POST" id="search_friends_form">
@@ -24,7 +24,7 @@
 		</form>
 	</div>
 </div>
-<div class="" style="float:left; width:59%">
+<div>
 	<div class="headingbox"><h3><?php echo _AT('search_results'); ?></h3></div>
 	<div class="contentbox">
 	<?php 
@@ -43,8 +43,8 @@
 	?>
 	<div class="contact_mini" >
 		<div>
-			<div style="float:left;"><?php echo printSocialProfileImg($id); ?></div>
-			<div style="padding-left:0.5em; float:left;">
+			<div ><?php echo printSocialProfileImg($id); ?></div>
+			<div>
 				<?php 
 					$member_obj = new Member($id);
 					$profile = $member_obj->getAddress();
