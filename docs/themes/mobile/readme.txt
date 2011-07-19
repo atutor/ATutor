@@ -14,7 +14,9 @@ GLOBAL TASKS & BUGS (all devices) ----------------------------------------------
     See: http://issues.fluidproject.org/browse/FLUID-4313
     - white list arrow should change color >
     - top navigation bar "home" & "help" buttons should highlight. 
-- make skip links image the same color as the header.    
+- make skip links image the same color as the header (iphone, android)  
+- ARIA roles review for navigational menu in tablet theme
+- July 25 26 F2F: default theme on FF  
 - clean-up order of style rules in iphone.css and tablet.css (Ongoing & August)
 - default.preferences.tmpl.php 
 - try http://www.filamentgroup.com/lab/styling_buttons_and_toolbars_with_the_jquery_ui_css_framework/ for "Navigation" hover 
