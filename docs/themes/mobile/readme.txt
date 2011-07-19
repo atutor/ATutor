@@ -10,16 +10,20 @@ Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.htm
 	
 GLOBAL TASKS & BUGS (all devices) ----------------------------------------------------------------
 
-- default.preferences.tmpl.php 
-- A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
-- A11Y TASKhtml-check the Instructor mobile pages. (August)
-- Remove redundant styles from iphone.css  ***In Process
-- Update color scheme of android.css (not a priority) 
 - MOBILE FSS BUG: Create a workaround for Mobile FSS bug  ***In Process
     See: http://issues.fluidproject.org/browse/FLUID-4313
     - white list arrow should change color >
     - top navigation bar "home" & "help" buttons should highlight. 
-    
+- make skip links image the same color as the header.    
+- clean-up order of style rules in iphone.css and tablet.css (Ongoing & August)
+- default.preferences.tmpl.php 
+- try http://www.filamentgroup.com/lab/styling_buttons_and_toolbars_with_the_jquery_ui_css_framework/ for "Navigation" hover 
+- A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
+- A11Y TASKhtml-check the Instructor mobile pages. (August)
+- Remove redundant styles from iphone.css  ***In Process
+- Aesthetics: Update color scheme of android.css 
+- Aesthetics: Style button elements
+- Remove any redundant styles from tablet.css
 - Instructor user: Content menu open/close stays highlighted after close - touch highlighting. 
 - Instructor user: remove on keydowns (only present on index pages) 
 - Instructor user: Improve styling: /docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup
@@ -27,12 +31,8 @@ GLOBAL TASKS & BUGS (all devices) ----------------------------------------------
 - Admin user: Improve styling: http://localhost/GSoC2011/docs/admin/error_logging.php
 - Done ? Create course / Edit course / Course properties for admin / instructor users. 
 - template groups/ social networking (e.g. /mods/_standard/social/index_public.php)
-
-
-STUDENT VIEW TABLET TASKS / BUGS / INFO ----------------------------------------------------------------
-- implement device detection ***DONE (in mobile/)
-- create list of pages that need templating. 
-
+- change android.css color scheme.
+- template docs/mods/_core/themes/index.php
 
 iPHONE TASKS / BUGS / INFO ----------------------------------------------------------------
 - A11Y BUG: Voice over bug:  admin user logs out in voice over when using the drop-down menu. 
