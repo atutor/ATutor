@@ -8,7 +8,7 @@ html, body{
 #main{
 	padding-bottom: 2.3em;
 	overflow: auto;
-	background-color: yellow;
+
 }
 
 body,ul,li {
@@ -1759,7 +1759,10 @@ ul#topnavlist-tablet>li:hover a,
 ul#topnavlist-tablet>li:active,
 ul#topnavlist-tablet>li:active a,
 ul#topnavlist-tablet>li:focus, 
-ul#topnavlist-tablet>li:focus a {
+ul#topnavlist-tablet>li:focus a, 
+/*highlight active list item*/
+ul#topnavlist-tablet>li .active
+{
 	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
@@ -1827,10 +1830,7 @@ div#contentwrapper{
 	
 	}
 div#inner-contentwrapper{
-	background-color: red;
-	background-color: red;
-		border:10px #A9ADB0 solid;
-	-webkit-border-radius:5px;
+
 }
 
 div#navigation-column{
@@ -1964,3 +1964,4 @@ ul.social_inline_menu{
 	width:90%;
 	margin:auto;
 }
+
