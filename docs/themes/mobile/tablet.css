@@ -1752,6 +1752,7 @@ div#results-display{
 ul#topnavlist-tablet li {
 	padding: 0;
 	margin: 0;
+	color: white;
 }
 	
 ul#topnavlist-tablet>li:hover,
@@ -1760,8 +1761,8 @@ ul#topnavlist-tablet>li:active,
 ul#topnavlist-tablet>li:active a,
 ul#topnavlist-tablet>li:focus, 
 ul#topnavlist-tablet>li:focus a, 
-/*highlight active list item*/
-ul#topnavlist-tablet>li .active
+/*highlight active list item
+ul#topnavlist-tablet>li .active*/
 {
 	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
@@ -1769,10 +1770,13 @@ ul#topnavlist-tablet>li .active
 }
 
 ul#topnavlist-tablet li a  {
- 	color: #4C566C;
+ 	/*color: #4C566C;*/
  	text-decoration: none;
 }
 
+.flc-screenNavigator-backButton .fl-link-hilight{
+	display: none;
+}
 
 div.toolcontainer{
 	border: #cccccc 1px solid;
@@ -1839,11 +1843,12 @@ div#navigation-column{
 
 }
 div#contentcolumn{
-	border:thin #A9ADB0 solid;
-	-webkit-border-radius:5px;
+	/*border:thin #A9ADB0 solid;
+	-webkit-border-radius:5px;*/
 	width: 68.5%; 
 	float: right;
-
+	border-left: thin #A9ADB0 solid;
+	padding-left: .313em;
 }
 
 
