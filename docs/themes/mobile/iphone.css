@@ -178,7 +178,7 @@ p a:active {
 h1, h2, h3, h4, h5, h6 {
     color: #4C566C;
     clear: right;
-    font: 100% Verdana, Helvetica, Arial, sans-serif;
+    font: 100% Helvetica, Arial, sans-serif;
 	font-weight: bold;
     margin: 0;
 	padding: 0;
@@ -263,7 +263,7 @@ a:link, /*a:visited*/ a:focus  {
 }
 /* small submit button at top */
 .button2 {
-	font-family: Verdana, Helevetica, Arial, sans-serif;
+	font-family: Helvetica,sans-serif;
 	background-color: #E9F4F3;
 
 }
@@ -274,7 +274,7 @@ a:link, /*a:visited*/ a:focus  {
 
 /* Editor box large */
 .editorlargebox {
-	font-family: Verdana, Helevetica, Arial, sans-serif;
+	font-family: Helvetica,sans-serif;
 	background-color: #E9F4F3;
 	margin-left:1em;
 	padding-left: .2em;
@@ -1520,14 +1520,31 @@ a:active {
 	color: #ffffff;
 	text-decoration: underline;
 }
-
-
 */
-a:active, a:hover, a:focus{
+
+
+/*Creates the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
+.buttontab hover addresses the Mobile FSS bug http://issues.fluidproject.org/browse/FLUID-4313 and is applied to 
+elements in the theme header and footer. Should be removed when the FSS issue is fixed. */
+a:active, a:hover, a:focus, .buttontab-hover{
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
   
+}
+
+/*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
+Ensure styling matches that in fl-tabs.*/
+.topnavlistcontainer a:hover, .topnavlistcontainer a:active, .topnavlistcontainer a:focus{
+    background-image: -webkit-gradient(linear, left top, left bottom,
+     	from(#3b5371),
+        color-stop(0.5, #374e6b),
+        color-stop(0.50, #354d68),
+        to(#354d68)
+    );
+      
+       
+
 }
 
 /*Added by Silvia */
@@ -1704,7 +1721,7 @@ div.menuedit{
 }
 li.folders {
 	list-style: disc url(../../images/folder.gif) outside;
-	font-family: Verdana, Helevetica, Arial, sans-serif;
+	font-family: Helvetica,sans-serif;
 	margin-bottom: 0;
 	margin-top: 0;
 	margin-right: 0;
@@ -1953,15 +1970,11 @@ margin-left:2em;}
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
   
 }
-.fl-list-menu a:hover,
-.fl-list-menu a:focus,
-.fl-list-menu a:active {
-	color: #fff;
-    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-  
-}
 
+/* isolates fl tabs 
+.fl-theme-iphone .fl-tabs li a, .fl-theme-iphone .fl-tabs .fl-tabs-active {
+	background-color: white;
+} */
 
 
 
