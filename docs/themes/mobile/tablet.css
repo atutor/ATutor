@@ -1,5 +1,5 @@
-/* Style is optimized for iphone. Note that -webkit properties create errors in the CSS validator. 
-Classes beginning with ".fl-" are overriding Mobile FSS, see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
+/* Style is optimized for tablets. Note that -webkit properties create errors in the CSS validator. 
+Classes beginning with ".fl-" override Mobile FSS, see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
 for more details. 
 */
 html, body{
@@ -1823,6 +1823,15 @@ ol#tools>li:hover, ol#tools>li:hover a {
   	
 }
 
+div#contentwrapper{
+	
+	}
+div#inner-contentwrapper{
+	background-color: red;
+	background-color: red;
+		border:10px #A9ADB0 solid;
+	-webkit-border-radius:5px;
+}
 
 div#navigation-column{
 	width: 30%; 
