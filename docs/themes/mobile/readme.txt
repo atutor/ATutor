@@ -14,6 +14,7 @@ GLOBAL TASKS & BUGS (all devices) ----------------------------------------------
     See: http://issues.fluidproject.org/browse/FLUID-4313
     - white list arrow should change color >
     - top navigation bar "home" & "help" buttons should highlight. 
+- student user: filtering & highlight links.
 - make skip links image the same color as the header (iphone, android)  
 - ARIA roles review for navigational menu in tablet theme
 - July 25 26 F2F: default theme on FF  
@@ -256,5 +257,8 @@ NOT DONE
 [STUDENT TOOLS]
 NOT DONE: /docs/mods/_standard/student_tools/instructor_index.php 
 
+----------------------------------------------------------------------------------------
+TABLET TEMPLATE: STUDENT 
 
+/docs/login.php
 
