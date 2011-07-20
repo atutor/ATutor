@@ -323,7 +323,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 <div id="wrapper">
 <div id="main">
-	<div id="header">
+	<div id="header" role="header">
 
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
@@ -413,7 +413,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<!--  requires ARIA roles review -->
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
-				<ul id="topnavlist-tablet"  class="fl-list-menu">
+				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
 					<?php $accesscounter = 0; //initialize ?>
 					<?php foreach ($this->top_level_pages as $page): ?>
 						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
