@@ -206,6 +206,7 @@ h3.browse-courses{
 	display: inline;
 }
 
+
 h3 a {
     font-size: 100%;
 }
@@ -1223,6 +1224,7 @@ fieldset {
 	margin:0 auto;
 	border:thin #A9ADB0 solid;
 	margin-bottom: 1em;
+
 }
 #shortcuts legend {
 }
@@ -1498,41 +1500,35 @@ dl.browse-course dd {
 /*  form fields grouping for WCAG 2.0 conformance*/
 
 fieldset.group_form{
-	width:95%;
+	width:98%;
 	margin:0 auto;
 	margin-bottom: 1em;
-	border: 1px #6D7B8D solid;
-	-webkit-border-radius:5px;
+	border: 1px white solid;
+	
+	
 }
 
 legend.group_form{
 	background-color:white;
 	font-weight: 600;
 	color: #4c566c;
-	padding:.5em;
-	border: 1px #6D7B8D solid;
-	-webkit-border-radius:5px;
+	padding:0;
+	border: 1px white solid;
 }
 
-/* highlight active links for WCAG 2.0 conformance 
-a:hover {
-	color: #4C566C;
-	text-decoration: underline;
-}
-a:active {
-	color: #ffffff;
-	text-decoration: underline;
-}
-*/
 
-
+/* highlight active links for WCAG 2.0 conformance */
 /*Creates the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
 .buttontab hover addresses the Mobile FSS bug http://issues.fluidproject.org/browse/FLUID-4313 and is applied to 
 elements in the theme header and footer. Should be removed when the FSS issue is fixed. */
 a:active, a:hover, a:focus, .buttontab-hover{
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    color: black;
+	border: 1px #DEE7EC solid;
+	-webkit-border-radius:5px;
+	background: #DEE7EC;
   
 }
 
@@ -1847,8 +1843,10 @@ div#contentcolumn{
 	-webkit-border-radius:5px;*/
 	width: 68.5%; 
 	float: right;
-	border-left: thin #A9ADB0 solid;
-	padding-left: .313em;
+	padding-bottom: .5em;
+	
+	/*border-left: thin #A9ADB0 solid;*/
+	
 }
 
 
@@ -1968,5 +1966,9 @@ ul.social_inline_menu{
 	padding:.5em;
 	width:90%;
 	margin:auto;
+}
+.results-hide-show-link-container{
+	   border: #A9ADB0 solid 1px;
+	-webkit-border-radius: 5px;
 }
 
