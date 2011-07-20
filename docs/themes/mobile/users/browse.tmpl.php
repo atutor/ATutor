@@ -1,33 +1,46 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <div class="column-login">
 <div class="input-form">
-<fieldset class="group_form"><legend class="group_form"><?php echo _AT('filter'); ?></legend>
-	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+
+<div class="fl-container-autoHeading" style="margin-left: 0; margin-right: 0;">
+	<h3><?php echo "Results"; ?></h3>
+
+	<ul class="fl-list-menu fl-list-thumbnails fl-list-brief fl-thumbnails-expanded">
+		<li><a class="flc-screenNavigator-backButton" id="results-hide-show-link" href="javascript:void(0);" tabindex="1"><?php echo $this->num_results; echo " courses found."?>
+
+		</a>
 		
-			<div class="row">
-				<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
-			</div>
-			<div class="row">
-				<?php echo _AT('access'); ?><br />
-				<input type="radio" name="access" value="private" id="s1" <?php if ($_GET['access'] == 'private') { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('private'); ?></label> 
 
-				<input type="radio" name="access" value="protected" id="s2" <?php if ($_GET['access'] == 'protected') { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('protected'); ?></label>
+		
+		</li>
+	</ul>
+</div>
 
-				<input type="radio" name="access" value="public" id="s3" <?php if ($_GET['access'] == 'public') { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('public'); ?></label>
+<div id="results-hide-show" role="search"  aria-live="assertive">
+<div id="results-display">
+<fieldset class="group_form"><legend class="group_form"><?php echo "Filter by:"; ?></legend>
+		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+				<div class="row">
+					<?php echo _AT('access'); ?><br />
+					<input type="radio" name="access" value="private" id="s1" <?php if ($_GET['access'] == 'private') { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('private'); ?></label> 
+	
+					<input type="radio" name="access" value="protected" id="s2" <?php if ($_GET['access'] == 'protected') { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('protected'); ?></label>
 
-				<input type="radio" name="access" value="" id="s" <?php if ($_GET['access'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
-			</div>
+					<input type="radio" name="access" value="public" id="s3" <?php if ($_GET['access'] == 'public') { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('public'); ?></label>
 
-		<?php if ($this->has_categories): ?>
-			<div class="row">
-				<label for="category"><?php echo _AT('category'); ?></label><br/>
-				<select name="category" id="category">
-					<option value="-1">- - - <?php echo _AT('cats_all'); ?> - - -</option>
-					<option value="0" <?php if ($_GET['category'] == 0) { echo 'selected="selected"'; } ?>>- - - <?php echo _AT('cats_uncategorized'); ?> - - -</option>
-					<?php echo $this->categories_select; ?>
-				</select>
-			</div>
-		<?php endif; ?>
+					<input type="radio" name="access" value="" id="s" <?php if ($_GET['access'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+				</div>
+
+			<?php if ($this->has_categories): ?>
+				<div class="row">
+					<label for="category"><?php echo _AT('category'); ?></label><br/>
+					<select name="category" id="category">
+						<option value="-1">- - - <?php echo _AT('cats_all'); ?> - - -</option>
+						<option value="0" <?php if ($_GET['category'] == 0) { echo 'selected="selected"'; } ?>>- - - <?php echo _AT('cats_uncategorized'); ?> - - -</option>
+						<?php echo $this->categories_select; ?>
+					</select>
+				</div>
+			<?php endif; ?>
 
 			<div class="row">
 				<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('title').', '._AT('description'); ?>)</label><br />
@@ -44,8 +57,15 @@
 				<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>"/>
 			</div>
 		
-	</form>
-</fieldset>
+		</form>
+
+		</fieldset>
+</div>
+</div>
+
+
+
+
 </div>
 </div>
 <div>
