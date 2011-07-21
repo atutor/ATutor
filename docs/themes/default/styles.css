@@ -13,17 +13,15 @@ html,body{
 /* main body attributes */
 body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
-	font-size:1.0em;
+	font-size:.8em;
 	margin:0px;
-	margin-top: -10px;
-	background-color: #EDE7C2;
+	background-color: #F2F9FA;
 }
 .page_wrapper{
-	border:1px solid #aaaaaa;
-	width:97%;
+/*	border:1px solid #aaaaaa;*/
+	width:100%;
 	margin-left:auto;
 	margin-right:auto;
-	margin-top:1em;
 	background-color: #ffffff;
 	border-radius: 1em 1em 1em 1em;
 	-moz-border-radius: 1em 1em 1em 1em;
@@ -261,7 +259,6 @@ a .highlight{
 /* edit content tabs */
 .buttontab {
 	color:#555;
-/*	font-size:10pt;*/
 	white-space: nowrap;
   	background-color: #FFFFFF;
 	margin: 0px;
@@ -586,7 +583,7 @@ div#top-links a:focus{
 	margin-left: 2em;
 	margin-top:.2em;
 	white-space:nowrap;
-	background-color:#eeeeee;
+	background-color:#F2F7F7;
 	border:thin solid #cccccc;
 	border-radius: .3em .3em .3em .3em;
 	-mox-border-radius: .3em .3em .3em .3em;
@@ -597,12 +594,12 @@ div#top-links a:focus{
 	float:left;
 	white-space:nowrap;
 	margin-top:.2em;
-	background-color:#eeeeee;
+	background-color:#F2F7F7;
 	padding-right:.5em;
 }
 
 #jumpmenu{
-	background-color:#eeeeee;
+	background-color:#F2F7F7;
 	border:thin solid #cccccc;
 	border-radius:.3em .3em .3em .3em;
 	-moz-border-radius:.3em .3em .3em .3em;	
@@ -1062,7 +1059,10 @@ h4.box {
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding:.2em;
-	border:1px solid #ccc;
+	border-top:1px solid #F2F7F7;
+	border-left:1px solid #F2F7F7;
+	border-right:1px solid #F2F7F7;
+		border-bottom:1px solid #F2F7F7;
 /*	-moz-box-shadow:.1em .1em .1em #999999;
 	box-shadow: .1em .1em .1em #999999;*/
 }
@@ -1075,9 +1075,9 @@ div.box {
 	font-weight: normal;
 	border-radius:.0em .0em .5em .5em;
 	-moz-border-radius: .0em .0em .5em .5em;
-	border-left:1px solid #ccc;
+/*	border-left:1px solid #ccc;
 	border-right:1px solid #ccc;
-	border-bottom:1px solid #ccc;
+	border-bottom:1px solid #ccc;*/
 /*	-moz-box-shadow:.1em .1em .1em #999999;
 	 box-shadow: .1em .1em  .1em #999999;*/
 }
@@ -1199,9 +1199,9 @@ div#alternatives_shortcuts {
 	margin: -2em 5pt;
 	border-radius: .5em .5em .5em .5em;;
 	-moz-border-radius: .5em .5em .5em .5em;
-	-moz-box-shadow:.1em .1em .2em #999999;
-	 box-shadow: .1em .1em  .2em #999999;
-	 border:1px solid #cccccc;
+/*	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;*/
+	 border:1px solid #F2F7F7;
 	 padding-top: .2em;
 	 padding-left: .2em;
 	 padding-right: .2em;
@@ -1224,15 +1224,15 @@ fieldset {
 	padding:.2em
 }
 div#shortcuts{
-	border-left:thin solid #cccccc;
-	border-right:thin solid #cccccc;
-	border-bottom:thin solid #cccccc;
-	border-radius: 0em 0em .5em .5em;;
+	border-left:thin solid #F2F7F7;
+	border-right:thin solid #F2F7F7;
+	border-bottom:thin solid #F2F7F7;
+	border-radius: 0em 0em .5em .5em;
 	-moz-border-radius: 0em 0em .5em .5em;
 	float:right;
 		margin-top:-.2em;
-	-moz-box-shadow:.1em .1em .2em #999999;
-	 box-shadow: .1em .1em  .2em #999999;
+/*	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;*/
 	margin-right:2em;
 	padding:.1em;
 }
@@ -1514,7 +1514,6 @@ ul#topnavlist li {
 	list-style: none;
 	display: inline-block;
 	height:auto;
-	margin-top:.1em;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 /*	-moz-box-shadow:.1em .0em .1em #999999;
@@ -1524,13 +1523,13 @@ ul#topnavlist li {
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
-	background-color: #E6E6E6;
+	background-color:  #F2F7F7;
 	color: black;
 	text-decoration:none;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	padding: .2em 1.8em .2em 1.8em;
-	border-bottom: 1px solid #E6E6E6;
+	padding: .1em 1.8em .2em 1.8em;
+	border-bottom: 1px solid #F2F7F7;
 
 }
 
@@ -1788,8 +1787,8 @@ a.tooltip{
 
 div.home_box {
 	width: 25em;
-	height: 166px;	
-	margin-top: .4em;
+	height: 130px;	
+	margin-top: sem;
 	padding: 3px;
 	padding-bottom: .4em;
 	float: left;
@@ -1836,7 +1835,7 @@ div.home_box {
 
 }
 .draggable_selected {
-	background-color: lightgrey;
+	background-color: lightgray;
 	cursor: move;
 }
 div#subnavlistcontainer {
@@ -1866,7 +1865,7 @@ ul#subnavlist {
 	padding-top: 4px;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
-/*	font-size:1.0em;*/
+/*font-size:1.0em;*/
 
 
 }
@@ -2002,9 +2001,9 @@ ul.current_list{
 }
 
 .logoutbar{
-      background-color:#E6E6E6; 
+      background-color: #F2F7F7; 
       font-size:0.85em; 
-      border-bottom:1px solid #cccccc; 
+      border-bottom:1px solid #F2F7F7; 
       height:2em;
 	  margin-top:-.15em;
       text-align:right;
@@ -2046,7 +2045,7 @@ table.etabbed-table	{
 }
 
 .prefs_buttontab {
-	height:1.4em;
+
 	background-color: #ffffff;
 	border-left:0;
 	border-right:0;
@@ -2055,7 +2054,7 @@ table.etabbed-table	{
 	
 }
 .prefs_tab{
-	height:1.6em;
+
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
@@ -2065,17 +2064,15 @@ table.etabbed-table	{
 	background-color: #FFFFFF;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .3em .2em 0em .3em;
+	padding: 0em .2em .2em .3em;
 	display: inline;
 	margin-left:.5em;
 		font-weight:bold;
 	text-decoration:none;
 }
     
-
-
 .prefs_tab_selected{
-    height:1.8em;
+
 	border-top: 1px solid #cccccc;
 	border-left: 1px solid #cccccc;
 	border-right: 1px solid #cccccc;
@@ -2085,8 +2082,7 @@ table.etabbed-table	{
 	background-color: #eeeeee;
 	border-radius:.3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .2em .2em 0em .5em;
-	padding: .2em .2em 0em .3em;
+	padding: .2em .2em .2em .3em;
 	display: inline;
 	margin-left:.5em;
 	font-weight:bold;
@@ -2094,7 +2090,9 @@ table.etabbed-table	{
 	
 }
 
-
+a.pref_wiz_launcher{
+	cursor:pointer;
+}
 
 .admin_container{
 	border:1px solid #cccccc;
@@ -2423,8 +2421,8 @@ height:1px;
 /* relative image size styles */
 
 img.img1616{
-height:1.5em;
-width:1.5em;
+height:1.6em;
+width:1.6em;
 }
 
 img.img1111{
@@ -2438,7 +2436,7 @@ img.img2424{
 input[type=image].fl-force-right{
 height:.9em;
 width:.9em;
-/*font-size:100%;*/
+font-size:100%;
 }
 
 img.fl-col{
