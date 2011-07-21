@@ -8,8 +8,8 @@ div.input-form {
 	background-color: #F8F8F8;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
-    -moz-box-shadow:.1em .1em .2em #999999;
-    box-shadow: .1em .1em .2em #999999;
+/*    -moz-box-shadow:.1em .1em .2em #999999;
+    box-shadow: .1em .1em .2em #999999;*/
 	padding:.2em;
 }
 
@@ -45,7 +45,7 @@ div.input-form textarea {
 	*width:400px;
 	padding: 2px;
 	margin-right: 2px;
-	font-size:100%;
+/*	font-size:100%;*/
 }
 
 div.input-form input[type=text], div.input-form input[type=password] {
@@ -64,7 +64,7 @@ div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.i
 input[type=checkbox]{
 
 	background-color: #FFDAB9;
-font-size:100%;
+/*font-size:100%;*/
 
 }
 
@@ -95,41 +95,41 @@ div.input-form div.row_alternatives {
 input[type=text]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	font-size:100%;
+/*	font-size:100%;*/
 }
 input[type=password]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	font-size:100%;
+/*	font-size:100%;*/
 }
 
 input[type=submit]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	font-size:100%;
+/*	font-size:100%;*/
 }
 
 input[type=reset]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	-moz-box-shadow:.2em .2em .3em #999999;
-	box-shadow: .2em .2em .3em #999999;
+/*	-moz-box-shadow:.2em .2em .3em #999999;
+	box-shadow: .2em .2em .3em #999999;*/
 }
 
 div.input-form input[type=submit]{
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-	-moz-box-shadow:.1em .1em .2em #999999;
-	 box-shadow: .1em .1em .2em #999999;
-	font-size:100%;
+/*	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em .2em #999999;*/
+/*	font-size:100%;*/
 }
 select{
 	background-color:#eeeeee;
 	border-radius: .2em .2em .2em .2em;
 	-moz-border-radius: .2em .2em .2em .2em;
-	-moz-box-shadow:.2em .2em .3em #999999;
-	box-shadow: .2em .2em .3em #999999;
-	font-size:100%;
+/*	-moz-box-shadow:.2em .2em .3em #999999;
+	box-shadow: .2em .2em .3em #999999;*/
+/*	font-size:100%;*/
 }
 .test_instruction{
 	background-color: #f3f3f3; 
