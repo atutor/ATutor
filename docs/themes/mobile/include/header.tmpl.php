@@ -82,12 +82,15 @@ jQuery('#topnavlist-link').click(function(e) {
   jQuery('#topnavlist').slideToggle();
 });
 ";
-
-//hide and show results	
+//[class*="fl-container-autoHeading"]
+//hide and show results	on Browse Courses page
 $this->onload .= "
 jQuery('#results-hide-show-link').click(function(e) {
   e.stopPropagation();
-  jQuery('#results-display').slideToggle();";
+  jQuery('#results-display').slideToggle();
+  
+  
+  ";
 $this->onload .= "});
 ";
 	
@@ -259,7 +262,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		</div>
 	<?php endif; ?>
 
-		<div id="inner-contentwrapper" class="fl-container">
+		<div id="inner-contentwrapper" class="fl-container" >
 
 			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
 				<!-- style="margin-left:0.5em;width:99%;" -->
@@ -317,7 +320,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					</ul>
 				</div> <!--  end subnavlistcontainer -->
 		<?php endif; ?>
-<?php endif; ?><!--  end header template for iphone, android, blackberry -->
+<?php endif; ?>
+
+
+<!--  end header template for iphone, android, blackberry -->
 <?php if ($this->mobile_device_type == IPAD_DEVICE): ?><!-- start header template for ipad/tablets -->
 <body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone ui-mobile-viewport">
 
@@ -371,7 +377,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	</div> <!--  END HEADER -->
 
 
-	<div id="contentwrapper">
+	<div id="contentwrapper" class="fl-container" >
 
 
 
@@ -386,7 +392,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		</div>
 	<?php endif; ?>
 
-		<div id="inner-contentwrapper" class="fl-container">
+		<div id="inner-contentwrapper" >
 
 			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
 				<!-- style="margin-left:0.5em;width:99%;" -->
@@ -409,7 +415,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		</div> <!-- end sequence-links -->
 		<?php endif; ?>
 
-	<div id="navigation-column">
+
+	<div id="navigation-column" >
 		<!--  requires ARIA roles review -->
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
@@ -435,7 +442,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		
 
 	</div>
-	<div id="contentcolumn">	
+	<div id="contentcolumn" >	
 		
 
 		<!-- the page title -->
