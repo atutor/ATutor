@@ -2,21 +2,13 @@
 <div class="column-login">
 <div class="input-form">
 
-<div class="fl-container-autoHeading" style="margin-left: 0; margin-right: 0;">
-	<h3><?php echo "Results"; ?></h3>
 
-	<ul class="fl-list-menu fl-list-thumbnails fl-list-brief fl-thumbnails-expanded">
-		<li><a class="flc-screenNavigator-backButton" id="results-hide-show-link" href="javascript:void(0);" tabindex="1"><?php echo $this->num_results; echo " courses found."?>
 
-		</a>
-		
+<div id="hide-show-container">
+	<h3><a id="results-hide-show-link" href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1"><?php echo $this->num_results; echo " courses found."?></h3> </a>
 
-		
-		</li>
-	</ul>
 </div>
-
-<div id="results-hide-show" role="search"  aria-live="assertive">
+<div id="results-hide-show" >
 <div id="results-display">
 <fieldset class="group_form"><legend class="group_form"><?php echo "Filter by:"; ?></legend>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -64,6 +56,7 @@
 </div>
 
 
+	
 
 
 </div>
