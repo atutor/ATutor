@@ -58,13 +58,13 @@
     for($i=$start;$i<=$end; $i++){
 	$count = $i;
 	if (isset($this->all_news)) {
-	    echo '<ul class="current_list">';
+	    echo '<ul class="tools">';
 	      if(isset($this->all_news[$i]['thumb'])){
-		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'"/> ' . $this->all_news[$i]['link'] .' <br />';
+		    echo '<li class="top-tool">' . $this->all_news[$i]['link'] .'&nbsp';
 		    if($this->all_news[$i]['object']['course_id']){
-		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)|';
+		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)';
 		    }
-		    echo '('.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).')</small><hr></hr></li>';
+		    echo '('.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).')</small></li>';
 		}
 	    echo '</ul>';
 	}
