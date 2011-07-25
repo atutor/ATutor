@@ -68,6 +68,6 @@
 	</div>
 	-->
 </div>
-
+</div>
 <div style="clear:both;"></div>
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
