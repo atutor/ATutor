@@ -96,8 +96,8 @@ function encrypt_password()
 		<a href="<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_play.php" title="<?php echo _AT('audible_captcha'); ?>"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/audio_icon.gif" alt="<?php echo _AT('audible_captcha'); ?>" onclick="this.blur()" align="top" border="0"></a><br>
 		<a href="#" title="<?php echo _AT('refresh_image'); ?>" onclick="document.getElementById('simage').src = '<?php echo AT_INCLUDE_PATH; ?>securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="<?php echo AT_INCLUDE_PATH; ?>securimage/images/refresh.gif" alt="<?php echo _AT('refresh_image'); ?>" onclick="this.blur()" align="bottom" border="0"></a>
 
-		<br />
-		<p><?php echo _AT('image_validation_text'); ?><br />
+		<br /><br />
+		<label for="secret"><?php echo _AT('image_validation_text'); ?></label>
 		<input id="secret" name="secret" type="text" size="6" maxlength="6" value="" />
 		<br />
 		<small><?php echo _AT('image_validation_text2'); ?><br /></small>
