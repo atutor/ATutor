@@ -13,7 +13,8 @@
 <fieldset class="group_form"><legend class="group_form"><?php echo "Filter by:"; ?></legend>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 				<div class="row">
-					<?php echo _AT('access'); ?><br />
+					<legend><?php echo _AT('access'); ?></legend>
+					<fieldset>
 					<input type="radio" name="access" value="private" id="s1" <?php if ($_GET['access'] == 'private') { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('private'); ?></label> 
 	
 					<input type="radio" name="access" value="protected" id="s2" <?php if ($_GET['access'] == 'protected') { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('protected'); ?></label>
@@ -21,6 +22,7 @@
 					<input type="radio" name="access" value="public" id="s3" <?php if ($_GET['access'] == 'public') { echo 'checked="checked"'; } ?> /><label for="s3"><?php echo _AT('public'); ?></label>
 
 					<input type="radio" name="access" value="" id="s" <?php if ($_GET['access'] == '') { echo 'checked="checked"'; } ?> /><label for="s"><?php echo _AT('all'); ?></label>
+					</fieldset>
 				</div>
 
 			<?php if ($this->has_categories): ?>
@@ -39,9 +41,11 @@
 
 				<input type="text" name="search" id="search" size="30" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
 				<br/>
-				<?php echo _AT('search_match'); ?>:
+				<legend><?php echo _AT('search_match'); ?>:</legend>
+				<fieldset>
 				<input type="radio" name="include" value="all" id="match_all" <?php echo $this->checked_include_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label> 
 				<input type="radio" name="include" value="one" id="match_one" <?php echo $this->checked_include_one; ?> /><label for="match_one"><?php echo _AT('search_any_word'); ?></label>
+				</fieldset>
 			</div>
 
 			<div class="row buttons">
