@@ -244,7 +244,9 @@ a:link, /*a:visited*/ a:focus  {
 	color: #4C566C;
 	text-decoration: underline;
 }
-
+.top-tool a:link, .top-tool a:focus{
+	text-decoration: none;	
+}	
 
 /* main submit button */
 .button {
@@ -1860,7 +1862,7 @@ ol#tools>li:hover, ol#tools>li:hover a {
 
 #tools{
 	margin: 0 auto;
-	padding: 0.375em;
+	padding: 0;
 }
 
 
