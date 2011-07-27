@@ -384,8 +384,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</li>
 			<?php endif; ?>
 		</ul>
+		
 	</div><!--  END navigation-contentwrapper -->
-	<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
 	
 	</div> <!--  END HEADER -->
 
@@ -483,21 +483,24 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
 					<?php endif; ?>
 					</div>
-
-					<ul id="subnavlist">
+				
+					<ul class="fl-tabs">
 					<?php $num_pages = count($this->sub_level_pages); ?>
 					<?php for ($i=0; $i<$num_pages; $i++): ?>				
-						<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-						<li id="test" ><?php echo $this->sub_level_pages[$i]['title']; ?></li>
-						<?php else: ?>
+					
 						<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-						<?php endif; ?>
+						
 					<?php if ($i < $num_pages-1): 
 						echo " ";?>
 					<?php endif; ?>
 					<?php endfor; ?>
 					</ul>
+					
+					
+					
+					
 				</div> <!--  end subnavlistcontainer -->
+				
 		<?php endif; ?>
 		
 <?php endif; ?><!--  end header template for ipad/tablets -->
