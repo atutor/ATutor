@@ -82,7 +82,7 @@ jQuery('#topnavlist-link').click(function(e) {
   jQuery('#topnavlist').slideToggle();
 });
 ";
-//[class*="fl-container-autoHeading"]
+
 //hide and show results	on Browse Courses page
 $this->onload .= "
 jQuery('#results-hide-show-link').click(function(e) {
@@ -93,7 +93,20 @@ jQuery('#results-hide-show-link').click(function(e) {
   ";
 $this->onload .= "});
 ";
+
+//hide and show results	everywhere else (uses classes) 
+
+$this->onload .= "
+jQuery('.results-hide-show-link').click(function(e) {
+  e.stopPropagation();
+	jQuery(this).parent().next('.results-display').slideToggle(); 
+  
+  
+  ";
+$this->onload .= "});
+";
 	
+
 // Hide the addressbar
 $this->onload .= "
 setTimeout(function() { window.scrollTo(0, 1) }, 100);
@@ -282,7 +295,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php endif; ?>
 			<?php } ?>
 			&nbsp;
-		</div> <!-- end sequence-links -->
+			</div> <!-- end sequence-links -->
 		<?php endif; ?>
 
 
@@ -381,39 +394,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 
-	
-	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
-		<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-		<a id="content_link" href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
-		<div id="content" style=" display: none; position: relative; z-index: 1;">
-		<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript"></script>
-		</div>
-		</div>
-	<?php endif; ?>
-
 		<div id="inner-contentwrapper" >
 
-			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
-				<!-- style="margin-left:0.5em;width:99%;" -->
-			<?php endif; ?>
-			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-			<div class="sequence-links">
-			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-				<?php if ($this->sequence_links['resume']): ?>
-						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?></a>
-				<?php else:
-					if ($this->sequence_links['previous']): ?>
-						<a href="<?php echo $this->sequence_links['previous']['url']; ?>" class="previous-next" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> </a>
-					<?php endif;
-					if ($this->sequence_links['next']): ?>
-						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class="previous-next"  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?></a>
-					<?php endif; ?>
-			<?php endif; ?>
-			<?php } ?>
-			&nbsp;
-		</div> <!-- end sequence-links -->
-		<?php endif; ?>
 
 
 	<div id="navigation-column" >
@@ -440,7 +422,48 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</ul>
 			<?php endif; ?>
 		
+<!--  side menus -->	
 
+			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
+				<!-- style="margin-left:0.5em;width:99%;" -->
+			<?php endif; ?>
+			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+			<div class="sequence-links">
+			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
+				<?php if ($this->sequence_links['resume']): ?>
+						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?></a>
+				<?php else:
+					if ($this->sequence_links['previous']): ?>
+						<a href="<?php echo $this->sequence_links['previous']['url']; ?>" class="previous-next" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> </a>
+					<?php endif;
+					if ($this->sequence_links['next']): ?>
+						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class="previous-next"  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?></a>
+					<?php endif; ?>
+			<?php endif; ?>
+			<?php } ?>
+			&nbsp;
+		</div> <!-- end sequence-links -->
+		<?php endif; ?>
+
+
+<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
+<div id="hide-show-container">
+	<a id="content_link" href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
+
+</div>
+<div id="results-hide-show" >	
+	
+		<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+		
+		<div id="content" style=" display: none; position: relative; z-index: 1;">
+		<?php $contentManager->printMainMenu(); ?>
+				<script language="javascript" type="text/javascript"></script>
+		</div>
+		</div>
+	
+</div>
+<?php endif; ?>
+<!-- end side menus -->
 	</div>
 	<div id="contentcolumn" >	
 		
