@@ -14,10 +14,12 @@ html, body{
 body,ul,li {
 	padding:0;
 	margin:0;
+	font-size: 19px;
 }
 
 .fl-theme-iphone{
-	background: white;	
+	background: white;
+
 }
 
 #header{
@@ -38,12 +40,14 @@ body,ul,li {
     to(#4b6b90)
     ); 
   background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6d8cb3), to(#4b6b90));
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 
 }
 
 .fl-theme-iphone .fl-navbar{
 	border: none;
 	border-top: none;
+	
 }
 
 .fl-navbar a{
@@ -56,21 +60,21 @@ body,ul,li {
     to(#4b6b90)
     ); 
 }
-
-.fl-navbar .fl-tabs {
+.fl-navbar .fl-tabs{
 	padding-top: .3em;
 	padding-bottom: .3em;
 	border-top: 1px solid black;
 	border-bottom: .5px solid black;
 	background-color: #4b6b90; 
     height: 2em;   
+    background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 }
 
 #navigation-contentwrapper{
 	position: relative;
 	background-color: #4b6b90;
 	height: 2.2em; 
-	
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 }
 
 #navigation-bar{
@@ -135,16 +139,17 @@ body,ul,li {
 }
 
 div#content-link-container{
- 	border: #A9ADB0 solid 1px;
+ 	list-style: none;
+/*	padding: 0.125em 0.125em 0.125em  0.938em;
+	
+	border: solid 1px #A9ADB0;
+	-webkit-border-radius:8px;*/
 }
 
 
 #content_link{
 	display: block;
 	text-decoration: none;
-	padding-bottom: 12px;
-  	padding-left: 8px;
-    padding-top: 12px;
 }
 
 #home-guide{
@@ -244,9 +249,12 @@ h3 a {
 
 
 /* link attributes */
-a:link, /*a:visited*/ a:focus  {
+a:link /*a:visited*/ a:focus  {
 	color: #4C566C;
 	text-decoration: underline;
+}
+.top-tool a: link, .top-tool a:focus{
+	text-decoration: none;
 }
 
 
@@ -596,6 +604,7 @@ div#top-links {
 	margin-top: -2.3em;
 	position: relative;
 	clear: both;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 	
 }
 
@@ -1282,10 +1291,10 @@ ul#home-links, ul#home-detail-links {
 .my-courses-list{
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:5px;
-	padding: .375em;
+	padding: .313em;
 	color: #4C566C;
-	margin: .375em;
-	padding: .375em;
+	margin: .313em;
+	padding: .313em;
 }
 .my-courses-list-ul{
 	margin: 0 auto;
@@ -1441,7 +1450,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 	margin-bottom: 0.313em; 
 	line-height: 200%; 
 	border: solid 1px #A9ADB0;
-	-webkit-border-radius:5px;
+	-webkit-border-radius:8px;
 }
 	
 li.child-tool a { 
@@ -1516,15 +1525,20 @@ legend.group_form{
 	border: 1px white solid;
 }
 
-
-/* highlight active links for WCAG 2.0 conformance */
-/*Creates the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
+/*The following three rules create the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
 .buttontab hover addresses the Mobile FSS bug http://issues.fluidproject.org/browse/FLUID-4313 and is applied to 
 elements in the theme header and footer. Should be removed when the FSS issue is fixed. */
-a:active, a:hover, a:focus, .buttontab-hover{
- 	color: #fff;
+/* highlight active links for WCAG 2.0 conformance */
+
+a:active:not(#results-hide-show-link), 
+a:hover:not(#results-hide-show-link),
+a:focus:not(#results-hide-show-link),
+.buttontab-hover{
+ 	/*color: #fff;
+ 	results-hide-show-link
+    .fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));*/
     color: black;
 	border: 1px #DEE7EC solid;
 	-webkit-border-radius:5px;
@@ -1541,10 +1555,15 @@ Ensure styling matches that in fl-tabs.*/
         color-stop(0.50, #354d68),
         to(#354d68)
     );
-      
-       
-
 }
+
+ul#topnavlist-tablet li a:hover,
+ul#topnavlist-tablet li a:active,
+ul#topnavlist-tablet li a:focus{
+	display: none;
+}
+/*end of http://issues.fluidproject.org/browse/FLUID-4313 workaround */
+
 /*Added by Silvia */
 div.column_primary {
 	float: left;
@@ -1739,9 +1758,10 @@ ul.folder{
 
 
 ul#topnavlist-tablet {
+	padding-top: .313em;
 }
 
-div#results-display{
+div#results-display, .results-display{
 	display: none;
 }
 
@@ -1828,22 +1848,43 @@ ol#tools>li:hover, ol#tools>li:hover a {
 
 div#contentwrapper{
 	
-	}
-div#inner-contentwrapper{
-
 }
-
+[class*="fl-container"]:not(.fl-navbar){
+	margin: 0;
+	margin-right: .313em;
+	
+	padding: 0;	
+}	
 div#navigation-column{
 	width: 30%; 
 	float: left;
+	/*background-color: #E6EDF4;
+	background: -webkit-gradient(linear, left top, right top,
+        from(#c5ccd3),
+        to(#cfd5dd),
+        color-stop(0.80, #c5ccd3),
+        color-stop(0.80, #cfd5dd));
+    -webkit-background-origin: padding-box;
+    -webkit-background-size: 10px 1px;*/
+	height: 100%;
+	position: relative; 
 
+	padding-right: .313em;
+	padding-left: .313em;
+	
 }
 div#contentcolumn{
-	/*border:thin #A9ADB0 solid;
-	-webkit-border-radius:5px;*/
-	width: 68.5%; 
+	border:thin #A9ADB0 solid;
+	-webkit-border-radius:8px;
+	background-color: white;
+	
+	width: 65.5%; 
 	float: right;
-	padding-bottom: .5em;
+
+	padding-top: .313em;
+	margin-top: .313em;
+	padding: .313em;
+	margin-bottom: .313em;
 	
 	/*border-left: thin #A9ADB0 solid;*/
 	
@@ -1875,7 +1916,7 @@ div#contentcolumn{
 
 #tools{
 	margin: 0 auto;
-	padding: 0.375em;
+	padding: 0.313em;
 }
 
 
@@ -1968,7 +2009,34 @@ ul.social_inline_menu{
 	margin:auto;
 }
 .results-hide-show-link-container{
-	   border: #A9ADB0 solid 1px;
+	border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 5px;
 }
 
+	
+#hide-show-container, .hide-show-container h4{
+	-webkit-border-radius:8px;
+	margin-top: 0.875em;
+	margin-bottom: 0.875em;
+	padding: 0.875em;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+}
+
+#hide-show-container a:link, .hide-show-container a:link:not(.fl-list-menu):not(.fl-list-brief),  
+#hide-show-container a:focus, .hide-show-container a:focus:not(.fl-list-menu):not(.fl-list-brief), 
+#hide-show-container a:hover, .hide-show-container a:hover:not(.fl-list-menu):not(.fl-list-brief),
+.hide-show-container a:active:not(.fl-list-menu):not(.fl-list-brief),
+#hide-show-container a:active{
+	color: white;
+	text-decoration: none;
+	text-shadow: none;
+	display: block; 
+	backround: none;
+}
+.hide-show-container a>h4{
+	color: white;
+}
+.fl-theme-iphone a .results-hide-show-link{
+	color: white;
+	}
+	
