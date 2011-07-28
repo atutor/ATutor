@@ -72,7 +72,7 @@ $this->onload .= "});
 ";
 
 
-// open/close header navigational menu 
+// open/close header navigational menu for smartphones
 
 $this->onload .= "
 jQuery(document).click(function () {
@@ -82,6 +82,18 @@ jQuery('#topnavlist-link').click(function(e) {
   jQuery('#topnavlist').slideToggle();
 });
 ";
+
+// open/close header navigational menu for tablets
+
+$this->onload .= "
+jQuery(document).click(function () {
+jQuery('#navigation-column').slideUp(600);}); 
+jQuery('#topnavlist-link').click(function(e) {
+  e.stopPropagation();
+  jQuery('#navigation-column').slideToggle();
+});
+";
+
 
 //hide and show results	on Browse Courses page
 $this->onload .= "
@@ -352,12 +364,42 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		
 		<!--  Note: ARIA roles cause XHTML validation errors because the XHTML DTD does not yet support ARIA. Use ARIA anyway -->
 
+	
 	<div id="navigation-contentwrapper">
-	<h1 id="section-title"><?php echo $this->section_title; ?>
-				<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
-				<!-- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>-->
+	<div id="navigation-bar">
+		<!--  this should be a button on its own  -->
+			<?php if ($this->current_sub_level_page): ?>
+			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
+			<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+				<div id="navigation-column" >
+				<!--  requires ARIA roles review -->
+				<!--  this should be a button on its own  -->
+				<?php if ($this->current_sub_level_page): ?>
+				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
+					<?php $accesscounter = 0; //initialize ?>
+					<?php foreach ($this->top_level_pages as $page): ?>
+						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+						<?php if ($page['url'] == $this->current_top_level_page): ?>
+							<!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+						<?php else: ?>
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+						<?php endif; ?>
+				
+						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+					
+					<?php endforeach; ?>
+					 
+				</ul>
 				<?php endif; ?>
-				</h1>
+			</div>
+			</div>
+			<?php endif; ?>
+		</div>
+
+
 
 	<ul class="fl-tabs" id="home-guide">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
@@ -384,10 +426,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</li>
 			<?php endif; ?>
 		</ul>
-	
-	
-	
-	
 	</div><!--  END navigation-contentwrapper -->
 	
 	</div> <!--  END HEADER -->
@@ -401,30 +439,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 
-	<div id="navigation-column" >
-		<!--  requires ARIA roles review -->
-		<!--  this should be a button on its own  -->
-			<?php if ($this->current_sub_level_page): ?>
-				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
-					<?php $accesscounter = 0; //initialize ?>
-					<?php foreach ($this->top_level_pages as $page): ?>
-						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-						<?php if ($page['url'] == $this->current_top_level_page): ?>
-							<!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
-						<?php else: ?>
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
-						<?php endif; ?>
-				
-						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-					
-					<?php endforeach; ?>
-					 
-				</ul>
-			<?php endif; ?>
-		
+	
 <!--  side menus -->	
 
 			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
@@ -501,7 +516,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					
 					
 					
-					
+				
 				</div> <!--  end subnavlistcontainer -->
 				
 		<?php endif; ?>
