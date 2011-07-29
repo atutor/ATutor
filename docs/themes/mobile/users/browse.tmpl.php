@@ -4,11 +4,9 @@
 
 
 
-<div id="hide-show-container">
-	<h3><a id="results-hide-show-link" href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1"><?php echo $this->num_results; echo " courses found."?></h3> </a>
-
+<div id="hide-show-container" >
+	<h3><a id="results-hide-show-link" href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1" style="color: red"><?php echo $this->num_results; echo " courses found."?></h3> </a>
 </div>
-<div id="results-hide-show" >
 <div id="results-display">
 <fieldset class="group_form"><legend class="group_form"><?php echo "Filter by:"; ?></legend>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -57,12 +55,6 @@
 
 		</fieldset>
 </div>
-</div>
-
-
-	
-
-
 </div>
 </div>
 <div>
