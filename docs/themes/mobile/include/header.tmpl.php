@@ -94,17 +94,19 @@ jQuery('#topnavlist-link').click(function(e) {
 });
 ";
 
-
+// see: http://stackoverflow.com/questions/253689/switching-a-div-background-image-with-jquery
 //hide and show results	on Browse Courses page
 $this->onload .= "
 jQuery('#results-hide-show-link').click(function(e) {
   e.stopPropagation();
   jQuery('#results-display').slideToggle();
-  
-  
+  jQuery(this).css('color','black');
+
   ";
 $this->onload .= "});
 ";
+
+
 
 //hide and show results	everywhere else (uses classes) 
 
@@ -290,7 +292,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<div id="inner-contentwrapper" class="fl-container" >
 
 			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
-				<!-- style="margin-left:0.5em;width:99%;" -->
 			<?php endif; ?>
 			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			<div class="sequence-links">
@@ -431,6 +432,30 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	</div> <!--  END HEADER -->
 
 
+<?php if (count($this->sub_level_pages) > 0): ?>
+				<div id="subnavlistcontainer">
+					<div id="subnavbacktopage" >
+					<?php if (isset($this->back_to_page)): ?>
+						<a href="<?php echo $this->back_to_page['url']; ?>">
+						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
+					<?php endif; ?>
+					</div>
+				
+					<ul id="subnavlist" style="text-align: center; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F8FAFB), to(#B6C0C6));">
+					<?php $num_pages = count($this->sub_level_pages); ?>
+					<?php for ($i=0; $i<$num_pages; $i++): ?>				
+					
+						<li style="font-size: 12px; padding-left: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+						
+					<?php if ($i < $num_pages-1): 
+						echo " ";?>
+					<?php endif; ?>
+					<?php endfor; ?>
+					</ul>
+
+				</div> <!--  end subnavlistcontainer -->
+				
+		<?php endif; ?>	
 	<div id="contentwrapper" class="fl-container" >
 
 
@@ -485,7 +510,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	</div>
 	<div id="contentcolumn" >	
 		
-
+		
 		<!-- the page title -->
 		<a name="content" title="<?php echo _AT('content'); ?>"></a>
 		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
@@ -493,32 +518,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<?php global $msg; $msg->printAll(); $_base_href;?>
 	
 		<!-- the sub navigation -->
-		<?php if (count($this->sub_level_pages) > 0): ?>
-				<div id="subnavlistcontainer">
-					<div id="subnavbacktopage">
-					<?php if (isset($this->back_to_page)): ?>
-						<a href="<?php echo $this->back_to_page['url']; ?>">
-						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
-					<?php endif; ?>
-					</div>
-				
-					<ul class="fl-tabs">
-					<?php $num_pages = count($this->sub_level_pages); ?>
-					<?php for ($i=0; $i<$num_pages; $i++): ?>				
-					
-						<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-						
-					<?php if ($i < $num_pages-1): 
-						echo " ";?>
-					<?php endif; ?>
-					<?php endfor; ?>
-					</ul>
-					
-					
-					
-				
-				</div> <!--  end subnavlistcontainer -->
-				
-		<?php endif; ?>
+
 		
 <?php endif; ?><!--  end header template for ipad/tablets -->
