@@ -2023,31 +2023,52 @@ ul.social_inline_menu{
 .results-hide-show-link-container{
 	border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 5px;
-	
+}
+#results-hide-show-link{
+	height: 100%;
 }
 
-	
-#hide-show-container, .hide-show-container h4{
+#hide-show-container{
 	-webkit-border-radius:8px;
 	margin-top: 0.875em;
 	margin-bottom: 0.875em;
 	padding: 0.875em;
+	padding-right: .2em;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 }
 
-#hide-show-container a:link, .hide-show-container a:link:not(.fl-list-menu):not(.fl-list-brief),  
-#hide-show-container a:focus, .hide-show-container a:focus:not(.fl-list-menu):not(.fl-list-brief), 
-#hide-show-container a:hover, .hide-show-container a:hover:not(.fl-list-menu):not(.fl-list-brief),
-.hide-show-container a:active:not(.fl-list-menu):not(.fl-list-brief),
-#hide-show-container a:active{
-	color: white;
+.hide-show-container h4{
+	border: #A9ADB0 solid 1px;
+	-webkit-border-radius:8px;
+	margin-top: 0.875em;
+	margin-bottom: 0.875em;
+	padding: 0.875em;
+	padding-right: .2em;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F8FAFB), to(#B6C0C6));
+	background: white; 
+}
+
+#hide-show-container a:link,
+#hide-show-container a:focus,
+#hide-show-container a:hover{
+ 	color: white;
+	
 	text-decoration: none;
 	text-shadow: none;
 	display: block; 
-	background-image:url("images/plus.png"); 
-	background-position: top right;
-	background-repeat: no-repeat;
+}
 
+.hide-show-container a:link:not(.fl-list-menu):not(.fl-list-brief),  
+.hide-show-container a:focus:not(.fl-list-menu):not(.fl-list-brief), 
+.hide-show-container a:hover:not(.fl-list-menu):not(.fl-list-brief),
+.hide-show-container a:active:not(.fl-list-menu):not(.fl-list-brief),
+#hide-show-container a:active{
+	color: white;
+	color: #4C566C;
+	text-decoration: none;
+	text-shadow: none;
+	display: block; 
 }
 
 .hide-show-container a>h4{
@@ -2055,9 +2076,8 @@ ul.social_inline_menu{
 }
 .fl-theme-iphone a .results-hide-show-link{
 	color: white;
+	
 }
-	
-	
 /* REBUILDING THE TOP NAVIGATION MENU */
 
 #navigation-bar{
@@ -2149,12 +2169,14 @@ ul#topnavlist li a  {
 }
 .content-expand {
 	background-image:url("images/plus.png");
-	background-position: top right;
+	background-position: 100% 100%;
 	background-repeat: no-repeat;
 }
 .content-closed{
 	background-image:url("images/minus.png");
-	background-position: bottom right;
+	background-position: 100% 100%;
 	background-repeat: no-repeat;
+	
+	
 }
 
