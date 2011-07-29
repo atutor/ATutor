@@ -61,8 +61,8 @@
 	
 		//echo mb_strimwidth("Hello World", 0, 10, "...");
 		
-		echo '<div class="hide-show-container">'.'<h4>' .'<a class="results-hide-show-link" href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1">'.'</a>';
-		echo "hi";
+		echo '<div class="hide-show-container">'.'<h4>' .'<a class="results-hide-show-link content-expand " href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1">'.'click me';
+		echo '</a>';
 		echo '</h4>'; 
 		
 		/*
