@@ -94,14 +94,15 @@ jQuery('#topnavlist-link').click(function(e) {
 });
 ";
 
-// see: http://stackoverflow.com/questions/253689/switching-a-div-background-image-with-jquery
+// see: http://thenerdary.net/articles/entry/toggletext
 //hide and show results	on Browse Courses page
+
 $this->onload .= "
 jQuery('#results-hide-show-link').click(function(e) {
   e.stopPropagation();
-  jQuery('#results-display').slideToggle();
-  jQuery(this).css('color','black');
-
+    jQuery('#results-display').slideToggle();
+    jQuery(this).toggleClass('content-closed');
+    jQuery(this).preventDefault();
   ";
 $this->onload .= "});
 ";
