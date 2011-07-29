@@ -3,8 +3,7 @@ Classes beginning with ".fl-" override Mobile FSS, see the API @ http://wiki.flu
 for more details. 
 */
 html, body{
-	height: 100%;
-}
+	height: 100%;}
 #main{
 	padding-bottom: 2.3em;
 	overflow: auto;
@@ -15,6 +14,8 @@ body,ul,li {
 	padding:0;
 	margin:0;
 	font-size: 19px;
+	
+	
 }
 
 .fl-theme-iphone{
@@ -68,6 +69,7 @@ body,ul,li {
 	background-color: #4b6b90; 
     height: 2em;   
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+   
 }
 
 #navigation-contentwrapper{
@@ -89,6 +91,7 @@ body,ul,li {
 	overflow:hidden;
 	overflow: auto;
 	min-height: 100%;
+	background-image: url(images/idi_background.png);
 }
 
 #site-name, h1#section-title{
@@ -840,7 +843,7 @@ div#feedback, div#info {
 }
 div#feedback li, div#info li, div#error li{
 	color: #4C566C;
-	z-index: -1;
+	/*z-index: -1;*/
 }
 
 div#help {
@@ -1080,17 +1083,17 @@ h4.box a {
 	color: #4C566C;
 	background-color: #F5F5F5;
 	text-decoration: none;
-}
+}/*
 .content-expand {
-	background-image:url("images/content-arrow-down.png");
+	background-image:url("images/plus.png");
 	background-position: top right;
 	background-repeat: no-repeat;
 }
 .content-closed{
-	background-image:url("images/content-arrow-up.png");
-	background-position: center right;
+	background-image:url("images/minus.png");
+	background-position: bottom right;
 	background-repeat: no-repeat;
-}
+}*/
 
 div.box {
 	padding: 0.313em;
@@ -1527,24 +1530,23 @@ legend.group_form{
 
 /*The following three rules create the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
 .buttontab hover addresses the Mobile FSS bug http://issues.fluidproject.org/browse/FLUID-4313 and is applied to 
-elements in the theme header and footer. Should be removed when the FSS issue is fixed. */
-/* highlight active links for WCAG 2.0 conformance */
+elements in the theme header and footer. Should be removed when the FSS issue is fixed. highlight active links for WCAG 2.0 conformance
 
 a:active:not(#results-hide-show-link), 
 a:hover:not(#results-hide-show-link),
 a:focus:not(#results-hide-show-link),
 .buttontab-hover{
- 	/*color: #fff;
- 	results-hide-show-link
+ 	color: #fff;
+ 	/*
     .fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));*/
+    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
     color: black;
 	border: 1px #DEE7EC solid;
 	-webkit-border-radius:5px;
 	background: #DEE7EC;
   
-}
+}*/
 
 /*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
 Ensure styling matches that in fl-tabs.*/
@@ -1756,9 +1758,14 @@ ul.folder{
 	padding:0em;
 }
 
+#topnavlist-tablet{
+		-webkit-border-radius: 8px;
+		background: white; 
+		z-index: 1;
+}	
+ul#topnavlist-tablet.fl-list-menu {
+	
 
-ul#topnavlist-tablet {
-	padding-top: .313em;
 }
 
 div#results-display, .results-display{
@@ -1776,13 +1783,11 @@ ul#topnavlist-tablet>li:hover a,
 ul#topnavlist-tablet>li:active,
 ul#topnavlist-tablet>li:active a,
 ul#topnavlist-tablet>li:focus, 
-ul#topnavlist-tablet>li:focus a, 
+ul#topnavlist-tablet>li:focus a {
 /*highlight active list item
 ul#topnavlist-tablet>li .active*/
-{
 	color: #fff;
-    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center, -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
 }
 
 ul#topnavlist-tablet li a  {
@@ -1851,13 +1856,13 @@ div#contentwrapper{
 }
 [class*="fl-container"]:not(.fl-navbar){
 	margin: 0;
+	margin-left: .313em;
 	margin-right: .313em;
-	
 	padding: 0;	
 }	
 div#navigation-column{
-	width: 30%; 
-	float: left;
+	/*width: 30%;  removed July 27
+	float: left; */
 	/*background-color: #E6EDF4;
 	background: -webkit-gradient(linear, left top, right top,
         from(#c5ccd3),
@@ -1867,20 +1872,27 @@ div#navigation-column{
     -webkit-background-origin: padding-box;
     -webkit-background-size: 10px 1px;*/
 	height: 100%;
+	width: 40%;
+	z-index: 1;
 	position: relative; 
-
+	top: 1.3em;
+	background: black;
 	padding-right: .313em;
 	padding-left: .313em;
+	padding-top: .313em;
+	-webkit-border-radius: 8px;
+	display: none;
+	
 	
 }
 div#contentcolumn{
-	border:thin #A9ADB0 solid;
+	/*border:thin #A9ADB0 solid;
 	-webkit-border-radius:8px;
 	background-color: white;
-	
+	 
 	width: 65.5%; 
-	float: right;
-
+	float: right;*/
+	
 	padding-top: .313em;
 	margin-top: .313em;
 	padding: .313em;
@@ -2011,6 +2023,7 @@ ul.social_inline_menu{
 .results-hide-show-link-container{
 	border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 5px;
+	
 }
 
 	
@@ -2031,12 +2044,117 @@ ul.social_inline_menu{
 	text-decoration: none;
 	text-shadow: none;
 	display: block; 
-	backround: none;
+	background-image:url("images/plus.png"); 
+	background-position: top right;
+	background-repeat: no-repeat;
+
 }
+
 .hide-show-container a>h4{
 	color: white;
 }
 .fl-theme-iphone a .results-hide-show-link{
 	color: white;
-	}
+}
 	
+	
+/* REBUILDING THE TOP NAVIGATION MENU */
+
+#navigation-bar{
+ 	height: 2; 
+    border-bottom: .5px solid black;
+   /*padding-bottom: .3em;*/
+     
+}
+
+
+/*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
+Ensure styling matches that in fl-tabs.*/
+.topnavlistcontainer a:hover, .topnavlistcontainer a:active, .topnavlistcontainer a:focus{
+    background-image: -webkit-gradient(linear, left top, left bottom,
+     	from(#3b5371),
+        color-stop(0.5, #374e6b),
+        color-stop(0.50, #354d68),
+        to(#354d68)
+    );
+}
+
+
+
+/*this CSS creates a button that looks exactly like a Mobile FSS tab.*/
+.navigation-bar-button
+
+{
+    border-width:5px;
+    -webkit-border-radius: 5px;
+	font-size: 18px;/*keep this in px*/
+	padding: 0 .3em;
+	color: white;
+	position: relative;
+	top: .69em; 
+	left: 0.188em; 
+    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
+    background-image: -webkit-gradient(linear, left top, left bottom,
+     	from(#3b5371),
+        color-stop(0.5, #374e6b),
+        color-stop(0.50, #354d68),
+        to(#354d68)
+    );
+ 	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+    -webkit-border-left-image: none;
+    -webkit-background-origin: border;
+    -webkit-background-clip: border;
+}
+
+
+/*	hiding/showing top navigation and results-display */
+
+#topnavlist-link {
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+ul#topnavlist {
+	display: none;
+	position: relative;
+	top: 1.2em;
+	z-index: 1;
+	/*background-color: white;*/
+}
+
+div#results-display{
+	display: none;
+}
+
+ul#topnavlist li {
+	padding: 0;
+	margin: 0;
+}
+	
+ul#topnavlist>li:hover,
+ul#topnavlist>li:hover a, 
+ul#topnavlist>li:active,
+ul#topnavlist>li:active a,
+ul#topnavlist>li:focus, 
+ul#topnavlist>li:focus a {
+	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+}
+
+ul#topnavlist li a  {
+ 	color: #4C566C;
+ 	text-decoration: none;
+}
+.content-expand {
+	background-image:url("images/plus.png");
+	background-position: top right;
+	background-repeat: no-repeat;
+}
+.content-closed{
+	background-image:url("images/minus.png");
+	background-position: bottom right;
+	background-repeat: no-repeat;
+}
+
