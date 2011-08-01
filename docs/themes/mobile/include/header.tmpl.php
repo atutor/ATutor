@@ -364,24 +364,20 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 	
 	<div id="navigation-contentwrapper">
+
 	<div id="navigation-bar">
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
 			<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-				<div id="navigation-column" >
-				<!--  requires ARIA roles review -->
-				<!--  this should be a button on its own  -->
-				<?php if ($this->current_sub_level_page): ?>
-				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
+				<ul id="topnavlist"  class="fl-list-menu">
 					<?php $accesscounter = 0; //initialize ?>
 					<?php foreach ($this->top_level_pages as $page): ?>
 						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
 						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
 						<?php if ($page['url'] == $this->current_top_level_page): ?>
-							<!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
 						<?php else: ?>
 							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
 						<?php endif; ?>
@@ -389,15 +385,13 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
 					
 					<?php endforeach; ?>
-					 
+					<?php if(!$this->just_social): ?>
+					<li role="menuitem"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
+					<?php endif; ?> 
 				</ul>
-				<?php endif; ?>
-			</div>
 			</div>
 			<?php endif; ?>
 		</div>
-
-
 
 	<ul class="fl-tabs" id="home-guide">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
