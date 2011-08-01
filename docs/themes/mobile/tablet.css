@@ -964,7 +964,7 @@ div#content_text {
 	margin-left: 0.313em;
 }
 
-#content{
+#content, #content-tablet{
 /*
 	padding-top:.5em;
 	margin-top: .5em;
@@ -976,6 +976,8 @@ div#content_text {
 	-webkit-border-bottom-right-radius: 5px;
 	-webkit-border-bottom-left-radius: 5px;*/
 	padding-top: .313em;
+	z-index: 1;
+	background-color: white;
 }
 form {
 	display:inline;
