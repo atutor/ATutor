@@ -107,16 +107,12 @@ jQuery('#results-hide-show-link').click(function(e) {
 $this->onload .= "});
 ";
 
-
-
 //hide and show results	everywhere else (uses classes) 
-
 $this->onload .= "
 jQuery('.results-hide-show-link').click(function(e) {
   e.stopPropagation();
 	jQuery(this).parent().next('.results-display').slideToggle(); 
-  
-  
+	  jQuery(this).toggleClass('content-closed');
   ";
 $this->onload .= "});
 ";
@@ -434,7 +430,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 <?php if (count($this->sub_level_pages) > 0): ?>
-				<div id="subnavlistcontainer">
+				<div id="subnavlistcontainer" 
 					<div id="subnavbacktopage" >
 					<?php if (isset($this->back_to_page)): ?>
 						<a href="<?php echo $this->back_to_page['url']; ?>">
@@ -442,12 +438,15 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<?php endif; ?>
 					</div>
 				
-					<ul id="subnavlist" style="text-align: center; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F8FAFB), to(#B6C0C6));">
+					<ul id="subnavlist" style="text-align: center; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB)); border-bottom: 1px #B6C0C6) solid; ">
 					<?php $num_pages = count($this->sub_level_pages); ?>
-					<?php for ($i=0; $i<$num_pages; $i++): ?>				
-					
-						<li style="font-size: 12px; padding-left: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-						
+					<?php for ($i=0; $i<$num_pages; $i++): ?>	
+					<?php if( $this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
+						<li class="selected" style="font-size: 12px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+					<?php else: ?> 
+						<li style="font-size: 12px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+					<?php endif; ?> 
+				
 					<?php if ($i < $num_pages-1): 
 						echo " ";?>
 					<?php endif; ?>
@@ -462,8 +461,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 		<div id="inner-contentwrapper" >
-
-
 
 	
 <!--  side menus -->	
@@ -522,3 +519,11 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 		
 <?php endif; ?><!--  end header template for ipad/tablets -->
+<?php 
+debug($this->path);
+debug($this->sub_level_pages);
+debug($this->current_sub_level_page);
+debug($this->current_top_level_page);
+
+?>
+
