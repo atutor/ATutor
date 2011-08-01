@@ -2175,8 +2175,23 @@ ul#topnavlist li a  {
 .content-closed{
 	background-image:url("images/minus.png");
 	background-position: 100% 100%;
-	background-repeat: no-repeat;
-	
-	
+	background-repeat: no-repeat;	
 }
 
+/* SUBNAVLIST HIGHLIGHTING*/
+
+ul#subnavlist{
+	color: black;
+	
+}
+ul#subnavlist li a:active, ul#subnavlist li  a:hover,ul#subnavlist li a:focus {
+	color: red;	
+	border-bottom: #4C566C 2px solid;
+}
+
+.selected{
+	color: red;
+	font-size: 12px;
+	border-bottom: #4C566C 2px solid;
+}
+/* end SUBNAVLIST HIGHLIGHTING*/
