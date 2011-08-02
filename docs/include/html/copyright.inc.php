@@ -27,7 +27,7 @@ global $_config;
 	/****************************************************************************************/
 	/* VERY IMPORTANT
 	   IN KEEPING WITH THE TERMS OF THE ATUTOR LICENCE AGREEMENT (GNU GPL), THE FOLLOWING
-	   COPYRIGHT LINES MAY NOT BE ALTERED IN ANY WAY.
+	   COPYRIGHT LINES MAY NOT BE ALTERED WITHOUT EXPRESSED CONSENT FROM ATUTOR OR IDI.
 	*/
 
 ?>
