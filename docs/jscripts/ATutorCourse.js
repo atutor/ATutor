@@ -49,7 +49,7 @@ ATutor.course = ATutor.course || {};
 	
 	//modifies the menu html to add title, expand/collapse image, alt text. 
 	var printSubmenus = function () {
-		var sideMenuBoxHeadings = jQuery("h4.box");
+		var sideMenuBoxHeadings = jQuery("h2.box");
 		for (var titleIndex = 0; titleIndex < sideMenuBoxHeadings.length; titleIndex++) {
 			var heading = jQuery(sideMenuBoxHeadings[titleIndex]);				
 			var title = jQuery("span", heading).html();
