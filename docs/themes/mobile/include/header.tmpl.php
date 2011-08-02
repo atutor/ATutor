@@ -94,7 +94,17 @@ jQuery('#topnavlist-link').click(function(e) {
 });
 ";
 
-// see: http://thenerdary.net/articles/entry/toggletext
+//jQuery for Gmail dock-style "more" button that makes the subnavlist expand for more options
+$this->onload .= "
+jQuery(document).click(function () {
+jQuery('.subnavlist-more').slideUp();}); 
+jQuery('.more-button').click(function(e) {
+  e.stopPropagation();
+  jQuery('.subnavlist-more').slideToggle();
+});
+";
+
+
 //hide and show results	on Browse Courses page
 
 $this->onload .= "
@@ -107,7 +117,7 @@ jQuery('#results-hide-show-link').click(function(e) {
 $this->onload .= "});
 ";
 
-//hide and show results	everywhere else (uses classes) 
+//hide and show results	elsewhere (uses classes) 
 $this->onload .= "
 jQuery('.results-hide-show-link').click(function(e) {
   e.stopPropagation();
@@ -460,9 +470,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 									<?php endif; ?> 
 								<?php endif;?>
 								<?php if($i== 6): ?>
-									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em">More</li>
-									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-									<ul>
+									<li class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a class="more-button" href="javascript:void(0);" tabindex="1">More</a></li>
+									<ul class="subnavlist-more">
+									<li class="more-item" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									
 								<?php endif;?>
 								<?php if($i > 6 && $i < $num_pages): ?>
 									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
