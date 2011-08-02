@@ -127,7 +127,32 @@ body,ul,li {
     -webkit-background-clip: border;
 }
 
-.navigation-bar-button a:hover, .navigation-bar-button a:active, .navigation-bar-button a:focus{
+.navigation-bar-button-content{
+  	border-width:5px;
+    -webkit-border-radius: 5px;
+	font-size: 18px;/*keep this in px*/
+	padding: 0 .3em;
+	color: white;
+	position: relative;
+	top: -4.45em; 
+	left: 6.2em; 
+	
+    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
+    background-image: -webkit-gradient(linear, left top, left bottom,
+     	from(#3b5371),
+        color-stop(0.5, #374e6b),
+        color-stop(0.50, #354d68),
+        to(#354d68)
+    );
+ 	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+    -webkit-border-left-image: none;
+    -webkit-background-origin: border;
+    -webkit-background-clip: border;
+
+}
+
+.navigation-bar-button a:hover, .navigation-bar-button a:active, .navigation-bar-button a:focus
+.navigation-bar-button-tablet a:hover, .navigation-bar-button-tablet a:active, .navigation-bar-button-tablet a:focus{
 	background-color: white;
 }
 
@@ -150,10 +175,7 @@ div#content-link-container{
 }
 
 
-#content_link{
-	display: block;
-	text-decoration: none;
-}
+
 
 #home-guide{
 	position: absolute;
@@ -530,15 +552,7 @@ a#back-to {
 	background-position: 0 0;
 }
 
-.breadcrumbs, .previous-next /*a#guide*/{
-    /* The path bar, including breadcrumbs and add to favorites */
-	clear:both;
-    font-size: 0.85em;
-	padding:0 0.375em;
-	color: #4C566C;
-	background-color: white;
 
-}
 #breadcrumbs-container{
 	background-color: #4d4d4d;
 	position: relative;
@@ -916,18 +930,7 @@ div.home-link img {
 	border: 0;
 }
 
-/* sequence links */
-div#sequence-links {
 
-}
-div#sequence-links a {
-	text-decoration: none;
-	display: block;
-}
-
-.previous-next{
-	display: block;
-}
 div.dropdown {
 	width: 12.5em;
 	padding: 0.125em;
@@ -2137,6 +2140,11 @@ Ensure styling matches that in fl-tabs.*/
 	font-weight: bold;
 }
 
+#content_link{
+	color: black;
+	font-size: 12px;
+}		
+
 ul#topnavlist {
 	display: none;
 	position: relative;
@@ -2180,7 +2188,7 @@ ul#topnavlist li a  {
 	background-repeat: no-repeat;	
 }
 
-/* SUBNAVLIST HIGHLIGHTING*/
+/* SUBNAVLIST HIGHLIGHTING and Gmail-STYLE "more" button */
 
 ul#subnavlist{
 	color: black;
@@ -2193,7 +2201,50 @@ ul#subnavlist li a:active, ul#subnavlist li  a:hover,ul#subnavlist li a:focus {
 
 .selected{
 	color: red;
-	font-size: 12px;
+	font-size: 0.875em;
 	border-bottom: #4C566C 2px solid;
 }
+.more-item{
+	display: block;
+}
+
+
+.more-button{
+}
+.more-button-surround{
+}
+.subnavlist-more{
+	list-style-type: bullet;
+	width: 40%;
+	display: block;
+	display: none;
+}
+
+.subnavlist-more li{
+	
+}	
 /* end SUBNAVLIST HIGHLIGHTING*/
+/* course level navigation styling ** move */
+#course-level-navigation{
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB));
+}
+/* sequence links */
+.sequence-links {
+
+}
+.sequence-links a {
+	text-decoration: none;
+	display: inline;
+	display: none;
+}
+.breadcrumbs, .previous-next{
+    /* The path bar, including breadcrumbs and add to favorites */
+	clear:both;
+    font-size: 0.85em;
+	padding:0 0.375em;
+	color: #4C566C;
+	background-color: white;
+}
+.previous-next{
+/*	display: block;*/
+}
