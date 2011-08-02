@@ -62,7 +62,7 @@
 		//echo mb_strimwidth("Hello World", 0, 10, "...");
 		
 		echo '<div class="hide-show-container">'.'<h4>' .'<a class="results-hide-show-link content-expand " href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1">'.'click me';
-		echo '</a>';
+		echo $this->all_news[$i]['thumb'].'</a>';
 		echo '</h4>'; 
 		
 		/*
@@ -79,11 +79,11 @@
 		echo '<div class="results-display">';
 	    echo '<ul class="fl-list-menu fl-list-brief">';
 	      if(isset($this->all_news[$i]['thumb'])){
-		    echo '<li class="">' . $this->all_news[$i]['link'];
+		    echo '<li>' . $this->all_news[$i]['link'].'</li>' ;
 		    if($this->all_news[$i]['object']['course_id']){
-		    echo '<a class="flc-screenNavigator-backButton" href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)';
+		    echo '<li>'.'<a class="flc-screenNavigator-backButton" href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)';
 		    }
-		    echo ''.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).'</li>';
+		    //echo ''.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).'</li>';
 		}
 	    echo '</ul>';
 	    echo '</div>';
