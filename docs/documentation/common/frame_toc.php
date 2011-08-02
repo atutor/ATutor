@@ -205,7 +205,8 @@ if ($section == 'admin'){
 												'export_content.php',
 												'packages.php',
 												'tile.php',
-												'file_storage.php'
+												'file_storage.php',
+												'fs_new_file.php'
 												),
 				'my_network.php' => array(					
 											'my_contacts.php',			
