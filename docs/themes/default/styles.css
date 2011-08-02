@@ -72,6 +72,9 @@ h2 {
 h2.sidebox{
 	font-size: 110%;
 }
+h2.box{
+	font-size: 110%;
+}
 h3 {
 	font-size: 130%;
 }
@@ -1054,6 +1057,19 @@ div.tabs a:hover, div.tabs a.active {
 }
 
 h4.box {
+	font-size:0.85em;
+	padding: 2px;
+	border-radius: .5em .5em 0em 0em;
+	-moz-border-radius: .5em .5em 0em 0em;
+	padding:.2em;
+	border-top:1px solid #F2F7F7;
+	border-left:1px solid #F2F7F7;
+	border-right:1px solid #F2F7F7;
+		border-bottom:1px solid #F2F7F7;
+/*	-moz-box-shadow:.1em .1em .1em #999999;
+	box-shadow: .1em .1em .1em #999999;*/
+}
+h2.box {
 	font-size:0.85em;
 	padding: 2px;
 	border-radius: .5em .5em 0em 0em;

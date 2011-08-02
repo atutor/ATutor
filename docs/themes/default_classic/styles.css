@@ -991,12 +991,12 @@ fieldset {
   width:19em;
 margin-right:.3em;
 }
-h4.box {
+h2.box {
 
     border: 1px solid #788CB3;
 }
 
-h4.box span {
+h2.box span {
     background: #788CB3;
     border: 1px solid #788CB3;
     font-family: Helevetica, Arial, sans-serif;

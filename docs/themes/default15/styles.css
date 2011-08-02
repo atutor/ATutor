@@ -971,6 +971,19 @@ h4.box {
 	margin-left: 0px;
 }
 
+h2.box {
+	margin-top: 10px;
+	font-family: Helevetica, Arial, sans-serif;
+ 	background: #efefef;
+  	border: 1px solid #afafaf;
+   	color: black;
+	white-space:nowrap;
+   	padding: 0em 1em 0em 1em;
+   	display: inline;
+	font-weight:normal;
+	font-size:1em;
+	margin-left: 0px;
+}
 div.box {
     background: transparent;
     border-collapse: collapse;

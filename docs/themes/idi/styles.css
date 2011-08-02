@@ -994,11 +994,12 @@ div.tabs a:hover, div.tabs a.active {
 }
 
 
-h4.box {
+h2.box {
 	background-color: #DEE7EC;
 	color: black;
 	border: 1px solid #8CACBB;
 	padding: 2px;
+	font-size:1em;
 }
 
 div.box {
