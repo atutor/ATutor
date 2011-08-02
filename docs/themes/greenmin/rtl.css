@@ -102,3 +102,14 @@ white-space:normal;
 table.etabbed-table	{
 	padding-right:5em;
 }
+
+div.details-text img{
+	float:right;
+	clear:right;
+	padding-left:.2em;
+}
+
+div.details-text{
+	line-height:1.5em;
+	margin-right:.2em;
+}
