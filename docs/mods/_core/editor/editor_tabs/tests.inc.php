@@ -107,10 +107,16 @@ while($row = mysql_fetch_assoc($result))
 	<span style="font-weight:bold"><?php echo _AT('about_content_tests'); ?></span>
 </div>
 
-<div class="row">
+<input type="hidden" name="allow_test_export" id="disallow_test_export" value="0"/>
+
+<!-- <div class="row">
+This option has been commented out for the timebeing until the ability to export and view 
+tests a part of a CP or CP is actually possible
+
 	<?php
 	//Need radio button 'cause one checkbox makes the states indeterministic
 	//@harris
+/*
 	$test_export_y_checked = '';
 	$test_export_n_checked = '';
 	if ($_POST['allow_test_export'] == 1){
@@ -120,14 +126,15 @@ while($row = mysql_fetch_assoc($result))
 	}
 	
 	echo _AT('allow_test_export');
+*/
 ?>
 
-	<input type="radio" name="allow_test_export" id="allow_test_export" value="1" <?php echo $test_export_y_checked; ?>/>
-	<label for="allow_test_export"><?php echo _AT('yes'); ?></label>
-	<input type="radio" name="allow_test_export" id="disallow_test_export" value="0" <?php echo $test_export_n_checked; ?>/>
-	<label for="disallow_test_export"><?php echo _AT('no'); ?></label>
+	<input type="radio" name="allow_test_export" id="allow_test_export" value="1" <?php //echo $test_export_y_checked; ?>/>
+	<label for="allow_test_export"><?php //echo _AT('yes'); ?></label>
+	<input type="radio" name="allow_test_export" id="disallow_test_export" value="0" <?php //echo $test_export_n_checked; ?>/>
+	<label for="disallow_test_export"><?php //echo _AT('no'); ?></label>
 </div>
-
+-->
 
 <div class="row">
 	<p><?php echo _AT('custom_test_message'); ?></p>
