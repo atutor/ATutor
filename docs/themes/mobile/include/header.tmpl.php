@@ -195,10 +195,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <div id="wrapper">
 <div id="main">
 	<div id="header">
-
+<!-- check that these are needed.  
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-
+ -->
 		<div id="header-section-title">
 			<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 					echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
@@ -353,10 +353,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <div id="wrapper">
 <div id="main">
 	<div id="header" role="header">
-
+<!--  check to see if skip links are needed. 
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-
+ -->
 		
 		
 		
@@ -395,8 +395,9 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</div>
 			</div>
 			<?php endif; ?>
-		</div>
+<!--  		
 
+ -->
 
 
 	<ul class="fl-tabs" id="home-guide">
@@ -438,15 +439,42 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<?php endif; ?>
 					</div>
 				
+					<!-- Markup for a subnavlist styled like a Gmail dock. Clean up this code for redundancy but it works for now. -->
 					<ul id="subnavlist" style="text-align: center; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB)); border-bottom: 1px #B6C0C6) solid; ">
 					<?php $num_pages = count($this->sub_level_pages); ?>
-					<?php for ($i=0; $i<$num_pages; $i++): ?>	
-					<?php if( $this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
-						<li class="selected" style="font-size: 12px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-					<?php else: ?> 
-						<li style="font-size: 12px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-					<?php endif; ?> 
-				
+						<?php for ($i=0; $i<$num_pages; $i++): ?>	
+							
+							<?php if($num_pages <= 5): ?>
+								<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
+								<li class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+								<?php else: ?> 
+								<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+								<?php endif; ?> 
+							<?php endif; ?>
+							<?php if($num_pages > 5): ?>
+								<?php if($i <= 5):?>
+									<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
+										<li class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<?php else: ?> 
+										<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<?php endif; ?> 
+								<?php endif;?>
+								<?php if($i== 6): ?>
+									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em">More</li>
+									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<ul>
+								<?php endif;?>
+								<?php if($i > 6 && $i < $num_pages): ?>
+									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+								<?php endif;?>
+								<?php if($i==$num_pages): ?>
+									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									</ul>
+								<?php endif; ?>
+							<?php endif; ?>
+						
+						
+							
 					<?php if ($i < $num_pages-1): 
 						echo " ";?>
 					<?php endif; ?>
@@ -456,18 +484,24 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div> <!--  end subnavlistcontainer -->
 				
 		<?php endif; ?>	
-	<div id="contentwrapper" class="fl-container" >
-
-
-
-		<div id="inner-contentwrapper" >
-
+			
+	<!--  course level navigation -->	
 	
-<!--  side menus -->	
-
-			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
-				<!-- style="margin-left:0.5em;width:99%;" -->
+	<div id="course-level-navigation">	
+		<!-- the sub navigation -->
+				<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
+			
+			<a id="content_link" class="flc-screenNavigator-backButton fl-button" style="position: relative; top: 1em;"href="javascript:void(0);"><?php echo "Content Navigation";//_AT("content_navigation"); ?></a>
+			
+			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+		
+			<div id="content" style=" display: none; position: relative; z-index: 1;">
+				<?php $contentManager->printMainMenu(); ?>
+				<script language="javascript" type="text/javascript"></script>
+			</div>
+			</div>		
 			<?php endif; ?>
+	
 			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			<div class="sequence-links">
 			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
@@ -485,45 +519,14 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			&nbsp;
 		</div> <!-- end sequence-links -->
 		<?php endif; ?>
-
-
-<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
-<div id="hide-show-container">
-	<a id="content_link" href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
-
-</div>
-<div id="results-hide-show" >	
-	
-		<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 		
-		<div id="content" style=" display: none; position: relative; z-index: 1;">
-		<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript"></script>
-		</div>
-		</div>
-	
-</div>
-<?php endif; ?>
-<!-- end side menus -->
-	</div>
-	<div id="contentcolumn" >	
-		
-		
-		<!-- the page title -->
-		<a name="content" title="<?php echo _AT('content'); ?>"></a>
-		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 	
 		<?php global $msg; $msg->printAll(); $_base_href;?>
-	
-		<!-- the sub navigation -->
+	</div> <!--  end course-level-naviagtion -->	
+		
+	<div id="contentwrapper" class="fl-container" >
+		
+	<div id="contentcolumn" >	
 
 		
 <?php endif; ?><!--  end header template for ipad/tablets -->
-<?php 
-debug($this->path);
-debug($this->sub_level_pages);
-debug($this->current_sub_level_page);
-debug($this->current_top_level_page);
-
-?>
-
