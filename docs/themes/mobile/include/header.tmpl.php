@@ -472,14 +472,14 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 								<?php if($i== 6): ?>
 									<li class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a class="more-button" href="javascript:void(0);" tabindex="1">More</a></li>
 									<ul class="subnavlist-more">
-									<li class="more-item" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<li class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									
 								<?php endif;?>
 								<?php if($i > 6 && $i < $num_pages): ?>
-									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<li style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 								<?php endif;?>
 								<?php if($i==$num_pages): ?>
-									<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<li style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									</ul>
 								<?php endif; ?>
 							<?php endif; ?>
@@ -492,15 +492,14 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<?php endfor; ?>
 					</ul>
 
-				</div> <!--  end subnavlistcontainer -->
-				
+				</div> <!--  end subnavlistcontainer -->				
 		<?php endif; ?>	
 			
-	<!--  course level navigation -->	
+
 	
 	<div id="course-level-navigation">	
-		<!-- the sub navigation -->
-				<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
+	
+		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
 			
 			<a id="content_link" class="flc-screenNavigator-backButton fl-button" style="position: relative; top: 1em;"href="javascript:void(0);"><?php echo "Content Navigation";//_AT("content_navigation"); ?></a>
 			
