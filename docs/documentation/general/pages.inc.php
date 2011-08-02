@@ -16,6 +16,7 @@
 	$_pages['packages.php']					= 'Packages';
 	$_pages['tile.php']						= 'TILE Repository Search';
 	$_pages['file_storage.php']				= 'File Storage';
+	$_pages['fs_new_file.php']				= 'New/Edit File';
     $_pages['my_network.php']				= 'My Networking';
     $_pages['my_contacts.php']				= 'My Contacts';
     $_pages['my_groups.php']				= 'Network Groups';
