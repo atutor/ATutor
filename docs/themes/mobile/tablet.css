@@ -168,6 +168,10 @@ body,ul,li {
 
 div#content-link-container{
  	list-style: none;
+ 	width: 100%;
+ 	display: block; 
+ 	clear: left; 
+ 	background: red;
 /*	padding: 0.125em 0.125em 0.125em  0.938em;
 	
 	border: solid 1px #A9ADB0;
@@ -1519,18 +1523,20 @@ dl.browse-course dd {
 fieldset.group_form{
 	width:98%;
 	margin:0 auto;
-	margin-bottom: 1em;
-	border: 1px white solid;
-	
-	
+	color: #4C566C; 
+	padding:.313em;
+	margin: .313em;
+	border: 1px #A9ADB0 solid;
 }
 
 legend.group_form{
 	background-color:white;
 	font-weight: 600;
-	color: #4c566c;
-	padding:0;
-	border: 1px white solid;
+	color: #4C566C;
+	padding:.313em;
+	margin: .313em;
+	border: 1px #4C566C solid;
+	-webkit-border-radius: 8px;
 }
 
 /*The following three rules create the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
@@ -1770,7 +1776,6 @@ ul.folder{
 }	
 ul#topnavlist-tablet.fl-list-menu {
 	
-
 }
 
 div#results-display, .results-display{
@@ -1811,29 +1816,8 @@ div.toolcontainer{
 	margin-bottom: 1em;
 }
 
-ul#subnavlist {
-	padding: 0;
-	padding-bottom: 0.313em;
-	margin: 0;
-	font-size: 90%;
-}
 
 
-ul#subnavlist li {
-	display: inline;
-}
-
-ul#subnavlist li#test{
-	display: none;
-}
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{ /*
-  	color: black;
-	text-decoration:none;*/
-}
-
-ul#subnavlist li a, ul#subnavlist li a:visited {
-	color: #4C566C;
-}
 
 
 /* list attributes */
@@ -2188,24 +2172,33 @@ ul#topnavlist li a  {
 	background-repeat: no-repeat;	
 }
 
+
+
+
+
 /* SUBNAVLIST HIGHLIGHTING and Gmail-STYLE "more" button */
 
-ul#subnavlist{
-	color: black;
-	
-}
 ul#subnavlist li a:active, ul#subnavlist li  a:hover,ul#subnavlist li a:focus {
 	color: red;	
 	border-bottom: #4C566C 2px solid;
 }
-
+ul#subnavlist{
+	color: black;
+	padding: 0;
+	padding-bottom: 0.313em;
+	margin: 0;
+	font-size: 90%;
+	text-align: center;  
+	/*border-bottom: 1px #B6C0C6 solid;*/
+}
 .selected{
 	color: red;
 	font-size: 0.875em;
 	border-bottom: #4C566C 2px solid;
 }
-.more-item{
-	display: block;
+#subnavlist-more .more-item{
+	font-size: 14px; list-style-type: bullet;
+	
 }
 
 
@@ -2214,37 +2207,60 @@ ul#subnavlist li a:active, ul#subnavlist li  a:hover,ul#subnavlist li a:focus {
 .more-button-surround{
 }
 .subnavlist-more{
-	list-style-type: bullet;
-	width: 40%;
+	
 	display: block;
 	display: none;
 }
 
-.subnavlist-more li{
-	
-}	
-/* end SUBNAVLIST HIGHLIGHTING*/
-/* course level navigation styling ** move */
 #course-level-navigation{
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB));
 }
-/* sequence links */
-.sequence-links {
 
+ul#subnavlist li:not(#subnavlist-more){
+	display: inline;
 }
+
+/*
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{ /*
+  	color: black;
+	text-decoration:none;*/
+}
+
+ul#subnavlist li a, ul#subnavlist li a:visited {
+	color: #4C566C;
+	color: black;
+}
+
+
+/* sequence links */
+
 .sequence-links a {
 	text-decoration: none;
 	display: inline;
-	display: none;
+	
 }
 .breadcrumbs, .previous-next{
     /* The path bar, including breadcrumbs and add to favorites */
-	clear:both;
-    font-size: 0.85em;
-	padding:0 0.375em;
-	color: #4C566C;
-	background-color: white;
+	
+	
 }
 .previous-next{
 /*	display: block;*/
 }
+#breadcrumbs, #sequence-links{
+	float: left; 
+}
+#breadcrumbs{
+	width: 50%; 
+}
+#sequence-links{
+	width: 50%; 
+}
+#course-level-navigation{
+	width: 100%; 
+	display: block;
+}
+
+	
+
+
