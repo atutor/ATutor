@@ -311,12 +311,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
 <input type="hidden" name="course_id" value="<?php echo $course_id; ?>"/>
 
-<ul id="subnavlist">
+<ul id="etabbed-list">
 	<?php for ($i = 0; $i< $num_tabs; $i++): ?>
 		<?php if ($current_tab == $i): ?>
-			<li class="active"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></strong></a></li>
+			<li class="prefs_tab_selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></strong></a></li>
 		<?php else: ?>
-			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>"><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></a></li>
+			<li class="prefs_tab"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>"><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></a></li>
 		<?php endif; ?>
 	<?php endfor; ?>
 </ul>
