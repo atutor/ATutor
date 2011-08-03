@@ -2111,15 +2111,14 @@ Ensure styling matches that in fl-tabs.*/
 
 div#content-link-container{
  	list-style: none; 
-	padding-left: .313em;
-	padding-top: .314em;
-	float: left;
+	padding-top: .316em;
+	padding-right: .2em;
+	float: right;
 }
  
 #content_link{
 	color: white;
 	font-weight: bold; 
-	
 }		
  
 .content_link_tablet {
@@ -2127,6 +2126,7 @@ div#content-link-container{
     -webkit-border-radius: 5px;
 	font-size: 0.875em;/*keep this in px*/
 	color: white;
+	padding: .1em;
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
@@ -2145,14 +2145,13 @@ div#content-link-container{
 
 #sequence-links{
 	padding-left: .313em;
-	/*padding-top: .313em;*/
 	float: left;
 }
 #course-level-navigation{	
 	width: 100%; 
 	height: 2.2em; 
-	padding-top: .2em;
-	padding: 1em; 
+	padding-top: .4em;
+	padding-left: -.4em;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#96a4ad), to(#B6C0C6));
 }
 ul#sequence-links li{ 
