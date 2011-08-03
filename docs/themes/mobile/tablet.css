@@ -4,10 +4,11 @@ for more details.
 */
 html, body{
 	height: 100%;}
+		
 #main{
 	padding-bottom: 2.3em;
 	overflow: auto;
-
+	z-index: 1000;
 }
 
 body,ul,li {
@@ -19,8 +20,6 @@ body,ul,li {
 }
 
 .fl-theme-iphone{
-	background: white;
-
 }
 
 #header{
@@ -92,6 +91,7 @@ body,ul,li {
 	overflow: auto;
 	min-height: 100%;
 	background-image: url(images/idi_background.png);
+	
 }
 
 #site-name, h1#section-title{
@@ -165,20 +165,6 @@ body,ul,li {
         to(#354d68)
     ); 
 }
-
-div#content-link-container{
- 	list-style: none;
- 	width: 100%;
- 	display: block; 
- 	clear: left; 
- 	background: red;
-/*	padding: 0.125em 0.125em 0.125em  0.938em;
-	
-	border: solid 1px #A9ADB0;
-	-webkit-border-radius:8px;*/
-}
-
-
 
 
 #home-guide{
@@ -1772,7 +1758,7 @@ ul.folder{
 #topnavlist-tablet{
 		-webkit-border-radius: 8px;
 		background: white; 
-		z-index: 1;
+		z-index: 1000;
 }	
 ul#topnavlist-tablet.fl-list-menu {
 	
@@ -1862,7 +1848,7 @@ div#navigation-column{
     -webkit-background-size: 10px 1px;*/
 	height: 100%;
 	width: 40%;
-	z-index: 1;
+	z-index: 1000;
 	position: relative; 
 	top: 1.3em;
 	background: black;
@@ -2116,18 +2102,64 @@ Ensure styling matches that in fl-tabs.*/
 }
 
 
-/*	hiding/showing top navigation and results-display */
-
+/* hiding/showing course content */
 #topnavlist-link {
 	color: white;
 	text-decoration: none;
 	font-weight: bold;
 }
 
+div#content-link-container{
+ 	list-style: none; 
+	padding-left: .313em;
+	padding-top: .314em;
+	float: left;
+}
+ 
 #content_link{
-	color: black;
-	font-size: 12px;
+	color: white;
+	font-weight: bold; 
+	
 }		
+ 
+.content_link_tablet {
+	border-width:5px;
+    -webkit-border-radius: 5px;
+	font-size: 0.875em;/*keep this in px*/
+	color: white;
+    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
+    background-image: -webkit-gradient(linear, left top, left bottom,
+     	from(#3b5371),
+        color-stop(0.5, #374e6b),
+        color-stop(0.50, #354d68),
+        to(#354d68)
+    );
+ 	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+    -webkit-border-left-image: none;
+    -webkit-background-origin: border;
+    -webkit-background-clip: border;
+}
+
+/* sequence links */
+
+
+#sequence-links{
+	padding-left: .313em;
+	/*padding-top: .313em;*/
+	float: left;
+}
+#course-level-navigation{	
+	width: 100%; 
+	height: 2.2em; 
+	padding-top: .2em;
+	padding: 1em; 
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#96a4ad), to(#B6C0C6));
+}
+ul#sequence-links li{ 
+	font-size: 0.875em; /*override the default font-size of the fl-tabs*/
+}
+
+/*	hiding/showing top navigation and results-display */
 
 ul#topnavlist {
 	display: none;
@@ -2211,11 +2243,6 @@ ul#subnavlist{
 	display: block;
 	display: none;
 }
-
-#course-level-navigation{
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB));
-}
-
 ul#subnavlist li:not(#subnavlist-more){
 	display: inline;
 }
@@ -2232,34 +2259,6 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 }
 
 
-/* sequence links */
-
-.sequence-links a {
-	text-decoration: none;
-	display: inline;
-	
-}
-.breadcrumbs, .previous-next{
-    /* The path bar, including breadcrumbs and add to favorites */
-	
-	
-}
-.previous-next{
-/*	display: block;*/
-}
-#breadcrumbs, #sequence-links{
-	float: left; 
-}
-#breadcrumbs{
-	width: 50%; 
-}
-#sequence-links{
-	width: 50%; 
-}
-#course-level-navigation{
-	width: 100%; 
-	display: block;
-}
 
 	
 
