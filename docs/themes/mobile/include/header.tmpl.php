@@ -439,7 +439,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	</div> <!--  END HEADER -->
 
-
 <?php if (count($this->sub_level_pages) > 0): ?>
 				<div id="subnavlistcontainer" 
 					<div id="subnavbacktopage" >
@@ -450,7 +449,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					</div>
 				
 					<!-- Markup for a subnavlist styled like a Gmail dock. Clean up this code for redundancy but it works for now. -->
-					<ul id="subnavlist" style="text-align: center; background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB)); border-bottom: 1px #B6C0C6) solid; ">
+					<!-- background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB));  -->
+					<ul id="subnavlist" style="text-align: center; border-bottom: 1px #B6C0C6 solid; background: #B6C0C6; ">
 					<?php $num_pages = count($this->sub_level_pages); ?>
 						<?php for ($i=0; $i<$num_pages; $i++): ?>	
 							
@@ -494,26 +494,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 				</div> <!--  end subnavlistcontainer -->				
 		<?php endif; ?>	
-			
 
-	
 	<div id="course-level-navigation">	
 	
-		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
-			
-			<a id="content_link" class="flc-screenNavigator-backButton fl-button" style="position: relative; top: 1em;"href="javascript:void(0);"><?php echo "Content Navigation";//_AT("content_navigation"); ?></a>
-			
-			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-		
-			<div id="content" style=" display: none; position: relative; z-index: 1;">
-				<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript"></script>
-			</div>
-			</div>		
-			<?php endif; ?>
+	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 	
-			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-			<div class="sequence-links">
+		<div class="sequence-links" id="sequence-links">
 			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 				<?php if ($this->sequence_links['resume']): ?>
 						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?></a>
@@ -524,18 +510,40 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					if ($this->sequence_links['next']): ?>
 						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class="previous-next"  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?></a>
 					<?php endif; ?>
-			<?php endif; ?>
+				<?php endif; ?>
 			<?php } ?>
-			&nbsp;
-		</div> <!-- end sequence-links -->
+				&nbsp;
+			</div> <!-- end sequence-links -->
+		<?php endif; ?>
+</div>
+<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
+			
+			
+			
+			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+		<a id="content_link" href="javascript:void(0);"><?php echo "Content Navigation";//_AT("content_navigation"); ?></a>
+			<div id="content" style=" display: none; position: relative; z-index: 1;">
+				<?php $contentManager->printMainMenu(); ?>
+				<script language="javascript" type="text/javascript"></script>
+			</div>
+			</div>		
 		<?php endif; ?>
 		
+		
+
+
+
 	
 		<?php global $msg; $msg->printAll(); $_base_href;?>
-	</div> <!--  end course-level-naviagtion -->	
+	
+		
+	<!--  end course-level-naviagtion -->	
 		
 	<div id="contentwrapper" class="fl-container" >
-		
+	
+			
+
+	</div>
 	<div id="contentcolumn" >	
 
 		
