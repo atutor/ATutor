@@ -87,7 +87,7 @@ jQuery('#topnavlist-link').click(function(e) {
 
 $this->onload .= "
 jQuery(document).click(function () {
-jQuery('#navigation-column').slideUp(600);}); 
+jQuery('#navigation-column').slideUp();}); 
 jQuery('#topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#navigation-column').slideToggle();
@@ -528,11 +528,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 				<a id="content_link" class="content_link_tablet" href="javascript:void(0);"><?php echo "Content Navigation";//_AT("content_navigation"); ?></a>	
-			<div id="content" style=" display: none; position: relative; z-index: 1;">
-				<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript"></script>
-			</div>
 			</div>		
+				<div id="content" style="display: none;">
+					<?php $contentManager->printMainMenu(); ?>
+					<script language="javascript" type="text/javascript"></script>
+				</div>
+		
 </div><!-- course-level navigation -->		
 		
 <?php endif;?>
@@ -548,7 +549,5 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			
 
 	</div>
-	<div id="contentcolumn" >	
-
-		
+	<div id="contentcolumn" >			
 <?php endif; ?><!--  end header template for ipad/tablets -->
