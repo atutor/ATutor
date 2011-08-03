@@ -1836,16 +1836,6 @@ div#contentwrapper{
 	padding: 0;	
 }	
 div#navigation-column{
-	/*width: 30%;  removed July 27
-	float: left; */
-	/*background-color: #E6EDF4;
-	background: -webkit-gradient(linear, left top, right top,
-        from(#c5ccd3),
-        to(#cfd5dd),
-        color-stop(0.80, #c5ccd3),
-        color-stop(0.80, #cfd5dd));
-    -webkit-background-origin: padding-box;
-    -webkit-background-size: 10px 1px;*/
 	height: 100%;
 	width: 40%;
 	z-index: 1000;
@@ -2119,6 +2109,7 @@ div#content-link-container{
 #content_link{
 	color: white;
 	font-weight: bold; 
+	
 }		
  
 .content_link_tablet {
@@ -2140,9 +2131,13 @@ div#content-link-container{
     -webkit-background-clip: border;
 }
 
+#content{
+clear: left;
+clear: right;
+}
+
+
 /* sequence links */
-
-
 #sequence-links{
 	padding-left: .313em;
 	float: left;
