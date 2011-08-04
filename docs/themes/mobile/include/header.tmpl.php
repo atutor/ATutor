@@ -376,7 +376,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<div id="navigation-bar">
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
-			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
+			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
 			<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 				<div id="navigation-column" >
 				<!--  requires ARIA roles review -->
@@ -404,10 +404,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</div>
 			</div>
 			<?php endif; ?>
-<!--  		
 
- -->
-
+		
 
 	<ul class="fl-tabs" id="home-guide">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
