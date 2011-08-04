@@ -547,7 +547,5 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<div id="contentwrapper" class="fl-container" >
 	
 			
-
-	</div>
 	<div id="contentcolumn" >			
 <?php endif; ?><!--  end header template for ipad/tablets -->
