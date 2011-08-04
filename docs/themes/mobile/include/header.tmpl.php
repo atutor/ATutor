@@ -177,7 +177,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		
 	<!-- Fluid Infusion -->
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script src="<?php echo $this->base_path;?>jscripts/jQueryMobile/jquery.mobile-1.0b1.min.js" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
 
 	//<!--
