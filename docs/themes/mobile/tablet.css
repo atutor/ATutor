@@ -1861,11 +1861,19 @@ div#contentcolumn{
 	padding-top: .313em;
 	margin-top: .313em;
 	padding: .313em;
-	margin-bottom: .313em;
+	margin-bottom: 1em;
+	position: relative; 
+	top: .7em;
 	
 	/*border-left: thin #A9ADB0 solid;*/
 	
 }
+#content-text{
+	position: relative;
+	top: .7em;
+}
+
+	
 
 
 #content-contentwrapper{
@@ -2132,8 +2140,13 @@ div#content-link-container{
 }
 
 #content{
+position: relative;
 clear: left;
 clear: right;
+top: 1em;
+right: 0;
+width: 50%;
+float: right; 
 }
 
 
@@ -2148,6 +2161,7 @@ clear: right;
 	padding-top: .4em;
 	padding-left: -.4em;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#96a4ad), to(#B6C0C6));
+	position: absolute;
 }
 ul#sequence-links li{ 
 	font-size: 0.875em; /*override the default font-size of the fl-tabs*/
@@ -2252,8 +2266,5 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 	color: black;
 }
 
-
-
-	
 
 
