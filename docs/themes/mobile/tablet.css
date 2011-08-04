@@ -1759,19 +1759,20 @@ ul.folder{
 		-webkit-border-radius: 8px;
 		background: white; 
 		z-index: 1000;
-}	
-ul#topnavlist-tablet.fl-list-menu {
-	
+		border-bottom-left-radius: 8px 8px;
+border-bottom-right-radius: 8px 8px;
+border-top-left-radius: 8px 8px;
+border-top-right-radius: 8px 8p
+}
+#topnavlist-tablet .fl-list-menu {
+-webkit-border-radius: 8px;
 }
 
-div#results-display, .results-display{
-	display: none;
-}
 
 ul#topnavlist-tablet li {
-	padding: 0;
-	margin: 0;
+	
 	color: white;
+
 }
 	
 ul#topnavlist-tablet>li:hover,
@@ -1837,7 +1838,7 @@ div#contentwrapper{
 }	
 div#navigation-column{
 	height: 100%;
-	width: 40%;
+	width: 90%;
 	z-index: 1000;
 	position: relative; 
 	top: 1.3em;
@@ -1846,24 +1847,19 @@ div#navigation-column{
 	padding-left: .313em;
 	padding-top: .313em;
 	-webkit-border-radius: 8px;
-	display: none;
+	/*display: none;*/
 	
 	
 }
 div#contentcolumn{
-	/*border:thin #A9ADB0 solid;
-	-webkit-border-radius:8px;
-	background-color: white;
-	 
-	width: 65.5%; 
-	float: right;*/
-	
 	padding-top: .313em;
 	margin-top: .313em;
 	padding: .313em;
 	margin-bottom: 1em;
 	position: relative; 
 	top: .7em;
+	top: 1.2em;
+	top: 2em;
 	
 	/*border-left: thin #A9ADB0 solid;*/
 	
@@ -2107,6 +2103,7 @@ Ensure styling matches that in fl-tabs.*/
 	font-weight: bold;
 }
 
+
 div#content-link-container{
  	list-style: none; 
 	padding-top: .316em;
@@ -2140,14 +2137,30 @@ div#content-link-container{
 }
 
 #content{
-position: relative;
-clear: left;
-clear: right;
-top: 1em;
-right: 0;
-width: 50%;
-float: right; 
+	position: relative;
+	clear: left;
+	clear: right;
+	top: .7em; 
+	right: 0.313em;
+	width: 50%;
+	float: right;
+	-webkit-border-radius: 8px;
+	border: 2px solid #B6C0C6;
+
 }
+/*
+	height: 100%;
+	width: 40%;
+	z-index: 1000;
+	position: relative; 
+	top: 1.3em;
+	background: black;
+	padding-right: .313em;
+	padding-left: .313em;
+	padding-top: .313em;
+	-webkit-border-radius: 8px;
+	display: none;
+*/
 
 
 /* sequence links */
@@ -2177,7 +2190,7 @@ ul#topnavlist {
 	/*background-color: white;*/
 }
 
-div#results-display{
+div#results-display, .results-display{
 	display: none;
 }
 
