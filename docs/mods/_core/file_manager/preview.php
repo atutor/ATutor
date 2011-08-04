@@ -20,9 +20,8 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$file = 'b64:'.base64_encode($_GET['file']);
 } else {
 	$get_file = $_base_path . 'content/' . $_SESSION['course_id'] . '/';
-	$file = $_GET['file'];
+	$file = $_GET['file'];	
 }
-
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Frameset//EN" "http://www.w3.org/TR/REC-html40/frameset.dtd" />
 <html lang="<?php echo $myLang->getCode(); ?>">

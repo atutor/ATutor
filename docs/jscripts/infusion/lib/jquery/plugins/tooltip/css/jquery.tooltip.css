@@ -1,2 +1,3 @@
-#tooltip{position:absolute;z-index:3000;border:1px solid #111;background-color:#ffffe1;padding:2px;}
-#tooltip h3,#tooltip div{margin:0;}
+.ui-tooltip{padding:8px;position:absolute;z-index:9999;-o-box-shadow:0 0 5px #aaa;-moz-box-shadow:0 0 5px #aaa;-webkit-box-shadow:0 0 5px #aaa;box-shadow:0 0 5px #aaa;}
+* html .ui-tooltip{background-image:none;}
+body .ui-tooltip{border-width:2px;}

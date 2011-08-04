@@ -1,18 +1,18 @@
-Fluid is available under either the terms of the New BSD license or the
-Educational Community License, Version 2.0. As a recipient of Fluid, you may
+Infusion is available under either the terms of the New BSD license or the
+Educational Community License, Version 2.0. As a recipient of Infusion, you may
 choose which license to receive this code under (except as noted in per-module
-LICENSE files). All modules are Copyright 2007 University of Toronto except
+LICENSE files). All modules are Copyright 2011 OCAD University except
 where noted otherwise in the code itself, or if the modules reside in a separate
 directory, they may contain explicit declarations of copyright in both the
 LICENSE file in the directory in which they reside and in the code itself. No
 external contributions are allowed under licenses which are fundamentally
-incompatible with the ECL or BSD licenses that Fluid is distributed under.
+incompatible with the ECL or BSD licenses that Infusion is distributed under.
 
 The text of the ECL and BSD licenses is reproduced below.
 
 Educational Community License, Version 2.0
 *************************************
-Copyright 2007 University of Toronto
+Copyright 2011 OCAD University
 
 Educational Community License, Version 2.0, April 2007
 
@@ -196,7 +196,7 @@ END OF TERMS AND CONDITIONS FOR ECL 2.0
 The New BSD license
 **********************
 
-Copyright 2007 University of Toronto.
+Copyright 2011 OCAD University
 
 All rights reserved.
 
@@ -208,7 +208,7 @@ this list of conditions and the following disclaimer.
     * Redistributions in binary form must reproduce the above copyright notice,
 this list of conditions and the following disclaimer in the documentation
 and/or other materials provided with the distribution.
-    * Neither the name of the University of Toronto nor the names of its
+    * Neither the name of OCAD University nor the names of its
 contributors may be used to endorse or promote products derived from this
 software without specific prior written permission.
 

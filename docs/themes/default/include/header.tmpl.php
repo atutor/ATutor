@@ -71,13 +71,20 @@ global $system_courses, $_custom_css, $db;
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
 	<![endif]-->
     <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
-<link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
 
 <?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 <?php endif; ?>
-	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
+	    <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-reset-global.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-base-global.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-text.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion//components/uploader/css/Uploader.css" />
+        
+    <!-- Fluid and jQuery Dependencies -->
+    <script type="text/javascript" src="<?php echo $this->base_href; ?>jscripts/infusion/InfusionAll.js"></script>
+        
 	<script language="javascript" type="text/javascript">
 	//<!--
 	jQuery.noConflict();
@@ -93,7 +100,7 @@ global $system_courses, $_custom_css, $db;
 <div id="header">
 <div class="bypass">
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
-	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
 
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo htmlentities_utf8($_REQUEST['cid']);  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
 </div>	

@@ -451,4 +451,22 @@ function readfile_in_chunks($filename) {
 		readfile($filename);
 	}
 }
+
+/**
+ * This function handles ajax request and return an array of errors encoded in JSON
+ * @param   int     HTTP Status code, so far, handle 200 and 500.
+ */
+function handleAjaxUpload($statusCode) {
+    if ($_POST['type'] === 'ajax') {
+        if ($statusCode === 500) {
+//            $msg->printErrors();
+            header("HTTP/1.1 500 Internal Server Error", TRUE, 500);
+        } elseif ($statusCode === 200) {
+//            $msg->printFeedbacks();
+            header("HTTP/1.1 200 Ok", TRUE, 200);
+        }
+        exit;
+    }
+}
+ 
 ?>

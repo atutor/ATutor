@@ -56,45 +56,6 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
         }
 
     }
-
-    $_custom_head .= '
-        <link href="'.$fluid_dir.'components/uploader/css/Uploader.css" rel="stylesheet" type="text/css" />
-        <script language="JavaScript" type="text/javascript">
-
-            var myUpload; // mostly used for testing
-
-            jQuery(document).ready(function () {
-		    myUpload = fluid.progressiveEnhanceableUploader(".flc-uploader", ".fl-ProgEnhance-basic", {
-		        uploadManager: {
-				    type: "fluid.swfUploadManager",
-		
-				    options: {
-				       // Set the uploadURL to the URL for posting files to your server.
-				       uploadURL: "'.$_base_href.'include/lib/upload.php?path='.urlencode($current_path.$pathext).'",
-		
-				       // This option points to the location of the SWFUpload Flash object that ships with Fluid Infusion.
-				       flashURL: "jscripts/infusion/lib/swfupload/flash/swfupload.swf"
-					}
-				},
-		
-		        listeners: {
-            		onFileSuccess: function (file, serverData){
-		                // example assumes that the server code passes the new image URL in the serverData
-        		        window.location="'.$_SERVER['PHP_SELF'].'?pathext=' . urlencode($pathext) . SEP . 'popup=' . $popup . SEP . 'framed=' . $framed . SEP . 'msg=FILEUPLOAD_DONE";
-                	}
-    		    },
-		
-                 decorators: [{
-                    type: "fluid.swfUploadSetupDecorator",
-                    options: {
-                         // This option points to the location of the Browse Files button used with Flash 10 clients.
-                         flashButtonImageURL: "'.AT_BASE_HREF.'jscripts/infusion/components/uploader/images/browse.png"
-					}
-                 }]
-		     });
-		});
-        </script>
-    ';
 }
 
 global $msg;

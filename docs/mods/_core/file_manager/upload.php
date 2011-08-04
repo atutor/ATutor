@@ -11,7 +11,6 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
@@ -29,7 +28,7 @@ $alter = $_REQUEST['alter'];
 //echo $_REQUEST['tab'];
 
 //echo $alter;
-
+					
 /* get this courses MaxQuota and MaxFileSize: */
 $sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
 $result = mysql_query($sql, $db);
@@ -48,8 +47,10 @@ $my_MaxFileSize	= $row['max_file_size'];
 
 $path = AT_CONTENT_DIR . $_SESSION['course_id'].'/'.$_POST['pathext'];
 
-if (isset($_POST['submit'])) {
-
+if (isset($_POST['submit'])) {   
+    if($_FILES['file']) {
+       $_FILES['uploadedfile'] = $_FILES['file']; 
+    }
 	if($_FILES['uploadedfile']['name'])	{
 
 		$_FILES['uploadedfile']['name'] = trim($_FILES['uploadedfile']['name']);
@@ -63,6 +64,7 @@ if (isset($_POST['submit'])) {
 		if (in_array($ext, $IllegalExtentions)) {
 			$errors = array('FILE_ILLEGAL', $ext);
 			$msg->addError($errors);
+			handleAjaxUpload(500);
 			header('Location: index.php?pathext='.$_POST['pathext'].SEP. 'framed='.$framed.SEP.'cp='.$_GET['cp'].SEP.'pid='.$_GET['pid'].SEP.'cid='.$_GET['cid'].SEP.'a_type='.$_GET['a_type']);
 			exit;
 		}
@@ -77,7 +79,6 @@ if (isset($_POST['submit'])) {
 	
 		/* anything else should be okay, since we're on *nix.. hopefully */
 		$_FILES['uploadedfile']['name'] = str_replace(array(' ', '/', '\\', ':', '*', '?', '"', '<', '>', '|', '\''), '', $_FILES['uploadedfile']['name']);
-
 
 		/* if the file size is within allowed limits */
 		if( ($_FILES['uploadedfile']['size'] > 0) && ($_FILES['uploadedfile']['size'] <= $my_MaxFileSize) ) {
@@ -121,6 +122,7 @@ if (isset($_POST['submit'])) {
 										$_GET['popup'],
 										SEP);
 						$msg->addFeedback($f);
+						handleAjaxUpload(200);
 						if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
@@ -134,6 +136,7 @@ if (isset($_POST['submit'])) {
 					}
 					else {
 						$msg->addFeedback('FILE_UPLOADED');
+						handleAjaxUpload(200);
 
 						if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
@@ -144,6 +147,7 @@ if (isset($_POST['submit'])) {
 				}
 			} else {
 				$msg->addError(array('MAX_STORAGE_EXCEEDED', get_human_size($my_MaxCourseSize)));
+				handleAjaxUpload(500);
 				if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
@@ -153,6 +157,7 @@ if (isset($_POST['submit'])) {
 			}
 		} else {
 			$msg->addError(array('FILE_TOO_BIG', get_human_size($my_MaxFileSize)));
+			handleAjaxUpload(500);
 			if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
@@ -162,6 +167,7 @@ if (isset($_POST['submit'])) {
 		}
 	} else {
 		$msg->addError('FILE_NOT_SELECTED');
+		handleAjaxUpload(500);
 		if ($alter)
 							header('Location: '.$_base_href.'editor/edit_content.php?cid='.$_REQUEST['cid'].SEP . 'pathext='.$_POST['pathext'].SEP. 'popup='.$_GET['popup'].SEP. 'tab='.$_REQUEST['tab']);
 						else
