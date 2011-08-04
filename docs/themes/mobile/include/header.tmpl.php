@@ -378,7 +378,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
 			<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-				<div id="navigation-column" >
+				
+				<div id="navigation-column" class="triangle-isosceles top">
 				<!--  requires ARIA roles review -->
 				<!--  this should be a button on its own  -->
 				<?php if ($this->current_sub_level_page): ?>
@@ -536,7 +537,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 				<a id="content_link" class="content_link_tablet" href="javascript:void(0);"><?php echo "Content Navigation";//_AT("content_navigation"); ?></a>	
 			</div>		
-				<div id="content" style="display: none;">
+				<div id="content" style="display: none;" class="triangle-isosceles top right">
 					<?php $contentManager->printMainMenu(); ?>
 					<script language="javascript" type="text/javascript"></script>
 				</div>
