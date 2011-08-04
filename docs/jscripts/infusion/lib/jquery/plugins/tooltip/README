@@ -1,0 +1,7 @@
+This version of the jQuery UI tooltip plugin is a pre-release version from the 
+tooltip branch on github for jQuery UI v1.9 
+https://github.com/jquery/jquery-ui/tree/tooltip
+
+    commit  48a5977d3325869abd7b
+    tree    43fd0cda4af2cdcd33f5
+    parent  bdd815e8dcdeace8be6d

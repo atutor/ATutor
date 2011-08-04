@@ -1,0 +1,41 @@
+.fl-theme-blackYellow{color:#000;background-color:#ff0;}
+.fl-theme-blackYellow div,.fl-theme-blackYellow input{color:#000;background-color:#ff0;border-color:#000;}
+.fl-theme-blackYellow iframe{border-color:#000;}
+.fl-theme-blackYellow a{color:#000;font-weight:bold;background-color:#ff0;}
+.fl-theme-blackYellow h1,.fl-theme-blackYellow h2,.fl-theme-blackYellow h3,.fl-theme-blackYellow h4,.fl-theme-blackYellow h5,.fl-theme-blackYellow h6{color:#000;background-color:#ff0;border-color:#000;}
+.fl-theme-blackYellow th{border:.1em solid #000;background-color:#000;color:#ff0;}
+.fl-theme-blackYellow td{border:.1em solid #000;}
+.fl-theme-blackYellow .fl-focus:focus,.fl-theme-blackYellow .fl-focus :focus,.fl-theme-blackYellow.fl-focus :focus,.fl-theme-blackYellow .selectable{outline:.2em solid #F00;}
+.fl-theme-blackYellow .fl-knockout{background:transparent!important;color:#000;}
+.fl-theme-blackYellow .fl-icon{background-color:#ff0;}
+.fl-theme-blackYellow .fl-tabs{border-bottom-color:#000;}
+.fl-theme-blackYellow .fl-tabs li,.fl-theme-blackYellow .fl-tabs li *{border-color:#000;border-bottom-color:#000;}
+.fl-theme-blackYellow .fl-tabs li{background-color:#000;}
+.fl-theme-blackYellow .fl-tabs li *{color:#ff0;font-weight:bold;background-color:#000;text-decoration:none;}
+.fl-theme-blackYellow .fl-tabs li:hover,.fl-theme-blackYellow .fl-tabs li:hover *,.fl-theme-blackYellow .fl-tabs li a:hover{color:#000;background-color:#ff0;}
+.fl-theme-blackYellow .fl-tabs li.fl-tabs-active,.fl-theme-blackYellow .fl-tabs li.fl-tabs-active a,.fl-theme-blackYellow .fl-tabs li.fl-tabs-active a:hover,.fl-theme-blackYellow .fl-tabs li.fl-activeTab,.fl-theme-blackYellow .fl-tabs li.fl-activeTab:hover,.fl-theme-blackYellow .fl-tabs li.fl-activeTab a,.fl-theme-blackYellow .fl-tabs li.fl-activeTab a:hover{background-color:#ff0;border-bottom-color:#ff0;color:#000;}
+.fl-theme-blackYellow .fl-tab-content{background-color:#ff0;color:#000;}
+.fl-theme-blackYellow .fl-listmenu,.fl-theme-blackYellow .fl-list-menu{border:1px solid #000;border-bottom-width:2px;background-color:#ff0;}
+.fl-theme-blackYellow .fl-listmenu li,.fl-theme-blackYellow .fl-list-menu li,.fl-theme-blackYellow .fl-listmenu li a,.fl-theme-blackYellow .fl-list-menu li a{font-weight:bold;color:#000;background-color:#ff0;border-color:#000;text-decoration:none;}
+.fl-theme-blackYellow .fl-listmenu a:hover,.fl-theme-blackYellow .fl-list-menu a:hover{background-color:#000;color:#ff0;}
+.fl-theme-blackYellow .fl-listmenu .fl-activemenu a,.fl-theme-blackYellow .fl-list-menu .fl-activemenu a,.fl-theme-blackYellow .fl-listmenu .fl-activemenu a:hover,.fl-theme-blackYellow .fl-list-menu .fl-activemenu a:hover{background-color:#000;border-bottom-color:#ff0;color:#ff0;}
+.fl-theme-blackYellow .fl-button-left,.fl-theme-blackYellow .fl-button-right{background-image:url(../images/themes/blackYellow/buttons-med-cap.png);}
+.fl-theme-blackYellow .fl-button-inner{background-image:url(../images/themes/blackYellow/buttons-med-bg.png);}
+.fl-theme-blackYellow .fl-widget{background-color:#000;border:1px solid #ff0;}
+.fl-theme-blackYellow .fl-widget h2{color:#000;}
+.fl-theme-blackYellow .fl-widget a{color:#000;}
+.fl-theme-blackYellow .fl-widget .fl-icon-more{background-image:url('../images/themes/blackYellow/icon-widget-More.png');margin-left:0;}
+.fl-theme-blackYellow .fl-widget .fl-icon-close{background-image:url('../images/themes/blackYellow/icon-widget-Close.png');margin-right:0;}
+.fl-theme-blackYellow .fl-widget .fl-widget-titlebar{margin-bottom:3px;}
+.fl-theme-blackYellow .fl-grabbable .fl-widget-titlebar{background-image:url('../images/themes/blackYellow/icon-widget-gripper.png');}
+.fl-theme-blackYellow .fl-grabbable .fl-widget-titlebar h2{display:inline;}
+.fl-theme-blackYellow .fl-widget-titlebar .icon{background-position:center center;}
+.fl-theme-blackYellow .fl-widget-titlebar .fl-button-right,.fl-theme-blackYellow .fl-widget-titlebar .fl-button-left{color:#000;background-image:url('../images/themes/blackYellow/buttons-titlebar-cap.png');text-decoration:none;}
+.fl-theme-blackYellow .fl-widget-titlebar .fl-button-inner{background-image:url('../images/themes/blackYellow/buttons-titlebar-bg.png');}
+.fl-theme-blackYellow .fl-widget .fl-widget-options{padding:0;}
+.fl-theme-blackYellow .fl-widget .fl-widget-options li{border-left:1px solid #ff0;}
+.fl-theme-blackYellow .fl-widget .fl-widget-content{background-color:#ff0;}
+.fl-theme-blackYellow .fl-progress-bounds{border-color:#000;background-color:#ff0;}
+.fl-theme-blackYellow .fl-progress-fill{color:#ff0;background-color:#000;}
+.fl-theme-blackYellow .fl-reorderer-dropMarker{background-color:#f00;}
+.fl-theme-blackYellow .fl-inlineEdit-edit{background-color:#000;color:#ff0;border:.1em solid #ff0;padding:.1em;margin:-0.1em;}
