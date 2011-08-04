@@ -1751,9 +1751,13 @@ ul.folder{
 }
 
 #topnavlist-tablet{
-		-webkit-border-radius: 8px;
+	-webkit-border-radius: 8px;
+		border: black;
 		background: black; 
 		z-index: 1000;
+		padding-bottom: 0; 
+		margin-bottom: 0;
+		
 }
 
 ul#topnavlist-tablet li {
@@ -1825,10 +1829,14 @@ div#navigation-column{
 	z-index: 1000;
 	position: relative; 
 	top: 1.3em;
+	top: 1.5em;
+
 	background: black;
-	padding-right: .313em;
-	padding-left: .313em;
-	padding-top: .313em;
+	padding-right: .2em;
+	padding-left: .2em;
+	padding-top: .2em;
+	
+	padding-bottom: .2em;
 	display: none;
 	
 	
@@ -2127,7 +2135,7 @@ div#content-link-container{
 	float: right;
 	-webkit-border-radius: 8px;
 	border: 2px solid #B6C0C6;
-
+border: 4px solid black;
 }
 /*
 	height: 100%;
@@ -2259,6 +2267,36 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 	color: #4C566C;
 	color: black;
 }
+/*.arrow{ /*creates a little up-facing arrow to help mimick an ipad-style popover 
+	   background-image: url("images/arrow-up-black.png");
+	   	background-position: 0 -2%;
+		background-repeat: no-repeat;
+		z-index: 1000;
+}	*/
+
+ /*creates a little up-facing arrow to help mimick an ipad-style popover.  
+ See http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
+
+.triangle-isosceles {
+     position: relative;
+}
 
 
+.triangle-isosceles:after {
+     
+     border-style: solid;
+     content: "";
+     display: block;
+  
+     position: absolute;
+   
+}
 
+.triangle-isosceles.top:after {
+     border-color: black transparent;
+     border-width: 0pt 15px 15px;
+     bottom: auto;
+     left: auto;
+     left: 2em;
+     top: -15px;
+}
