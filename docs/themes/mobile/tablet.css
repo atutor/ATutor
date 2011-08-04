@@ -31,17 +31,12 @@ body,ul,li {
 }
 
 #header-section-title {
-	text-align: center;
-	background-image: -webkit-gradient(linear, left top, left bottom,
-   	from(#6d8cb3),
-    color-stop(0.5, #6d8cb3),
-    color-stop(0.50, #4b6b90),
-    color-stop(0.5, #6d8cb3),
-    to(#4b6b90)
-    ); 
-  background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#6d8cb3), to(#4b6b90));
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
-
+	/*text-align: center;
+	
+	position: relative; 
+left: 20em;
+top: -.7em;*/
+	width: 100%;
 }
 
 .fl-theme-iphone .fl-navbar{
@@ -593,7 +588,7 @@ h1#section-title {
 	font-size: 120%;
 	position: absolute;
 	top: .3em;
- 	left: 0.5em; 
+ 	left: 41%; 
 	white-space:nowrap;
 	display: inline;
 	
@@ -1757,22 +1752,12 @@ ul.folder{
 
 #topnavlist-tablet{
 		-webkit-border-radius: 8px;
-		background: white; 
+		background: black; 
 		z-index: 1000;
-		border-bottom-left-radius: 8px 8px;
-border-bottom-right-radius: 8px 8px;
-border-top-left-radius: 8px 8px;
-border-top-right-radius: 8px 8p
 }
-#topnavlist-tablet .fl-list-menu {
--webkit-border-radius: 8px;
-}
-
 
 ul#topnavlist-tablet li {
-	
 	color: white;
-
 }
 	
 ul#topnavlist-tablet>li:hover,
@@ -1827,9 +1812,6 @@ ol#tools>li:hover, ol#tools>li:hover a {
   	
 }
 
-div#contentwrapper{
-	
-}
 [class*="fl-container"]:not(.fl-navbar){
 	margin: 0;
 	margin-left: .313em;
@@ -1838,7 +1820,8 @@ div#contentwrapper{
 }	
 div#navigation-column{
 	height: 100%;
-	width: 90%;
+	width: 50%;
+	-webkit-border-radius: 8px;
 	z-index: 1000;
 	position: relative; 
 	top: 1.3em;
@@ -1846,8 +1829,7 @@ div#navigation-column{
 	padding-right: .313em;
 	padding-left: .313em;
 	padding-top: .313em;
-	-webkit-border-radius: 8px;
-	/*display: none;*/
+	display: none;
 	
 	
 }
@@ -2071,9 +2053,7 @@ Ensure styling matches that in fl-tabs.*/
 
 
 /*this CSS creates a button that looks exactly like a Mobile FSS tab.*/
-.navigation-bar-button
-
-{
+.navigation-bar-button{
     border-width:5px;
     -webkit-border-radius: 5px;
 	font-size: 18px;/*keep this in px*/
@@ -2081,7 +2061,8 @@ Ensure styling matches that in fl-tabs.*/
 	color: white;
 	position: relative;
 	top: .69em; 
-	left: 0.188em; 
+	left: 0; 
+	
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
