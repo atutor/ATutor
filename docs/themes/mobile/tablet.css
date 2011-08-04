@@ -2267,12 +2267,6 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 	color: #4C566C;
 	color: black;
 }
-/*.arrow{ /*creates a little up-facing arrow to help mimick an ipad-style popover 
-	   background-image: url("images/arrow-up-black.png");
-	   	background-position: 0 -2%;
-		background-repeat: no-repeat;
-		z-index: 1000;
-}	*/
 
  /*creates a little up-facing arrow to help mimick an ipad-style popover.  
  See http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
@@ -2298,5 +2292,14 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
      bottom: auto;
      left: auto;
      left: 2em;
+     top: -15px;
+}
+
+.triangle-isosceles.top.right:after {
+     border-color: black transparent;
+     border-width: 0pt 15px 15px;
+     bottom: auto;
+     left: auto;
+     right: 3.5em;
      top: -15px;
 }
