@@ -372,7 +372,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<!--  Note: ARIA roles cause XHTML validation errors because the XHTML DTD does not yet support ARIA. Use ARIA anyway -->
 
 	
-	<div id="navigation-contentwrapper">
+	<div id="navigation-contentwrapper" >
 	<div id="navigation-bar">
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
