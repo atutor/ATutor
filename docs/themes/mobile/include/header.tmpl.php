@@ -520,7 +520,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 						</li>
 				<?php else:
 					if ($this->sequence_links['previous']): ?>
-						<li><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+						<li class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
 						</li>
 					<?php endif;
 					if ($this->sequence_links['next']): ?>
@@ -553,10 +553,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<!--  end course-level-naviagtion -->	
 		
 	<div id="contentwrapper" class="fl-container" >
-<!-- 
-	<div class="triangle-isosceles previous">
-	<a href="#">Prev</a>
-	</div>
- -->			
+
 
 <?php endif; ?><!--  end header template for ipad/tablets -->
