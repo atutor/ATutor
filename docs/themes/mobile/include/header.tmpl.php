@@ -543,7 +543,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 		
 </div><!-- course-level navigation -->		
-	
+</div>	
 <?php endif;?>
 
 	
