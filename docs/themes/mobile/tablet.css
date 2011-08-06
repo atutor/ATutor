@@ -66,6 +66,7 @@ top: -.7em;*/
 	background-color: #4b6b90;
 	height: 2.2em; 
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+	
 }
 
 #navigation-bar{
@@ -2433,5 +2434,15 @@ ul.sequence-links li a:active:before {
   	 right: -5px;
   	 top: 11px;
 }
+.fl-navbar .fl-table-row:first-child {
+	height:45px;
 
+}
+
+.fl-table-row {
+    display:table-row;
+    height:45px;
+    max-height: 45px;
+    	
+}
 
