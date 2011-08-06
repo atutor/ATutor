@@ -2318,3 +2318,82 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
     left: -12px;
      top: 0px;
 }
+/*adds arrows to Fluid Tabs */
+
+ul.sequence-links {
+}
+
+ul.sequence-links li {
+    position:relative;
+    z-index:1;
+    overflow:hidden;
+    list-style:none;
+   /* padding:0;
+    margin:0 0 0 0 ;*/
+}
+
+ul.sequence-links li a:link, 
+ul.sequence-links li a:visited {
+    display:block;
+   /* border :0;*/
+    padding-left:12px;
+    color:white;
+}
+
+ul.sequence-links li a:hover, 
+ul.sequence-links li a:focus, 
+ul.sequence-links li a:active {
+    color:#730800; /*WCAG*/
+    background:transparent;
+}
+
+ul.sequence-links li:before, 
+ul.sequence-links li:after,
+ul.sequence-links li a:before, 
+ul.sequence-links li a:after {
+    content:"";
+    position:absolute;
+    top:50%;
+    left:0;
+}
+
+ul.sequence-links li a:before, 
+ul.sequence-links li a:after {
+    margin:-8px 0 0;
+  
+ 
+}
+
+ul.sequence-links li a:hover:before, 
+ul.sequence-links li a:focus:before, 
+ul.sequence-links li a:active:before {
+ 
+   
+   
+}
+
+.arrow a:after {/*arrow pointing to the left*/
+     background: none repeat scroll 0% 0% transparent;
+     border-color: transparent #FFFFFF;
+     border-style: solid;
+     border-width: 5px 0pt 5px 6px;
+     left: 8px;
+     margin-top: -5px;
+}
+
+.arrow:before {
+
+}
+
+.arrow.back a:after {
+     border-width: 6px 6px 6px 0pt;
+     left: 16px;
+      left: 3px;
+     top: 14px;
+}
+
+.arrow.back:before {
+     
+}
+
+
