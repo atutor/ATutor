@@ -520,12 +520,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 						</li>
 				<?php else:
 					if ($this->sequence_links['previous']): ?>
-						<li><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="previous-next" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous_topic'); ?> </a>
+						<li><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
 						</li>
 					<?php endif;
 					if ($this->sequence_links['next']): ?>
 						<li>
-						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class="previous-next"  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next_topic'); ?></a>
+						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
 						</li>
 					<?php endif; ?>
 				<?php endif; ?>
@@ -535,7 +535,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<?php endif; ?>
 			
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-				<a id="content_link" class="content_link_tablet" href="javascript:void(0);"><?php echo "Content Navigation";//_AT("content_navigation"); ?></a>	
+				<a id="content_link" class="content_link_tablet" href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
 			</div>		
 				<div id="content" style="display: none;" class="triangle-isosceles top right">
 					<?php $contentManager->printMainMenu(); ?>
@@ -543,7 +543,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 		
 </div><!-- course-level navigation -->		
-		
+</div>		
 <?php endif;?>
 
 	
@@ -553,7 +553,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<!--  end course-level-naviagtion -->	
 		
 	<div id="contentwrapper" class="fl-container" >
-	
-			
-	<div id="contentcolumn" >			
+<!-- 
+	<div class="triangle-isosceles previous">
+	<a href="#">Prev</a>
+	</div>
+ -->			
+
 <?php endif; ?><!--  end header template for ipad/tablets -->
