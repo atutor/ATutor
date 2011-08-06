@@ -1,7 +1,13 @@
+
+/************************************************************************************************/
 /* Style is optimized for tablets. Note that -webkit properties create errors in the CSS validator. 
-Classes beginning with ".fl-" override Mobile FSS, see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
-for more details. 
-*/
+Classes beginning with ".fl-" override Mobile FSS, 
+see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
+for more details.
+ */
+/************************************************************************************************/
+
+
 html, body{
 	height: 100%;}
 		
