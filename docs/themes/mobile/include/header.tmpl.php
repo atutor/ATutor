@@ -524,7 +524,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 						</li>
 					<?php endif;
 					if ($this->sequence_links['next']): ?>
-						<li>
+						<li class="arrow forward">
 						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
 						</li>
 					<?php endif; ?>
@@ -543,7 +543,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 		
 </div><!-- course-level navigation -->		
-</div>		
+	
 <?php endif;?>
 
 	
