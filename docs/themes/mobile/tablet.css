@@ -2154,22 +2154,7 @@ border: 4px solid black;
 */
 
 
-/* sequence links */
-#sequence-links{
-	padding-left: .313em;
-	float: left;
-}
-#course-level-navigation{	
-	width: 100%; 
-	height: 2.2em; 
-	padding-top: .4em;
-	padding-left: -.4em;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#96a4ad), to(#B6C0C6));
-	position: absolute;
-}
-ul#sequence-links li{ 
-	font-size: 0.875em; /*override the default font-size of the fl-tabs*/
-}
+
 
 /*	hiding/showing top navigation and results-display */
 
@@ -2324,6 +2309,23 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
      bottom: auto;
     left: -12px;
      top: 0px;
+}
+
+/* sequence links */
+#sequence-links{
+	padding-left: .313em;
+	float: left;
+}
+#course-level-navigation{	
+	width: 100%; 
+	height: 2.2em; 
+	padding-top: .4em;
+	padding-left: -.4em;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#96a4ad), to(#B6C0C6));
+	position: absolute;
+}
+ul#sequence-links li{ 
+	font-size: 0.875em; /*override the default font-size of the fl-tabs*/
 }
 /*Adds arrows to Fluid Tabs. Here is a good guide for creating triangles with CSS: 
 http://jonrohan.me/guide/css/creating-triangles-in-css/ */
