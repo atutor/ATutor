@@ -95,7 +95,9 @@ body,ul,li {
 	
 }
 
-/*this CSS creates a button that looks exactly like a Mobile FSS tab.*/
+/************************************************************************************************/
+/* "Navigation" button, also this CSS creates a button that looks exactly like a Mobile FSS tab.*/
+/************************************************************************************************/
 .navigation-bar-button{
     border-width:5px;
     -webkit-border-radius: 5px;
@@ -130,6 +132,29 @@ body,ul,li {
         color-stop(0.50, #354d68),
         to(#354d68)
     ); 
+}
+.fl-theme-iphone .topnavlistcontainer .topnavlist-link {/*makes the navigation button link white*/
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+.fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
+	color: #4c96f4;
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#topnavlist-link {
+
+}
+
+ul#topnavlist {
+	display: none;
+	position: relative;
+	top: 1.2em;
+	z-index: 1;
+	/*background-color: white;*/
 }
 
 div#content-link-container{
@@ -1757,21 +1782,8 @@ ul.folder{
 }
 
 
-/*	hiding/showing top navigation and results-display */
+/*	hiding/showing  results-display */
 
-#topnavlist-link {
-	color: white;
-	text-decoration: none;
-	font-weight: bold;
-}
-
-ul#topnavlist {
-	display: none;
-	position: relative;
-	top: 1.2em;
-	z-index: 1;
-	/*background-color: white;*/
-}
 
 div#results-display{
 	display: none;
