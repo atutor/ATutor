@@ -163,7 +163,7 @@ top: -.7em;*/
     ); 
 }
 
-
+/*fl-tabs for the "home" and "guide" links*/
 #home-guide{
 	position: absolute;
 	top: .26em;
@@ -173,6 +173,13 @@ top: -.7em;*/
 	display: inline;
 }
 
+
+ul.home-guide li a:hover, ul.home-guide li a:focus, ul.home-guide li a:active,
+ul.home-guide li.back a:hover, ul.home-guide li.back a:focus, ul.home-guide li.back a:active,
+ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guide li.forward a:active {
+    color: #4c96f4;
+    background:transparent;
+}
 /* main body attributes */
 p {
     text-align: left;
@@ -2358,15 +2365,9 @@ ul.sequence-links li.forward a:visited {
     color:white;
 }
 /*WCAG*/
-ul.sequence-links li a:hover, 
-ul.sequence-links li a:focus, 
-ul.sequence-links li a:active,
-ul.sequence-links li.back a:hover, 
-ul.sequence-links li.back a:focus, 
-ul.sequence-links li.back a:active,
-ul.sequence-links li.forward a:hover, 
-ul.sequence-links li.forward a:focus, 
-ul.sequence-links li.forward a:active {
+ul.sequence-links li a:hover, ul.sequence-links li a:focus, ul.sequence-links li a:active,
+ul.sequence-links li.back a:hover, ul.sequence-links li.back a:focus, ul.sequence-links li.back a:active,
+ul.sequence-links li.forward a:hover, ul.sequence-links li.forward a:focus, ul.sequence-links li.forward a:active {
     color: #4c96f4;
     background:transparent;
 }
@@ -2453,4 +2454,3 @@ ul.sequence-links li a:active:before {
     max-height: 45px;
     	
 }
-
