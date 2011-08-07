@@ -289,14 +289,15 @@ h3 a {
 
 
 /* link attributes */
-a:link /*a:visited*/ a:focus  {
-	color: #4C566C;
-	text-decoration: underline;
-}
-.top-tool a: link, .top-tool a:focus{
-	text-decoration: none;
-}
 
+.top-tool a: link, .top-tool a:focus{
+	/*text-decoration: none;*/
+}
+/* link attributes */
+a:link, a:hover, a:visited, a:focus  {
+/*NOT DONE*/
+	
+}
 
 /* main submit button */
 .button {
@@ -2358,9 +2359,10 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 ul#sequence-links li{ 
 	font-size: 0.875em; /*override the default font-size of the fl-tabs*/
 }
+/************************************************************************************************/
 /*Adds arrows to Fluid Tabs. Here is a good guide for creating triangles with CSS: 
 http://jonrohan.me/guide/css/creating-triangles-in-css/ */
-
+/************************************************************************************************/
 ul.sequence-links {
 }
 
@@ -2467,14 +2469,7 @@ ul.sequence-links li a:active:before {
   	 right: -5px;
   	 top: 11px;
 }
-.fl-navbar .fl-table-row:first-child {
-	height:45px;
 
-}
 
-.fl-table-row {
-    display:table-row;
-    height:45px;
-    max-height: 45px;
-    	
-}
+
+
