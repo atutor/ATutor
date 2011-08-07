@@ -158,13 +158,21 @@ top: -.7em;*/
 	font-weight: bold;
 }
 
-
+.fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
+	color: #4c96f4;
+	text-decoration: none;
+	font-weight: bold;
+}
+/*preserve if something goes wrong: 
+this needs to be toggled on and off when "navigation" is activated"
 .fl-theme-iphone .navigation-bar-button-highlight a:hover, 
 .fl-theme-iphone .navigation-bar-button-highlight a:focus, 
 .fl-theme-iphone .navigation-bar-button-highlight a:active{
     color: #4c96f4;
    
-}
+   
+}*/
+
 
 
 .fl-theme-iphone .fl-tabs li{
@@ -251,6 +259,13 @@ h3.browse-courses{
 h3 a {
     font-size: 100%;
 }
+/*link highlighting -- add when the header and footer is done 
+.fl-theme-iphone a:not(.fl-tabs){
+	 color: #4c96f4;
+}
+.fl-theme-iphone a:active, .fl-theme-iphone a:focus, .fl-theme-iphone a:hover{
+	text-decoration: underline;
+}*/
 
 /* Preferences tabs */
 .etabbed-list-container	{
@@ -1115,18 +1130,7 @@ h4.box a {
 	color: #4C566C;
 	background-color: #F5F5F5;
 	text-decoration: none;
-}/*
-.content-expand {
-	background-image:url("images/plus.png");
-	background-position: top right;
-	background-repeat: no-repeat;
 }
-.content-closed{
-	background-image:url("images/minus.png");
-	background-position: bottom right;
-	background-repeat: no-repeat;
-}*/
-
 div.box {
 	padding: 0.313em;
 	background-color: #F5F5F5;
@@ -2240,10 +2244,14 @@ ul#topnavlist li a  {
 
 
 /* SUBNAVLIST HIGHLIGHTING and Gmail-STYLE "more" button */
+ul#subnavlist li a{
+	color: black;
+}
 
-ul#subnavlist li a:active, ul#subnavlist li  a:hover,ul#subnavlist li a:focus {
+ul#subnavlist li a:active, ul#subnavlist li a:focus, ul#subnavlist li  a:hover {
 	color: red;	
 	border-bottom: #4C566C 2px solid;
+	text-decoration: none;
 }
 ul#subnavlist{
 	color: black;
