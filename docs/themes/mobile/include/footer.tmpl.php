@@ -9,8 +9,8 @@
 </div> <!-- end wrapper -->
 
 <div id="footer" class="fl-navbar fl-table">
-<div id="top-links"> <!-- top help/search/login links -->
-	<ul class="fl-tabs flc-themer">  
+<div id="footer-links"> <!-- top help/search/login links -->
+	<ul class="footer-links-tabs fl-tabs flc-themer">  
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id'] > 0): ?>
 			<?php if(!$this->just_social): ?>					
 				<?php if ($_SESSION['is_super_admin']): ?>
@@ -58,8 +58,8 @@
 </div> <!-- end wrapper -->
 
 <div id="footer" class="fl-navbar fl-table">
-<div id="top-links"> <!-- top help/search/login links -->
-	<ul class="fl-tabs flc-themer">  
+<div id="footer-links"> <!-- top help/search/login links -->
+	<ul class="footer-links-tabs fl-tabs flc-themer">  
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id'] > 0): ?>
 			<?php if(!$this->just_social): ?>					
 				<?php if ($_SESSION['is_super_admin']): ?>
