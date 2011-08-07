@@ -88,7 +88,7 @@ jQuery('#topnavlist-link').click(function(e) {
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#navigation-column').slideUp();}); 
-jQuery('#topnavlist-link').click(function(e) {
+jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#navigation-column').slideToggle();
 });
@@ -377,8 +377,9 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
-			<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-				
+			<div class="navigation-bar-button-highlight">
+			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+			</div>
 				<div id="navigation-column" class="triangle-isosceles top">
 				<!--  requires ARIA roles review -->
 				<!--  this should be a button on its own  -->
