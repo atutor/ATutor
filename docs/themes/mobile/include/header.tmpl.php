@@ -259,7 +259,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<ul class="fl-tabs" id="home-guide">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
-		<li><a class="hover-fl-tabs" href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li><a  href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
@@ -418,10 +418,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		</div>
 		
 
-	<ul class="fl-tabs" id="home-guide">
+	<ul class="home-guide fl-tabs" id="home-guide">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
-		<li><a class="hover-fl-tabs" href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
@@ -543,7 +543,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 		
 </div><!-- course-level navigation -->		
-</div>	
+
 <?php endif;?>
 
 	
