@@ -153,6 +153,13 @@ div#content-link-container{
 	display: inline;
 }
 
+ul.home-guide li a:hover, ul.home-guide li a:focus, ul.home-guide li a:active,
+ul.home-guide li.back a:hover, ul.home-guide li.back a:focus, ul.home-guide li.back a:active,
+ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guide li.forward a:active {
+    color: #4c96f4;
+    background:transparent;
+}
+
 /* main body attributes */
 p {
     text-align: left;
@@ -580,8 +587,10 @@ div#toctoggle {
 h1#section-title {
 	font-size: 90%;
 }
-
-div#top-links {
+/**********************************************************************/
+/*FOOTER*/
+/**********************************************************************/
+div#footer-links {
 	margin: 0 auto;
 	font-size: .938em;
 /* moved inside of #footer for mobile theme */
@@ -596,6 +605,12 @@ div#top-links {
 	
 }
 
+ul.footer-links-tabs li a:hover, ul.footer-links-tabs li a:focus, ul.footer-links-tabs li a:active,
+ul.footer-links-tabs li.back a:hover, ul.footer-links-tabs li.back a:focus, ul.footer-links-tabs li.back a:active,
+ul.footer-links-tabs li.forward a:hover, ul.footer-links-tabs li.forward a:focus, ul.footer-links-tabs li.forward a:active {
+    color: #4c96f4;
+    background:transparent;
+}
 div#top-links a:link, div#top-links a:visited {
 	text-decoration:none;
 }
