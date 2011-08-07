@@ -1,15 +1,13 @@
 
 /************************************************************************************************/
 /* Style is optimized for tablets. Note that -webkit properties create errors in the CSS validator. 
-Classes beginning with ".fl-" override Mobile FSS, 
-see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
-for more details.
- */
+Classes beginning with ".fl-" override Mobile FSS, see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API  */
 /************************************************************************************************/
 
 
 html, body{
-	height: 100%;}
+	height: 100%;
+}
 		
 #main{
 	padding-bottom: 2.3em;
@@ -33,10 +31,9 @@ body,ul,li {
 
 #header-section-title {
 	/*text-align: center;
-	
 	position: relative; 
-left: 20em;
-top: -.7em;*/
+	left: 20em;
+	top: -.7em;*/
 	width: 100%;
 }
 
@@ -248,6 +245,9 @@ h3.browse-courses{
 h3 a {
     font-size: 100%;
 }
+/************************************************************************************************/
+/* Highlighting outside of the header and footer */
+/************************************************************************************************/
 /*link highlighting -- add when the header and footer is done 
 .fl-theme-iphone a:not(.fl-tabs){
 	 color: #4c96f4;
