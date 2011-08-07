@@ -91,6 +91,7 @@ jQuery('#navigation-column').slideUp();});
 jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#navigation-column').slideToggle();
+    jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
 });
 ";
 
@@ -378,7 +379,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
 			<div class="navigation-bar-button-highlight">
-			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+			<a class="navigation-bar-button topnavlist-link " id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 			</div>
 				<div id="navigation-column" class="triangle-isosceles top">
 				<!--  requires ARIA roles review -->
