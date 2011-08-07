@@ -163,17 +163,6 @@ top: -.7em;*/
 	text-decoration: none;
 	font-weight: bold;
 }
-/*preserve if something goes wrong: 
-this needs to be toggled on and off when "navigation" is activated"
-.fl-theme-iphone .navigation-bar-button-highlight a:hover, 
-.fl-theme-iphone .navigation-bar-button-highlight a:focus, 
-.fl-theme-iphone .navigation-bar-button-highlight a:active{
-    color: #4c96f4;
-   
-   
-}*/
-
-
 
 .fl-theme-iphone .fl-tabs li{
     /* default mobile fss color scheme for tabs not AA compliant against a white foreground text.therefore its backgroud-image must be overrided */
