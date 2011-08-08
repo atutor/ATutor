@@ -2,7 +2,7 @@
 	<div class="album_panel">
 		<?php if(!empty($this->photos)): ?>
 		<p><?php echo _AT('pa_organize_photo_blurb'); ?></p>
-		<form action="<?php echo 'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>" id="reorder-images-form" class="flc-imageReorderer fl-imageReorderer fl-reorderer-horizontalLayout" style="float:left;">
+		<form action="<?php echo AT_PA_BASENAME . 'edit_photos.php?aid='.$this->album_info['id'].SEP.'org=1'; ?>" id="reorder-images-form" class="fl-reorderer-horizontalLayout" style="float:left;">
 		<!-- loop through this -->
 		<?php foreach($this->photos as $key=>$photo):?>
 		<div class="photo_wrapper">
@@ -24,5 +24,5 @@
 </div>
 
 <script type="text/javascript">
-	demo.formBasedImageReorderer();	
+	atutor.formBasedImageReorderer();	
 </script>

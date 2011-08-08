@@ -13,15 +13,15 @@ https://source.fluidproject.org/svn/LICENSE.txt
 
 /*global jQuery*/
 /*global fluid*/
-/*global demo*/
+/*global atutor*/
 
-var demo = demo || {};
+var atutor = atutor || {};
 (function (jQuery, fluid) {
 	var afterMoveListener = function (thePhotoThatMoved, position, allPhotos) {
 		// Loop through each item in the ordered list and update its hidden form field.
 		allPhotos.each(function (idx, photo) {
 			jQuery(photo).children("a").children("input").val(idx+1);
-		});
+		}); 
 
 		//POST it back to the server
 		postOrder();
@@ -35,7 +35,7 @@ var demo = demo || {};
 		// Send it back to the server via an AJAX POST request.
 		jQuery.ajax({
 			type: "post",
-			url: form.action, 
+			url: form.attr('action'), 
 			data: photoRequest, 
 			complete: function (data, ajaxStatus) {
 				// Handle success or failure by being nice to the user.
@@ -43,15 +43,16 @@ var demo = demo || {};
 		});
 	};
 
-        
-    demo.formBasedImageReorderer = function () {
-        var reorderer = fluid.reorderImages("#reorder-images-form", {
+    
+    /**
+     * Which actually uses the Grid reorderer
+     */
+    atutor.formBasedImageReorderer = function () {
+        var reorderer = fluid.reorderGrid("#reorder-images-form", {
             selectors: {
                 movables: ".photo_wrapper"
-            },
-			listeners: {
-			   afterMove: afterMoveListener
-			}
-        });  
+            }
+        });
+        reorderer.events.afterMove.addListener(afterMoveListener);
     };
 })(jQuery, fluid);
