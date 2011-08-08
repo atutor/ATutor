@@ -25,17 +25,13 @@ body,ul,li {
 #header{
 	width:100%;
 	line-height:17px;
-	padding:0;
+	padding-top: 158;
 	font-size:1.063em;
+	background-color: #4b6b90; /*FF*/
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+	
 }
 
-#header-section-title {
-	/*text-align: center;
-	position: relative; 
-	left: 20em;
-	top: -.7em;*/
-	width: 100%;
-}
 
 .fl-theme-iphone .fl-navbar{
 	border: none;
@@ -66,18 +62,10 @@ body,ul,li {
 
 #navigation-contentwrapper{
 	position: relative;
-	background-color: #4b6b90;
-	height: 2.2em; 
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
-	
+	height: 2.5em; /*requires a height, do not remove */	
+	top: .6em;
 }
 
-#navigation-bar{
- 	height: 2.5em; 
-    border-bottom: .5px solid black;
-   /*padding-bottom: .3em;*/
-     
-}
 
 #wrapper{
 	width:100%;
@@ -85,16 +73,21 @@ body,ul,li {
 	overflow: auto;
 	min-height: 100%;
 	background-image: url(images/idi_background.png);
+
 	
+}
+#header-section-title {
+	width: 100%;
+		position: relative;
+	top: -.5em;
+ 	color: white;
+ 	font-size: 12px;
+ 	
 }
 
 #site-name, h1#section-title{
-	display: inline;
-	text-shadow: none;
-	font-size: 90%;
-	color: #4C566C;
-	color: white;
-	margin-bottom: 1em;
+	width: 100%;
+		color: white;
 	
 }
 
@@ -103,37 +96,16 @@ body,ul,li {
 /************************************************************************************************/
 
 
-.navigation-bar-button{
-    border-width:5px;
-    -webkit-border-radius: 5px;
-	font-size: 18px;/*keep this in px*/
-	padding: 0 .3em;
-	color: white;
-	position: relative;
-	top: .4em; 
-	left: 0.188em; 
-    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
-    background-image: -webkit-gradient(linear, left top, left bottom,
-     	from(#3b5371),
-        color-stop(0.5, #374e6b),
-        color-stop(0.50, #354d68),
-        to(#354d68)
-    );
- 	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
-    -webkit-border-left-image: none;
-    -webkit-background-origin: border;
-    -webkit-background-clip: border;
-}
-
 .navigation-bar-button-content{
   	border-width:5px;
     -webkit-border-radius: 5px;
 	font-size: 18px;/*keep this in px*/
-	padding: 0 .3em;
+	/*padding: .3em .3em .3em .3em;
+	
 	color: white;
 	position: relative;
 	top: -4.45em; 
-	left: 6.2em; 
+	left: 6.2em; */
 	
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
@@ -171,15 +143,12 @@ body,ul,li {
     ); 
 }
 /************************************************************************************************/
-/*fl-tabs for the "home" and "guide" links*/
+/*fl-tabs for the "home" and "guide" and sequence links*/
 /************************************************************************************************/
 #home-guide{
-	position: absolute;
-	top: .26em;
- 	right: 0.188em; 
- 	font-size: 17px;/*keep this in px*/
-	white-space:nowrap;
-	display: inline;
+float: right;
+padding-top: 0;
+margin-top: 0;
 }
 
 
@@ -2104,8 +2073,8 @@ Ensure styling matches that in fl-tabs.*/
 	padding: 0 .3em;
 	color: white;
 	position: relative;
-	top: .69em; 
-	left: 0; 
+	top: .4em; 
+
 	
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
@@ -2118,6 +2087,8 @@ Ensure styling matches that in fl-tabs.*/
     -webkit-border-left-image: none;
     -webkit-background-origin: border;
     -webkit-background-clip: border;
+	margin-top: .3em;
+	margin-bottom: -1em;
 }
 
 
@@ -2350,20 +2321,18 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 
 /* sequence links */
 #sequence-links{
-	padding-left: .313em;
-	float: left;
+	float: right;
 }
 #course-level-navigation{	
-	width: 100%; 
+	width: 100%;
 	height: 2.2em; 
 	padding-top: .4em;
 	padding-left: -.4em;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#96a4ad), to(#B6C0C6));
 	position: absolute;
+	margin-bottom: 1em;
+	
 }
-ul#sequence-links li{ 
-	font-size: 0.875em; /*override the default font-size of the fl-tabs*/
-}
+
 /************************************************************************************************/
 /*Adds arrows to Fluid Tabs. Here is a good guide for creating triangles with CSS: 
 http://jonrohan.me/guide/css/creating-triangles-in-css/ */
