@@ -67,19 +67,24 @@ $this->onload .= "
 jQuery('#content_link').click(function(e) {
   e.stopPropagation();
   
-  jQuery('#content').slideToggle();";
+  jQuery('#content').slideToggle();
+  jQuery('#content_link').toggleClass('.content_link_tablet_highlight');
+  ";
 $this->onload .= "});
 ";
 
 
-// open/close header navigational menu for smartphones
 
+
+// open/close header navigational menu for smartphones
+// jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#topnavlist').slideUp(600);}); 
-jQuery('#topnavlist-link').click(function(e) {
+jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#topnavlist').slideToggle();
+ jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight');
 });
 ";
 
@@ -205,10 +210,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <div id="wrapper">
 <div id="main">
 	<div id="header">
-<!-- check that these are needed.  
+
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
- -->
+
 		<div id="header-section-title">
 			<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 					echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
@@ -231,7 +236,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
-			<a class="navigation-bar-button" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 				<ul id="topnavlist"  class="fl-list-menu">
 					<?php $accesscounter = 0; //initialize ?>
 					<?php foreach ($this->top_level_pages as $page): ?>
@@ -378,9 +383,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
-			<div class="navigation-bar-button-highlight">
 			<a class="navigation-bar-button topnavlist-link " id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-			</div>
+			
 				<div id="navigation-column" class="triangle-isosceles top">
 				<!--  requires ARIA roles review -->
 				<!--  this should be a button on its own  -->
@@ -537,7 +541,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<?php endif; ?>
 			
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-				<a id="content_link" class="content_link_tablet" href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
+				<a id="content_link" class="content_link_tablet content_link" href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
 			</div>		
 				<div id="content" style="display: none;" class="triangle-isosceles top right">
 					<?php $contentManager->printMainMenu(); ?>
