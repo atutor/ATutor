@@ -368,18 +368,72 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <div id="wrapper">
 <div id="main">
 	<div id="header" role="header">
-<!--  check to see if skip links are needed. 
-		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
-		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
- -->
-		
-		
-		
-		<!--  Note: ARIA roles cause XHTML validation errors because the XHTML DTD does not yet support ARIA. Use ARIA anyway -->
 
-	
+	<div id="header-section-title">
+			<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
+					echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
+				endif; ?> --> 
+			<h1 id="section-title"><?php echo $this->section_title; ?>
+				<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
+				<!-- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>-->
+				<?php endif; ?>
+				</h1>
+		</div>
 	<div id="navigation-contentwrapper" >
-	<div id="navigation-bar">
+		
+		
+	<ul class="home-guide fl-tabs" id="home-guide">
+	<!--  CHECK TO SEE IF USER IS A STUDENT -->
+	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
+		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+	<?php endif;?>		
+	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
+	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
+		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
+		<li><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
+	<?php endif;?>
+	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
+	<?php if($_SESSION['is_admin'] == 1): ?>
+		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+	<?php endif;?>
+	
+	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
+			<li>
+		    	<div id="guide_box">
+					<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
+      		
+				  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
+      			</div>
+			</li>
+			<?php endif; ?>
+		</ul>
+	
+	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+			
+	
+		<ul class="sequence-links fl-tabs" id="sequence-links">
+			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
+				<?php if ($this->sequence_links['resume']): ?>
+						<li>
+						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
+						</li>
+				<?php else:
+					if ($this->sequence_links['previous']): ?>
+						<li class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+						</li>
+					<?php endif;
+					if ($this->sequence_links['next']): ?>
+						<li class="arrow forward">
+						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
+						</li>
+					<?php endif; ?>
+				<?php endif; ?>
+			<?php } ?>
+				&nbsp;
+			</ul> <!-- end sequence-links -->
+		<?php endif; ?>
+	
+	
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
@@ -414,32 +468,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 	
 
-	<ul class="home-guide fl-tabs" id="home-guide">
-	<!--  CHECK TO SEE IF USER IS A STUDENT -->
-	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
-		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
-	<?php endif;?>		
-	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
-	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
-		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
-		<li><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
-	<?php endif;?>
-	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
-	<?php if($_SESSION['is_admin'] == 1): ?>
-		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
-	<?php endif;?>
+
 	
-	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-			<li>
-		    	<div id="guide_box">
-					<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
-      		
-				  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
-      			</div>
-			</li>
-			<?php endif; ?>
-		</ul>
-	</div><!--  END navigation-contentwrapper -->
 	</div>
 	</div> <!--  END HEADER -->
 
@@ -505,30 +535,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 <div id="course-level-navigation">
 		
-	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-			
 	
-		<ul class="sequence-links fl-tabs" id="sequence-links">
-			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-				<?php if ($this->sequence_links['resume']): ?>
-						<li>
-						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
-						</li>
-				<?php else:
-					if ($this->sequence_links['previous']): ?>
-						<li class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
-						</li>
-					<?php endif;
-					if ($this->sequence_links['next']): ?>
-						<li class="arrow forward">
-						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
-						</li>
-					<?php endif; ?>
-				<?php endif; ?>
-			<?php } ?>
-				&nbsp;
-			</ul> <!-- end sequence-links -->
-		<?php endif; ?>
 			
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 				<a id="content_link" class="content_link_tablet content_link" href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
