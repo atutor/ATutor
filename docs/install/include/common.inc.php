@@ -3,6 +3,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
 @set_time_limit(0);
 
+// set the default timezone to avoid the warning of "cannot rely on system timezone"
+@date_default_timezone_set(@date_default_timezone_get());
+
 /* atutor default configuration options */
 /* used on: ustep1.php, step3.php, step5.php */
 $_defaults['admin_username'] = ($_POST['old_path'] ? 'admin' : '');
