@@ -139,11 +139,13 @@ body,ul,li {
 	font-weight: bold;
 }
 
-.fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
+#content_link_phone.topnavlist-link-highlight, fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
 	color: #4c96f4;
 	text-decoration: none;
 	font-weight: bold;
 }
+
+
 
 #topnavlist-link {
 
@@ -158,44 +160,44 @@ ul#topnavlist {
 }
 
 div#content-link-container.flc-screenNavigator-navbar {
-  	background: pink; 
-  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
- 
- margin: .313em;
- padding: .313em;
--webkit-border-radius:5px;
-float: right;
+  
+
+  border-width:5px;
+    -webkit-border-radius: 5px;
+	font-size: 18px;/*keep this in px*/
+	color: white;
+	
+    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
+    background-image: -webkit-gradient(linear, left top, left bottom,
+     	from(#3b5371),
+        color-stop(0.5, #374e6b),
+        color-stop(0.50, #354d68),
+        to(#354d68)
+    );
+ 	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+    -webkit-border-left-image: none;
+    -webkit-background-origin: border;
+    -webkit-background-clip: border;
+float: left;
+font-weight: bold;
 }
 
 .content-link-surround a:active, .content-link-surround a:focus, .content-link-surround a:hover{
 	background: none;
+	
 }
-#content_link_phone{
+ #content_link_phone {
 	
 	display: block;
 	text-decoration: none;
-	padding: .313em;
+	padding: .1em;
     color: white;
-    
-}
-#content-sequence-links{
-width: 100%;
-background:blue;
-float: left;
-padding: .313em;
-}
-/*
-div#content-link-surround.content-expanded{
-	background-image:url("images/plus.png");
-	background-position: 100% 100%;
-	background-repeat: no-repeat;
+    font-style: bold;
+    float: left;
+    font-size: 17px;
 }
 
-div#content-link-surround.content-closed{
-	background-image:url("images/minus.png");
-	background-position: 100% 100%;
-	background-repeat: no-repeat;	
-}*/
+/*
 .content-expanded{
 	background-image:url("images/plus.png");
 	background-position: 100% 100%;
@@ -206,7 +208,7 @@ div#content-link-surround.content-closed{
 	background-image:url("images/minus.png");
 	background-position: 100% 100%;
 	background-repeat: no-repeat;	
-}
+}*/
 
 
 
@@ -984,7 +986,7 @@ div.home-link img {
 
 /* sequence links */
 div#sequence-links {
-
+	
 }
 div#sequence-links a {
 	text-decoration: none;
@@ -2101,7 +2103,7 @@ ul.sequence-links li a:active:before {
      border-style: solid;
      border-width: 5px 0pt 5px 6px;
      left: 8px;
-     margin-top: -7px;
+     margin-top: -5px;
 }
 
 /*left and right triangle icons change color*/
@@ -2131,6 +2133,7 @@ ul.sequence-links li a:active:before {
      border-color: transparent #FFFFFF;
      border-style: solid;
      margin-top: -6.8px;
+     margin-top: -5px;
    
 }
 .arrow.forward a:after {
@@ -2141,15 +2144,29 @@ ul.sequence-links li a:active:before {
   	 border-style: solid;
   	 width:0;
   	 height:0;
-  	 right: -3px;
+  	 right: -5px;
   	 top: 11px;
 }
 
+
+#content-sequence-links{
+	width: 98%;
+	padding: .313em;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+	background: #B6C0C6;
+	float: left;
+	margin: 0 auto;
+	margin-bottom: .313em;
+}
 
 
 #sequence-links{
 	float: left;
 }
+	
 
-
+#content{
+	text-align: left;
+	width: 98%;
+}
 
