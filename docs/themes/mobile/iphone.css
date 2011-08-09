@@ -196,7 +196,9 @@ font-weight: bold;
     float: left;
     font-size: 17px;
 }
-
+.resume{
+	font-size: 17px;
+}
 /*
 .content-expanded{
 	background-image:url("images/plus.png");
@@ -596,7 +598,7 @@ a#back-to {
 .breadcrumbs, .previous-next /*a#guide*/{
     /* The path bar, including breadcrumbs and add to favorites */
 	clear:both;
-    font-size: 0.85em;
+    font-size: 17px;
 	padding:0 0.375em;
 	color: #4C566C;
 	background-color: white;
