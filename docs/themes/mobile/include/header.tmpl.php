@@ -453,6 +453,23 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				&nbsp;
 			</ul> <!-- end sequence-links -->
 		<?php endif; ?>
+		
+		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 	
+		<div id="course-level-navigation">
+		
+	
+			
+			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+				<a id="content_link" class="content_link_tablet content_link" href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
+			</div>	
+		</div><!-- course-level navigation -->				
+				<div id="content" style="display: none;" class="triangle-isosceles top right">
+					<?php $contentManager->printMainMenu(); ?>
+					<script language="javascript" type="text/javascript"></script>
+				</div>
+		
+		
+		<?php endif;?>
 	
 	
 		<!--  this should be a button on its own  -->
@@ -549,26 +566,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 				</div> <!--  end subnavlistcontainer -->				
 		<?php endif; ?>	
-<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 	
-
-
-
-
-<div id="course-level-navigation">
 		
-	
-			
-			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-				<a id="content_link" class="content_link_tablet content_link" href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
-			</div>		
-				<div id="content" style="display: none;" class="triangle-isosceles top right">
-					<?php $contentManager->printMainMenu(); ?>
-					<script language="javascript" type="text/javascript"></script>
-				</div>
-		
-</div><!-- course-level navigation -->		
 
-<?php endif;?>
 
 	
 	<?php global $msg; $msg->printAll(); $_base_href;?>
