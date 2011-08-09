@@ -14,7 +14,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 require('../svn.php');
 
-$svn_data   = explode("\n", $svn_data);
+if ($svn_data <> '') $svn_data = explode("\n", $svn_data);
 
 if (substr($svn_data[1], 0, 1) == 'r') {
 	$svn_data = $svn_data[1];
