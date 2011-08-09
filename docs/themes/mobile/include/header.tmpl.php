@@ -68,7 +68,10 @@ jQuery('#content_link').click(function(e) {
   e.stopPropagation();
   
   jQuery('#content').slideToggle();
-  jQuery('#content_link').toggleClass('.content_link_tablet_highlight');
+  jQuery('#content_link').toggleClass('content_link_tablet_highlight');
+  jQuery('#content_link').toggleClass('triangle-isosceles'); 
+  jQuery('#content_link').toggleClass('top'); 
+  jQuery('#content_link').toggleClass('right');    
   ";
 $this->onload .= "});
 ";
