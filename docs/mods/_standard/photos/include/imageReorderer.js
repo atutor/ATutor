@@ -51,8 +51,10 @@ var atutor = atutor || {};
         var reorderer = fluid.reorderGrid("#reorder-images-form", {
             selectors: {
                 movables: ".photo_wrapper"
+            },
+            listeners: {
+                afterMove: afterMoveListener
             }
         });
-        reorderer.events.afterMove.addListener(afterMoveListener);
     };
 })(jQuery, fluid);
