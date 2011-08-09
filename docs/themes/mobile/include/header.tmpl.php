@@ -74,7 +74,17 @@ $this->onload .= "});
 ";
 
 
-
+// open/close content menu - smartphones 
+$this->onload .= "
+jQuery('#content_link_phone').click(function(e) {
+  e.stopPropagation();
+  
+  jQuery('#content').slideToggle();
+  jQuery('#content-link-surround').toggleClass('content-closed');
+  
+  ";
+$this->onload .= "});
+";
 
 // open/close header navigational menu for smartphones
 // jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
@@ -292,13 +302,16 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
-		<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-		<a id="content_link" href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
+		<div id="content-link-container"role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+		<div id="content-link-surround"  class=" content-link-surround content-expanded"" >
+		<a id="content_link_phone"  href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
+		</div>
+		</div>
 		<div id="content" style=" display: none; position: relative; z-index: 1;">
 		<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript"></script>
 		</div>
-		</div>
+		
 	<?php endif; ?>
 
 		<div id="inner-contentwrapper" class="fl-container" >
