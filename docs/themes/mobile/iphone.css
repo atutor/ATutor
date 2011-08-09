@@ -157,17 +157,52 @@ ul#topnavlist {
 	/*background-color: white;*/
 }
 
-div#content-link-container{
- 	border: #A9ADB0 solid 1px;
+div#content-link-container.flc-screenNavigator-navbar {
+  	background: pink; 
+  background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+ 
+ margin: .313em;
+ padding: .313em;
+-webkit-border-radius:5px;
 }
 
-#content_link{
+.content-link-surround a:active, .content-link-surround a:focus, .content-link-surround a:hover{
+	background: none;
+}
+#content_link_phone{
+	
 	display: block;
 	text-decoration: none;
-	padding-bottom: 12px;
-  	padding-left: 8px;
-    padding-top: 12px;
+	padding: .313em;
+    color: white;
+    
 }
+/*
+div#content-link-surround.content-expanded{
+	background-image:url("images/plus.png");
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+div#content-link-surround.content-closed{
+	background-image:url("images/minus.png");
+	background-position: 100% 100%;
+	background-repeat: no-repeat;	
+}*/
+.content-expanded{
+	background-image:url("images/plus.png");
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.content-closed{
+	background-image:url("images/minus.png");
+	background-position: 100% 100%;
+	background-repeat: no-repeat;	
+}
+
+
+
 
 #home-guide{
 	position: absolute;
@@ -1001,6 +1036,7 @@ div#content_text {
 	-webkit-border-bottom-right-radius: 5px;
 	-webkit-border-bottom-left-radius: 5px;*/
 	padding-top: .313em;
+	background-color: white;
 }
 form {
 	display:inline;
@@ -1109,16 +1145,7 @@ h4.box a {
 	background-color: #F5F5F5;
 	text-decoration: none;
 }
-.content-expand {
-	background-image:url("images/content-arrow-down.png");
-	background-position: top right;
-	background-repeat: no-repeat;
-}
-.content-closed{
-	background-image:url("images/content-arrow-up.png");
-	background-position: center right;
-	background-repeat: no-repeat;
-}
+
 
 div.box {
 	padding: 0.313em;
@@ -1564,10 +1591,6 @@ a:active {
 }
 */
 
-
-/*Creates the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
-.buttontab hover addresses the Mobile FSS bug http://issues.fluidproject.org/browse/FLUID-4313 and is applied to 
-elements in the theme header and footer. Should be removed when the FSS issue is fixed. */
 a:active, a:hover, a:focus, .buttontab-hover{
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
@@ -1584,10 +1607,8 @@ Ensure styling matches that in fl-tabs.*/
         color-stop(0.50, #354d68),
         to(#354d68)
     );
-      
-       
-
 }
+
 
 /*Added by Silvia */
 div.column_primary {
@@ -2004,6 +2025,7 @@ margin-left:2em;}
 .fl-theme-iphone .fl-tabs li a, .fl-theme-iphone .fl-tabs .fl-tabs-active {
 	background-color: white;
 } */
+
 
 
 
