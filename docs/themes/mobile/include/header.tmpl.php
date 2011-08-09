@@ -298,7 +298,33 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php endif; ?>
 		</ul>
 	</div><!--  END navigation-contentwrapper -->
+	
+	<div id="content-sequence-links">
 	<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
+	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+			
+	
+		<ul class="sequence-links fl-tabs" id="sequence-links">
+			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
+				<?php if ($this->sequence_links['resume']): ?>
+						<li>
+						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
+						</li>
+				<?php else:
+					if ($this->sequence_links['previous']): ?>
+						<li class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+						</li>
+					<?php endif;
+					if ($this->sequence_links['next']): ?>
+						<li class="arrow forward">
+						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
+						</li>
+					<?php endif; ?>
+				<?php endif; ?>
+			<?php } ?>
+				&nbsp;
+			</ul> <!-- end sequence-links -->
+		<?php endif; ?>
 	
 	
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
@@ -307,34 +333,15 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<a id="content_link_phone"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>
 		</div>
 		</div>
-		<div id="content" style=" display: none; position: relative; z-index: 1;">
+		<div id="content" style=" display: none; position: absolute; top: 6.5em; clear: left; clear: right; z-index: 1;">
 		<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript"></script>
 		</div>
 		
 	<?php endif; ?>
-
+</div>
 		<div id="inner-contentwrapper" class="fl-container" >
 
-			<?php if ((isset($this->course_id) && $this->course_id <= 0)): ?>
-			<?php endif; ?>
-			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-			<div class="sequence-links">
-			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-				<?php if ($this->sequence_links['resume']): ?>
-						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?></a>
-				<?php else:
-					if ($this->sequence_links['previous']): ?>
-						<a href="<?php echo $this->sequence_links['previous']['url']; ?>" class="previous-next" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> </a>
-					<?php endif;
-					if ($this->sequence_links['next']): ?>
-						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class="previous-next"  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?></a>
-					<?php endif; ?>
-			<?php endif; ?>
-			<?php } ?>
-			&nbsp;
-			</div> <!-- end sequence-links -->
-		<?php endif; ?>
 
 
 	<div id="contentcolumn">	
