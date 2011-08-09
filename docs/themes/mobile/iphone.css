@@ -164,6 +164,7 @@ div#content-link-container.flc-screenNavigator-navbar {
  margin: .313em;
  padding: .313em;
 -webkit-border-radius:5px;
+float: right;
 }
 
 .content-link-surround a:active, .content-link-surround a:focus, .content-link-surround a:hover{
@@ -176,6 +177,12 @@ div#content-link-container.flc-screenNavigator-navbar {
 	padding: .313em;
     color: white;
     
+}
+#content-sequence-links{
+width: 100%;
+background:blue;
+float: left;
+padding: .313em;
 }
 /*
 div#content-link-surround.content-expanded{
@@ -1036,6 +1043,7 @@ div#content_text {
 	-webkit-border-bottom-left-radius: 5px;*/
 	padding-top: .313em;
 	background-color: white;
+	
 }
 form {
 	display:inline;
@@ -2026,7 +2034,122 @@ margin-left:2em;}
 } */
 
 
+/************************************************************************************************/
+/*Adds arrows to Fluid Tabs. Here is a good guide for creating triangles with CSS: 
+http://jonrohan.me/guide/css/creating-triangles-in-css/ */
+/************************************************************************************************/
+ul.sequence-links {
+}
 
+ul.sequence-links li {
+    position:relative;
+    z-index:1;
+    overflow:hidden;
+    list-style:none;
+   /* padding:0;
+    margin:0 0 0 0 ;*/
+}
+
+ul.sequence-links li.back a:link, 
+ul.sequence-links li.back a:visited {
+    display:block;
+   /* border :0;*/
+    padding-left:12px;
+    color:white;
+}
+
+ul.sequence-links li.forward a:link, 
+ul.sequence-links li.forward a:visited {
+    display:block;
+   /* border :0;*/
+    padding-right:12px;
+    color:white;
+}
+/*WCAG*/
+ul.sequence-links li a:hover, ul.sequence-links li a:focus, ul.sequence-links li a:active,
+ul.sequence-links li.back a:hover, ul.sequence-links li.back a:focus, ul.sequence-links li.back a:active,
+ul.sequence-links li.forward a:hover, ul.sequence-links li.forward a:focus, ul.sequence-links li.forward a:active {
+    color: #4c96f4;
+    background:transparent;
+}
+
+
+ul.sequence-links li:before, 
+ul.sequence-links li:after,
+ul.sequence-links li a:before, 
+ul.sequence-links li a:after {
+    content:"";
+    position:absolute;
+    top:50%;
+   /* left:0;*/
+}
+
+ul.sequence-links li a:before, 
+ul.sequence-links li a:after {
+    margin:-8px 0 0;
+  }
+
+ul.sequence-links li a:hover:before, 
+ul.sequence-links li a:focus:before, 
+ul.sequence-links li a:active:before {
+ 
+}
+/*arrow that points to the left, beside the "Previous" text */
+.arrow.back a:after {/*arrow pointing to the left*/
+     background: none repeat scroll 0% 0% transparent;
+     border-color: transparent #FFFFFF;
+     border-style: solid;
+     border-width: 5px 0pt 5px 6px;
+     left: 8px;
+     margin-top: -7px;
+}
+
+/*left and right triangle icons change color*/
+.arrow a:hover:after, .arrow a:focus:after, .arrow a:active:after, 
+.arrow.forward a:hover:after, .arrow.forward a:focus:after, .arrow.forward a:active:after{
+	border-color: transparent #4c96f4;
+}
+
+.arrow.back a:after {
+     border-width: 6px 6px 6px 0pt;    
+     left: 3px;
+     top: 11px;
+}
+
+.arrow.back:before {
+     
+}
+.arrow.forward:before {
+     
+}
+.arrow:before {
+
+}
+/*arrow that points to the right, beside the "Next" text */
+.arrow.forward a:after {
+     background: none repeat scroll 0% 0% transparent;
+     border-color: transparent #FFFFFF;
+     border-style: solid;
+     margin-top: -6.8px;
+   
+}
+.arrow.forward a:after {
+     /*top: 11px;*/
+       background: none repeat scroll 0% 0% transparent;
+     border-color: transparent transparent transparent white;
+  	 border-width: 6px;
+  	 border-style: solid;
+  	 width:0;
+  	 height:0;
+  	 right: -3px;
+  	 top: 11px;
+}
+
+
+
+#sequence-links{
+	float: left;
+}
 
 
 
