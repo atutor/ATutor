@@ -11,7 +11,7 @@ html, body{
 		
 #main{
 	padding-bottom: 2.3em;
-	overflow: auto;
+	/*overflow: auto; commented out because of Firefox problems... */
 	z-index: 1000;
 }
 
@@ -2143,16 +2143,14 @@ div#content-link-container{
 
 
 #content{
-	position: relative;
-	clear: left;
-	clear: right;
-	top: .7em; 
+	position: absolute;
+	top: 2em; 
 	right: 0.313em;
 	width: 50%;
 	float: right;
 	-webkit-border-radius: 8px;
-	border: 2px solid #B6C0C6;
-border: 4px solid black;
+	border: 4px solid black;
+	z-index: 1000;
 }
 /*
 	height: 100%;
@@ -2295,7 +2293,7 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
      left: auto;
      left: 20%;
      top: 95%;
-     	z-index: 1000;
+     z-index: 1000;
 }
 
 .triangle-isosceles.top.right:after {
@@ -2303,8 +2301,9 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
      border-width: 0pt 15px 15px;
      bottom: auto;
      left: auto;
-     right: 2em;
-     top: -15px;
+     right: 30%;
+     top: 98%;
+     z-index: 1000;
 }
 
 /*'Previous' and 'Next' buttons */
