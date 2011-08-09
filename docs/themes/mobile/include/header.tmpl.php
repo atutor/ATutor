@@ -108,6 +108,8 @@ jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#navigation-column').slideToggle();
     jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
+    jQuery('#topnavlist-link').toggleClass('triangle-isosceles');
+    jQuery('#topnavlist-link').toggleClass('top');
 });
 ";
 
@@ -460,10 +462,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 			
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-				<a id="content_link" class="content_link_tablet content_link" href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
+				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
 			</div>	
 		</div><!-- course-level navigation -->				
-				<div id="content" style="display: none;" class="triangle-isosceles top right">
+				<div id="content" style="display: none;">
 					<?php $contentManager->printMainMenu(); ?>
 					<script language="javascript" type="text/javascript"></script>
 				</div>
@@ -475,9 +477,9 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
-			<a class="navigation-bar-button topnavlist-link " id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 			
-				<div id="navigation-column" class="triangle-isosceles top">
+				<div id="navigation-column">
 				<!--  requires ARIA roles review -->
 				<!--  this should be a button on its own  -->
 				<?php if ($this->current_sub_level_page): ?>
