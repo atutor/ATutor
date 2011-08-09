@@ -1833,13 +1833,13 @@ ol#tools>li:hover, ol#tools>li:hover a {
 	padding: 0;	
 }	
 div#navigation-column{
-	height: 100%;
+	
 	width: 50%;
 	-webkit-border-radius: 8px;
 	z-index: 1000;
-	position: relative; 
+	position: absolute; 
 	top: 1.3em;
-	top: 1.5em;
+	top: 2em;
 
 	background: black;
 	padding-right: .2em;
@@ -1856,7 +1856,7 @@ div#contentcolumn{
 	margin-top: .313em;
 	padding: .313em;
 	margin-bottom: 1em;
-	position: relative; 
+	position: absolute; 
 	top: .7em;
 	top: 1.2em;
 	top: 2em;
