@@ -309,7 +309,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 				<?php if ($this->sequence_links['resume']): ?>
 						<li>
-						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
+						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
 						</li>
 				<?php else:
 					if ($this->sequence_links['previous']): ?>
