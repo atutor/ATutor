@@ -304,7 +304,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
 		<div id="content-link-container"role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 		<div id="content-link-surround"  class=" content-link-surround content-expanded"" >
-		<a id="content_link_phone"  href="javascript:void(0);"><?php echo "Course Content Navigation";//_AT("content_navigation"); ?></a>
+		<a id="content_link_phone"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>
 		</div>
 		</div>
 		<div id="content" style=" display: none; position: relative; z-index: 1;">
