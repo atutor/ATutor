@@ -1449,6 +1449,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 	line-height: 200%; 
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:8px;
+	background: white;
 }
 	
 li.child-tool a { 
@@ -1893,6 +1894,7 @@ div#contentcolumn{
 #tools{
 	margin: 0 auto;
 	padding: 0.313em;
+	
 }
 
 
@@ -2400,7 +2402,7 @@ ul.sequence-links li a:active:before {
      border-style: solid;
      border-width: 5px 0pt 5px 6px;
      left: 8px;
-     margin-top: -5px;
+     margin-top: -7px;
 }
 
 /*left and right triangle icons change color*/
@@ -2424,12 +2426,12 @@ ul.sequence-links li a:active:before {
 .arrow:before {
 
 }
-/*arrow that points to the left, beside the "Next" text */
+/*arrow that points to the right, beside the "Next" text */
 .arrow.forward a:after {
      background: none repeat scroll 0% 0% transparent;
      border-color: transparent #FFFFFF;
      border-style: solid;
-     margin-top: -5px;
+     margin-top: -7px;
    
 }
 .arrow.forward a:after {
