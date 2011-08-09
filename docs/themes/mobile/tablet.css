@@ -2293,8 +2293,8 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
      border-width: 0pt 15px 15px;
      bottom: auto;
      left: auto;
-     left: 2em;
-     top: -15px;
+     left: 7em;
+     top: 25px;
 }
 
 .triangle-isosceles.top.right:after {
