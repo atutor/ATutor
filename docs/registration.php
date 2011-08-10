@@ -254,7 +254,7 @@ if (isset($_POST['cancel'])) {
 		               '$_POST[phone]', 
 		               $status, 
 		               '$_config[pref_defaults]', 
-		               now(),
+		               '$now',
 		               '$_SESSION[lang]', 
 		               $_config[pref_inbox_notify], 
 		               $_POST[private_email], 
