@@ -155,7 +155,7 @@ ul#topnavlist {
 	display: none;
 	position: relative;
 	top: 1.2em;
-	z-index: 1;
+	z-index: 1000;
 	/*background-color: white;*/
 }
 
@@ -2172,3 +2172,43 @@ ul.sequence-links li a:active:before {
 	width: 98%;
 }
 
+/*hiding and showing content */
+
+#results-hide-show-simple-content{
+	-webkit-border-radius:8px;
+	margin-top: 0.875em;
+	margin-bottom: 0.875em;
+	padding: 0.875em;
+	padding-right: .2em;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+}
+#results-hide-show-link{
+	color: white;
+	text-decoration: none;	
+	display: block;
+	font-weight: bold;
+}
+
+
+.content-expand{
+	background-image:url("images/plus.png");
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+}
+
+.content-closed{
+	background-image:url("images/minus.png");
+	background-position: 100% 100%;
+	background-repeat: no-repeat;	
+}
+#results-display{
+	background-color: #F7F3ED; 
+	-webkit-border-radius:8px;
+	border: 1px #A9ADB0 solid;
+	padding: .313em;
+	
+}
+.hide-show-container-surround a:active, .hide-show-container-surround a:focus, .hide-show-container-surround a:hover{
+	background: none;
+	
+}
