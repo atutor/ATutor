@@ -441,7 +441,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 								<?php for ($i=0; $i<$num_pages; $i++): ?>	
 									<?php if($i==0): ?>
 				
-									<a id="subnavlist-link" href="javascript:void(0);" style="display: block; background-color: white;">Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
+									<a id="subnavlist-link" href="javascript:void(0);" style="display: block;">Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
 									<?php endif; ?>
 								<?php endfor;?>
 					</div>
