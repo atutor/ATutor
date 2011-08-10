@@ -48,6 +48,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * is_mobile_device          true or false                    the request is from a mobile device or a desktop device
  * mobile_device_type        One of the constants: IPOD_DEVICE, BLACKBERRY_DEVICE, ANDROID_DEVICE, UNKNOWN_DEVICE (@see include/lib/constants.inc.php)
  */
+ 
 
 // will have to be moved to the header.inc.php
 global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
@@ -76,7 +77,17 @@ jQuery('#content_link').click(function(e) {
 $this->onload .= "});
 ";
 
+//open/close subnavlist in smartphones 
 
+$this->onload .= "
+jQuery('#subnavlist-link').click(function(e) {
+  e.stopPropagation();
+  
+  jQuery('#subnavlist').slideToggle();
+   
+  ";
+$this->onload .= "});
+";
 // open/close content menu - smartphones 
 $this->onload .= "
 jQuery('#content_link_phone').click(function(e) {
@@ -276,6 +287,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php endif; ?>
 		</div>
 
+				
 
 
 	<ul class="home-guide fl-tabs" id="home-guide">
@@ -305,47 +317,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		</ul>
 	</div><!--  END navigation-contentwrapper -->
 	
-	<div id="content-sequence-links">
-	<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
-	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-			
-	
-		<ul class="sequence-links fl-tabs" id="sequence-links">
-			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-				<?php if ($this->sequence_links['resume']): ?>
-						<li>
-						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
-						</li>
-				<?php else:
-					if ($this->sequence_links['previous']): ?>
-						<li class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
-						</li>
-					<?php endif;
-					if ($this->sequence_links['next']): ?>
-						<li class="arrow forward">
-						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
-						</li>
-					<?php endif; ?>
-				<?php endif; ?>
-			<?php } ?>
-				&nbsp;
-			</ul> <!-- end sequence-links -->
-		<?php endif; ?>
-	
-	
-	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
-		<div id="content-link-container"role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-		<div id="content-link-surround"  class=" content-link-surround" >
-		<a id="content_link_phone"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>
-		</div>
-		</div>
-		<div id="content" style=" display: none; position: absolute; top: 6.5em; clear: left; clear: right; z-index: 1;">
-		<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript"></script>
-		</div>
-		
-	<?php endif; ?>
-</div>
+
 		<div id="inner-contentwrapper" class="fl-container" >
 
 
@@ -358,32 +330,141 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 	
 		<?php global $msg; $msg->printAll(); $_base_href;?>
+			<div id="content-sequence-links">
+			<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
+		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+			
+	<!-- Preserve untl a style for sequence-links is chosen.
+			<ul class="sequence-links fl-tabs" id="sequence-links">
+				<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
+					<?php if ($this->sequence_links['resume']): ?>
+						<li>
+							<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
+						</li>
+					<?php else:
+						if ($this->sequence_links['previous']): ?>
+						<li class="arrow back">
+							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+						</li>
+					<?php endif;
+						if ($this->sequence_links['next']): ?>
+						<li class="arrow forward">
+							<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
+						</li>
+					<?php endif; ?>
+				<?php endif; ?>
+			<?php } ?>
+				&nbsp;
+			</ul>  -->
+		<?php endif; ?>
 	
+	
+	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
+		<!-- 
+		<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+			<div id="content-link-surround"  class="content-link-surround" >
+				<a id="content_link_phone"  href="javascript:void(0);"><?php echo "Content"; ?></a>
+			</div>
+		</div>
+		 -->
+		 
+
+		<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
+			<div class="subnavcontain">
+				<div class="rectangle">
+				<a id="content_link_phone"  href="javascript:void(0);" >View Course Content</a> 
+				<!-- <a href="#">content</a> -->
+				</div>
+			</div>
+					
+		<div id="content" style=" display: none; position: absolute; top: 9em; clear: left; clear: right; z-index: 1;">
+			<?php $contentManager->printMainMenu(); ?>
+				<script language="javascript" type="text/javascript"></script>
+		</div>
+
+	</div>
+
+
+		
+			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+			
+			<div class="subnavcontain2">
+			<ul class="sequence-links" >
+				<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
+					<?php if ($this->sequence_links['resume']): ?>
+						
+						<li class="rectangle2">
+							<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
+						</li>
+						
+					<?php else:
+						if ($this->sequence_links['previous']): ?>
+					
+						<li class="rectangle2 arrow back">
+							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+						</li>
+						
+					<?php endif;
+						if ($this->sequence_links['next']): ?>
+						
+						<li class=" rectangle2 arrow forward">
+							<a  href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
+						</li>
+						
+					<?php endif; ?>
+				<?php endif; ?>
+			<?php } ?>
+				&nbsp;
+				</div>
+			</ul>  
+		<?php endif; ?>
+			
+			
+	</div>
+	<?php endif; ?>	
+</div>
+		
 		<!-- the sub navigation -->
 		<?php if (count($this->sub_level_pages) > 0): ?>
-				<div id="subnavlistcontainer">
-					<div id="subnavbacktopage">
-					<?php if (isset($this->back_to_page)): ?>
-						<a href="<?php echo $this->back_to_page['url']; ?>">
-						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
-					<?php endif; ?>
+			<div id="subnavlistcontainer">
+				<div id="subnavbacktopage">
+				<?php if (isset($this->back_to_page)): ?>
+					<a href="<?php echo $this->back_to_page['url']; ?>">
+					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
+				<?php endif; ?>
+				</div>
+				<!-- id="subnavlist" -->
+			<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
+				<div class="subnavcontain">
+					<div class="rectangle">
+						<?php $num_pages = count($this->sub_level_pages); ?>	
+								<?php for ($i=0; $i<$num_pages; $i++): ?>	
+									<?php if($i==0): ?>
+				
+									<a id="subnavlist-link" href="javascript:void(0);" style="display: block; background-color: white;">Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
+									<?php endif; ?>
+								<?php endfor;?>
 					</div>
-
-					<ul id="subnavlist">
-					<?php $num_pages = count($this->sub_level_pages); ?>
+				</div>
+					<ul id="subnavlist" class="fl-list-menu" style="display: none;">
+					<?php $num_pages = count($this->sub_level_pages); ?>	
 					<?php for ($i=0; $i<$num_pages; $i++): ?>				
 						<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-						<li id="test" ><?php echo $this->sub_level_pages[$i]['title']; ?></li>
+							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li> 
 						<?php else: ?>
-						<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 						<?php endif; ?>
 					<?php if ($i < $num_pages-1): 
 						echo " ";?>
 					<?php endif; ?>
 					<?php endfor; ?>
 					</ul>
-				</div> <!--  end subnavlistcontainer -->
+				</div>
+			</div>	
 		<?php endif; ?>
+		<?php debug($this->sub_level_pages);?>
+	
+		<!-- the sub navigation -->
 <?php endif; ?>
 
 
@@ -511,13 +592,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 	
 
-
 	
 	</div>
 	</div> <!--  END HEADER -->
 
 <?php if (count($this->sub_level_pages) > 0): ?>
-				<div id="subnavlistcontainer" 
+				<div id="subnavlistcontainer"> 
 					<div id="subnavbacktopage" >
 					<?php if (isset($this->back_to_page)): ?>
 						<a href="<?php echo $this->back_to_page['url']; ?>">
