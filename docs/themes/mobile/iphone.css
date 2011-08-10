@@ -1359,7 +1359,8 @@ ul#home-links, ul#home-detail-links {
 	-webkit-border-radius:5px;
 	padding: .375em;
 	color: #4C566C;
-	
+	margin-bottom: .375em; 
+	margin-top: .375em;
 	padding: .375em;
 }
 .my-courses-list-ul{
