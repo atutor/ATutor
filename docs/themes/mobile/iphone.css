@@ -161,13 +161,13 @@ ul#topnavlist {
 
 div#content-link-container.flc-screenNavigator-navbar {
   
-
+/*
   border-width:5px;
     -webkit-border-radius: 5px;
-	font-size: 18px;/*keep this in px*/
+	font-size: 18px; keep this in px
 	color: white;
 	
-    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
+    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: 
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -179,7 +179,8 @@ div#content-link-container.flc-screenNavigator-navbar {
     -webkit-background-origin: border;
     -webkit-background-clip: border;
 float: left;
-font-weight: bold;
+font-weight: bold;*/
+	color: #005689;
 }
 
 .content-link-surround a:active, .content-link-surround a:focus, .content-link-surround a:hover{
@@ -190,11 +191,10 @@ font-weight: bold;
 	
 	display: block;
 	text-decoration: none;
-	padding: .1em;
+	
     color: white;
     font-style: bold;
-    float: left;
-    font-size: 17px;
+    color: #005689;
 }
 .resume{
 	font-size: 17px;
@@ -1047,7 +1047,7 @@ div#content_text {
 	-webkit-border-bottom-left-radius: 5px;*/
 	padding-top: .313em;
 	background-color: white;
-	
+	z-index: 1000;
 }
 form {
 	display:inline;
@@ -1359,7 +1359,7 @@ ul#home-links, ul#home-detail-links {
 	-webkit-border-radius:5px;
 	padding: .375em;
 	color: #4C566C;
-	margin: .375em;
+	
 	padding: .375em;
 }
 .my-courses-list-ul{
@@ -1850,21 +1850,7 @@ div.toolcontainer{
 	margin-bottom: 1em;
 }
 
-ul#subnavlist {
-	padding: 0;
-	padding-bottom: 0.313em;
-	margin: 0;
-	font-size: 90%;
-}
 
-
-ul#subnavlist li {
-	display: inline;
-}
-
-ul#subnavlist li#test{
-	display: none;
-}
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{ /*
   	color: black;
 	text-decoration:none;*/
@@ -2047,7 +2033,6 @@ ul.sequence-links {
 
 ul.sequence-links li {
     position:relative;
-    z-index:1;
     overflow:hidden;
     list-style:none;
    /* padding:0;
@@ -2058,16 +2043,16 @@ ul.sequence-links li.back a:link,
 ul.sequence-links li.back a:visited {
     display:block;
    /* border :0;*/
-    padding-left:12px;
-    color:white;
+    padding-left:7px;
+   	color: #005689;
 }
 
 ul.sequence-links li.forward a:link, 
 ul.sequence-links li.forward a:visited {
     display:block;
    /* border :0;*/
-    padding-right:12px;
-    color:white;
+    padding-right:5px;
+  	color: #005689;
 }
 /*WCAG*/
 ul.sequence-links li a:hover, ul.sequence-links li a:focus, ul.sequence-links li a:active,
@@ -2101,7 +2086,8 @@ ul.sequence-links li a:active:before {
 /*arrow that points to the left, beside the "Previous" text */
 .arrow.back a:after {/*arrow pointing to the left*/
      background: none repeat scroll 0% 0% transparent;
-     border-color: transparent #FFFFFF;
+     border-color: transparent #005689;
+   
      border-style: solid;
      border-width: 5px 0pt 5px 6px;
      left: 8px;
@@ -2117,7 +2103,7 @@ ul.sequence-links li a:active:before {
 .arrow.back a:after {
      border-width: 6px 6px 6px 0pt;    
      left: 3px;
-     top: 11px;
+     top: 20px;
 }
 
 .arrow.back:before {
@@ -2141,24 +2127,24 @@ ul.sequence-links li a:active:before {
 .arrow.forward a:after {
      /*top: 11px;*/
        background: none repeat scroll 0% 0% transparent;
-     border-color: transparent transparent transparent white;
+     border-color: transparent transparent transparent    #005689;
   	 border-width: 6px;
   	 border-style: solid;
   	 width:0;
   	 height:0;
   	 right: -5px;
-  	 top: 11px;
+  	 top: 20px;
 }
 
 
-#content-sequence-links{
+#content-sequence-links{/*
 	width: 98%;
 	padding: .313em;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 	background: #B6C0C6;
 	float: left;
 	margin: 0 auto;
-	margin-bottom: .313em;
+	margin-bottom: .313em;*/
 }
 
 
@@ -2169,7 +2155,10 @@ ul.sequence-links li a:active:before {
 
 #content{
 	text-align: left;
-	width: 98%;
+	width: 93.5%;
+	border-left: #A9ADB0 1px solid;
+	border-right: #A9ADB0 1px solid;
+	border-bottom: #A9ADB0 1px solid;
 }
 
 /*hiding and showing content */
@@ -2212,3 +2201,55 @@ ul.sequence-links li a:active:before {
 	background: none;
 	
 }
+.subnavcontain2, .subnavcontain{
+	margin: .313em auto; 
+	padding-left: .313em;
+	border: #A9ADB0 1px solid; 
+	-webkit-border-radius:5px;
+}	
+
+.fl-theme-iphone .subnavcontain a, .fl-theme-iphone .subnavcontain a:hover, .fl-theme-iphone .subnavcontain a:active, .fl-theme-iphone .subnavcontain a:focus {
+	text-decoration: none;
+	font-weight: bold; 
+	color: #005689;
+	background: none;
+}
+
+.fl-theme-iphone #subnavlist-link a:active, .fl-theme-iphone #subnavlist-link a:hover, .fl-theme-iphone #subnavlist-link a:focus{
+	background: none;
+	color: red;
+	}
+.fl-theme-iphone .subnavcontain{
+	
+}	
+
+.rectangle2{
+	display: inline-block; 
+	color: #005689;
+	font-weight: bold; 
+	padding: .6em;
+	/*margin: .313em 0;*/
+	margin: -.1em;
+	border-right: #A9ADB0 1px solid; 
+}
+
+.rectangle2:last-child{
+	border: none;
+}
+.rectangle2 a{
+	color: #005689;
+	text-decoration: none;
+	font-weight: bold;
+}
+.rectangle{
+	display: block;
+	color: #005689;
+	font-weight: bold; 
+	padding: .313em;
+	margin: .313em 0;
+}
+#content_link_phone a:active, #content_link_phone a:focus, #content_link_phone a:hover{
+	color: #005689;
+	background-color: white;
+}
+
