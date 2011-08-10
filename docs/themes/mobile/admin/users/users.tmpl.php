@@ -1,11 +1,11 @@
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+	<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
 	<div class="input-form">
-		
-			<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
-			<a id="results-hide-show-link" href="javascript:void(0);" tabindex="1">Refine Results</a>
-		
-	
+	<div id="results-hide-show-simple-content">	
+			
+			<a id="results-hide-show-link" class="content-expand" href="javascript:void(0);" tabindex="1">Refine Results</a>
+	</div>
 		
 	<div id="results-hide-show" role="search"  aria-live="assertive">
 	<div id="results-display">
