@@ -16,7 +16,8 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TESTS);
-$tid = $_REQUEST['tid'];
+$tid = intval($_REQUEST['tid']);
+$qid = intval($_GET['qid']);
 
 $_pages['mods/_standard/tests/results_quest_long.php']['title_var']  = 'view_responses';
 $_pages['mods/_standard/tests/results_quest_long.php']['parent'] = 'mods/_standard/tests/results_all_quest.php?tid='.$tid;
@@ -36,7 +37,7 @@ if ($_POST['back']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid]";
+$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_array($result);
 
@@ -51,7 +52,7 @@ echo '<br /><p>'._AT('response_text').' <strong>'.AT_print(urldecode($_GET['q'])
 //get the answers
 $sql = "SELECT count(*), A.answer
 		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
-		WHERE A.question_id=".$_GET['qid']." AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=".$_GET['tid']."
+		WHERE A.question_id=$qid AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid
 		GROUP BY A.answer
 		ORDER BY A.answer";
 

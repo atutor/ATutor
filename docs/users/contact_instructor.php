@@ -121,7 +121,7 @@ $msg->printErrors();
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $course; ?>" />
-<input type="hidden" name="from_browse" value="<?php echo $_REQUEST['from_browse']; ?>" />
+<input type="hidden" name="from_browse" value="<?php echo AT_print($_REQUEST['from_browse'], 'input.contact_instructor'); ?>" />
 <table cellspacing="1" cellpadding="0" border="0" summary="" width="85%" class="bodyline" align="center">
 <tr>
 	<th colspan="2" align="left" class="cyan"><?php echo _AT('instructor_contact_form'); ?></th>
