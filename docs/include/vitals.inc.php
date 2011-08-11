@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
-define('AT_DEVEL_TRANSLATE', 1);
+define('AT_DEVEL_TRANSLATE', 0);
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -47,6 +47,54 @@ if ( get_magic_quotes_gpc() == 1 ) {
 } else {
     $addslashes   = 'mysql_real_escape_string';
     $stripslashes = 'my_null_slashes';
+}
+
+function regenerate_session($reload = false)
+{
+	if(!isset($_SESSION['IPaddress']) || $reload)
+		$_SESSION['IPaddress'] = $_SERVER['REMOTE_ADDR'];
+
+	if(!isset($_SESSION['userAgent']) || $reload)
+		$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
+
+	// Set current session to expire in 10 seconds
+	$_SESSION['OBSOLETE'] = true;
+	$_SESSION['EXPIRES'] = time() + 10;
+
+	// Create new session without destroying the old one
+	session_regenerate_id(false);
+
+	// Grab current session ID and close both sessions to allow other scripts to use them
+	$newSession = session_id();
+	session_write_close();
+
+	// Set session ID to the new one, and start it back up again
+	session_id($newSession);
+	session_start();
+
+	// Don't want this one to expire
+	unset($_SESSION['OBSOLETE']);
+	unset($_SESSION['EXPIRES']);
+}
+
+function check_session()
+{
+	if($_SESSION['OBSOLETE'] && ($_SESSION['EXPIRES'] < time())) {
+		return false;
+	}
+	            
+	if($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR']) {
+		return false;
+	}
+	            
+	if($_SESSION['userAgent'] != $_SERVER['HTTP_USER_AGENT']) {
+		return false;
+	}
+	            
+	if(!$_SESSION['OBSOLETE']) {
+		regenerate_session();
+	}
+	return true;
 }
 
 /*
@@ -109,10 +157,26 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	ob_start();
 	session_set_cookie_params(0, $_base_path);
 	session_start();
+	
+	// Regenerate session id at every page refresh to prevent CSRF
+	$valid_session = true;
+	if (count($_SESSION) == 0) {
+		regenerate_session();
+	} else {
+		$valid_session = check_session();
+	}
+	
 	$str = ob_get_contents();
 	ob_end_clean();
 	unregister_GLOBALS();
-
+	
+	// Re-direct to login page at a potential session hijack
+	if (!$valid_session) {
+		$_SESSION = array();
+		header('Location: '.AT_BASE_HREF.'login.php');
+		exit;
+	}
+	
 	if ($str) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 		$err = new ErrorHandler();
@@ -121,7 +185,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
 						'and the directory exists.</strong></code><br /><hr /><br />', E_USER_ERROR);
 		exit;
 	}
-
+	
 
 /***** end session initilization block ****/
 
@@ -396,6 +460,11 @@ while ($row = mysql_fetch_assoc($result)) {
 /*																	*/
 /********************************************************************/
 // p_course is set when pretty url is on and guests access a public course. @see bounce.php
+// First, santinize p_course
+if (isset($_REQUEST['p_course'])) {
+	$_REQUEST['p_course'] = intval($_REQUEST['p_course']);
+}
+
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0 || $_REQUEST['p_course'] > 0) {
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary 
 	         WHERE course_id='.($_SESSION['course_id']>0 ? $_SESSION['course_id'] : $_REQUEST['p_course']).' 
