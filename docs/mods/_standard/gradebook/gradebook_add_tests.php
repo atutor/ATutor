@@ -46,6 +46,7 @@ function add_test($test_id, $title)
 
 	if ($no_error)  // add into gradebook
 	{
+	    $_POST["selected_grade_scale_id"] = intval($_POST["selected_grade_scale_id"]);
 		$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (id, type, grade_scale_id)
 		               VALUES (". $test_id. ", 'ATutor Test', ".$_POST["selected_grade_scale_id"].")";
 		$result_insert = mysql_query($sql_insert, $db) or die(mysql_error());
@@ -55,6 +56,7 @@ function add_test($test_id, $title)
 function add_assignment($assignment_id)
 {
 	global $db;
+	$_POST["selected_grade_scale_id"] = intval($_POST["selected_grade_scale_id"]);
 	
 	$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (id, type, grade_scale_id)
 	               VALUES (". $assignment_id. ", 'ATutor Assignment', ".$_POST["selected_grade_scale_id"].")";
@@ -139,6 +141,14 @@ else if (isset($_POST['addExternalTest']))
 
 	if (!$msg->containsErrors()) 
 	{
+	    $_POST["year_due"] = intval($_POST["year_due"]);
+	    $_POST["month_due"] = intval($_POST["month_due"]);
+	    $_POST["day_due"] = intval($_POST["day_due"]);
+	    $_POST["hour_due"] = intval($_POST["hour_due"]);
+	    $_POST["min_due"] = intval($_POST["min_due"]);
+	    $_POST["title"] = $addslashes($_POST["title"]);
+	    $_POST["selected_grade_scale_id"] = intval($_POST["selected_grade_scale_id"]);
+	    
 		if ($_POST["has_due_date"] == 'true')
 			$date_due = $_POST["year_due"]. '-' .str_pad ($_POST["month_due"], 2, "0", STR_PAD_LEFT). '-' .str_pad ($_POST["day_due"], 2, "0", STR_PAD_LEFT). ' '.str_pad ($_POST["hour_due"], 2, "0", STR_PAD_LEFT). ':' .str_pad ($_POST["min_due"], 2, "0", STR_PAD_LEFT) . ':00';
 
@@ -251,7 +261,7 @@ else
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" size="30" value="<?php echo $_POST['title']; ?>" />
+		<input type="text" name="title" id="title" size="30" value="<?php echo AT_print($_POST['title'], 'input.title'); ?>" />
 	</div>
 
 	<div class="row">

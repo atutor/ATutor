@@ -50,6 +50,7 @@ if ($_POST['submit']) {
 	if (!$msg->containsErrors()) {
 		$_POST['word']  = $addslashes($_POST['word']);
 		$_POST['definition']  = $addslashes($_POST['definition']);
+		$_POST['gid'] = intval($_POST['gid']);
 
 		$sql = "UPDATE ".TABLE_PREFIX."glossary SET word='$_POST[word]', definition='$_POST[definition]', related_word_id=$_POST[related_term] WHERE word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
 		

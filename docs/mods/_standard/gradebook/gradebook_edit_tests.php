@@ -28,6 +28,14 @@ if (isset($_POST['cancel']))
 else if (isset($_POST['save'])) 
 {
 	$missing_fields = array();
+	$_POST["selected_grade_scale_id"] = intval($_POST["selected_grade_scale_id"]);
+	$_REQUEST["gradebook_test_id"] = intval($_REQUEST["gradebook_test_id"]);
+	$_GET['gradebook_test_id'] = intval($_GET['gradebook_test_id']);
+	$_POST["year_due"] = intval($_POST["year_due"]);
+	$_POST["month_due"] = intval($_POST["month_due"]);
+	$_POST["day_due"] = intval($_POST["day_due"]);
+	$_POST["hour_due"] = intval($_POST["hour_due"]);
+	$_POST["min_due"] = intval($_POST["min_due"]);
 
 	if (isset($_POST['title']) && $_POST['title'] == '') {
 		$missing_fields[] = _AT('title');
