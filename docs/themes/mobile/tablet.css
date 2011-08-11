@@ -1,7 +1,8 @@
 
 /************************************************************************************************/
 /* Style is optimized for tablets. Note that -webkit properties create errors in the CSS validator. 
-Classes beginning with ".fl-" override Mobile FSS, see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API  */
+Relative units for sizes are used unless it is a border.Classes beginning with ".fl-" override Mobile FSS,
+see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API  */
 /************************************************************************************************/
 
 
@@ -18,13 +19,13 @@ html, body{
 body,ul,li {
 	padding:0;
 	margin:0;
-	font-size: 19px;
+	font-size: 1.118em;
 }
 
 
 #header{
 	width:100%;
-	line-height:17px;
+	line-height:1em;
 	padding-top: 158;
 	font-size:1.063em;
 	height: 3em;
@@ -81,7 +82,7 @@ body,ul,li {
 	width: 100%;
 	position: relative;
  	color: white;
- 	font-size: 15px;
+ 	font-size: 0.938em;
  	
  	
 }
@@ -253,7 +254,7 @@ h3 a {
 .prefs_tab_selected{  
 	padding:0.7em 0.3em 0;
 	margin: 0;
-	margin: 0px;
+	margin: 0;
 	font-weight:bold;
 	text-align:center;
 	white-space: nowrap;
@@ -973,16 +974,6 @@ div#content_text {
 }
 
 #content, #content-tablet{
-/*
-	padding-top:.5em;
-	margin-top: .5em;
-	background-color: #F5F5F5;
-	
-	border: #A9ADB0 1px solid;
-	border: #cccccc 1px solid;
-	-webkit-border-radius:5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;*/
 	padding-top: .313em;
 	z-index: 1;
 	background-color: white;
@@ -2128,7 +2119,7 @@ div#content-link-container{
     -webkit-background-origin: border;
     -webkit-background-clip: border;
    
-    margin-bottom: -4px;
+    margin-bottom: -0.25em;
 
 }
 .flc-screenNavigator-navbar .content_link{
@@ -2152,22 +2143,6 @@ div#content-link-container{
 	border: 4px solid black;
 	z-index: 1000;
 }
-/*
-	height: 100%;
-	width: 40%;
-	z-index: 1000;
-	position: relative; 
-	top: 1.3em;
-	background: black;
-	padding-right: .313em;
-	padding-left: .313em;
-	padding-top: .313em;
-	-webkit-border-radius: 8px;
-	display: none;
-*/
-
-
-
 
 /*	hiding/showing top navigation and results-display */
 
@@ -2243,7 +2218,7 @@ ul#subnavlist{
 	border-bottom: #4C566C 2px solid;
 }
 #subnavlist-more .more-item{
-	font-size: 14px; list-style-type: bullet;
+	font-size: 0.875em; list-style-type: bullet;
 	
 }
 
@@ -2308,7 +2283,7 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 
 /*'Previous' and 'Next' buttons */
 .previous{
-	margin-left:50px;
+	margin-left:3.125em;
 	background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -2318,16 +2293,16 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 }
 
 .triangle-isosceles.previous:after {
-	top:16px; /* controls vertical position */
-	left:-50px; /* value = - border-left-width - border-right-width */
+	top:1em; /* controls vertical position */
+	left:-3.125em; /* value = - border-left-width - border-right-width */
 	bottom:auto;
 	border-width:15px 50px 10px 0;
 	border-color:transparent #f3961c;
 	border-color: transparent #F3961C;
      border-width: 10px 10px 10px 0pt;
      bottom: auto;
-    left: -12px;
-     top: 0px;
+    left: -0.75em;
+     top: 0;
 }
 
 /* sequence links */
@@ -2336,14 +2311,7 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 	padding-right:0;
 }
 #course-level-navigation{	
-/*	width: 100%;
-	height: 2.2em; 
-	padding-top: .4em;
-	padding-left: -.4em;
-	position: absolute;
-	margin-bottom: 1em;*/
-	float: right;
-	
+		float: right;
 }
 
 /************************************************************************************************/
@@ -2374,7 +2342,7 @@ ul.sequence-links li.forward a:link,
 ul.sequence-links li.forward a:visited {
     display:block;
    /* border :0;*/
-    padding-right:12px;
+    padding-right:0.75em;
     color:white;
 }
 /*WCAG*/
@@ -2398,7 +2366,7 @@ ul.sequence-links li a:after {
 
 ul.sequence-links li a:before, 
 ul.sequence-links li a:after {
-    margin:-8px 0 0;
+    margin:-0.5em 0 0;
   }
 
 ul.sequence-links li a:hover:before, 
@@ -2412,8 +2380,8 @@ ul.sequence-links li a:active:before {
      border-color: transparent #FFFFFF;
      border-style: solid;
      border-width: 5px 0pt 5px 6px;
-     left: 8px;
-     margin-top: -7px;
+     left: .5em;
+     margin-top: -0.438em;
 }
 
 /*left and right triangle icons change color*/
@@ -2424,8 +2392,8 @@ ul.sequence-links li a:active:before {
 
 .arrow.back a:after {
      border-width: 6px 6px 6px 0pt;    
-     left: 3px;
-     top: 11px;
+     left: 0.188em;
+     top: 0.688em;
 }
 
 .arrow.back:before {
@@ -2442,7 +2410,7 @@ ul.sequence-links li a:active:before {
      background: none repeat scroll 0% 0% transparent;
      border-color: transparent #FFFFFF;
      border-style: solid;
-     margin-top: -6.8px;
+     margin-top: -0.425em;
    
 }
 .arrow.forward a:after {
@@ -2453,8 +2421,8 @@ ul.sequence-links li a:active:before {
   	 border-style: solid;
   	 width:0;
   	 height:0;
-  	 right: -5px;
-  	 top: 11px;
+  	 right: -0.313em;
+  	 top: 0.688em;
 }
 
 
