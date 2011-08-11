@@ -1,6 +1,6 @@
-/* Style is optimized for iphone. Note that -webkit properties create errors in the CSS validator. 
-Classes beginning with ".fl-" are overriding Mobile FSS, see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
-for more details. 
+/* Style is optimized for iphone. Note that -webkit properties create errors in the CSS validator. Relative units 
+for sizes are used unless it is a border. Classes beginning with ".fl-" override Mobile FSS, 
+see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API for more details. 
 */
 html, body{
 	height: 100%;
@@ -197,22 +197,8 @@ font-weight: bold;*/
     color: #005689;
 }
 .resume{
-	font-size: 17px;
+	font-size: 1em;
 }
-/*
-.content-expanded{
-	background-image:url("images/plus.png");
-	background-position: 100% 100%;
-	background-repeat: no-repeat;
-}
-
-.content-closed{
-	background-image:url("images/minus.png");
-	background-position: 100% 100%;
-	background-repeat: no-repeat;	
-}*/
-
-
 
 
 #home-guide{
@@ -309,7 +295,7 @@ h3 a {
 .prefs_tab_selected{  
 	padding:0.7em 0.3em 0;
 	margin: 0;
-	margin: 0px;
+	margin: 0;
 	font-weight:bold;
 	text-align:center;
 	white-space: nowrap;
@@ -598,7 +584,7 @@ a#back-to {
 .breadcrumbs, .previous-next /*a#guide*/{
     /* The path bar, including breadcrumbs and add to favorites */
 	clear:both;
-    font-size: 17px;
+    font-size: 1em;
 	padding:0 0.375em;
 	color: #4C566C;
 	background-color: white;
@@ -1592,16 +1578,7 @@ legend.group_form{
 	-webkit-border-radius:5px;
 }
 
-/* highlight active links for WCAG 2.0 conformance 
-a:hover {
-	color: #4C566C;
-	text-decoration: underline;
-}
-a:active {
-	color: #ffffff;
-	text-decoration: underline;
-}
-*/
+/* highlight active links for WCAG 2.0 conformance */
 
 a:active, a:hover, a:focus, .buttontab-hover{
  	color: #fff;
@@ -2044,7 +2021,7 @@ ul.sequence-links li.back a:link,
 ul.sequence-links li.back a:visited {
     display:block;
    /* border :0;*/
-    padding-left:7px;
+    padding-left:0.438em;
    	color: #005689;
 }
 
@@ -2052,7 +2029,7 @@ ul.sequence-links li.forward a:link,
 ul.sequence-links li.forward a:visited {
     display:block;
    /* border :0;*/
-    padding-right:5px;
+    padding-right:0.313em;
   	color: #005689;
 }
 /*WCAG*/
@@ -2076,7 +2053,7 @@ ul.sequence-links li a:after {
 
 ul.sequence-links li a:before, 
 ul.sequence-links li a:after {
-    margin:-8px 0 0;
+    margin:-0.5em 0 0;
   }
 
 ul.sequence-links li a:hover:before, 
@@ -2091,8 +2068,8 @@ ul.sequence-links li a:active:before {
    
      border-style: solid;
      border-width: 5px 0pt 5px 6px;
-     left: 8px;
-     margin-top: -5px;
+     left: 0.5em;
+     margin-top: -0.313em;
 }
 
 /*left and right triangle icons change color*/
@@ -2103,8 +2080,8 @@ ul.sequence-links li a:active:before {
 
 .arrow.back a:after {
      border-width: 6px 6px 6px 0pt;    
-     left: 3px;
-     top: 20px;
+     left: 0.188em;
+     top: 1.25em;
 }
 
 .arrow.back:before {
@@ -2121,8 +2098,8 @@ ul.sequence-links li a:active:before {
      background: none repeat scroll 0% 0% transparent;
      border-color: transparent #FFFFFF;
      border-style: solid;
-     margin-top: -6.8px;
-     margin-top: -5px;
+     margin-top: -0.425em;
+     margin-top: -0.313em;
    
 }
 .arrow.forward a:after {
@@ -2133,8 +2110,8 @@ ul.sequence-links li a:active:before {
   	 border-style: solid;
   	 width:0;
   	 height:0;
-  	 right: -5px;
-  	 top: 20px;
+  	 right: -0.313em;
+  	 top: 0.25em;
 }
 
 
