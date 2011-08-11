@@ -2069,7 +2069,7 @@ ul.sequence-links li a:active:before {
      border-style: solid;
      border-width: 5px 0pt 5px 6px;
      left: 0.5em;
-     margin-top: -0.313em;
+     margin-top: -0.39em;
 }
 
 /*left and right triangle icons change color*/
@@ -2111,7 +2111,7 @@ ul.sequence-links li a:active:before {
   	 width:0;
   	 height:0;
   	 right: -0.313em;
-  	 top: 0.25em;
+  	 top: 1.19em;
 }
 
 
