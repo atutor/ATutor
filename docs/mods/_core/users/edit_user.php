@@ -29,6 +29,22 @@ if (isset($_POST['submit'])) {
 	$missing_fields = array();
 
 	$id = intval($_POST['id']);
+	//$_POST['password']   = $addslashes($_POST['password']);
+    $_POST['website']    = $addslashes($_POST['website']);
+    $_POST['first_name'] = $addslashes($_POST['first_name']);
+    $_POST['second_name'] = $addslashes($_POST['second_name']);
+    $_POST['last_name']  = $addslashes($_POST['last_name']);
+    $_POST['address']    = $addslashes($_POST['address']);
+    $_POST['postal']     = $addslashes($_POST['postal']);
+    $_POST['city']       = $addslashes($_POST['city']);
+    $_POST['province']   = $addslashes($_POST['province']);
+    $_POST['country']    = $addslashes($_POST['country']);
+    $_POST['phone']      = $addslashes($_POST['phone']);
+    $_POST['status']     = intval($_POST['status']);
+    $_POST['old_status']     = intval($_POST['old_status']);
+    $_POST['gender']     = $addslashes($_POST['gender']);
+    $_POST['student_id'] = intval($_POST['student_id']);
+    $_POST['email']      = $addslashes($_POST['email']);
 
 	//check if student id (public field) is already being used
 	if (!$_POST['overwrite'] && !empty($_POST['student_id'])) {
@@ -124,21 +140,6 @@ if (isset($_POST['submit'])) {
 		} else {
 			$_POST['private_email'] = 0;
 		}
-
-		//$_POST['password']   = $addslashes($_POST['password']);
-		$_POST['website']    = $addslashes($_POST['website']);
-		$_POST['first_name'] = $addslashes($_POST['first_name']);
-		$_POST['second_name'] = $addslashes($_POST['second_name']);
-		$_POST['last_name']  = $addslashes($_POST['last_name']);
-		$_POST['address']    = $addslashes($_POST['address']);
-		$_POST['postal']     = $addslashes($_POST['postal']);
-		$_POST['city']       = $addslashes($_POST['city']);
-		$_POST['province']   = $addslashes($_POST['province']);
-		$_POST['country']    = $addslashes($_POST['country']);
-		$_POST['phone']      = $addslashes($_POST['phone']);
-		$_POST['status']     = intval($_POST['status']);
-		$_POST['old_status']     = intval($_POST['old_status']);
-		$_POST['gender']     = $addslashes($_POST['gender']);
 
 		/* insert into the db. (the last 0 for status) */
 		$sql = "UPDATE ".TABLE_PREFIX."members SET	email      = '$_POST[email]',
