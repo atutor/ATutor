@@ -424,15 +424,17 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php endif; ?>	
 </div>
 		
-		<!-- the sub navigation -->
-		<?php if (count($this->sub_level_pages) > 0): ?>
-			<div id="subnavlistcontainer">
-				<div id="subnavbacktopage">
 				<?php if (isset($this->back_to_page)): ?>
 					<a href="<?php echo $this->back_to_page['url']; ?>">
 					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
 				<?php endif; ?>
 				</div>
+		<!-- the sub navigation -->
+		<div id="subnavbacktopage">
+		<?php if (count($this->sub_level_pages) > 0): ?>
+			
+			<div id="subnavlistcontainer">
+				
 				<!-- id="subnavlist" -->
 			<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 				<div class="subnavcontain">
@@ -657,7 +659,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	<?php global $msg; $msg->printAll(); $_base_href;?>
 	
-		
+		</div>
 	<!--  end course-level-naviagtion -->	
 		
 	<div id="contentwrapper" class="fl-container" >
