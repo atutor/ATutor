@@ -270,7 +270,9 @@ h3.browse-courses{
 h3 a {
     font-size: 100%;
 }
-
+#subnavbacktopage{
+	padding-top: 1em;
+	}
 /* Preferences tabs */
 .etabbed-list-container	{
 	padding:0;
@@ -2144,14 +2146,17 @@ ul.sequence-links li a:active:before {
 
 #results-hide-show-simple-content{
 	-webkit-border-radius:8px;
+	border: 1px #A9ADB0 solid;
 	margin-top: 0.875em;
 	margin-bottom: 0.875em;
 	padding: 0.875em;
 	padding-right: .2em;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+	color: #005689;
+/*	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));*/
 }
 #results-hide-show-link{
 	color: white;
+	color: #005689;
 	text-decoration: none;	
 	display: block;
 	font-weight: bold;
