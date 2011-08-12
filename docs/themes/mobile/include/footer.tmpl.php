@@ -40,7 +40,7 @@
 </ul>			
  </div>			
 </div>
-<div class="type-interior ui-page ui-body-c ui-page-active"> <!-- jQueryMobile only -->
+
 	<script language="javascript" type="text/javascript">
 //<!--
     <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
@@ -53,9 +53,6 @@
 
 </div> <!-- end innner-contentwrapper -->	
 </div> <!-- end contentcolumn -->
-</div> <!-- end contentwrapper -->
-</div> <!-- end main -->
-</div> <!-- end wrapper -->
 
 <div id="footer" class="fl-navbar fl-table">
 <div id="footer-links"> <!-- top help/search/login links -->
