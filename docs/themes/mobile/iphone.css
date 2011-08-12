@@ -1998,7 +1998,9 @@ margin-left:2em;}
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
   
 }
-
+ul#subnavlist li a:focus, ul#subnavlist li a:active, ul#subnavlist li a:hover{
+	color: white;
+}
 /* isolates fl tabs 
 .fl-theme-iphone .fl-tabs li a, .fl-theme-iphone .fl-tabs .fl-tabs-active {
 	background-color: white;
