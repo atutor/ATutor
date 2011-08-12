@@ -68,7 +68,7 @@ $this->onload .= "
 jQuery('#content_link').click(function(e) {
   e.stopPropagation();
   
-  jQuery('#content').slideToggle();
+  jQuery('#content').slideToggle(0);
   jQuery('#content_link').toggleClass('content_link_tablet_highlight');
   jQuery('#content_link').toggleClass('triangle-isosceles'); 
   jQuery('#content_link').toggleClass('top'); 
@@ -117,10 +117,10 @@ jQuery('.topnavlist-link').click(function(e) {
 
 $this->onload .= "
 jQuery(document).click(function () {
-jQuery('#navigation-column').slideUp();}); 
+jQuery('#navigation-column').slideUp(200);}); 
 jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
-  jQuery('#navigation-column').slideToggle();
+  jQuery('#navigation-column').slideToggle(0);
     jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
     jQuery('#topnavlist-link').toggleClass('triangle-isosceles');
     jQuery('#topnavlist-link').toggleClass('top');
