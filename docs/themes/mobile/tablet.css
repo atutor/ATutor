@@ -19,7 +19,7 @@ html, body{
 body,ul,li {
 	padding:0;
 	margin:0;
-	font-size: 1.118em;
+	font-size: 19px;/*fix*/
 }
 
 
