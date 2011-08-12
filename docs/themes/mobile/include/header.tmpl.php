@@ -658,10 +658,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	<?php global $msg; $msg->printAll(); $_base_href;?>
 	
-		</div>
 	<!--  end course-level-naviagtion -->	
 		
 	<div id="contentwrapper" class="fl-container" >
-
-
 <?php endif; ?><!--  end header template for ipad/tablets -->
