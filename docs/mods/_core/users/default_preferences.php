@@ -102,7 +102,7 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_SERVER['PHP_SELF']);
+	header('Location: '.$_SERVER['PHP_SELF'].'?current_tab='.$_POST['current_tab']);
 	exit;
 }
 

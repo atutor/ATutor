@@ -16,8 +16,8 @@ for ($i=0; $i < $num_tabs; $i++)
 	}
 }
 
-if (!$switch_tab && isset($_POST['current_tab'])) {
-	$current_tab = intval($_POST['current_tab']);
+if (!$switch_tab && isset($_REQUEST['current_tab'])) {
+	$current_tab = intval($_REQUEST['current_tab']);
 }
 
 if ($current_tab == 1)

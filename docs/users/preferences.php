@@ -29,6 +29,7 @@ if (!$_SESSION['valid_user']) {
 $is_auto_login = checkAutoLoginCookie();
 
 if (isset($_POST['submit']) || isset($_POST['set_default'])) {
+	$current_tab = $_POST['current_tab'];
 	if (isset($_POST['submit']))
 	{
 	    //copy posted variables to a temporary array
@@ -58,7 +59,7 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
     }
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: preferences.php');
+	header('Location: preferences.php?current_tab='.$current_tab);
 	exit;
 }
 
