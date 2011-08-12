@@ -1,7 +1,8 @@
 <?php global $_config; $_config_defaults;?>
 
 <div class="admin_container"> 
-	<?php 
+
+	<?php /*
 	$this->path_length = strlen($this->base_path);
 
 	echo '<ul class="fl-list-menu ">';
@@ -11,15 +12,15 @@
 		$page_info['url'] = substr($page_info['url'], $this->path_length);
 
 		if ($this->pages[$page_info['url']]['children']) {
-			echo '<ul>';
+	
 			foreach ($this->pages[$page_info['url']]['children'] as $child) {
 				echo ' <li  ><a href="'.$child.'">'._AT($this->pages[$child]['title_var']).'</a></li>';
 			}
-			echo '</ul>';
+			
 		}
 		echo '</li>'; //end top-tool
 	}
-	echo '</ul>';
+	echo '</ul>';*/
 	
 ?>
 
