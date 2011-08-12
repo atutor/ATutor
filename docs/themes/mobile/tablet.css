@@ -204,6 +204,10 @@ h1 {
 h2 {
     font-size: 150%;
 }
+#subnavbacktopage{
+	padding: .313em;
+	
+}
 
 h3 {
 	padding: 0;
@@ -2424,7 +2428,10 @@ ul.sequence-links li a:active:before {
   	 right: -0.313em;
   	 top: 0.688em;
 }
-
-
+/* style for "last modified" information of course content*/
+#content-info{
+	padding-top: 2em;
+	font-size: 80%;
+}	
 
 
