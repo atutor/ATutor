@@ -264,7 +264,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
 			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-				<ul id="topnavlist"  class="fl-list-menu">
+				<ul id="topnavlist"  class="fl-list-menu" role="menu">
 					<?php $accesscounter = 0; //initialize ?>
 					<?php foreach ($this->top_level_pages as $page): ?>
 						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
@@ -290,23 +290,23 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				
 
 
-	<ul class="home-guide fl-tabs" id="home-guide">
+	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
-		<li><a  href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li role="menuitem"><a  href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
 		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
-		<li><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
 	<?php if($_SESSION['is_admin'] == 1): ?>
-		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	
 	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-			<li>
+			<li role="menuitem">
 		    	<div id="guide_box">
 					<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
       		
@@ -389,7 +389,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			
 			<div class="subnavcontain2">
-			<ul class="sequence-links" >
+			<ul class="sequence-links">
 				<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 					<?php if ($this->sequence_links['resume']): ?>
 						
@@ -486,22 +486,22 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				<?php endif; ?>
 				</h1>
 		</div>
-	<div id="navigation-contentwrapper" >
+	<div id="navigation-contentwrapper" role="menubar" >
 		
 		
-	<ul class="home-guide fl-tabs" id="home-guide">
+	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
-		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
 		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
-		<li><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
 	<?php if($_SESSION['is_admin'] == 1): ?>
-		<li><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	
 	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
@@ -518,15 +518,15 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			
 	
-		<ul class="sequence-links fl-tabs" id="sequence-links">
+		<ul class="sequence-links fl-tabs" id="sequence-links" >
 			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 				<?php if ($this->sequence_links['resume']): ?>
-						<li>
+						<li >
 						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
 						</li>
 				<?php else:
 					if ($this->sequence_links['previous']): ?>
-						<li class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+						<li  class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
 						</li>
 					<?php endif;
 					if ($this->sequence_links['next']): ?>
@@ -560,7 +560,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 		<!--  this should be a button on its own  -->
 			<?php if ($this->current_sub_level_page): ?>
-			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer fl-container" >
+			<div id="topnavlistcontainer" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" >
 			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 			
 				<div id="navigation-column">
