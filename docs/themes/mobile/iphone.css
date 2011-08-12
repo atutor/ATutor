@@ -597,9 +597,10 @@ a#back-to {
 .breadcrumbs{
 	display:none;
 }
-h2.page-title {
-
+h2.page-title, #subnavlistbacktopage {
+	float: left;
 }
+
 h1 {
 	margin-bottom: 0.313em;
 	
@@ -2198,7 +2199,7 @@ ul.sequence-links li a:active:before {
 	color: red;
 	}
 .fl-theme-iphone .subnavcontain{
-	
+	margin-top: 1em;
 }	
 
 .rectangle2{
@@ -2230,4 +2231,9 @@ ul.sequence-links li a:active:before {
 	color: #005689;
 	background-color: white;
 }
+/* style for "last modified" information of course content*/
+#content-info{
+	padding-top: 1em;
+	font-size: 80%;
+}	
 
