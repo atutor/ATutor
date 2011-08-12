@@ -157,7 +157,7 @@ $isHttps = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
           ? false
           : true;
 ob_start();
-session_set_cookie_params(0, $_base_path);
+session_set_cookie_params(0, $_base_path, "", $isHttps);
 session_start();
 
 // Regenerate session id at every page refresh to prevent CSRF
