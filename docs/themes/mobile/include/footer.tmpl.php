@@ -50,7 +50,7 @@
 <?php endif;?><!--  end footer template for iphone, android and blackberry -->
 <?php if ($this->mobile_device_type == IPAD_DEVICE): ?> <!-- start footer template for ipad/talets -->
 
-
+</div> <!-- end main -->
 </div> <!-- end innner-contentwrapper -->	
 </div> <!-- end contentcolumn -->
 
