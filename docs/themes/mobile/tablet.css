@@ -68,7 +68,9 @@ body,ul,li {
 	top: 1.1em;
 }
 
-
+#contentwrapper{
+	margin-bottom: 3em;
+}
 #wrapper{
 	width:100%;
 	overflow:hidden;
