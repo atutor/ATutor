@@ -647,18 +647,17 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 				</div> <!--  end subnavlistcontainer -->				
 		<?php endif; ?>	
-		<div id="subnavbacktopage" >
+	
+	<?php global $msg; $msg->printAll(); $_base_href;?>
+	
+	
+	</div><!--  end course-level-naviagtion -->	
+			<div id="contentwrapper" class="fl-container" >
+			<div id="subnavbacktopage" >
 					<?php if (isset($this->back_to_page)): ?>
 						<a href="<?php echo $this->back_to_page['url']; ?>">
 						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
 					<?php endif; ?>
-					</div>
-
-
-	
-	<?php global $msg; $msg->printAll(); $_base_href;?>
-	
-	<!--  end course-level-naviagtion -->	
-		
-	<div id="contentwrapper" class="fl-container" >
+				</div>
+				
 <?php endif; ?><!--  end header template for ipad/tablets -->
