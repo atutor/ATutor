@@ -221,7 +221,7 @@ global $db, $_config_defaults;;
  * @return string - either 'enable' if the cookies were set, or 'disable' otherwise.
  */
 function setAutoLoginCookie($toDo) {
-global $db;
+    global $db;
 
     //set default values for disabled auto login cookies
     $parts = parse_url(AT_BASE_HREF);
@@ -234,16 +234,18 @@ global $db;
 	//if enable auto login, set actual cookie values
 	if ($toDo == 'enable') {
 		$time = time() + 172800;
-		$sql	= "SELECT password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
+		$sql	= "SELECT password, last_login FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 		$row	= mysql_fetch_assoc($result);
 		$password = $row["password"];
+		$last_login = $row["last_login"];
 		$login = $_SESSION['login'];	
 	}
-	
-	//set cookies and boolean value indicating cookies have been set.ies
+	#4775: password now store with salt
+	$saltedPassword = hash('sha512', $password . hash('sha512', $last_login));
+	//set cookies and boolean value indicating cookies have been set.iesf
 	$is_cookie_login_set = ATutor.setcookie('ATLogin', $login, $time, $path);
-	$is_cookie_pass_set = ATutor.setcookie('ATPass',  $password, $time, $path);
+	$is_cookie_pass_set = ATutor.setcookie('ATPass',  $saltedPassword, $time, $path);
 	if ($is_cookie_login_set && $is_cookie_pass_set) $is_auto_login = $toDo;
 	return $is_auto_login;
 }

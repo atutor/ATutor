@@ -109,7 +109,12 @@ if (isset($this_login, $this_password)) {
 	} 
 	
 	if ($used_cookie) {
-		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status, last_login FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND password='$this_password'";
+	    #4775: password now store with salt
+	    $sql = "SELECT password, last_login FROM " . TABLE_PREFIX . "members WHERE login='$this_login'";
+	    $result = mysql_query($sql, $db);
+	    $cookieRow = mysql_fetch_assoc($result);
+	    $saltedPassword = hash('sha512', $cookieRow['password'] . hash('sha512', $cookieRow['last_login']));
+		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status, last_login FROM ".TABLE_PREFIX."members WHERE login='$this_login' AND '$saltedPassword'='$this_password'";
 	} else {
 		$sql = "SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass, last_login FROM ".TABLE_PREFIX."members WHERE (login='$this_login' OR email='$this_login') AND SHA1(CONCAT(password, '$_SESSION[token]'))='$this_password'";
 	}
@@ -132,13 +137,16 @@ if (isset($this_login, $this_password)) {
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row['language'];
 		$_SESSION['course_id']  = 0;
+		$now = date('Y-m-d H:i:s');
 
 		if ($auto_login == 1) {
 			$parts = parse_url($_base_href);
 			// update the cookie.. increment to another 2 days
 			$cookie_expire = time()+172800;
+			// #4775, also look at pref_tab_functions.inc.php setAutoLoginCookie(). Same technique.
+			$saltedPassword = hash('sha512', $row['pass'] . hash('sha512', $now));
 			ATutor.setcookie('ATLogin', $this_login, $cookie_expire, $parts['path']);
-			ATutor.setcookie('ATPass',  $row['pass'],  $cookie_expire, $parts['path']);
+			ATutor.setcookie('ATPass',  $saltedPassword,  $cookie_expire, $parts['path']);
 		}
 		
 		$_SESSION['first_login'] = false;
@@ -147,7 +155,7 @@ if (isset($this_login, $this_password)) {
 		    $_SESSION['first_login'] = true;
 		}
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login=NOW() WHERE member_id=$_SESSION[member_id]";
+		$sql = "UPDATE ".TABLE_PREFIX."members SET creation_date=creation_date, last_login='$now' WHERE member_id=$_SESSION[member_id]";
 		mysql_query($sql, $db);
 
 		//clear login attempt on successful login
