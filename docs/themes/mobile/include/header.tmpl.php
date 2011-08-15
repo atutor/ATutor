@@ -651,13 +651,28 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php global $msg; $msg->printAll(); $_base_href;?>
 	
 	
-	</div><!--  end course-level-naviagtion -->	
-			<div id="contentwrapper" class="fl-container" >
-			<div id="subnavbacktopage" >
+	<!-- </div>end #main -->
+		<div id="contentwrapper" class="fl-container" >
+		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
+		<div id="subnavbacktopage" >
 					<?php if (isset($this->back_to_page)): ?>
 						<a href="<?php echo $this->back_to_page['url']; ?>">
 						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
 					<?php endif; ?>
 				</div>
+	
+	<!--  check if a user is logged-into a course and if so display breadcrumbs.  -->	
+		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 		
+		<?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
+		 
+			<div class="crumbcontainer">
+			  <div id="breadcrumbs">
+			  <?php foreach ($this->path as $page): ?>
+				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
+			  <?php endforeach; ?> <?php echo $this->page_title; ?>
+		  	  </div>
+			</div>
+	  <?php } ?>
+	 <?php endif; ?> 
 				
 <?php endif; ?><!--  end header template for ipad/tablets -->
