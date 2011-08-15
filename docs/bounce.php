@@ -151,6 +151,11 @@ if (!empty($_REQUEST['pu'])) {
 	}
 } elseif (!empty($_REQUEST['p'])) {
 	//For search
+    //p is a relative path, check that.  #4773
+    if (strpos('http') !== false) {
+        //if not relative, reset it.
+        $_REQUEST['p'] = "";
+    }
 	$page = urldecode($_REQUEST['p']);
 } elseif (($_config['pretty_url'] > 0) && preg_match('/bounce.php\?course=([\d]+)$/', $_SERVER['REQUEST_URI'])==1) {
 	//for browse, and my start page url rewrite.	
