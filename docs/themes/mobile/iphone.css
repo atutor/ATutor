@@ -253,6 +253,7 @@ h1 {
 	color: #FFF;
 }
 
+
 h2 {
     font-size: 150%;
 }
@@ -273,7 +274,10 @@ h3 a {
 #subnavbacktopage{
 	padding-top: 1em;
 	}
+
+/************************************************************************************************/
 /* Preferences tabs */
+/************************************************************************************************/
 .etabbed-list-container	{
 	padding:0;
 	margin: 0;
@@ -304,8 +308,9 @@ h3 a {
     display: inline;
 }
 
-
+/************************************************************************************************/
 /* link attributes */
+/************************************************************************************************/
 a:link, /*a:visited*/ a:focus  {
 	color: #4C566C;
 	text-decoration: underline;
@@ -317,7 +322,6 @@ a:link, /*a:visited*/ a:focus  {
 /* main submit button */
 .button {
 	background-color: #808080;
-	font-weight: normal;
 	color: black;
 	text-align: center;
 	-webkit-border-radius:3px;
