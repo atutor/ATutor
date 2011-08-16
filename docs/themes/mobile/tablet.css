@@ -11,7 +11,7 @@ html, body{
 }
 		
 #main{
-	overflow-x: hidden;
+	overflow-x: visible;
 }
 
 body,ul,li {
@@ -107,14 +107,6 @@ body,ul,li {
     -moz-border-radius: 5px;
 	border-radius: 5px;
 	font-size: 18px;/*keep this in px*/
-	/*padding: .3em .3em .3em .3em;
-	
-	color: white;
-	position: relative;
-	top: -4.45em; 
-	left: 6.2em; */
-	
-    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -144,7 +136,6 @@ body,ul,li {
 }
 
 .fl-theme-iphone .fl-tabs li{
-    /* default mobile fss color scheme for tabs not AA compliant against a white foreground text.therefore its backgroud-image must be overrided */
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -186,11 +177,13 @@ p a {
 }
 
 p a:visited {
-	color: #3F2670;
+	color: #005689;
+	color: #4c96f4;
     background-color: transparent;
 }
 p a:active {
-	color: #A50707;
+	color: #005689;
+	color: #4c96f4;
     background-color: transparent;
 }
 
@@ -239,11 +232,11 @@ h3 a {
 /************************************************************************************************/
 /* Highlighting outside of the header and footer */
 /************************************************************************************************/
-/*link highlighting -- add when the header and footer is done 
+link highlighting -- add when the header and footer is done 
 .fl-theme-iphone a:not(.fl-tabs){
 	 color: #4c96f4;
 }
-.fl-theme-iphone a:active, .fl-theme-iphone a:focus, .fl-theme-iphone a:hover{
+/*.fl-theme-iphone a:active, .fl-theme-iphone a:focus, .fl-theme-iphone a:hover{
 	text-decoration: underline;
 }*/
 
@@ -1354,17 +1347,12 @@ ul#home-links, ul#home-detail-links {
 	padding-bottom: 0.875em;
 	display: inline;
 }
-.fl-list-menu li a {
-}
-.fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a {
-}
+
 .fl-theme-iphone [class*="fl-list"] > li .fl-link-summary{
 	color: #4C566C;
 }
 .current_head{
 	padding-top: .5em;
-}
-.fl-list-menu {
 }
 .current_box{
 	max-width: 100%;
@@ -1383,9 +1371,6 @@ ul#home-links, ul#home-detail-links {
 .current_list_date_time{
 	font-size: 65%;
 }
-.current_list img{
-}
-
 #show-all, #show-pages{
 	text-align: center;
 	
