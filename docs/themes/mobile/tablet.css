@@ -1,7 +1,7 @@
 
 /************************************************************************************************/
-/* Style is optimized for tablets. Note that -webkit properties create errors in the CSS validator. 
-Relative units for sizes are used unless it is a border.Classes beginning with ".fl-" override Mobile FSS,
+/* Style is optimized for tablets. Note that -webkit  and -moz properties create errors in the CSS validator. 
+Relative units for sizes are used unless it is a border. Classes beginning with ".fl-" override Mobile FSS,
 see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API  */
 /************************************************************************************************/
 
@@ -104,6 +104,8 @@ body,ul,li {
 .navigation-bar-button-content{
   	border-width:5px;
     -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+	border-radius: 5px;
 	font-size: 18px;/*keep this in px*/
 	/*padding: .3em .3em .3em .3em;
 	
@@ -120,10 +122,13 @@ body,ul,li {
         to(#354d68)
     );
  	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+ 	-moz-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
     -webkit-border-left-image: none;
+    -moz-border-left-image: none;
     -webkit-background-origin: border;
+    -moz-background-origin: border;
     -webkit-background-clip: border;
-
+	-moz-background-clip: border;
 }
 
 .fl-theme-iphone .topnavlistcontainer .topnavlist-link {/*makes the navigation button link white*/
@@ -209,9 +214,11 @@ h2 {
 }
 h2.page-title{
 	padding-top: .313em;
+	/*float: left;*/
 }
 #subnavbacktopage{
 	padding: .313em;
+	float: left;
 	
 }
 
@@ -292,6 +299,8 @@ a:link, a:hover, a:visited, a:focus  {
 	color: black;
 	text-align: center;
 	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius: 3px;
 	padding-top: 0.313em;
 	padding-bottom: 0.313em;
 }
@@ -561,8 +570,11 @@ a#back-to {
 	background-color: #4d4d4d;
 	position: relative;
 }
-.breadcrumbs{
-	display:none;
+
+#breadcrumbs{
+font-size: 80%;
+    margin-top: .7em;
+text-align: left;
 }
 h1 {
 	margin-bottom: 0.313em;	
@@ -604,10 +616,10 @@ div#toctoggle {
 }
 
 h1#section-title {
-	font-size: 110%;
+	font-size: 100%;
 	position: absolute;
 	top: 0em;
- 	left: 41%; 
+ 	text-align: center;
 	white-space:nowrap;
 	display: inline;
 	
@@ -695,6 +707,8 @@ a#editor-link.on {
 	border: #A9ADB0 1px solid;
 	border: #cccccc 1px solid;
 	-webkit-border-radius:5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	margin-top: 1em;
 	margin-bottom: 1em;
 	
@@ -849,6 +863,8 @@ div#error {
 	padding-left: 1.563em;
 	font-weight: bold;
 	-webkit-border-radius:5px;
+	-moz-border-radius: 5px;
+	-border-radius: 5px;
 }
 div#error h4 {
 	color: black;
@@ -875,6 +891,8 @@ div#feedback, div#info {
 	padding: 0.313em;
 	font-family: Helvetica, Arial, sans-serif;
 	-webkit-border-radius:5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	border: 1px solid #17B506;
 	background-color: #E7EFD0;
 	color: #3f4559;
@@ -995,7 +1013,7 @@ div#content_text {
 
 #content, #content-tablet{
 	padding-top: .313em;
-	z-index: 1;
+	z-index: 1000;
 	background-color: white;
 }
 form {
@@ -1206,10 +1224,14 @@ table.data .odd img.headicon{
 	width: 2.469em;
 	height: 2.469em; 
 	-webkit-border-radius:5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 .icon{
 	-webkit-border-radius:10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
 	border-color: white;
 	width: 2.5em;
 	height: 2.5em;
@@ -1239,6 +1261,8 @@ fieldset#shortcuts {
 fieldset {
 	margin-bottom: 10pt;
 	-webkit-border-radius:5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	padding: 0 0.375em;
 	width: 90%;
 	margin: 0 auto; 
@@ -1298,12 +1322,16 @@ ul#home-links, ul#home-detail-links {
 	margin: 0 auto;
 	border:0;	
 	min-width: 100%;
+	
 }
+
 #my-courses-navlist{
 }
 .my-courses-list{
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	padding: .313em;
 	color: #4C566C;
 	margin: .313em;
@@ -1470,6 +1498,8 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 	line-height: 200%; 
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 	background: white;
 }
 	
@@ -1546,6 +1576,8 @@ legend.group_form{
 	margin: .313em;
 	border: 1px #4C566C solid;
 	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 }
 
 /*The following three rules create the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
@@ -1577,6 +1609,7 @@ Ensure styling matches that in fl-tabs.*/
         color-stop(0.50, #354d68),
         to(#354d68)
     );
+    
 }
 
 ul#topnavlist-tablet li a:hover,
@@ -1780,6 +1813,8 @@ ul.folder{
 
 #topnavlist-tablet{
 	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 		border: black;
 		background: black; 
 		z-index: 1000;
@@ -1816,6 +1851,8 @@ ul#topnavlist-tablet li a  {
 div.toolcontainer{
 	border: #cccccc 1px solid;
 	-webkit-border-radius:5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
@@ -1854,6 +1891,8 @@ div#navigation-column{
 	
 	width: 50%;
 	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 	z-index: 1000;
 	position: absolute; 
 	top: 1.3em;
@@ -1991,6 +2030,8 @@ div.contentbox, input-form{
     overflow:hidden;
     border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 
 div.suggestions{
@@ -2012,6 +2053,8 @@ ul.social_inline_menu{
 .results-hide-show-link-container{
 	border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
 }
 #results-hide-show-link{
 	height: 100%;
@@ -2019,6 +2062,8 @@ ul.social_inline_menu{
 
 #hide-show-container{
 	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 	margin-top: 0.875em;
 	margin-bottom: 0.875em;
 	padding: 0.875em;
@@ -2029,6 +2074,8 @@ ul.social_inline_menu{
 .hide-show-container h4{
 	border: #A9ADB0 solid 1px;
 	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 	margin-top: 0.875em;
 	margin-bottom: 0.875em;
 	padding: 0.875em;
@@ -2093,6 +2140,8 @@ Ensure styling matches that in fl-tabs.*/
 .navigation-bar-button{
     border-width:5px;
     -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+	border-radius: 5px;
 	font-size: 18px;/*keep this in px*/
 	padding: 0 .3em;
 	color: white;
@@ -2108,9 +2157,13 @@ Ensure styling matches that in fl-tabs.*/
         to(#354d68)
     );
  	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+ 	-moz-border-image:url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
     -webkit-border-left-image: none;
+    -moz-border-left-image: none;
     -webkit-background-origin: border;
+    -moz-background-origin: border;
     -webkit-background-clip: border;
+	-moz-background-clip: border;
 	margin-top: .3em;
 	margin-bottom: -1em;
 }
@@ -2128,6 +2181,8 @@ div#content-link-container{
 .content_link_tablet {
 	border-width:5px;
     -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+	border-radius: 5px;
 	font-size: 0.875em;/*keep this in px*/
 	font-size: 18px;
 	/*padding: .1em;*/
@@ -2144,10 +2199,13 @@ div#content-link-container{
         to(#354d68)
     );
  	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+    -moz-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
     -webkit-border-left-image: none;
+    -moz-border-left-image: none;
     -webkit-background-origin: border;
+    -moz-background-origin: border;
     -webkit-background-clip: border;
-   
+    -moz-background-clip: border;
     margin-bottom: -0.25em;
 
 }
@@ -2169,6 +2227,8 @@ div#content-link-container{
 	width: 50%;
 	float: right;
 	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
 	border: 4px solid black;
 	z-index: 1000;
 }
