@@ -68,6 +68,7 @@ body,ul,li {
 
 #contentwrapper{
 	margin-bottom: 3em;
+	padding: .313em;
 }
 #wrapper{
 	width:100%;
@@ -188,6 +189,7 @@ p a:active {
     background-color: transparent;
 }
 
+
 h1, h2, h3, h4, h5, h6 {
     color: #4C566C;
     clear: right;
@@ -198,15 +200,15 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-    font-size: 160%;
+  font-size: 160%;
 	color: #FFF;
 }
-
+ 
 h2 {
     font-size: 150%;
 }
 h2.page-title{
-
+	padding-top: .313em;
 }
 #subnavbacktopage{
 	padding: .313em;
@@ -238,7 +240,9 @@ h3 a {
 	text-decoration: underline;
 }*/
 
+/************************************************************************************************/
 /* Preferences tabs */
+/************************************************************************************************/
 .etabbed-list-container	{
 	padding:0;
 	margin: 0;
@@ -269,8 +273,9 @@ h3 a {
     display: inline;
 }
 
-
+/************************************************************************************************/
 /* link attributes */
+/************************************************************************************************/
 
 .top-tool a: link, .top-tool a:focus{
 	/*text-decoration: none;*/
@@ -284,14 +289,15 @@ a:link, a:hover, a:visited, a:focus  {
 /* main submit button */
 .button {
 	background-color: #808080;
-	font-weight: normal;
 	color: black;
 	text-align: center;
 	-webkit-border-radius:3px;
 	padding-top: 0.313em;
 	padding-bottom: 0.313em;
-
 }
+
+
+
 .button:focus {
 	border:1px solid #A50707;
 	background-color:  #FFDAB9;	
@@ -1890,6 +1896,7 @@ div#contentcolumn{
 	z-index:1000;			
 	width:100%;
 	overflow:hidden;
+	
 }
 
 #leftcolumn{
@@ -2414,7 +2421,8 @@ ul.sequence-links li a:active:before {
 .arrow.back a:after {
      border-width: 6px 6px 6px 0pt;    
      left: 0.188em;
-     top: 0.688em;
+     
+     top: .8em;
 }
 
 .arrow.back:before {
@@ -2443,7 +2451,8 @@ ul.sequence-links li a:active:before {
   	 width:0;
   	 height:0;
   	 right: -0.313em;
-  	 top: 0.688em;
+  	 top: 0.8em;
+  	 
 }
 /* style for "last modified" information of course content*/
 #content-info{
