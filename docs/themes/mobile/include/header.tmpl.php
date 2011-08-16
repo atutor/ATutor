@@ -476,18 +476,13 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 <div id="wrapper">
 <div id="main">
+	
 	<div id="header" role="header">
-
 	<div id="header-section-title">
-			<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
-					echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
-				endif; ?> --> 
-			<h1 id="section-title"><?php echo $this->section_title; ?>
-				<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
-				<!-- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>-->
-				<?php endif; ?>
-				</h1>
+			<h1 id="section-title"><?php echo $this->section_title; ?></h1>
 		</div>
+
+	
 	<div id="navigation-contentwrapper" role="menubar" >
 		
 		
