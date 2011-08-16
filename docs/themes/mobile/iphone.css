@@ -599,7 +599,11 @@ a#back-to {
 .breadcrumbs{
 	display:none;
 }
-h2.page-title, #subnavlistbacktopage {
+h2.page-title  {
+	
+	
+}
+#subnavlistbacktopage{
 	float: left;
 }
 
@@ -1386,18 +1390,24 @@ ul#home-links, ul#home-detail-links {
 }
 .current_list{
 	width: 95%;
-	padding: 0 0.375em;
+	padding: 0.375em;
 }
 .current_list li{
 	list-style-type: none;
-	padding:0;
+	font-style: bold;
+	padding-bottom: .5em;
+	padding-left: .5em;
 	margin:0;
+}
+.current_list_date_time{
+	font-size: 65%;
 }
 .current_list img{
 }
 
-#show-all{
+#show-all, #show-pages{
 	text-align: center;
+	
 }
 /* enrollment tabs */
 #navlist {
