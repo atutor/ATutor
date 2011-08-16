@@ -17,7 +17,7 @@ html, body{
 body,ul,li {
 	padding:0;
 	margin:0;
-	font-size: 19px;/*fix*/
+	font-size: 18px;/*fix*/
 }
 
 
@@ -604,9 +604,9 @@ div#toctoggle {
 }
 
 h1#section-title {
-	font-size: 120%;
+	font-size: 110%;
 	position: absolute;
-	top: .3em;
+	top: 0em;
  	left: 41%; 
 	white-space:nowrap;
 	display: inline;
@@ -2121,7 +2121,6 @@ Ensure styling matches that in fl-tabs.*/
 div#content-link-container{
  	list-style: none; 
 	padding-top: .316em;
-
 	float: right;
 }
  
@@ -2130,10 +2129,12 @@ div#content-link-container{
 	border-width:5px;
     -webkit-border-radius: 5px;
 	font-size: 0.875em;/*keep this in px*/
+	font-size: 18px;
 	/*padding: .1em;*/
 
 	padding: 0 0.313em;
-	margin-right: .5em;
+	margin-right: .313em;
+	margin-right:0;
 	
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
@@ -2337,6 +2338,8 @@ ul#subnavlist li a, ul#subnavlist li a:visited {
 #sequence-links{
 	float: right;
 	padding-right:0;
+	position: relative; 
+	right: -.313em;
 }
 #course-level-navigation{	
 		float: right;
@@ -2422,7 +2425,7 @@ ul.sequence-links li a:active:before {
      border-width: 6px 6px 6px 0pt;    
      left: 0.188em;
      
-     top: .8em;
+     top: .75em;
 }
 
 .arrow.back:before {
@@ -2451,8 +2454,7 @@ ul.sequence-links li a:active:before {
   	 width:0;
   	 height:0;
   	 right: -0.313em;
-  	 top: 0.8em;
-  	 
+  	 top: 0.75em;
 }
 /* style for "last modified" information of course content*/
 #content-info{
