@@ -14,8 +14,9 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
+$_custom_css = $_base_href.'jscripts/infusion/components/uploader/css/Uploader.css';
 
+require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) && 
 	(!isset($_REQUEST['framed']) || !$_REQUEST['framed'])) {
 	$popup = TRUE;
