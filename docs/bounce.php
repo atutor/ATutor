@@ -152,7 +152,7 @@ if (!empty($_REQUEST['pu'])) {
 } elseif (!empty($_REQUEST['p'])) {
 	//For search
     //p is a relative path, check that.  #4773
-    if (strpos('http') !== false) {
+    if (strpos($_REQUEST['p'], 'http') !== false) {
         //if not relative, reset it.
         $_REQUEST['p'] = "";
     }
