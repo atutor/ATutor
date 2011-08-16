@@ -57,6 +57,8 @@ function regenerate_session($reload = false)
 	if(!isset($_SESSION['userAgent']) || $reload)
 		$_SESSION['userAgent'] = $_SERVER['HTTP_USER_AGENT'];
 
+	$session_values = $_SESSION;
+
 	// Set current session to expire in 10 seconds
 	$_SESSION['OBSOLETE'] = true;
 	$_SESSION['EXPIRES'] = time() + 10;
@@ -72,9 +74,7 @@ function regenerate_session($reload = false)
 	session_id($newSession);
 	session_start();
 
-	// Don't want this one to expire
-	unset($_SESSION['OBSOLETE']);
-	unset($_SESSION['EXPIRES']);
+	$_SESSION = $session_values; 
 }
 
 function check_session()
