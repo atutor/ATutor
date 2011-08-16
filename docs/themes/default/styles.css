@@ -27,7 +27,7 @@ body {
 	-moz-border-radius: 1em 1em 1em 1em;
 /*	-moz-box-shadow:.1em .1em  #999999;
 	box-shadow: .1em .1em  #999999;*/
-	background-image: url('images/atutor_head.jpg');
+/*	background-image: url('images/atutor_head.jpg');*/
 	background-position: 0% 0%;
 	background-repeat: repeat-x;
     background-size:auto auto;
@@ -782,6 +782,7 @@ div#error ul, div#feedback ul, div#help ul {
 	list-style: none;
 	margin-left: 0px;
 	padding-left: 0px;
+	list-style-type:none;
 }
 
 div#error ul li{
@@ -975,8 +976,12 @@ div.paging li a:hover, div.paging li a.current {
 
 #header{
 	/* background-image: url('images/pencil_top_ds.png'); */
-	background-position: 99% 99%;
-	background-repeat: no-repeat;
+/*	background-position: 99% 99%;*/
+	background-repeat: repeatx;
+	background-image: url('images/atutor_head.jpg');
+	height:5em;
+	margin-bottom:-2em;
+	padding-bottom: 2em;
 }
 
 #header a{
@@ -1855,10 +1860,9 @@ div.home_box {
 	cursor: move;
 }
 div#subnavlistcontainer {
-	width:95%;
+	width:90%;
 	margin:auto;
-
-	height:auto;
+	height:1.8em;
 
 }
 div#subnavbacktopage {
@@ -1906,7 +1910,8 @@ ul#subnavlist li {
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
   	color: black;
 	text-decoration:none;
-	background-color: #E6E6E6;
+	background-color: #F8F8F8;
+	border-bottom:thin solid #F8F8F8;
 }
 
 ul#subnavlist li a {
@@ -2455,6 +2460,10 @@ width:.9em;
 font-size:100%;
 }
 
+.fl-force-right{
+float:right;	
+	
+}
 img.fl-col{
 height:3.5em;
 width:3.5em;
