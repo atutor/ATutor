@@ -13,6 +13,30 @@
 // $Id$
 
 $_user_location = 'admin';
+/**
+ * A simple method to sign the request with the secret using HMAC.  
+ * @param   String      the URL which we want to sign
+ * @param   String      Use UTC time, gmdate("Y-m-d\TH:i:s\Z");
+ * @param   String      Hashed secret.  Unique per user.   
+ */
+function at_sign_request($url, $timestamp = "", $secretKey = "") {
+    global $dao;
+    $timestamp = gmdate("Y-m-d\TH:i:s\Z");    
+    $queryArray = explode('&', $url);
+    print_r($queryArray);
+
+//    $secretKey = 
+}
+
+/**
+ * Verify request 
+ *
+ */
+function at_verify_request($signedUrl) {
+    
+}
+at_sign_request('a=3&b=4&id=123&approve=12');
+exit;
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
