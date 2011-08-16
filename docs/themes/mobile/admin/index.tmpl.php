@@ -14,7 +14,10 @@
 		if ($this->pages[$page_info['url']]['children']) {
 	
 			foreach ($this->pages[$page_info['url']]['children'] as $child) {
-				echo ' <li  ><a href="'.$child.'">'._AT($this->pages[$child]['title_var']).'</a></li>';
+				// check whether the page is set to be available for mobile themes. @see include/lib/menu_pages.php
+				if (page_available($child)) {
+					echo ' <li  ><a href="'.$child.'">'._AT($this->pages[$child]['title_var']).'</a></li>';
+				}
 			}
 			
 		}

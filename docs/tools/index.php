@@ -28,7 +28,9 @@ foreach ($keys as $module_name) {
 		if (isset($_pages[$parent]['children'])) {
 			echo '<ul class="child-top-tool">';
 			foreach ($_pages[$parent]['children'] as $child) {
-				echo '<li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</a></li>';
+				if (page_available($child)) {
+					echo '<li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</a></li>';
+				}
 			}
 			echo '</ul>';
 		}
