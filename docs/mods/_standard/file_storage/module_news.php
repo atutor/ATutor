@@ -39,8 +39,8 @@ function file_storage_news() {
 			      'alt'=>_AT('download'),
 			      'thumb'=>'images/application_get.png', 
 			      'link'=>'<a href="bounce.php?course='.$row['owner_id'].'&p='.urlencode('mods/_standard/file_storage/index.php?download=1'.SEP.'files[]='. $row['file_id']).'"'.
-		          (strlen($filetext) > SUBLINK_TEXT_LEN ? ' title="'.$filetext.'"' : '') .'>'. 
-		          validate_length($filetext, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
+		          (strlen($filetext) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($filetext, 'input.text').'"' : '') .'>'. 
+		          AT_print(validate_length($filetext, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'input.text') .'</a>');
 		}
 	}
 	return $news;
