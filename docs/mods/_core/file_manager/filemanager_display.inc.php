@@ -277,7 +277,7 @@ if (TRUE || $framed != TRUE) {
         <script type="text/javascript">
             var myUploader = fluid.uploader(".flc-uploader", {
                 queueSettings: {
-                    uploadURL: '/atutor/mods/_core/file_manager/upload.php',
+                    uploadURL: '<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/upload.php',
                     fileUploadLimit: 5,
                     fileQueueLimit: 2,
                     postParams: {pathext: '<?php echo $pathext; ?>', type: 'ajax', submit: 'submit'},
