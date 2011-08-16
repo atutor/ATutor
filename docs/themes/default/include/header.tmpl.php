@@ -76,12 +76,7 @@ global $system_courses, $_custom_css, $db;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 <?php endif; ?>
-	    <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-reset-global.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-base-global.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-text.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion/framework/fss/css/fss-layout.css" />
-        <link rel="stylesheet" type="text/css" href="<?php echo $this->base_href; ?>jscripts/infusion//components/uploader/css/Uploader.css" />
-        
+
     <!-- Fluid and jQuery Dependencies -->
     <script type="text/javascript" src="<?php echo $this->base_href; ?>jscripts/infusion/InfusionAll.js"></script>
         
