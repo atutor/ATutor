@@ -22,15 +22,16 @@ if (admin_authenticate(AT_ADMIN_PRIV_PATCHER, TRUE) || admin_authenticate(AT_ADM
 	$this->_pages[AT_NAV_ADMIN] = array('mods/_standard/patcher/index_admin.php');
 	$this->_pages['mods/_standard/patcher/index_admin.php']['title_var'] = 'patcher';
 	$this->_pages['mods/_standard/patcher/index_admin.php']['parent']    = AT_NAV_ADMIN;
-
+	$this->_pages['mods/_standard/patcher/index_admin.php']['avail_in_mobile']   = false;
+	
 	$this->_pages['mods/_standard/patcher/index_admin.php']['children'] = array('mods/_standard/patcher/myown_patches.php','mods/_standard/patcher/patch_create.php');
 	$this->_pages['mods/_standard/patcher/myown_patches.php']['title_var'] = 'myown_patches';
 	$this->_pages['mods/_standard/patcher/myown_patches.php']['parent']   = 'mods/_standard/patcher/index_admin.php';
-
+	
 	$this->_pages['mods/_standard/patcher/myown_patches.php']['children'] = array('mods/_standard/patcher/patch_create.php');
 	$this->_pages['mods/_standard/patcher/patch_create.php']['title_var'] = 'create_patch';
 	$this->_pages['mods/_standard/patcher/patch_create.php']['parent']   = 'mods/_standard/patcher/myown_patches.php';
-
+	
 	$this->_pages['mods/_standard/patcher/patch_edit.php']['title_var'] = 'edit_patch';
 	$this->_pages['mods/_standard/patcher/patch_edit.php']['parent']   = 'mods/_standard/patcher/myown_patches.php';
 

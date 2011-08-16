@@ -280,7 +280,10 @@ if ($_config['check_version']) {
 		if ($_pages[$page_info['url']]['children']) {
 			echo '<ul class="child-top-tool">';
 			foreach ($_pages[$page_info['url']]['children'] as $child) {
-				echo ' <li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</a></li>';
+				// check whether the page is set to be available for mobile themes. @see include/lib/menu_pages.php
+				if (page_available($child)) {
+					echo ' <li class="child-tool"><a href="'.$child.'">'._AT($_pages[$child]['title_var']).'</a></li>';
+				}
 			}
 			echo '</ul>';
 		}

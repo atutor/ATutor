@@ -276,6 +276,42 @@ $_pages['inbox/export.php']['parent']    = 'inbox/index.php';
 $_pages['profile.php']['title_var'] = 'profile';
 $_pages['profile.php']['parent']    = 'index.php';
 
+/**
+ * Iterate $_pages, distribute the "avail_in_mobile" setting on the parent page to all its child pages
+ * as long as it's not initially set on the child page.
+ * @param $this_page - string, the page location used as a key in $_pages
+ */ 
+function distribute_avail_in_mobile($this_page) {
+	global $_pages;
+	// return in the cases:
+	// 1. the given page is not defined in $_pages 
+	// 2. it does not have any child
+	// 3. the given page does not have "avail_in_mobile" setting defined
+	if (!isset($_pages[$this_page]) || !isset($_pages[$this_page]["avail_in_mobile"]) || 
+	    !isset($_pages[$this_page]['children']) || !is_array($_pages[$this_page]['children'])) {
+    	return;
+	}
+	
+	foreach ($_pages[$this_page]['children'] as $child_page) {
+		// Initial "avail_in_mobile" setting on the child page wins over the one fromt the parent
+		if (!isset($_pages[$child_page])) {
+			continue;
+		} else {
+			if (!isset($_pages[$child_page]["avail_in_mobile"])) {
+				$_pages[$child_page]["avail_in_mobile"] = $_pages[$this_page]["avail_in_mobile"];
+			}
+			distribute_avail_in_mobile($child_page);
+		}
+	}
+}
+
+// The page can be turned on/off in mobile themes by adjusting page setting "avail_in_mobile" in module.php
+// Here is to populate this setting to child pages.
+if (is_mobile_device()) {
+	foreach ($_pages as $page => $garbage) {
+		distribute_avail_in_mobile($page);
+	}
+}
 
 $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
 
@@ -294,6 +330,20 @@ function get_num_new_messages() {
     return $num_messages;
 }
 
+/**
+ *  Check the page availability
+ *  The page is unavailable if it's accessed by mobile device and the setting "avail_in_mobile" is set to false
+ *  @param	$this_page - string, the page location used as a key in $_pages 
+ */
+function page_available($this_page) {
+	global $_pages;
+	if (is_mobile_device() && isset($_pages[$this_page]["avail_in_mobile"]) && !$_pages[$this_page]["avail_in_mobile"]) {
+		return false;
+	} else {
+		return isset($_pages[$this_page]);
+	}
+}
+
 //TODO****************BOLOGNA*******************REMOVE ME**********************/
 function get_main_navigation($current_page) {
     global $_pages, $_base_path, $_tool;
@@ -305,7 +355,7 @@ function get_main_navigation($current_page) {
 
     if (isset($parent_page) && defined($parent_page)) {
         foreach($_pages[$parent_page] as $page) {
-            if (isset($_pages[$page])) {
+        	if (page_available($page)) {
                 if (isset($_pages[$page]['title'])) {
                     $_page_title = $_pages[$page]['title'];
                 } else {
@@ -347,8 +397,8 @@ function get_sub_navigation($current_page) {
     if (isset($current_page) && defined($current_page)) {
     // reached the top
         return array();
-    } else if (isset($_pages[$current_page]['children'])) {
-            if (isset($_pages[$current_page]['title'])) {
+    } else if (isset($_pages[$current_page]['children']) && page_available($current_page)) {
+    		if (isset($_pages[$current_page]['title'])) {
                 $_page_title = $_pages[$current_page]['title'];
             } else {
                 $_page_title = _AT($_pages[$current_page]['title_var']);
@@ -356,8 +406,9 @@ function get_sub_navigation($current_page) {
 
             $_sub_level_pages[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
             foreach ($_pages[$current_page]['children'] as $child) {
-
-                if (isset($_pages[$child]['title'])) {
+            	if (!page_available($child)) continue;
+            	
+            	if (isset($_pages[$child]['title'])) {
                     $_page_title = $_pages[$child]['title'];
                 } else {
                     $_page_title = _AT($_pages[$child]['title_var']);
@@ -377,6 +428,9 @@ function get_sub_navigation($current_page) {
 
 function get_current_sub_navigation_page($current_page) {
     global $_pages, $_base_path;
+    
+    if (!page_available($current_page)) return;
+    
     $parent_page = $_pages[$current_page]['parent'];
 
     if (isset($parent_page) && defined($parent_page)) {
@@ -389,6 +443,12 @@ function get_current_sub_navigation_page($current_page) {
 function get_path($current_page) {
     global $_pages, $_base_path;
 
+    $path = array();
+    
+    if (!page_available($current_page)){
+    	return $path;
+    }
+     
     $parent_page = $_pages[$current_page]['parent'];
 
     if (isset($_pages[$current_page]['title'])) {
@@ -419,7 +479,7 @@ function get_home_navigation($home_array='') {
 
     $home_links = array();
     foreach ($home_array as $child) {                                           //esecuzione del ciclo fin quando non saranno terminati i moduli presenti nella home-page del corso
-        if (isset($_pages[$child])) {
+        if (page_available($child)) {
         // initialization
             $title = $icon = $sub_file = $image = $text = $tool_file = $table ='';
 
