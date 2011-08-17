@@ -35,7 +35,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_LANGUAGES, TRUE) || admin_authenticate(AT_A
 
 	$this->_pages['mods/_core/languages/language_editor.php']['title_var'] = 'editor';
 	$this->_pages['mods/_core/languages/language_editor.php']['parent']    = 'mods/_core/languages/language.php';
-
+	$this->_pages['mods/_core/languages/language_editor.php']['avail_in_mobile']   = false;
+	
 	$this->_pages['mods/_core/languages/language_term.php']['title_var'] = 'editor';
 }
 ?>
