@@ -3,8 +3,8 @@
 	<div class="input-form">
 		
 			<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
-		<div id="results-hide-show-simple-content" class="hide-show-container-surround content-expand">		
-			<a id="results-hide-show-link"  href="javascript:void(0);" tabindex="1">Refine Results</a>
+		<div id="results-hide-show-simple-content" class="hide-show-container-surround">		
+			<a id="results-hide-show-link" class="content-expand" href="javascript:void(0);" tabindex="1">Refine Results</a>
 		</div>
 	
 		
