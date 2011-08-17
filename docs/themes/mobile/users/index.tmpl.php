@@ -1,7 +1,7 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 
 <div id="my_courses_container">
-<ul class="my-courses-list-ul" style="padding:0">
+<ul class="my-courses-list-ul" >
 
 <?php foreach ($this->courses as $row):
 	static $counter;
