@@ -8,9 +8,10 @@ $this->_pages['mods/_standard/course_tools/modules.php']['title_var'] = 'course_
 $this->_pages['mods/_standard/course_tools/modules.php']['parent']    = 'tools/index.php';
 $this->_pages['mods/_standard/course_tools/modules.php']['children']  = array('mods/_standard/course_tools/side_menu.php');
 $this->_pages['mods/_standard/course_tools/modules.php']['guide']     = 'instructor/?p=student_tools.php';
+$this->_pages['mods/_standard/course_tools/modules.php']['avail_in_mobile']   = false;
 
 	$this->_pages['mods/_standard/course_tools/side_menu.php']['title_var'] = 'side_menu';
 	$this->_pages['mods/_standard/course_tools/side_menu.php']['parent']    = 'mods/_standard/course_tools/modules.php';
 	$this->_pages['mods/_standard/course_tools/side_menu.php']['guide']     = 'instructor/?p=side_menu.php';
-
+	$this->_pages['mods/_standard/course_tools/side_menu.php']['avail_in_mobile']   = false;
 ?>
