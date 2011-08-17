@@ -282,8 +282,11 @@ link highlighting -- add when the header and footer is done
 }
 /* link attributes */
 a:link, a:hover, a:visited, a:focus  {
-/*NOT DONE*/
-	
+ 	color: #4C96F4;
+
+}
+.fl-list-menu a, .fl-list-menu a:visited{ /*may need to be removed when FLUID-4313 is fixed*/
+	color: black;
 }
 
 /* main submit button */
@@ -1044,14 +1047,16 @@ div.paging li a {
 	text-decoration: none;
 	padding-left: 0.25em;
 	padding-right: 0.25em;
-	border-left: 1px solid white;
-	border-right: 1px solid white;
+	color: black;
 }
 
 div.paging li a:hover, div.paging li a.current {
-   border-left: 1px solid #000;
-   border-right: 1px solid #000;
-   color: black;
+   border: 1px solid #4c96f4;
+   color: white;
+   background-color: #4c96f4;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
 }
 
 #tl_corner{
@@ -1318,17 +1323,22 @@ ul#home-links, ul#home-detail-links {
 	
 }
 
-#my-courses-navlist{
-}
 .my-courses-list{
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:5px;
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 	padding: .313em;
-	color: #4C566C;
 	margin: .313em;
 	padding: .313em;
+	
+}
+.my-courses-list a{
+	color: black;
+}
+.my-courses-list a:active, .my-courses-list a:focus, .my-courses-list a:hover {
+	
+	background-color: #4c96f4;
 }
 .my-courses-list-ul{
 	margin: 0 auto;
@@ -1368,6 +1378,11 @@ ul#home-links, ul#home-detail-links {
 	padding-left: .5em;
 	margin:0;
 }
+.current_list li a:active, .current_list li a:focus, .current_list li a:hover{
+	color: white; 
+	background-color: #4C96F4;
+}
+
 .current_list_date_time{
 	font-size: 65%;
 }
@@ -1564,26 +1579,6 @@ legend.group_form{
 	-moz-border-radius: 8px;
 	border-radius: 8px;
 }
-
-/*The following three rules create the workaround for highlighting in the "Navigation" bar drop down menu, but also applies to links sitewise.
-.buttontab hover addresses the Mobile FSS bug http://issues.fluidproject.org/browse/FLUID-4313 and is applied to 
-elements in the theme header and footer. Should be removed when the FSS issue is fixed. highlight active links for WCAG 2.0 conformance
-
-a:active:not(#results-hide-show-link), 
-a:hover:not(#results-hide-show-link),
-a:focus:not(#results-hide-show-link),
-.buttontab-hover{
- 	color: #fff;
- 	/*
-    .fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a
-    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-    color: black;
-	border: 1px #DEE7EC solid;
-	-webkit-border-radius:5px;
-	background: #DEE7EC;
-  
-}*/
 
 /*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
 Ensure styling matches that in fl-tabs.*/
