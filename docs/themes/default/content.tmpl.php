@@ -56,7 +56,7 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") {
 <?php
 
 if (!empty($this->forum_ids)): ?>
-<div id="content-test" class="input-form">
+<div id="content-forum" class="input-form">
     <ol>
         <strong><?php echo _AT('forums') . ':' ; ?></strong>
         <li class="top-tool"><?php echo $this->forum_message; ?></li>

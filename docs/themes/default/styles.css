@@ -979,7 +979,7 @@ div.paging li a:hover, div.paging li a.current {
 /*	background-position: 99% 99%;*/
 	background-repeat: repeatx;
 	background-image: url('images/atutor_head.jpg');
-	height:5em;
+	height:4em;
 	margin-bottom:-2em;
 	padding-bottom: 2em;
 }
@@ -1328,6 +1328,27 @@ div#content-test ol ul li{
 	border-bottom: 1px solid #efefef; 
 	border: 1px solid #eeeeff;
 }
+
+div#content-forum {	
+	float: left;
+	margin-top: 2em;
+	padding-right: 5pt;
+	width: 80%;
+}
+div#content-forum ol{	
+	margin-right: 5pt;	
+}
+
+div#content-forum ol ul li{
+	list-style: none;
+	padding: 0px 2px 0px 15px;
+	margin-bottom: 1px; 
+	line-height: 200%; 
+	background-color: #fdfdfd; 
+	border-bottom: 1px solid #efefef; 
+	border: 1px solid #eeeeff;
+}
+
 
 div#content-info {
 	margin: 5pt;

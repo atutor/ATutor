@@ -64,7 +64,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 <?php
 
 if (!empty($this->forum_ids)): ?>
-<div id="content-test" class="input-form">
+<div id="content-forum" class="input-form">
     <ol>
         <strong><?php echo _AT('forums') . ':' ; ?></strong>
         <li class="top-tool"><?php echo $this->forum_message; ?></li>
