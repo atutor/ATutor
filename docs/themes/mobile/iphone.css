@@ -313,7 +313,7 @@ h3 a {
 /************************************************************************************************/
 a:link, /*a:visited*/ a:focus  {
 	color: #4C566C;
-	text-decoration: underline;
+	
 }
 .top-tool a:link, .top-tool a:focus{
 	text-decoration: none;	
@@ -1377,18 +1377,14 @@ ul#home-links, ul#home-detail-links {
 	padding-bottom: 0.875em;
 	display: inline;
 }
-.fl-list-menu li a {
-}
-.fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a {
-}
+
 .fl-theme-iphone [class*="fl-list"] > li .fl-link-summary{
 	color: #4C566C;
 }
 .current_head{
 	padding-top: .5em;
 }
-.fl-list-menu {
-}
+
 .current_box{
 	max-width: 100%;
 }
@@ -1597,11 +1593,11 @@ legend.group_form{
 
 /* highlight active links for WCAG 2.0 conformance */
 
-a:active, a:hover, a:focus, .buttontab-hover{
+a:active:not(.subnavcontain a), a:hover:not(.subnavcontain a), a:focus:not(.subnavcontain a), .buttontab-hover{
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-  
+ 
 }
 
 /*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
@@ -2212,11 +2208,15 @@ ul.sequence-links li a:active:before {
 	text-decoration: none;
 	font-weight: bold; 
 	color: #005689;
-	background: none;
+	background-repeat: no-repeat;
+	
 }
 
-.fl-theme-iphone #subnavlist-link a:active, .fl-theme-iphone #subnavlist-link a:hover, .fl-theme-iphone #subnavlist-link a:focus{
-	background: none;
+
+.fl-theme-iphone #subnavlist-link  a:active, 
+.fl-theme-iphone #subnavlist-link  a:hover, 
+.fl-theme-iphone #subnavlist-link a:focus{
+	background-color: none;
 	color: red;
 	}
 .fl-theme-iphone .subnavcontain{
