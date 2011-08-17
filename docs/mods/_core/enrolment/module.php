@@ -21,6 +21,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE) || admin_authenticate(AT_
 	$this->_pages['mods/_core/enrolment/admin/privileges.php']['title_var'] = 'privileges';
 	$this->_pages['mods/_core/enrolment/admin/privileges.php']['parent']    = 'mods/_core/enrolment/admin/index.php';
 	$this->_pages['mods/_core/enrolment/admin/privileges.php']['guide']     = 'admin/?p=enrollment_privileges.php';
+	$this->_pages['mods/_core/enrolment/admin/privileges.php']['avail_in_mobile']   = false;
+	
 
 	// linked from users.php
 	$this->_pages['admin/user_enrollment.php']['title_var'] = 'enrollment';
