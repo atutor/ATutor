@@ -84,6 +84,7 @@ jQuery('#subnavlist-link').click(function(e) {
   e.stopPropagation();
   
   jQuery('#subnavlist').slideToggle();
+  jQuery('#subnavlist-link').toggleClass('content-closed');
    
   ";
 $this->onload .= "});
@@ -207,7 +208,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <?php endif; ?>
 
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
-		
+	<!-- Fluid Infusion mobile fss extension.. remove when it is committed to Mobile FSS -->
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/moz.css" type="text/css" />	
 	<!-- Fluid Infusion -->
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
@@ -443,7 +445,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 								<?php for ($i=0; $i<$num_pages; $i++): ?>	
 									<?php if($i==0): ?>
 				
-									<a id="subnavlist-link" href="javascript:void(0);" style="display: block;">Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
+									<a id="subnavlist-link" class="content-expand" href="javascript:void(0);" style="display: block;">Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
 									<?php endif; ?>
 								<?php endfor;?>
 					</div>
