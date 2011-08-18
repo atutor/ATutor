@@ -30,7 +30,7 @@ $this->_pages['mods/_standard/reading_list/index_instructor.php']['title_var'] =
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['parent']   = 'tools/index.php';
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['children'] = array('mods/_standard/reading_list/display_resources.php');
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['guide'] = 'instructor/?p=reading_list.php';
-
+$this->_pages['mods/_standard/reading_list/index_instructor.php']['avail_in_mobile']   = false;
 
 	$this->_pages['mods/_standard/reading_list/add_resource_url.php']['title_var'] = 'rl_add_resource_url';
 	$this->_pages['mods/_standard/reading_list/add_resource_url.php']['parent']    = 'mods/_standard/reading_list/display_resources.php';
