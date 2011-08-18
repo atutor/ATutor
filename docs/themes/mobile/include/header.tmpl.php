@@ -95,9 +95,9 @@ jQuery('#content_link_phone').click(function(e) {
   e.stopPropagation();
   
   jQuery('#content').slideToggle();
-  jQuery('#content-link-surround').toggleClass('content-closed');
+ 
   jQuery('#content_link_phone').toggleClass('topnavlist-link-highlight');
-  
+  jQuery('#content_link_phone').toggleClass('content-closed'); 
   ";
 $this->onload .= "});
 ";
@@ -322,7 +322,48 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 		<div id="inner-contentwrapper" class="fl-container" >
 
-
+		
+				<?php if (isset($this->back_to_page)): ?>
+					<a href="<?php echo $this->back_to_page['url']; ?>">
+					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
+				<?php endif; ?>
+			
+		<!-- the sub navigation -->
+		<div id="subnavbacktopage">
+		<?php if (count($this->sub_level_pages) > 0): ?>
+			
+			<div id="subnavlistcontainer">
+				
+				<!-- id="subnavlist" -->
+			<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
+				<div class="subnavcontain">
+					<div class="rectangle">
+						<?php $num_pages = count($this->sub_level_pages); ?>	
+								<?php for ($i=0; $i<$num_pages; $i++): ?>	
+									<?php if($i==0): ?>
+				
+									<a id="subnavlist-link" class="content-expand" href="javascript:void(0);" style="display: block;">Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
+									<?php endif; ?>
+								<?php endfor;?>
+					</div>
+				</div>
+					<ul id="subnavlist" class="fl-list-menu" style="display: none;">
+					<?php $num_pages = count($this->sub_level_pages); ?>	
+					<?php for ($i=0; $i<$num_pages; $i++): ?>				
+						<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
+							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li> 
+						<?php else: ?>
+							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+						<?php endif; ?>
+					<?php if ($i < $num_pages-1): 
+						echo " ";?>
+					<?php endif; ?>
+					<?php endfor; ?>
+					</ul>
+				</div>
+			</div>	
+		<?php endif; ?>
+	</div> <!--  end subnavbacktopage->	
 
 	<div id="contentcolumn">	
 		
@@ -374,12 +415,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 			<div class="subnavcontain">
 				<div class="rectangle">
-				<a id="content_link_phone"  href="javascript:void(0);" >View Course Content</a> 
+				<a id="content_link_phone"  class="content-expand" href="javascript:void(0);" >View Course Content</a> 
 				<!-- <a href="#">content</a> -->
 				</div>
 			</div>
 					
-		<div id="content" style=" display: none; position: absolute; top: 9em; clear: left; clear: right; z-index: 1;">
+		<div id="content" style=" display: none; position: relative; top: 0em; clear: left; clear: right; z-index: 1;">
 			<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript"></script>
 		</div>
@@ -424,52 +465,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			
 	</div>
 	<?php endif; ?>	
-</div>
-		
-				<?php if (isset($this->back_to_page)): ?>
-					<a href="<?php echo $this->back_to_page['url']; ?>">
-					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
-				<?php endif; ?>
-				</div>
-		<!-- the sub navigation -->
-		<div id="subnavbacktopage">
-		<?php if (count($this->sub_level_pages) > 0): ?>
-			
-			<div id="subnavlistcontainer">
-				
-				<!-- id="subnavlist" -->
-			<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
-				<div class="subnavcontain">
-					<div class="rectangle">
-						<?php $num_pages = count($this->sub_level_pages); ?>	
-								<?php for ($i=0; $i<$num_pages; $i++): ?>	
-									<?php if($i==0): ?>
-				
-									<a id="subnavlist-link" class="content-expand" href="javascript:void(0);" style="display: block;">Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
-									<?php endif; ?>
-								<?php endfor;?>
-					</div>
-				</div>
-					<ul id="subnavlist" class="fl-list-menu" style="display: none;">
-					<?php $num_pages = count($this->sub_level_pages); ?>	
-					<?php for ($i=0; $i<$num_pages; $i++): ?>				
-						<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li> 
-						<?php else: ?>
-							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-						<?php endif; ?>
-					<?php if ($i < $num_pages-1): 
-						echo " ";?>
-					<?php endif; ?>
-					<?php endfor; ?>
-					</ul>
-				</div>
-			</div>	
-		<?php endif; ?>
-		<?php debug($this->sub_level_pages);?>
+
+
 	
 		<!-- the sub navigation -->
 <?php endif; ?>
+
 
 
 <!--  end header template for iphone, android, blackberry -->
