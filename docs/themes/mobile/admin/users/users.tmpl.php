@@ -4,7 +4,7 @@
 	<div class="input-form">
 	<div id="results-hide-show-simple-content" class="hide-show-container-surround ">	
 			
-			<a id="results-hide-show-link"  class="content-expand"href="javascript:void(0);" tabindex="1">Refine Results</a>
+			<a id="results-hide-show-link"  class="content-expand" href="javascript:void(0);" tabindex="1">Refine Results</a>
 	</div>
 		
 	<div id="results-hide-show" role="search"  aria-live="assertive">
