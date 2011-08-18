@@ -10,6 +10,7 @@ $this->_pages['mods/_core/groups/index.php']['title_var'] = 'groups';
 $this->_pages['mods/_core/groups/index.php']['parent']    = 'tools/index.php';
 $this->_pages['mods/_core/groups/index.php']['children']  = array('mods/_core/groups/create.php');
 $this->_pages['mods/_core/groups/index.php']['guide']  = 'instructor/?p=groups.php';
+$this->_pages['mods/_core/groups/index.php']['avail_in_mobile']   = false;
 
 	$this->_pages['mods/_core/groups/edit_group.php']['title_var'] = 'edit';
 	$this->_pages['mods/_core/groups/edit_group.php']['parent']    = 'mods/_core/groups/index.php';
