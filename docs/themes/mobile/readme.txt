@@ -1,19 +1,141 @@
-
-
+******************************
 Theme:		1.6.4 Mobile Theme
-Date:		
+Date:	
+******************************
 
 
 Installing:	 See section "Installing a New Theme" in the themes_readme.txt file located in the themes/ top directory.
 Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.html.
+
+
+What's new: 
+============
+
+/mobile.css 
+* style for android, iphone, & ipod rolled into one stylesheet
+* improved subnavigation and in-course navigation
+
+/tablet.css 
+* new style for tablet devices, beginning with -webkit browsers
+* generic CSS used to broaden browser support
+
+include/header.tmpl.php
+* accessibility: increased support for ARIA roles that Safari recognizes. Note: ARIA roles create HTML validation errors.
+
+Known Issues
+============
+
+* "Activation hightlighting is visible on the desktop but not the on the mobile device"
+** http://issues.fluidproject.org/browse/FLUID-4313
+** affects fl-lists including:
+*** the "Navigation" menus on mobiles and tablets after a link is highlighted 
+*** docs/users/browse.php in mobile and tablets
+
+Omitted from mobile/
+====================
+Administrator user: 
+*Patcher 
+*/docs/mods/_core/cats_categories/admin/course_categories.php
+*/docs/mods/_core/enrolment/admin/privileges.php 
+*/docs/mods/_core/modules/install_modules.php
+*/docs/mods/_core/languages/language_editor.php
+
+Instructor user: 
+*/docs/mods/_standard/assignments/add_assignment.php
+*Course Tools
+*/docs/mods/_core/enrolment/create_course_list.php
+*/docs/mods/_core/enrolment/privileges.php
+*mods/_core/file_manager/index.php
+*reading list
+*student tools
+
+Accessibility & validation issues 
+=================================
+
+
+
+
+Admin USERS & COURSES --> a bit of improvement on the styling 
+Turn circle plusses to top/down
+
+
+
+Tasks
+============
+
+- Do a11y and HTML check of index, browse, preferences page. 
+- remove inline styles from header.tmpl.php
+- Do arrow highlighting. 
+- Find cross-browser styles in the CSS that was committed to mobile FSS for: 
+-webkit-border-image, -webkit-border-left-image, -webkit-background-origin: border, -webkit-background-clip: border;
+
+
+- pages where "topics in" doesn't make sense.
+- css +/-
+- link attributes
+
+
+
+- in the subnavigation list and the topnavigation list, the arrows should turn white. 
+
+Templating done: 
+- http://localhost/GSoC2011/docs/users/browse.php
+- http://localhost/GSoC2011/docs/users/profile.php
+- http://localhost/GSoC2011/docs/mods/_standard/social/index_mystart.php
+
+Next week: 
+- theme the breadcrumbs 
+- when a user is logged into a course, if they press home, it logs them out somehow. 
+- if a page is "too short" the navigation menu, if long, can't be scrolled down. e.g. administrator menu. 
+- underlines in the 'administrative' menu. 
+- template & validate all the main student pages. 
+- login version of iphone issues with markup. 
+
+ 
+ For the submit: 
+ - subnavlistcontainer ARIA landmark
+- order of links inside a course -- should be made different. Home, Navigation, Course, etc. 
+- Document the accessibility steps and mobile best practices taken
+-- Added:: Home/Guide - menu/menuitem. Navigation - menu/menuitem. Aria now in the footer as well. 
+-- Followed: http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/AccessibilityRoles.html
+- Simplify/shorten style sheets - easy task to do when ired. 
+- Deal with android.css through making the default iphone/android css more facebook-like in color-scheme. 
+- Create a nested navigation menu. 
+- Simplified desktop theme
+
+Longer-term/desired: 
+- Created CSS icons or image-based icons to replace certain[what]links, give them very descriptive titles. 
+
+
+
+
+
 	
-	
+TABLET TASKS & BUGS
+
+(1) LAYOUT
+- content navigation
+- jquery: browse courses +/- button, - hide show container + and -'s
+- sequence links - need to display 
+- margins should not cut off on very short content. 
+- jquery: navigation hover should appear instantly. 
+- templating email, social networking. 
+
+(2) COLOR SCHEME
+- tablet should match IDI default. 
+- highlight issues - bring to WCAG AA: Subnaviagation, links. 
+
+- retrofit header of tablet theme with classes fl-navbar fl-table
+- a fully-expanded, long content-navigation menu should "push" the footer down.
+
 GLOBAL TASKS & BUGS (all devices) ----------------------------------------------------------------
 
+- remove any remaining inline styles from header.tmpl.php
 - MOBILE FSS BUG: Create a workaround for Mobile FSS bug  ***In Process
     See: http://issues.fluidproject.org/browse/FLUID-4313
     - white list arrow should change color >
     - top navigation bar "home" & "help" buttons should highlight. 
+- the "home" ? 
 - student user: filtering & highlight links.
 - make skip links image the same color as the header (iphone, android)  
 - ARIA roles review for navigational menu in tablet theme
@@ -105,7 +227,7 @@ NOTE there are 3 errors in HTML validator due to using an ARIA role.
 [COURSES]
 1.  /docs/mods/_core/courses/admin/courses.php **** DONE / WCAG AA / Valid HTML (note: lacks fieldset, added onkeydown)
 2.  /docs/mods/_core/properties/admin/edit_course.php *** DONE (Linearizes)
-3.  /docs/mods/_standard/forums/admin/forums.php ****NOT DONE HTML (note: lacks fieldset, added onkeydown)
+3.  /docs/mods/_standard/forums/admin/forums.php ****DONE HTML (note: lacks fieldset, added onkeydown)
 4.  /docs/mods/_standard/forums/admin/forum_add.php **** DONE / WCAG AA / Valid HTML
 5.  /docs/mods/_standard/forums/admin/forum_edit.php **** DONE / WCAG AA / Valid HTML
 6.  /docs/mods/_core/courses/admin/create_course.php *** DONE (Linearizes)
@@ -185,13 +307,13 @@ NOT DONE: /docs/mods/_standard/assignments/add_assignment.php **** NOT DONE, rem
 
 [CONTENT]
 /docs/mods/_core/content/index.php  **** DONE 
-http://localhost/GSoC2011/docs/mods/_core/editor/edit_content_folder.php?cid=240 **** DONE 
+/docs/mods/_core/editor/edit_content_folder.php?cid=240 **** DONE 
 /docs/mods/_standard/tracker/tools/page_student_stats.php **** DONE 
 /docs/mods/_standard/tracker/tools/index.php  **** DONE 
-http://localhost/GSoC2011/docs/mods/_standard/tracker/tools/student_usage.php **** DONE 
-http://localhost/GSoC2011/docs/mods/_standard/tracker/tools/reset.php ***** DONE 
+/docs/mods/_standard/tracker/tools/student_usage.php **** DONE 
+/docs/mods/_standard/tracker/tools/reset.php ***** DONE 
 /docs/mods/_core/editor/add_content.php **** NOT DONE, remove for mobile? 
-http://localhost/GSoC2011/docs/mods/_core/editor/edit_content.php? **** NOT DONE, remove for mobile? (link from /index.php should be removed)
+/docs/mods/_core/editor/edit_content.php? **** NOT DONE, remove for mobile? (link from /index.php should be removed)
 
 [COURSE EMAIL] 
 http://localhost/GSoC2011/docs/mods/_standard/course_email/course_email.php **** DONE 
@@ -260,5 +382,6 @@ NOT DONE: /docs/mods/_standard/student_tools/instructor_index.php
 ----------------------------------------------------------------------------------------
 TABLET TEMPLATE: STUDENT 
 
-/docs/login.php
-
+/docs/login.php - WCAG AA / Valid HTML
+/docs/browse.php - WCAG AA / Valid HTML
+/docs/registration.php
