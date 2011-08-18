@@ -116,7 +116,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$parent_name = $post_row['subject'];
 
-	echo '<ul id="forum-thread">';
+	echo '<ul class="forum-thread">';
 	print_entry($post_row);
 	$subject = $post_row['subject'];
 	if ($_GET['reply'] == $post_row['post_id']) {
@@ -163,7 +163,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 		}
 		echo '</div>';
-		echo '<ul id="forum-thread">';
+		echo '<ul class="forum-thread">';
 	
 		while ($row = mysql_fetch_assoc($result)) {
 			print_entry($row);
