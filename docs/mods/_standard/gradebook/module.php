@@ -43,6 +43,7 @@ $this->_pages['mods/_standard/gradebook/gradebook_tests.php']['title_var'] = 'gr
 $this->_pages['mods/_standard/gradebook/gradebook_tests.php']['parent']    = 'tools/index.php';
 $this->_pages['mods/_standard/gradebook/gradebook_tests.php']['guide']     = 'instructor/?p=gradebook.php';
 $this->_pages['mods/_standard/gradebook/gradebook_tests.php']['children']  = array('mods/_standard/gradebook/gradebook_add_tests.php', 'mods/_standard/gradebook/update_gradebook.php', 'mods/_standard/gradebook/import_export_external_marks.php', 'mods/_standard/gradebook/edit_marks.php', 'mods/_standard/gradebook/grade_scale.php');
+$this->_pages['mods/_standard/gradebook/gradebook_tests.php']['avail_in_mobile']   = false;
 
 $this->_pages['mods/_standard/gradebook/gradebook_add_tests.php']['title_var'] = 'add_tests';
 $this->_pages['mods/_standard/gradebook/gradebook_add_tests.php']['parent']    = 'mods/_standard/gradebook/gradebook_tests.php';
