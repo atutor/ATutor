@@ -1511,9 +1511,9 @@ overflow:hidden;
 }
 
 /** forum stuff **/
-#forum-thread li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
-#forum-thread li.even { background-color: #F7F3ED; border-top: none;  margin-top:.5em;}
-#forum-thread li.odd { background-color: #fff; margin-top:1em;}
+.forum-thread li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
+.forum-thread li.even { background-color: #F7F3ED; border-top: none;  margin-top:.5em;}
+.forum-thread li.odd { background-color: #fff; margin-top:1em;}
 div.forum-post-author { float:left; width:150px; padding:8px 10px; }
 div.forum-post-author a.title {font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
 div.forum-post-author img.profile-picture { border: 2px solid #F7F3ED; text-align:right;}

@@ -1393,9 +1393,9 @@ img.headicon {
 
 
 /** forum stuff **/
-#forum-thread li { clear:left; border:1px solid #eee; border-bottom: 1px solid #f0f0f0; float:left; width: 98%; list-style: none; }
-#forum-thread li.even { background: #fdfdfd; border-top: none; }
-#forum-thread li.odd { background: #fff; }
+.forum-thread li { clear:left; border:1px solid #eee; border-bottom: 1px solid #f0f0f0; float:left; width: 98%; list-style: none; }
+.forum-thread li.even { background: #fdfdfd; border-top: none; }
+.forum-thread li.odd { background: #fff; }
 div.forum-post-author { float:left; width:150px; padding:8px 10px; }
 div.forum-post-author a.title {	font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
 div.forum-post-author img.profile-picture { border: 2px solid #f0f0f0; }
