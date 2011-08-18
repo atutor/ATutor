@@ -9,21 +9,6 @@
 }
 
 
-ul#topnavlist {
-	zoom:100%;
-	margin:0px;
-	position:absolute;
-	top:5.3em;
-}
-
-ul#topnavlist li {
-	zoom:100%;
-	padding:0.3em;
-	margin-bottom:-3px;
-	border-bottom:0;
-	min-height:3.5em;
-
-}
 
 label {
 	zoom:100%;
@@ -38,6 +23,32 @@ table.data tfoot input {
 #topnavlistcontainer {
 	margin-bottom:-1px;
 	border-bottom:0;
+}
+
+ul#topnavlist li {
+	margin-bottom:-3em;
+	*display: inline;
+}
+
+ul#topnavlist {
+	zoom:100%;
+	margin:0px;
+	position:absolute;
+	top:5em;
+}
+
+ul#topnavlist li {
+	zoom:100%;
+	padding:0.3em;
+	margin-bottom:-3px;
+	border-bottom:0;
+	min-height:3.5em;
+
+}
+ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
+	margin-bottom:-25px;	
+	padding: .2em 1.8em .1em 1.8em;
+	border-bottom: none;
 }
 
 #header{
@@ -59,15 +70,22 @@ div#top-links a:active{
 	height:9.6em;
 }
 
-ul#topnavlist li {
-	margin-bottom:-3em;
-	*display: inline;
-}
 
 ul#subnavlist li {
 	*display: inline;
 	margin-right:.5em;
+	
+
 }
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
+  	color: black;
+	text-decoration:none;
+	background-color: #F8F8F8;
+	border-bottom:thin solid #F8F8F8;
+
+
+}
+
 fieldset.group_form{
 	padding:.5em;
 	padding-bottom:2em;
@@ -144,6 +162,7 @@ ul.current_list{
 #top-links-jump{
 	background-color:#eeeeee;
 	padding-right:.5em;
+
 }
 div#top-links {
 	white-space:nowrap;
@@ -156,8 +175,8 @@ div#top-links {
 	margin-top:0em;
 }
 #course_title_container{
-	margin-top:-1em;
-
+	margin-top:-2em;
+	*margin-top:-1em;
 }
 h1#section-title {
 	margin-top:.5em;
@@ -185,7 +204,7 @@ div#guide_box{
 }
 
 .logoutbar{
-	margin-top:-.2em;	
+	margin-top:-2.5em;	
 }
 textarea#body_text{
 	*width:600px;
