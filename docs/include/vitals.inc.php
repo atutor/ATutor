@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -112,6 +112,9 @@ function check_session()
  ***/
 
 /**** 0. start system configuration options block ****/
+	//set the timezone, php 5.3+ problem. http://atutor.ca/atutor/mantis/view.php?id=4409
+	date_default_timezone_set('UTC');
+
 	error_reporting(0);
 	if (!defined('AT_REDIRECT_LOADED')){
 		include_once(AT_INCLUDE_PATH.'config.inc.php');
@@ -158,7 +161,7 @@ function check_session()
               ? false
               : true;
     ob_start();
-    session_set_cookie_params(0, $_base_path, "", $isHttps);
+    session_set_cookie_params(0, $_session_path, "", $isHttps);
 	session_start();
 	
 	// Regenerate session id at every page refresh to prevent CSRF
@@ -241,9 +244,6 @@ $IllegalExtentions = explode('|',$_config['illegal_extentions']);
 define('AT_DEFAULT_PREFS',  isset($_config['prefs_default']) ? $_config['prefs_default'] : '');
 $_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['home_defaults_2'] : '');
 $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
-
-//set the timezone, php 5.3+ problem. http://atutor.ca/atutor/mantis/view.php?id=4409
-date_default_timezone_set('UTC');
 
 if ($_config['time_zone']) {
 	//$sql = "SET time_zone='{$_config['time_zone']}'";

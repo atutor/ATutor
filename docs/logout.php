@@ -27,6 +27,11 @@ unset($_SESSION['course_id']);
 unset($_SESSION['prefs']);
 unset($_SESSION['dd_question_ids']);
 unset($_SESSION['flash']);
+unset($_SESSION['userAgent']);
+unset($_SESSION['IPaddress']);
+unset($_SESSION['OBSOLETE']);
+unset($_SESSION['EXPIRES']);
+unset($_SESSION['token']);
 
 $msg->addFeedback('LOGOUT');
 header('Location: login.php');

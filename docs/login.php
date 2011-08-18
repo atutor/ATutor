@@ -223,8 +223,6 @@ if (isset($this_login, $this_password)) {
 	}
 }
 
-$_SESSION['session_test'] = TRUE;
-
 if (isset($_SESSION['member_id'])) {
 	$sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[member_id]";
 	$result = @mysql_query($sql, $db);
