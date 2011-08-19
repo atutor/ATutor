@@ -376,42 +376,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<div id="content-sequence-links">
 			<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
 		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-			
-	<!-- Preserve untl a style for sequence-links is chosen.
-			<ul class="sequence-links fl-tabs" id="sequence-links">
-				<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-					<?php if ($this->sequence_links['resume']): ?>
-						<li>
-							<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
-						</li>
-					<?php else:
-						if ($this->sequence_links['previous']): ?>
-						<li class="arrow back">
-							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
-						</li>
-					<?php endif;
-						if ($this->sequence_links['next']): ?>
-						<li class="arrow forward">
-							<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
-						</li>
-					<?php endif; ?>
-				<?php endif; ?>
-			<?php } ?>
-				&nbsp;
-			</ul>  -->
+	
 		<?php endif; ?>
 	
 	
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
-		<!-- 
-		<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-			<div id="content-link-surround"  class="content-link-surround" >
-				<a id="content_link_phone"  href="javascript:void(0);"><?php echo "Content"; ?></a>
-			</div>
-		</div>
-		 -->
-		 
-
+		
 		<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 			<div class="subnavcontain">
 				<div class="rectangle">
@@ -420,7 +390,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 			</div>
 					
-		<div id="content" style=" display: none; position: relative; top: 0em; clear: left; clear: right; z-index: 1;">
+		<div id="content">
 			<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript"></script>
 		</div>
