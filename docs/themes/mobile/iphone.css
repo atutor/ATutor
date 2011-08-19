@@ -247,7 +247,9 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
 	padding: 0;
 }
-
+h2, h3, h4, h5, h6{
+	padding-top: .5em;
+}
 h1 {
     font-size: 160%;
 	color: #FFF;
@@ -258,8 +260,8 @@ h2 {
     font-size: 150%;
 }
 
-h3 {
-	padding: 0;
+h3.input-form {
+	padding-top: .875em;
 }
 h3.browse-courses{
 	font-size: 90%;
@@ -271,9 +273,7 @@ h3.browse-courses{
 h3 a {
     font-size: 100%;
 }
-#subnavbacktopage{
-	padding-top: 1em;
-	}
+
 
 /************************************************************************************************/
 /* Preferences tabs */
@@ -591,7 +591,7 @@ a#back-to {
     /* The path bar, including breadcrumbs and add to favorites */
 	clear:both;
     font-size: 1em;
-	padding:0 0.375em;
+	padding:0;
 	color: #4C566C;
 	background-color: white;
 
@@ -1353,7 +1353,9 @@ ul#home-links, ul#home-detail-links {
 }
 .my-courses-list{
 	border: solid 1px #A9ADB0;
-	-webkit-border-radius:5px;
+	-webkit-border-radius:8px;
+	-moz-border-radius:8px;
+	border-radius:8px;
 	padding: .375em;
 	color: #4C566C;
 	margin-bottom: .375em; 
@@ -1580,6 +1582,9 @@ fieldset.group_form{
 	margin-bottom: 1em;
 	border: 1px #6D7B8D solid;
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
+	margin-top: .5em;
 }
 
 legend.group_form{
@@ -1593,7 +1598,10 @@ legend.group_form{
 
 /* highlight active links for WCAG 2.0 conformance */
 
-a:active:not(.subnavcontain a), a:hover:not(.subnavcontain a), a:focus:not(.subnavcontain a), .buttontab-hover{
+a:active:not(.subnavcontain a), 
+a:hover:not(.subnavcontain a),
+a:focus:not(.subnavcontain a),
+.buttontab-hover{
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
@@ -1872,7 +1880,9 @@ ol#tools>li:hover, ol#tools>li:hover a {
   	
 }
 
-
+#contentwrapper{
+	
+}
 #content-contentwrapper{
 	height:100%;
     position:relative;	
@@ -2149,22 +2159,33 @@ ul.sequence-links li a:active:before {
 #content{
 	text-align: left;
 	width: 93.5%;
+	width: 99%;
 	border-left: #A9ADB0 1px solid;
 	border-right: #A9ADB0 1px solid;
 	border-bottom: #A9ADB0 1px solid;
+	-webkit-border-radius: 5px; 
+	-moz-border-radius: 5px; 
+	border-radius: 5px;
 }
 
 /*hiding and showing content */
 
 #results-hide-show-simple-content{
-	-webkit-border-radius:8px;
+	-webkit-border-radius:5px;
 	border: 1px #A9ADB0 solid;
-	margin-top: 0.875em;
+	/*margin-top: 0.875em;
 	margin-bottom: 0.875em;
 	padding: 0.875em;
+	padding-right: .2em;*/
+	padding-top: .6em;
+	padding-bottom: .6em;
 	padding-right: .2em;
+	padding-left: .6em;
+	margin-bottom: 0.875em;
+	margin-top: 0.875em;
 	color: #005689;
 /*	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));*/
+	background-color: none;
 }
 #results-hide-show-link{
 	color: white;
@@ -2194,14 +2215,15 @@ ul.sequence-links li a:active:before {
 	
 }
 .hide-show-container-surround a:active, .hide-show-container-surround a:focus, .hide-show-container-surround a:hover{
-	background: none;
+	background-color: transparent;
 	
 }
 .subnavcontain2, .subnavcontain{
-	margin: .313em auto; 
-	padding-left: .313em;
+	margin: .313em 0; 
+	
 	border: #A9ADB0 1px solid; 
-	-webkit-border-radius:5px;
+	-webkit-border-radius:8px;
+	width: 100%;
 }	
 
 .fl-theme-iphone .subnavcontain a, .fl-theme-iphone .subnavcontain a:hover, .fl-theme-iphone .subnavcontain a:active, .fl-theme-iphone .subnavcontain a:focus {
@@ -2211,7 +2233,9 @@ ul.sequence-links li a:active:before {
 	background-repeat: no-repeat;
 	
 }
-
+#subnavlist-link{
+	display: block;
+}
 
 .fl-theme-iphone #subnavlist-link  a:active, 
 .fl-theme-iphone #subnavlist-link  a:hover, 
