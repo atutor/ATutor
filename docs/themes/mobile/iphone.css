@@ -2168,6 +2168,12 @@ ul.sequence-links li a:active:before {
 	-webkit-border-radius: 5px; 
 	-moz-border-radius: 5px; 
 	border-radius: 5px;
+	display: none;
+	position: relative;
+	top: 0em; 
+	clear: left;
+	clear: right;
+	z-index: 1;
 }
 
 /*hiding and showing content */
