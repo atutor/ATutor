@@ -281,9 +281,14 @@ link highlighting -- add when the header and footer is done
 	/*text-decoration: none;*/
 }
 /* link attributes */
-a:link, a:hover, a:visited, a:focus  {
+a:link {
  	color: #4C96F4;
-
+	color: #005689;
+	text-decoration: underline;
+}
+a:hover, a:visited, a:focus {
+	color: #4C96F4;
+	text-decoration: underline;
 }
 .fl-list-menu a, .fl-list-menu a:visited{ /*may need to be removed when FLUID-4313 is fixed*/
 	color: black;
@@ -2188,9 +2193,11 @@ div#content-link-container{
     -moz-background-clip: border;
     margin-bottom: -0.25em;
 
+
 }
 .flc-screenNavigator-navbar .content_link{
 	color: white;
+	    text-decoration: none;
 	font-weight: bold;
 }
 .fl-theme-iphone .content_link_tablet_highlight{
