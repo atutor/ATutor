@@ -347,7 +347,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 								<?php endfor;?>
 					</div>
 				</div>
-					<ul id="subnavlist" class="fl-list-menu" style="display: none;">
+					<ul id="subnavlist" class="fl-list-menu">
 					<?php $num_pages = count($this->sub_level_pages); ?>	
 					<?php for ($i=0; $i<$num_pages; $i++): ?>				
 						<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
