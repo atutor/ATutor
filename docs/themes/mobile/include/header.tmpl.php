@@ -519,7 +519,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
 			</div>	
 		</div><!-- course-level navigation -->				
-				<div id="content" style="display: none;">
+				<div id="content">
 					<?php $contentManager->printMainMenu(); ?>
 					<script language="javascript" type="text/javascript"></script>
 				</div>
