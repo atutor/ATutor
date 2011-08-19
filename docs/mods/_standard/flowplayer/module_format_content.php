@@ -47,8 +47,8 @@ for ($i=0;$i<count($media_replace);$i++){
 		}
 		else
 		{
-			$width = 425;
-			$height = 350;
+			$width = DEFAULT_VIDEO_PLAYER_WIDTH;
+			$height = DEFAULT_VIDEO_PLAYER_HEIGHT;
 		}
 		
 		//replace media tags with embedded media for each media tag

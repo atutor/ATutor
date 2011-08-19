@@ -12,10 +12,10 @@ foreach ($media_matches as $media_match) {
 	$width = $media_match[2];
 	$height = $media_match[3];
 	if($width == ''){
-		$width = "425";
+		$width = DEFAULT_VIDEO_PLAYER_WIDTH;
 	}
 	if($height == ''){
-		$height = "350";
+		$height = DEFAULT_VIDEO_PLAYER_HEIGHT;
 	}
 	$video_id = $media_match[4];
 

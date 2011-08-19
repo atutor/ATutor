@@ -398,6 +398,10 @@ define('VALIDATE_LENGTH_FOR_DISPLAY',	1);
 define('SUBLINK_TEXT_LEN', 38);
 
 /* The lock out time for max login attempts */
+define('DEFAULT_VIDEO_PLAYER_WIDTH', 425);   // in pixels
+define('DEFAULT_VIDEO_PLAYER_HEIGHT', 350);  // in pixels
+
+/* The lock out time for max login attempts */
 define('LOGIN_ATTEMPT_LOCKED_TIME', 60);	//in minutes, default an hour, 60 minutes
 
 /* UTC Timezones array */
