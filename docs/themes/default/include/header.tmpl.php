@@ -89,6 +89,7 @@ global $system_courses, $_custom_css, $db;
     <?php echo $this->custom_css; ?>
     <?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
+    <link rel="stylesheet" href="<?php echo $this->base_path; ?>/jscripts/infusion/lib/jquery/plugins/tooltip/css/jquery.tooltip.css" type="text/css" />
 </head>
 <body onload="<?php echo $this->onload; ?>">
 <div class="page_wrapper">

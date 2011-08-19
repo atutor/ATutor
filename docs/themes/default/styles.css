@@ -2461,7 +2461,11 @@ height:1px;
 }
 /* relative image size styles */
 
-img.img1616{
+input.img1616{
+cursor:pointer;
+}
+
+input.img1616, img.img1616{
 height:1.6em;
 width:1.6em;
 }

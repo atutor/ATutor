@@ -93,7 +93,7 @@ function print_sublinks($link){
 		<div class="outside_box">
 <?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
 			<div class="buttonbox">
-			<a href="#" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>'); return false;"><img src="<?php echo AT_BASE_HREF; ?>images/x.gif" border="0" alt="<?php echo _AT('close'); ?>" class="img1616"/></a>
+			<input type="image" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>');" src="<?php echo AT_BASE_HREF; ?>images/x.gif" alt="<?php echo _AT('close'); ?>" value="<?php echo _AT('close'); ?>" class="img1616"/>
 			</div>
 <?php }?>
 			<img src="<?php echo $link['img']; ?>" alt="" border="0" style="vertical-align:middle;" class="img-size-home"/>

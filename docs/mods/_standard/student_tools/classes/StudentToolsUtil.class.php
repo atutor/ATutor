@@ -29,6 +29,7 @@ class StudentToolsUtil {
 	{
 		global $db;
 		
+		$student_tools = array();
 		$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id=$course_id";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
