@@ -2211,6 +2211,7 @@ div#content-link-container{
 	border-radius: 8px;
 	border: 4px solid black;
 	z-index: 1000;
+	display: none;
 }
 
 /*	hiding/showing top navigation and results-display */
