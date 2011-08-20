@@ -130,11 +130,14 @@ jQuery('.topnavlist-link').click(function(e) {
 
 //jQuery for Gmail dock-style "more" button that makes the subnavlist expand for more options
 $this->onload .= "
-jQuery(document).click(function () {
-jQuery('.subnavlist-more').slideUp();}); 
+
 jQuery('.more-button').click(function(e) {
   e.stopPropagation();
   jQuery('.subnavlist-more').slideToggle();
+  jQuery('#switch').attr('src', 'images/hidemenu.gif'); 
+  jQuery('#switch').attr('title', 'less menu items'); 
+  jQuery('#switch').attr('alt', 'less menu items'); 
+
 });
 ";
 
@@ -591,7 +594,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 									<?php endif; ?> 
 								<?php endif;?>
 								<?php if($i== 6): ?>
-									<li class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a class="more-button" href="javascript:void(0);" tabindex="1">More</a></li>
+									<li class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="More menu items" title="More menu items" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
 									<ul class="subnavlist-more">
 									<li class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									
