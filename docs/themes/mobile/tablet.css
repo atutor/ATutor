@@ -1324,8 +1324,7 @@ ul#home-links, ul#home-detail-links {
 	text-align: left;
 	margin: 0 auto;
 	border:0;	
-	min-width: 100%;
-	
+	min-width: 100%;	
 }
 
 .my-courses-list{
@@ -1336,14 +1335,17 @@ ul#home-links, ul#home-detail-links {
 	padding: .313em;
 	margin: .313em;
 	padding: .313em;
-	
+	/*
+	background-color:  #4C96F4;*/
 }
 .my-courses-list a{
 	color: black;
+	text-decoration: none;
+
 }
 .my-courses-list a:active, .my-courses-list a:focus, .my-courses-list a:hover {
 	
-	background-color: #4c96f4;
+	background-color: white;
 }
 .my-courses-list-ul{
 	margin: 0 auto;
@@ -2197,7 +2199,7 @@ div#content-link-container{
 }
 .flc-screenNavigator-navbar .content_link{
 	color: white;
-	    text-decoration: none;
+	text-decoration: none;
 	font-weight: bold;
 }
 .fl-theme-iphone .content_link_tablet_highlight{
@@ -2287,6 +2289,7 @@ ul#subnavlist{
 	margin: 0;
 	font-size: 90%;
 	text-align: center;  
+
 	/*border-bottom: 1px #B6C0C6 solid;*/
 }
 .selected{
@@ -2313,15 +2316,11 @@ ul#subnavlist li:not(#subnavlist-more){
 	display: inline;
 }
 
-/*
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{ /*
-  	color: black;
-	text-decoration:none;*/
-}
-
 ul#subnavlist li a, ul#subnavlist li a:visited {
-	color: #4C566C;
 	color: black;
+}
+ul#subnavlist li a{
+	text-decoration: none;
 }
 
  /*creates a little up-facing arrow to help mimick an ipad-style popover.  
