@@ -1343,10 +1343,7 @@ ul#home-links, ul#home-detail-links {
 	text-decoration: none;
 
 }
-.my-courses-list a:active, .my-courses-list a:focus, .my-courses-list a:hover {
-	
-	background-color: white;
-}
+
 .my-courses-list-ul{
 	margin: 0 auto;
 	padding-left: 0;
@@ -2301,8 +2298,11 @@ ul#subnavlist{
 	font-size: 0.875em; list-style-type: bullet;
 	
 }
-
-
+.more-icon {
+	background-image:url('images/hidemenu.gif');
+	background-position: 100% 100%;
+	background-repeat: no-repeat;
+}
 .more-button{
 }
 .more-button-surround{
@@ -2507,4 +2507,16 @@ ul.sequence-links li a:active:before {
 #content-info{
 	padding-top: 2em;
 	font-size: 80%;
+}
+
+ul.my-courses-list-ul > li:hover{
+background-color: #e6e6e6;
+	color: black; 	
+	
+ 	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+} 
+ul.my-courses-list-ul > li:hover a{
+	color: white;
 }
