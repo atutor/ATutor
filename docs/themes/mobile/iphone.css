@@ -1871,7 +1871,7 @@ li {
 	list-style: none;
 }
 
-ol#tools>li:hover, ol#tools>li:hover a {
+ol#tools>li:hover {
 	/*border: 1px solid #e0e0e0;*/
 	background-color: #e6e6e6;
 	color: black; 	
@@ -1880,6 +1880,9 @@ ol#tools>li:hover, ol#tools>li:hover a {
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
   	
+}
+ol#tools>li:hover a{
+	color: white;
 }
 
 #contentwrapper{
@@ -2289,4 +2292,14 @@ ul.sequence-links li a:active:before {
 	padding-top: 1em;
 	font-size: 80%;
 }	
-
+ul.my-courses-list-ul > li:hover{
+background-color: #e6e6e6;
+	color: black; 	
+	
+ 	color: #fff;
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+} 
+ul.my-courses-list-ul > li:hover a{
+	color: white;
+}
