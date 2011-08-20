@@ -571,7 +571,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				
 					<!-- Markup for a subnavlist styled like a Gmail dock. Clean up this code for redundancy but it works for now. -->
 					<!-- background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB));  -->
-					<ul id="subnavlist" style="text-align: center; border-bottom: 1px #B6C0C6 solid; background: #B6C0C6; ">
+					<ul id="subnavlist" style="text-decoration: none; text-align: center; border-bottom: 1px #B6C0C6 solid; background: #B6C0C6; ">
 					<?php $num_pages = count($this->sub_level_pages); ?>
 						<?php for ($i=0; $i<$num_pages; $i++): ?>	
 							
