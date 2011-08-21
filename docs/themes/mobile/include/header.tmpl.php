@@ -85,6 +85,8 @@ jQuery('#subnavlist-link').click(function(e) {
   
   jQuery('#subnavlist').slideToggle();
   jQuery('#subnavlist-link').toggleClass('content-closed');
+
+
    
   ";
 $this->onload .= "});
@@ -325,11 +327,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 		<div id="inner-contentwrapper" class="fl-container" >
 
-		
-				<?php if (isset($this->back_to_page)): ?>
-					<a href="<?php echo $this->back_to_page['url']; ?>">
-					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
-				<?php endif; ?>
+	
 			
 		<!-- the sub navigation -->
 		<div id="subnavbacktopage">
@@ -372,8 +370,16 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		
 
 		<!-- the page title -->
+		<div id="page-title-back-to-page">
 		<a name="content" title="<?php echo _AT('content'); ?>"></a>
 		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
+			<div id="back-to-page">
+				<?php if (isset($this->back_to_page)): ?>
+					<a href="<?php echo $this->back_to_page['url']; ?>">
+					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
+				<?php endif; ?>
+		</div>		
+		</div><!--  end "page-title-back-to-page" -->
 	
 		<?php global $msg; $msg->printAll(); $_base_href;?>
 			<div id="content-sequence-links">
@@ -454,6 +460,13 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <div id="main">
 	
 	<div id="header" role="header">
+	
+	<div class="bypass">
+		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#page-title" accesskey="c">
+		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
+</div>	
+	
+	
 	<div id="header-section-title">
 			<h1 id="section-title"><?php echo $this->section_title; ?></h1>
 		</div>
@@ -531,14 +544,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<?php endif;?>
 	
 	
-		<!--  this should be a button on its own  -->
+		
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" >
 			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
 			
 				<div id="navigation-column">
-				<!--  requires ARIA roles review -->
-				<!--  this should be a button on its own  -->
 				<?php if ($this->current_sub_level_page): ?>
 				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
 					<?php $accesscounter = 0; //initialize ?>
@@ -624,7 +635,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	<!-- </div>end #main -->
 		<div id="contentwrapper" class="fl-container" >
-		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
+		<a name="page-title" id="page-title"></a>
+		<h2 class="page-title" ><?php echo $this->page_title; ?></h2>
 		<div id="subnavbacktopage" >
 					<?php if (isset($this->back_to_page)): ?>
 						<a href="<?php echo $this->back_to_page['url']; ?>">
