@@ -209,6 +209,8 @@ h2.page-title{
 	padding-top: .313em;
 	/*float: left;*/
 }
+
+
 #subnavbacktopage{
 	padding: .313em;
 	float: left;
@@ -1595,13 +1597,6 @@ Ensure styling matches that in fl-tabs.*/
     );
     
 }
-
-ul#topnavlist-tablet li a:hover,
-ul#topnavlist-tablet li a:active,
-ul#topnavlist-tablet li a:focus{
-	display: none;
-}
-/*end of http://issues.fluidproject.org/browse/FLUID-4313 workaround */
 
 /*Added by Silvia */
 div.column_primary {
