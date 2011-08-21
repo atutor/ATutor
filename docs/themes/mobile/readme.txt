@@ -1,15 +1,15 @@
-******************************
+******************************************************************************************
 Theme:		1.6.4 Mobile Theme
 Date:	
-******************************
+******************************************************************************************
 
 
 Installing:	 See section "Installing a New Theme" in the themes_readme.txt file located in the themes/ top directory.
 Licence:	Falls under the GPL agreement.  See http://www.gnu.org/copyleft/gpl.html.
 
-
+==============================================================================
 What's new: 
-============
+==============================================================================
 
 /mobile.css 
 * style for android, iphone, & ipod rolled into one stylesheet
@@ -22,17 +22,31 @@ What's new:
 include/header.tmpl.php
 * accessibility: increased support for ARIA roles that Safari recognizes. Note: ARIA roles create HTML validation errors.
 
+==================================================================================
 Known Issues
-============
+==================================================================================
+
+* "0004796: Student user's Preferences template won't display"
+** see: http://atutor.ca/atutor/mantis/view.php?id=4796
+
 
 * "Activation hightlighting is visible on the desktop but not the on the mobile device"
-** http://issues.fluidproject.org/browse/FLUID-4313
-** affects fl-lists including:
+** see: http://issues.fluidproject.org/browse/FLUID-4313
+** both arrows and background color don't highlight.
+** affects .fl-lists, including:
 *** the "Navigation" menus on mobiles and tablets after a link is highlighted 
 *** docs/users/browse.php in mobile and tablets
 
+* WCAG 1.3.2 Meaningful Sequence
+iPad -- Logged into a course as a student user, the DOM order should match the visual order. Possibly affects
+3.2.3 Consistent Navigation. 
+
+* WCAG 3.2.1 On Focus
+**Is this violated by the pop-up "guide" button in the mobile and tablet devices?  
+
+==================================================================================
 Omitted from mobile/
-====================
+==================================================================================
 Administrator user: 
 *Patcher 
 */docs/mods/_core/cats_categories/admin/course_categories.php
@@ -49,159 +63,81 @@ Instructor user:
 *reading list
 *student tools
 
-Accessibility & validation issues 
-=================================
+===================================================================================================
+Accessibility notes, features, & validation issues 
+===================================================================================================
+*Newer versions of iPods, iPads, & iPhones have limited support for WAI-ARIA. I deployed the roles that were supported. 
+VoiceOver users can enable or disable speaking, for example, of various WAI-ARIA roles. Here is Apple's documentation:
+ http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/AccessibilityRoles.html
 
+WCAG AA
+I primarily used WCAG to guide the evolution of content generated from the header and footer. 
+Below are Success Criteria that apply to my work, and I have listed criteria that don't pass
+ or that may need more attention. Further Success Criteria apply to the LMS but would depend on, 
+for example, course content used.  I checked for WCAG as a part of my AChecker workflow 
+(to WCAG AA) along with validating markup, and manually on the following capstone pages: 
+**
 
-
-
-Admin USERS & COURSES --> a bit of improvement on the styling 
-Turn circle plusses to top/down
-
-
-
-Tasks
-============
-
-- Do a11y and HTML check of index, browse, preferences page. 
-- remove inline styles from header.tmpl.php
-- Do arrow highlighting. 
-- Find cross-browser styles in the CSS that was committed to mobile FSS for: 
--webkit-border-image, -webkit-border-left-image, -webkit-background-origin: border, -webkit-background-clip: border;
-
-
-- pages where "topics in" doesn't make sense.
-- css +/-
-- link attributes
-
-
-
-- in the subnavigation list and the topnavigation list, the arrows should turn white. 
-
-Templating done: 
-- http://localhost/GSoC2011/docs/users/browse.php
-- http://localhost/GSoC2011/docs/users/profile.php
-- http://localhost/GSoC2011/docs/mods/_standard/social/index_mystart.php
-
-Next week: 
-- theme the breadcrumbs 
-- when a user is logged into a course, if they press home, it logs them out somehow. 
-- if a page is "too short" the navigation menu, if long, can't be scrolled down. e.g. administrator menu. 
-- underlines in the 'administrative' menu. 
-- template & validate all the main student pages. 
-- login version of iphone issues with markup. 
-
+Applicable Success Criteria 
+1.1.1 Non-text Content***
+1.3.1 Info and Relationships 
+	Note: should fieldset/legends and onkeydown be added to these pages?
+	/docs/mods/_core/users/users.php 
+	/docs/mods/_core/users/instructor_requests.php
+	/docs/mods/_core/users/master_list.php 
+	/docs/mods/_core/users/admins/index.php 
+	/docs/mods/_core/users/admins/log.php 
+	/docs/mods/_core/courses/admin/courses.php 
+	/docs/mods/_standard/forums/admin/forums.php 
+	/docs/mods/_core/courses/admin/default_mods.php 
+	/docs/mods/_core/modules/index.php 
+	/docs/mods/_standard/rss_feeds/index.php 
+	/docs/mods/_standard/announcements/index.php
+	/docs/mods/_standard/assignments/index_instructor.php
+	/docs/mods/_core/backups/index.php
+	/docs/mods/_standard/chat/manage/index.php
+	/docs/mods/_core/content/index.php 
+	/docs/mods/_standard/tracker/tools/page_student_stats.php
+	/docs/mods/_standard/forums/index.php
+	/docs/mods/_standard/faq/index_instructor.php
+	/docs/mods/_standard/polls/tools/index.php
  
- For the submit: 
- - subnavlistcontainer ARIA landmark
-- order of links inside a course -- should be made different. Home, Navigation, Course, etc. 
-- Document the accessibility steps and mobile best practices taken
--- Added:: Home/Guide - menu/menuitem. Navigation - menu/menuitem. Aria now in the footer as well. 
--- Followed: http://developer.apple.com/library/safari/#documentation/appleapplications/reference/SafariHTMLRef/Articles/AccessibilityRoles.html
-- Simplify/shorten style sheets - easy task to do when ired. 
-- Deal with android.css through making the default iphone/android css more facebook-like in color-scheme. 
-- Create a nested navigation menu. 
-- Simplified desktop theme
 
-Longer-term/desired: 
-- Created CSS icons or image-based icons to replace certain[what]links, give them very descriptive titles. 
+1.3.2 Meaningful Sequence
+Mobile - passes, but Tablet - fails. Logged into a course as a student user, the DOM order should match the visual order.
+I have listed this as an issue.  
 
+1.3.3 Sensory Characteristics
+1.4.3 Contrast (Minimum)
+1.4.4 Resize text
+-- Applies but unsure how to test using the zoom feature (i.e. to what proportion it magnifies to). 
+-- Increasing text size with finger gestures is disabled, but using Apple's zoom feature, text appears readable.
 
+2.1.1 Keyboard
+**Mobile - passes, but Tablet - fails (Navigation button). I have listed this as an issue. 
+2.1.2 No Keyboard Trap
+2.4.1 Bypass Blocks
+**Note: This passes for both mobile & tablet because heading groupings are used at the beginning of content. 
+**But skip-links currently aren't working properly with VoiceOver, although they work correctly on a desktop browser. 
+2.4.3 Focus Order
+2.4.4 Link Purpose (In Context)
+2.4.5 Multiple Ways
+2.4.6 Headings and Labels
+2.4.7 Focus Visible
+3.1.1 Language of Page
+3.2.1 On Focus
+**Is this violated by the pop-up "guide" button in the mobile and tablet devices? 
 
-
-
-	
-TABLET TASKS & BUGS
-
-(1) LAYOUT
-- content navigation
-- jquery: browse courses +/- button, - hide show container + and -'s
-- sequence links - need to display 
-- margins should not cut off on very short content. 
-- jquery: navigation hover should appear instantly. 
-- templating email, social networking. 
-
-(2) COLOR SCHEME
-- tablet should match IDI default. 
-- highlight issues - bring to WCAG AA: Subnaviagation, links. 
-
-- retrofit header of tablet theme with classes fl-navbar fl-table
-- a fully-expanded, long content-navigation menu should "push" the footer down.
-
-GLOBAL TASKS & BUGS (all devices) ----------------------------------------------------------------
-
-- remove any remaining inline styles from header.tmpl.php
-- MOBILE FSS BUG: Create a workaround for Mobile FSS bug  ***In Process
-    See: http://issues.fluidproject.org/browse/FLUID-4313
-    - white list arrow should change color >
-    - top navigation bar "home" & "help" buttons should highlight. 
-- the "home" ? 
-- student user: filtering & highlight links.
-- make skip links image the same color as the header (iphone, android)  
-- ARIA roles review for navigational menu in tablet theme
-- July 25 26 F2F: default theme on FF  
-- clean-up order of style rules in iphone.css and tablet.css (Ongoing & August)
-- default.preferences.tmpl.php 
-- try http://www.filamentgroup.com/lab/styling_buttons_and_toolbars_with_the_jquery_ui_css_framework/ for "Navigation" hover 
-- A11Y TASK: research whether to add ARIA landmarks (e.g. Main, Navigation) to header.tmpl.php & footer.tmpl.php (August)
-- A11Y TASKhtml-check the Instructor mobile pages. (August)
-- Remove redundant styles from iphone.css  ***In Process
-- Aesthetics: Update color scheme of android.css 
-- Aesthetics: Style button elements
-- Remove any redundant styles from tablet.css
-- Instructor user: Content menu open/close stays highlighted after close - touch highlighting. 
-- Instructor user: remove on keydowns (only present on index pages) 
-- Instructor user: Improve styling: /docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup
-- Admin user: Improve styling: /docs/mods/_core/courses/admin/default_mods.php 
-- Admin user: Improve styling: http://localhost/GSoC2011/docs/admin/error_logging.php
-- Done ? Create course / Edit course / Course properties for admin / instructor users. 
-- template groups/ social networking (e.g. /mods/_standard/social/index_public.php)
-- change android.css color scheme.
-- template docs/mods/_core/themes/index.php
-
-iPHONE TASKS / BUGS / INFO ----------------------------------------------------------------
-- A11Y BUG: Voice over bug:  admin user logs out in voice over when using the drop-down menu. 
-	Only affects instructor users. Why? 
-- A11Y TASK: do manual check for refine results open/close, i.e. make sure it can be used by Voice Over. 
-Fix styling of "refine results" link after it has been opened/closed.  Sync styling changes with Android. 
-	Affects: 	
-	---	/docs/mods/_core/users/users.php 
-	--- /docs/mods/_core/users/master_list.php 
-	---	/docs/mods/_core/courses/admin/courses.php 
-	--- /docs/mods/_core/modules/index.php 
-
-ANDROID TASKS / BUGS / INFO ----------------------------------------------------------------
-localhost: 10.0.2.2.
-local Android emulator: /Users/alisonbenjamin/Documents/ATutor\ Design/android-sdk-mac_86/tools/android
-
-BLACKBERRY TASKS / BUGS / INFO ----------------------------------------------------------------
-http://stackoverflow.com/questions/61449/how-do-i-access-the-host-from-vmware-fusion
+3.2.3 Consistent Navigation
+3.2.4 Consistent Identification
+3.3.2 Labels or Instructions
+3.3.3 Error Suggestion - already handled 
+4.1.1 Parsing, 4.1.2 Name, Role, Value
 
 
-DEFAULT THEME a11y REVIEW NEEDED: (fieldset/legends and onkeydown might be added).---------------------------------
-/docs/mods/_core/users/users.php 
-/docs/mods/_core/users/instructor_requests.php
-/docs/mods/_core/users/master_list.php 
-/docs/mods/_core/users/admins/index.php 
-/docs/mods/_core/users/admins/log.php 
-/docs/mods/_core/courses/admin/courses.php 
-/docs/mods/_standard/forums/admin/forums.php 
-/docs/mods/_core/courses/admin/default_mods.php 
-/docs/mods/_core/modules/index.php 
-/docs/mods/_standard/rss_feeds/index.php 
-/docs/mods/_standard/announcements/index.php
-/docs/mods/_standard/assignments/index_instructor.php
-/docs/mods/_core/backups/index.php
-/docs/mods/_standard/chat/manage/index.php
-/docs/mods/_core/content/index.php 
-/docs/mods/_standard/tracker/tools/page_student_stats.php
-/docs/mods/_standard/forums/index.php
-/docs/mods/_standard/faq/index_instructor.php
-/docs/mods/_standard/polls/tools/index.php
- 
-ADMINISTRATORS ----------------------------------------------------------------------------------
+ADMINISTRATORS: MOBILE ----------------------------------------------------------------------------------
 
-NOTE there are 3 errors in HTML validator due to using an ARIA role. 
+NOTE there are 4 errors in HTML validator due to using an ARIA role. 
 
 [ADMIN-HOME] 
 1. /docs/admin/index.php -  ****  DONE / WCAG AA / Valid HTML
@@ -272,7 +208,7 @@ http://localhost/GSoC2011/docs/mods/_standard/patcher/index_admin.php
 16. /docs/admin/cron_config.php **** DONE / WCAG AA / Valid HTML -- wrap bug. 
 17. /docs/admin/error_logging.php
 
-INSTRUCTORS ---------------------------------------------------------------------------------- 
+INSTRUCTORS: MOBILE ---------------------------------------------------------------------------------- 
 	--- course home ***DONE 
 	--- networking ***DONE 
 	--- glossary ***DONE 
@@ -381,7 +317,10 @@ NOT DONE: /docs/mods/_standard/student_tools/instructor_index.php
 
 ----------------------------------------------------------------------------------------
 TABLET TEMPLATE: STUDENT 
+*Note: there are 4 ARIA-errors! 
 
 /docs/login.php - WCAG AA / Valid HTML
 /docs/browse.php - WCAG AA / Valid HTML
+/docs/users/profile.php  - WCAG AA / Valid HTML
+/docs/users/index.php - WCAG AA / Problem with HTML validation, likely to do with the "Things Current" list
 /docs/registration.php
