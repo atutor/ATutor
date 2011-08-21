@@ -379,7 +379,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
 				<?php endif; ?>
 		</div>		
-		</div><!--  end "page-title-back-to-page" -->
+		</div><!--  end page-title-back-to-page -->
 	
 		<?php global $msg; $msg->printAll(); $_base_href;?>
 			<div id="content-sequence-links">
