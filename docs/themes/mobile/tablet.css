@@ -147,11 +147,13 @@ body,ul,li {
 /*fl-tabs for the "home" and "guide" and sequence links*/
 /************************************************************************************************/
 #home-guide{
-float: left;
-padding-top: 0;
-margin-top: 0;
-padding-left: .313em;
-padding-right: .313em;
+	padding-top: 0;
+	margin-top: 0;
+	padding-right: .313em;
+	position: relative;
+	left: 0em;
+	float: left;	
+	top: 0;
 }
 
 
@@ -2378,12 +2380,13 @@ ul#subnavlist li a{
 
 /* sequence links */
 #sequence-links{
-	float: right;
+	float: left;
 	padding-right:0;
 	position: relative; 
 	right: -.313em;
 }
-#course-level-navigation{	
+
+#course-level-navigation, #sequence-links-course-navigation{	
 		float: right;
 }
 
@@ -2514,4 +2517,10 @@ background-color: #e6e6e6;
 } 
 ul.my-courses-list-ul > li:hover a{
 	color: white;
+}
+
+
+
+#topnavlistcontainer {
+    float: left;
 }
