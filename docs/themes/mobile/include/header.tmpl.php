@@ -473,7 +473,35 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 	
 	<div id="navigation-contentwrapper" role="menubar" >
-		
+	
+			<?php if ($this->current_sub_level_page): ?>
+			<div id="topnavlistcontainer" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" >
+			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+			
+				<div id="navigation-column">
+				<?php if ($this->current_sub_level_page): ?>
+				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
+					<?php $accesscounter = 0; //initialize ?>
+					<?php foreach ($this->top_level_pages as $page): ?>
+						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+						<?php if ($page['url'] == $this->current_top_level_page): ?>
+							<!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+						<?php else: ?>
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+						<?php endif; ?>
+				
+						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+					
+					<?php endforeach; ?>
+					 
+				</ul>
+				<?php endif; ?>
+			</div>
+			</div>
+			<?php endif; ?>	
 		
 	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
@@ -503,7 +531,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			
-	
+<div id="sequence-links-course-navigation">	
 		<ul class="sequence-links fl-tabs" id="sequence-links" >
 			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 				<?php if ($this->sequence_links['resume']): ?>
@@ -534,45 +562,17 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
 			</div>	
-		</div><!-- course-level navigation -->				
+			</div><!-- course-level navigation -->				
 				<div id="content">
 					<?php $contentManager->printMainMenu(); ?>
 					<script language="javascript" type="text/javascript"></script>
 				</div>
 		
-		
+		</div> <!-- end sequence-links-course-navigation -->
 		<?php endif;?>
 	
 	
 		
-			<?php if ($this->current_sub_level_page): ?>
-			<div id="topnavlistcontainer" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" >
-			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-			
-				<div id="navigation-column">
-				<?php if ($this->current_sub_level_page): ?>
-				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
-					<?php $accesscounter = 0; //initialize ?>
-					<?php foreach ($this->top_level_pages as $page): ?>
-						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-						<?php if ($page['url'] == $this->current_top_level_page): ?>
-							<!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
-						<?php else: ?>
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
-						<?php endif; ?>
-				
-						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-					
-					<?php endforeach; ?>
-					 
-				</ul>
-				<?php endif; ?>
-			</div>
-			</div>
-			<?php endif; ?>
 
 	
 
