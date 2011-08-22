@@ -9,11 +9,12 @@
 	<h3><a id="results-hide-show-link" class="content-expand" href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1" ><?php echo $this->num_results; echo " courses found."?></a></h3>
 </div>
 <div id="results-display">
+
 <fieldset class="group_form"><legend class="group_form"><?php echo "Filter by:"; ?></legend>
 		<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 				<div class="row">
-					<legend><?php echo _AT('access'); ?></legend>
-					<fieldset>
+					
+					<fieldset><legend><?php echo _AT('access'); ?></legend>
 					<input type="radio" name="access" value="private" id="s1" <?php if ($_GET['access'] == 'private') { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('private'); ?></label> 
 	
 					<input type="radio" name="access" value="protected" id="s2" <?php if ($_GET['access'] == 'protected') { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('protected'); ?></label>
@@ -40,8 +41,8 @@
 
 				<input type="text" name="search" id="search" size="30" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
 				<br/>
-				<legend><?php echo _AT('search_match'); ?>:</legend>
-				<fieldset>
+				
+				<fieldset><legend><?php echo _AT('search_match'); ?>:</legend>
 				<input type="radio" name="include" value="all" id="match_all" <?php echo $this->checked_include_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label> 
 				<input type="radio" name="include" value="one" id="match_one" <?php echo $this->checked_include_one; ?> /><label for="match_one"><?php echo _AT('search_any_word'); ?></label>
 				</fieldset>
@@ -54,7 +55,7 @@
 		
 		</form>
 
-		</fieldset>
+</fieldset>
 </div>
 </div>
 </div>
