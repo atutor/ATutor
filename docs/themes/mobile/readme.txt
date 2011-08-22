@@ -1,6 +1,6 @@
 ******************************************************************************************
 Theme:		1.6.4 Mobile Theme
-Date:	
+Date:		August 2011
 ******************************************************************************************
 
 
@@ -23,7 +23,7 @@ include/header.tmpl.php
 * accessibility: increased support for ARIA roles that Safari recognizes. Note: ARIA roles create HTML validation errors.
 
 ==================================================================================
-Known Issues
+Known Issues / More work needed
 ==================================================================================
 
 * "0004796: Student user's Preferences template won't display"
@@ -39,7 +39,10 @@ Known Issues
 
 
 * WCAG 3.2.1 On Focus
-**Is this violated by the pop-up "guide" button in the mobile and tablet devices?  
+**Is this violated by the pop-up "guide" button in the mobile and tablet devices? 
+
+*Instructor user: 
+/docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup 
 
 ==================================================================================
 Omitted from mobile/
@@ -57,7 +60,12 @@ Instructor user:
 */docs/mods/_core/enrolment/create_course_list.php
 */docs/mods/_core/enrolment/privileges.php
 *mods/_core/file_manager/index.php
+*file manager -- removed for mobile 
 *reading list
+*groups
+*gradebook
+*glossary
+*patcher
 *student tools
 
 ===================================================================================================
@@ -190,20 +198,18 @@ http://localhost/GSoC2011/docs/mods/_standard/patcher/index_admin.php
 1.  /docs/admin/config_edit.php  **** DONE / WCAG AA / Valid HTML 
 2.  /docs/mods/_core/languages/language_translate.php -- **** DONE, VALID WCAG, Valid HTML
 3.  /docs/mods/_core/languages/language_import.php  -- **** DONE, WCAG AA, VALID HTML 
-4.  /docs/mods/_core/languages/language_add.php - Channel bug, why is it blank? (also a problem in GSoC2011_TRUNK)
-5.  /docs/mods/_core/languages/language_edit.php - Channel bug, why is it blank? (also a problem in GSoC2011_TRUNK)  
-6.  /docs/mods/_core/languages/language.php -- **** DONE, VALID WCAG, HELP on HTML (CHANNEL BUG)  *** valid HTML except for fieldset
-7.  /docs/mods/_core/languages/language_editor.php -  **** NOT DONE NEEDS TEMPLATING 
-8.  /docs/mods/_standard/rss_feeds/preview.php
-9.  /docs/mods/_standard/rss_feeds/edit_feed.php **** DONE / WCAG AA / Valid HTML
-10.  /docs/mods/_standard/rss_feeds/index.php **** DONE / WCAG AA / Valid HTML (note: lacks fieldset, added onkeydown)
-11. /docs/mods/_standard/rss_feeds/add_feed.php **** DONE / WCAG AA / Valid HTML
-12. /docs/mods/_standard/tile_search/admin/module_setup.php **** DONE / HELP WCAG / HELP HTML (CHANNEL BUG)
-13. /docs/mods/_standard/google_search/admin/module_prefs.php **** DONE, VALID WCAG, HTML good (except for legacy <b> tag)
-14. /docs/mods/_standard/social/admin/delete_applications.php ==  already templated
-15. /docs/mods/_standard/social/index_admin.php **** DONE / WCAG AA / Valid HTML
-16. /docs/admin/cron_config.php **** DONE / WCAG AA / Valid HTML -- wrap bug. 
-17. /docs/admin/error_logging.php
+4.  /docs/mods/_core/languages/language.php -- **** DONE, VALID WCAG, HELP on HTML (CHANNEL BUG)  *** valid HTML except for fieldset
+5.  /docs/mods/_core/languages/language_editor.php -  **** NOT DONE NEEDS TEMPLATING 
+6.  /docs/mods/_standard/rss_feeds/preview.php
+7.  /docs/mods/_standard/rss_feeds/edit_feed.php **** DONE / WCAG AA / Valid HTML
+8.  /docs/mods/_standard/rss_feeds/index.php **** DONE / WCAG AA / Valid HTML (note: lacks fieldset, added onkeydown)
+9. /docs/mods/_standard/rss_feeds/add_feed.php **** DONE / WCAG AA / Valid HTML
+10. /docs/mods/_standard/tile_search/admin/module_setup.php **** DONE / HELP WCAG / HELP HTML (CHANNEL BUG)
+11. /docs/mods/_standard/google_search/admin/module_prefs.php **** DONE, VALID WCAG, HTML good (except for legacy <b> tag)
+12. /docs/mods/_standard/social/admin/delete_applications.php ==  already templated
+13. /docs/mods/_standard/social/index_admin.php **** DONE / WCAG AA / Valid HTML
+14. /docs/admin/cron_config.php **** DONE / WCAG AA / Valid HTML -- wrap bug. 
+15. /docs/admin/error_logging.php
 
 INSTRUCTORS: MOBILE ---------------------------------------------------------------------------------- 
 	--- course home ***DONE 
@@ -251,10 +257,6 @@ NOT DONE: /docs/mods/_standard/assignments/add_assignment.php **** NOT DONE, rem
 [COURSE EMAIL] 
 http://localhost/GSoC2011/docs/mods/_standard/course_email/course_email.php **** DONE 
 
-[COURSE TOOLS]
-/docs/mods/_standard/course_tools/modules.php  ***  remove for mobile?
-/docs/mods/_standard/course_tools/side_menu.php  ***  remove for mobile?
-
 [ENROLLMENT]
 /docs/mods/_core/enrolment/export_course_list.php **** DONE 
 /docs/mods/_core/enrolment/import_course_list.php **** DONE 
@@ -262,8 +264,6 @@ http://localhost/GSoC2011/docs/mods/_standard/course_email/course_email.php ****
 /docs/mods/_core/enrolment/index.php **** DONE 
 /docs/mods/_core/enrolment/privileges.php   **** NOT DONE
 
-[FILE MANAGER]
-NOT DONE: /docs/mods/_core/file_manager/index.php  ***  remove for mobile?
 
 [FORUMS]
 /docs/mods/_standard/forums/edit_forum.php  *** DONE
@@ -293,7 +293,6 @@ NOT DONE
 /docs/mods/_core/groups/create_manual.php
 NOT DONE: - /docs/mods/_core/groups/index.php
 
-[PATCHER]
 
 [POLLS] 
 /docs/mods/_standard/polls/tools/index.php  *** DONE
@@ -303,12 +302,6 @@ NOT DONE: - /docs/mods/_core/groups/index.php
 [PROPERTIES] 
 http://localhost/GSoC2011/docs/mods/_core/properties/course_properties.php  *** DONE
 
-[READING LIST]
-NOT DONE
-
-[STATISTICS] 
-/docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup
-
 [STUDENT TOOLS]
 NOT DONE: /docs/mods/_standard/student_tools/instructor_index.php 
 
@@ -317,7 +310,8 @@ TABLET TEMPLATE: STUDENT
 *Note: there are 4 ARIA-errors! 
 
 /docs/login.php - WCAG AA / Valid HTML
-/docs/browse.php - WCAG AA / Valid HTML
+/docs/browse.php - WCAG AA / Valid HTML - 6 errors - ARIA-related
 /docs/users/profile.php  - WCAG AA / Valid HTML
+/docs/users/preferences.php - WCAG AA / Valid HTML
 /docs/users/index.php - WCAG AA / Problem with HTML validation, likely to do with the "Things Current" list
 /docs/registration.php
