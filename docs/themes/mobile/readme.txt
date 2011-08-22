@@ -32,7 +32,7 @@ Known Issues / More work needed
 
 * develop a desktop theme based on tablet.css (harder) 
 
-* develop a desktop theme based on mobile.css (easier)
+* develop a desktop theme based on mobile.css (easier) & do a final update to ensure generic CSS is used
 
 Aesthetic improvements, mobile: 
 * find a better icon for the subnavigation list that appears for mobile student/instructor/admin users. 
