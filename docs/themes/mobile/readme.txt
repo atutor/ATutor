@@ -37,9 +37,6 @@ Known Issues
 *** the "Navigation" menus on mobiles and tablets after a link is highlighted 
 *** docs/users/browse.php in mobile and tablets
 
-* WCAG 1.3.2 Meaningful Sequence
-iPad -- Logged into a course as a student user, the DOM order should match the visual order. Possibly affects
-3.2.3 Consistent Navigation. 
 
 * WCAG 3.2.1 On Focus
 **Is this violated by the pop-up "guide" button in the mobile and tablet devices?  
@@ -118,7 +115,7 @@ I have listed this as an issue.
 2.1.2 No Keyboard Trap
 2.4.1 Bypass Blocks
 **Note: This passes for both mobile & tablet because heading groupings are used at the beginning of content. 
-**But skip-links currently aren't working properly with VoiceOver, although they work correctly on a desktop browser. 
+**Also, skip-links are working with VoiceOver now on tablet.
 2.4.3 Focus Order
 2.4.4 Link Purpose (In Context)
 2.4.5 Multiple Ways
