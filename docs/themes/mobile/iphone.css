@@ -2235,7 +2235,8 @@ ul.sequence-links li a:active:before {
 	border: #A9ADB0 1px solid; 
 	-webkit-border-radius:8px;
 	width: 100%;
-}	
+
+}
 
 .fl-theme-iphone .subnavcontain a, .fl-theme-iphone .subnavcontain a:hover, .fl-theme-iphone .subnavcontain a:active, .fl-theme-iphone .subnavcontain a:focus {
 	text-decoration: none;
@@ -2247,23 +2248,30 @@ ul.sequence-links li a:active:before {
 #subnavlist-link{
 	display: block;
 }
+#page-title-back-to-page{
+    display: inline-block;
+    width: 100%;
+}
+
+.page-title, #back-to-page{
+    float: left;
+}
 
 .fl-theme-iphone #subnavlist-link  a:active, 
 .fl-theme-iphone #subnavlist-link  a:hover, 
 .fl-theme-iphone #subnavlist-link a:focus{
 	background-color: none;
-	color: red;
-	}
+}
 .fl-theme-iphone .subnavcontain{
 	margin-top: 1em;
-}	
-
+	background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   	-webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+}
 .rectangle2{
 	display: inline-block; 
 	color: #005689;
 	font-weight: bold; 
 	padding: .6em;
-	/*margin: .313em 0;*/
 	margin: -.1em;
 	border-right: #A9ADB0 1px solid; 
 }
@@ -2282,6 +2290,7 @@ ul.sequence-links li a:active:before {
 	font-weight: bold; 
 	padding: .313em;
 	margin: .313em 0;
+	    
 }
 #content_link_phone a:active, #content_link_phone a:focus, #content_link_phone a:hover{
 	color: #005689;
