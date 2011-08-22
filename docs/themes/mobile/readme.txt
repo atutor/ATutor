@@ -26,6 +26,21 @@ include/header.tmpl.php
 Known Issues / More work needed
 ==================================================================================
 
+*/docs/users/index.php - WCAG AA / Problem with HTML validation, likely to do with the "Things Current" list
+
+* write a jQuery function to toggle the 'more' button shut in the subnavlist for iPad instructor users
+
+* develop a desktop theme based on tablet.css (harder) 
+
+* develop a desktop theme based on mobile.css (easier)
+
+Aesthetic improvements, mobile: 
+* find a better icon for the subnavigation list that appears for mobile student/instructor/admin users. 
+functionally it's good but aesthetically it can be better
+
+* on activation, the Subnavigation div, Resume, Previous, Next on mobile should highlight as a block 
+
+
 * "0004796: Student user's Preferences template won't display"
 ** see: http://atutor.ca/atutor/mantis/view.php?id=4796
 
