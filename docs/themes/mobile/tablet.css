@@ -63,7 +63,8 @@ body,ul,li {
 #navigation-contentwrapper{
 	position: relative;
 	height: 2.5em; /*requires a height, do not remove */	
-	top: 1.1em;
+	top: 1em;
+	
 }
 
 #contentwrapper{
@@ -2124,7 +2125,9 @@ Ensure styling matches that in fl-tabs.*/
     -moz-border-radius: 5px;
 	border-radius: 5px;
 	font-size: 18px;/*keep this in px*/
-	padding: 0 .3em;
+	padding-left: .3em;
+	padding-right: .3em;
+	padding-top: .1em;
 	color: white;
 	position: relative;
 	top: .4em; 
@@ -2167,10 +2170,12 @@ div#content-link-container{
 	font-size: 0.875em;/*keep this in px*/
 	font-size: 18px;
 	/*padding: .1em;*/
-
-	padding: 0 0.313em;
+padding-left: .3em;
+	padding-right: .3em;
+	padding-top: .1em;
+	padding-bottom: .1em;
 	margin-right: .313em;
-	margin-right:0;
+
 	
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
