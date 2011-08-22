@@ -6,7 +6,7 @@
 
 
 <div id="hide-show-container" >
-	<h3><a id="results-hide-show-link" class="content-expand" href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1" ><?php echo $this->num_results; echo " courses found."?></h3></a>
+	<h3><a id="results-hide-show-link" class="content-expand" href="javascript:void(0);" role="search"  aria-live="assertive"	tabindex="1" ><?php echo $this->num_results; echo " courses found."?></a></h3>
 </div>
 <div id="results-display">
 <fieldset class="group_form"><legend class="group_form"><?php echo "Filter by:"; ?></legend>
