@@ -144,7 +144,26 @@ jQuery('.more-button').click(function(e) {
 
 });
 ";
+/*
+ * 
+ * $(".wizard-img").toggle(
+  function () {
+    $(this).find("img").attr({src:"x-on.png"});
+  },
+  function () {
+    $(this).find("img").attr({src:"x-off.png"});
+  },
+  function () {
+    $(this).find("img").attr({src:"x.png"});
+  }
+);
 
+// works
+ jQuery('#switch').attr('src', 'images/hidemenu.gif'); 
+  jQuery('#switch').attr('title', 'less menu items'); 
+  jQuery('#switch').attr('alt', 'less menu items'); 
+ * 
+ */
 
 //hide and show results	on Browse Courses page
 
