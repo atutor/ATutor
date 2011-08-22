@@ -2208,13 +2208,13 @@ ul.sequence-links li a:active:before {
 
 
 .content-expand{
-	background-image:url("images/plus.png");
+	background-image:url("images/up.png");
 	background-position: 100% 100%;
 	background-repeat: no-repeat;
 }
 
 .content-closed{
-	background-image:url("images/minus.png");
+	background-image:url("images/down.png");
 	background-position: 100% 100%;
 	background-repeat: no-repeat;	
 }
@@ -2264,8 +2264,6 @@ ul.sequence-links li a:active:before {
 }
 .fl-theme-iphone .subnavcontain{
 	margin-top: 1em;
-	background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-   	-webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
 }
 .rectangle2{
 	display: inline-block; 
