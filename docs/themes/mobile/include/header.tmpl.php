@@ -85,6 +85,8 @@ jQuery('#subnavlist-link').click(function(e) {
   
   jQuery('#subnavlist').slideToggle();
   jQuery('#subnavlist-link').toggleClass('content-closed');
+  jQuery('fl-theme-iphone').toggleClass('subnavcontain2');
+  
 
 
    
@@ -606,6 +608,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 								<?php endif;?>
 								<?php if($i== 6): ?>
 									<li class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="More menu items" title="More menu items" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
+									<li>
 									<ul class="subnavlist-more">
 									<li class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									
@@ -616,6 +619,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 								<?php if($i==$num_pages): ?>
 									<li style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									</ul>
+									</li>
 								<?php endif; ?>
 							<?php endif; ?>
 						
