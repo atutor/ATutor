@@ -95,18 +95,18 @@ function checkResources($import_path){
 
 	//generate a file tree
 	$data = rscandir($import_path);
-
 	//check if every file is presented in the manifest
 	foreach($data as $filepath){
-		$filepath = substr($filepath, strlen($import_path));
-
+	debug(preg_match('/(.*)\.xml/', substr($filepath, strlen($import_path))));
 		//validate xml via its xsd/dtds
-		if (preg_match('/(.*)\.xml/', $filepath)){
+		if (preg_match('/(.*)\.xml/', substr($filepath, strlen($import_path)))){
 			libxml_use_internal_errors(true);
 			$dom = new DOMDocument();
-			$dom->load(realpath($import_path.$filepath));
- 			if (!@$dom->schemaValidate('main.xsd')){
+			$dom->load(realpath($filepath));
+			debug(realpath($filepath), 'filepath');
+ 			if (!$dom->schemaValidate('main.xsd')){
 				$errors = libxml_get_errors();
+				debug($errors);exit;
 				foreach ($errors as $error) {
 					//suppress warnings
 					if ($error->level==LIBXML_ERR_WARNING){
@@ -116,6 +116,7 @@ function checkResources($import_path){
 				}
 				libxml_clear_errors();
 			}
+			
 			//if this is the manifest file, we do not have to check for its existance.
 //			if (preg_match('/(.*)imsmanifest\.xml/', $filepath)){
 //				continue;
@@ -428,14 +429,16 @@ function removeCommonPath($items){
 			}
 
 			$temp_path = pathinfo($attrs['href']);
-			$temp_path = explode('/', $temp_path['dirname']);
-			if (empty($package_base_path)){
-			    $package_base_path = $temp_path;
-            }
-			if ($all_package_base_path!='' && empty($all_package_base_path)){
-				$all_package_base_path = $temp_path;
+			if (!strpos($temp_path['dirname'], 'Share')) {
+			    $temp_path = explode('/', $temp_path['dirname']);
+			    if (empty($package_base_path)){
+			        $package_base_path = $temp_path;
+                }
+			    if ($all_package_base_path!='' && empty($all_package_base_path)){
+				    $all_package_base_path = $temp_path;
+			    }
+			    $package_base_path = array_intersect_assoc($package_base_path, $temp_path);
 			}
-			$package_base_path = array_intersect_assoc($package_base_path, $temp_path);
 			
 			//calculate the depths of relative paths
 			if ($all_package_base_path!=''){
@@ -456,19 +459,19 @@ function removeCommonPath($items){
 			if (in_array('..', $temp_path)){
 				$sizeofrp = array_count_values($temp_path);
 			}
-
 			//for IMSCC, assume that all resources lies in the same folder, except styles.css
 			if ($items[$current_identifier]['type']=='webcontent' || $items[$current_identifier]['type']=='imsdt_xmlv1p0'){
 				//find the intersection of each item's related files, then that intersection is the content_path
 				if (isset($items[$current_identifier]['file'])){
 					foreach ($items[$current_identifier]['file'] as $resource_path){
-						$temp_path = pathinfo($resource_path);
-						$temp_path = explode('/', $temp_path['dirname']);
-						$package_base_path = array_intersect_assoc($package_base_path, $temp_path);						
+					    if (!strpos($resource_path, 'Share')) {
+						    $temp_path = pathinfo($resource_path);
+						    $temp_path = explode('/', $temp_path['dirname']);
+						    $package_base_path = array_intersect_assoc($package_base_path, $temp_path);						
+						}
 					}
 				}
 			}
-
 			//real content path
 			if($sizeofrp['..'] > 0 && !empty($all_package_base_path)){
 				for ($i=0; $i<$sizeofrp['..']; $i++){

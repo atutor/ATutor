@@ -266,7 +266,7 @@ function print_organizations($parent_id,
 			if (count($import_files) > 0) $my_files = array_merge($my_files, $import_files);
 			foreach ($my_files as $file) {
 				/* filter out full urls */
-				$url_parts = @parse_url($file);
+				$url_parts = @parse_url($file);				
 //				if (isset($url_parts['scheme'])) {
 //					continue;
 //				}
@@ -314,7 +314,6 @@ function print_organizations($parent_id,
 						} else {
 							$zip_path = 'resources/' . $content['content_path'] . $file;
 						}
-	
 						$zipfile->add_file(@file_get_contents($file_path), $zip_path, $file_info['mtime']);
 					}
 				}
@@ -373,7 +372,22 @@ function print_organizations($parent_id,
 							//http://www.atutor.ca/atutor/mantis/view.php?id=4313
 							//relative link that goes beyond get.php shouldn't be added
 							//relative link that does not exist shouldn't be added.
-							$content_files .= str_replace('{FILE}', $content['content_path'] . $file, $ims_template_xml['file']);
+							$filepath_array = explode('/', $content['content_path'] . $file);
+						    $new_filepath_array = array();
+						    if (in_array('..', $filepath_array)){
+							    while (!empty($filepath_array)){
+								    $temp = array_shift($filepath_array);
+								    if ($temp == '..'){
+									    array_pop($new_filepath_array);
+								    } else {
+									    array_push($new_filepath_array, $temp);
+								    }
+							    }
+							    $file = implode('/', $new_filepath_array);
+						    } else {
+						        $file = $content['content_path'] . $file;
+                            }
+							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
 						}
 					}
 				}

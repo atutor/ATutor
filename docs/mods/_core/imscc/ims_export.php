@@ -256,6 +256,7 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 /* save the imsmanifest.xml file */
+//debug($imsmanifest_xml);exit;
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 
 if ($glossary_xml) {
