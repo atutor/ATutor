@@ -105,3 +105,6 @@ div .button {
 textarea#body_text{
 	*width:600px;
 }
+#shortcuts{
+	*width:12%;
+}

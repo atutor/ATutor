@@ -41,7 +41,9 @@ div#breadcrumbs {
 	background-color: #e1ecfe;
 	width:100%;
 }
-
+#shortcuts{
+	*width:12%;
+}
 div#top-links {
 	position: relative;
 	padding-right: 5px;
