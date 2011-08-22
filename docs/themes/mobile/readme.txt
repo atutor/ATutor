@@ -28,7 +28,7 @@ Known Issues / More work needed
 
 */docs/users/index.php - WCAG AA / Problem with HTML validation, likely to do with the "Things Current" list
 
-* write a jQuery function to toggle the 'more' button shut in the subnavlist for iPad instructor users
+* write a jQuery function to toggle img src for thethe 'less' button shut in the subnavlist for iPad instructor users
 
 * develop a desktop theme based on tablet.css (harder) 
 
@@ -39,6 +39,9 @@ Aesthetic improvements, mobile:
 functionally it's good but aesthetically it can be better
 
 * on activation, the Subnavigation div, Resume, Previous, Next on mobile should highlight as a block 
+
+*Instructor user: 
+/docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup 
 
 
 * "0004796: Student user's Preferences template won't display"
@@ -56,8 +59,6 @@ functionally it's good but aesthetically it can be better
 * WCAG 3.2.1 On Focus
 **Is this violated by the pop-up "guide" button in the mobile and tablet devices? 
 
-*Instructor user: 
-/docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup 
 
 ==================================================================================
 Omitted from mobile/
