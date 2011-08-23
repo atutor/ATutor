@@ -1035,21 +1035,21 @@ $msg->printAll();
 		<h4>Example 1</h4>
 		<p>To alter a text to lowercase:
 		<pre class="code">
-		$str = 'Αρχαίο Πνεύμα';
+		$str = 'Î‘Ï�Ï‡Î±Î¯Î¿ Î Î½ÎµÏ�Î¼Î±';
 		echo $strtolower($str);
 		</pre></p>
 
 		<h4>Example 2</h4>
 		<p>To alter a text to uppercase:
 		<pre class="code">
-		$str = 'Αρχαίο Πνεύμα';
+		$str = 'Î‘Ï�Ï‡Î±Î¯Î¿ Î Î½ÎµÏ�Î¼Î±';
 		echo $strtoupper($str);
 		</pre></p>
 
 		<h4>Example 3</h4>
 		<p>To find the middle character of a string:
 		<pre class="code">
-		$str = 'Αρχαίο Πνεύμα';
+		$str = 'Î‘Ï�Ï‡Î±Î¯Î¿ Î Î½ÎµÏ�Î¼Î±';
 		$mid = $strlen;
 		echo $strpos($mid, $str);
 		</pre></p>
@@ -1057,7 +1057,7 @@ $msg->printAll();
 		<h4>Example 4</h4>
 		<p>To check if the string has the appropriate length:
 		<pre class="code">
-		$str = 'Αρχαίο Πνεύμα';
+		$str = 'Î‘Ï�Ï‡Î±Î¯Î¿ Î Î½ÎµÏ�Î¼Î±';
 		$title = validate_length($str, 40);
 		//now the title is safe to insert into the db
 		</pre></p>
@@ -1081,7 +1081,7 @@ $msg->printAll();
 	<h3><a name="var-base_href"></a>17.3 $_base_href</h3>
 		<h4>Description</h4>
 		<p><kbd>constant string $_base_href</kbd></p>
-		<p>The full URL to ATutor's base installation. Supports both regular and SSL protocols. Example: <kbd>http://myserver.org/files/ATutor/</kbd>.</p>
+		<p>The full URL to the base href of the current page, an equivalence of the "href" attribute value in the page html <base> tag. Supports both regular and SSL protocols. Example: <kbd>http://myserver.org/files/ATutor/</kbd>.</p>
 
 		<h4>Location</h4>
 			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
@@ -1089,7 +1089,7 @@ $msg->printAll();
 	<h3><a name="var-base_path"></a>17.4 $_base_path</h3>
 		<h4>Description</h4>
 		<p><kbd>constant string $_base_path</kbd></p>
-		<p>The full absolute path to ATutor's base installation. Example: <kbd>/files/ATutor/</kbd>.</p>
+		<p>Extracted from $_base_href, the full absolute base path of the current page. Example: <kbd>/files/ATutor/</kbd>.</p>
 
 		<h4>Location</h4>
 			<p><kbd>`include/lib/constants.inc.php`</kbd></p>
@@ -1363,7 +1363,7 @@ The second month in French is: &lt;?php echo AT_date('%F', 2, AT_DATE_INDEX_VALU
 
 		<p>Result:
 <pre class="code">
-The second month in French is: f憝rier
+The second month in French is: fæ†�rier
 </pre></p>
 
 	<h3><a name="fn-addslashes"></a>18.5 $addslashes()</h3>
