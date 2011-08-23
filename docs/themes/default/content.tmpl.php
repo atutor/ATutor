@@ -39,8 +39,8 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") {
 <?php if (!empty($this->test_ids)): ?>
 <div id="content-test" class="input-form">
 	<ol>
-		<strong><?php echo _AT('tests') . ':' ; ?></strong>
-		<li class="top-tool"><?php echo $this->test_message; ?></li>
+		
+		<li><strong><?php echo _AT('tests') . ':' ; ?></strong>
 		<ul class="tools">
 		<?php 
 			foreach ($this->test_ids as $id => $test_obj){
@@ -58,8 +58,7 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") {
 if (!empty($this->forum_ids)): ?>
 <div id="content-forum" class="input-form">
     <ol>
-        <strong><?php echo _AT('forums') . ':' ; ?></strong>
-        <li class="top-tool"><?php echo $this->forum_message; ?></li>
+        <li><strong><?php echo _AT('forums') . ':' ; ?></strong>
             <ul class="tools">
                 <?php
                 foreach ($this->forum_ids as $id => $forum_obj) {

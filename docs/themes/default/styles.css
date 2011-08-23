@@ -1320,7 +1320,7 @@ div#content-test ol{
 }
 
 div#content-test ol ul li{
-	list-style: none;
+	list-style-type: none;
 	padding: 0px 2px 0px 15px;
 	margin-bottom: 1px; 
 	line-height: 200%; 
@@ -1328,7 +1328,9 @@ div#content-test ol ul li{
 	border-bottom: 1px solid #efefef; 
 	border: 1px solid #eeeeff;
 }
-
+div#content-test li{
+	list-style-type: none;
+}
 div#content-forum {	
 	float: left;
 	margin-top: 2em;
@@ -1340,7 +1342,7 @@ div#content-forum ol{
 }
 
 div#content-forum ol ul li{
-	list-style: none;
+	list-style-type: none;
 	padding: 0px 2px 0px 15px;
 	margin-bottom: 1px; 
 	line-height: 200%; 
@@ -1348,7 +1350,9 @@ div#content-forum ol ul li{
 	border-bottom: 1px solid #efefef; 
 	border: 1px solid #eeeeff;
 }
-
+div#content-forum li{
+	list-style-type: none;
+}
 
 div#content-info {
 	margin: 5pt;
