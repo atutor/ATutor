@@ -240,7 +240,8 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" accesskey="s" onclick="confirmSubmit(this, '<?php echo $addslashes(_AT("test_confirm_submit")); ?>'); return false;"/>
 	</div>
+	</fieldset>
 </div>
 </form>
-<script type="text/javascript" src="<?php echo $_base_href;?>/mods/_standard/tests/lib/take_test.js">
+<script type="text/javascript" src="<?php echo $_base_href;?>/mods/_standard/tests/lib/take_test.js"></script>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

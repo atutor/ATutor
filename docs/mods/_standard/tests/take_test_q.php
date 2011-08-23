@@ -275,6 +275,7 @@ if (!$result || !$question_row) {
 			<input type="submit" name="next" value="<?php echo _AT('next'); ?>" accesskey="s" />
 		<?php endif; ?>
 	</div>
+	</fieldset>
 </div>
 </form>
 <script type="text/javascript" src="<?php echo $_base_href;?>/mods/_standard/tests/lib/take_test.js">
