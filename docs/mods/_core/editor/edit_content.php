@@ -17,6 +17,9 @@ global $db, $associated_forum;
 
 $get_related_glossary = true;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+authenticate(AT_PRIV_CONTENT);
+
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
