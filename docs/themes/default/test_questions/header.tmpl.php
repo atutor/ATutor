@@ -12,7 +12,5 @@
 	<?php endif; ?>
 
 	<h3 style="color: black"><?php echo _AT('question'); ?> <?php echo $this->number; ?>: <span style="padding-left: 10px"><?php echo $this->type; ?></span></h3>
-</span>
-	</strong>
 </div>
 <div class="row" style="padding-bottom: 20px">
