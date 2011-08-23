@@ -73,7 +73,6 @@ body,ul,li {
 }
 #wrapper{
 	width:100%;
-	/*overflow:hidden;*/
 	overflow: auto;
 	min-height: 100%;
 	background-image: url(images/idi_background.png);
@@ -210,7 +209,6 @@ h2 {
 }
 h2.page-title{
 	padding-top: .313em;
-	/*float: left;*/
 }
 
 
@@ -241,9 +239,6 @@ link highlighting -- add when the header and footer is done
 .fl-theme-iphone a:not(.fl-tabs){
 	 color: #4c96f4;
 }
-/*.fl-theme-iphone a:active, .fl-theme-iphone a:focus, .fl-theme-iphone a:hover{
-	text-decoration: underline;
-}*/
 
 /************************************************************************************************/
 /* Preferences tabs */
@@ -282,9 +277,6 @@ link highlighting -- add when the header and footer is done
 /* link attributes */
 /************************************************************************************************/
 
-.top-tool a: link, .top-tool a:focus{
-	/*text-decoration: none;*/
-}
 /* link attributes */
 a:link {
  	color: #4C96F4;
@@ -442,8 +434,7 @@ h5.search-results {
 
 /*preferences*/
 
-.input-form 
-table.tabbed-table {
+.input-form table.tabbed-table {
 	width: 100%;
 	border:thin black solid;
 }
@@ -636,15 +627,8 @@ h1#section-title {
 /**********************************************************************/
 
 #footer{
-	/*width:100%;*/
-	/*height:2.3em;
-	background-color: #4b6b90;
-	margin-top: -2.3em;
-	position: relative;
-	clear: both;*/
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
-		height:2.3em;
-
+	height:2.3em;
 	margin-top: -2.3em;
 	position: relative;
 	clear: both;
@@ -653,18 +637,11 @@ h1#section-title {
 div#footer-links{
 	margin: 0 auto;
 	font-size: .938em;
-/* moved inside of #footer for mobile theme */
 }
 
-ul.footer-links-tabs li a:hover, 
-ul.footer-links-tabs li a:focus, 
-ul.footer-links-tabs li a:active,
-ul.footer-links-tabs li.back a:hover, 
-ul.footer-links-tabs li.back a:focus, 
-ul.footer-links-tabs li.back a:active,
-ul.footer-links-tabs li.forward a:hover, 
-ul.footer-links-tabs li.forward a:focus, 
-ul.footer-links-tabs li.forward a:active {
+ul.footer-links-tabs li a:hover, ul.footer-links-tabs li a:focus, ul.footer-links-tabs li a:active,
+ul.footer-links-tabs li.back a:hover, ul.footer-links-tabs li.back a:focus, ul.footer-links-tabs li.back a:active,
+ul.footer-links-tabs li.forward a:hover, ul.footer-links-tabs li.forward a:focus, ul.footer-links-tabs li.forward a:active {
     color: #4c96f4;
     background:transparent;
 }
@@ -742,12 +719,6 @@ table.data th a {
 	background-position: right;
 }
 
-table.data tbody {
-/*
-	border-top: 1px solid #B8AE9C;
-	border-bottom: 1px solid #B8AE9C;
-	*/
-}
 /*headings text*/
 table.data tbody th {
 	text-align: left;
@@ -790,7 +761,6 @@ table.data tfoot tr:first-child td {
 }
 
 table.data.static tfoot td, table.data.static tfoot tr:first-child td {
-	/*border-top: 1px solid #B8AE9C;*/
 	padding: 0.313em;
 	background-image: none;
 	padding-left: 0;
@@ -799,7 +769,6 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 /* add borders to row in Required Information, Personal Information*/
 .row{
 	padding:.375em 0;
-	/*border-bottom: 1px #cccccc solid;*/
 	font-size: 0.938em;
 }
 #last-row, .row-buttons, #last-row1, .row-blurb{
@@ -814,11 +783,9 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 table.data tfoot input {
 	background-color: #efefef;
 	font-weight: normal;
-	/*border:  #AAA  solid 1px;*/
 }
 table.data tfoot input:focus {
 	background-color: #FFDAB9;
-	/*border:  #AAA  solid 1px;*/
 }
 
 
@@ -828,10 +795,7 @@ table.data.static tbody tr:hover {
 	cursor: auto;
 }
 
-
-
 /* course browser: */
-
 div#browse {
 	margin-left: auto; 
 	margin-right: auto; 
@@ -907,7 +871,6 @@ div#feedback, div#info {
 }
 div#feedback li, div#info li, div#error li{
 	color: #4C566C;
-	/*z-index: -1;*/
 }
 
 div#help {
@@ -921,7 +884,6 @@ div#help {
 	background-color: #E9F4F3;
 	color: #024C41;
 }
-
 
 div#warning {
 	width: 95%;
@@ -980,7 +942,6 @@ div.home-link img {
 	border: 0;
 }
 
-
 div.dropdown {
 	width: 12.5em;
 	padding: 0.125em;
@@ -1025,11 +986,6 @@ div#content_text {
 form {
 	display:inline;
 	max-width: 100%;
-}
-
-
-optgroup {
-	/*font-size: small;*/
 }
 
 /* paging*/
@@ -1181,10 +1137,7 @@ div.box a.close {
     padding: 0em 0.2em;
 }
 
-div.box h1, 
-div.box h2, 
-div.box h3, 
-div.box h4 {
+div.box h1, div.box h2, div.box h3, div.box h4 {
     margin: 0;
     padding: 0;
 }
@@ -1199,7 +1152,6 @@ div.box .odd {
 
 
 /* users/index.php */
-
 div.course {
 	position: relative;
 	width: 12.5em;
@@ -1262,10 +1214,6 @@ fieldset#shortcuts {
 	padding-left: 10pt;
 }
 
-.shortcuts{
-
-}
-
 fieldset {
 	margin-bottom: 10pt;
 	-webkit-border-radius:5px;
@@ -1297,10 +1245,6 @@ fieldset {
 
 #guide img{
 	border:none;
-}
-
-#guide a:hover{
-	
 }
 
 div#content-test, div.content-from-module {	
@@ -1340,8 +1284,6 @@ ul#home-links, ul#home-detail-links {
 	padding: .313em;
 	margin: .313em;
 	padding: .313em;
-	/*
-	background-color:  #4C96F4;*/
 }
 .my-courses-list a{
 	color: black;
@@ -1440,7 +1382,6 @@ ul#home-links, ul#home-detail-links {
 	width:1.5em;
 }
 /* profile page */
-
 dl#public-profile dt {
 	float: left;
 	width: 90%;
@@ -1517,7 +1458,6 @@ li.child-tool a {
 	font-weight: normal; 
 }
 
-/* ol#tools>li>ul, */ 
 ul.child-top-tool {
 	margin-top: -0.313em;
 	padding-left: 0;
@@ -1566,7 +1506,6 @@ dl.browse-course dd {
 }
 
 /*  form fields grouping for WCAG 2.0 conformance*/
-
 fieldset.group_form{
 	width:98%;
 	margin:0 auto;
@@ -1608,7 +1547,6 @@ div.column_primary {
 	margin: 0.313em;
 	padding: 0;
 	min-width: 10.625em;
-/*	position: relative;*/
 }
 
 div.column_equivalent{
@@ -1622,8 +1560,6 @@ div.column_equivalent{
 	padding: 0.313em;
 	border: 1px solid #EEE;
 	background-color: #FFF;
-/*	position: relative;*/
-
 }
 
 div.resource_box{
@@ -1633,7 +1569,6 @@ div.resource_box{
 	padding: 0.313em;
 	min-width: 9.375em;
 	background-color: #eee;
-/*	position: relative;*/
 }
 
 h2.alternatives_to{
@@ -1644,7 +1579,6 @@ h2.alternatives_to{
 
 div.alternative_box{
 	border: 1px solid #ddd;
-	/*width: 90%;*/
 	margin: 0.313em;
 	padding: 0.313em;
 	min-width: 9.375em;
@@ -1666,7 +1600,10 @@ label.primary a{
 }
 
 /* format of "table of contents" on content page */
-#toc a 		{ display:block; margin:0.188em; }
+#toc a { 
+	display:block; 
+	margin:0.188em; 
+}
 #toc .h2, #toc .h3, #toc .h4, #toc .h5, #toc .h6{ 
 	padding:0 0 0 0;
 }
@@ -1797,12 +1734,11 @@ ul.folder{
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
 	border-radius: 8px;
-		border: black;
-		background: black; 
-		z-index: 1000;
-		padding-bottom: 0; 
-		margin-bottom: 0;
-		
+	border: black;
+	background: black; 
+	z-index: 1000;
+	padding-bottom: 0; 
+	margin-bottom: 0;	
 }
 
 ul#topnavlist-tablet li {
@@ -1815,14 +1751,11 @@ ul#topnavlist-tablet>li:active,
 ul#topnavlist-tablet>li:active a,
 ul#topnavlist-tablet>li:focus, 
 ul#topnavlist-tablet>li:focus a {
-/*highlight active list item
-ul#topnavlist-tablet>li .active*/
 	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center, -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
 }
 
 ul#topnavlist-tablet li a  {
- 	/*color: #4C566C;*/
  	text-decoration: none;
 }
 
@@ -1877,18 +1810,13 @@ div#navigation-column{
 	border-radius: 8px;
 	z-index: 1000;
 	position: absolute; 
-	top: 1.3em;
 	top: 2em;
-
 	background: black;
 	padding-right: .2em;
 	padding-left: .2em;
 	padding-top: .2em;
-	
 	padding-bottom: .2em;
 	display: none;
-	
-	
 }
 div#contentcolumn{
 	padding-top: .313em;
@@ -1899,9 +1827,6 @@ div#contentcolumn{
 	top: .7em;
 	top: 1.2em;
 	top: 2em;
-	
-	/*border-left: thin #A9ADB0 solid;*/
-	
 }
 #content-text{
 	position: relative;
@@ -1943,7 +1868,6 @@ div#contentcolumn{
 
 
 /* ATutor Social Styles */
-
 div .profile_container {
 	background-color:#eee; 
 	border: 1px solid #8e8e8e; 
@@ -1984,8 +1908,6 @@ div .button:hover{
 }
 
 /* Side menu */
-
-
 ul.social_side_menu {
 	padding-left: 2em;
 }
@@ -2006,7 +1928,6 @@ div .divider {
 }
 
 div.contentbox, input-form{
-
 	padding:.5em;
 	background-color: #ffffff;
     overflow:hidden;
@@ -2088,22 +2009,15 @@ ul.social_inline_menu{
 	display: block; 
 }
 
-.hide-show-container a>h4{
+.hide-show-container a>h4, .fl-theme-iphone a .results-hide-show-link{
 	color: white;
-}
-.fl-theme-iphone a .results-hide-show-link{
-	color: white;
-	
 }
 /* REBUILDING THE TOP NAVIGATION MENU */
 
 #navigation-bar{
  	height: 2; 
-    border-bottom: .5px solid black;
-   /*padding-bottom: .3em;*/
-     
+    border-bottom: .5px solid black;    
 }
-
 
 /*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
 Ensure styling matches that in fl-tabs.*/
@@ -2170,7 +2084,7 @@ div#content-link-container{
 	font-size: 0.875em;/*keep this in px*/
 	font-size: 18px;
 	/*padding: .1em;*/
-padding-left: .3em;
+	padding-left: .3em;
 	padding-right: .3em;
 	padding-top: .1em;
 	padding-bottom: .1em;
@@ -2207,7 +2121,6 @@ padding-left: .3em;
 	
 }
 
-
 #content{
 	position: absolute;
 	top: 2em; 
@@ -2223,13 +2136,11 @@ padding-left: .3em;
 }
 
 /*	hiding/showing top navigation and results-display */
-
 ul#topnavlist {
 	display: none;
 	position: relative;
 	top: 1.2em;
 	z-index: 1;
-	/*background-color: white;*/
 }
 
 div#results-display, .results-display{
@@ -2267,10 +2178,6 @@ ul#topnavlist li a  {
 	background-repeat: no-repeat;	
 }
 
-
-
-
-
 /* SUBNAVLIST HIGHLIGHTING and Gmail-STYLE "more" button */
 ul#subnavlist li a{
 	color: black;
@@ -2288,8 +2195,6 @@ ul#subnavlist{
 	margin: 0;
 	font-size: 90%;
 	text-align: center;  
-
-	/*border-bottom: 1px #B6C0C6 solid;*/
 }
 .selected{
 	color: red;
@@ -2327,7 +2232,6 @@ ul#subnavlist li a{
 
  /*creates a little up-facing arrow to help mimick an ipad-style popover.  
  See http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
-
 .triangle-isosceles {
      position: relative;
 }
@@ -2377,10 +2281,10 @@ ul#subnavlist li a{
 	border-width:15px 50px 10px 0;
 	border-color:transparent #f3961c;
 	border-color: transparent #F3961C;
-     border-width: 10px 10px 10px 0pt;
-     bottom: auto;
+    border-width: 10px 10px 10px 0pt;
+    bottom: auto;
     left: -0.75em;
-     top: 0;
+    top: 0;
 }
 
 /* sequence links */
@@ -2399,22 +2303,17 @@ ul#subnavlist li a{
 /*Adds arrows to Fluid Tabs. Here is a good guide for creating triangles with CSS: 
 http://jonrohan.me/guide/css/creating-triangles-in-css/ */
 /************************************************************************************************/
-ul.sequence-links {
-}
 
 ul.sequence-links li {
     position:relative;
     z-index:1;
     overflow:hidden;
     list-style:none;
-   /* padding:0;
-    margin:0 0 0 0 ;*/
 }
 
 ul.sequence-links li.back a:link, 
 ul.sequence-links li.back a:visited {
     display:block;
-   /* border :0;*/
     padding-left:12px;
     color:white;
 }
@@ -2422,7 +2321,6 @@ ul.sequence-links li.back a:visited {
 ul.sequence-links li.forward a:link, 
 ul.sequence-links li.forward a:visited {
     display:block;
-   /* border :0;*/
     padding-right:0.75em;
     color:white;
 }
@@ -2450,11 +2348,6 @@ ul.sequence-links li a:after {
     margin:-0.5em 0 0;
   }
 
-ul.sequence-links li a:hover:before, 
-ul.sequence-links li a:focus:before, 
-ul.sequence-links li a:active:before {
- 
-}
 /*arrow that points to the left, beside the "Previous" text */
 .arrow.back a:after {/*arrow pointing to the left*/
      background: none repeat scroll 0% 0% transparent;
@@ -2478,14 +2371,6 @@ ul.sequence-links li a:active:before {
      top: .75em;
 }
 
-.arrow.back:before {
-     
-}
-.arrow.forward:before {
-     
-}
-.arrow:before {
-
 }
 /*arrow that points to the right, beside the "Next" text */
 .arrow.forward a:after {
@@ -2496,8 +2381,8 @@ ul.sequence-links li a:active:before {
    
 }
 .arrow.forward a:after {
-     /*top: 11px;*/
-       background: none repeat scroll 0% 0% transparent;
+  
+      background: none repeat scroll 0% 0% transparent;
      border-color: transparent transparent transparent white;
   	 border-width: 6px;
   	 border-style: solid;
@@ -2513,9 +2398,7 @@ ul.sequence-links li a:active:before {
 }
 
 ul.my-courses-list-ul > li:hover{
-background-color: #e6e6e6;
-	color: black; 	
-	
+	background-color: #e6e6e6;
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
@@ -2523,9 +2406,6 @@ background-color: #e6e6e6;
 ul.my-courses-list-ul > li:hover a{
 	color: white;
 }
-
-
-
 #topnavlistcontainer {
     float: left;
 }
