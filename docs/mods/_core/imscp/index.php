@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+authenticate(AT_PRIV_CONTENT);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!isset($_main_menu)) {
