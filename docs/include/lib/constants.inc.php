@@ -195,14 +195,7 @@ if (($temp = strpos($_base_href, AT_PRETTY_URL_HANDLER)) > 0){
 
 }
 $_base_href	= substr($_base_href, 0, $endpos);
-$_base_path = $_session_path = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
-
-// $_session_path is used to attach the session ID on @ see include/vitals.inc.php - session_set_cookie_params()
-// $_session_path is ATutor installation path, which is not captured by $_base_path in the case that the sent-in
-// URL ends with '/'.
-if (substr($_SERVER['PHP_SELF'], -1) == '/') {
-	$_session_path = substr($_base_path, 0, strrpos(substr($_base_path, 0, -1), '/') + 1);
-}
+$_base_path = substr($_base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
 
 define('AT_BASE_HREF', $_base_href);
 

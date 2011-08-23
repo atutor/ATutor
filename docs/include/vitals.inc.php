@@ -102,13 +102,12 @@ function check_session()
  *
  * 0. load config.inc.php
  * 1. load constants
- * 2. initilize session
- * 3. load language constants
+ * 2. initialize db connection and populate $_config
+ * 3. initialize session
  * 4. enable output compression
- * 5. initilize db connection
- * 6. load cache library
- * 7. initilize session localization
- * 8. load ContentManagement/output/Savant/Message libraries
+ * 5. validate login user
+ * 6. load language
+ * 7. load cache/ContentManagement/output/Savant/Message libraries
  ***/
 
 /**** 0. start system configuration options block ****/
@@ -129,78 +128,15 @@ function check_session()
 		header('Location: ' . $relative_path . 'install/not_installed.php');
 		exit;
 	}
-/*** end system config block ****/
+/*** end system config block ***/
 
 /*** 1. constants ***/
-	if (!defined('AT_REDIRECT_LOADED')){
-		require_once(AT_INCLUDE_PATH.'lib/constants.inc.php');
-	}
-
-/***** 2. start session initilization block ****/
-	if (headers_sent()) {
-		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-		$err = new ErrorHandler();
-		trigger_error('VITAL#<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).' . '</strong></code><br /><hr /><br />', E_USER_ERROR);
-	}
-
-	@set_time_limit(0);
-	@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
-	@session_cache_limiter('private, must-revalidate');
-	session_name('ATutorID');
-	error_reporting(AT_ERROR_REPORTING);
-
-	if (headers_sent()) {
-		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-		$err = new ErrorHandler();
-		trigger_error('VITAL#<br /><code><strong>Headers already sent. ' .
-						'Cannot initialise session.</strong></code><br /><hr /><br />', E_USER_ERROR);
-		exit;
-	}
-
-    $isHttps = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
-              ? false
-              : true;
-    ob_start();
-    session_set_cookie_params(0, $_session_path, "", $isHttps);
-	session_start();
-	
-	// Regenerate session id at every page refresh to prevent CSRF
-	$valid_session = true;
-	if (count($_SESSION) == 0) {
-		regenerate_session();
-	} else {
-		$valid_session = check_session();
-	}
-	
-	$str = ob_get_contents();
-	ob_end_clean();
-	unregister_GLOBALS();
-	
-	// Re-direct to login page at a potential session hijack
-	if (!$valid_session) {
-		$_SESSION = array();
-		header('Location: '.AT_BASE_HREF.'login.php');
-		exit;
-	}
-	
-	if ($str) {
-		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-		$err = new ErrorHandler();
-		trigger_error('VITAL#<br /><code><strong>Error initializing session. ' .
-						'Please varify that session.save_path is correctly set in your php.ini file ' .
-						'and the directory exists.</strong></code><br /><hr /><br />', E_USER_ERROR);
-		exit;
-	}
-	
-
-/***** end session initilization block ****/
-
-// 4. enable output compression, if it isn't already enabled:
-if ((@ini_get('output_handler') == '') && (@ini_get('zlib.output_handler') == '')) {
-	@ini_set('zlib.output_compression', 1);
+if (!defined('AT_REDIRECT_LOADED')){
+	require_once(AT_INCLUDE_PATH.'lib/constants.inc.php');
 }
 
-/* 5. database connection */
+/*** 2. initialize db connection and populate $_config ***/
+
 if (!defined('AT_REDIRECT_LOADED')){
 	require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 }
@@ -212,7 +148,69 @@ while ($row = mysql_fetch_assoc($result)) {
 	$_config[$row['name']] = $row['value'];
 }
 
-//Check if users=valid
+/***** 3. start session initilization block *****/
+if (headers_sent()) {
+	require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+	$err = new ErrorHandler();
+	trigger_error('VITAL#<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).' . '</strong></code><br /><hr /><br />', E_USER_ERROR);
+}
+
+@set_time_limit(0);
+@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
+@session_cache_limiter('private, must-revalidate');
+session_name('ATutorID');
+error_reporting(AT_ERROR_REPORTING);
+
+if (headers_sent()) {
+	require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+	$err = new ErrorHandler();
+	trigger_error('VITAL#<br /><code><strong>Headers already sent. ' .
+					'Cannot initialise session.</strong></code><br /><hr /><br />', E_USER_ERROR);
+	exit;
+}
+
+    $isHttps = (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] != "on")
+              ? false
+              : true;
+    ob_start();
+    session_set_cookie_params(0, $_config["session_path"], "", $isHttps);
+session_start();
+
+// Regenerate session id at every page refresh to prevent CSRF
+$valid_session = true;
+if (count($_SESSION) == 0) {
+	regenerate_session();
+} else {
+	$valid_session = check_session();
+}
+
+$str = ob_get_contents();
+ob_end_clean();
+unregister_GLOBALS();
+
+// Re-direct to login page at a potential session hijack
+if (!$valid_session) {
+	$_SESSION = array();
+	header('Location: '.AT_BASE_HREF.'login.php');
+	exit;
+}
+
+if ($str) {
+	require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+	$err = new ErrorHandler();
+	trigger_error('VITAL#<br /><code><strong>Error initializing session. ' .
+					'Please varify that session.save_path is correctly set in your php.ini file ' .
+					'and the directory exists.</strong></code><br /><hr /><br />', E_USER_ERROR);
+	exit;
+}
+/***** end session initilization block ****/
+
+/**** 4. enable output compression, if it isn't already enabled: ****/
+if ((@ini_get('output_handler') == '') && (@ini_get('zlib.output_handler') == '')) {
+	@ini_set('zlib.output_compression', 1);
+}
+
+/**** 5. validate login user ****/
 if (!isset($_SESSION['course_id']) && !isset($_SESSION['valid_user']) && (!isset($_user_location) || $_user_location != 'public') && !isset($_pretty_url_course_id)) {
 	if (isset($in_get) && $in_get && (($pos = strpos($_SERVER['PHP_SELF'], 'get.php/')) !== FALSE)) {
 		$redirect = substr($_SERVER['PHP_SELF'], 0, $pos) . 'login.php';
@@ -262,105 +260,105 @@ if ($_config['time_zone']) {
 		@putenv("TZ={$_config['time_zone']}");
 	}
 }
-/***** 7. start language block *****/
-	// set current language
-	require(AT_INCLUDE_PATH . '../mods/_core/languages/classes/LanguageManager.class.php');
-	$languageManager = new LanguageManager();
+/***** 6. load language *****/
+// set current language
+require(AT_INCLUDE_PATH . '../mods/_core/languages/classes/LanguageManager.class.php');
+$languageManager = new LanguageManager();
 
-	$myLang =& $languageManager->getMyLanguage();
+$myLang =& $languageManager->getMyLanguage();
 
-	if ($myLang === FALSE) {
-		echo 'There are no languages installed!';
-		exit;
+if ($myLang === FALSE) {
+	echo 'There are no languages installed!';
+	exit;
+}
+$myLang->saveToSession();
+if (isset($_GET['lang']) && $_SESSION['valid_user']) {
+	if ($_SESSION['course_id'] == -1) {
+		$myLang->saveToPreferences($_SESSION['login'], 1);	//1 for admin			
+	} else {
+		$myLang->saveToPreferences($_SESSION['member_id'], 0);	//0 for non-admin
 	}
-	$myLang->saveToSession();
-	if (isset($_GET['lang']) && $_SESSION['valid_user']) {
-		if ($_SESSION['course_id'] == -1) {
-			$myLang->saveToPreferences($_SESSION['login'], 1);	//1 for admin			
-		} else {
-			$myLang->saveToPreferences($_SESSION['member_id'], 0);	//0 for non-admin
-		}
-	}
-	$myLang->sendContentTypeHeader();
+}
+$myLang->sendContentTypeHeader();
 
-	/* set right-to-left language */
-	$rtl = '';
-	if ($myLang->isRTL()) {
-		$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. eg. rtl_tree */
-	}
+/* set right-to-left language */
+$rtl = '';
+if ($myLang->isRTL()) {
+	$rtl = 'rtl_'; /* basically the prefix to a rtl variant directory/filename. eg. rtl_tree */
+}
 /***** end language block ****/
 
-/* 8. load common libraries */
-	require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
-	require_once(AT_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
-	if (!(defined('AT_REDIRECT_LOADED'))){
-		require_once(AT_INCLUDE_PATH . 'classes/UrlRewrite/UrlParser.class.php');	/* pretty url tool */
-	}
-	require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme and template management */
+/* 7. load common libraries */
+require(AT_INCLUDE_PATH.'classes/ContentManager.class.php');  /* content management class */
+require_once(AT_INCLUDE_PATH.'lib/output.inc.php');           /* output functions */
+if (!(defined('AT_REDIRECT_LOADED'))){
+	require_once(AT_INCLUDE_PATH . 'classes/UrlRewrite/UrlParser.class.php');	/* pretty url tool */
+}
+require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme and template management */
 
-	// set default template paths:
-	$savant = new Savant2();
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
+// set default template paths:
+$savant = new Savant2();
+$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
-	//if user has requested theme change, make the change here
-	if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
-	    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
-	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
-	} else if ($_POST['set_default']) {
-	    $_SESSION['prefs']['PREF_THEME'] = 'default';
-	    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
-	}
+//if user has requested theme change, make the change here
+if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
+    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
+    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
+} else if ($_POST['set_default']) {
+    $_SESSION['prefs']['PREF_THEME'] = 'default';
+    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
+}
+
+// Reset PREF_THEME when:
+// 1. If PREF_THEME is not set 
+// 2. The request is from the mobile device but PREF_THEME is not a mobile theme 
+if (!isset($_SESSION['prefs']['PREF_THEME']) ||
+    $_SESSION['prefs']['PREF_THEME'] == "" ||
+    (is_mobile_device() && !is_mobile_theme($_SESSION['prefs']['PREF_THEME']))) {
+	// get default
+	$default_theme = get_default_theme();
 	
-	// Reset PREF_THEME when:
-	// 1. If PREF_THEME is not set 
-	// 2. The request is from the mobile device but PREF_THEME is not a mobile theme 
-	if (!isset($_SESSION['prefs']['PREF_THEME']) ||
-	    $_SESSION['prefs']['PREF_THEME'] == "" ||
-	    (is_mobile_device() && !is_mobile_theme($_SESSION['prefs']['PREF_THEME']))) {
-		// get default
-		$default_theme = get_default_theme();
-		
-		$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
-	}
-	
-	if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) || $_SESSION['prefs']['PREF_THEME'] == '') {
-		$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
-	}
-	
-	// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
-	// When more mobile themes come in, this should be changed.
-	if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
-		if ($_SESSION['course_id'] == -1) {
-			if ($_SESSION['prefs']['PREF_THEME'] == '' || !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
-				$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
-			}
+	$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+}
+
+if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) || $_SESSION['prefs']['PREF_THEME'] == '') {
+	$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
+}
+
+// use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
+// When more mobile themes come in, this should be changed.
+if (isset($_SESSION['prefs']['PREF_THEME']) && file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
+	if ($_SESSION['course_id'] == -1) {
+		if ($_SESSION['prefs']['PREF_THEME'] == '' || !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) {
+			$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
+		}
+	} else {
+		//check if enabled
+		$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+		if ($row['status'] > 0) {
 		} else {
-			//check if enabled
-			$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
-			if ($row['status'] > 0) {
-			} else {
-				// get default
-				$default_theme = get_default_theme();
-				if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
-					$default_theme = array('dir_name' => get_system_default_theme());
-				}
-				$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+			// get default
+			$default_theme = get_default_theme();
+			if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
+				$default_theme = array('dir_name' => get_system_default_theme());
 			}
+			$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
 		}
 	}
-	
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
-	require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
+}
 
-	require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-	$msg = new Message($savant);
+$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
+require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
-	$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['p_course']);
-	$contentManager->initContent();
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+$msg = new Message($savant);
+
+$contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['p_course']);
+$contentManager->initContent();
+
 /**************************************************/
-
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
 require(AT_INCLUDE_PATH.'lib/utf8.php');			//UTF-8 multibyte library
 

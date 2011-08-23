@@ -120,6 +120,11 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('set_utf8', '1')";
 		mysql_query($sql ,$db);
 
+		// Calculate the ATutor installation path and save into database for the usage of
+		// session associated path @ include/vitals.inc.php
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('session_path', '".get_atutor_installation_path()."')";
+		mysql_query($sql ,$db);
+		
 		unset($_POST['admin_username']);
 		unset($_POST['form_admin_password_hidden']);
 		unset($_POST['admin_email']);

@@ -238,6 +238,30 @@ function print_meta_redirect(){
 }
 
 /**
+ * This function calculate the ATutor installation path
+ * @access  public
+ * @param   none
+ * @return  string: atutor installation path, for example: /ATutor/
+ */
+function get_atutor_installation_path() {
+	/* get the base url	*/
+	if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
+		$server_protocol = 'https://';
+	} else {
+		$server_protocol = 'http://';
+	}
+
+	$dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
+	$url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
+	$base_href	 = array_slice($url_parts, 0, count($url_parts) - $dir_deep-2);
+	$base_href	 = $server_protocol . implode('/', $base_href).'/';
+	
+	$session_path = substr($base_href, strlen($server_protocol . $_SERVER['HTTP_HOST']));
+	
+	return $session_path;
+}
+
+/**
  * This function is used for printing variables for debugging.
  * @access  public
  * @param   mixed $var	The variable to output

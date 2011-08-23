@@ -10,6 +10,9 @@
 /************************************************************************/
 // $Id$
 
+// Be careful at modifying AT_INCLUDE_PATH constant which is used by 
+// get_atutor_installation_path() @ common.inc.php. Must make sure the 
+// function doesn't get broken at its modification.
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'common.inc.php');
 
