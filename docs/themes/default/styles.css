@@ -555,7 +555,7 @@ div#toctoggle {
 h1#section-title {
 	float: left;
 	margin-left:1em;
-	margin-top:-1.5em;
+	margin-top:-.5em;
 	
 }
 
@@ -584,7 +584,7 @@ div#top-links a:focus{
 	float:right;
 	clear:right;
 	margin-left: 2em;
-	margin-top:.2em;
+	margin-top:-1em;
 	white-space:nowrap;
 	background-color:#F2F7F7;
 	border:thin solid #cccccc;
@@ -596,7 +596,7 @@ div#top-links a:focus{
 #top-links-jump{
 	float:left;
 	white-space:nowrap;
-	margin-top:.2em;
+	margin-top:-1em;
 	background-color:#F2F7F7;
 	padding-right:.5em;
 }
