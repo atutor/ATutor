@@ -1,4 +1,4 @@
-/* Style is optimized for iphone. Note that -webkit properties create errors in the CSS validator. Relative units 
+/* Style is optimized for iphone and android. Note that -webkit properties create errors in the CSS validator. Relative units 
 for sizes are used unless it is a border. Classes beginning with ".fl-" override Mobile FSS, 
 see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API for more details. 
 */
@@ -145,12 +145,6 @@ body,ul,li {
 	font-weight: bold;
 }
 
-
-
-#topnavlist-link {
-
-}
-
 ul#topnavlist {
 	display: none;
 	position: relative;
@@ -160,26 +154,6 @@ ul#topnavlist {
 }
 
 div#content-link-container.flc-screenNavigator-navbar {
-  
-/*
-  border-width:5px;
-    -webkit-border-radius: 5px;
-	font-size: 18px; keep this in px
-	color: white;
-	
-    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: 
-    background-image: -webkit-gradient(linear, left top, left bottom,
-     	from(#3b5371),
-        color-stop(0.5, #374e6b),
-        color-stop(0.50, #354d68),
-        to(#354d68)
-    );
- 	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
-    -webkit-border-left-image: none;
-    -webkit-background-origin: border;
-    -webkit-background-clip: border;
-float: left;
-font-weight: bold;*/
 	color: #005689;
 }
 
@@ -512,7 +486,6 @@ table.tabbed-table th.selected {
 }
 
 table.tabbed-table a, table.tabbed-table a:visited, table.tabbed-table a:hover {
-	/* color: black;*/
 	color: #4C566C;
 	text-decoration: none;
 }
@@ -570,8 +543,6 @@ div.preference-buttons-container li{
 #defaultfontsize-wrapper{
 	width:90%; 
 }
-
-/* end of preferences */
 
 a#my-start-page {
 	padding: 0.125em;
@@ -660,10 +631,8 @@ h1#section-title {
 div#footer-links {
 	margin: 0 auto;
 	font-size: .938em;
-/* moved inside of #footer for mobile theme */
 }
 #footer{
-	/*width:100%;*/
 	height:2.3em;
 	background-color: #4b6b90;
 	margin-top: -2.3em;
@@ -749,12 +718,7 @@ table.data th a {
 	background-position: right;
 }
 
-table.data tbody {
-/*
-	border-top: 1px solid #B8AE9C;
-	border-bottom: 1px solid #B8AE9C;
-	*/
-}
+
 /*headings text*/
 table.data tbody th {
 	text-align: left;
@@ -772,7 +736,7 @@ table.data td a:link, a:visited{
 	color: #4C566C
 }
 
-/*should table.data tbody tr:hover  and table.data tbody tr.selected  highlighting
+/*should table.data tbody tr:hover  and table.data tbody tr.selected  highlighting 
 be improved to sync with Mobile FSS highlighting */
 table.data tbody tr:hover {
 	background-color: #efefef;
@@ -797,7 +761,6 @@ table.data tfoot tr:first-child td {
 }
 
 table.data.static tfoot td, table.data.static tfoot tr:first-child td {
-	/*border-top: 1px solid #B8AE9C;*/
 	padding: 0.313em;
 	background-image: none;
 	padding-left: 0;
@@ -806,7 +769,6 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 /* add borders to row in Required Information, Personal Information*/
 .row{
 	padding:.375em 0;
-	/*border-bottom: 1px #cccccc solid;*/
 	font-size: 0.938em;
 }
 #last-row, .row-buttons, #last-row1, .row-blurb{
@@ -821,11 +783,9 @@ table.data.static tfoot td, table.data.static tfoot tr:first-child td {
 table.data tfoot input {
 	background-color: #efefef;
 	font-weight: normal;
-	/*border:  #AAA  solid 1px;*/
 }
 table.data tfoot input:focus {
 	background-color: #FFDAB9;
-	/*border:  #AAA  solid 1px;*/
 }
 
 
@@ -1032,16 +992,6 @@ div#content_text {
 }
 
 #content{
-/*
-	padding-top:.5em;
-	margin-top: .5em;
-	background-color: #F5F5F5;
-	
-	border: #A9ADB0 1px solid;
-	border: #cccccc 1px solid;
-	-webkit-border-radius:5px;
-	-webkit-border-bottom-right-radius: 5px;
-	-webkit-border-bottom-left-radius: 5px;*/
 	padding-top: .313em;
 	background-color: white;
 	z-index: 1000;
@@ -1051,10 +1001,6 @@ form {
 	max-width: 100%;
 }
 
-
-optgroup {
-	/*font-size: small;*/
-}
 
 /* paging*/
 div.paging {
@@ -1282,10 +1228,6 @@ fieldset#shortcuts {
 	padding-left: 10pt;
 }
 
-.shortcuts{
-
-}
-
 fieldset {
 	margin-bottom: 10pt;
 	-webkit-border-radius:5px;
@@ -1297,8 +1239,6 @@ fieldset {
 	border:thin #6D7B8D solid;
 	border:thin #A9ADB0 solid;
 	margin-bottom: 1em;
-}
-#shortcuts legend {
 }
 #shortcuts ul {
 	position: relative;
@@ -1348,8 +1288,6 @@ ul#home-links, ul#home-detail-links {
 	margin: 0 auto;
 	border:0;	
 	min-width: 100%;
-}
-#my-courses-navlist{
 }
 .my-courses-list{
 	border: solid 1px #A9ADB0;
@@ -1404,9 +1342,6 @@ ul#home-links, ul#home-detail-links {
 .current_list_date_time{
 	font-size: 65%;
 }
-.current_list img{
-}
-
 #show-all, #show-pages{
 	text-align: center;
 	
@@ -1452,7 +1387,6 @@ ul#home-links, ul#home-detail-links {
 	width:1.5em;
 }
 /* profile page */
-
 dl#public-profile dt {
 	float: left;
 	width: 90%;
@@ -1526,7 +1460,6 @@ li.child-tool a {
 	font-weight: normal; 
 }
 
-/* ol#tools>li>ul, */ 
 ul.child-top-tool {
 	margin-top: -0.313em;
 	padding-left: 0;
@@ -1575,7 +1508,6 @@ dl.browse-course dd {
 }
 
 /*  form fields grouping for WCAG 2.0 conformance*/
-
 fieldset.group_form{
 	width:95%;
 	margin:0 auto;
@@ -1597,7 +1529,6 @@ legend.group_form{
 }
 
 /* highlight active links for WCAG 2.0 conformance */
-
 a:active:not(.subnavcontain a), 
 a:hover:not(.subnavcontain a),
 a:focus:not(.subnavcontain a),
@@ -1627,7 +1558,6 @@ div.column_primary {
 	margin: 0.313em;
 	padding: 0;
 	min-width: 10.625em;
-/*	position: relative;*/
 }
 
 div.column_equivalent{
@@ -1641,8 +1571,6 @@ div.column_equivalent{
 	padding: 0.313em;
 	border: 1px solid #EEE;
 	background-color: #FFF;
-/*	position: relative;*/
-
 }
 
 div.resource_box{
@@ -1652,7 +1580,6 @@ div.resource_box{
 	padding: 0.313em;
 	min-width: 9.375em;
 	background-color: #eee;
-/*	position: relative;*/
 }
 
 h2.alternatives_to{
@@ -1849,10 +1776,7 @@ div.toolcontainer{
 	margin-bottom: 1em;
 }
 
-
-ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{ /*
-  	color: black;
-	text-decoration:none;*/
+ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li a.active{
 }
 #subnavlist{
 	display: none;
@@ -2014,7 +1938,7 @@ float:left;
 clear:right;
 margin-left:2em;}
 
-/*mobile FSS overrides */
+/*mobile FSS override */
 .fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a:hover, 
 .fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a:focus,
 .fl-theme-iphone [class*="fl-list"]:not(.fl-list):not(.fl-grid) a:active {
@@ -2026,10 +1950,7 @@ margin-left:2em;}
 ul#subnavlist li a:focus, ul#subnavlist li a:active, ul#subnavlist li a:hover{
 	color: white;
 }
-/* isolates fl tabs 
-.fl-theme-iphone .fl-tabs li a, .fl-theme-iphone .fl-tabs .fl-tabs-active {
-	background-color: white;
-} */
+
 
 
 /************************************************************************************************/
@@ -2043,14 +1964,11 @@ ul.sequence-links li {
     position:relative;
     overflow:hidden;
     list-style:none;
-   /* padding:0;
-    margin:0 0 0 0 ;*/
 }
 
 ul.sequence-links li.back a:link, 
 ul.sequence-links li.back a:visited {
     display:block;
-   /* border :0;*/
     padding-left:0.438em;
    	color: #005689;
 }
@@ -2058,7 +1976,6 @@ ul.sequence-links li.back a:visited {
 ul.sequence-links li.forward a:link, 
 ul.sequence-links li.forward a:visited {
     display:block;
-   /* border :0;*/
     padding-right:0.313em;
   	color: #005689;
 }
@@ -2114,15 +2031,7 @@ ul.sequence-links li a:active:before {
      top: 1.25em;
 }
 
-.arrow.back:before {
-     
-}
-.arrow.forward:before {
-     
-}
-.arrow:before {
 
-}
 /*arrow that points to the right, beside the "Next" text */
 .arrow.forward a:after {
      background: none repeat scroll 0% 0% transparent;
@@ -2145,14 +2054,7 @@ ul.sequence-links li a:active:before {
 }
 
 
-#content-sequence-links{/*
-	width: 98%;
-	padding: .313em;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
-	background: #B6C0C6;
-	float: left;
-	margin: 0 auto;
-	margin-bottom: .313em;*/
+#content-sequence-links{
 }
 
 
@@ -2184,10 +2086,6 @@ ul.sequence-links li a:active:before {
 #results-hide-show-simple-content{
 	-webkit-border-radius:5px;
 	border: 1px #A9ADB0 solid;
-	/*margin-top: 0.875em;
-	margin-bottom: 0.875em;
-	padding: 0.875em;
-	padding-right: .2em;*/
 	padding-top: .6em;
 	padding-bottom: .6em;
 	padding-right: .2em;
@@ -2195,7 +2093,6 @@ ul.sequence-links li a:active:before {
 	margin-bottom: 0.875em;
 	margin-top: 0.875em;
 	color: #005689;
-/*	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));*/
 	background-color: none;
 }
 #results-hide-show-link{
