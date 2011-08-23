@@ -263,7 +263,7 @@ if (isset($_POST['step1']['old_version'])) {
 		
 		<p>On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>.</p>
 		
-		<p>The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod a+rwx content</kbd>, additionally the path may not contain any symbolic links.</p>
+		<p>The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod 2777 content</kbd>. Also be sure the path may not contain any symbolic links.</p>
 
 		<input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" /></td>
 	</tr>
