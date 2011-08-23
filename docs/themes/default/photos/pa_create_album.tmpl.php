@@ -10,7 +10,9 @@
 	<div class="row">
 		<div class="left_row"<label for="album_type"><?php echo _AT('pa_album_type'); ?></label></div>
 		<label for="my_album"><?php echo _AT('pa_my_albums'); ?></label><input type="radio" name="album_type" id="my_album" value="1" checked="checked" />
+	<?php  if($_SESSION['is_admin']){?>
 		<label for="course_album"><?php echo _AT('pa_course_albums'); ?></label><input type="radio" name="album_type" id="course_album" value="2" />
+	<?php }?>
 	</div>
 	<?php endif; ?>
 	<div class="row">
