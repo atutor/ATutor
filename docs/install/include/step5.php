@@ -22,7 +22,7 @@ if (isset($_POST['submit'])) {
 	} else if (!is_dir($_POST['content_dir'])) {
 		$errors[] = '<strong>Content Directory</strong> is not a directory.';
 	} else if (!is_writable($_POST['content_dir'])){
-		$errors[] = 'The Content Directory is not writable.';
+		$errors[] = 'The Content Directory is not writable. To make it writable, at the command prompt from within the ATutor directory enter the command <strong>chmod 2777 content</strong>';
 	} else {
 
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
