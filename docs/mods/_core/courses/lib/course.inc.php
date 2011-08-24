@@ -272,12 +272,12 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	// create the course content directory
 	$path = AT_CONTENT_DIR . $new_course_id . '/';
-	@mkdir($path, 2770);
+	@mkdir($path, 0700);
 	@copy(AT_CONTENT_DIR . 'index.html', AT_CONTENT_DIR . $new_course_id . '/index.html');
 
 	// create the course backup directory
 	$path = AT_BACKUP_DIR . $new_course_id . '/';
-	@mkdir($path, 2770);
+	@mkdir($path, 0700);
 	@copy(AT_CONTENT_DIR . 'index.html', AT_BACKUP_DIR . $new_course_id . '/index.html');
 
 	/* insert some default content: */
@@ -352,7 +352,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
             $path = AT_CONTENT_DIR.$owner_id."/custom_icons/";
 		
             if (!is_dir($path)) {
-                @mkdir($path, $mode = 2770);
+                @mkdir($path);
             }
 			
 			// if we can upload custom course icon, it means GD is enabled, no need to check extension again.
