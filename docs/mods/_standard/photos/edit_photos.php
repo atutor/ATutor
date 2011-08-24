@@ -61,7 +61,7 @@ if ($isadmin) {
 //handle organize
 if(isset($_GET['org'])){
 	$_custom_head .= '<script type="text/javascript" src="'.AT_PA_BASENAME.'include/imageReorderer.js"></script>';
-	$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+	//$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 	//reset pages/submenu
 	$_pages[AT_PA_BASENAME.'edit_photos.php']['title'] = _AT('pa_organize_photos');
 
@@ -88,7 +88,7 @@ if(isset($_GET['org'])){
 //printer header iff this is not a POST request 
 //a hack to avoid 'header already sent...' error.
 if (!isset($_POST['submit']) && !isset($_POST['cancel'])){
-	$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+	//$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	$msg->printAll();
 }

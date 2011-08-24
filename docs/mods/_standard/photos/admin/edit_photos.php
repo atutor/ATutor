@@ -20,7 +20,7 @@ $isadmin   = TRUE;
 //printer header iff this is not a POST request 
 //a hack to avoid 'header already sent...' error.
 if (!isset($_POST['submit']) && !isset($_POST['cancel'])){
-	$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+	//$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	$msg->printAll();
 }

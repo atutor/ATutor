@@ -18,7 +18,7 @@ include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 include (AT_PA_INCLUDE.'classes/SimpleImage.class.php');
 include (AT_PA_INCLUDE.'lib.inc.php');
 include (AT_PA_INCLUDE.'classes/AjaxMessage.class.php');
-$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+//$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 $_custom_head .= '<script src="'.$_base_path . AT_PA_BASENAME . 'include/ajaxupload.js" type="text/javascript"></script>';
 
 $id = intval($_REQUEST['id']);

@@ -15,7 +15,7 @@ $_user_location = 'public';
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
-$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+//$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 
 //quit if this is not a member
 if(!(isset($_SESSION['member_id']) && $_SESSION['member_id'] > 0)){

@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
 include (AT_PA_INCLUDE.'lib.inc.php');
-$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+//$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
 $_custom_head .= '<script type="text/javascript" src="'.AT_PA_BASENAME.'include/imageReorderer.js"></script>';
 
 $aid = intval($_GET['aid']);
