@@ -302,7 +302,6 @@ function removeCommonPath($items){
         if($ext=='xml'){
             continue;
         }
-        
         //if common path is empty, assign the first path to it.
         if ($common_path=='' && $quit==false){
             $common_path = $path;
@@ -321,6 +320,12 @@ function removeCommonPath($items){
         }
         $intersect_array = array_intersect($common_array, $path_array);
         $common_path = implode('/', $intersect_array);       
+    }
+    // If this path (including file extension) is in the filearray,
+    // then this means there is only 1 file in the array, implies there
+    // wasn't any intersection at all.  In this case, use the base root.
+    if(in_array($common_path, $filearray)) {
+        $common_path = '';
     }
     return $common_path;
 }
@@ -429,7 +434,8 @@ function removeCommonPath($items){
 			}
 
 			$temp_path = pathinfo($attrs['href']);
-			if (!strpos($temp_path['dirname'], 'Share')) {
+//			if (!strpos($temp_path['dirname'], 'Share')) {
+            if ($temp_path['extension'] == 'html') {
 			    $temp_path = explode('/', $temp_path['dirname']);
 			    if (empty($package_base_path)){
 			        $package_base_path = $temp_path;
@@ -439,7 +445,7 @@ function removeCommonPath($items){
 			    }
 			    $package_base_path = array_intersect_assoc($package_base_path, $temp_path);
 			}
-			
+
 			//calculate the depths of relative paths
 			if ($all_package_base_path!=''){
 				$no_relative_temp_path = $temp_path;
@@ -459,7 +465,7 @@ function removeCommonPath($items){
 			if (in_array('..', $temp_path)){
 				$sizeofrp = array_count_values($temp_path);
 			}
-			//for IMSCC, assume that all resources lies in the same folder, except styles.css
+			//for IMSCC, assume that all resources lies in the same folder, except styles.css		
 			if ($items[$current_identifier]['type']=='webcontent' || $items[$current_identifier]['type']=='imsdt_xmlv1p0'){
 				//find the intersection of each item's related files, then that intersection is the content_path
 				if (isset($items[$current_identifier]['file'])){
@@ -467,44 +473,28 @@ function removeCommonPath($items){
 					    if (!strpos($resource_path, 'Share')) {
 						    $temp_path = pathinfo($resource_path);
 						    $temp_path = explode('/', $temp_path['dirname']);
+
 						    $package_base_path = array_intersect_assoc($package_base_path, $temp_path);						
 						}
 					}
 				}
 			}
+
 			//real content path
 			if($sizeofrp['..'] > 0 && !empty($all_package_base_path)){
 				for ($i=0; $i<$sizeofrp['..']; $i++){
 					array_pop($all_package_base_path);
 				}
 			}
-			
-			if (count($package_base_path) > 0) {
+			if (!empty($package_base_path)) {
 				$items[$current_identifier]['new_path'] = implode('/', $package_base_path);
 			}
 				
-/* 
- * @harris, reworked the package_base_path 
-				if ($package_base_path=="") {
-					$package_base_path = $temp_path;
-				} 
-				elseif (is_array($package_base_path) && $content_type != 'IMS Common Cartridge') {
-					//if this is a content package, we want only intersection
-					$package_base_path = array_intersect($package_base_path, $temp_path);
-					$temp_path = $package_base_path;
-				}
-				//added these 2 lines in so that pictures would load.  making the elseif above redundant.
-				//if there is a bug for pictures not load, then it's the next 2 lines.
-				$package_base_path = array_intersect($package_base_path, $temp_path);
-				$temp_path = $package_base_path;
-			}
-			$items[$current_identifier]['new_path'] = implode('/', $temp_path);	
-*/
-			if (	isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
+			if (isset($_POST['allow_test_import']) && isset($items[$current_identifier]) 
 						&& preg_match('/((.*)\/)*tests\_[0-9]+\.xml$/', $attrs['href'])) {
 				$items[$current_identifier]['tests'][] = $attrs['href'];
 			} 
-			if (	isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
+			if (isset($_POST['allow_a4a_import']) && isset($items[$current_identifier])) {
 				$items[$current_identifier]['a4a_import_enabled'] = true;
 			}
 		} else if (($name == 'item') && ($attrs['identifierref'] != '')) {
@@ -985,7 +975,6 @@ if ($package_base_path) {
 } elseif (empty($package_base_path)){
 	$package_base_path = '';
 }
-
 if ($xml_base_path) {
 	$package_base_path = $xml_base_path . $package_base_path;
 
@@ -1232,12 +1221,13 @@ foreach ($items as $item_id => $content_info)
 	if(is_array($all_package_base_path)){
 		$all_package_base_path = implode('/', $all_package_base_path);
 	}
-	if ($common_path != '') {
+
+	if ($common_path != '' && substr($content_info['new_path'], strlen($common_path))) {
 		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($common_path));
 	} else {
 		$content_info['new_path'] = $package_base_name . '/' . $content_info['new_path'];
 	}
-	
+
 	//handles weblinks
 	if ($content_info['type']=='imswl_xmlv1p0'){
 		$weblinks_parser = new WeblinksParser();
@@ -1394,7 +1384,7 @@ foreach ($items as $item_id => $content_info)
 		$dt_import->associateForum($items[$item_id]['real_content_id'], $added_dt[$item_id]);
 	}
 }
-//exit;//harris
+
 if ($package_base_path == '.') {
 	$package_base_path = '';
 }
@@ -1431,7 +1421,7 @@ if(is_array($all_package_base_path)){
         }
     }
 }
-
+//exit;//harris
 //check if there are still resources missing
 /*
 foreach($items as $idetails){
