@@ -939,16 +939,16 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
             $term = '(\s*'.$term.'\s*)';
 			$term = str_replace(' ','((<br \/>)*\s*)', $term); 
 			
-			$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');		
+			// Uncomment the line below and comment the following line
+			// when the jquery UI tooltip supports the html display.
+			//$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
+			$def = strip_tags($v);
 			if ($simple) {
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
 						'<a href="'.$simple.'glossary.html#'.urlencode($original_term).'" target="body" class="at-term">\\2</a>',
 						$input);
-			} else {/*
-				$input = preg_replace
-						("/(\[\?\])$term(\[\/\?\])/i",
-						'\\2<sup><a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.addslashes($original_term).': '.$def.'">?</a></sup>',$input);*/
+			} else {
 				$input = preg_replace
 						("/(\[\?\])".$term."(\[\/\?\])/i",
 						'<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.htmlentities_utf8($original_term).': '.$def.'">\\2</a>',$input);
