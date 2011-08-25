@@ -756,7 +756,6 @@ function embed_media($text) {
 	for ($i=0;$i<count($media_replace);$i++){
 		foreach($media_matches[$i] as $media)
 		{
-			//debug($media);
 			//find width and height for each matched media
 			if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
 			{
@@ -926,10 +925,9 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 			$v = str_replace("\r", '', $v);
 
 			$k = str_replace('&lt;', '<', $k);
-			$k = str_replace('/', '\/', $k);
 
-			$original_term = $k;
-			$term = $original_term;
+			$original_term = str_replace('/', '\/', $k);;
+			$term = $k;
              if (!$html) {
                 $term = str_replace('<', '&lt;', $term);
             }
@@ -942,7 +940,8 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 			// Uncomment the line below and comment the following line
 			// when the jquery UI tooltip supports the html display.
 			//$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
-			$def = strip_tags($v);
+			$def = htmlspecialchars(strip_tags($v), ENT_QUOTES, 'UTF-8');
+			
 			if ($simple) {
 				$input = preg_replace
 						("/(\[\?\])$term(\[\/\?\])/i",
