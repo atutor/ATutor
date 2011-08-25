@@ -27,10 +27,6 @@ Known Issues / More work needed
 ==================================================================================
 
 Important:
-*/docs/users/index.php - WCAG AA / Problem with HTML validation, likely to do with the "Things Current" list
-
-
-Important:
 * Mobile instructor users can currently see modules that have been disabled through their module.php file, and it
 needs to be fixed so that they cannot have this option. 
 
@@ -47,6 +43,7 @@ Aesthetic improvements, mobile:
 
 * "0004796: Student user's Preferences template won't display"
 ** see: http://atutor.ca/atutor/mantis/view.php?id=4796
+** see: http://atutor.ca/atutor/mantis/view.php?id=4679
 
 
 * "Activation hightlighting is visible on the desktop but not the on the mobile device"
