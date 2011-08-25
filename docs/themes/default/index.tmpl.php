@@ -57,12 +57,14 @@ if($this->view_mode==0){
 <?php			}  // end of foreach
 		}// end of inner inner if
 	} ?>
+
 	</div> 
+	<br style="clear:both;" />&nbsp;
 <?php
 } // end of if
 
 if ($this->announcements): ?>
-
+	<br style="clear:both;" />
 <h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
 	<?php foreach ($this->announcements as $item): ?>
 		<div class="news">
