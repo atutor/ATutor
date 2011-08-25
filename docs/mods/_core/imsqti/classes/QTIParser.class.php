@@ -248,8 +248,9 @@ class QTIParser {
 
 				//closing this tag means a selection of choices have ended.  Assign the correct answer in this case.
 				$tv = $this->temp_answer[$this->attributes[$this->item_num]['varequal']['respident']];
-//				debug($tv, 'harris'.$this->item_num);
-//				debug($this->answers_for_matching[$this->item_num], 'answers');
+				//debug($tv, 'harris'.$this->item_num);
+                //debug($this->choices[$this->item_num], 'choices');
+				//debug($this->answers_for_matching[$this->item_num], 'answers');
 
 				//If matching, then attribute = 'Respondus_correct'; otherwise it is 'que_score'
 				if ($this->getQuestionType($this->item_num) == 5){
@@ -285,7 +286,7 @@ class QTIParser {
 							$this->answers_for_matching[$this->item_num] = array();
 						}							
 //							if (!in_array($tv['name'][$val_id], $this->answers_for_matching[$this->item_num])){
-							array_push($this->answers_for_matching[$this->item_num], $tv['name'][$pos]);
+							array_push($this->answers_for_matching[$this->item_num], $tv['name'][$this->item_num]);
 							
 							//add mark
 							$this->weights[$this->item_num] += floatval($current_answer);
