@@ -45,8 +45,8 @@ define('AT_ADMIN_PRIV_PHOTO_ALBUM', $this->getAdminPrivilege());
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-$_group_tool = $_student_tool = AT_PA_BASENAME.'index.php';
-
+//$_group_tool = $_student_tool = AT_PA_BASENAME.'index.php';
+$_student_tool = AT_PA_BASENAME.'index.php';
 $this->_list['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery','file'=>AT_PA_BASENAME.'sublinks.php');
 $this->_pages[AT_PA_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
 
