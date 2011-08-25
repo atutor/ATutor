@@ -90,8 +90,12 @@ function unenroll ($list) {
 		$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$course_id AND member_id IN ($members)";
 		$result = mysql_query($sql, $db);
 
-		$sql    = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE member_id IN ($members)";
+
+		$sql    = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE member_id IN ($members) AND 
+		group_id IN (SELECT group_id from ".TABLE_PREFIX."groups G, ".TABLE_PREFIX."groups_types GT
+		              WHERE G.type_id = GT.type_id AND GT.course_id = ".$course_id.")";
 		$result = mysql_query($sql, $db);
+
 		// $groupModule->unenroll(course_id, user_id);
 		// $forumModule->unenroll(course_id, user_id);
 		
@@ -194,11 +198,13 @@ function enroll ($list) {
 
 		unset($mail);
 	}
+
 }
 
 
 function group ($list, $gid) {
 	global $db,$msg;
+
 	$sql = "REPLACE INTO ".TABLE_PREFIX."groups_members VALUES ";
 	$gid=intval($gid);
 	for ($i=0; $i < count($list); $i++)	{
@@ -336,7 +342,7 @@ if ($_GET['func'] == 'remove') {
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'enroll') {
 	$confirm = array('ENROLL_STUDENT',   $str);
-	$msg->addconfirm($confirm, $hidden_vars);
+	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'unenroll') {
 	if (check_roles($member_ids) == 1) {
 		$confirm = array('UNENROLL_PRIV', $str);
