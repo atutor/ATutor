@@ -122,7 +122,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 		// Calculate the ATutor installation path and save into database for the usage of
 		// session associated path @ include/vitals.inc.php
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('session_path', '".get_atutor_installation_path()."')";
+		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('session_path', '".get_atutor_installation_path(AT_INCLUDE_PATH)."')";
 		mysql_query($sql ,$db);
 		
 		unset($_POST['admin_username']);

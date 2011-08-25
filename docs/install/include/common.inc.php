@@ -240,10 +240,10 @@ function print_meta_redirect(){
 /**
  * This function calculate the ATutor installation path
  * @access  public
- * @param   none
+ * @param   include_path: The relative path to install/include
  * @return  string: atutor installation path, for example: /ATutor/
  */
-function get_atutor_installation_path() {
+function get_atutor_installation_path($include_path) {
 	/* get the base url	*/
 	if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 		$server_protocol = 'https://';
@@ -251,7 +251,7 @@ function get_atutor_installation_path() {
 		$server_protocol = 'http://';
 	}
 
-	$dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
+	$dir_deep	 = substr_count($include_path, '..');
 	$url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);
 	$base_href	 = array_slice($url_parts, 0, count($url_parts) - $dir_deep-2);
 	$base_href	 = $server_protocol . implode('/', $base_href).'/';

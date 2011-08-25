@@ -10,10 +10,10 @@
 /************************************************************************/
 // $Id$
 
-// Be careful at modifying AT_INCLUDE_PATH constant which is used by 
-// get_atutor_installation_path() @ common.inc.php. Must make sure the 
-// function doesn't get broken at its modification.
-define('AT_INCLUDE_PATH', 'include/');
+// AT_INCLUDE_PATH is the relative path to atutor root include directory
+// rather than the install include directory because this path is required
+// by Module.class.php used in ustep3.php.
+define('AT_INCLUDE_PATH', '../include/');
 
 if (isset($_POST['new_version'])) {
 	$new_version = $_POST['new_version'];
@@ -27,7 +27,11 @@ if (!isset($step) || ($step == 0)) {
 	$step = 1;
 }
 
-require(AT_INCLUDE_PATH.'common.inc.php');
+// Be careful at modifying AT_UPGRADE_INCLUDE_PATH constant which is used by 
+// get_atutor_installation_path() @ common.inc.php in ustep3.php. Must make sure the 
+// function doesn't get broken at modifying this constant.
+define('AT_UPGRADE_INCLUDE_PATH', 'include/');
+require(AT_UPGRADE_INCLUDE_PATH.'common.inc.php');
 
 if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 	header('Location: index.php');
