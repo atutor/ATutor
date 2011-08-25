@@ -72,7 +72,7 @@
     if($perpage == count($this->all_news)){ ?>
 	<div id="show-pages"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=1"><?php echo _AT('show_pages'); ?></a></div>
     <?php }else{ ?>
-	<div id="show-all"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo _AT('show_all'); ?></a></div>
+	<div id="show-all"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo "Show All"; ?></a></div>
     <?php } ?>
 <br /><br />
 </div>  
