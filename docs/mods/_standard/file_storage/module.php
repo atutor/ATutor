@@ -29,6 +29,7 @@ $this->_pages['mods/_standard/file_storage/comments.php']['children'] = array();
 $this->_pages['mods/_standard/file_storage/edit.php']['title_var'] = 'file_storage_edit_file';
 $this->_pages['mods/_standard/file_storage/edit.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/edit.php']['children'] = array(); // empty array creates a "back to" link to index.php
+$this->_pages['mods/_standard/file_storage/edit.php']['guide']      = 'general/?p=fs_new_file.php';
 
 $this->_pages['mods/_standard/file_storage/edit_folder.php']['title_var'] = 'file_storage_edit_folder';
 $this->_pages['mods/_standard/file_storage/edit_folder.php']['parent'] = 'mods/_standard/file_storage/index.php';
@@ -45,6 +46,7 @@ $this->_pages['mods/_standard/file_storage/assignment.php']['children'] = array(
 $this->_pages['mods/_standard/file_storage/new.php']['title_var'] = 'file_storage_new_file';
 $this->_pages['mods/_standard/file_storage/new.php']['parent'] = 'mods/_standard/file_storage/index.php';
 $this->_pages['mods/_standard/file_storage/new.php']['children'] = array(); // empty array creates a "back to" link to index.php
+$this->_pages['mods/_standard/file_storage/new.php']['guide']      = 'general/?p=fs_new_file.php';
 
 $this->_pages['mods/_standard/file_storage/delete_revision.php']['title_var'] = 'delete';
 $this->_pages['mods/_standard/file_storage/delete_revision.php']['parent'] = 'mods/_standard/file_storage/index.php';
