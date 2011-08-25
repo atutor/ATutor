@@ -361,12 +361,12 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 			</div>	
 		<?php endif; ?>
-	</div> <!--  end subnavbacktopage->	
+	</div> <!--end subnavbacktopage-->	
 
 	<div id="contentcolumn">	
 		
 
-		<!-- the page title -->
+		<!--the page title-->
 		<div id="page-title-back-to-page">
 		<a name="content" title="<?php echo _AT('content'); ?>"></a>
 		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
