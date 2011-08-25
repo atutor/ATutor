@@ -34,16 +34,12 @@ Important:
 * Mobile instructor users can currently see modules that have been disabled through their module.php file, and it
 needs to be fixed so that they cannot have this option. 
 
-* write a jQuery function to toggle img src for thethe 'less' button shut in the subnavlist for iPad instructor users
-
 Towards a simplified desktop theme: 
 * develop a desktop theme based on tablet.css (harder) 
 * develop a desktop theme based on mobile.css (easier) & do a final update to ensure generic CSS is used
 * erase commented out styles from mobile.css and tablet.css and re-order where necessary
 
 Aesthetic improvements, mobile: 
-* find a better icon for the subnavigation list that appears for mobile student/instructor/admin users. 
-functionally it's good but aesthetically it can be better
 * on activation, the Subnavigation div, Resume, Previous, Next on mobile should highlight as a block 
 *Instructor user: 
 /docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup 
@@ -59,11 +55,6 @@ functionally it's good but aesthetically it can be better
 ** affects .fl-lists, including:
 *** the "Navigation" menus on mobiles and tablets after a link is highlighted 
 *** docs/users/browse.php in mobile and tablets
-
-
-* WCAG 3.2.1 On Focus
-**Is this violated by the pop-up "guide" button in the mobile and tablet devices? 
-
 
 ==================================================================================
 Omitted from mobile/
