@@ -86,10 +86,7 @@ jQuery('#subnavlist-link').click(function(e) {
   jQuery('#subnavlist').slideToggle();
   jQuery('#subnavlist-link').toggleClass('content-closed');
   jQuery('fl-theme-iphone').toggleClass('subnavcontain2');
-  
-
-
-   
+     
   ";
 $this->onload .= "});
 ";
@@ -135,35 +132,18 @@ jQuery('.topnavlist-link').click(function(e) {
 //jQuery for Gmail dock-style "more" button that makes the subnavlist expand for more options
 $this->onload .= "
 
-jQuery('.more-button').click(function(e) {
-  e.stopPropagation();
-  jQuery('.subnavlist-more').slideToggle();
-  jQuery('#switch').attr('src', 'images/hidemenu.gif'); 
+jQuery('.more-button').toggle(function(e) {
+  jQuery('.subnavlist-more').show();
+  jQuery('#switch').attr('src','images/hidemenu.gif' );
   jQuery('#switch').attr('title', 'less menu items'); 
-  jQuery('#switch').attr('alt', 'less menu items'); 
-
+  jQuery('#switch').attr('alt', 'less menu items');
+},function(){
+  jQuery('.subnavlist-more').hide(); 
+  jQuery('#switch').attr('src', 'images/showmenu.gif' );
+  jQuery('#switch').attr('title', 'more menu items'); 
+  jQuery('#switch').attr('alt', 'more menu items');
 });
 ";
-/*
- * 
- * $(".wizard-img").toggle(
-  function () {
-    $(this).find("img").attr({src:"x-on.png"});
-  },
-  function () {
-    $(this).find("img").attr({src:"x-off.png"});
-  },
-  function () {
-    $(this).find("img").attr({src:"x.png"});
-  }
-);
-
-// works
- jQuery('#switch').attr('src', 'images/hidemenu.gif'); 
-  jQuery('#switch').attr('title', 'less menu items'); 
-  jQuery('#switch').attr('alt', 'less menu items'); 
- * 
- */
 
 //hide and show results	on Browse Courses page
 
@@ -229,7 +209,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
 	<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />
-	
 	<?php endif; ?>
 <?php endif; ?>
 
@@ -283,12 +262,9 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 	<div id="contentwrapper">
-
-	<!--  Note: ARIA roles cause XHTML validation errors because the XHTML DTD does not yet support ARIA. Use ARIA anyway -->
-
 	<div id="navigation-contentwrapper">
 	<div id="navigation-bar">
-		<!--  this should be a button on its own  -->
+
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
 			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
@@ -299,16 +275,16 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
 						<?php if ($page['url'] == $this->current_top_level_page): ?>
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+							<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a></span></li>
 						<?php else: ?>
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+							<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></span></li>
 						<?php endif; ?>
 				
 						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
 					
 					<?php endforeach; ?>
 					<?php if(!$this->just_social): ?>
-					<li role="menuitem"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
+					<li role="menuitem"><span class="arrow-highlight"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a></span></li>
 					<?php endif; ?> 
 				</ul>
 			</div>
@@ -602,7 +578,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	</div> <!--  END HEADER -->
 
 <?php if (count($this->sub_level_pages) > 0): ?>
-				<div id="subnavlistcontainer" role="navigation" aria-live="assertive" > 
+				<div id="subnavlistcontainer" role="menu" aria-live="assertive" > 
 				
 					<!-- Markup for a subnavlist styled like a Gmail dock. Clean up this code for redundancy but it works for now. -->
 					<!-- background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB));  -->
@@ -612,31 +588,31 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 							
 							<?php if($num_pages <= 5): ?>
 								<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
-								<li class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+								<li role="menuitem" class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 								<?php else: ?> 
-								<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+								<li role="menuitem" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 								<?php endif; ?> 
 							<?php endif; ?>
 							<?php if($num_pages > 5): ?>
 								<?php if($i <= 5):?>
 									<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
-										<li class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+										<li role="menuitem" class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									<?php else: ?> 
-										<li style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+										<li role="menuitem" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									<?php endif; ?> 
 								<?php endif;?>
 								<?php if($i== 6): ?>
-									<li class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="More menu items" title="More menu items" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
-									<li>
+									<li role="menuitem" class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="More menu items" title="More menu items" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
+									<li role="menuitem">
 									<ul class="subnavlist-more">
-									<li class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<li role="menuitem" class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									
 								<?php endif;?>
 								<?php if($i > 6 && $i < $num_pages): ?>
-									<li style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<li role="menuitem" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 								<?php endif;?>
 								<?php if($i==$num_pages): ?>
-									<li style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
+									<li role="menuitem" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									</ul>
 									</li>
 								<?php endif; ?>
