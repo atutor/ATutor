@@ -101,6 +101,8 @@ body,ul,li {
 .navigation-bar-button{
     border-width:5px;
     -webkit-border-radius: 5px;
+    -moz-border-radius:5px;
+	border-radius: 5px;
 	font-size: 18px;/*keep this in px*/
 	padding: 0 .3em;
 	color: white;
@@ -299,6 +301,8 @@ a:link, /*a:visited*/ a:focus  {
 	color: black;
 	text-align: center;
 	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	border-radius: 3px;
 	padding-top: 0.313em;
 	padding-bottom: 0.313em;
 
@@ -691,6 +695,8 @@ a#editor-link.on {
 	border: #A9ADB0 1px solid;
 	border: #cccccc 1px solid;
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 	margin-top: 1em;
 	margin-bottom: 1em;
 	
@@ -836,6 +842,8 @@ div#error {
 	padding-left: 1.563em;
 	font-weight: bold;
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 }
 div#error h4 {
 	color: black;
@@ -862,6 +870,8 @@ div#feedback, div#info {
 	padding: 0.313em;
 	font-family: Helvetica, Arial, sans-serif;
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 	border: 1px solid #17B506;
 	background-color: #E7EFD0;
 	color: #3f4559;
@@ -1202,10 +1212,14 @@ table.data .odd img.headicon{
 	width: 2.469em;
 	height: 2.469em; 
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 }
 
 .icon{
 	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius: 10px;
 	border-color: white;
 	width: 2.5em;
 	height: 2.5em;
@@ -1231,6 +1245,8 @@ fieldset#shortcuts {
 fieldset {
 	margin-bottom: 10pt;
 	-webkit-border-radius:5px;
+	moz-border-radius:5px;
+	border-radius:5px;
 	padding: 0 0.375em;
 	width: 90%;
 	margin: 0 auto; 
@@ -1453,6 +1469,8 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 	line-height: 200%; 
 	border: solid 1px #A9ADB0;
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
 }
 	
 li.child-tool a { 
@@ -1526,6 +1544,8 @@ legend.group_form{
 	padding:.5em;
 	border: 1px #6D7B8D solid;
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 }
 
 /* highlight active links for WCAG 2.0 conformance */
@@ -1772,6 +1792,8 @@ ul#topnavlist li a  {
 div.toolcontainer{
 	border: #cccccc 1px solid;
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 	margin-top: 1em;
 	margin-bottom: 1em;
 }
@@ -1911,6 +1933,8 @@ div.contentbox, input-form{
     overflow:hidden;
     border: #A9ADB0 solid 1px;
 	-webkit-border-radius: 5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 }
 
 div.suggestions{
@@ -2085,6 +2109,8 @@ ul.sequence-links li a:active:before {
 
 #results-hide-show-simple-content{
 	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius: 5px;
 	border: 1px #A9ADB0 solid;
 	padding-top: .6em;
 	padding-bottom: .6em;
@@ -2118,6 +2144,8 @@ ul.sequence-links li a:active:before {
 #results-display{
 	background-color: #F7F3ED; 
 	-webkit-border-radius:8px;
+	-moz-border-radius:8px;
+	border-radius: 8px;
 	border: 1px #A9ADB0 solid;
 	padding: .313em;
 	
@@ -2131,6 +2159,8 @@ ul.sequence-links li a:active:before {
 	
 	border: #A9ADB0 1px solid; 
 	-webkit-border-radius:8px;
+	-moz-border-radius:8px;
+	border-radius: 8px;
 	width: 100%;
 
 }
