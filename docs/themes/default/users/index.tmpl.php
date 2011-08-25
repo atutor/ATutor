@@ -45,11 +45,10 @@
 
 
     </td>
-
     <td><?php echo '<a href="'.url_rewrite('bounce.php?course=' . $row['course_id']) . '"> '.htmlentities_utf8($row['title']).'</a>' ?>
     <br /><small><?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?></small>
     </td>
-    <td><small><?php echo '<a href="'.AT_BASE_HREF.'inbox/send_message.php?id='.$row['member_id'].'">'. get_display_name($row['member_id']).'<a/>'; ?></small></td>
+    <td><small><?php echo '<a href="'.AT_BASE_HREF.'inbox/send_message.php?id='.$row['member_id'].'">'. get_display_name($row['member_id']).'</a>'; ?></small></td>
     <td><small>
     <?php	
 
@@ -71,17 +70,19 @@
 
     </small></td>
     <td>
-    <small>
+<?php if($_config['allow_unenroll'] || $row['tests']){  ?>
     <ul>
     <?php if ($row['member_id'] != $_SESSION['member_id']  && $_config['allow_unenroll'] == 1): ?>
 	    <li><a href="users/remove_course.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('unenroll_me'); ?></a></li>
-    <?php endif; ?><br>
+    <?php endif; ?>
     <?php if ($row['tests']): ?>
 	    <?php foreach ($row['tests'] as $test): ?>
 		    <li><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('mods/_standard/tests/test_intro.php?tid='.$test['test_id']); ?>"><span title="<?php echo _AT('tests'); ?>:<?php echo $test['title']; ?>"><?php echo $test['title']; ?></span></a> </li>
 	    <?php endforeach ;?>
     <?php endif; ?>
-    </ul>    </small>
+    </ul>  
+<?php }  ?>
+
     <?php if ($row['last_cid']): ?>
 	  <div class="shortcuts" style="float:right;">
 		  <a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo $_base_href;  ?>themes/default/images/resume.png" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" class="img1616"/></a>
