@@ -1016,7 +1016,8 @@ div.paging li a {
 	color: black;
 }
 
-div.paging li a:hover, div.paging li a.current {
+div.paging li a:hover, div.paging li a.current, #show-all a:active, #show-all a:focus, #show-all a:hover,
+#show-pages a:active, #show-pages a:focus, #show-pages a:hover   {
    border: 1px solid #4c96f4;
    color: white;
    background-color: #4c96f4;
@@ -1024,6 +1025,9 @@ div.paging li a:hover, div.paging li a.current {
    -moz-border-radius: 3px;
    border-radius: 3px;
 }
+#show-pages:active, #show-pages:focus, #show-pages:hover, #show-all:active, #show-all:focus, #show-all:hover{
+	background-color: #4c96f4;
+} 
 
 #tl_corner{
 
@@ -1338,9 +1342,26 @@ ul#home-links, ul#home-detail-links {
 	font-size: 65%;
 }
 #show-all, #show-pages{
-	text-align: center;
+	-webkit-border-radius: 8px; 
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	padding: .5em;
+	border: solid 1px #A9ADB0;
+	background-color: white;
+	
 	
 }
+#show-all{
+	
+}
+#show-all a, #show-pages a{
+    color: black;
+    padding-left: 0.25em;
+    padding-right: 0.25em;
+    text-decoration: none;
+    display: block;
+}
+
 /* enrollment tabs */
 #navlist {
 	padding: 0;
