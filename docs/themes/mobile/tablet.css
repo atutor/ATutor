@@ -2422,7 +2422,7 @@ ul.sequence-links li a:after {
 }
 
 ul.my-courses-list-ul > li:hover{
-	background-color: #e6e6e6;
+	background-color: #4c96f4;
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
