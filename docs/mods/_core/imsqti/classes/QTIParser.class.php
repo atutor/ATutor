@@ -230,6 +230,10 @@ class QTIParser {
 				break;
 			case 'varequal':
 				//stores the answers (either correct or incorrect) into a stack
+				if (in_array('not', $this->element_path)) {				
+				    //if there is a "not", it's a multiple answer, and this should be included to the answer
+				    break;
+                }
 				$this->temp_answer[$this->attributes[$this->item_num][$name]['respident']]['name'][] = $this->character_data;
 				//responses handling, remember to save the answers or match them up
 				if (!is_array($this->answers[$this->item_num])){
@@ -250,7 +254,7 @@ class QTIParser {
 				$tv = $this->temp_answer[$this->attributes[$this->item_num]['varequal']['respident']];
 				//debug($tv, 'harris'.$this->item_num);
                 //debug($this->choices[$this->item_num], 'choices');
-				//debug($this->answers_for_matching[$this->item_num], 'answers');
+				//debug($this->answers_for_matching[$this->item_num], 'answers for matching');
 
 				//If matching, then attribute = 'Respondus_correct'; otherwise it is 'que_score'
 				if ($this->getQuestionType($this->item_num) == 5){
@@ -286,8 +290,7 @@ class QTIParser {
 							$this->answers_for_matching[$this->item_num] = array();
 						}							
 //							if (!in_array($tv['name'][$val_id], $this->answers_for_matching[$this->item_num])){
-							array_push($this->answers_for_matching[$this->item_num], $tv['name'][$this->item_num]);
-							
+							array_push($this->answers_for_matching[$this->item_num], $tv['name'][sizeof($tv['name'])-1]);
 							//add mark
 							$this->weights[$this->item_num] += floatval($current_answer);
 //							} 
