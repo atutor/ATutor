@@ -26,7 +26,7 @@ body,ul,li {
 	line-height:1em;
 	padding-top: 158;
 	font-size:1.063em;
-	height: 3em;
+	height: 3.2em;
 	background-color: #4b6b90; /*FF*/
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 	
@@ -85,7 +85,7 @@ body,ul,li {
 	position: relative;
  	color: white;
  	font-size: 0.938em;
- 	
+ 	height: .3em;
  	
 }
 
