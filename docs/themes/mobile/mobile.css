@@ -1041,10 +1041,14 @@ div.paging li a {
 	border-right: 1px solid white;
 }
 
+
 div.paging li a:hover, div.paging li a.current {
-   border-left: 1px solid #000;
-   border-right: 1px solid #000;
-   color: black;
+   border: 1px solid #4c96f4;
+   color: white;
+   background-color: #4c96f4;
+   -webkit-border-radius: 3px;
+   -moz-border-radius: 3px;
+   border-radius: 3px;
 }
 
 #tl_corner{
@@ -2076,11 +2080,6 @@ ul.sequence-links li a:active:before {
   	 right: -0.313em;
   	 top: 1.19em;
 }
-
-
-#content-sequence-links{
-}
-
 
 #sequence-links{
 	float: left;
