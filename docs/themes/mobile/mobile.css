@@ -187,8 +187,7 @@ div#content-link-container.flc-screenNavigator-navbar {
 	display: inline;
 }
 
-ul.home-guide li a:hover, ul.home-guide li a:focus, ul.home-guide li a:active,
-ul.home-guide li.back a:hover, ul.home-guide li.back a:focus, ul.home-guide li.back a:active,
+ul.home-guide li a:hover, ul.home-guide li a:focus, ul.home-guide li a:active, ul.home-guide li.back a:hover, ul.home-guide li.back a:focus, ul.home-guide li.back a:active,
 ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guide li.forward a:active {
     color: #4c96f4;
     background:transparent;
@@ -1995,15 +1994,13 @@ ul.sequence-links li {
     list-style:none;
 }
 
-ul.sequence-links li.back a:link, 
-ul.sequence-links li.back a:visited {
+ul.sequence-links li.back a:link, ul.sequence-links li.back a:visited {
     display:block;
     padding-left:0.438em;
    	color: #005689;
 }
 
-ul.sequence-links li.forward a:link, 
-ul.sequence-links li.forward a:visited {
+ul.sequence-links li.forward a:link, ul.sequence-links li.forward a:visited {
     display:block;
     padding-right:0.313em;
   	color: #005689;
@@ -2017,24 +2014,18 @@ ul.sequence-links li.forward a:hover, ul.sequence-links li.forward a:focus, ul.s
 }
 
 
-ul.sequence-links li:before, 
-ul.sequence-links li:after,
-ul.sequence-links li a:before, 
-ul.sequence-links li a:after {
+ul.sequence-links li:before, ul.sequence-links li:after, ul.sequence-links li a:before, ul.sequence-links li a:after {
     content:"";
     position:absolute;
     top:50%;
    /* left:0;*/
 }
 
-ul.sequence-links li a:before, 
-ul.sequence-links li a:after {
+ul.sequence-links li a:before, ul.sequence-links li a:after {
     margin:-0.5em 0 0;
   }
 
-ul.sequence-links li a:hover:before, 
-ul.sequence-links li a:focus:before, 
-ul.sequence-links li a:active:before {
+ul.sequence-links li a:hover:before, ul.sequence-links li a:focus:before, ul.sequence-links li a:active:before {
  
 }
 /*arrow that points to the left, beside the "Previous" text */
@@ -2049,8 +2040,7 @@ ul.sequence-links li a:active:before {
 }
 
 /*left and right triangle icons change color*/
-.arrow a:hover:after, .arrow a:focus:after, .arrow a:active:after, 
-.arrow.forward a:hover:after, .arrow.forward a:focus:after, .arrow.forward a:active:after{
+.arrow a:hover:after, .arrow a:focus:after, .arrow a:active:after, .arrow.forward a:hover:after, .arrow.forward a:focus:after, .arrow.forward a:active:after{
 	border-color: transparent #4c96f4;
 }
 
