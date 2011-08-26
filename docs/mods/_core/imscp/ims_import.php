@@ -97,16 +97,16 @@ function checkResources($import_path){
 	$data = rscandir($import_path);
 	//check if every file is presented in the manifest
 	foreach($data as $filepath){
-	debug(preg_match('/(.*)\.xml/', substr($filepath, strlen($import_path))));
+//	debug(preg_match('/(.*)\.xml/', substr($filepath, strlen($import_path))));
 		//validate xml via its xsd/dtds
 		if (preg_match('/(.*)\.xml/', substr($filepath, strlen($import_path)))){
 			libxml_use_internal_errors(true);
 			$dom = new DOMDocument();
 			$dom->load(realpath($filepath));
-			debug(realpath($filepath), 'filepath');
+//			debug(realpath($filepath), 'filepath');
  			if (!$dom->schemaValidate('main.xsd')){
 				$errors = libxml_get_errors();
-				debug($errors);exit;
+//				debug($errors);exit;
 				foreach ($errors as $error) {
 					//suppress warnings
 					if ($error->level==LIBXML_ERR_WARNING){
