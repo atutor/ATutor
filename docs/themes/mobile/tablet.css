@@ -992,6 +992,8 @@ form {
 div.paging {
 	margin-top: 1em;
 	text-align: center;
+
+
 }
 div.paging ul {
     list-style: none;
@@ -1288,6 +1290,7 @@ ul#home-links, ul#home-detail-links {
 	padding: .313em;
 	margin: .313em;
 	padding: .313em;
+	background-color: white;
 }
 .my-courses-list a{
 	color: black;
