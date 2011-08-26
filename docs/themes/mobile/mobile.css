@@ -83,6 +83,7 @@ body,ul,li {
 	overflow:hidden;
 	overflow: auto;
 	min-height: 100%;
+	background-color:white;
 }
 
 #site-name, h1#section-title{
@@ -2155,7 +2156,7 @@ ul.sequence-links li a:active:before {
 }
 .subnavcontain2, .subnavcontain{
 	margin: .313em 0; 
-	
+	background-color: white;
 	border: #A9ADB0 1px solid; 
 	-webkit-border-radius:8px;
 	-moz-border-radius:8px;
@@ -2226,9 +2227,8 @@ ul.sequence-links li a:active:before {
 	font-size: 80%;
 }	
 ul.my-courses-list-ul > li:hover{
-background-color: #e6e6e6;
+	background-color: #4c96f4;
 	color: black; 	
-	
  	color: #fff;
 }
 ul.my-courses-list-ul > li:hover a{
