@@ -77,7 +77,7 @@ jQuery('#content_link').click(function(e) {
 $this->onload .= "});
 ";
 
-//open/close subnavlist in smartphones 
+//open/close subnavlist in smartphones    
 
 $this->onload .= "
 jQuery('#subnavlist-link').click(function(e) {
@@ -85,7 +85,10 @@ jQuery('#subnavlist-link').click(function(e) {
   
   jQuery('#subnavlist').slideToggle();
   jQuery('#subnavlist-link').toggleClass('content-closed');
-  jQuery('fl-theme-iphone').toggleClass('subnavcontain2');
+  jQuery('#subnavlist-link').toggleClass('subnavcontain-active');
+  
+  jQuery('.subnavcontain').toggleClass('subnavcontain3');
+
      
   ";
 $this->onload .= "});
