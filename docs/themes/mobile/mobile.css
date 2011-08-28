@@ -121,6 +121,7 @@ body,ul,li {
     -webkit-border-left-image: none;
     -webkit-background-origin: border;
     -webkit-background-clip: border;
+    
 }
 
 .navigation-bar-button a:hover, .navigation-bar-button a:active, .navigation-bar-button a:focus{
@@ -142,11 +143,12 @@ body,ul,li {
 	font-weight: bold;
 }
 
-#content_link_phone.topnavlist-link-highlight, fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
+#content_link_phone.topnavlist-link-highlight, .fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight {/*makes the navigation button link highlight*/
 	color: #4c96f4;
 	text-decoration: none;
 	font-weight: bold;
 }
+
 
 ul#topnavlist {
 	display: none;
@@ -250,7 +252,11 @@ h3 a {
     font-size: 100%;
 }
 
+a:hover, a:visited, a:focus {
+	color: #4C96F4;
+	text-decoration: underline;
 
+}
 /************************************************************************************************/
 /* Preferences tabs */
 /************************************************************************************************/
@@ -1572,6 +1578,7 @@ Ensure styling matches that in fl-tabs.*/
         color-stop(0.50, #354d68),
         to(#354d68)
     );
+
 }
 
 
@@ -1776,11 +1783,7 @@ ul#topnavlist li {
 	margin: 0;
 }
 	
-ul#topnavlist>li:hover,
-ul#topnavlist>li:hover a, 
-ul#topnavlist>li:active,
-ul#topnavlist>li:active a,
-ul#topnavlist>li:focus, 
+ul#topnavlist>li:hover, ul#topnavlist>li:hover a,  ul#topnavlist>li:active, ul#topnavlist>li:active a, ul#topnavlist>li:focus, 
 ul#topnavlist>li:focus a {
 	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
