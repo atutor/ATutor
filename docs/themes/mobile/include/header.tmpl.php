@@ -111,7 +111,7 @@ jQuery('#topnavlist').slideUp(600);});
 jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#topnavlist').slideToggle();
- jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
+ jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight');
 });
 ";
 
