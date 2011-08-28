@@ -36,7 +36,7 @@ Towards a simplified desktop theme:
 * erase commented out styles from mobile.css and tablet.css and re-order where necessary
 
 Aesthetic improvements, mobile: 
-* on activation, the Subnavigation div, Resume, Previous, Next on mobile should highlight as a block 
+* on activation (done), the Subnavigation div (done), Resume, Previous, Next on mobile should highlight as a block 
 *Instructor user: 
 /docs/mods/_standard/statistics/course_stats.php - remove inline styles, fix markup 
 
