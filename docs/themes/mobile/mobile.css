@@ -2157,16 +2157,27 @@ ul.sequence-links li a:hover:before, ul.sequence-links li a:focus:before, ul.seq
 	width: 100%;
 
 }
-
-.fl-theme-iphone .subnavcontain a, .fl-theme-iphone .subnavcontain a:hover, .fl-theme-iphone .subnavcontain a:active, .fl-theme-iphone .subnavcontain a:focus {
+/* .fl-theme-iphone .subnavcontain a:hover, .fl-theme-iphone .subnavcontain a:active, .fl-theme-iphone .subnavcontain a:focus*/
+.fl-theme-iphone .subnavcontain a {
 	text-decoration: none;
-	font-weight: bold; 
-	color: #005689;
-	background-repeat: no-repeat;
-	
+
 }
+.fl-theme-iphone .subnavcontain-active{
+	color: white;
+	text-decoration: none;
+} 
+.subnavcontain3{
+	margin: .313em 0; 
+	background-image:	-webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+	border: #A9ADB0 1px solid; 
+	-webkit-border-radius:8px;
+	-moz-border-radius:8px;
+	border-radius: 8px;
+	width: 100%;
+} 
 #subnavlist-link{
 	display: block;
+	
 }
 #page-title-back-to-page{
     display: inline-block;
