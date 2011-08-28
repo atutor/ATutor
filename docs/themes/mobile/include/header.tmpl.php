@@ -86,10 +86,7 @@ jQuery('#subnavlist-link').click(function(e) {
   jQuery('#subnavlist').slideToggle();
   jQuery('#subnavlist-link').toggleClass('content-closed');
   jQuery('#subnavlist-link').toggleClass('subnavcontain-active');
-  
-  jQuery('.subnavcontain').toggleClass('subnavcontain3');
-
-     
+  jQuery('.subnavcontain').toggleClass('subnavcontain3');     
   ";
 $this->onload .= "});
 ";
@@ -102,6 +99,7 @@ jQuery('#content_link_phone').click(function(e) {
  
   jQuery('#content_link_phone').toggleClass('topnavlist-link-highlight');
   jQuery('#content_link_phone').toggleClass('content-closed'); 
+  jQuery('.subnavcontain').toggleClass('subnavcontain3'); 
   ";
 $this->onload .= "});
 ";
