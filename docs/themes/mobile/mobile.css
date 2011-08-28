@@ -143,12 +143,16 @@ body,ul,li {
 	font-weight: bold;
 }
 
-#content_link_phone.topnavlist-link-highlight, .fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight {/*makes the navigation button link highlight*/
+#content_link_phone.topnavlist-link-highlight {/*makes the content link highlight*/
+	color: white;
+	text-decoration: none;
+	font-weight: bold;
+}
+.fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
 	color: #4c96f4;
 	text-decoration: none;
 	font-weight: bold;
 }
-
 
 ul#topnavlist {
 	display: none;
