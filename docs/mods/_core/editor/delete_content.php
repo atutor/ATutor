@@ -35,7 +35,6 @@ if (isset($_POST['submit_yes'])) {
 
 $_GET['cid'] = intval($_REQUEST['cid']);
 
-//$path	= $contentManager->getContentPath($cid);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
