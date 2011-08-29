@@ -12,6 +12,17 @@
 /****************************************************************/
 // $Id$
 
+/**
+ * This script creates the main index page for "file storage" that
+ * handles file upload, edit, view, delete, assignment hand-in etc.
+ * The table below is the mapping between owner type and owner id:
+ ******************************************************
+ * owner_type              owner_id
+ ******************************************************
+ * WORKSPACE_COURSE        course_id
+ * WORKSPACE_PERSONAL      member_id
+ * WORKSPACE_GROUP         group_id
+ */
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); // for get_human_size()
@@ -164,7 +175,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) 
 else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = current($_GET['files']);
-		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
+		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id";
 		$result = mysql_query($sql, $db);
 		if ($row = mysql_fetch_assoc($result)) {
 			$ext = fs_get_file_extension($row['file_name']);
