@@ -120,10 +120,12 @@ body,ul,li {
         to(#354d68)
     );
  	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+ 
     -webkit-border-left-image: none;
     -webkit-background-origin: border;
+
     -webkit-background-clip: border;
-    
+
 }
 
 .navigation-bar-button a:hover, .navigation-bar-button a:active, .navigation-bar-button a:focus{
