@@ -367,7 +367,9 @@ function print_organizations($parent_id,
 						$content_files .= str_replace('{FILE}', $file, $ims_template_xml['file']);
 					} else {
 						if (preg_match('/^http[s]?\:/', $file) == 1){
-							$content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
+						    if ($use_a4a) {
+							    $content_files .= str_replace('{FILE}', $file, $ims_template_xml['xml']);
+							}
 						} elseif (file_exists($file_path) && is_file($file_path)) {
 							//http://www.atutor.ca/atutor/mantis/view.php?id=4313
 							//relative link that goes beyond get.php shouldn't be added
