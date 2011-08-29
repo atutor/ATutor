@@ -37,8 +37,7 @@ Towards a simplified desktop theme:
 
 Aesthetic improvements, mobile: 
 * on activation (done), the Subnavigation div (done), Resume, Previous, Next on mobile should highlight as a block 
-*Instructor user: 
-/docs/mods/_standard/statistics/course_stats.php - (template now includes graph)
+*Instructor user: (done) /docs/mods/_standard/statistics/course_stats.php - (template now includes graph)
 
 
 * "0004796: Student user's Preferences template won't display"
