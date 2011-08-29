@@ -330,7 +330,21 @@ $html_mainheader = str_replace(array('{COURSE_TITLE}', '{COURSE_PRIMARY_LANGUAGE
 							   array($ims_course_title, $course_language_charset, $course_language_code),
 							   $html_mainheader);
 
-
+$footer = str_replace(	
+    array(
+        '{COURSE_PRIMARY_LANGUAGE_CODE}',	
+        '{CONTENT_PACKAGE_TITLE}', 
+        '{COURSE_PRIMARY_LANGUAGE_CHARSET}', 
+        '{CONTENT_PACKAGE_HOW_TO}'
+    ), 
+    array(
+        $course_language_code, 
+        _AT('content_package') . ' - ' . $ims_course_title,
+        $course_language_charset,
+         _AT('general_help', AT_GUIDES_PATH.'index_list.php?lang='.$_SESSION['lang'])
+    ),
+    $footer_html
+);
 
 /* append the Organizations and Resources to the imsmanifest */
 $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURSE_TITLE}'),
@@ -358,6 +372,7 @@ $zipfile->add_file($frame,			 'index.html');
 $zipfile->add_file($toc_html,		 'toc.html');
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 $zipfile->add_file($html_mainheader, 'header.html');
+$zipfile->add_file($footer,          'footer.html');
 if ($glossary_xml) {
 	$zipfile->add_file($glossary_xml,  'glossary.xml');
 	$zipfile->add_file($glossary_html, 'glossary.html');
@@ -367,7 +382,6 @@ $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'../mods/_core/imscp/includ
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'../mods/_core/imscp/include/imscp_rootv1p1p2.xsd'), 'imscp_rootv1p1p2.xsd');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'../mods/_core/imscp/include/imsmd_rootv1p2p1.xsd'), 'imsmd_rootv1p2p1.xsd');
 $zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'../mods/_core/imscp/include/ims.css'), 'ims.css');
-$zipfile->add_file(file_get_contents(AT_INCLUDE_PATH.'../mods/_core/imscp/include/footer.html'), 'footer.html');
 $zipfile->add_file(file_get_contents('../../../images/logo.gif'), 'logo.gif');
 
 $zipfile->close(); // this is optional, since send_file() closes it anyway

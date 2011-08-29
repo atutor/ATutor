@@ -536,7 +536,24 @@ $html_frame = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN"
 </frameset>
 </html>';
 
-
+//footer
+$footer_html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{COURSE_PRIMARY_LANGUAGE_CODE}" lang="{COURSE_PRIMARY_LANGUAGE_CODE}">
+<head>
+	<link rel="stylesheet" type="text/css" href="ims.css" />
+	<title>{CONTENT_PACKAGE_TITLE}</title>
+	<meta http-equiv="Content-Type" content="text/html; charset={COURSE_PRIMARY_LANGUAGE_CHARSET}" />
+</head>
+<body class="footerbody"> 
+<table>
+<tr>
+	<td valign="middle" align="left"><a href="http://www.atutor.ca" target="_blank"><img src="logo.gif" border="0" alt="ATutor.ca - opens in a new window" width="84" height="29" align="left" title="ATutor.ca - opens in a new window" /></a></td>
+	<td><span class="footer">{CONTENT_PACKAGE_HOW_TO}</span></td>
+</tr>
+</table>
+</body>
+</html>';
 
 $glossary_xml = '<?xml version="1.0" encoding="{COURSE_PRIMARY_LANGUAGE_CHARSET}"?>
 <!--This is an ATutor Glossary terms document-->
