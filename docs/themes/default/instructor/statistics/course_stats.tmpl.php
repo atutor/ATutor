@@ -1,4 +1,4 @@
-<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="" align="center">
+<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="course statistics" align="center">
 	<tr>
 		<th colspan="2" class="cyan"><small class="bigspacer"><?php
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?month='.($this->last_month).SEP.'year='.$this->last_year.'">';
