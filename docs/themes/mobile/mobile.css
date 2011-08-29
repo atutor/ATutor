@@ -25,10 +25,12 @@ body,ul,li {
 	line-height:2.813em;
 	padding:0;
 	font-size:1.063em;
+	background-color: #4B6B90;
 }
 
 #header-section-title {
 	text-align: center;
+	
 	background-image: -webkit-gradient(linear, left top, left bottom,
    	from(#6d8cb3),
     color-stop(0.5, #6d8cb3),
