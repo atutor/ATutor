@@ -1,3 +1,4 @@
+<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
 <table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="course statistics" align="center">
 	<tr>
 		<th colspan="2" class="cyan"><small class="bigspacer"><?php
@@ -97,3 +98,82 @@
 		</td>
 	</tr>
 	</table>
+<?php endif;?>
+<?php if ($this->mobile_device_type != IPAD_DEVICE): ?>
+
+<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="course statistics" align="center">
+	<tr>
+		<th colspan="2" class="cyan"><small class="bigspacer"><?php
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?month='.($this->last_month).SEP.'year='.$this->last_year.'">';
+			echo ' '.AT_date('%F', $this->last_month, AT_DATE_INDEX_VALUE ); ?></a> |</small>
+			<?php echo AT_date('%F', $this->month, AT_DATE_INDEX_VALUE ); ?> <small class="bigspacer">| <?php
+			echo '<a href="'.$_SERVER['PHP_SELF'].'?month='.$this->next_month.SEP.'year='.$this->next_year.'">';
+			echo AT_date('%F', $this->next_month, AT_DATE_INDEX_VALUE); ?> </a></small></th>
+	</tr>
+<?php
+		if (($this->num_days == 0) || ($this->empty)) {
+			echo '<tr>';
+			echo '<td class="row1" colspan="2">'._AT('no_month_data').'</td>';
+			echo '</tr>';
+			echo '</table>';
+			require(AT_INCLUDE_PATH.'footer.inc.php');
+			exit;
+		}
+?>
+	<tr>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('total'); ?>:</strong></td>
+		<td class="row1"><?php echo $this->total_logins; ?></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('maximum'); ?>:</strong></td>
+		<td class="row1"><?php echo $this->max_total_logins; ?></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+
+	<tr>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('minimum'); ?>:</strong></td>
+		<td class="row1"><?php
+		if ($this->min_total_logins < 99999999) {
+			echo $this->min_total_logins; 
+		} else {
+			echo '0';
+		} ?></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" valign="top" align="right"><strong><?php   echo _AT('average'); ?>:</strong></td>
+		<td class="row1"><?php echo number_format($this->avg_total_logins, 1); ?> <?php   echo _AT('per_day'); ?></td>
+	</tr>
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+
+
+	<tr><td height="1" class="row2" colspan="2"></td></tr>
+	<tr>
+		<td class="row1" valign="top" align="right"><strong><?php echo _AT('raw_data'); ?>:</strong></td>
+		<td class="row1" align="center">
+	
+		<table class="data static" summary="" rules="cols">
+		<thead>
+		<tr>
+			<th scope="col"><?php echo _AT('date');    ?></th>
+			<th scope="col"><?php echo _AT('guests');  ?></th>
+			<th scope="col"><?php echo _AT('members'); ?></th>
+		</tr>
+		</thead>
+		<tbody>
+		<?php $short_name = $month_name_con['en'][$month-1]; ?>
+		<?php foreach ($this->days as $day => $logins):?>
+			<tr>
+				<td><?php echo $short_name.' '.$day; ?></td>
+				<td><?php echo $logins[0]; ?></td>
+				<td><?php echo $logins[1]; ?></td>
+			</tr>
+		<?php endforeach; ?>
+		<tbody>
+		</table>
+
+		</td>
+	</tr>
+	</table>
+<?php endif;?>
