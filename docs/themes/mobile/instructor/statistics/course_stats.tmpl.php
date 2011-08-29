@@ -46,7 +46,7 @@
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr>
-		<td class="row1" valign="top" align="right"><strong><?php   echo _AT('graph'); ?>:</strong></td>
+		<td class="row1" valign="top" align="right" <strong><?php   echo _AT('graph'); ?>:</strong></td>
 		<td class="row1">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -101,7 +101,7 @@
 <?php endif;?>
 <?php if ($this->mobile_device_type != IPAD_DEVICE): ?>
 
-<table cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="course statistics" align="center">
+<table style="width: 100%" cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="course statistics" align="center" frame="box" >
 	<tr>
 		<th colspan="2" class="cyan"><small class="bigspacer"><?php
 			echo '<a href="'.$_SERVER['PHP_SELF'].'?month='.($this->last_month).SEP.'year='.$this->last_year.'">';
@@ -153,7 +153,7 @@
 		<td class="row1" valign="top" align="right"><strong><?php echo _AT('raw_data'); ?>:</strong></td>
 		<td class="row1" align="center">
 	
-		<table class="data static" summary="" rules="cols">
+		<table class="data static" summary="" rules="cols" frame="box">
 		<thead>
 		<tr>
 			<th scope="col"><?php echo _AT('date');    ?></th>
