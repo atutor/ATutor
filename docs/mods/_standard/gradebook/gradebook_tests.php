@@ -115,7 +115,14 @@ else
 			<td width="10"><input type="radio" name="gradebook_test_id" value="<?php echo $row["gradebook_test_id"]; ?>" id="m<?php echo $row["gradebook_test_id"]; ?>" <?php if ($row["gradebook_test_id"]==$_POST['gradebook_test_id']) echo 'checked'; ?> /></td>
 			<td><label for="m<?php echo $row["gradebook_test_id"]; ?>"><?php echo $row["title"]; ?></label></td>
 			<td><?php echo $scale_content[$row["grade_scale_id"]]; ?></td>
-			<td><?php echo $row["type"]; ?></td>
+			<?php if ($row["type"] == "External"){?>
+				<td><?php echo _AT("external"); ?></td>
+			<?php } elseif($row["type"] == "ATutor Test"){ ?>
+				<td><?php echo _AT("atutor_test"); ?></td>
+			<?php } else if($row["type"] == "ATutor Assignment") { ?>
+				<td><?php echo _AT("atutor_assignment"); ?></td>
+			<?php } ?>
+			
 		</tr>
 <?php 
 	}
