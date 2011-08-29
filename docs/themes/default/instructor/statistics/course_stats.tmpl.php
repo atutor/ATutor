@@ -54,7 +54,7 @@
 <?php
 			foreach ($this->days as $day => $logins) {
 			$dd++;
-				echo '<td valign="bottom" class="graph"><img src="images/clr.gif" height="'.(($this->max_total_logins*$multiplyer_height) % $block_height + $block_height).'" width="10" alt="" /><br /><img src="images/blue.gif" height="'.($logins[0]*$multiplyer_height).'" width="9" alt="'.$logins[0].' '._AT('guests').' ('.($logins[0]+$logins[1]).' '._AT('total').')" /><br /><img src="images/red.gif" height="'.($logins[1]*$multiplyer_height).'" width="9" alt="'.$logins[1].' '._AT('members').' ('.($logins[1]+$logins[0]).' '._AT('total').')" /><br /><small>'.$dd.'&nbsp;</small></td>';
+				echo '<td valign="bottom" class="graph"><img src="images/clr.gif" height="'.(($this->max_total_logins*$this->multiplyer_height) % $this->block_height + $this->block_height).'" width="10" alt="" /><br /><img src="images/blue.gif" height="'.($logins[0]*$this->multiplyer_height).'" width="9" alt="'.$logins[0].' '._AT('guests').' ('.($logins[0]+$logins[1]).' '._AT('total').')" /><br /><img src="images/red.gif" height="'.($logins[1]*$this->multiplyer_height).'" width="9" alt="'.$logins[1].' '._AT('members').' ('.($logins[1]+$logins[0]).' '._AT('total').')" /><br /><small>'.$dd.'&nbsp;</small></td>';
 
 			} while ($row = mysql_fetch_array($this->result));
 ?>
