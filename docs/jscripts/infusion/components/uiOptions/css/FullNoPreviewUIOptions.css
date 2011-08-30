@@ -1,0 +1,10 @@
+body{max-width:960px;min-width:900px;}
+.fl-uiOptions-fullNoPreview .fl-uiOptions-category{border-top:2px solid #ddd;clear:both;}
+.fl-uiOptions-fullNoPreview .fl-uiOptions-category h2 img{padding-top:10px;margin-bottom:-4px;}
+.fl-uiOptions-fullNoPreview .fl-uiOptions-buttons{text-align:right;}
+.fl-uiOptions-fullNoPreview .fl-col-flex{padding-top:15px;}
+.fl-uiOptions-fullNoPreview ul{float:left;}
+.fl-uiOptions-fullNoPreview ul li{clear:left;}
+.fl-uiOptions-fullNoPreview label,.fl-uiOptions-fullNoPreview .fl-inputs{margin-bottom:15px;}
+.fl-uiOptions-fullNoPreview .fl-uiOptions-text ul li{clear:left;height:3.5em;}
+.fl-uiOptions-fullNoPreview .fl-uiOptions-layout li,.fl-uiOptions-fullNoPreview .fl-uiOptions-links li{height:4em;}

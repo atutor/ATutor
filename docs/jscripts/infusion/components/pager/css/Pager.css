@@ -7,5 +7,5 @@
 .fl-pager .fl-pager-ui .fl-pager-disabled,.fl-pager .fl-pager-ui .fl-pager-links .fl-pager-currentPage{color:#000;border:none;background-color:transparent;text-decoration:none;}
 .fl-pager .fl-pager-ui .fl-pager-links a:hover{background-color:#0287C5;color:#fff;text-decoration:none;}
 .fl-pager .fl-pager-ui .fl-pager-disabled:hover,.fl-pager .fl-pager-ui .fl-pager-links .fl-pager-currentPage:hover{background-color:transparent;color:#000;text-decoration:none;cursor:default;}
-.fl-theme-hc .fl-pager .fl-pager-data .fl-pager-desc{background:url(../images/arrow-up.png) no-repeat right;}
-.fl-theme-hc .fl-pager .fl-pager-data .fl-pager-asc{background:url(../images/arrow-dn.png) no-repeat right;}
+.fl-theme-bw .fl-pager .fl-pager-data .fl-pager-desc{background:url(../images/arrow-up.png) no-repeat right;}
+.fl-theme-bw .fl-pager .fl-pager-data .fl-pager-asc{background:url(../images/arrow-dn.png) no-repeat right;}
