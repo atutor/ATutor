@@ -302,6 +302,15 @@ $savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
 //if user has requested theme change, make the change here
 if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
+    //http://atutor.ca/atutor/mantis/view.php?id=4781
+    //Themes should be in the same folder, disallow '../'
+    $newTheme = str_replace("../", "", $_POST['theme']);
+    $newMobileTheme = str_replace("../", "", $_POST['mobile_theme']);
+    if ($newTheme != $_POST['theme'] || $newMobileTheme != $_POST['mobile_theme']) {
+        header('Location:'.AT_BASE_HREF.'users/preferences.php');
+	    exit;
+    }
+    
     $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
     $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
 } else if ($_POST['set_default']) {
