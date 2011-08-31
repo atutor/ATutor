@@ -25,6 +25,9 @@ include/header.tmpl.php
 ==================================================================================
 Known Issues / More work needed
 ==================================================================================
+
+Outstanding templates to be created: 
+* see "TEMPLATES - CREATED & OUTSTANDING" for a list of my progress &  "Omitted from mobile/" for a list of work that needs to be done. 
  
 Towards a simplified desktop theme: 
 * develop a desktop theme based on tablet.css (harder) 
@@ -32,8 +35,8 @@ Towards a simplified desktop theme:
 * erase commented out styles from mobile.css and tablet.css and re-order where necessary
 
 Aesthetic improvements, mobile: 
-* on activation (done), the Subnavigation div (done), Resume, Previous, Next on mobile should highlight as a block 
-*Instructor user: (done) /docs/mods/_standard/statistics/course_stats.php - (template now includes graph)
+* on activation (done-AUG27), the Subnavigation div (done-AUG27), Resume, Previous, Next on mobile should highlight as a block 
+*Instructor user: (done-AUG27) /docs/mods/_standard/statistics/course_stats.php - (template now includes graph)
 
 
 * "0004796: Student user's Preferences template won't display"
@@ -41,6 +44,7 @@ Aesthetic improvements, mobile:
 ** see: http://atutor.ca/atutor/mantis/view.php?id=4679
 
 
+A Mobile FSS 
 * "Activation hightlighting is visible on the desktop but not the on the mobile device"
 ** see: http://issues.fluidproject.org/browse/FLUID-4313
 ** both arrows and background color don't highlight.
@@ -69,6 +73,8 @@ Instructor user:
 *groups
 *gradebook
 *glossary
+** /docs/mods/_core/glossary/tools/index.php ** NOT DONE
+** docs/mods/_core/glossary/tools/add.php ** DONE - August 31st
 *patcher
 *student tools
 
@@ -143,7 +149,9 @@ I have listed this as an issue.
 3.3.3 Error Suggestion - already handled 
 4.1.1 Parsing, 4.1.2 Name, Role, Value
 
-
+==============================================================================
+TEMPLATES - CREATED & OUTSTANDING
+==============================================================================
 ADMINISTRATORS: MOBILE ----------------------------------------------------------------------------------
 
 NOTE there are 4 errors in HTML validator due to using an ARIA role. 
