@@ -27,17 +27,17 @@ $args = substr($_SERVER['PHP_SELF'], strlen($_SERVER['SCRIPT_NAME']));
 $file = AT_CONTENT_DIR . $args;
 
 //check that this file is within the content directory & exists
+if (preg_match('/^\/[0-9]+\.html$/', $args) === 1) {
+    $real = realpath($file);
+    if (file_exists($real) && substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR) {
+     	header('Content-Type: text/html');
+	    echo file_get_contents($real);
+	    exit;
+	}
+} 
+header('HTTP/1.1 404 Not Found');
+exit;
 
-$real = realpath($file);
-
-if (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR) {
- 	header('Content-Type: text/html');
-	echo file_get_contents($real);
-	exit;
-} else {
-	header('HTTP/1.1 404 Not Found');
-	exit;
-}
 
 
 ?>
