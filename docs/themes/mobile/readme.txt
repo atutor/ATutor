@@ -25,11 +25,7 @@ include/header.tmpl.php
 ==================================================================================
 Known Issues / More work needed
 ==================================================================================
-
-Important:
-* Mobile instructor users can currently see modules that have been disabled through their module.php file, and it
-needs to be fixed so that they cannot have this option. 
-
+ 
 Towards a simplified desktop theme: 
 * develop a desktop theme based on tablet.css (harder) 
 * develop a desktop theme based on mobile.css (easier) & do a final update to ensure generic CSS is used
