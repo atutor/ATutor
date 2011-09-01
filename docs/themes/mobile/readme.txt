@@ -35,8 +35,10 @@ Towards a simplified desktop theme:
 * erase commented out styles from mobile.css and tablet.css and re-order where necessary
 
 Aesthetic improvements, mobile: 
-* on activation (done-AUG27), the Subnavigation div (done-AUG27), Resume, Previous, Next on mobile should highlight as a block 
-*Instructor user: (done-AUG27) /docs/mods/_standard/statistics/course_stats.php - (template now includes graph)
+* Resume, Previous, Next on mobile should highlight as a block (outstanding)
+* on activation should highlight as a block (done-AUG27) 
+* the Subnavigation div should highlight as a block (done-AUG27)
+* Instructor user: (done-AUG27) /docs/mods/_standard/statistics/course_stats.php - (template now includes graph)
 
 
 * "0004796: Student user's Preferences template won't display"
@@ -44,7 +46,7 @@ Aesthetic improvements, mobile:
 ** see: http://atutor.ca/atutor/mantis/view.php?id=4679
 
 
-A Mobile FSS 
+Mobile FSS 
 * "Activation hightlighting is visible on the desktop but not the on the mobile device"
 ** see: http://issues.fluidproject.org/browse/FLUID-4313
 ** both arrows and background color don't highlight.
@@ -52,6 +54,8 @@ A Mobile FSS
 *** the "Navigation" menus on mobiles and tablets after a link is highlighted 
 *** docs/users/browse.php in mobile and tablets
 
+Mark McLaren's moz.css
+https://github.com/fluid-project/infusion/commit/25ad6755ef78347b414d60bd4037a0f197f9d09d#diff-7
 ==================================================================================
 Omitted from mobile/
 ==================================================================================
@@ -152,7 +156,7 @@ I have listed this as an issue.
 ==============================================================================
 TEMPLATES - CREATED & OUTSTANDING
 ==============================================================================
-ADMINISTRATORS: MOBILE ----------------------------------------------------------------------------------
+ADMINISTRATORS: MOBILE -------------------------------------------------------
 
 NOTE there are 4 errors in HTML validator due to using an ARIA role. 
 
