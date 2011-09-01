@@ -26,6 +26,14 @@ body,ul,li {
 	padding:0;
 	font-size:1.063em;
 	background-color: #4B6B90;
+	/*firefox*/
+	background-image: -moz-linear-gradient(
+        center top,
+        #9aafca,
+        #4b6b90,
+        #6d8cb3 10%,
+        #4b6b90 90%        
+    );        
 }
 
 #header-section-title {
@@ -120,10 +128,8 @@ body,ul,li {
         to(#354d68)
     );
  	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
- 
     -webkit-border-left-image: none;
     -webkit-background-origin: border;
-
     -webkit-background-clip: border;
 
 }
@@ -145,6 +151,9 @@ body,ul,li {
 	color: white;
 	text-decoration: none;
 	font-weight: bold;
+	/*firefox*/
+	 -moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
+    background-color: #354D68;
 }
 
 #content_link_phone.topnavlist-link-highlight {/*makes the content link highlight*/
@@ -2245,4 +2254,16 @@ ul.my-courses-list-ul > li:hover{
 }
 ul.my-courses-list-ul > li:hover a{
 	color: white;
+	text-decoration: none;
+}
+
+/* to be created as a separate desktop theme file */ 
+.fl-tabs li:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.fl-theme-iphone .fl-tabs li {
+    -moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
+    background-color: #354D68;
 }
