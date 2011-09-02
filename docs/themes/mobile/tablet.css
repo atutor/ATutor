@@ -27,9 +27,8 @@ body,ul,li {
 	padding-top: 158;
 	font-size:1.063em;
 	height: 3.2em;
-	background-color: #4b6b90; /*FF*/
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
-	
+	background: -moz-linear-gradient(#999, black);
 }
 
 
@@ -1996,6 +1995,7 @@ ul.social_inline_menu{
 	padding: 0.875em;
 	padding-right: .2em;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+	background: -moz-linear-gradient(#999, black);
 }
 
 .hide-show-container h4{
@@ -2007,7 +2007,6 @@ ul.social_inline_menu{
 	margin-bottom: 0.875em;
 	padding: 0.875em;
 	padding-right: .2em;
-	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F8FAFB), to(#B6C0C6));
 	background: white; 
 }
@@ -2078,6 +2077,8 @@ Ensure styling matches that in fl-tabs.*/
         color-stop(0.50, #354d68),
         to(#354d68)
     );
+	background-color: #354D68;
+	-moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
  	-webkit-border-image: url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
  	-moz-border-image:url(images/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
     -webkit-border-left-image: none;
@@ -2432,4 +2433,43 @@ ul.my-courses-list-ul > li:hover a{
 }
 #topnavlistcontainer {
     float: left;
+}
+
+/* to be created as a separate desktop theme file. The classes below should be removed when 
+Mark McLaren's port of mobile fss to firefox is committed to infusion: 
+https://github.com/fluid-project/infusion/blob/25ad6755ef78347b414d60bd4037a0f197f9d09d/infusion-branch/src/webapp/framework/fss/css/fss-mobile-theme-firefox.css */ 
+.fl-tabs li:first-child {
+    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.fl-theme-iphone .fl-tabs li {
+    -moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
+    background-color: #354D68;
+}
+[class*="fl-container"] [class*="fl-list"] > li:first-child, [class*="fl-container"] [class*="fl-list"] > li:first-child a {
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+[class*="fl-container"] [class*="fl-list"] > li:last-child, [class*="fl-container"] [class*="fl-list"] > li:last-child a {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+}
+
+.fl-theme-iphone .fl-tabs .fl-tabs-active {
+    background-image: -moz-linear-gradient(
+        center top,
+        rgba(149, 184, 239,1),
+        rgba(35,109,229,1),
+        rgba(149, 184, 239,1)  50%,
+        rgba(75,148,244,1) 50%
+    );
+}
+
+/* A simulation for a:active on the device, requires JS */
+/* since .fl-list is for mixed material lists, dont include them in these effects */
+.fl-theme-iphone [class*=fl-list]:not(.fl-list):not(.fl-grid) a:active,
+.fl-theme-iphone [class*=fl-list]:not(.fl-list):not(.fl-grid) a.fl-link-hilight {
+    background: url(../images/themes/iphone/listmenu_arrow.png) no-repeat right -25px,
+                -moz-linear-gradient(#4a94f4, #236de5);
 }
