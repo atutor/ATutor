@@ -27,6 +27,7 @@ body,ul,li {
 	padding-top: 158;
 	font-size:1.063em;
 	height: 3.2em;
+	background: #999; /*fallback*/
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 	background: -moz-linear-gradient(#999, black);
 }
@@ -40,13 +41,6 @@ body,ul,li {
 
 .fl-navbar a{
 	font-size: 0.969em;
-	background-image: -webkit-gradient(linear, left top, left bottom,
-   	from(#4b6b90),
-    color-stop(0.5, #6d8cb3),
-    color-stop(0.50, #4b6b90),
-    color-stop(0.5, #6d8cb3),
-    to(#4b6b90)
-    ); 
 }
 .fl-navbar .fl-tabs{
 	padding-top: .3em;
@@ -56,7 +50,7 @@ body,ul,li {
 	background-color: #4b6b90; 
     height: 2em;   
     background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
-   
+    background: -moz-linear-gradient(#999, black);
 }
 
 #navigation-contentwrapper{
@@ -627,6 +621,7 @@ h1#section-title {
 
 #footer{
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
+	background: -moz-linear-gradient(#999, black);
 	height:2.3em;
 	margin-top: -2.3em;
 	position: relative;
@@ -1560,7 +1555,6 @@ Ensure styling matches that in fl-tabs.*/
         color-stop(0.50, #354d68),
         to(#354d68)
     );
-    
 }
 
 /*Added by Silvia */
@@ -1768,14 +1762,11 @@ ul#topnavlist-tablet li {
 	color: white;
 }
 	
-ul#topnavlist-tablet>li:hover,
-ul#topnavlist-tablet>li:hover a, 
-ul#topnavlist-tablet>li:active,
-ul#topnavlist-tablet>li:active a,
-ul#topnavlist-tablet>li:focus, 
-ul#topnavlist-tablet>li:focus a {
+ul#topnavlist-tablet>li:hover, ul#topnavlist-tablet>li:hover a,  ul#topnavlist-tablet>li:active,
+ul#topnavlist-tablet>li:active a, ul#topnavlist-tablet>li:focus, ul#topnavlist-tablet>li:focus a {
 	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center, -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+	background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center, -moz-linear-gradient(#4a94f4, #236de5);
 }
 
 ul#topnavlist-tablet li a  {
@@ -1816,7 +1807,8 @@ ol#tools>li:hover, ol#tools>li:hover a {
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-  	
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -moz-linear-gradient(#4a94f4, #236de5);	
 }
 
 [class*="fl-container"]:not(.fl-navbar){
@@ -2008,6 +2000,7 @@ ul.social_inline_menu{
 	padding: 0.875em;
 	padding-right: .2em;
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#F8FAFB), to(#B6C0C6));
+	background: -moz-linear-gradient(#F8FAFB, #B6C0C6);
 	background: white; 
 }
 
@@ -2139,6 +2132,7 @@ div#content-link-container{
 	color: white;
 	text-decoration: none;
 	font-weight: bold;
+	background-color: #354D68;
 }
 .fl-theme-iphone .content_link_tablet_highlight{
 	 color: #4c96f4;
@@ -2177,15 +2171,13 @@ ul#topnavlist li {
 	margin: 0;
 }
 	
-ul#topnavlist>li:hover,
-ul#topnavlist>li:hover a, 
-ul#topnavlist>li:active,
-ul#topnavlist>li:active a,
-ul#topnavlist>li:focus, 
-ul#topnavlist>li:focus a {
+ul#topnavlist>li:hover, ul#topnavlist>li:hover a,  ul#topnavlist>li:active, ul#topnavlist>li:active a,
+ul#topnavlist>li:focus, ul#topnavlist>li:focus a {
 	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+   -moz-linear-gradient(#4a94f4, #236de5);
 }
 
 ul#topnavlist li a  {
@@ -2291,12 +2283,6 @@ ul#subnavlist li a{
 /*'Previous' and 'Next' buttons */
 .previous{
 	margin-left:3.125em;
-	background-image: -webkit-gradient(linear, left top, left bottom,
-     	from(#3b5371),
-        color-stop(0.5, #374e6b),
-        color-stop(0.50, #354d68),
-        to(#354d68)
-    );
 }
 
 .triangle-isosceles.previous:after {
@@ -2426,7 +2412,9 @@ ul.my-courses-list-ul > li:hover{
 	background-color: #4c96f4;
  	color: #fff;
     background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
-   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+    -moz-linear-gradient(#4a94f4, #236de5);
 } 
 ul.my-courses-list-ul > li:hover a{
 	color: white;
