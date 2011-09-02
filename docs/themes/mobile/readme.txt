@@ -26,6 +26,8 @@ include/header.tmpl.php
 Known Issues / More work needed
 ==================================================================================
 
+why isn't simplified-desktop in svn? 
+
 Outstanding templates to be created: 
 * see "TEMPLATES - CREATED & OUTSTANDING" for a list of my progress &  "Omitted from mobile/" for a list of work that needs to be done. 
  
