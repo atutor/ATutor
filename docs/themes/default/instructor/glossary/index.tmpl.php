@@ -1,4 +1,7 @@
+<?php debug($this->gloss_results_row);
+debug($this->related_word);
 
+?>
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
@@ -23,8 +26,11 @@
 		<tr onmousedown="document.form['m<?php echo $row['word_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['word_id']; ?>">
 			<td valign="top" width="10"><input type="radio" name="word_id" value="<?php echo $row['word_id']; ?>" id="m<?php echo $row['word_id']; ?>" /></td>
 			<td valign="top"><label for="m<?php echo $row['word_id']; ?>"><?php echo AT_print($row['word'], 'glossary.word'); ?></label></td>
-			<td style="whitespace:nowrap;"><?php echo AT_print($this->def_trunc, 'glossary.definition'); ?></td>		
-			<td valign="top"><?php echo AT_print($this->related_word, 'glossary.word'); ?></td>
+			<td style="whitespace:nowrap;"><?php echo AT_print($row['definition'], 'glossary.definition'); ?></td>	
+			<?php if(!empty($row['related_word_id'])):?>	
+			<td valign="top"><?php //debug($this->related_word);
+			//echo AT_print($row[related_word_id], 'glossary.word'); ?></td>
+			<?php endif; ?>
 		</tr>
 	
 	<?php endforeach;?>

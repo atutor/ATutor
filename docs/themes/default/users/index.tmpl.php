@@ -1,5 +1,4 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-
 <div id="my_courses_container">
 <table class="data" style="width:100%;">
 <tr><th></th>
