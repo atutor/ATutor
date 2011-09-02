@@ -32,7 +32,15 @@ Outstanding templates to be created:
 Towards a simplified desktop theme: 
 * develop a desktop theme based on tablet.css (harder) 
 * develop a desktop theme based on mobile.css (easier) & do a final update to ensure generic CSS is used
+** update to -moz rules
 * erase commented out styles from mobile.css and tablet.css and re-order where necessary
+
+Simplify or remove this rule in mobile.css and tablet.css
+* navigation-bar-button-content
+
+Tablet bug? 
+In Firefox, the "Home" and "Previous/Next" buttons are the wrong height. Test on the tablet
+then see if it can be reproduced there before fixing. 
 
 Aesthetic improvements, mobile: 
 * Resume, Previous, Next on mobile should highlight as a block (outstanding)
