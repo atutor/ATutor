@@ -214,8 +214,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <?php endif; ?>
 
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
-	<!-- Fluid Infusion mobile fss extension.. remove when it is committed to Mobile FSS -->
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/moz.css" type="text/css" />	
+	<!-- Fluid Infusion mobile fss extension... Remove when it is committed to Mobile FSS.  
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/moz.css" type="text/css" />-->	
 	<!-- Fluid Infusion -->
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
 	<script language="javascript" type="text/javascript">
