@@ -1,6 +1,4 @@
-/* Style is optimized for iphone. Note that -webkit properties 
-create errors in the CSS validator. 
-Classes beginning with ".fl-" are overriding Mobile FSS, 
+/* Style is optimized for blackberry devices. Classes beginning with ".fl-" are overriding Mobile FSS, 
 see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API 
 for more details. 
 */
