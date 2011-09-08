@@ -57,6 +57,7 @@ if ( authenticate(AT_PRIV_BASICLTI, TRUE) ) {
 	$this->_pages['mods/_standard/basiclti/index_instructor.php']['children'] = array('mods/_standard/basiclti/tool/instructor_create.php');
 	$this->_pages['mods/_standard/basiclti/tool/instructor_create.php']['title_var'] = 'bl_create';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_create.php']['parent'] = 'mods/_standard/basiclti/index_instructor.php';
+	$this->_pages['mods/_standard/basiclti/tool/instructor_create.php']['guide'] = 'admin/?p=basiclti_external_tools.php';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_view.php']['title_var'] = 'bl_view';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_view.php']['parent'] = 'mods/_standard/basiclti/index_instructor.php';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_edit.php']['title_var'] = 'bl_edit';
