@@ -118,7 +118,7 @@ function populate_a4a($cid, $content, $formatting){
 	$parser = new XML_HTMLSax();
 	$parser->set_object($handler);
 	$parser->set_element_handler('openHandler','closeHandler');
-	
+
 	$my_files 		= array();
 	$parser->parse($body);
 	$my_files = array_unique($my_files);
@@ -145,7 +145,7 @@ function populate_a4a($cid, $content, $formatting){
     
     $a4a = new A4a($cid);
     $db_primary_resources = $a4a->getPrimaryResources();
-    
+
     // clean up the removed resources
     foreach ($db_primary_resources  as $primary_rid=>$db_resource){
         //if this file from our table is not found in the $resource, then it's not used.
@@ -167,7 +167,7 @@ function populate_a4a($cid, $content, $formatting){
 
 // save all changes to the DB
 function save_changes($redir, $current_tab) {
-	global $contentManager, $db, $addslashes, $msg;
+	global $contentManager, $db, $addslashes, $msg, $stripslashes;
 	
 	$_POST['pid']	= intval($_POST['pid']);
 	$_POST['cid']	= intval($_POST['cid']);
@@ -177,10 +177,10 @@ function save_changes($redir, $current_tab) {
 	$_POST['title'] = trim($_POST['title']);
 	$_POST['head']	= trim($_POST['head']);
 	$_POST['use_customized_head']	= isset($_POST['use_customized_head'])?$_POST['use_customized_head']:0;
-	$_POST['body_text']	= trim($_POST['body_text']);
+	$_POST['body_text']	= $stripslashes(trim($_POST['body_text']));
 	$_POST['weblink_text'] = trim($_POST['weblink_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
-	$_POST['keywords']	= trim($_POST['keywords']);
+	$_POST['keywords']	= $stripslashes(trim($_POST['keywords']));
 	$_POST['test_message'] = trim($_POST['test_message']);
 	$_POST['allow_test_export'] = intval($_POST['allow_test_export']);
 
@@ -590,8 +590,6 @@ function paste_from_file() {
 			$msg->addFeedback('FILE_PASTED');
 		} else if ($ext == 'txt') {
 			$_POST['body_text'] = file_get_contents($_FILES['uploadedfile_paste']['tmp_name']);
-			//LAW
-//			debug($_POST);
 			$msg->addFeedback('FILE_PASTED');
 
 		}
