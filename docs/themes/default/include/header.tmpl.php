@@ -80,6 +80,7 @@ global $system_courses, $_custom_css, $db;
 
     <!-- Fluid and jQuery Dependencies -->
     <script type="text/javascript" src="<?php echo $this->base_href; ?>jscripts/infusion/InfusionAll.js"></script>
+    <script type="text/javascript" src="<?php echo $this->base_href; ?>jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js"></script>
         
 	<script language="javascript" type="text/javascript">
 	//<!--

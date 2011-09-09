@@ -196,7 +196,7 @@ if (TRUE || $framed != TRUE) {
 					<th class="fl-uploader-file-name">File Name</th>
 					<th class="fl-uploader-file-size">Size</th>
 					<th class="fl-uploader-file-actions"></th>
-				</tr>
+				</tr>u
             </table>
             
             <!-- File Queue body, which is the default container for the FileQueueView component -->
@@ -321,6 +321,16 @@ if (TRUE || $framed != TRUE) {
                         window.location = "<?php echo AT_BASE_HREF; ?>mods/_core/file_manager/index.php?pathext=<?php echo $pathext; ?>";
                     }
     		    },
+    		    components: {
+                    strategy: {
+                        options: {
+                            flashMovieSettings: {
+                                flashURL: "<?php echo AT_BASE_HREF; ?>jscripts/infusion/lib/swfupload/flash/swfupload.swf",
+                                flashButtonImageURL: "<?php echo AT_BASE_HREF; ?>jscripts/infusion/components/uploader/images/browse.png"
+                            }
+                        }
+                    }
+                }
             });
             
             //bind fluid checkbox
