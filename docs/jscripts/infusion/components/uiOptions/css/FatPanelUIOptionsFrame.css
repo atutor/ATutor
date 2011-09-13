@@ -1,4 +1,4 @@
-.fl-uiOptions-fatPanel{min-width:960px;background-color:#fff;}
+.fl-uiOptions-fatPanel{min-width:960px;min-width:inherit;background-color:#fff;}
 .fl-uiOptions-fatPanel #reset{background-color:#333;color:#fff;text-transform:uppercase;font-weight:bold;display:block;padding:8px 15px 8px 3em;}
 .fl-uiOptions-fatPanel ul.fl-tabs{background-color:#333;color:#fff;margin-top:0;border-bottom:none;}
 .fl-uiOptions-fatPanel .fl-tabs li a{background-color:#333;color:#fff;text-transform:uppercase;font-weight:bold;border:0;}
@@ -11,7 +11,6 @@
 .fl-uiOptions-fatPanel.ui-tabs .ui-tabs-nav li{top:0;margin:0;}
 .fl-uiOptions-fatPanel.ui-tabs .ui-tabs-nav li a{float:left;padding:1em 1.5em 1em 3em;}
 .fl-uiOptions-fatPanel.ui-tabs .ui-state-default{border:none;}
-.fl-uiOptions-fatPanel.ui-tabs .ui-helper-reset{line-height:1em;}
 .fl-uiOptions-fatPanel.ui-tabs .ui-tabs-nav li.ui-tabs-selected{padding-bottom:0;}
 .fl-uiOptions-fatPanel .fl-tabs .ui-corner-top{-moz-border-radius-topleft:0;-moz-border-radius-topright:0;}
 .fl-uiOptions-fatPanel .fl-tabs .ui-corner-all{-moz-border-radius:0;}
@@ -19,7 +18,7 @@
 .fl-uiOptions-fatPanel.ui-widget-content{border:none;}
 .fl-uiOptions-fatPanel.ui-tabs .ui-widget-header{background:none;border:0;background-color:#333;}
 .fl-uiOptions-fatPanel.ui-tabs .ui-tabs-panel ul{margin:0;padding-top:1.5em;}
-.fl-uiOptions-fatPanel .fl-tab-text,.fl-uiOptions-fatPanel .fl-tab-layout,.fl-uiOptions-fatPanel .fl-tab-links,.fl-uiOptions-fatPanel #reset{background-repeat:no-repeat;background-position:1.1em .6em;}
+.fl-uiOptions-fatPanel .fl-tab-text,.fl-uiOptions-fatPanel .fl-tab-layout,.fl-uiOptions-fatPanel .fl-tab-links,.fl-uiOptions-fatPanel #reset{background-repeat:no-repeat;background-position:8% 50%;}
 .fl-uiOptions-fatPanel .fl-tab-text{background-image:url('../images/default/uio_icon_textanddisplay_defaultInverted_16x16.png');}
 .fl-uiOptions-fatPanel .fl-tab-layout{background-image:url('../images/default/uio_icon_layoutandnavigation_defaultInverted_16x16.png');}
 .fl-uiOptions-fatPanel .fl-tab-links{background-image:url('../images/default/uio_icon_linksandbuttons_defaultInverted_16x16.png');}

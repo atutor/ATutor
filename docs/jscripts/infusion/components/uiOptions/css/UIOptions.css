@@ -1,11 +1,10 @@
-.fl-uiOptions{font-family:"Myriad Pro",Helvetica,Arial,sans-serif;font-size:.85em;}
+.fl-uiOptions{font-family:"Myriad Pro",Helvetica,Arial,sans-serif;}
 .fl-uiOptions ul{margin-left:0;}
 .fl-uiOptions ul li{list-style:none;}
 .fl-uiOptions label{text-transform:uppercase;font-size:1.2em;}
 .fl-uiOptions input[type="text"]{width:2em;font-size:1em;}
 .fl-uiOptions .fl-slider{float:left;margin-right:10px;}
-.fl-uiOptions .fl-slider-input{float:right;}
-.fl-uiOptions input[type="checkbox"]{margin-right:10px;margin-bottom:2em;border:1px solid black;}
+.fl-uiOptions input[type="checkbox"]{margin-right:10px;border:1px solid black;}
 .fl-uiOptions select{border:2px solid #ebebeb;}
 .fl-uiOptions select#textFont{font-weight:bold;}
 .fl-uiOptions select#textFont option.times{font-family:"Times New Roman";}
@@ -13,14 +12,11 @@
 .fl-uiOptions select#textFont option.arial{font-family:Arial;}
 .fl-uiOptions select#textFont option.verdana{font-family:Verdana;}
 .fl-uiOptions select#theme{font-weight:bold;text-transform:uppercase;}
-.fl-uiOptions select#theme option.default{color:#000;background-color:#efefef;}
-.fl-uiOptions select#theme option.bw{color:#fff;background-color:#000;}
-.fl-uiOptions select#theme option.wb{color:#000;background-color:#fff;}
-.fl-uiOptions select#theme option.by{color:#000;background-color:#fe0;}
-.fl-uiOptions select#theme option.yb{color:#fe0;background-color:#000;}
+.fl-uiOptions select#theme option.fl-uio-default-theme{color:#000!important;background-color:#efefef!important;}
 .fl-uiOptions .fl-uiOptions-text label{display:block;float:left;width:14em;}
 .fl-uiOptions .fl-uiOptions-text .fl-inputs{float:left;font-size:1em;}
-.fl-uiOptions .fl-uiOptions-option-description{color:#4D4D4D;margin-bottom:1em;padding-top:5px;font-size:1.1em;}
+.fl-uiOptions .fl-uiOptions-option-description{color:#4D4D4D;padding-top:5px;font-size:1.1em;}
+.fl-uiOptions .fl-uiOptions-layout div,.fl-uiOptions .fl-uiOptions-links div{margin-left:25px;}
 .fl-uiOptions .fl-slider-horz{width:140px;height:3px;-moz-border-radius:65%;-webkit-border-radius:65%;}
 .fl-uiOptions .fl-slider{position:relative;background-color:#555;padding:0;margin-top:8px;}
 .fl-uiOptions .fl-slider .fl-handle,.fl-slider a{position:absolute;display:block;height:32px;width:32px;top:0;left:0;}

@@ -1,4 +1,4 @@
-.fl-theme-wb,.fl-theme-bw.fl-inverted-color{color:#fff;background-color:#000;}
+.fl-theme-wb,.fl-theme-wb *,.fl-preview-theme.fl-theme-wb,.fl-theme-bw.fl-inverted-color,.fl-theme-bw .fl-inverted-color,.fl-theme-bw.fl-inverted-color *,.fl-theme-bw .fl-inverted-color *,.fl-preview-theme.fl-theme-bw.fl-inverted-color{color:#fff;background-color:#000;border-color:#fff;}
 .fl-theme-wb div,.fl-theme-wb input,.fl-theme-bw .fl-inverted-color div,.fl-theme-bw .fl-inverted-color input{color:#fff;background-color:#000;border-color:#fff;}
 .fl-theme-wb iframe,.fl-theme-bw .fl-inverted-color iframe{border-color:#fff;}
 .fl-theme-wb a,.fl-theme-bw .fl-inverted-color a{color:#fff;font-weight:bold;background-color:#000;}

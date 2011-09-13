@@ -1,4 +1,4 @@
-.fl-theme-mist{color:#000;background-color:#f4f4f4;border-color:#4070a1;}
+.fl-theme-mist,.fl-theme-mist.fl-preview-theme{color:#000;background-color:#f4f4f4;border-color:#4070a1;}
 .fl-theme-mist a{color:#5a95cf;font-weight:bold;}
 .fl-theme-mist a:hover{color:#6DB5FB;}
 .fl-theme-mist h1{color:#4070a1;border-bottom-width:.2em;border-bottom-style:solid;}

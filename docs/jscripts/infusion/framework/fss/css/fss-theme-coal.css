@@ -1,4 +1,4 @@
-.fl-theme-coal{color:#000;background-color:#ebebeb;border-color:#000;}
+.fl-theme-coal,.fl-theme-coal.fl-preview-theme{color:#000;background-color:#ebebeb;border-color:#000;}
 .fl-theme-coal a{color:#333;font-weight:bold;}
 .fl-theme-coal a:hover{color:#999;}
 .fl-theme-coal h1{color:#000;border-bottom-width:.2em;border-bottom-style:solid;}

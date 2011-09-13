@@ -11,3 +11,4 @@ body.fl-reset,.fl-reset body,.fl-reset div,.fl-reset dl,.fl-reset dt,.fl-reset d
 .fl-reset sup{vertical-align:text-top;}
 .fl-reset sub{vertical-align:text-bottom;}
 .fl-reset legend{color:#000;}
+.fl-reset button{font-family:inherit;font-size:inherit;}

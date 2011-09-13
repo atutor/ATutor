@@ -11,3 +11,4 @@ abbr,acronym{border:0;font-variant:normal;}
 sup{vertical-align:text-top;}
 sub{vertical-align:text-bottom;}
 legend{color:#000;}
+button{font-family:inherit;font-size:inherit;}

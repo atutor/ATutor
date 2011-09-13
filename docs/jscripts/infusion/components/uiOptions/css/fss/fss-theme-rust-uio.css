@@ -20,8 +20,9 @@
 .fl-theme-uio-rust .fl-listmenu li,.fl-theme-uio-rust .fl-listmenu li a{font-weight:bold;color:#4070a1!important;background-color:#fff!important;border-top-color:#4070a1!important;border-right-color:#4070a1!important;border-bottom-color:#4070a1!important;border-left-color:#4070a1!important;text-decoration:none;}
 .fl-theme-uio-rust .fl-listmenu a:hover{background-color:#5a95cf!important;color:#fff!important;}
 .fl-theme-uio-rust .fl-listmenu .fl-activemenu,.fl-theme-uio-rust .fl-listmenu .fl-activemenu:hover{background-color:#fff!important;border-bottom-color:#fff!important;color:#508cc9!important;}
+.fl-theme-uio-rust .fl-widget{background-color:#662e0f!important;background-image:url('../../../../framework/fss/css/../images/themes/rust/widget-earmark.png')!important;background-repeat:no-repeat;background-attachment:scroll;background-position:top left;}
 .fl-theme-uio-rust .fl-widget h2{color:#FFFBC2!important;}
-.fl-theme-uio-rust .grabbable{background-image:url('../images/themes/rust/gripper.png')!important;}
+.fl-theme-uio-rust .grabbable{background-image:url('../../../../framework/fss/css/../images/themes/rust/gripper.png')!important;}
 .fl-theme-uio-rust .fl-widget-titlebar .icon{background-position:center center;}
 .fl-theme-uio-rust .fl-widget-options li{border-left-width:1px;border-left-style:solid;border-left-color:#cf923e!important;}
 .fl-theme-uio-rust .fl-widget-options a{color:#cf923e!important;}

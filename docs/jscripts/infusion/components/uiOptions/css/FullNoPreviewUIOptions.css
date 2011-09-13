@@ -6,5 +6,3 @@ body{max-width:960px;min-width:900px;}
 .fl-uiOptions-fullNoPreview ul{float:left;}
 .fl-uiOptions-fullNoPreview ul li{clear:left;}
 .fl-uiOptions-fullNoPreview label,.fl-uiOptions-fullNoPreview .fl-inputs{margin-bottom:15px;}
-.fl-uiOptions-fullNoPreview .fl-uiOptions-text ul li{clear:left;height:3.5em;}
-.fl-uiOptions-fullNoPreview .fl-uiOptions-layout li,.fl-uiOptions-fullNoPreview .fl-uiOptions-links li{height:4em;}

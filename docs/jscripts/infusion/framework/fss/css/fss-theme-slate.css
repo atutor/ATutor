@@ -1,4 +1,4 @@
-.fl-theme-slate{color:#000;background-color:#ccc;border-color:#999;}
+.fl-theme-slate,.fl-theme-slate.fl-preview-theme{color:#000;background-color:#ccc;border-color:#999;}
 .fl-theme-slate a{color:#ebebeb;font-weight:bold;}
 .fl-theme-slate a:hover{color:#fff;}
 .fl-theme-slate h1{color:#999;border-bottom-width:.2em;border-bottom-style:solid;}

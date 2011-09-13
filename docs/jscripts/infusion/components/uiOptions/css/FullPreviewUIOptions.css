@@ -1,5 +1,5 @@
 .fl-uiOptions-fullPreview{min-width:800px;}
-.fl-uiOptions-fullPreview ul li{clear:left;height:3.5em;}
+.fl-uiOptions-fullPreview ul li{clear:left;}
 .fl-uiOptions-fullPreview h2{border-top:2px solid #ddd;margin-bottom:20px;}
 .fl-uiOptions-fullPreview .fl-uiOptions-category{padding-bottom:20px;}
 .fl-uiOptions-fullPreview ul{margin-left:0;}
@@ -8,7 +8,7 @@
 .fl-uiOptions .fl-inputs{float:left;}
 .fl-uiOptions input[type="text"]{width:2em;}
 .fl-uiOptions-fullPreview .fl-slider{float:left;margin-right:10px;}
-.fl-uiOptions-fullPreview label{display:block;float:left;width:14em;}
+.fl-uiOptions-fullPreview label{display:block;float:left;width:15em;}
 .fl-uiOptions-fullPreview .fl-uiOptions-layout li,.fl-uiOptions-fullPreview .fl-uiOptions-links li{padding-bottom:10px;}
 .fl-uiOptions-fullPreview .fl-uiOptions-preview iframe{height:480px;width:100%;border:2px solid #d7d7d7;}
 .fl-uiOptions-fullPreview .fl-uiOptions-preview h2{font-weight:lighter;font-size:1.8em;color:#4D4D4D;padding:18px 0 0 0;}
