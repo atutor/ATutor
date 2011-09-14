@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Support Tools</name> 
+    <description lang="en">Supports dictionary, thesaurus, atlas, calculator, note_taking and abacas. </description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>0.1</version> 
+		<privileges>
+			<instructor_privilege>create</instructor_privilege>
+			<admin_privilege></admin_privilege> 
+		</privileges>
+        <date>2008-09-10</date> 
+        <state>stable</state> 
+        <notes>This is a standard module.</notes> 
+    </release> 
+</module>

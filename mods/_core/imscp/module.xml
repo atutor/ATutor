@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Import/Export Content</name> 
+    <description lang="en">Instructors can import or export content packages.  Students can export content into content packages for offline viewing or reference.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL</license> 
+	<release> 
+        <version>0.1</version> 
+        <use_privilege>true</use_privilege> 
+        <date>2005-08-25</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>

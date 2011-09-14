@@ -1,0 +1,110 @@
+/* IE specific styles */
+
+/* Content editor tabs */
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:55px;
+
+}
+.etabbed-list{
+	padding-top:.3em;
+
+}
+.editor_tab{
+	*zoom:100%;
+	*width:auto;	
+	*display: inline-block;
+	*clear: left;
+	*padding: 0 5px 3 5px;
+	height:1.4em;
+
+}
+.editor_buttontab {
+	*zoom:100%;
+	*clear:both;
+    *padding-right:1em;
+
+}
+
+.editor_tab_selected{
+	*width:auto;
+}
+.prefs_buttontab{
+	margin-bottom:.2em;
+}
+.prefs_tab_selected{
+	margin-bottom:-.1em;
+}
+
+td.tab-spacer {
+	background-color: transparent;
+	width: 2%;
+}
+
+label {
+	zoom:100%;
+	margin:0px;
+}
+
+table.data tfoot input {
+	min-width:0px;
+}
+
+.details_text{
+	margin-left:1em;
+	white-space:normal;
+}
+
+#details_view{
+    white-space:normal;
+}
+p{
+    white-space:normal;
+}
+
+.header{
+	background-position/*\**/:0 8px\9;
+	*background-position:0px -25px;
+	height:10.5em;
+	*height:10.8em;
+	*margin-top:0;
+}
+
+ul.current_list{
+      *margin-left:0em;
+}
+ul#subnavlist li{
+	*display:inline;	
+	*margin-left:.3em;
+}
+input.prefs_buttontab[type=submit]{
+	height:1em;	
+}
+
+.fl-force-right{
+	*margin-top:-1.2em;
+}
+
+
+h1.section-title {
+	margin-top:-.3em;
+	*margin-top:.3em;
+	clear:both;
+	white-space:nowrap;
+}
+div#member-links{
+	background-color: #788CB3;
+}
+#breadcrumbs{
+	*clear:left;
+	*margin-top:2em;
+}
+div .button {
+	*overflow:visible;
+}
+textarea#body_text{
+	*width:600px;
+}
+#shortcuts{
+	*width:12%;
+}

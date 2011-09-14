@@ -1,0 +1,11 @@
+ATutor Service Provider Interface, SPI.
+==============================================================
+In simplicity, these files provide services for the gadgets.  
+
+Check shindig/php/src/social/spi/*Service.php for more Details
+
+
+Opensocial
+==============================================================
+We are using Opensocial 0.8 (http://code.google.com/apis/opensocial/docs/0.8/reference/)
+

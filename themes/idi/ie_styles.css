@@ -1,0 +1,77 @@
+/* IE specific styles */
+
+ul#topnavlist {
+	zoom:100%;
+	margin:0px;
+}
+
+ul#topnavlist li {
+	zoom:100%;
+	padding:0.3em;
+	padding-bottom:0.3em;
+	margin:0px;
+	margin-bottom:-3px;
+	display:inline;
+}
+
+label {
+	zoom:100%;
+	margin:0px;
+}
+
+table.data tfoot input {
+	min-width:0px;
+}
+.outside_box{
+	height:9.0em;
+}
+.buttons input[type=submit]{
+	padding:.3em;
+	width:auto;
+	overflow:visible;
+}
+#top-links-jump{
+	*margin-top:-5em;
+}
+ul.current_list{
+	 *margin-left:0em;
+}
+
+.etabbed-list{
+	*padding-top:.5em;
+}
+.prefs_tab{
+	*padding-top:.2em;
+}
+div.home_box {
+	 margin-bottom:2em;
+}
+.fl-force-right{
+	*margin-top:-1.2em;
+	*margin-right:.2em;
+}
+ul#subnavlist li {
+	*display: inline;
+	*margin-left:.5em;
+}
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:55px;
+
+}
+.etabbed-list{
+	*padding-top:.5em;
+}
+.tab-spacer{
+	*width:10px;
+}
+div.input-form textarea {
+	*width:400px;
+
+}
+ul#topnavlist{
+	*margin-bottom:-.2em;
+}
+textarea#body_text{
+	*width:600px;
+}

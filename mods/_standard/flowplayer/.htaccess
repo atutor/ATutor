@@ -1,0 +1,1 @@
+SetEnv no-gzip dont-vary[E=no-gzip:1]

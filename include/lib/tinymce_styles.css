@@ -1,0 +1,28 @@
+/* styles listed in TinyMCE editor styles dropdown box */
+
+.focusbox {
+background: #eee;
+padding: 10px;
+border: solid 1px gray;
+margin-top: 20px;
+}
+
+.float-left {
+
+padding: 5px;
+border: solid 1px gray;
+float: left;
+margin-right: 10px;
+}
+
+.float-right {
+padding: 5px;
+border: solid 1px gray;
+float: right;
+margin-left: 10px;
+}
+
+.clear {
+clear:both;
+}
+

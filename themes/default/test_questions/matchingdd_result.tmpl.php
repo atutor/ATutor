@@ -1,0 +1,1 @@
+<?php require('matching_result.tmpl.php'); ?>

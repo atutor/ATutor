@@ -1,0 +1,13 @@
+body {
+	background-color: White;
+	font-family: Helvetica, arial, sans serif;
+	margin: 0px;
+	margin-top: 0px;
+	color: black;
+	border: 0px;
+}
+
+div#side-menu, div#member-links, span#side-menushowlink, div#rightcolumn, div#suv-nav-logout, div#top-links, span#side-menuhidelink, div.sequence-links, select#jumpmenu, a#guide, div#gototop, input#jump-button, div#topnavlistcontainer, a#guide, div#breadcrumbs, div#jump-area, table.tabbed-table, div#sub-navigation, div#sequence-links, div#language, div#toc, fieldset#shortcuts {
+	display: none;
+}
+

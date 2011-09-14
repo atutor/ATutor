@@ -1,0 +1,124 @@
+# BEGIN ATutor
+<IfModule mod_rewrite.c>
+RewriteEngine On
+#RewriteBase	/ATutor
+
+#Takes out ib flag
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)\&ib\=1$ $1 [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/ib/1$ $1/?ib=1 [L]
+
+#Forums rules
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/?$ go.php/$1/forums/forum/view.php/fid/$2/pid/$3/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/([0-9]+)/(([0-9]+)\.html)$ go.php/$1/forums/forum/view.php/fid/$2/pid/$3/page/$4 [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/?$ go.php/$1/forums/forum/index.php/fid/$2/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/([0-9]+)/([0-9+])\.html$ go.php/$1/forums/forum/index.php/fid/$2/page/$3 [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/forum/?$ go.php/$1/forums/forum/list.php [L]
+
+#Content rule
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/content/([0-9]+)/?$ go.php/$1/content.php/cid/$2 [L]
+
+#File storage rule
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/?$ go.php/$1/file_storage/index.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/index.php/ot/$2/oid/$3/folder/$4/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/comments/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/comments.php/ot/$2/oid/$3/id/$4/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/file_storage/revisions/([0-9]+)/([0-9]+)/([0-9]+)/?$ go.php/$1/file_storage/revisions.php/ot/$2/oid/$3/id/$4/ [L]
+
+#Tests and Survey
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/tests_surveys/([0-9]+)/?$ go.php/$1/tools/test_intro.php/tid/$2/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/tests_surveys/([0-9]+)/(begin|cancel)/?$ go.php/$1/tools/test_intro.php/tid/$2/action/$3/ [L]
+
+#Glossary
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/glossary/?$ go.php/$1/glossary/index.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*)/glossary/(.*)/?$ go.php/$1/glossary/index.php/p/$2/ [L]
+
+#Handles the removal of index.php
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/^.]+)/?$ go.php/$1/index.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/^.]+)/(([^/^.]+)|((mods|tools)/([^/^.]+)))/$ go.php/$1/$2/index.php [L]
+
+#Handles the removal of .php
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/([^/^.]+)/?$ go.php/$1/$2.php [L]
+
+#This handles multi-level directory (adds index.php to the add if it ends with a /)
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/(([^/^.]+)/)+([^/^.]+)/$ go.php/$1/$2/$4/index.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/([^/^.]+)/([^/^.]+)/?$ go.php/$1/$2/$3.php [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/tools/tests/questions/tid/([0-9]+)/?$ go.php/$1/tools/tests/questions.php/tid/$2/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/tools/tests/results/tid/([0-9]+)/?$ go.php/$1/tools/tests/results.php/tid/$2/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/tools/tests/results_all_quest/tid/([0-9]+)/?$ go.php/$1/tools/tests/results_all_quest.php/tid/$2/ [L]
+
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule ^([^/]+)/(((mods)/[^/^.]+)|([^/^.]+))/([^/^.]+)/([^\.]+)$ go.php/$1/$2/$6.php/$7 [L]
+
+#Default rule
+RewriteCond     %{REQUEST_FILENAME}     !-f
+RewriteCond     %{REQUEST_FILENAME}     !-d
+RewriteRule (.*) go.php/$1 [L]
+</IfModule>
+# END ATutor

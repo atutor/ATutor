@@ -1,0 +1,88 @@
+/* main body attributes */
+body {
+	font-family: Helevetica, Arial, sans-serif;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	/* max-width: 760px; */
+	margin-bottom: 0px;
+	font-size: small;
+	background-color: white;
+	/*border-right: 1px solid #788CB3;*/
+}
+
+a.midtext {
+	font-family: Helevetica, Arial, sans-serif;
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	/* max-width: 760px; */
+	margin-bottom: 0px;
+	font-size: medium;
+	background-color: white;
+}
+
+html,body {
+	height: 100%;
+}
+
+/* heading attributes */
+h1 {
+	font-family: trebuchet ms, Arial, sans-serif;
+	margin-bottom: 10px;
+	margin-top: 10px;
+	margin-left: 5px;
+	margin-right: 0px;
+	font-size: large;
+	color: #384F89; /* #152065; #D15600; */
+}
+
+h2, h3, h4, h5, h6 {
+	font-family: trebuchet ms, Arial, sans-serif;
+	margin-bottom: 0px;
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+	font-size: medium;
+	color: #384F89; /* #152065; #D15600; */
+}
+
+/* paragraph attributes */
+p {
+	font-family: Helevetica, Arial, sans-serif;
+	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-left: 5px;
+	margin-right: 0px;
+} 
+
+
+/** forum stuff **/
+ul.forum-thread { margin-bottom: 50px; }
+ul.forum-thread { margin-bottom: 50px; }
+ul.forum-thread li { clear:left; border:2px solid #ccc; border-bottom: 2px solid #ccc; float:left; width: 95%; list-style: none;} /* #eee, #f0f0f0*/
+ul.forum-thread li.even { background: #eeeeee; } /* #fdfdfd border-top: none; */
+ul.forum-thread li.odd { background: #f5f5f5; } /* #fff */
+div.forum-post-author { float:left; width:150px; padding:8px 10px; }
+div.forum-post-author label.title {	font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; color: #384F89; }	
+div.forum-post-author img.profile-picture { border: 2px solid #f0f0f0; }
+div.forum-post-content { margin-left: 150px; padding: 5px 0px 12px 8px; }
+div.forum-post-content h3 { font-weight: 500; }
+div.forum-post-ctrl { float: right; padding-right: 5px; color: #a1a1a1; }
+div.forum-post-ctrl a { text-decoration: none; }
+div.forum-post-ctrl span { color: black; background-color: #fefdc2; padding: 3px; }
+div.forum-post-content div.postheader { border-bottom: 1px solid #ccc; font-weight: 500; } /* #f0f0f0*/
+div.forum-post-content div.date { float: right; color: #aaa; } /* #a1a1a1*/
+div.forum-post-content div.body p { margin-bottom:0px; }
+
+div.threadlist { margin-left: 50px; margin-top: 10px; margin-right: 100px; padding: 30px 30px 30px 30px; 
+	border:2px solid #ccc; background: #f5f5f5; font-size: medium; }
+
+
+
+
+
+
+/** inbox stuff - reuses some of the forum layout **/
+#inbox-msg li { clear:left; border:1px solid #eee; border-bottom: 1px solid #f0f0f0; width: 98%; list-style: none; }
+

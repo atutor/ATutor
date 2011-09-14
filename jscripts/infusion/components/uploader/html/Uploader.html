@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Uploader Template</title>
+  
+        <link rel="stylesheet" type="text/css" href="../../../framework/fss/css/fss-reset-global.css" />
+        <link rel="stylesheet" type="text/css" href="../../../framework/fss/css/fss-base-global.css" />
+        <link rel="stylesheet" type="text/css" href="../../../framework/fss/css/fss-text.css" />
+        <link rel="stylesheet" type="text/css" href="../../../framework/fss/css/fss-layout.css" />
+        <link rel="stylesheet" type="text/css" href="../css/Uploader.css" />
+        
+        <!-- Fluid and jQuery Dependencies -->
+        <script type="text/javascript" src="../../../lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery/ui/js/jquery.ui.core.js"></script>
+        <script type="text/javascript" src="../../../framework/core/js/jquery.keyboard-a11y.js"></script>
+        <script type="text/javascript" src="../../../lib/jquery/plugins/scrollTo/js/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="../../../lib/swfobject/js/swfobject.js"></script>
+        <script type="text/javascript" src="../../../lib/swfupload/js/swfupload.js"></script>
+        <script type="text/javascript" src="../../../framework/core/js/Fluid.js"></script>
+        <script type="text/javascript" src="../../../framework/core/js/FluidDocument.js"></script>
+        <script type="text/javascript" src="../../../framework/core/js/FluidView.js"></script>
+        <script type="text/javascript" src="../../../framework/core/js/DataBinding.js"></script>
+        <script type="text/javascript" src="../../../framework/core/js/FluidIoC.js"></script>
+        <script type="text/javascript" src="../../../framework/enhancement/js/ProgressiveEnhancement.js"></script>
+        
+        <!-- Uploader dependencies -->
+        <script type="text/javascript" src="../js/Uploader.js"></script>
+        <script type="text/javascript" src="../js/FileQueue.js"></script>
+        <script type="text/javascript" src="../../progress/js/Progress.js"></script>
+        <script type="text/javascript" src="../js/FileQueueView.js"></script>
+        <script type="text/javascript" src="../js/ErrorPanel.js"></script>
+        <script type="text/javascript" src="../js/FlashUploaderSupport.js"></script>
+        <script type="text/javascript" src="../js/Flash9UploaderSupport.js"></script>
+        <script type="text/javascript" src="../js/HTML5UploaderSupport.js"></script>
+        <script type="text/javascript" src="../js/DemoUploadManager.js"></script>
+        <script type="text/javascript" src="../js/MimeTypeExtensions.js"></script>        
+        
+    </head>
+    
+    <body>            
+        <!-- Basic upload controls, used when JavaScript is unavailable -->
+        <form method="post" enctype="multipart/form-data" class="fl-progEnhance-basic">
+            <p>Use the Browse button to add a file, and the Save button to upload it.</p>
+            <input name="fileData" type="file" />
+            <input class="fl-uploader-basic-save" type="submit" value="Save"/>
+        </form>
+        
+        <!-- Uploader container -->
+        <form class="flc-uploader fl-uploader fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
+            
+            <!-- File Queue, which is split up into two separate tables: one for the header and body -->
+            <table class="fl-uploader-header">
+           		<tr>
+					<th class="fl-uploader-file-name">File Name</th>
+					<th class="fl-uploader-file-size">Size</th>
+					<th class="fl-uploader-file-actions"></th>
+				</tr>
+            </table>
+            
+            <!-- File Queue body, which is the default container for the FileQueueView component -->
+            <table summary="The list of files" class="flc-uploader-queue fl-uploader-queue">
+				<caption>File Upload Queue:</caption>
+				<tbody>
+					<!-- Template for file row -->
+					<tr class="flc-uploader-file-tmplt flc-uploader-file">
+						<td class="flc-uploader-file-name fl-uploader-file-name">File Name Placeholder</td>
+						<td class="flc-uploader-file-size fl-uploader-file-size">0 KB</td>
+						<td class="fl-uploader-file-actions">
+							<button type="button" class="flc-uploader-file-action" tabindex="-1"></button>
+						</td>
+					</tr>
+					
+					<!-- Template for error info row -->
+					<tr class="flc-uploader-file-error-tmplt fl-uploader-file-error">
+						<td colspan="3" class="flc-uploader-file-error"></td>
+					</tr>
+				</tbody>
+			</table>
+            
+            <!-- File progress bar template, used to generate progress bars for each file in the queue -->
+            <div class="flc-uploader-file-progressor-tmplt fl-uploader-file-progress"></div>            
+
+            <!-- Initial instructions -->
+            <div class="flc-uploader-browse-instructions fl-uploader-browse-instructions">
+                Choose <em>Browse files</em> to add files to the queue. 
+            </div>            
+
+            <!-- Status footer -->
+            <div class="flc-uploader-queue-footer fl-uploader-queue-footer fl-clearfix">
+                <div class="fl-force-left">
+	                <div class="flc-uploader-total-progress-text fl-uploader-total-progress-text">
+	                        Total: 0 files (0 KB) 
+	                </div>
+	                <div class="flc-uploader-upload-limit-text"></div>
+                </div>                
+                <div class="fl-text-align-right fl-force-right">
+                    <span class="flc-uploader-button-browse fl-uploader-browse">
+                        <span class="flc-uploader-button-browse-text">Browse files</span>
+                    </span>
+                </div>
+                <!-- Total progress bar -->
+                <div class="flc-uploader-total-progress fl-uploader-total-progress-okay"></div>
+                <div class="flc-uploader-errorsPanel fl-uploader-errorsPanel">
+                    <div class="fl-uploader-errorsPanel-header"><span class="flc-uploader-errorPanel-header">Warnings:</span></div>
+
+                    <!-- The markup for each error section will be rendered into these containers. -->
+                    <div class="flc-uploader-errorPanel-section-fileSize"></div>
+                    <div class="flc-uploader-errorPanel-section-numFiles"></div>
+                     
+                     <!-- Error section template.-->
+                     <div class="flc-uploader-errorPanel-section-tmplt fl-uploader-hidden-templates">
+                        <div class="fl-container-flex">
+                            <div class="flc-uploader-errorPanel-section-title fl-uploader-errorPanel-section-title fl-force-left">
+                                x files were too y and were not added to the queue.
+                            </div>
+                            <button type="button" class="flc-uploader-errorPanel-section-removeButton fl-uploader-errorPanel-section-removeButton fl-force-right">
+                                 <span class="flc-uploader-erroredButton-text fl-uploader-hidden">Remove error</span>
+                            </button>
+                        </div>
+                        
+                        <div class="fl-container-flex">
+                            <div class="flc-uploader-errorPanel-section-details fl-uploader-errorPanel-section-details">
+                                <p>The following files were not added:</p>
+                                <p class="flc-uploader-errorPanel-section-files">file_1, file_2, file_3, file_4, file_5 </p>
+                            </div>
+                        </div>                        
+                        <div class="fl-container-flex">
+                            <button type="button" class="flc-uploader-errorPanel-section-toggleDetails fl-uploader-errorPanel-section-toggleDetails">Hide this list</button>
+                        </div>
+                     </div>
+                 </div>                
+            </div>
+            
+            <!-- Upload buttons -->
+            <div class="fl-uploader-buttons">
+                <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden">Stop Upload</button>
+                <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim">Upload</button>
+            </div>
+            
+            <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
+        </form>        
+            
+        <script type="text/javascript">
+            var myUploader = fluid.uploader(".flc-uploader", {
+                demo: true     
+            });
+        </script> 
+    </body>
+</html>

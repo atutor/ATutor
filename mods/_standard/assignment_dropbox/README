@@ -1,0 +1,25 @@
+Assignment Dropbox README
+
+This module can be installed with ATutor for:
+1) instructors to manage students' assignment submissions.
+2) students to submit assignments.
+
+* How to install
+1. Copy the downloaded file into the ATutor mods/ directory and unzip it there. 
+
+On Windows systems use and application like WinZip the extract the file into the mods/ directory
+
+On Unix/Linux systems use the command:
+
+unzip assignment_dropbox.zip
+
+2. Login to ATutor as the administrator and run Install Module under the Modules tab, select the Assignment Dropbox module, which should be listed as available to be installed when the module has been unzipped into the mods directory
+
+3. Once the module has been installed, and enabled, login as instructor, click on tab "Manage", the "Assignment Dropbox" is listed onlong with the Assignment Manager. Instructors make the Assignment Dropbox available to students through "Course Tools". 
+
+* How to use Assignment Dropbox
+1. for instructors
+  Assignment Dropbox provides the same functionality as assignment submission in the "File Storage" tool, but with fewer steps and with a more intuitive interface. As an extension of "File Storage", when instructors create an assignment for a group, this group must have "File Storage" enabled, otherwise, the students are not able to submit assignments via Assignment Dropbox. If the Assignment Dropbox module is installed, a drop box is setup automatically when an assignment is created for all students in a course.
+
+2. for students
+  Once the Assignment Dropbox has been turned on in Course Tools by the instructor, a link "Assignment Dropbox" is displayed either on the course home page or as a main navigation tab. The dropbox lists all the assignments that are assigned to the student viewing, up to the submission "cut off date" set in an assignment's properties (set under "Accept Late Submissions). The student can upload or delete assignment files up until the "due date", after which assignment submissions are locked and can no longer be modified by students. The Delete button is greyed out when the due date is passed. The Upload button remains available to students until the cut off date.

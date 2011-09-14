@@ -1,0 +1,114 @@
+/* for right to left languages */
+html, body {
+	direction: rtl;
+}
+
+.img-size-tree {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.45em;
+	width:1.45em;
+	float: right;
+}
+
+div.box {
+	line-height:150%;
+}
+
+div.menuedit{
+	float:left;
+	margin-top:-1.5em;
+}
+
+
+.del-content-icon{
+/* float:left; */
+	border:0;
+}
+
+
+#editable_table a{
+margin-right:.5em;
+
+}
+
+#logoutbar{
+	text-align:left;
+	float:left;
+	text-transform: lowercase;
+}
+
+.fl-force-right{
+	float:left;
+
+}
+
+.buttonbox{
+	float:left;
+
+}
+ul.current_list li{
+	width:90%;
+}
+
+.current_box{
+	width:34%;
+}
+
+.my_course_container{
+	width:55%;
+}
+
+#content-tool-links{
+	float:right;
+}
+
+#home-links{
+	float:right;
+}
+
+.admin_container{
+	float:left;
+	white-space:normal;
+}
+.page-title{
+
+	margin-top:1em;
+}
+
+.top-tool{
+	width:95%;
+}
+.child-top-tool li{
+	white-space:normal;
+	overflow:visible;
+}
+
+#contentcolumn {
+	white-space:normal;
+}
+
+table.etabbed-table	{
+	*margin-right:5em;
+	padding-right:5em;
+}
+
+.column fieldset.group_form input#login, input#pass, input.button{
+	*margin-right:2em;	
+}
+.column fieldset.group_form{
+	*margin:1em;	
+}
+#subnavlist{
+	*margin-right:5em;	
+}
+div.details-text img{
+	float:right;
+	clear:right;
+	padding-left:.2em;
+}
+
+div.details-text{
+	line-height:1.5em;
+	margin-right:.2em;
+}

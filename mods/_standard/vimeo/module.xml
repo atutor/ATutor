@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<module version="0.1"> 
+    <name lang="en">Vimeo Simple API Module</name> 
+    <description lang="en">This module adapts output.inc.php to process embedded Viemo videos using its Simple API.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2010-11-22</date> 
+        <state>stable</state> 
+	<notes>The embed a vimeo video use the [media][/media] tags containing a url to a vimeo video</notes> 
+    </release> 
+</module>

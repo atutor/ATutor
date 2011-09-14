@@ -1,0 +1,24 @@
+.fl-base table{font-size:inherit;font:100%;}
+.fl-base pre,.fl-base code,.fl-base kbd,.fl-base samp,.fl-base tt{font-family:monospace;*font-size:108%;line-height:100%;}
+.fl-base h1{font-size:138.5%;}
+.fl-base h2{font-size:123.1%;}
+.fl-base h3{font-size:108%;}
+.fl-base h1,.fl-base h2,.fl-base h3{margin:1em 0;}
+.fl-base h1,.fl-base h2,.fl-base h3,.fl-base h4,.fl-base h5,.fl-base h6,.fl-base strong{font-weight:bold;}
+.fl-base abbr,.fl-base acronym{border-bottom:1px dotted #000;cursor:help;}
+.fl-base em{font-style:italic;}
+.fl-base blockquote,.fl-base ul,.fl-base ol,.fl-base dl{margin:1em;}
+.fl-base ol,.fl-base ul,.fl-base dl{margin-left:2em;}
+.fl-base ol li{list-style:decimal outside;}
+.fl-base ul li{list-style:disc outside;}
+.fl-base dl dd{margin-left:1em;}
+.fl-base th,td{border:1px solid #000;padding:.5em;}
+.fl-base th{font-weight:bold;text-align:center;}
+.fl-base caption{margin-bottom:.5em;text-align:center;}
+.fl-base p,.fl-base fieldset,.fl-base table,.fl-base pre{margin-bottom:1em;}
+.fl-base input[type=text],.fl-base input[type=password],.fl-base textarea{width:12.25em;*width:11.9em;}
+.fl-base input,.fl-base textarea,.fl-base select{font-family:inherit;font-size:inherit;font-weight:inherit;}
+.fl-base html.fl-base{overflow:auto;font:13px/1.231 arial,helvetica,clean,sans-serif;*font-size:small;}
+.fl-base input,.fl-base textarea,.fl-base select{*font-size:100%;*font-family:sans-serif;}
+.fl-base input{*overflow:visible;*padding:0 1em;}
+.fl-focus:focus,.fl-focus :focus{outline:2px solid black;}

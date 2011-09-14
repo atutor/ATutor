@@ -1,0 +1,1 @@
+<?php require('matching_stats.tmpl.php'); ?>

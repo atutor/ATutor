@@ -1,0 +1,7 @@
+.fl-uiOptions-fatPanel .fl-panelBar{width:100%;height:5px;background-color:#fff;border-bottom:1px solid #ccc;}
+.fl-uiOptions-fatPanel .fl-toggleButton{float:right;text-transform:uppercase;font-weight:bold;border:0;background-color:white;padding:5px;margin-right:10px;border-radius:8px;border-bottom:1px solid #ccc;}
+.fl-uiOptions-fatPanel-iframe{border:0;background-color:#fff;height:0;}
+.fl-theme-bw .fl-uiOptions-fatPanel .fl-panelBar,.fl-theme-bw .fl-uiOptions-fatPanel .fl-toggleButton{background-color:#fff;border-color:#000;}
+.fl-theme-wb .fl-uiOptions-fatPanel .fl-panelBar,.fl-theme-wb .fl-uiOptions-fatPanel .fl-toggleButton{background-color:#000;border-color:#fff;color:#fff;}
+.fl-theme-by .fl-uiOptions-fatPanel .fl-panelBar,.fl-theme-by .fl-uiOptions-fatPanel .fl-toggleButton{background-color:#FF0;border-color:#000;}
+.fl-theme-yb .fl-uiOptions-fatPanel .fl-panelBar,.fl-theme-yb .fl-uiOptions-fatPanel .fl-toggleButton{background-color:#000;border-color:#ff0;color:#ff0;}

@@ -1,0 +1,161 @@
+pre {
+	font-family: Verdana, Arial, sans-serif;
+}
+body{
+	background-color: #fafafa;
+    font-family: Verdana, Arial,sans-serif;
+	font-size: small;
+	line-height:150%;
+}
+h1,h2,h3,p, table, ul {
+    font-family: Verdana,Arial,sans-serif;
+}
+h1 {
+	border-bottom: 1px dashed #cfcfcf;
+	margin-left: -5px;
+	padding-left: 15px;
+	margin-right: -5px;
+	padding-right: 15px;
+}
+h2{
+	color: #666;
+	border-bottom: 1px dashed #cfcfcf;
+	margin-left: -5px;
+	padding-left: 15px;
+	margin-right: -5px;
+	padding-right: 15px;
+}
+a {
+	text-decoration: none;
+	border-bottom: 1px solid;
+	font-weight: bold;
+}
+a:hover {
+	border-bottom: 0px;
+}
+td,th {
+	font-size: 85%;
+}
+
+kbd {
+	padding: 0px 1px 0px 1px;
+	border-width: 1px 2px 2px 1px;
+	border-style: solid;
+	border-color: #edd #baa #baa #eed;
+	white-space: pre;
+}
+
+code {
+    font-family: Verdana,Arial,sans-serif;
+	background-color: #efefef;
+	padding: 0px 4px 0px 4px;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-color: #edd #baa #baa #eed;		
+}
+
+
+div#toc {
+	color: #f0f0f0;
+	padding-bottom: 15px;
+}
+
+div#toc ul {
+	list-style: none;
+}
+div#toc li {
+	padding-top: 2px;
+	padding-bottom: 0px;
+}
+
+ol {
+	margin-top: 0px;
+}
+
+ol li {
+	padding-bottom: 3px;
+}
+
+dl {
+	margin: 0 10px
+}
+dl dd { 
+	padding-top: 0px;
+	padding-left: 5px;
+	margin-left: 5%;
+	border-left: 1px solid #d0d0d0;
+	margin-bottom: 10px;
+}
+
+dd p {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+dd p:last-child {
+	padding-bottom: 0px;
+}
+acronym {
+	cursor: help;
+}
+a[href*="http"] {
+	padding-right: 8px;
+	background-image: url('link-out.gif');
+	background-repeat: no-repeat;
+	background-position: right 4px;
+	margin-right: 2px;
+}
+div#nav-links {
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+div#nav-links a {
+	color: black;
+	text-decoration: none;
+	border-bottom: 1px solid;
+}
+pre {
+	font-family: Courier, monospace;
+	background-color: #eef;
+	padding: 5px;
+	margin-left: 20px;
+	color:#761596;
+    margin-top: 0px;
+	width: 50%;
+	font-size: smaller;
+}
+div.seq {
+	font-size: smaller;
+	padding: 5px;
+	border: 1px dashed #cfcfcf;
+}
+div.tag {
+	margin: 10px;
+	font-size: smaller;
+	padding: 5px;
+	line-height: 110%;
+	color: #cfcfcf;
+}
+div.add-note {
+	background-color: #f0f0f0;
+	padding: 5px;
+}
+div.add-note h3 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+div.note {
+	background-color: #fefefe;
+	padding: 5px;
+	margin-bottom: 5px;
+}
+div.note h4 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+}
+div.note h5 {
+	margin-top: 0px;
+	margin-bottom: 0px;
+	float: right;
+	font-weight: normal;
+}

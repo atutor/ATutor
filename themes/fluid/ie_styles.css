@@ -1,0 +1,102 @@
+/* IE specific styles */
+
+ul#topnavlist {
+	zoom:100%;
+	margin:0px;
+}
+
+ul#topnavlist li {
+	zoom:100%;
+	padding:0.3em;
+	padding-bottom:0.3em;
+	margin:0px;
+	margin-bottom:-3px;
+}
+
+label {
+	zoom:100%;
+	margin:0px;
+}
+
+table.data tfoot input {
+	min-width:0px;
+}
+
+#topnavlistcontainer {
+	margin-bottom:-1px;
+}
+
+div#breadcrumbs {
+    /* The path bar, including breadcrumbs and add to favorites */
+    background-color:#efefef;
+	*margin-left: 2em;
+	*margin-top:-1.6em;
+	*height:1.2em;
+}
+.side-menu {
+	background-color:#efefef;
+	padding:0px 5px 0px 5px;
+}
+#header{
+	background-color: #e1ecfe;
+	width:100%;
+}
+#shortcuts{
+	*width:12%;
+}
+div#top-links {
+	position: relative;
+	padding-right: 5px;
+	line-height: 170%;
+	margin-top: 3px;
+	*margin-bottom:-2em;
+}
+.etabbed-list{
+	*padding-top:.3em;
+
+}
+
+div#topnavlistcontainer {
+    background-color: #e1ecfe;
+}
+.outside_box{
+	height:8.8em;
+}
+ul.current_list{
+	float:right;
+	width:99%;
+}
+div#guide_box{
+	*width:10em;
+
+}
+ul#subnavlist li {
+	*display:inline;
+	*margin-left:.5em;
+	
+}
+.fl-force-right{
+	*margin-top:-1.2em;
+	*margin-right:.2em;
+}
+table.etabbed-table	{
+	*table-layout:fixed;
+	*margin-left:55px;
+
+}
+.etabbed-list{
+	*padding-top:.5em;
+}
+.tab-spacer{
+	*width:10px;
+}
+
+.editor_tab{
+	height:1.5em\9;
+}
+fieldset.group_form{
+	*margin-left:1em;
+}
+textarea#body_text{
+	*width:600px;
+}

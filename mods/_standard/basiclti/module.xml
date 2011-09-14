@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="1.0"> 
+    <name lang="en">External Tools</name> 
+    <description lang="en">This is a module to support externally hosted tools using the IMS Basic LTI specification to launch those tools.</description> 
+    <maintainers>
+        <maintainer> 
+            <name>Charles Severance</name> 
+            <email>csev@umich.edu</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.1</version> 
+        <date>2010-12-22</date> 
+        <state>alpha</state> 
+		<notes>This module is an implementation of the IMS Basic LTI that extends the ATutor content editor. Feedback, bug reports, etc. should be posted to the atutor.ca &lt;a href="http://atutor.ca/forums/">developer or modules forums&lt;/a>. Be sure to review the README file included with the module (linked above) for more about setting up BasicLTI remote tools in ATutor. </notes> 
+    </release> 
+</module>

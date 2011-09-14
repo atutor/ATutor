@@ -1,0 +1,357 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html  xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+	<title>ATutor Theme Designer Documentation</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta name="author" content="Greg Gay" />
+	<meta name="description" content="ATutor Theme Designer Documentation" />
+<style type="text/css">
+
+h1 {
+	background-color: #CCCCCC;
+	padding-left: 20px;
+	padding-right: 20px;
+	margin-bottom: 10px;
+	text-align: right;
+}
+
+h2 {
+	background-color: #DDDDDD;
+	padding-left: 10px;
+	margin-bottom: 0px;
+}
+h3 {
+	background-color: #EFEFEF;
+	padding-left: 20px;
+	margin-bottom: 0px;
+}
+h4  { margin-bottom: 0px; }
+p   { margin-top: 0px;    }
+dl  { margin-top: 0px;    }
+kbd {
+	padding: 0px 1px 0px 1px;
+	border-width: 1px 2px 2px 1px;
+	border-style: solid;
+	border-color: #edd #baa #baa #eed;
+	white-space: pre;
+}
+kbd em {
+	font-weight: bold;
+	background-color: #efefef;
+}
+blockquote { font-style: italic; }
+pre.code {
+	background-color: #EEEEFF;
+	padding: 5px;
+	margin-left: 20px;
+	color:#761596;
+    margin-top: 0px;
+}
+.top {
+	float: right;
+	color: green;
+	padding-top: 2px;
+	padding-right: 5px;
+}
+pre {
+	background-color: #EEEEFF;
+	font-family: Courier, monospace;
+	border-left: 1px solid #761596;
+	padding: 0px 0px 0px 10px;
+	color: #333;
+        margin: 0px 0px 10px 20px;
+	font-size: 88%;
+	line-height: 1.2em;
+}
+@media print {
+	h2 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+	}
+	h3 {
+		page-break-after: avoid;
+		border-bottom: solid 1px black;
+		width: 75%;
+	}
+	.top {
+		display: none;
+	}
+
+	pre.code {
+		page-break-inside: avoid;
+	}
+}
+}
+acronym {
+	cursor: help;
+}
+</style>
+
+</head>
+<body>
+<div>
+<h1>Theme Designer Documentation</h1>
+<ul>
+
+<li><a href="#intro">Introduction</a></li>
+<li><a href="#install">Installing a New Theme</a></li>
+<li><a href="#structure">File &amp; Directory Structure</a></li>
+<li><a href="#config">Theme Configuration File</a></li>
+<li><a href="#create">Creating a Theme</a></li>
+<li><a href="#variables">Theme Variables</a></li>
+<li><a href="#testing">Testing a theme</a></li>
+<li><a href="#updating">Updating an old theme for a newer version of ATutor</a></li>
+</ul>
+
+<p><a name="intro"></a></p>
+
+<h2>Introduction</h2>
+	<p>An ATutor theme is a set of template files with images and a stylesheet that change the overall look and feel of an ATutor installation. An installation may have one or more themes installed at one time; a user is given the ability of selecting a single theme to be used while they are logged-in.</p>
+
+	<p>ATutor themes are based on Savant2 templating system. Visit the Savant site for full documentation:
+	<a href="http://phpsavant.com/yawiki/index.php?area=Savant2;page=SavantDocs">Savant</a></p>
+
+<a name="install"></a>
+<h2>Installing a New Theme</h2>
+	<h3>Importing a Theme (automatic install)</h3>
+	<p>Access the Theme Manager area of ATutor in the Administrator tools. Before importing a theme, the ATutor theme directory will need to be writable by the Web server. If the directory is not writable, you will see a message explaining how to make the directory writable, in place of the theme import tool. Note that themes imported this way will be owned by the Web server user, thus once imported, you will not be able to modify the files in the theme.</p>
+	<h3>FTP a Theme (automatic install)</h3>
+	<p>If you are planning to modify the theme to create a custom version, you will want to install the theme using the FTP method.</p>
+	
+	<p>To avoid loosing the ability to edit theme files, you should upload the theme's zip file into the <kbd>themes/</kbd> directory using an FTP application, and unzipping the file yourself once it has been uploaded to the server. You may be able to unzip the files using your FTP client, or through applications like CPanel, or other common ISP provided site management tools. Once the theme is uploaded and unzipped, manually add an entry to the themes table in the ATutor database to make the theme available to the ATutor Theme Manager. If you are using a tool like phpMyAdmin to access your database, you can create a new row in the themes table, and enter the information manually.</p>
+	
+	<p>Or, run an SQL statement like the following. </p>
+	
+	
+	<pre>
+	INSERT INTO `AT_themes` 
+	(`title`, `version`, `dir_name`, `last_updated`, `extra_info`, `status`) 
+	VALUES
+	('My Theme Name', '1.6.1', 'my_theme_dir', NOW(), 'This is a customized theme based on the default theme.', 1);
+	</pre>
+
+	<p>Be sure the last value for "status" is set to "1" to begin with, which means the theme is installed and enabled, but is not the default theme. Once your theme has been finalized, this value can be changed to "2" to make it the system's default theme. This value should be set using the Theme Manager.</p>
+<a name="structure"></a>
+<h2>File &amp; Directory Structure</h2>
+
+<p>All theme specific files are located in <kbd>/themes/[theme_name]/</kbd>, where `[theme_name]` is the directory name (dir_name) of the theme. The `[theme_name] need not be the exact name of the theme (i.e. a theme titled `Blueberry Cheesecake` may exist in a directory called `bb_cc` etc.). The actual name of the theme is specified in that theme's configuration file.</p>
+
+<p>The Default theme contains the following files:</p>
+
+<pre>
+# confirmmessage.tmpl.php
+# content.tmpl.php
+# directory.tmpl.php
+# errormessage.tmpl.php
+# feedbackmessage.tmpl.php
+# forms.css
+# images/
+#- arrow_ltr.gif
+#- back.gif
+#- error-large.gif
+#- guide.gif
+#- instructor.gif
+#- next.gif
+#- pen.gif
+#- pen2.gif
+#- pencils.jpg
+#- previous.gif
+#- resume.gif
+#- side_arrow.gif
+#- sort.gif
+#- user-star.gif
+#- user.gif
+# include/
+#- box.tmpl.php
+#- fm_footer.tmpl.php
+#- fm_header.tmpl.php
+#- footer.tmpl.php
+#- header.tmpl.php
+# index.tmpl.php
+# infomessage.tmpl.php
+# login.tmpl.php
+# password_change.tmpl.php
+# password_reminder.tmpl.php
+# password_reminder_feedback.tmpl.php
+# print.css
+# profile.tmpl.php
+# readme.txt
+# registration.tmpl.php
+# rtl.css
+# screenshot.gif
+# styles.css
+# theme.cfg.php
+# theme_info.xml
+# test_questions/
+#- likert.tmpl.php
+#- likert_qti_1p2.tmpl.php
+#- likert_qti_2p1.tmpl.php
+#- likert_result.tmpl.php
+#- likert_stats.tmpl.php
+#- long.tmpl.php
+#- long_qti_1p2.tmpl.php
+#- long_qti_2p1.tmpl.php
+#- long_result.tmpl.php
+#- long_stats.tmpl.php
+#- manifest_qti_1p2.tmpl.php
+#- manifest_qti_2p1.tmpl.php
+#- matching.tmpl.php
+#- matching_qti_1p2.tmpl.php
+#- matching_qti_2p1.tmpl.php
+#- matching_result.tmpl.php
+#- matching_stats.tmpl.php
+#- matchingdd.tmpl.php
+#- matchingdd_qti_1p2.tmpl.php
+#- matchingdd_qti_2p1.tmpl.php
+#- matchingdd_result.tmpl.php
+#- matchingdd_stats.tmpl.php
+#- multianswer.tmpl.php
+#- multianswer_qti_1p2.tmpl.php
+#- multianswer_qti_2p1.tmpl.php
+#- multianswer_result.tmpl.php
+#- multianswer_stats.tmpl.php
+#- multichoice.tmpl.php
+#- multichoice_qti_1p2.tmpl.php
+#- multichoice_qti_2p1.tmpl.php
+#- multichoice_result.tmpl.php
+#- multichoice_stats.tmpl.php
+#- ordering.tmpl.php
+#- ordering_qti_1p2.tmpl.php
+#- ordering_qti_2p1.tmpl.php
+#- ordering_result.tmpl.php
+#- ordering_stats.tmpl.php
+#- truefalse.tmpl.php
+#- truefalse_qti_1p2.tmpl.php
+#- truefalse_qti_2p1.tmpl.php
+#- truefalse_result.tmpl.php
+#- truefalse_stats.tmpl.php
+#- wrapper.tmpl.php
+# users/
+#- browse.tmpl.php
+#- email_change.tmpl.php
+#- index.tmpl.php
+#- password_change.tmpl.php
+#- preferences.tmpl.php
+#- profile.tmpl.php
+# warningmessage.tmpl.php
+</pre>
+
+<a name="config"></a>
+<h3>Theme Configuration File - theme.cfg.php</h3>
+	<p>Each theme must have a configuration file named <kbd>theme.cfg.php</kbd>. If the theme.cfg.php file cannot be found in the theme's directory then the theme will not be made available to use. The fields in the theme.cfg.php file are documented in the file; they describe such things as the name of the theme, its author, and the version of ATutor the theme should be installed with.</p>
+
+<a name="create"></a>
+<h2>Creating a Theme</h2>
+<p>Here are a couple ways to create a new theme:</p>
+<ol>
+<li> One way to create a theme, and for many <strong>the preferred way</strong>, is to copy the <strong>Primary Theme Files</strong> from the default theme into a new theme directory. You can copy these files from other themes that may look closer to the style you want to create, but the default theme will always be most up to date. In many cases it is only necessary to modify the stylesheet (styles.css) to adjust colours, fonts, and some layout styles etc, to create a new theme. A theme can be made up of a single stylesheet file and a theme.cfg.php file. Most other templates used to layout various tool screens, table displays, test items etc. you probably won't need to include in your theme. If templates are not found in the new theme, they will be inherited from the default theme. <br /><br />
+
+In some cases you may want to make more significant changes to the layout than can be done with stylesheet adjustments alone, so in such a case you can copy the header and footer files from the default theme into the new theme's <kbd>/[theme_name]/include/</kbd> directory, then edit those files. You will probably need to create the <kbd>include/</kbd> directory first.<br /><br />
+
+These files are generally all that are required to create a new theme:<br /><br />
+
+<strong>Primary Theme Files</strong><br />
+<ol>
+   <li> styles.css</li>
+   <li> theme.cfg.php</li>
+   <li> theme_info.xml</li>
+   <li> screenshot.jpg</li>
+   <li> include/
+	<ul>
+          <li> header.tmpl.php</li>
+          <li>footer.tmpl.php</li>
+	</ul>
+    </li>
+</ol><br /><br />
+</li>
+
+<li> If you have limited access to the ATutor files on the server, export one of the themes displayed in the administrator's Theme Manager. The theme is exported onto your computer as a '.zip' file. Unzip the file, then make changes to theme files it contains. Be sure to edit the theme_info.xml file to give your theme a new name. Once you've made your changes, zip the files together again and import the file back into ATutor with the Theme Manager. The name of the zip file you create should closely represent the name you want to give your theme, substituting '_' for spaces.</li>
+</ol>
+
+<p>The theme files described above are basically HTML files with some PHP mixed in. You do not need to know much about PHP to create a theme; most of the syntax is straight forward and uses basic if-statements to control if some feature displays or not, and foreach-loops to display repetitive or tabular information. For additional information on PHP see <a href="http://www.php.net">php.net</a>.</p>
+
+<p>The theme files contain variables which look like <kbd>$this->[something]</kbd> mixed in among HTML markup. Those variables get set by ATutor and may contain simple text or in some cases arrays of values.</p>
+
+<p>You will probably want to add the developing theme to the ATutor database "themes" table while you are working on it, so you can see the changes you're making as they occur. The following are the fields in the "themes" table.</p>
+
+<p>The fields in the themes table are as follows:</p>
+<pre>
+`title` (the name of the theme, any text string)
+`version` (the version of ATutor the theme is intended for)
+`dir_name` (the name of the directory the theme will be located in, alphabetic string, no spaces)
+`type` (the type of the theme, "Desktop" or "Mobile)
+`last_updated` (The last date the theme was modified, use "NOW()")
+`extra_info` (A description of the theme etc. )
+`status` (theme's enable status, 0:disabled, 1:enabled, 2:set as default theme)
+</pre>
+<p>Below is an example of the SQL used to create an entry in the themes table for a new theme. You can also use a tool like phpMyAdmin to add a new entry to the "themes" table. Be sure to adjust the "<kbd>AT_</kbd>" prefix if you are using the SQL statement, to match the prefix you are using in your ATutor installation. <strong>Be careful when setting the value for the status field</strong>. If you set the status to "set as default" ( 2 ) and your theme is broken, you may find you can no longer access ATutor.</p>
+
+<pre>
+INSERT INTO `AT_themes` 
+     (`title`, `version`, `dir_name`, `type`, `last_updated`, `extra_info`, `status`) 
+VALUES
+     ('Blueberry Cheesecake', '1.6.1', 'bb_cc', `Desktop`, NOW(), 'This is a blue theme.', 1);
+</pre>
+
+<p>ATutor detects the type of the devices where the requests are from. If the request is from a desktop computer, the default desktop theme is automatically applied. Otherwise, if the request is from a mobile device, the default mobile is applied.</p>
+
+<a name="variables"></a>
+<h2>Theme Variables</h2>
+<p>The following is a complete list of variables that can be used in themes as of 1.6.2. These variables contain various data from the ATutor application, that when inserted into a theme template, display some value, or values. The most up to date list of theme variables can be found in the include/header.tmpl.php file of the default theme for the version of ATutor you are using. See the ATutor <a href="guidelines.html">Developer Documentation</a> for details about using the <kbd>debug()</kbd> function to print out a list of the values to help while you are designing a theme.</p>
+
+<pre>
+* $this->lang_code			the ISO language code
+* SITE_NAME				the site name from the config file
+* $this->page_title		the name of this page to use in the &lt;title&gt;
+* $this->lang_charset		the ISO language character set
+* $this->content_base_href	the &lt;base href&gt; to use for this page
+* $this->base_path			the absolute path to this atutor installation
+* $this->rtl_css			if set, the path to the RTL style sheet
+* $this->banner_style{-}deprecated-
+* $this->theme				the directory name of the current theme
+* $this->base_href			the full url to this atutor installation
+* $this->onload			javascript onload() calls
+* $this->img				the absolute path to this theme's images/ directory
+* $this->sequence_links	associative array of 'previous', 'next', and/or 'resume' links
+* $this->path				associative array of path to this page: aka bread crumbs
+* $this->rel_url			the relative url from the installation root to this page
+* $this->nav_courses		associative array of this user's enrolled courses
+* $this->section_title		the title of this section (course, public, admin, my start page)
+* $this->top_level_pages	associative array of the top level navigation
+* $this->current_top_level_page	the full path to the current top level page with file name
+* $this->sub_level_pages	associate array of sub level navigation
+* $this->back_to_page		ithe path and file name to the part of this page (if parent is not a top level nav)
+* $this->current_sub_level_page	the full path to the current sub level page with file name
+* $this->guide				the full path and file name to the guide page
+* $this->icon the path to a course icon *(new from 1.6)*
+* ======================================
+* top_level_pages           array(array('url', 'title'))     the top level pages. ATutor default creates tabs.
+* section_title string the name of the current section. either name of the course, administration, my start page, etc.
+* page_title                string                           the title of the current page.
+* path                      array(array('url', 'title'))     the path to the current page.
+* back_to_page              array('url', 'title')     the link back to the part of the current page, if needed.
+* current_top_level_page    string                    full url to the current top level page in "top_leve_pages"
+* current_sub_level_page    string                    full url to the current sub level page in the "sub_level_pages"
+* sub_level_pages           array(array('url', 'title'))     the sub level pages.
+* is_mobile_device          true or false                    the request is from a mobile device or a desktop device
+* mobile_device_type        One of the values: ipod, blackberry, android, unknown
+</pre>
+<a name="testing"></a>
+<h2>Testing A Theme</h2>
+<p>To make ATutor use your theme, login as an ATutor user, go to "Preferences" page, "ATutor Settings" tab. Depending on the theme type, your theme will be displayed either in "Desktop Theme" or in "Mobile Theme". Find and select your theme name and save. ATutor will automatically switch to the saved theme. Note that if your theme is defined as a mobile theme, it will only be applied when you access ATutor via a mobile device. Vice versas for destop theme.</p>
+
+<a name="updating"></a>
+<h2>Updating an Old Theme</h2>
+
+<p>Occasionally new features are added to themes, and adjustments are needed to allow older themes to work with newer versions of ATutor, or to add new functionality to themes that was not available in older versions. For a list of theme changes, see the <a href="http://wiki.atutor.ca/display/atutorwiki/Theme+Change+Log">Theme Change Log</a>.</p>
+
+<p><strong>NOTE:</strong> There is not a direct upgrade path from the 1.6 series themes to the 2.0 series themes. We suggest you start as you would creating a new theme, copying the files from the 2.0 default theme, then copy the stylesheet from the old theme into the stylesheet for the new theme, as well as copying any images from the old to the new.</p>
+
+<h2>Sharing Themes</h2>
+<p>Once you've perfected your theme, consider contributing it to the ATutor community so others can use it. Visit the Themes section of ATutor.ca to contribute a theme. Login with your atutor.ca user account, then submit your theme to receive credit for your work. Contributing a theme will automatically raise your ATutor contributor status to the Bronze level. Or, if you're not interested in being credited, just send the theme to the ATutor team (info//AT//atutor.ca), or post it to one of the forums, and the ATutor team will submit the theme for you.</p>
+
+<p><a href="http://www.atutor.ca/atutor/themes/submit_theme.php">Submit a Theme</a></p>
+
+</div>
+</body>
+</html>

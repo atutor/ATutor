@@ -1,0 +1,41 @@
+.fl-theme-yellowBlack{color:#ff0;background-color:#000;}
+.fl-theme-yellowBlack div,.fl-theme-yellowBlack input{color:#ff0;background-color:#000;border-color:#ff0;}
+.fl-theme-yellowBlack iframe{border-color:#ff0;}
+.fl-theme-yellowBlack a{color:#ff0;font-weight:bold;background-color:#000;}
+.fl-theme-yellowBlack h1,.fl-theme-yellowBlack h2,.fl-theme-yellowBlack h3,.fl-theme-yellowBlack h4,.fl-theme-yellowBlack h5,.fl-theme-yellowBlack h6{color:#ff0;background-color:#000;border-color:#ff0;}
+.fl-theme-yellowBlack th{border:.1em solid #ff0;background-color:#ff0;color:#000;}
+.fl-theme-yellowBlack td{border:.1em solid #ff0;}
+.fl-theme-yellowBlack .fl-focus:focus,.fl-theme-yellowBlack .fl-focus :focus,.fl-theme-yellowBlack.fl-focus :focus,.fl-theme-yellowBlack .selectable{outline:.2em solid #F00;}
+.fl-theme-yellowBlack .fl-knockout{background:transparent!important;color:#ff0;}
+.fl-theme-yellowBlack .fl-icon{background-color:#000;}
+.fl-theme-yellowBlack .fl-tabs{border-bottom-color:#ff0;}
+.fl-theme-yellowBlack .fl-tabs li,.fl-theme-yellowBlack .fl-tabs li *{border-color:#ff0;border-bottom-color:#ff0;}
+.fl-theme-yellowBlack .fl-tabs li{background-color:#ff0;}
+.fl-theme-yellowBlack .fl-tabs li *{color:#000;font-weight:bold;background-color:#ff0;text-decoration:none;}
+.fl-theme-yellowBlack .fl-tabs li:hover,.fl-theme-yellowBlack .fl-tabs li:hover *,.fl-theme-yellowBlack .fl-tabs li a:hover{color:#ff0;background-color:#000;}
+.fl-theme-yellowBlack .fl-tabs li.fl-tabs-active,.fl-theme-yellowBlack .fl-tabs li.fl-tabs-active a,.fl-theme-yellowBlack .fl-tabs li.fl-tabs-active a:hover,.fl-theme-yellowBlack .fl-tabs li.fl-activeTab,.fl-theme-yellowBlack .fl-tabs li.fl-activeTab:hover,.fl-theme-yellowBlack .fl-tabs li.fl-activeTab a,.fl-theme-yellowBlack .fl-tabs li.fl-activeTab a:hover{background-color:#000;border-bottom-color:#000;color:#ff0;}
+.fl-theme-yellowBlack .fl-tab-content{background-color:#000;border:1px solid #ff0;border-top:none;color:#ff0;}
+.fl-theme-yellowBlack .fl-listmenu,.fl-theme-yellowBlack .fl-list-menu{border:1px solid #ff0;border-bottom-width:2px;background-color:#000;}
+.fl-theme-yellowBlack .fl-listmenu li,.fl-theme-yellowBlack .fl-list-menu li,.fl-theme-yellowBlack .fl-listmenu li a,.fl-theme-yellowBlack .fl-list-menu li a{font-weight:bold;color:#ff0;background-color:#000;border-color:#ff0;text-decoration:none;}
+.fl-theme-yellowBlack .fl-listmenu a:hover,.fl-theme-yellowBlack .fl-list-menu a:hover{background-color:#ff0;color:#000;}
+.fl-theme-yellowBlack .fl-listmenu .fl-activemenu a,.fl-theme-yellowBlack .fl-list-menu .fl-activemenu a,.fl-theme-yellowBlack .fl-listmenu .fl-activemenu a:hover,.fl-theme-yellowBlack .fl-list-menu .fl-activemenu a:hover{background-color:#ff0;border-bottom-color:#000;color:#000;}
+.fl-theme-yellowBlack .fl-button-left,.fl-theme-yellowBlack .fl-button-right{background-image:url('../images/themes/yellowBlack/buttons-med-cap.png');}
+.fl-theme-yellowBlack .fl-button-inner{background-image:url('../images/themes/yellowBlack/buttons-med-bg.png');}
+.fl-theme-yellowBlack .fl-widget{background-color:#ff0;border:1px solid #000;}
+.fl-theme-yellowBlack .fl-widget h2{color:#ff0;background-color:#000;}
+.fl-theme-yellowBlack .fl-widget a{color:#ff0;}
+.fl-theme-yellowBlack .fl-widget .fl-icon-more{background-image:url('../images/themes/yellowBlack/icon-widget-More.png');margin-left:0;}
+.fl-theme-yellowBlack .fl-widget .fl-icon-close{background-image:url('../images/themes/yellowBlack/icon-widget-Close.png');margin-right:0;}
+.fl-theme-yellowBlack .fl-widget .fl-widget-titlebar{margin-bottom:3px;}
+.fl-theme-yellowBlack .fl-grabbable .fl-widget-titlebar{background-image:url('../images/themes/yellowBlack/icon-widget-gripper.png');}
+.fl-theme-yellowBlack .fl-grabbable .fl-widget-titlebar h2{display:inline;}
+.fl-theme-yellowBlack .fl-widget-titlebar .icon{background-position:center center;}
+.fl-theme-yellowBlack .fl-widget-titlebar .fl-button-right,.fl-theme-yellowBlack .fl-widget-titlebar .fl-button-left{color:#ff0;background-image:url('../images/themes/yellowBlack/buttons-titlebar-cap.png');text-decoration:none;}
+.fl-theme-yellowBlack .fl-widget-titlebar .fl-button-inner{background-image:url('../images/themes/yellowBlack/buttons-titlebar-bg.png');}
+.fl-theme-yellowBlack .fl-widget .fl-widget-options{padding:0;}
+.fl-theme-yellowBlack .fl-widget .fl-widget-options li{border-left:1px solid #000;}
+.fl-theme-yellowBlack .fl-widget .fl-widget-content{background-color:#000;}
+.fl-theme-yellowBlack .fl-progress-bounds{border-color:#ff0;background-color:#000;}
+.fl-theme-yellowBlack .fl-progress-fill{color:#000;background-color:#ff0;}
+.fl-theme-yellowBlack .fl-reorderer-dropMarker{background-color:#f00;}
+.fl-theme-yellowBlack .fl-inlineEdit-edit{background-color:#ff0;color:#000;border:.1em solid #000;padding:.1em;margin:-0.1em;}
