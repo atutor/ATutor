@@ -266,146 +266,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<input type="hidden" name="tab" value="<?php echo $current_tab; ?>"/>
-	<input type="hidden" name="course_id" value="<?php echo $course_id; ?>"/>
-	<div class="input-form">
-	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('search'); ?></legend>
-		<?php if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE)): ?>
-			<div class="row">
-				<label for="course"><?php echo _AT('course'); ?></label><br/>
-				<select name="course_id" id="course">
-				<?php
-				$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
-				$result = mysql_query($sql, $db);
-				while ($courses_row = mysql_fetch_assoc($result)) {
-					if ($courses_row['course_id'] == $course_id) {
-						echo '<option value="'.$courses_row['course_id'].'" selected="selected">'.validate_length($courses_row['title'], 45,VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
-					} else {
-						echo '<option value="'.$courses_row['course_id'].'">'.validate_length($courses_row['title'],45,VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
-					}
-				}
-				?></select>
-			</div>
-		<?php endif; ?>
-
-		<div class="row">
-			<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('login_name').', '._AT('first_name').', '._AT('second_name').', '._AT('last_name') .', '._AT('email'); ?>)</label><br />
-			<input type="text" name="search" id="search" size="40" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
-			<br/>
-			<?php echo _AT('search_match'); ?>:
-			<input type="radio" name="match" value="all" id="match_all" <?php echo $checked_match_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label> <input type="radio" name="match" value="one" id="match_one" <?php echo $checked_match_one; ?> /><label for="match_one"><?php echo _AT('search_any_word'); ?></label>
-		</div>
-
-		<div class="row buttons">
-			<input type="submit" name="filter" value="<?php echo _AT('filter'); ?>" />
-			<input type="submit" name="reset_filter" value="<?php echo _AT('reset_filter'); ?>" />
-		</div>
-	</fieldset>
-	</div>
-</form>
-
-<?php print_paginator($page, $tab_counts[$current_tab], $page_string_w_tab . SEP . $order .'='. $col, $results_per_page); ?>
-
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="selectform">
-<input type="hidden" name="tab" value="<?php echo $current_tab; ?>" />
-<input type="hidden" name="course_id" value="<?php echo $course_id; ?>"/>
-
-<ul id="etabbed-list">
-	<?php for ($i = 0; $i< $num_tabs; $i++): ?>
-		<?php if ($current_tab == $i): ?>
-			<li class="prefs_tab_selected"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>" class="active"><strong><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></strong></a></li>
-		<?php else: ?>
-			<li class="prefs_tab"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$page_string; ?>"><?php echo _AT($tabs[$i]); ?> - <?php echo $tab_counts[$i]; ?></a></li>
-		<?php endif; ?>
-	<?php endfor; ?>
-</ul>
-
-
-<table class="data" style="width:95%;" summary="" rules="cols" >
-<colgroup>
-	<?php if ($col == 'login'): ?>
-		<col />
-		<col class="sort" />
-		<col span="4" />
-	<?php elseif($col == 'first_name'): ?>
-		<col span="2" />
-		<col class="sort" />
-		<col span="3" />
-	<?php elseif($col == 'second_name'): ?>
-		<col span="3" />
-		<col class="sort" />
-		<col span="2" />
-	<?php elseif($col == 'last_name'): ?>
-		<col span="4" />
-		<col class="sort" />
-		<col />
-	<?php elseif($col == 'email'): ?>
-		<col span="5" />
-		<col class="sort" />
-	<?php endif; ?>
-</colgroup>
-<thead>
-<tr>
-	<th scope="col" align="left"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
-
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=login<?php echo $page_string_w_tab;?>"><?php echo _AT('login_name'); ?></a></th>
-
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=first_name<?php echo $page_string_w_tab;?>"><?php echo _AT('first_name'); ?></a></th>
-
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=second_name<?php echo $page_string_w_tab;?>"><?php echo _AT('second_name'); ?></a></th>
-
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=last_name<?php echo $page_string_w_tab;?>"><?php echo _AT('last_name'); ?></a></th>
-
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $orders[$order]; ?>=email<?php echo $page_string_w_tab;?>"><?php echo _AT('email'); ?></a></th>
-</tr>
-</thead>
-<tfoot>
-<tr>
-	<td colspan="6">
-		<?php if ($current_tab == 0): ?>
-			<input type="submit" name="role"     value="<?php echo _AT('privileges');  ?>" /> 
-			<input type="submit" name="unenroll" value="<?php echo _AT('remove');    ?>" /> 
-			<input type="submit" name="alumni"   value="<?php echo _AT('mark_alumni'); ?>" />
-		<?php elseif ($current_tab == 1): ?>
-			<input type="submit" name="role" value="<?php echo _AT('privileges'); ?>" /> 
-			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" /> 
-
-		<?php elseif ($current_tab == 2): ?>
-			<input type="submit" name="enroll"   value="<?php echo _AT('enroll'); ?>" /> 
-			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" />
-		
-		<?php elseif ($current_tab == 3): ?>
-			<input type="submit" name="enroll" value="<?php echo _AT('enroll'); ?>" /> 
-			<input type="submit" name="unenroll" value="<?php echo _AT('remove'); ?>" />
-
-		<?php elseif ($current_tab == 4): ?>
-			<input type="submit" name="enroll"   value="<?php echo _AT('enroll'); ?>" /> 
-
-		<?php endif; ?></td>
-</tr>
-</tfoot>
-<tbody>
-<?php if ($tab_counts[$current_tab]): ?>
-	<?php while ($row = mysql_fetch_assoc($enrollment_result)): ?>
-		<tr onmousedown="document.selectform['m<?php echo $row['member_id']; ?>'].checked = !document.selectform['m<?php echo $row['member_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row['member_id']; ?>');" id="rm<?php echo $row['member_id']; ?>">
-			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>
-			<td><?php echo AT_print($row['login'], 'members.login'); ?></td>
-			<td><?php echo AT_print($row['first_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['second_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['last_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
-		</tr>
-	<?php endwhile; ?>
-<?php else: ?>
-	<tr>
-		<td colspan="6"><?php echo _AT('none_found'); ?></td>
-	</tr>
-<?php endif; ?>
-</tbody>
-</table>
-</form>
-
 <script language="JavaScript" type="text/javascript">
 //<!--
 function CheckAll() {
@@ -427,4 +287,32 @@ function togglerowhighlight(obj, boxid) {
 }
 //-->
 </script>
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php 
+
+$savant->assign('current_tab', $current_tab);
+$savant->assign('course_id', $course_id);
+$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+$result = mysql_query($sql, $db);
+$savant->assign('result', $result);
+$savant->assign('checked_match_all', $checked_match_all);
+$savant->assign('checked_match_one', $checked_match_one);
+$savant->assign('page', $page);
+$savant->assign('tab_counts', $tab_counts);
+$savant->assign('page_string_w_tab', $page_string_w_tab);
+$savant->assign('order', $order);
+$savant->assign('orders', $orders);
+$savant->assign('col', $col);
+$savant->assign('cols', $cols);
+$savant->assign('results_per_page', $results_per_page);
+$savant->assign('num_tabs', $num_tabs);
+$savant->assign('tabs', $tabs);
+$savant->assign('enrollment_result', $enrollment_result);
+if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN) {
+	$savant->display('admin/courses/enrollment.tmpl.php');
+}
+if($_SESSION['is_admin'] == 1){
+	$savant->display('instructor/enrolment/index.tmpl.php');
+}
+
+require(AT_INCLUDE_PATH.'footer.inc.php'); 
+?>

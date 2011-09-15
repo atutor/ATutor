@@ -24,12 +24,14 @@ $this->_pages['mods/_standard/assignments/index_instructor.php']['guide']     = 
 
 	$this->_pages['mods/_standard/assignments/add_assignment.php']['title_var'] = 'add_assignment';
 	$this->_pages['mods/_standard/assignments/add_assignment.php']['parent']    = 'mods/_standard/assignments/index_instructor.php';
-
+    $this->_pages['mods/_standard/assignments/add_assignment.php']['avail_in_mobile']   = false;
+    
 	$this->_pages['mods/_standard/assignments/edit_assignment.php']['title_var'] = 'edit';
 	$this->_pages['mods/_standard/assignments/edit_assignment.php']['parent']    = 'mods/_standard/assignments/index_instructor.php';
-
+    $this->_pages['mods/_standard/assignments/edit_assignment.php']['avail_in_mobile']   = false;
+    
 	$this->_pages['mods/_standard/assignments/delete_assignment.php']['title_var'] = 'delete';
 	$this->_pages['mods/_standard/assignments/delete_assignment.php']['parent']    = 'mods/_standard/assignments/index_instructor.php';
-
+    $this->_pages['mods/_standard/assignments/delete_assignment.php']['avail_in_mobile']   = false;
 
 ?>

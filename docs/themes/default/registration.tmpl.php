@@ -106,13 +106,13 @@ function encrypt_password()
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email"><?php echo _AT('email_address'); ?></label><br />
-		<input id="email" name="email" type="text" size="50" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" />
+		<input id="email" name="email" type="text" size="30" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" /><br />
 		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email'] || !isset($_POST['submit'])) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email2"><?php echo _AT('email_again'); ?></label><br />
-		<input id="email2" name="email2" type="text" size="50" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email2'])); ?>" />
+		<input id="email2" name="email2" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email2'])); ?>" />
 	</div>
 
 	<div class="row">
@@ -140,7 +140,7 @@ function encrypt_password()
 			} else {
 				$uncon = ' checked="checked"';
 			}?>
-			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
+			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" />
 			<div class="row">
 				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('account_status'); ?><br />
 
@@ -176,7 +176,7 @@ function encrypt_password()
 		<input type="hidden" name="old_student_id" value="<?php echo $_POST['old_student_id']; ?>" />
 		<div class="row">
 			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-				<input type="text" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
+				<input type="text" id="student_id" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
 		</div>
 		<div class="row">
 			<input type="checkbox" id="overwrite" name="overwrite" value="1" <?php if ($_POST['overwrite']) { echo 'checked="checked"'; } ?> /><label for="overwrite"><?php echo _AT('overwrite_master');?></label>
@@ -230,7 +230,7 @@ function encrypt_password()
 	</div>
 </fieldset>
 	<div class="row buttons">
-		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" onClick="encrypt_password()" class="button"/>
+		<input type="submit" name="submit" value=" <?php echo _AT('save'); ?> " accesskey="s" onclick="encrypt_password()" class="button"/>
 		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="button" />
 	</div>
 </div>

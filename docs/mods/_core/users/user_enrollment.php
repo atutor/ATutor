@@ -118,93 +118,11 @@ foreach ($system_courses as $cid => $course) {
 		$not_enrolled[] = $cid;
 	}
 }
-
-?>
-
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>?id=<?php echo $id; ?>">
-<input type="hidden" name="id" value="<?php echo $id; ?>"/>
-<div class="input-form" style="min-width: 400px; width: 45%; float: left; margin: 5px">
-	<div class="row">
-	<h3><?php echo _AT('instructor'); ?></h3>
-		<?php if ($instruct): ?>
-			<ul>
-			<?php foreach ($instruct as $cid): ?>
-				<li><?php echo $system_courses[$cid]['title']; ?></li>
-			<?php endforeach; ?>
-			</ul>
-		<?php else: ?>
-			<?php echo _AT('none'); ?>
-		<?php endif; ?>
-	</div>
-	<div class="row buttons">
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"/>
-	</div>
-</div>
-
-<div class="input-form" style="min-width: 400px; width: 45%; float: left; margin: 5px">
-	<div class="row">
-	<h3><?php echo _AT('enrolled'); ?></h3>
-		<?php if ($enrolled): ?>
-			<ul>
-			<?php foreach ($enrolled as $cid): ?>
-				<li><input type="checkbox" name="enrolled[]" value="<?php echo $cid; ?>" id="c<?php echo $cid; ?>"/><label for="c<?php echo $cid; ?>"><?php echo $system_courses[$cid]['title']; ?></label></li>
-			<?php endforeach; ?>
-			</ul>
-		<?php else: ?>
-			<?php echo _AT('none'); ?>
-		<?php endif; ?>
-	</div>
-	<div class="row buttons">
-	<?php if ($enrolled): ?>
-		<input type="submit" name="enrolled_unenroll" value="<?php echo _AT('unenroll'); ?>"/>
-	<?php endif; ?>
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"/>
-	</div>
-
-</div>
-
-<div class="input-form" style="min-width: 400px; width: 45%; float: left; margin: 5px">
-	<div class="row">
-	<h3><?php echo _AT('pending_enrollment'); ?></h3>
-		<?php if ($pending): ?>
-			<ul>
-			<?php foreach ($pending as $cid): ?>
-				<li><input type="checkbox" name="pending[]" value="<?php echo $cid; ?>" id="c<?php echo $cid; ?>"/><label for="c<?php echo $cid; ?>"><?php echo $system_courses[$cid]['title']; ?></label></li>
-			<?php endforeach; ?>
-			</ul>
-		<?php else: ?>
-			<?php echo _AT('none'); ?>
-		<?php endif; ?>
-	</div>
-	<div class="row buttons">
-	<?php if ($pending): ?>
-		<input type="submit" name="pending_remove" value="<?php echo _AT('remove'); ?>"/>
-		<input type="submit" name="pending_enroll" value="<?php echo _AT('enroll'); ?>"/>
-	<?php endif; ?>
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"/>
-	</div>	
-</div>
-
-<div class="input-form" style="min-width: 400px; width: 45%; float: left; margin: 5px">
-	<div class="row">
-		<h3><?php echo _AT('not_enrolled');?></h3>
-			<?php if ($not_enrolled): ?>
-				<ul>
-				<?php foreach ($not_enrolled as $cid): ?>
-					<li><input type="checkbox" name="not_enrolled[]" value="<?php echo $cid; ?>" id="c<?php echo $cid; ?>"/><label for="c<?php echo $cid; ?>"><?php echo $system_courses[$cid]['title']; ?></label></li>
-				<?php endforeach; ?>
-				</ul>
-			<?php else: ?>
-				<?php echo _AT('none'); ?>
-			<?php endif; ?>
-	</div>
-	<div class="row buttons">
-	<?php if ($not_enrolled): ?>
-		<input type="submit" name="not_enrolled_enroll" value="<?php echo _AT('enroll'); ?>"/>
-	<?php endif; ?>
-		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"/>
-	</div>
-</div>
-</form>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+$savant->assign('system_courses', $system_courses);
+$savant->assign('instruct', $instruct);
+$savant->assign('enrolled', $enrolled);
+$savant->assign('pending', $pending);
+$savant->assign('not_enrolled', $not_enrolled);
+$savant->assign('id', $id);
+$savant->display('admin/users/user_enrollment.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

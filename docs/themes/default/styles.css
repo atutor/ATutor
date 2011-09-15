@@ -10,7 +10,7 @@ html,body{
 	margin-left:.8em;
 	float:left;
 }
-/* main body attributes */
+/* main body attributes STARTED HERE */
 body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	font-size:.8em;
@@ -1316,7 +1316,7 @@ div#content-test {
 	width: 80%;
 }
 div#content-test ol{	
-	margin-right: 5pt;	
+	margin-right: 5pt;
 }
 
 div#content-test ol ul li{
@@ -2930,7 +2930,11 @@ text-decoration:none;
 vertical-align:middle;
 margin-right:.5em;
 }
-
+/*social networking box on admin page */
+#social_networking{
+padding: 1em;
+margin: 0;
+}
 
 /* End Photo Album Styles
  * 

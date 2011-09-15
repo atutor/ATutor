@@ -13,7 +13,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -1422,6 +1422,7 @@ function is_mobile_device() {
 	return ((stripos($http_user_agent, IPOD_DEVICE) !== false && stripos($http_user_agent, IPOD_DEVICE) >= 0) ||
 			(stripos($http_user_agent, IPHONE_DEVICE) !== false && stripos($http_user_agent, IPHONE_DEVICE) >= 0) ||
 	        (stripos($http_user_agent, BLACKBERRY_DEVICE) !== false && stripos($http_user_agent, BLACKBERRY_DEVICE) >= 0) ||
+	        (stripos($http_user_agent, IPAD_DEVICE) !== false && stripos($http_user_agent, IPAD_DEVICE) >= 0) ||
 	        (stripos($http_user_agent, ANDROID_DEVICE) !== false && stripos($http_user_agent, ANDROID_DEVICE) >= 0)) 
 	        ? true : false;
 }
@@ -1434,6 +1435,8 @@ function get_mobile_device_type() {
 		return IPHONE_DEVICE;
 	} else if (stripos($http_user_agent, BLACKBERRY_DEVICE) !== false && stripos($http_user_agent, BLACKBERRY_DEVICE) >= 0) {
 		return BLACKBERRY_DEVICE;
+	} else if (stripos($http_user_agent, IPAD_DEVICE) !== false && stripos($http_user_agent, IPAD_DEVICE) >= 0) {
+		return IPAD_DEVICE;
 	} else if (stripos($http_user_agent, ANDROID_DEVICE) !== false && stripos($http_user_agent, ANDROID_DEVICE) >= 0) {
 		return ANDROID_DEVICE;
 	} else {

@@ -18,8 +18,6 @@ require(AT_INCLUDE_PATH.'/vitals.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p><?php echo _AT('atutor_is');  ?></p>
-
-<?php echo _AT('atutor_links');  ?>
-
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php 
+$savant->display('about.tmpl.php');
+require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

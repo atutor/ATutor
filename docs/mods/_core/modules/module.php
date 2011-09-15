@@ -19,16 +19,20 @@ if (admin_authenticate(AT_ADMIN_PRIV_MODULES, TRUE) || admin_authenticate(AT_ADM
 
 	$this->_pages['mods/_core/modules/module_uninstall_step_1.php']['title_var'] = 'module_uninstall';
 	$this->_pages['mods/_core/modules/module_uninstall_step_1.php']['parent']    = 'mods/_core/modules/index.php';
-
+    $this->_pages['mods/_core/modules/module_uninstall_step_1.php']['avail_in_mobile']   = false;
+	
 	$this->_pages['mods/_core/modules/module_uninstall_step_2.php']['title_var'] = 'module_uninstall';
 	$this->_pages['mods/_core/modules/module_uninstall_step_2.php']['parent']    = 'mods/_core/modules/index.php';
-
+	$this->_pages['mods/_core/modules/module_uninstall_step_2.php']['avail_in_mobile']   = false;
+	
 	$this->_pages['mods/_core/modules/module_uninstall_step_3.php']['title_var'] = 'module_uninstall';
 	$this->_pages['mods/_core/modules/module_uninstall_step_3.php']['parent']    = 'mods/_core/modules/index.php';
-
+	$this->_pages['mods/_core/modules/module_uninstall_step_3.php']['avail_in_mobile']   = false;
+	
 	$this->_pages['mods/_core/modules/install_modules.php']['title_var'] = 'install_modules';
 	$this->_pages['mods/_core/modules/install_modules.php']['parent']    = 'mods/_core/modules/index.php';
 	$this->_pages['mods/_core/modules/install_modules.php']['guide']     = 'admin/?p=modules.php';
+	$this->_pages['mods/_core/modules/install_modules.php']['avail_in_mobile']   = false;
 
 	$this->_pages['mods/_core/modules/version_history.php']['title_var'] = 'version_history';
 	$this->_pages['mods/_core/modules/version_history.php']['parent']    = 'mods/_core/modules/install_modules.php';

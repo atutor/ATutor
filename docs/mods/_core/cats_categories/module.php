@@ -16,6 +16,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_CATEGORIES, TRUE) || admin_authenticate(AT_
 $this->_pages['mods/_core/cats_categories/admin/course_categories.php']['title_var'] = 'cats_categories';
 $this->_pages['mods/_core/cats_categories/admin/course_categories.php']['guide']     = 'admin/?p=categories.php';
 $this->_pages['mods/_core/cats_categories/admin/course_categories.php']['children']  = array('mods/_core/cats_categories/admin/create_category.php');
+$this->_pages['mods/_core/cats_categories/admin/course_categories.php']['avail_in_mobile']   = false;
 
 	$this->_pages['mods/_core/cats_categories/admin/create_category.php']['title_var'] = 'create_category';
 	$this->_pages['mods/_core/cats_categories/admin/create_category.php']['parent']    = 'mods/_core/cats_categories/admin/course_categories.php';

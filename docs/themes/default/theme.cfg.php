@@ -15,10 +15,10 @@
 /* This is the default configuration file for the default theme. */
 
 /* The theme's name. */
-	$_theme['name'] = 'Default 1.6';
+	$_theme['name'] = 'simplified-desktop';
 
 /* The theme's version number. */
-	$_theme['version'] = '0.1';
+	$_theme['version'] = '1.0';
 
 /* Which version of ATutor is this theme intended for. */
 	$_theme['atutor-version'] = '1.6';

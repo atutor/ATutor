@@ -21,6 +21,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE) || admin_authenticate(AT_
 	$this->_pages['mods/_core/enrolment/admin/privileges.php']['title_var'] = 'privileges';
 	$this->_pages['mods/_core/enrolment/admin/privileges.php']['parent']    = 'mods/_core/enrolment/admin/index.php';
 	$this->_pages['mods/_core/enrolment/admin/privileges.php']['guide']     = 'admin/?p=enrollment_privileges.php';
+	$this->_pages['mods/_core/enrolment/admin/privileges.php']['avail_in_mobile']   = false;
+	
 
 	// linked from users.php
 	$this->_pages['admin/user_enrollment.php']['title_var'] = 'enrollment';
@@ -40,6 +42,7 @@ $this->_pages['mods/_core/enrolment/index.php']['children'] = array('mods/_core/
 
 	$this->_pages['mods/_core/enrolment/create_course_list.php']['title_var'] = 'list_create_course_list';
 	$this->_pages['mods/_core/enrolment/create_course_list.php']['parent']    = 'mods/_core/enrolment/index.php';
+	$this->_pages['mods/_core/enrolment/create_course_list.php']['avail_in_mobile']   = false;
 
 	$this->_pages['mods/_core/enrolment/verify_list.php']['title_var']  = 'course_list';
 	$this->_pages['mods/_core/enrolment/verify_list.php']['parent'] = 'mods/_core/enrolment/index.php';
@@ -47,6 +50,7 @@ $this->_pages['mods/_core/enrolment/index.php']['children'] = array('mods/_core/
 	$this->_pages['mods/_core/enrolment/privileges.php']['title_var']  = 'privileges';
 	$this->_pages['mods/_core/enrolment/privileges.php']['parent'] = 'mods/_core/enrolment/index.php';
 	$this->_pages['mods/_core/enrolment/privileges.php']['guide']     = 'instructor/?p=enrollment_privileges.php';
+	$this->_pages['mods/_core/enrolment/privileges.php']['avail_in_mobile']   = false;
 	
 	$this->_pages['mods/_core/enrolment/enroll_edit.php']['title_var']    = 'enrollment';
 	$this->_pages['mods/_core/enrolment/enroll_edit.php']['parent']   = 'mods/_core/enrolment/index.php';

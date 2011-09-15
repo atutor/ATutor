@@ -13,8 +13,10 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
 
-if ($this->banner): ?><?php echo $this->banner; ?><br /><?php endif;
+if ($this->banner): ?>
 
+<?php echo $this->banner; ?><br /><?php endif;
+/** Icon View removed for mobile.
 // positioning switch of home ONLY FOR INSTRUCTORS. two icons will be used for identification to distinguish the two different views of the home.
 if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
 	if($this->view_mode==0)
@@ -22,6 +24,7 @@ if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
 	else
 		echo '<a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" ><img src="'.AT_BASE_HREF.'images/icon_view.png"  title ="'._AT('icon_view').'" alt ="'._AT('icon_view').'" /></a><br 	/>';
 }	
+
 
 // Icon View, $this->view_mode = 0. course will be made changes to the icons to restore the classic icons.
 if($this->view_mode==0){
@@ -60,13 +63,15 @@ if($this->view_mode==0){
 	</div> 
 <?php
 } // end of if
+*/
 
 if ($this->announcements): ?>
 <h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
 	<?php foreach ($this->announcements as $item): ?>
 		<div class="news">
 			<h3><?php echo $item['title']; ?></h3>
-			<p><span class="date"><?php echo $item['date'] .' '. _AT('by').' ' . $item['author']; ?></span></p> <?php echo $item['body']; ?>
+			<span class="date"><?php echo $item['date'] .' '. _AT('by').' ' . $item['author']; ?></span></p> <?php echo $item['body']; ?></span>
+			
 		</div>
 	<?php endforeach; ?>
 
