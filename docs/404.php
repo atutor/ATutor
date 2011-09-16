@@ -22,4 +22,5 @@ $msg->printInfos($_info);
 $msg->printAll();
 
 require (AT_INCLUDE_PATH.'footer.inc.php'); 
+
 ?>
