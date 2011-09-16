@@ -15,7 +15,8 @@ body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	font-size:.8em;
 	margin:0px;
-	background-color: #F2F9FA;
+/*	background-color: #F2F9FA; */
+		background-color: #000000;
 }
 .page_wrapper{
 /*	border:1px solid #aaaaaa;*/
