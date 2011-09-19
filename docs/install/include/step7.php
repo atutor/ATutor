@@ -133,7 +133,7 @@ print_progress($step);
 	</tr>
 	<tr>
 		<td class="row1" width="20%"><b>ATutor Version:</b></td>
-		<td class="row1"><?php echo $new_version; ?> (Git build date<?php echo ' - '. $build_date; ?>)</td>
+		<td class="row1"><?php echo $new_version; ?> (Build date<?php echo ' - '. $build_date; ?>)</td>
 	</tr>
 	<tr>
 		<td class="row1" nowrap="nowrap"><b>Operating System:</b></td>
