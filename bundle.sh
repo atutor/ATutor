@@ -15,7 +15,7 @@ set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor_$now"
 set bundle = "ATutor"
 
-set gitdir = "https://atutor@github.com/atutor/ATutor.git"
+set gitdir = "git://github.com/atutor/ATutor.git"
 set gitexec = "git"
 
 echo "ATutor Bundle Script for GitHub"
