@@ -1222,7 +1222,11 @@ foreach ($items as $item_id => $content_info)
 		$all_package_base_path = implode('/', $all_package_base_path);
 	}
 
-	if ($common_path != '' && substr($content_info['new_path'], strlen($common_path))) {
+    // The following condition checks if there is a common path, if so, remove it from the content base_href.
+    // This prevents the path to grow longer.
+	if ($common_path != '' 
+	        && ($content_info['new_path'] === $common_path
+	        || substr($content_info['new_path'], strlen($common_path)))) {
 		$content_info['new_path'] = $package_base_name . substr($content_info['new_path'], strlen($common_path));
 	} else {
 		$content_info['new_path'] = $package_base_name . '/' . $content_info['new_path'];
