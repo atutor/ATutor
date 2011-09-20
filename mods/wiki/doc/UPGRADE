@@ -1,7 +1,0 @@
-There are only minor incompatibilities in the R1.02 series of ewiki. (Two
-renamed plugins.)
-
-If you updated from R1.01c or earlier, then use the "tools/upgrade-101d"
-to convert the plugin file names in your 'config.php' file. It also works
-for later versions and is supposed to collect all future changes (= never
-hurts to run it).

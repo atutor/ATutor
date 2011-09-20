@@ -1,8 +1,0 @@
-WikiWikiWeb is the name of a Hypertext system implemented as application on
-top of the WorldWideWeb service. It tries to make it much easier and faster
-to contribute to existing content. Ward Cunningham had the idea and build
-the [very first Wiki|http://c2.com/cgi/wiki?WelcomeVisitors] nowadays known
-as [WardsWiki:].
-
-ErfurtWiki is a piece of software which implements such an
-application in the [PHP web scripting language | http://www.php.net/].
