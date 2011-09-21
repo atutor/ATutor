@@ -1,6 +1,6 @@
 ATutor Readme
 
-Installing a ATutor bundled distribution 
+Installing an ATutor bundled distribution 
 Full installation and upgrade instructions are available at:
 http://atutor.ca/atutor/docs/installation.php
 
@@ -14,5 +14,4 @@ GitHub Basics
 If you wish to have code you've developed added to the ATutor public source code, you will need to understand a few Git basics.
 
 See: http://wiki.atutor.ca/display/atutorwiki/Using+Git+and+GitHub
-
 
