@@ -1,4 +1,4 @@
-#! /bin/csh -f
+# /bin/csh -f
 #########################################################################
 # ATutor bundle script                                                  #
 # ./bundle [VERSION] to specify an optional version number              #
@@ -10,6 +10,8 @@
 # In addition to creating a clone of the atutor/ATutor source code from GitHub
 # This script retreives a copy of the latest English language from the atutor.ca language database via wget.
 #
+
+
 
 set now = `date +"%Y_%m_%d"`
 set atutor_dir = "ATutor_$now"
