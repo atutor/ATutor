@@ -123,7 +123,7 @@ body,ul,li {
 }
 
 .fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
-	color: #4c96f4;
+	color: #bfd9fb;
 	text-decoration: none;
 	font-weight: bold;
 }
@@ -153,7 +153,7 @@ body,ul,li {
 ul.home-guide li a:hover, ul.home-guide li a:focus, ul.home-guide li a:active,
 ul.home-guide li.back a:hover, ul.home-guide li.back a:focus, ul.home-guide li.back a:active,
 ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guide li.forward a:active {
-    color: #4c96f4;
+    color: #bfd9fb;
     background:transparent;
 }
 /************************************************************************************************/
@@ -172,12 +172,10 @@ p a {
 }
 
 p a:visited {
-	color: #005689;
 	color: #4c96f4;
     background-color: transparent;
 }
 p a:active {
-	color: #005689;
 	color: #4c96f4;
     background-color: transparent;
 }
@@ -230,7 +228,7 @@ h3 a {
 /************************************************************************************************/
 link highlighting -- add when the header and footer is done 
 .fl-theme-iphone a:not(.fl-tabs){
-	 color: #4c96f4;
+	color: #4c96f4;
 }
 
 /************************************************************************************************/
@@ -272,7 +270,6 @@ link highlighting -- add when the header and footer is done
 
 /* link attributes */
 a:link {
- 	color: #4C96F4;
 	color: #005689;
 	text-decoration: underline;
 }
@@ -636,7 +633,7 @@ div#footer-links{
 ul.footer-links-tabs li a:hover, ul.footer-links-tabs li a:focus, ul.footer-links-tabs li a:active,
 ul.footer-links-tabs li.back a:hover, ul.footer-links-tabs li.back a:focus, ul.footer-links-tabs li.back a:active,
 ul.footer-links-tabs li.forward a:hover, ul.footer-links-tabs li.forward a:focus, ul.footer-links-tabs li.forward a:active {
-    color: #4c96f4;
+    color: #bfd9fb;
     background:transparent;
 }
 
@@ -1547,14 +1544,9 @@ legend.group_form{
 }
 
 /*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
-Ensure styling matches that in fl-tabs.*/
+Ensure styling matches that in fl-tabs.*/ 
 .topnavlistcontainer a:hover, .topnavlistcontainer a:active, .topnavlistcontainer a:focus{
-    background-image: -webkit-gradient(linear, left top, left bottom,
-     	from(#3b5371),
-        color-stop(0.5, #374e6b),
-        color-stop(0.50, #354d68),
-        to(#354d68)
-    );
+    background-color: white;
 }
 
 /*Added by Silvia */
@@ -2038,12 +2030,7 @@ ul.social_inline_menu{
 /*Overrides above a:active, a:hover, a:focus so the "Navigation" button itself isn't highlighted when activated.
 Ensure styling matches that in fl-tabs.*/
 .topnavlistcontainer a:hover, .topnavlistcontainer a:active, .topnavlistcontainer a:focus{
-    background-image: -webkit-gradient(linear, left top, left bottom,
-     	from(#3b5371),
-        color-stop(0.5, #374e6b),
-        color-stop(0.50, #354d68),
-        to(#354d68)
-    );
+    background-color: white;
 }
 
 
@@ -2061,9 +2048,6 @@ Ensure styling matches that in fl-tabs.*/
 	color: white;
 	position: relative;
 	top: .4em; 
-
-	
-    /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -2133,12 +2117,14 @@ div#content-link-container{
 	text-decoration: none;
 	font-weight: bold;
 	background-color: #354D68;
-}
-.fl-theme-iphone .content_link_tablet_highlight{
-	 color: #4c96f4;
-	 font-weight: bold;
 	
 }
+.fl-theme-iphone .content_link_tablet_highlight{
+	 font-weight: bold;
+	 color: #bfd9fb;
+	
+}
+
 
 #content{
 	position: absolute;
@@ -2339,7 +2325,7 @@ ul.sequence-links li.forward a:visited {
 ul.sequence-links li a:hover, ul.sequence-links li a:focus, ul.sequence-links li a:active,
 ul.sequence-links li.back a:hover, ul.sequence-links li.back a:focus, ul.sequence-links li.back a:active,
 ul.sequence-links li.forward a:hover, ul.sequence-links li.forward a:focus, ul.sequence-links li.forward a:active {
-    color: #4c96f4;
+    color: #bfd9fb;
     background:transparent;
 }
 
@@ -2372,7 +2358,7 @@ ul.sequence-links li a:after {
 /*left and right triangle icons change color*/
 .arrow a:hover:after, .arrow a:focus:after, .arrow a:active:after, 
 .arrow.forward a:hover:after, .arrow.forward a:focus:after, .arrow.forward a:active:after{
-	border-color: transparent #4c96f4;
+	border-color: transparent #bfd9fb;
 }
 
 .arrow.back a:after {

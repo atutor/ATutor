@@ -105,7 +105,6 @@ $this->onload .= "});
 ";
 
 // open/close header navigational menu for smartphones
-// jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#topnavlist').slideUp(600);}); 
@@ -113,6 +112,7 @@ jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#topnavlist').slideToggle();
  jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight');
+ jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight-background');
 });
 ";
 
@@ -130,7 +130,7 @@ jQuery('.topnavlist-link').click(function(e) {
 });
 ";
 
-//jQuery for Gmail dock-style "more" button that makes the subnavlist expand for more options
+// makes the subnavlist expand for more options
 $this->onload .= "
 
 jQuery('.more-button').toggle(function(e) {
