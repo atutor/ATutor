@@ -1,6 +1,6 @@
 
 /************************************************************************************************/
-/* Style is optimized for tablets. Note that -webkit  and -moz properties create errors in the CSS validator. 
+/* Style is optimized for tablets. Note that -webkit  and -moz properties create 100 errors in the CSS3 validator. 
 Relative units for sizes are used unless it is a border. Classes beginning with ".fl-" override Mobile FSS,
 see the API @ http://wiki.fluidproject.org/display/fluid/Mobile+FSS+API  */
 /************************************************************************************************/
@@ -24,7 +24,7 @@ body,ul,li {
 #header{
 	width:100%;
 	line-height:1em;
-	padding-top: 158;
+	padding-top: .1em; 
 	font-size:1.063em;
 	height: 3.2em;
 	background: #999; /*fallback*/
@@ -226,7 +226,7 @@ h3 a {
 /************************************************************************************************/
 /* Highlighting outside of the header and footer */
 /************************************************************************************************/
-link highlighting -- add when the header and footer is done 
+/*link highlighting */
 .fl-theme-iphone a:not(.fl-tabs){
 	color: #4c96f4;
 }
@@ -1322,7 +1322,7 @@ ul#home-links, ul#home-detail-links {
 }
 .current_list li{
 	list-style-type: none;
-	font-style: bold;
+	font-weight: bold;
 	padding-bottom: .5em;
 	padding-left: .5em;
 	margin:0;
@@ -1342,8 +1342,6 @@ ul#home-links, ul#home-detail-links {
 	padding: .5em;
 	border: solid 1px #A9ADB0;
 	background-color: white;
-	
-	
 }
 #show-all{
 	
@@ -2374,8 +2372,7 @@ ul.sequence-links li a:after {
      background: none repeat scroll 0% 0% transparent;
      border-color: transparent #FFFFFF;
      border-style: solid;
-     margin-top: -0.425em;
-   
+     margin-top: -0.425em;   
 }
 .arrow.forward a:after {
   
