@@ -56,36 +56,28 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 // 1. any click on the page closes the content menu but the link "content_link" itself
 // 2. the click on link "content_link" opens the content menu
 
-
 require ('TeraWurflRemoteClient.php');
 $wurflObj = new TeraWurflRemoteClient('http://wurfl.thesedays.com/webservice.php');
 $capabilities = array("product_info");
 $data_format = TeraWurflRemoteClient::$FORMAT_JSON;
 $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 
-// open/close content menu
+//open/close content menu - tablet
 $this->onload .= "
 jQuery('#content_link').click(function(e) {
   e.stopPropagation();
-  
   jQuery('#content').slideToggle(0);
-  jQuery('#content_link').toggleClass('content_link_tablet_highlight');
-  jQuery('#content_link').toggleClass('triangle-isosceles'); 
-  jQuery('#content_link').toggleClass('top'); 
-  jQuery('#content_link').toggleClass('right');    
+  jQuery('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
   ";
 $this->onload .= "});
 ";
 
-//open/close subnavlist in smartphones    
-
+//open/close subnavlist - smartphones    
 $this->onload .= "
 jQuery('#subnavlist-link').click(function(e) {
   e.stopPropagation();
-  
   jQuery('#subnavlist').slideToggle();
-  jQuery('#subnavlist-link').toggleClass('content-closed');
-  jQuery('#subnavlist-link').toggleClass('subnavcontain-active');
+  jQuery('#subnavlist-link').toggleClass('content-closed').toggleClass('subnavcontain-active');
   jQuery('.subnavcontain').toggleClass('subnavcontain3');     
   ";
 $this->onload .= "});
@@ -94,39 +86,32 @@ $this->onload .= "});
 $this->onload .= "
 jQuery('#content_link_phone').click(function(e) {
   e.stopPropagation();
-  
   jQuery('#content').slideToggle();
- 
-  jQuery('#content_link_phone').toggleClass('topnavlist-link-highlight');
-  jQuery('#content_link_phone').toggleClass('content-closed'); 
+  jQuery('#content_link_phone').toggleClass('topnavlist-link-highlight').toggleClass('content-closed');
   jQuery('.subnavcontain').toggleClass('subnavcontain3'); 
   ";
 $this->onload .= "});
 ";
 
-// open/close header navigational menu for smartphones
+// open/close header navigational menu - smartphones
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#topnavlist').slideUp(600);}); 
 jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#topnavlist').slideToggle();
- jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight');
- jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight-background');
+ jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight').toggleClass('.topnavlist-link-highlight-background');
 });
 ";
 
-// open/close header navigational menu for tablets
-
+// open/close header navigational menu - tablets
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#navigation-column').slideUp(200);}); 
 jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#navigation-column').slideToggle(0);
-    jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
-    jQuery('#topnavlist-link').toggleClass('triangle-isosceles');
-    jQuery('#topnavlist-link').toggleClass('top');
+    jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight').toggleClass('triangle-isosceles').toggleClass('top');
 });
 ";
 
@@ -135,14 +120,10 @@ $this->onload .= "
 
 jQuery('.more-button').toggle(function(e) {
   jQuery('.subnavlist-more').show();
-  jQuery('#switch').attr('src','images/hidemenu.gif' );
-  jQuery('#switch').attr('title', 'less menu items'); 
-  jQuery('#switch').attr('alt', 'less menu items');
+  jQuery('#switch').attr('src','images/hidemenu.gif' ).attr('title', 'less menu items').attr('alt', 'less menu items');
 },function(){
   jQuery('.subnavlist-more').hide(); 
-  jQuery('#switch').attr('src', 'images/showmenu.gif' );
-  jQuery('#switch').attr('title', 'more menu items'); 
-  jQuery('#switch').attr('alt', 'more menu items');
+  jQuery('#switch').attr('src', 'images/showmenu.gif' ).attr('title', 'more menu items').attr('alt', 'more menu items');
 });
 ";
 
@@ -152,8 +133,7 @@ $this->onload .= "
 jQuery('#results-hide-show-link').click(function(e) {
   e.stopPropagation();
     jQuery('#results-display').slideToggle();
-    jQuery(this).toggleClass('content-closed');
-    jQuery(this).preventDefault();
+    jQuery(this).toggleClass('content-closed').preventDefault();
   ";
 $this->onload .= "});
 ";
@@ -168,14 +148,10 @@ jQuery('.results-hide-show-link').click(function(e) {
 $this->onload .= "});
 ";
 	
-
 // Hide the addressbar
 $this->onload .= "
 setTimeout(function() { window.scrollTo(0, 1) }, 100);
 ";
-
-
-
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -553,19 +529,15 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<?php endif; ?>
 		
 		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 	
-		<div id="course-level-navigation">
-		
-	
-			
+		<div id="course-level-navigation" role="navigation" aria-live="assertive">
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
 			</div>	
-			</div><!-- course-level navigation -->				
 				<div id="content">
 					<?php $contentManager->printMainMenu(); ?>
 					<script language="javascript" type="text/javascript"></script>
 				</div>
-		
+		</div><!-- course-level navigation -->				
 		</div> <!-- end sequence-links-course-navigation -->
 		<?php endif;?>
 	
