@@ -154,7 +154,7 @@ body,ul,li {
 	font-weight: bold;
 }
 .fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight{/*makes the navigation button link highlight*/
-	color: #354D68;
+	color: #bfd9fb;
 	text-decoration: none;
 	font-weight: bold;
 	background-color: white;
@@ -186,7 +186,7 @@ div#content-link-container.flc-screenNavigator-navbar {
 	text-decoration: none;
 	
     color: white;
-    font-style: bold;
+    font-weight: bold;
     color: #005689;
 }
 .resume{
@@ -1372,7 +1372,7 @@ ul#home-links, ul#home-detail-links {
 }
 .current_list li{
 	list-style-type: none;
-	font-style: bold;
+	font-weight: bold;
 	padding-bottom: .5em;
 	padding-left: .5em;
 	margin:0;
@@ -1753,7 +1753,7 @@ div.home_box {
 	margin-left:1em;
 }
 .draggable_selected {
-	background-color: lightgrey;
+	background-color: #A8A8A8;
 	cursor: move;
 }
 

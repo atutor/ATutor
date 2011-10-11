@@ -1,13 +1,11 @@
 <?php if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 <?php if ($this->mobile_device_type != IPAD_DEVICE): ?><!-- begin footer template for iphone, android, and blackberry -->
-
-
-</div> <!-- end innner-contentwrapper -->	
-</div> <!-- end contentcolumn -->
-</div> <!-- end contentwrapper -->
-</div> <!-- end main -->
+</div> 
+</div> 
+</div> 
+</div> 
+</div> 
 </div> <!-- end wrapper -->
-
 <div id="footer" class="fl-navbar fl-table">
 <div id="footer-links"> <!-- top help/search/login links -->
 	<ul class="footer-links-tabs fl-tabs flc-themer" role="menu">  
