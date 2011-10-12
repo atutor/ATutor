@@ -151,6 +151,7 @@ if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
 if ($_POST['customicon']) {
     echo "<script language='javascript' type='text/javascript'>document.getElementById('uploadform').focus();</script>";
 }
+$savant->assign('course', $course);
 $savant->assign('row', $row);
 $savant->display('admin/courses/edit_course.tmpl.php');
 ?>
