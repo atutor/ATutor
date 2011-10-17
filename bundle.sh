@@ -1,4 +1,4 @@
-# /bin/csh -f
+#! /bin/csh -f
 #########################################################################
 # ATutor bundle script                                                  #
 # ./bundle [VERSION] to specify an optional version number              #
@@ -61,7 +61,7 @@ mkdir $atutor_dir
 #$svnexec --force export $gitdir
 $gitexec clone $gitdir
 
-mv 'ATutor/docs' $atutor_dir/ATutor
+mv 'ATutor' $atutor_dir/ATutor
 sleep 1
 
 echo "Dumping language_text"
