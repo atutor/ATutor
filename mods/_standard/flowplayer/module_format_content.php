@@ -2,7 +2,11 @@
 // input string. DO NOT CHANGE.
 global $_input, $_content_base_href;
 
-//Output for flowplayer module.
+// Output for flowplayer module.
+// Note: The properly functioning of flowplayer requires flash to be installed. 
+// The conversion performed by this module converts the [media] tag into flowplayer class
+// only when the flash is installed, otherwise, the [media] tag is converted into a plain 
+// <a> link.
 $media_replace = array();
 $media_matches = array();
 $flowplayerholder_class = "atutor.flowplayerholder";  // style class used to play flowplayer medias
@@ -10,22 +14,29 @@ $flowplayerholder_def = '$f("*.'.$flowplayerholder_class.'"';   // javascript de
 
 // .flv
 preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.flv\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
-$media_replace[] ="  <div>\n".
-                  "    <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.flv\"></a>\n".
-                  "  </div>\n".
-                  "  <div style=\"margin-top:-2em;\">\n".
-                  "    <a href=\"##MEDIA1##.flv\">##MEDIA1##.flv</a>\n".
-                  "  </div>\n";
+
+if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
+	$media_replace[] = "<div>\n".
+	                   "  <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.flv\"></a>\n".
+	                   "</div>\n";
+} else {
+	$media_replace[] = "<div>\n".
+	                   "  <a href=\"##MEDIA1##.flv\">##MEDIA1##.flv</a>\n".
+	                   "</div>\n";
+}
 
 // .mp4
 preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mp4\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
 //$media_replace[] ="<a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"".AT_BASE_HREF."get.php/".$_content_base_href."##MEDIA1##.mp4\"></a>";
-$media_replace[] ="  <div>\n".
-                  "    <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.mp4\"></a>\n".
-                  "  </div>\n".
-                  "  <div style=\"margin-top:-3em;\">\n".
-                  "    <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
-                  "  </div>\n";
+if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
+	$media_replace[] = "<div>\n".
+	                   "  <a class=\"".$flowplayerholder_class."\" style=\"display:block;width:##WIDTH##px;height:##HEIGHT##px;\" href=\"##MEDIA1##.mp4\"></a>\n".
+	                   "</div>\n";
+} else {
+	$media_replace[] = "<div>\n".
+	                   "  <a href=\"##MEDIA1##.mp4\">##MEDIA1##.mp4</a>\n".
+	                   "</div>\n";
+}
 
 //// .mov
 //preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.mov\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
