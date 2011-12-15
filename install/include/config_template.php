@@ -15,6 +15,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function write_config_file($filename, $comments) {
+	 print_r($filename);
 	global $config_template;
 
 	$tokens = array('{USER}',

@@ -1,5 +1,7 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+$domain = ($_SERVER['HTTP_HOST']);
+$AT_SUB_INCLUDE_PATH = "/var/www/atutor/sites/$domain";
 error_reporting(E_ALL ^ E_NOTICE);
 @set_time_limit(0);
 
@@ -29,7 +31,7 @@ $_defaults['ill_ext'] = 'exe, asp, php, php3, bat, cgi, pl, com, vbs, reg, pcd, 
 $_defaults['cache_dir'] = '';
 
 $_defaults['theme_categories'] = 'FALSE';
-$_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
+$_defaults['content_dir'] = "$AT_SUB_INCLUDE_PATH/content";
 
 $_defaults['course_backups'] = 5;
 

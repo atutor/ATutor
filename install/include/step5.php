@@ -11,7 +11,7 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
+print_r($_POST);
 if (isset($_POST['submit'])) {
 	$_POST['content_dir'] = $stripslashes($_POST['content_dir']);
 

@@ -12,6 +12,10 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+$domain = ($_SERVER['HTTP_HOST']);
+$AT_SUB_INCLUDE_PATH = "/var/www/atutor/sites/$domain";
+print($AT_SUB_INCLUDE_PATH);
+include("$AT_SUB_INCLUDE_PATH/config.inc.php");
 
 define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
@@ -116,7 +120,7 @@ function check_session()
 
 	error_reporting(0);
 	if (!defined('AT_REDIRECT_LOADED')){
-		include_once(AT_INCLUDE_PATH.'config.inc.php');
+		include_once($AT_SUB_INCLUDE_PATH.'config.inc.php');
 	}
 	error_reporting(AT_ERROR_REPORTING);
 
