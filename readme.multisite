@@ -1,0 +1,33 @@
+ATutor multisite readme:
+
+First ensure your webserver has a virtual host setup to point to the main ATutor codebase. In this initial multisite branch, include/vitals.inc.php and the installer are configured to use /var/www/atutor/. This is hard-coded for proof of concept and needs to be changed to something like the following:
+$AT_SUB_INCLUDE_PATH = "$AT_INCLUDE_PATH/../sites/$domain";
+
+Otherwise, to install ATutor multisite simply point your browser to your installation and follow the provided instructions per a normal ATutor installation.
+
+When prompted for a content directory, take a look at include/vitals.inc.php, specifically at the $AT_SUB_INCLUDE_PATH line. Ensure that the path leading up to $domain exists on your webserver. Then create a directory inside sites with the name of the domain being configured. Ensure that said directory has write permissions enabled for the apache/www-data user depending on the webserver and platform being used.
+
+Again, this will change once a) the include path is abstracted, and b) once the content directory and config.inc.php creation are automated by the installer.
+
+For additional installation details see:
+http://www.atutor.ca/atutor/docs/installation.php
+
+Or, the official ATutor Handbook:
+http://help.atutor.ca
+
+Installing from a GitHub Clone
+1. If you are installing ATutor from a GitHub clone, rather than an ATutor bundled distribution, follow the usual installation and upgrade instructions at the link above.
+2. Before running the Installer, you will need to create an empty config file. To create the file, from the ATutor base directory, issue the command 
+touch include/config.inc.php
+3. Then follow the instruction given by the Installer.
+
+GitHub Basics
+If you wish to have code you've developed added to the ATutor public source code, you will need to understand a few Git basics.
+
+See: http://wiki.atutor.ca/display/atutorwiki/Using+Git+and+GitHub
+
+Enjoy!
+
+
+The ATutor Development Team
+http://www.atutor.ca
