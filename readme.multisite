@@ -1,13 +1,25 @@
 ATutor multisite readme:
+First create a subsite directory. To do that run the make_multi.sh file found in the root directory of ATutor (i.e ./make_multi.sh). 
 
-First ensure your webserver has a virtual host setup to point to the main ATutor codebase. In this initial multisite branch, include/vitals.inc.php and the installer are configured to use /var/www/atutor/. This is hard-coded for proof of concept and needs to be changed to something like the following:
-$AT_SUB_INCLUDE_PATH = "$AT_INCLUDE_PATH/../sites/$domain";
+Next ensure your webserver has a virtual host setup to point to the main ATutor codebase. Something like the following:
+
+<VirtualHost *:80>
+        ServerName  multi.mysite.com
+        ServerAlias *.mysite.com
+
+        # Indexes + Directory Root.
+        DirectoryIndex index.php index.html
+        DocumentRoot /var/www/sites/multi.mysite.com
+
+        # Logfiles
+        ErrorLog  /var/www/sites/logs/multi.mysite.com/errlog.log
+        CustomLog /var/www/sites/logs/multi.mysite.com/acclog.log   Combined
+</VirtualHost>
 
 Otherwise, to install ATutor multisite simply point your browser to your installation and follow the provided instructions per a normal ATutor installation.
 
 When prompted for a content directory, take a look at include/vitals.inc.php, specifically at the $AT_SUB_INCLUDE_PATH line. Ensure that the path leading up to $domain exists on your webserver. Then create a directory inside sites with the name of the domain being configured. Ensure that said directory has write permissions enabled for the apache/www-data user depending on the webserver and platform being used.
 
-Again, this will change once a) the include path is abstracted, and b) once the content directory and config.inc.php creation are automated by the installer.
 
 For additional installation details see:
 http://www.atutor.ca/atutor/docs/installation.php

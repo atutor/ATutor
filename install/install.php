@@ -14,10 +14,11 @@
 // get_atutor_installation_path() @ common.inc.php. Must make sure the 
 // function doesn't get broken at its modification.
 define('AT_INCLUDE_PATH', 'include/');
-require(AT_INCLUDE_PATH.'common.inc.php');
+
 $domain = ($_SERVER['HTTP_HOST']);
-$AT_SUB_INCLUDE_PATH = "/var/www/atutor/sites/$domain";
-//include("$AT_SUB_INCLUDE_PATH/config.inc.php");
+$rootpath = dirname($_SERVER['DOCUMENT_ROOT']);
+$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
+require_once($AT_SUB_INCLUDE_PATH.'/install/include/common.inc.php');
 
 if (!$new_version = $_POST['new_version']) {
 	$new_version = $_POST['step2']['new_version'];

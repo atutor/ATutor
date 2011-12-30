@@ -11,6 +11,21 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+if(isset($AT_SUBSITE)){
+// If this is a Sub-site installation, use the existing db info from the primary 
+// installation and bypass the db setup step. This assumes the primary 
+// installation was successfully installed as a standalone site
+	require($AT_SUB_INCLUDE_PATH.'/config_tmp.inc.php');
+	$_POST['submit'] = "1";
+	$_POST['db_host'] = DB_HOST;
+	$_POST['db_login'] = DB_USER;
+	$_POST['db_port'] = DB_PORT;
+	$_POST['db_password'] = DB_PASSWORD;
+	$_POST['db_name'] = "atutor_".$AT_SUBSITE;
+	$_POST['tb_prefix'] = "AT".$AT_SUBSITE."_";
+	$_POST['get_file'] = AT_FORCE_GET_FILE;
+
+}
 
 if(isset($_POST['submit'])) {
 	unset($errors);

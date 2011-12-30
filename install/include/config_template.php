@@ -15,7 +15,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function write_config_file($filename, $comments) {
-	 print_r($filename);
+	 //print_r($filename);
 	global $config_template;
 
 	$tokens = array('{USER}',
@@ -29,7 +29,8 @@ function write_config_file($filename, $comments) {
 					'{GENERATED_COMMENTS}',
 					'{CONTENT_DIR}',
 					'{MAIL_USE_SMTP}',
-					'{GET_FILE}'
+					'{GET_FILE}',
+					'{SUB_SITE}'
 				);
 
 	if ($_POST['step1']['old_path'] != '') {
@@ -44,7 +45,8 @@ function write_config_file($filename, $comments) {
 					$comments,
 					addslashes(urldecode($_POST['step5']['content_dir'])),
 					$_POST['step1']['smtp'],
-					$_POST['step1']['get_file']
+					$_POST['step1']['get_file'],
+					$_POST['step4']['sub_site']
 				);
 	} else {
 		$values = array(urldecode($_POST['step2']['db_login']),
@@ -58,7 +60,8 @@ function write_config_file($filename, $comments) {
 					$comments,
 					addslashes(urldecode($_POST['step4']['content_dir'])),
 					$_POST['step3']['smtp'],
-					$_POST['step4']['get_file']
+					$_POST['step4']['get_file'],
+					$_POST['step4']['sub_site']
 				);
 	}
 
@@ -124,6 +127,11 @@ define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 /* to ATutor_install_dir/content/ and AT_CONTENT_DIR will be ignored.   */
 /* This option is used for compatability with IIS and Apache 2.         */
 define('AT_FORCE_GET_FILE', {GET_FILE});
+
+/* If this installation is a subsite set to TRUE, otherwise if it is    */
+/* a standalone installation of a base installation for multisite set   */
+/* to FALSE																*/
+define('AT_SUB_SITE', {SUB_SITE});
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('AT_INSTALL', TRUE);

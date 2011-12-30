@@ -11,7 +11,16 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-print_r($_POST);
+
+if(isset($AT_SUBSITE)){
+	$_POST['submit'] = "1";
+	$_POST['content_dir'] = $AT_SUB_INCLUDE_PATH."/content";
+	require($AT_SUB_INCLUDE_PATH.'/config_tmp.inc.php');
+	$_POST['get_file'] = AT_FORCE_GET_FILE;
+	$_POST['sub_site'] = "TRUE";
+} else {
+	$_POST['sub_site'] = "FALSE";
+} 
 if (isset($_POST['submit'])) {
 	$_POST['content_dir'] = $stripslashes($_POST['content_dir']);
 
@@ -182,6 +191,8 @@ if (isset($_POST['step1']['old_version'])) {
 	// the following code checks to see if get.php is being executed, then sets $_POST['get_file'] appropriately:
 	$headers = array();
 	$path  = substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php')) . 'get.php/?test';
+	//debug($path);
+	//exit;
 	$port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
 
 	$host = parse_url($_SERVER['HTTP_HOST']);
@@ -234,6 +245,7 @@ if (isset($_POST['step1']['old_version'])) {
 	<input type="hidden" name="step" value="<?php echo $step; ?>" />
 	<input type="hidden" name="copy_from" value="<?php echo $copy_from; ?>" />
 	<input type="hidden" name="get_file" value="<?php echo $get_file; ?>" />
+	<input type="hidden" name="sub_site" value="<?php echo $sub_site; ?>" />
 	<?php print_hidden($step); ?>
 
 <?php if (isset($_POST['step1']['old_version'])) : ?>

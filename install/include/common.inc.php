@@ -1,7 +1,9 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 $domain = ($_SERVER['HTTP_HOST']);
-$AT_SUB_INCLUDE_PATH = "/var/www/atutor/sites/$domain";
+$rootpath = dirname($_SERVER['DOCUMENT_ROOT']);
+//$AT_SUBSITE='';
+$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
 error_reporting(E_ALL ^ E_NOTICE);
 @set_time_limit(0);
 

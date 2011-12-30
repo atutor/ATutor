@@ -14,7 +14,7 @@ define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
 
 require('../include/lib/constants.inc.php');
-
+require_once(AT_INCLUDE_PATH.'common.inc.php');
 $new_version = VERSION;
 
 header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -393,11 +393,19 @@ $not_as_good = FALSE;
 		</form></td>
 	</tr>
 	</table>
+		<?php endif;		?>	
+
+<?php	
+//debug($AT_SUBSITE);
+
+if($AT_SUBSITE == '' && $no_good == ''){ ?>
 	<table cellspacing="0" cellpadding="10" align="center" width="45%">
 	<tr>
 		<td align="center"><b>Or</b></td>
 	</tr>
 	</table>
+
+
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
 		<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation &raquo;</strong></td>
@@ -407,6 +415,7 @@ $not_as_good = FALSE;
 		</form></td>
 	</tr>
 	</table>
-<?php endif; ?>
+	<?php } ?>
+
 
 <?php require(AT_INCLUDE_PATH.'footer.php'); ?>

@@ -13,11 +13,18 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 $domain = ($_SERVER['HTTP_HOST']);
-$AT_SUB_INCLUDE_PATH = "/var/www/atutor/sites/$domain";
-print($AT_SUB_INCLUDE_PATH);
-include("$AT_SUB_INCLUDE_PATH/config.inc.php");
+$AT_SUB_INCLUDE_PATH = "/var/www/sites/".$domain;
 
-define('AT_DEVEL', 0);
+if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
+//if svn.php exists, this is a base installation
+	$AT_SUB_INCLUDE_PATH = "/var/www/sites/".$domain."/include";
+
+}else{
+//if svn.php does not exist, this is a subsite installation
+	$AT_SUB_INCLUDE_PATH = "/var/www/sites/".$domain;
+}
+
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
@@ -120,7 +127,7 @@ function check_session()
 
 	error_reporting(0);
 	if (!defined('AT_REDIRECT_LOADED')){
-		include_once($AT_SUB_INCLUDE_PATH.'config.inc.php');
+		include($AT_SUB_INCLUDE_PATH.'/config.inc.php');
 	}
 	error_reporting(AT_ERROR_REPORTING);
 

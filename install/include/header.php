@@ -13,10 +13,11 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 if ($step < 4) {
 	error_reporting(0);
-	include('../include/config.inc.php');
+	include(AT_INCLUDE_PATH.'/include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
+	//echo AT_INSTALL;
 	if (defined('AT_INSTALL')) {
-		include_once(AT_INCLUDE_PATH.'common.inc.php');
+		include_once(AT_INCLUDE_PATH.'/common.inc.php');
 		echo print_meta_redirect();
 		exit;
 	}
@@ -44,3 +45,4 @@ $install_steps[7] = array('name' => 'Done!');
 	<img src="../images/AT_Logo_1_sm.png" height="35" width="97" alt="ATutor Logo" id="logo" />
 </div>
 <div class="content">
+<?php print_r($_POST); ?>
