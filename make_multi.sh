@@ -1,7 +1,7 @@
 #!/bin/sh
-# This shell script is used to create ATutor subsites. Enter any sub site ID 
-# number as the first parameter, and a single word name for the site as the 
-# second paramater( e.g. ./make_multi.sh 234 mysite). This will create a 
+# This shell script is used to create ATutor subsites. Enter a unique sub site 
+# ID number as the first parameter, and a unique single word name for the site 
+# as the second paramater( e.g. ./make_multi.sh 234 mysite). This will create a 
 # directory using that ID, create a symbolic link named equivalent then copy 
 # over the install directory, update the installer's common.inc.php file to 
 # indicate the site is a subsite, create the subsite's content directory and 
@@ -25,14 +25,27 @@ base_http=`hostname -s`.`hostname -d`
 
 # Gather the first command link paramater (ID) and assign it to the
 # sub_dir variable
+
 sub_dir=$1
 
-# Determine the path of the sub site
+# Determine if the path of the sub site exists yet
 domain_dir=$base_dir/$sub_dir.$base_http
-
+if [ -d $domain_dir ]
+	then 	
+	echo "The directory $domain_dir already exists"
+	exit 1
+fi
 # Gather the second command line parameter (alias) and assign it
 # to the domain_dir_alias variable
 domain_dir_alias=$2
+
+# Determine if the alias of the sub site exists yet
+subsite_alias=$base_dir/$domain_dir_alias.$base_http
+if [ -h $subsite_alias ]
+	then
+	echo "Alias already exists. Try another"
+	exit 1
+fi
 
 # Create the sub site's directory and make it writable
 echo 'Creating ' $domain_dir
@@ -81,6 +94,6 @@ chmod a+w $domain_dir/mods
 # Create a symbolic link between the ID based directory for the sub site, and 
 # and the alias directory
 # echo 'Creating link ' $base_dir.$domain_dir_alias.$base_http
-ln -s $domain_dir $base_dir/$domain_dir_alias.$base_http
+ln -s $domain_dir $subsite_alias
 
 #echo "DONE, send the link http://$domain_dir_alias.$base_http to the alias directory to the new sub site's administrator"
