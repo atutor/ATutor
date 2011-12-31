@@ -24,7 +24,7 @@ if (!$new_version = $_POST['new_version']) {
 	$new_version = $_POST['step2']['new_version'];
 }
 
-$step = intval($_POST['step']);
+$step = intval($_REQUEST['step']);
 
 if ($step == 0) {
 	$step = 1;

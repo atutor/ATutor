@@ -37,6 +37,7 @@ global $_custom_css;
 global $_custom_head;
 global $substr, $strlen, $_course_id;
 global $_tool_shortcuts;
+global $AT_SUB_INCLUDE_PATH;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 //require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
@@ -48,7 +49,7 @@ $savant->assign('base_tmpl_path', $_SERVER['HTTP_HOST']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 $savant->assign('just_social', $_config['just_social']);
-
+$savant->assign('at_sub_include_path', $AT_SUB_INCLUDE_PATH);
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
 
@@ -61,7 +62,7 @@ if (isset($course_base_href) || isset($content_base_href)) {
 }
 
 $savant->assign('content_base_href', $_tmp_base_href);
-$savant->assign('base_href', AT_BASE_HREF);
+//$savant->assign('base_href', AT_BASE_HREF);
 
 //Handle pretty url pages
 if ((($_config['course_dir_name'] + $_config['pretty_url']) > 0) && ($temp = strpos($_SERVER['PHP_SELF'], AT_PRETTY_URL_HANDLER)) > 0){

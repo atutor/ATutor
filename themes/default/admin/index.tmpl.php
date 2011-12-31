@@ -50,7 +50,7 @@
 		
 	</div>
 
-	
+	<?php if(AT_SUB_SITE === FALSE){ ?>
 	<div class="input-form" style="width: 98%;">
 		<form method="get" action="mods/_standard/patcher/index_admin.php">
 			<div class="row">
@@ -63,6 +63,7 @@
 			</div>
 		</form>
 	</div>
+	<?php } ?>
 	<div class="input-form" style="width: 98%">
 		<div class="row">
 			<h3><?php echo _AT('statistics_information'); ?></h3>

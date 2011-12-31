@@ -16,12 +16,14 @@ if(isset($AT_SUBSITE)){
 // installation and bypass the db setup step. This assumes the primary 
 // installation was successfully installed as a standalone site
 	require($AT_SUB_INCLUDE_PATH.'/config_tmp.inc.php');
+	$hostname = gethostname();
+	$hostname = str_replace('.', '_', $hostname);
 	$_POST['submit'] = "1";
 	$_POST['db_host'] = DB_HOST;
 	$_POST['db_login'] = DB_USER;
 	$_POST['db_port'] = DB_PORT;
 	$_POST['db_password'] = DB_PASSWORD;
-	$_POST['db_name'] = "atutor_".$AT_SUBSITE;
+	$_POST['db_name'] = $AT_SUBSITE."_".$hostname;
 	$_POST['tb_prefix'] = "AT".$AT_SUBSITE."_";
 	$_POST['get_file'] = AT_FORCE_GET_FILE;
 

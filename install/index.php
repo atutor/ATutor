@@ -12,9 +12,23 @@
 
 define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
+$domain = ($_SERVER['HTTP_HOST']);
+$rootpath = $dirname = dirname($_SERVER['DOCUMENT_ROOT']);
+$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
 
-require('../include/lib/constants.inc.php');
-require_once(AT_INCLUDE_PATH.'common.inc.php');
+if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
+//if svn.php exists, this is a base installation
+	$AT_SUB_INCLUDE_PATH = "$rootpath/$domain/include";
+	require('../include/lib/constants.inc.php');
+	require_once('include/common.inc.php');
+
+}else{
+//if svn.php does not exist, this is a subsite installation
+	$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
+	require_once($AT_SUB_INCLUDE_PATH.'/install/include/common.inc.php');
+}
+
+
 $new_version = VERSION;
 
 header('Cache-Control: no-store, no-cache, must-revalidate');
@@ -396,7 +410,6 @@ $not_as_good = FALSE;
 		<?php endif;		?>	
 
 <?php	
-//debug($AT_SUBSITE);
 
 if($AT_SUBSITE == '' && $no_good == ''){ ?>
 	<table cellspacing="0" cellpadding="10" align="center" width="45%">
