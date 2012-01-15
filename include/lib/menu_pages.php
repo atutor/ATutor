@@ -203,25 +203,6 @@ if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION
 	$_pages['users/browse.php']['parent']    = AT_NAV_START;
 	$_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
 
-
-if (isset($_SESSION['member_id']) && get_instructor_status() === TRUE)	
-{
-	$_pages['mods/_core/courses/users/create_course.php']['title_var'] = 'create_course';
-$_pages['mods/_core/courses/users/create_course.php']['parent']    = 'users/index.php';
-$_pages['mods/_core/courses/users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
-$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
-
-}
-else if (isset($_SESSION['member_id']) && ALLOW_INSTRUCTOR_REQUESTS)
-{
-
-	  $_pages['mods/_core/courses/users/create_course.php']['title_var'] = 'request_instructor_priv';
-$_pages['mods/_core/courses/users/create_course.php']['parent']    = 'users/index.php';
-$_pages['mods/_core/courses/users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
-$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
-
-}
-
 $_pages['users/private_enroll.php']['title_var'] = 'enroll';
 $_pages['users/private_enroll.php']['parent']    = 'users/index.php';
 
