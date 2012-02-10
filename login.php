@@ -15,7 +15,7 @@
 $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-
+//
 // For security reasons the token has to be generated anew before each login attempt.
 // The entropy of SHA-1 input should be comparable to that of its output; in other words, the more randomness you feed it the better.
 
