@@ -1,4 +1,4 @@
-<p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
+<p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
 <p>
 	<?php if (($this->row['answer_0'] == 1) && ($this->answers == 1)): ?>
