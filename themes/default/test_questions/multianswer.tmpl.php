@@ -1,4 +1,4 @@
-<p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
+<p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
 <input type="hidden" name="answers[<?php echo $this->row['question_id']; ?>][]" value="-1" />
 

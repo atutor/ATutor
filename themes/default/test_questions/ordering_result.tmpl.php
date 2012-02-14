@@ -1,4 +1,4 @@
-<p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
+<p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
 <ol style="margin: 0px; padding: 0px">
 	<?php for ($i=0; $i < $this->num_choices; $i++): ?>

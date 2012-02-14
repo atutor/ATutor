@@ -1,4 +1,4 @@
-<p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
+<p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
 <p><input type="radio" name="answers[<?php echo $this->row['question_id']; ?>]" value="1" id="choice_<?php echo $this->row['question_id']; ?>_0" <?php if ($this->response == 1):?>checked="checked"<?php endif; ?>/><label for="choice_<?php echo $this->row['question_id']; ?>_0"><?php echo _AT('true'); ?></label></p>
 

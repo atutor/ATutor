@@ -362,6 +362,8 @@ $_field_formatting['themes.title']				= AT_FORMAT_NONE;
 $_field_formatting['tests_answers.answer']		= AT_FORMAT_NONE;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
 $_field_formatting['tests_questions.*']			= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
+// This constant is used to in the test question template scripts to display the preview and result.
+$_field_formatting['tests_questions.quotesNotConverted']	= AT_FORMAT_ALL;
 $_field_formatting['tests_questions_categories.title']	= AT_FORMAT_NONE;
 
 $_field_formatting['photo_albums.*']            = AT_FORMAT_QUOTES;
