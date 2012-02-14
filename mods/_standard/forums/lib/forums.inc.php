@@ -64,7 +64,7 @@ function get_forums($course) {
 		$result = mysql_query($sql, $db);
 		
 		if (mysql_num_rows($result) > 0){
-			$groups = .$group .',';
+			$groups .= $group .',';
 		}
 	}
 	if (isset($groups)) {
