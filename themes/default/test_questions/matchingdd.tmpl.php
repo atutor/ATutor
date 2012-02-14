@@ -1,4 +1,4 @@
-<p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
+<p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
 <?php $tmp_response = implode('|', $this->response); ?>
 <?php $_SESSION['dd_question_ids'][$this->row['question_id']] = 1; ?>
