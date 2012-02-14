@@ -48,7 +48,7 @@ for ($i=0; $i < 10; $i++) {
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html lang="<?php echo $_SESSION['lang']; ?>">
 <head>
-	<title><?php echo SITE_NAME; ?> : <?php echo AT_print($row['question'], 'tests_questions.question'); ?></title>
+	<title><?php echo SITE_NAME; ?> : <?php echo AT_print($row['question'], 'tests_questions.quotesNotConverted'); ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $myLang->getCharacterSet(); ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2007 by http://atutor.ca" />
 	<base href="<?php echo AT_BASE_HREF . $content_base_href; ?>" />
@@ -115,7 +115,7 @@ li.answer {
 						<?php endfor; ?>
 					</select>
 				
-				<?php echo AT_print($row['choice_'.$i], 'tests_questions.question'); ?></li>
+				<?php echo AT_print($row['choice_'.$i], 'tests_questions.quotesNotConverted'); ?></li>
 			<?php endif; ?>
 		<?php endfor; ?>
 	</ul>
@@ -123,7 +123,7 @@ li.answer {
 	<ol style="position: absolute; list-style-type: upper-alpha; top: 10px; left: 310px" id="a">
 		<?php for ($i=0; $i < 10; $i++): ?>
 			<?php if ($row['option_'. $i] != ''): ?>
-				<li class="answer" id="a<?php echo $i; ?>" value="<?php echo $i; ?>"><?php echo $_letters[$i]; ?>. <?php echo AT_print($row['option_'.$i], 'tests_questions.question'); ?></li>
+				<li class="answer" id="a<?php echo $i; ?>" value="<?php echo $i; ?>"><?php echo $_letters[$i]; ?>. <?php echo AT_print($row['option_'.$i], 'tests_questions.quotesNotConverted'); ?></li>
 			<?php endif; ?>
 		<?php endfor; ?>
 	</ol>
