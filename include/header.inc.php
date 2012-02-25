@@ -62,7 +62,7 @@ if (isset($course_base_href) || isset($content_base_href)) {
 }
 
 $savant->assign('content_base_href', $_tmp_base_href);
-//$savant->assign('base_href', AT_BASE_HREF);
+$savant->assign('base_href', AT_BASE_HREF);
 
 //Handle pretty url pages
 if ((($_config['course_dir_name'] + $_config['pretty_url']) > 0) && ($temp = strpos($_SERVER['PHP_SELF'], AT_PRETTY_URL_HANDLER)) > 0){
