@@ -124,7 +124,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	echo '
 	    </ul>
-	  <div class="forum-paginator">&nbsp;  
+	  <div class="forum-paginator">&nbsp;
 	  </div><br />';
 
 	$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ";
