@@ -119,6 +119,7 @@ ln -s $thispwd/themes/blumin $domain_dir/themes/blumin
 ln -s $thispwd/themes/greenmin $domain_dir/themes/greenmin
 ln -s $thispwd/themes/idi $domain_dir/themes/idi
 ln -s $thispwd/themes/fluid $domain_dir/themes/fluid
+ln -s $thispwd/themes/atspaces $domain_dir/themes/atspaces
 ln -s $thispwd/themes/mobile $domain_dir/themes/mobile
 ln -s $thispwd/themes/tablet1 $domain_dir/themes/tablet1
 ln -s $thispwd/themes/simplified-desktop $domain_dir/themes/simplified-desktop
