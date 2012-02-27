@@ -1,4 +1,6 @@
-
+<?php 
+if(!AT_SUB_SITE){
+?>
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	
 <div class="input-form">
@@ -16,7 +18,7 @@
 </div>
 
 </form>
-
+<?php } // end if AT_SUB_SITE ?>
 <?php 
 if (count($this->keys) > 0)
 {
@@ -60,9 +62,20 @@ if (count($this->keys) > 0)
 </form>
 <br />
 <?php 
-}
+} else {
+?>
+<div style="border:1p solid #F6F4DA">
+<p> No modules available to install</p>
+
+</div>
+
+<?php }
 ?>
 
+
+<?php 
+if(!AT_SUB_SITE){
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 
 ?>
@@ -140,3 +153,4 @@ else
 ?>
 </table>
 </form>
+<?php } // end if AT_SUB_SITE ?>
