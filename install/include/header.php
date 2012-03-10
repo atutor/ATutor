@@ -22,6 +22,9 @@ if ($step < 4) {
 		exit;
 	}
 }
+if(isset($AT_SUBSITE)){
+	require('/srv/www/include/config.inc.php');
+}
 if(!defined(VERSION)){
 	$new_version = '';
 }

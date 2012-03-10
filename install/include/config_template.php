@@ -16,7 +16,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 function write_config_file($filename, $comments) {
 	 //print_r($filename);
-	global $config_template;
+	global $config_template, $AT_SUBSITE;
 
 	$tokens = array('{USER}',
 					'{PASSWORD}',
@@ -32,7 +32,43 @@ function write_config_file($filename, $comments) {
 					'{GET_FILE}',
 					'{SUB_SITE}'
 				);
-
+	if($AT_SUBSITE != ''){
+		$db_pwd = MYSQL_PW;
+	}else{
+		$db_pwd = addslashes(urldecode($_POST['step1']['db_password']));
+	}
+	if ($_POST['step1']['old_path'] != '') {
+		$values = array(urldecode($_POST['step1']['db_login']),
+					$db_pwd,
+					$_POST['step1']['db_host'],
+					$_POST['step1']['db_port'],
+					$_POST['step1']['db_name'],
+					$_POST['step1']['tb_prefix'],
+					addslashes(urldecode($_POST['step1']['header_img'])),
+					addslashes(urldecode($_POST['step1']['header_logo'])),
+					$comments,
+					addslashes(urldecode($_POST['step5']['content_dir'])),
+					$_POST['step1']['smtp'],
+					$_POST['step1']['get_file'],
+					$_POST['step4']['sub_site']
+				);
+	} else {
+		$values = array(urldecode($_POST['step2']['db_login']),
+					$db_pwd,
+					$_POST['step2']['db_host'],
+					$_POST['step2']['db_port'],
+					$_POST['step2']['db_name'],
+					$_POST['step2']['tb_prefix'],
+					'', //header image
+					'', //header logo
+					$comments,
+					addslashes(urldecode($_POST['step4']['content_dir'])),
+					$_POST['step3']['smtp'],
+					$_POST['step4']['get_file'],
+					$_POST['step4']['sub_site']
+				);
+	}
+/*
 	if ($_POST['step1']['old_path'] != '') {
 		$values = array(urldecode($_POST['step1']['db_login']),
 					addslashes(urldecode($_POST['step1']['db_password'])),
@@ -64,7 +100,7 @@ function write_config_file($filename, $comments) {
 					$_POST['step4']['sub_site']
 				);
 	}
-
+*/
 	$config_template = str_replace($tokens, $values, $config_template);
 
 	if (!$handle = @fopen($filename, 'wb')) {

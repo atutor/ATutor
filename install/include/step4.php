@@ -56,8 +56,13 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		} else {
 			$status = 2;
 		}
+		if(isset($AT_SUBSITE)){
+			$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], MYSQL_PW);
 
-		$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
+		}else{
+			$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
+
+		}
 		mysql_select_db($_POST['step2']['db_name'], $db);
 
 		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (NULL,'$_POST[username]','$_POST[password]','$_POST[email]','','','','', '','', '','','','','', '',$status,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";

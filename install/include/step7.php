@@ -150,12 +150,20 @@ print_progress($step);
 	<tr>
 		<td class="row1"><b>MySQL Version:</b></td>
 		<td class="row1"><?php
-
-			if ($_POST['step1']['old_path'] != '') {
-				$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+			if(isset($AT_SUBSITE)){
+				if ($_POST['step1']['old_path'] != '') {
+					$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], MYSQL_PW);
+				} else {
+					$db     = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], MYSQL_PW);
+				}			
 			} else {
-				$db     = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+				if ($_POST['step1']['old_path'] != '') {
+					$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+				} else {
+					$db     = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+				}			
 			}
+
 
 			$sql    = 'SELECT VERSION() AS version';
 			$result = @mysql_query($sql, $db);

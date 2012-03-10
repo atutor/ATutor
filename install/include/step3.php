@@ -81,7 +81,12 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		$errors[] = 'Personal Account Last Name cannot be empty.';
 	}
 	if (!isset($errors)) {
-		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
+		if(isset($AT_SUBSITE)){
+			$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], MYSQL_PW);
+		}else{
+			$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
+		}
+
 		@mysql_select_db($_POST['step2']['db_name'], $db);
 
 		$_POST['account_email'] = $addslashes($_POST['account_email']);
