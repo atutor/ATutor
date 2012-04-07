@@ -16,7 +16,7 @@
 ###########
 
 ######
-# Make sure there's a subsite ID and Alias passwed to this script
+# Make sure there's a subsite ID and Alias passed to this script
 if [ -z $1 ]
 	then 	
 	echo "No ATutor site ID was provided"
@@ -29,14 +29,31 @@ if [ -z $2 ]
 	echo "No ATutor site alias was provided"
 	exit 1
 fi
+
+# If sitepath is passed, use it as the basedir
+# else use the default parent of the multisite code base
+if [ -n $3 ]
+	then 	
+	base_dir=$3
+else
+	thispwd=$(readlink -f "$0")
+	thispwd=`dirname $thispwd`
+	base_dir=`dirname "$thispwd"`
+	echo "created $basedir"
+fi
+#echo $sitepath
+#exit 1
 ####
 # Determine where the make_multi.sh script is being run from
 # Sub sites will be created next to the base ATutor installation
 #thispwd=`pwd -P`
 #base_dir=`dirname $thispwd`
-thispwd=$(readlink -f "$0")
-thispwd=`dirname $thispwd`
-base_dir=`dirname "$thispwd"`
+#if [ -n $sitepath]
+#	then
+
+
+
+
 
 # Detect the hostname, to be used in creating subsite directories
 base_http=`hostname -s`.`hostname -d`
@@ -66,7 +83,7 @@ domain_dir_alias=$2
 domain_dir=$base_dir/$sub_dir.$base_http
 if [ -d $domain_dir ]
 	then 	
-	echo "The site http://$domain_dir_alias.$base_http already exists"
+	echo "The site https://$domain_dir_alias.$base_http exists"
 	exit 1
 fi 
 # Determine if the alias of the sub site exists yet
@@ -132,8 +149,8 @@ chmod a+w $domain_dir/mods
 # and the alias directory
 # echo 'Creating link ' $base_dir.$domain_dir_alias.$base_http
 # echo 'Creating ' $subsite_alias
-echo "Creating http://$2.$base_http<br />"
+echo "Creating https://$2.$base_http<br />"
 ln -s $domain_dir $subsite_alias
 
-echo "DONE, Your ATutor installation is ready for setup at <a href=\"http://$2.$base_http\">http://$2.$base_http</a>"
+echo "DONE, Your ATutor installation is ready for setup at <a href=\"https://$2.$base_http\">https://$2.$base_http</a>"
 
