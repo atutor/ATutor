@@ -32,11 +32,14 @@ function write_config_file($filename, $comments) {
 					'{GET_FILE}',
 					'{SUB_SITE}'
 				);
+
 	if($AT_SUBSITE != ''){
-		$db_pwd = MYSQL_PW;
+		//$db_pwd = MYSQL_PW;
+		$db_pwd = addslashes(urldecode($_POST['step2']['db_password']));
 	}else{
-		$db_pwd = addslashes(urldecode($_POST['step1']['db_password']));
+		$db_pwd = addslashes(urldecode($_POST['step2']['db_password']));
 	}
+
 	if ($_POST['step1']['old_path'] != '') {
 		$values = array(urldecode($_POST['step1']['db_login']),
 					$db_pwd,

@@ -87,12 +87,8 @@ if (isset($errors)) {
 		if (($_POST['step1']['header_img'] != '' || $_POST['step1']['header_logo'] != '') 
 			&& $new_version == '1.5' && $_POST['step1']['old_version'] == '1.4.3')
 			{
-				if(isset($AT_SUBSITE)){
-					$db = mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], MYSQL_PW);		
-				}else{
-					$db = mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));		
-				}
-				
+				$db = mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+
 				mysql_select_db($_POST['step1']['db_name'], $db);
 
 				$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."themes VALUES ('ATutor_alt', '1.5', 'default_oldheader', NOW() , 'Backwards compatible default theme', 2)";

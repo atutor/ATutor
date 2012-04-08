@@ -23,7 +23,7 @@ if(isset($AT_SUBSITE)){
 	$_POST['db_host'] = DB_HOST;
 	$_POST['db_login'] = DB_USER;
 	$_POST['db_port'] = DB_PORT;
-	/* $_POST['db_password'] = md5(DB_PASSWORD); */
+	$_POST['db_password'] = DB_PASSWORD;
 	$_POST['db_name'] = $AT_SUBSITE."_".$hostname;
 	$_POST['tb_prefix'] = "AT".$AT_SUBSITE."_";
 	$_POST['get_file'] = AT_FORCE_GET_FILE;
@@ -35,11 +35,7 @@ if(isset($_POST['submit'])) {
 	unset($progress);
 
 	//check DB & table connection
-	if(isset($AT_SUBSITE)){
-		$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], MYSQL_PW);
-	}else{
-		$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
-	}
+	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
 
 	if (!$db) {
 		$errors[] = 'Unable to connect to database server.';

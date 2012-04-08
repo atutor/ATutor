@@ -27,7 +27,7 @@ if(isset($AT_SUBSITE)){
 ?>
 <p>License Agreement</p>
 
-<p>You agree to use ATutor as it was intended to be used to create and deliver Web-based instructional materials. Any other use may result in the discontinuation of service.  </p>
+<p>You agree to use ATutor as it was intended to be used to create and deliver Web-based instructional materials. Any other use may result in the discontinuation of service.   </p>
 
 <p>If you do not agree to the Terms of Use then you may not install and use ATutor.</p>
 
