@@ -1,33 +1,36 @@
-<?php if (!is_writeable(realpath('./../../../themes'))): ?>
-	<div class="input-form">
-		<div class="row">
-			<?php echo _AT('install_themes_text', realpath('./../../../themes')); ?>		
+<?php 
+if(!AT_SUB_SITE){
+	if (!is_writeable(realpath('./../../../themes'))): ?>
+		<div class="input-form">
+			<div class="row">
+				<?php echo _AT('install_themes_text', realpath('./../../../themes')); ?>		
+			</div>
 		</div>
-	</div>
-<?php else: ?>
-	<form name="importForm" method="post" action="mods/_core/themes/import.php" enctype="multipart/form-data">
-	<div class="input-form" style="width:95%;">
-		<div class="row">
-			<h3><?php echo _AT('import_theme'); ?></h3>
+	<?php else: ?>
+		<form name="importForm" method="post" action="mods/_core/themes/import.php" enctype="multipart/form-data">
+		<div class="input-form" style="width:95%;">
+			<div class="row">
+				<h3><?php echo _AT('import_theme'); ?></h3>
+			</div>
+	
+			<div class="row">
+				<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
+				<input type="file" name="file" size="40" id="file" />
+			</div>
+	
+			<div class="row">
+				<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
+				<input type="text" name="url" value="http://" size="40" id="url" />
+			</div>
+				
+			<div class="row buttons">
+				<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
+			</div>
 		</div>
-
-		<div class="row">
-			<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
-			<input type="file" name="file" size="40" id="file" />
-		</div>
-
-		<div class="row">
-			<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
-			<input type="text" name="url" value="http://" size="40" id="url" />
-		</div>
-			
-		<div class="row buttons">
-			<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
-		</div>
-	</div>
-	</form>
-	<br />
-<?php endif; ?>
+		</form>
+		<br />
+	<?php endif; ?>
+<?php } ?>
 <?php function print_data_table($this->result, $type) {
 	if (@mysql_num_rows($this->result) == 0) return;
 ?>

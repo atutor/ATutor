@@ -67,36 +67,40 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
-<?php if (!is_writeable(realpath('./../../../themes'))): ?>
-	<div class="input-form">
-		<div class="row">
-			<?php echo _AT('install_themes_text', realpath('./../../../themes')); ?>		
+<?php 
+// remove this IF once themes are enabled for multisite.
+if(!AT_SUB_SITE){
+	if (!is_writeable(realpath('./../../../themes'))): ?>
+		<div class="input-form">
+			<div class="row">
+				<?php echo _AT('install_themes_text', realpath('./../../../themes')); ?>		
+			</div>
 		</div>
-	</div>
-<?php else: ?>
-	<form name="importForm" method="post" action="mods/_core/themes/import.php" enctype="multipart/form-data">
-	<div class="input-form" style="width:95%;">
-		<div class="row">
-			<h3><?php echo _AT('import_theme'); ?></h3>
+	<?php else: ?>
+		<form name="importForm" method="post" action="mods/_core/themes/import.php" enctype="multipart/form-data">
+		<div class="input-form" style="width:95%;">
+			<div class="row">
+				<h3><?php echo _AT('import_theme'); ?></h3>
+			</div>
+	
+			<div class="row">
+				<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
+				<input type="file" name="file" size="40" id="file" />
+			</div>
+	
+			<div class="row">
+				<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
+				<input type="text" name="url" value="http://" size="40" id="url" />
+			</div>
+				
+			<div class="row buttons">
+				<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
+			</div>
 		</div>
-
-		<div class="row">
-			<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
-			<input type="file" name="file" size="40" id="file" />
-		</div>
-
-		<div class="row">
-			<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
-			<input type="text" name="url" value="http://" size="40" id="url" />
-		</div>
-			
-		<div class="row buttons">
-			<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
-		</div>
-	</div>
-	</form>
-	<br />
-<?php endif; 
+		</form>
+		<br />
+	<?php endif; 
+}
 
 $sql    = "SELECT * FROM " . TABLE_PREFIX . "themes WHERE type='".DESKTOP_DEVICE."' ORDER BY title ASC";
 $result = mysql_query($sql, $db);
@@ -132,8 +136,12 @@ print_data_table($result, MOBILE_DEVICE);
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 		<input type="submit" name="default" value="<?php echo _AT('set_default').'&nbsp;'; if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?>" />
+<?php 
+	// remove this IF once themes are enabled for multisite.
+	if(!AT_SUB_SITE){ ?>
 		<input type="submit" name="export"  value="<?php echo _AT('export'); ?>" />
 		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
+	<?php } ?>
 	</td>
 </tr>
 </tfoot>

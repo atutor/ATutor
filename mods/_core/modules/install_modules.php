@@ -17,7 +17,6 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_MODULES);
 require(AT_INCLUDE_PATH.'../mods/_core/modules/classes/ModuleListParser.class.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
-debug(AT_SUB_SITE);
 // delete all folders and files in $dir
 function clear_dir($dir)
 {
