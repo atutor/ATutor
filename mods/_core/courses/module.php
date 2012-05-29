@@ -17,12 +17,16 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 		$this->_pages['mods/_core/courses/admin/courses.php']['title_var'] = 'courses';
 		$this->_pages['mods/_core/courses/admin/courses.php']['parent']    = AT_NAV_ADMIN;
 		$this->_pages['mods/_core/courses/admin/courses.php']['guide']     = 'admin/?p=courses.php';
-	if(defined('DISABLE_CREATE_COURSE')){	
+	if($_config['disable_create'] != "1"){	
+		$this->_pages['mods/_core/courses/admin/courses.php']['children']  = array('mods/_core/enrolment/admin/index.php', 'mods/_core/courses/admin/default_mods.php', 'mods/_core/courses/admin/default_side.php','mods/_core/courses/admin/auto_enroll.php', 'mods/_core/courses/admin/create_course.php');
+
+	} else{
 		$this->_pages['mods/_core/courses/admin/courses.php']['children']  = array('mods/_core/enrolment/admin/index.php', 'mods/_core/courses/admin/default_mods.php', 'mods/_core/courses/admin/default_side.php','mods/_core/courses/admin/auto_enroll.php');
+
 	}
 		$this->_pages['mods/_core/courses/admin/instructor_login.php']['title_var'] = 'view';
 		$this->_pages['mods/_core/courses/admin/instructor_login.php']['parent']    = 'mods/_core/courses/admin/courses.php';
-	if(!defined('DISABLE_CREATE_COURSE')){
+	if($_config['disable_create'] != "1"){
 			// if the service module is installed, disable create course when
 			// the course limit is exceeded
 		$this->_pages['mods/_core/courses/admin/create_course.php']['title_var'] = 'create_course';
