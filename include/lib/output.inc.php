@@ -65,6 +65,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	AT_DATE_INDEX_VALUE:		0-x, index into a date array
 */
 function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME) {	
+
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 	global $_config;
 
@@ -114,8 +115,8 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 
 	if ($format_type == AT_DATE_INDEX_VALUE) {
 		// apply timezone offset
-//		$timestamp = apply_timezone($timestamp);
-	
+	//	$timestamp = apply_timezone($timestamp);
+
 		if ($format == '%D') {
 			return _AT($day_name_con[$timestamp-1]);
 		} else if ($format == '%l') {
@@ -142,6 +143,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 		$sec	= substr($timestamp,17,2);
 	    $timestamp	= mktime($hour, $min, $sec, $month, $day, $year);
 
+
 	} else if ($format_type == AT_DATE_MYSQL_TIMESTAMP_14) {
 	    $year		= substr($timestamp,0,4);
 	    $month		= substr($timestamp,4,2);
@@ -150,6 +152,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 	    $minute		= substr($timestamp,10,2);
 	    $second		= substr($timestamp,12,2);
 	    $timestamp	= mktime($hour, $minute, $second, $month, $day, $year);  
+
 	}
 
 	// apply timezone offset
@@ -192,7 +195,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 			} /* else: this token isn't valid. so don't replace it. Eg. try %q */
 		}
 	}
-
+//debug( $output);
 	return $output;
 }
 
@@ -1423,16 +1426,16 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 */
 function apply_timezone($timestamp){
 	global $_config;
-/*
+
 	if($_config['time_zone']){
 		$timestamp = ($timestamp + ($_config['time_zone']*3600));
 	}
-*/
 
 	if(isset($_SESSION['prefs']['PREF_TIMEZONE'])){
 		$timestamp = ($timestamp + ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
 	}
 
 	return $timestamp;
+
 }
 ?>

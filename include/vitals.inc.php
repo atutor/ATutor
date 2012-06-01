@@ -15,11 +15,13 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
+//define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
 // Define Multisite paths
 $domain = ($_SERVER['HTTP_HOST']);
 $rootpath = $dirname = dirname($_SERVER['DOCUMENT_ROOT']);
+$domain = "htdocs/atutorgit";
 $AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
 
 if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
@@ -128,8 +130,14 @@ function check_session()
 
 /**** 0. start system configuration options block ****/
 	//set the timezone, php 5.3+ problem. http://atutor.ca/atutor/mantis/view.php?id=4409
-	date_default_timezone_set('UTC');
-
+/*	
+	if (date_default_timezone_get()) {
+    	$tmzn = date_default_timezone_get();
+	} else if (ini_get('date.timezone')) {
+   		$tmzn =  ini_get('date.timezone');
+	}
+	date_default_timezone_set($tmzn);
+*/
 	error_reporting(0);
 
 	if (!defined('AT_REDIRECT_LOADED')){
@@ -263,9 +271,10 @@ $_config['home_defaults'] .= (isset($_config['home_defaults_2']) ? $_config['hom
 $_config['main_defaults'] .= (isset($_config['main_defaults_2']) ? $_config['main_defaults_2'] : '');
 
 if ($_config['time_zone']) {
+@putenv("TZ={$_config['time_zone']}");
 	//$sql = "SET time_zone='{$_config['time_zone']}'";
 	//mysql_query($sql, $db);
-
+/*
 	if (function_exists('date_default_timezone_set')) {
 	foreach($utc_timezones as $zone){
 
@@ -278,7 +287,9 @@ if ($_config['time_zone']) {
 	} else {
 		@putenv("TZ={$_config['time_zone']}");
 	}
+*/
 }
+
 /***** 6. load language *****/
 // set current language
 require(AT_INCLUDE_PATH . '../mods/_core/languages/classes/LanguageManager.class.php');
