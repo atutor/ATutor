@@ -1306,7 +1306,7 @@ function is_mobile_theme($theme) {
 	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE type='".MOBILE_DEVICE."'";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
-		if(AT_SUB_SITE === TRUE){
+		if(defined(AT_SUB_SITE)){
 			if ($row['dir_name'] == $theme && is_dir($AT_SUB_INCLUDE_PATH . '/themes/' . $theme)) return true;
 		}else{
 			if ($row['dir_name'] == $theme && is_dir(AT_INCLUDE_PATH . '../themes/' . $theme)) return true;
