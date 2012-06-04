@@ -1,5 +1,5 @@
 <?php 
-if(!AT_SUB_SITE){
+if(!defined(AT_SUB_SITE)){
 	if (!is_writeable(realpath('./../../../themes'))): ?>
 		<div class="input-form">
 			<div class="row">

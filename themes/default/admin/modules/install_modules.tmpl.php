@@ -1,5 +1,5 @@
 <?php 
-if(!AT_SUB_SITE){
+if(!define(AT_SUB_SITE)){
 ?>
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	
@@ -74,7 +74,7 @@ if (count($this->keys) > 0)
 
 
 <?php 
-if(!AT_SUB_SITE){
+if(!defined(AT_SUB_SITE)){
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 

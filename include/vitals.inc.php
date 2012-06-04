@@ -328,7 +328,7 @@ require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme a
 
 // set default template paths:
 $savant = new Savant2();
-if(AT_SUB_SITE === TRUE){
+if(defined(AT_SUB_SITE)){
 	$savant->addPath('template', $AT_SUB_INCLUDE_PATH . '/themes/default/');
 }else{
 	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
@@ -407,7 +407,7 @@ if (isset($_SESSION['prefs']['PREF_THEME']) && (file_exists(AT_INCLUDE_PATH . '.
 	}
 }
 
-if(AT_SUB_SITE === TRUE){
+if(defined(AT_SUB_SITE)){
 	$savant->addPath('template', $AT_SUB_INCLUDE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
 	//unset($_SESSION['prefs']['PREF_THEME']);
 	//debug($_SESSION['prefs']['PREF_THEME']);

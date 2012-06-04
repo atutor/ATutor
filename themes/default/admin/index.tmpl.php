@@ -50,7 +50,7 @@
 		
 	</div>
 
-	<?php if(AT_SUB_SITE === FALSE){ ?>
+	<?php if(!defined(AT_SUB_SITE)){ ?>
 	<div class="input-form" style="width: 98%;">
 		<form method="get" action="mods/_standard/patcher/index_admin.php">
 			<div class="row">

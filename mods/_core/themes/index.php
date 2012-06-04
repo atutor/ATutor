@@ -65,11 +65,13 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+
 ?>
 
 <?php 
 // remove this IF once themes are enabled for multisite.
-if(!AT_SUB_SITE){
+if(!defined(AT_SUB_SITE)){
 	if (!is_writeable(realpath('./../../../themes'))): ?>
 		<div class="input-form">
 			<div class="row">
@@ -138,7 +140,7 @@ print_data_table($result, MOBILE_DEVICE);
 		<input type="submit" name="default" value="<?php echo _AT('set_default').'&nbsp;'; if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?>" />
 <?php 
 	// remove this IF once themes are enabled for multisite.
-	if(!AT_SUB_SITE){ ?>
+	if(!defined(AT_SUB_SITE)){ ?>
 		<input type="submit" name="export"  value="<?php echo _AT('export'); ?>" />
 		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
 	<?php } ?>

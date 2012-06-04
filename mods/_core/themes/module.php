@@ -18,7 +18,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_THEMES, TRUE) || admin_authenticate(AT_ADMI
 
 	$this->_pages['mods/_core/themes/index.php']['title_var'] = 'themes';
 	$this->_pages['mods/_core/themes/index.php']['guide']     = 'admin/?p=themes.php';
-	if(!AT_SUB_SITE){
+	if(!defined(AT_SUB_SITE)){
 		$this->_pages['mods/_core/themes/index.php']['children']  = array('mods/_core/themes/install_themes.php');
 	}else{
 		$this->_pages['mods/_core/themes/index.php']['children']  = array('');
