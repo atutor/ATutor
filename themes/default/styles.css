@@ -10,6 +10,13 @@ html,body{
 	margin-left:.8em;
 	float:left;
 }
+
+h1#site-name-lrg {
+	float: left;
+	margin-left:1em;
+	margin-top:-.5em;	
+}
+
 /* main body attributes STARTED HERE */
 body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;

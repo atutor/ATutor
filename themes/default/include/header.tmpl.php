@@ -169,11 +169,20 @@ global $system_courses, $_custom_css, $db;
 
 	<!-- Course Title -->
 	<div id="course_title_container" <?php if(empty($this->icon)){echo ' style="left:1em;"';}   ?>>
-	<h1 id="section-title">sss<?php echo $this->section_title; ?>
+	<?php if(isset($_SESSION['valid_user'])):?>
+	
+	<h1 id="section-title"><?php echo $this->section_title; ?>
 		<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
 	</h1>
+	
+	<?php else: ?>
+	
+	<h1 id="site-name-lrg"><?php echo $this->section_title; ?>
+	</h1>
+	
+	<?php endif; ?>
 	</div>
 
 
