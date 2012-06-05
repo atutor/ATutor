@@ -91,6 +91,7 @@ li.answer {
 .drophover {
 	background-color: #ffc;
 }
+
 </style>
 </head>
 <body>
@@ -99,12 +100,12 @@ li.answer {
 
 <?php for ($i=0; $i < 10; $i++): ?>
 	<?php if ($row['choice_'. $i] != ''): ?>
-		<div id="container<?php echo $i; ?>" style="position: absolute; top: 0px; left: 0px; width: 100%"></div>
+		<div id="container<?php echo $i; ?>" class="dd-question"></div>
 	<?php endif; ?>
 <?php endfor; ?>
 
 <form method="get">
-	<ul style="position: absolute; top: 10px; left: 5px" id="q">
+	<ul class="dd-question" id="q">
 		<?php for ($i=0; $i < 10; $i++): ?>
 			<?php if ($row['choice_'. $i] != ''): ?>
 				<li class="question" id="q<?php echo $i; ?>" value="<?php echo $i; ?>">
@@ -120,7 +121,7 @@ li.answer {
 		<?php endfor; ?>
 	</ul>
 
-	<ol style="position: absolute; list-style-type: upper-alpha; top: 10px; left: 310px" id="a">
+	<ol class="dd-question" id="a">
 		<?php for ($i=0; $i < 10; $i++): ?>
 			<?php if ($row['option_'. $i] != ''): ?>
 				<li class="answer" id="a<?php echo $i; ?>" value="<?php echo $i; ?>"><?php echo $_letters[$i]; ?>. <?php echo AT_print($row['option_'.$i], 'tests_questions.question'); ?></li>

@@ -2950,3 +2950,69 @@ margin: 0;
  * 
  * 
  */
+
+/* Test template styles */
+
+ul.likert-question{
+	padding: 0px;
+	margin: 0px; 
+	list-style-type: none;
+}
+li.likert-question{
+ 	padding: 4px; 
+ 	display: inline;
+}
+table.matching-question{
+	width:100%
+}
+ul.matching-question{
+	padding: 0px; 
+	margin: 0px; 
+	list-style-type: none;
+}
+li.matching-question{
+	padding: 4px;
+}
+ul.multianswer-question{
+	padding: 0px; 
+	margin: 0px; 
+	list-style-type: none;
+}
+li.multianswer-question{
+	padding: 4px;
+}
+ul.multichoice-question{
+	padding: 0px; 
+	margin: 0px; 
+	list-style-type: none;
+}
+li.multichoice-question{
+	padding: 4px;
+}
+ul.ordering-question{
+	padding: 0px; 
+	margin: 0px; 
+	list-style-type: none;
+}
+li.ordering-question{
+	padding: 4px;
+}
+div.dd-question{
+	position: absolute; 
+	top: 0px; 
+	left: 0px; 
+	width: 100%;
+}
+ul.dd-question{
+	position: absolute; 
+	top: 10px; 
+	left: 5px;
+}
+
+ol.dd-question{
+	position: absolute; 
+	list-style-type: 
+	upper-alpha; 
+	top: 10px; 
+	left: 310px;
+}
