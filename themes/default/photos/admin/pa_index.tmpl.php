@@ -31,7 +31,7 @@
 			<td><?php echo AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME); ?></td>
 		</tr>
 		<?php endforeach; ?>
-		<?php endif; ?>
+
 		</tbody>
 		<tfoot>
 		<tr>
@@ -41,6 +41,11 @@
 			</td>
 		</tr>
 		</tfoot>
+		<?php else: ?>
+			<tr>
+			<td colspan="5"><?php echo _AT('none_found'); ?></td>
+			</tr>
+		<?php endif; ?>
 	</table>
 </form>
 </div>
