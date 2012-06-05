@@ -108,9 +108,9 @@ global $system_courses, $_custom_css, $db;
 	endif; ?>
 
 	<div id="top-links"> <!-- top help/search/login links -->
-			  <div id="top-links-jump">
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<?php if(!$this->just_social): ?>
+			 <div id="top-links-jump">
 			<!-- start the jump menu -->
 			<?php if (empty($_GET)): ?>
 				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
@@ -127,8 +127,10 @@ global $system_courses, $_custom_css, $db;
 					</optgroup>
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" class="button" /> </form>
 			<!-- /end the jump menu -->
-			<?php endif; ?>
 			</div>
+			<?php endif; ?>
+			<?php endif; ?>
+			
 			<div id="top-links-text">
 			<?php if ($_SESSION['is_super_admin']): ?>
 				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
@@ -141,13 +143,12 @@ global $system_courses, $_custom_css, $db;
 					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a>
 				<?php endif; ?>
 			<?php endif; ?>
-		<?php endif; ?>
+
 		<?php if(!$this->just_social): ?>
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> 
 		<?php endif; ?>
-		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>	
 		</div>
-
 	</div>
 
 	<?php // if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
@@ -168,7 +169,7 @@ global $system_courses, $_custom_css, $db;
 
 	<!-- Course Title -->
 	<div id="course_title_container" <?php if(empty($this->icon)){echo ' style="left:1em;"';}   ?>>
-	<h1 id="section-title"><?php echo $this->section_title; ?>
+	<h1 id="section-title">sss<?php echo $this->section_title; ?>
 		<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
