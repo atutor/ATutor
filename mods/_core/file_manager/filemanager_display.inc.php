@@ -175,6 +175,7 @@ if (TRUE || $framed != TRUE) {
 		|| (($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) && ($course_total < $MaxCourseSize))
 		|| ($my_MaxCourseSize-$course_total > 0)) {
 		echo '	<div class="row" style="float: left;">'._AT('OR').'</div>'."\n".'	<div class="row" style="float: left;">'."\n";
+
 		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 		?>
 		<div id="uploader-error-container"></div>
@@ -186,19 +187,19 @@ if (TRUE || $framed != TRUE) {
             <input name="fileData" type="file" />
             <input class="fl-uploader-basic-save" type="submit" value="Save"/>
         </form>
-        
+
         <!-- Uploader container -->
         <form class="flc-uploader fl-uploader fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
-            
+                             
             <!-- File Queue, which is split up into two separate tables: one for the header and body -->
             <table class="fl-uploader-header">
            		<tr>
 					<th class="fl-uploader-file-name">File Name</th>
 					<th class="fl-uploader-file-size">Size</th>
 					<th class="fl-uploader-file-actions"></th>
-				</tr>u
+				</tr>
             </table>
-            
+
             <!-- File Queue body, which is the default container for the FileQueueView component -->
             <table summary="The list of files" class="flc-uploader-queue fl-uploader-queue">
 				<caption>File Upload Queue:</caption>
@@ -218,7 +219,7 @@ if (TRUE || $framed != TRUE) {
 					</tr>
 				</tbody>
 			</table>
-            
+
             <!-- File progress bar template, used to generate progress bars for each file in the queue -->
             <div class="flc-uploader-file-progressor-tmplt fl-uploader-file-progress"></div>            
 
