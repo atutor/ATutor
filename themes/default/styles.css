@@ -1216,7 +1216,7 @@ img.headicon	{
 	text-align: right;
 	border:1px solid white;
 }
-div.course div.shortcuts, a {
+div.course div.shortcuts a {
 	text-align: right;
 	text-decoration:none;
 	clear: left;
@@ -3011,8 +3011,7 @@ ul.dd-question{
 
 ol.dd-question{
 	position: absolute; 
-	list-style-type: 
-	upper-alpha; 
+	list-style-type: upper-alpha; 
 	top: 10px; 
 	left: 310px;
 }
