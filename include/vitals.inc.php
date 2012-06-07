@@ -183,7 +183,7 @@ if (headers_sent()) {
 }
 
 @set_time_limit(0);
-@ini_set('session.gc_maxlifetime', '72000'); /* 20 minutes in seconds  */
+@ini_set('session.gc_maxlifetime', '1200'); /* 20 minutes in seconds  */
 @session_cache_limiter('private, must-revalidate');
 session_name('ATutorID');
 error_reporting(AT_ERROR_REPORTING);

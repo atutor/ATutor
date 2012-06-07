@@ -102,7 +102,7 @@ $custom_head .= '
          	redirUrl     : "'.$_base_path.'logout.php",
             logoutUrl    : "'.$_base_path.'logout.php",
 			warnAfter: '.($_at_timeout*1000).', //session.gc_maxlifetime converted to milliseconds
-			redirAfter: '.(($_at_timeout*1000)+18000000).', // allow 5 more minutes to respond, in milliseconds
+			redirAfter: '.(($_at_timeout*1000)+300000).', // allow 5 more minutes to respond, in milliseconds
 			title        : "'._AT('session_timeout_title').'",
             button_1     : "'._AT('session_timeout_logout_now').'",
             button_2	 : "'._AT('session_timeout_stay_connected').'"
