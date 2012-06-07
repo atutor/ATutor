@@ -85,6 +85,34 @@ if (isset($_custom_head)) {
 ' . $_custom_head;
 }
 
+// Set session timeout warning if user is logged in
+if($_SESSION['valid_user']){
+// Setup the timeout warning when a user logs in
+$_at_timeout = ini_get('session.gc_maxlifetime');
+$custom_head .= '
+	<link rel="stylesheet" href="'.$_base_path.'jscripts/lib/jquery-ui.css">
+	<script src="'.$_base_path.'jscripts/infusion/lib/jquery/core/js/jquery.js"></script>
+	<script src="'.$_base_path.'jscripts/lib/jquery-ui.min.js"></script>
+  	<script src="'.$_base_path.'jscripts/lib/jquery.sessionTimeout.1.0.min.js"></script>
+  	<script type="text/javascript">
+	$(document).ready(function() {
+		$.sessionTimeout({
+		    message      : "'._AT('session_will_expire').'",
+            keepAliveUrl : "'.$_base_path.'include/session_keepalive.php",
+         	redirUrl     : "'.$_base_path.'logout.php",
+            logoutUrl    : "'.$_base_path.'logout.php",
+			warnAfter: '.($_at_timeout*1000).', //session.gc_maxlifetime converted to milliseconds
+			redirAfter: '.(($_at_timeout*1000)+18000000).', // allow 5 more minutes to respond, in milliseconds
+			title        : "'._AT('session_timeout_title').'",
+            button_1     : "'._AT('session_timeout_logout_now').'",
+            button_2	 : "'._AT('session_timeout_stay_connected').'"
+		});
+	});
+	</script>
+  ';
+}
+// End session timeout warning
+
 $savant->assign('custom_css', $custom_head);
 
 if ($onload && ($_SESSION['prefs']['PREF_FORM_FOCUS'] || ($substr($onload, -8) != 'focus();'))) {
