@@ -21,7 +21,7 @@ define('AT_DEVEL_TRANSLATE', 0);
 // Define Multisite paths
 $domain = ($_SERVER['HTTP_HOST']);
 $rootpath = $dirname = dirname($_SERVER['DOCUMENT_ROOT']);
-$domain = "htdocs/atutorgit";
+//$domain = "htdocs/atutorgit";
 $AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
 
 if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
@@ -183,7 +183,7 @@ if (headers_sent()) {
 }
 
 @set_time_limit(0);
-@ini_set('session.gc_maxlifetime', '36000'); /* 10 hours */
+@ini_set('session.gc_maxlifetime', '72000'); /* 20 minutes in seconds  */
 @session_cache_limiter('private, must-revalidate');
 session_name('ATutorID');
 error_reporting(AT_ERROR_REPORTING);
