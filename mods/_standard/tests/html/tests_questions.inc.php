@@ -122,7 +122,7 @@ foreach ($cats as $cat) {
 			echo '<td>';
 			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
 			echo '<td>';
-			echo '<a title="'.AT_print($row[question], 'tests_questions.question').'">';
+			echo '<a title="'.strip_tags($row[question]).'">';
 			echo AT_print((validate_length($row['question'], 100, VALIDATE_LENGTH_FOR_DISPLAY)), 'tests_questions.question');
 			echo '</a>';
 			echo '</td>';

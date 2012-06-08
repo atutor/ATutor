@@ -15,6 +15,12 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
 authenticate(AT_PRIV_TESTS);
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$course_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 // converts array entries to ints
 function intval_array ( & $value, $key) { $value = (int) $value; }
 
