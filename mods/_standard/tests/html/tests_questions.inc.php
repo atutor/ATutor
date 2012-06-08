@@ -62,7 +62,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$cols = 3;
 ?>
 <?php if ($tid): ?>
-	<form method="post" action="mods/_standard/tests/add_test_questions_confirm.php" name="form">
+	<form method="post" action="<?php echo AT_BASE_HREF; ?>mods/_standard/tests/add_test_questions_confirm.php" name="form">
 <?php else: ?>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php endif; ?>
