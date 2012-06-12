@@ -22,6 +22,7 @@ header('Pragma: no-cache');
 
 $domain = ($_SERVER['HTTP_HOST']);
 $rootpath = $dirname = dirname($_SERVER['DOCUMENT_ROOT']);
+$domain = "htdocs/atinstall";
 $AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
 
 if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
@@ -40,6 +41,21 @@ if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
 
 require(AT_INCLUDE_PATH.'header.php');
 ?>
+<script type="text/javascript">
+function SetCookie(cookieName,cookieValue,nDays) {
+	 var today = new Date();
+	 var expire = new Date();
+	 if (nDays==null || nDays==0) nDays=1;
+	 expire.setTime(today.getTime() + 3600000*24*nDays);
+	 document.cookie = cookieName+"="+escape(cookieValue)
+					 + ";expires="+expire.toGMTString();
+	}
+</script>
+<script type="text/javascript">
+	SetCookie('jstest','1','1')
+</script>
+
+
 
 <?php if(isset($AT_SUBSITE)){ ?>
 <p>ATutor does not appear to be installed. <a href="install.php">Continue on to the installation</a>.</p>

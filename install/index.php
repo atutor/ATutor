@@ -14,8 +14,10 @@ define('AT_INCLUDE_PATH', 'include/');
 error_reporting(E_ALL ^ E_NOTICE);
 $domain = ($_SERVER['HTTP_HOST']);
 $rootpath = $dirname = dirname($_SERVER['DOCUMENT_ROOT']);
+$domain = "htdocs/atinstall";
 $AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
-
+//echo $AT_SUB_INCLUDE_PATH;
+//exit;
 if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
 //if svn.php exists, this is a base installation
 	$AT_SUB_INCLUDE_PATH = "$rootpath/$domain/include";
@@ -50,6 +52,17 @@ $warning = '<img src="images/warning.png" width="16" height="16" border="0" alt=
 $no_good = FALSE;
 $not_as_good = FALSE;
 ?>
+
+<script type="text/javascript">
+function SetCookie(cookieName,cookieValue,nDays) {
+	 var today = new Date();
+	 var expire = new Date();
+	 if (nDays==null || nDays==0) nDays=1;
+	 expire.setTime(today.getTime() + 3600000*24*nDays);
+	 document.cookie = cookieName+"="+escape(cookieValue)
+					 + ";expires="+expire.toGMTString();
+	}
+</script>
 <table style="float: right;
 	background-color: #FEFDEF;
 	border: 1pt solid #B8AE9C;
@@ -349,6 +362,28 @@ $not_as_good = FALSE;
 					} ?></td>
 		</tr>
 		</tbody>
+		<tbody>
+		<tr>
+			<th scope="col">Javascript</th>
+			<th scope="col">Detected</th>
+			<th scope="col">Status</th>
+		</tr>
+		<tr>
+			<td>Javascript Enabled?</td>
+			<td>
+			<?php if ($_COOKIE['jstest'] == 1) {
+						echo 'Enabled </td><td align="center">';
+						echo $good;
+					} else {
+						echo 'Disabled</td><td align="center">';
+						echo $bad;
+						$no_good = TRUE;
+					} 
+
+					?>
+			</td>
+		</tr>
+		</tbody>		
 		</table>
 <br />
 
@@ -430,5 +465,4 @@ if($AT_SUBSITE == '' && $no_good == ''){ ?>
 	</table>
 	<?php } ?>
 
-
-<?php require(AT_INCLUDE_PATH.'footer.php'); ?>
+<?php  require(AT_INCLUDE_PATH.'footer.php'); ?>
