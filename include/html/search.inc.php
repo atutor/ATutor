@@ -28,8 +28,9 @@ $checked_display_as_pages		= '';
 $checked_display_as_summaries	= '';
 
 /* some error checking can go here: */
+global $msg, $addslashes;
 if (isset($_GET['search'])) {
-	global $addslashes;
+
 	$_GET['words'] = stripslashes($addslashes($_GET['words']));
 	$_GET['words'] = str_replace(array('"', '\''), '', $_GET['words']);
 	if ($_GET['include'] == 'all') {
