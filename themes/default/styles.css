@@ -3015,3 +3015,14 @@ ol.dd-question{
 	top: 10px; 
 	left: 310px;
 }
+
+/* File Storage */
+.fs_tools{
+ 	width:95%;
+ 	padding-left:3em;
+}
+.fs_tools .input-form{
+	float:left;
+	width:45%;
+	margin-left:1em;
+}

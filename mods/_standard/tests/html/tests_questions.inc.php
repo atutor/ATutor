@@ -23,6 +23,7 @@ if (!isset($_GET['category_id'])) {
 }
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 ?>
+<br style="clear:both;" />
 <fieldset class="group_form" style="width:93%"><legend class="group_form"><?php echo _AT('category'); ?></legend>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
@@ -66,6 +67,7 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php else: ?>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php endif; ?>
+<br style="clear:both;" />
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>

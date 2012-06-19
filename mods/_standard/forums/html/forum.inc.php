@@ -69,9 +69,9 @@ if (!($row = mysql_fetch_assoc($result))) {
 <thead>
 <tr>
 	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF']."?$orders[$order]=subject$page_string"); ?>"><?php echo _AT('topic'); ?></a></th>
-	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF']."?$orders[$order]=num_comments$page_string"); ?>"><?php echo _AT('replies'); ?></a></th>
-	<th scope="col"><?php echo _AT('started_by'); ?></th>
-	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF']."?$orders[$order]=last_comment$page_string"); ?>"><?php echo _AT('last_comment'); ?></a></th>
+	<th scope="col" align="center"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF']."?$orders[$order]=num_comments$page_string"); ?>"><?php echo _AT('replies'); ?></a></th>
+	<th scope="col" align="center"><?php echo _AT('started_by'); ?></th>
+	<th scope="col"  align="center"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF']."?$orders[$order]=last_comment$page_string"); ?>"><?php echo _AT('last_comment'); ?></a></th>
 <?php
 	$colspan = 4;
 	if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
@@ -110,7 +110,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		$row['subject'] = AT_print($row['subject'], 'forums_threads.subject');
 		echo '<tr>';
-		echo '<td>';
+		echo '<td width="35%">';
 
 		if ($_SESSION['valid_user']) {
 			if ($row['stamp'] > $last_accessed[$row['post_id']]['last_accessed']) {
@@ -163,16 +163,16 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		echo '</td>';
 
-		echo '<td width="10%" align="center">'.$row['num_comments'].'</td>';
+		echo '<td width="5%" align="center">'.$row['num_comments'].'</td>';
 
-		echo '<td width="10%"><a href="'.AT_BASE_HREF.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
+		echo '<td width="20%"  align="center"><a href="'.AT_BASE_HREF.'profile.php?id='.$row['member_id'].'">'.get_display_name($row['member_id']).'</a></td>';
 
-		echo '<td width="20%" align="right" nowrap="nowrap">';
+		echo '<td width="20%" align="center" nowrap="nowrap">';
 		echo AT_date(_AT('forum_date_format'),$row['last_comment'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 
 		if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)) {
-			echo '<td nowrap="nowrap">';
+			echo '<td nowrap="nowrap"  align="right" width:10%;>';
 			echo ' <a href="mods/_standard/forums/forum/stick.php?fid='.$fid.SEP.'pid='.$row['post_id'].'"><img src="images/forum/sticky.gif" border="0" alt="'._AT('sticky_thread').'" title="'._AT('sticky_thread').'" /></a> ';
 
 			if ($row['locked'] != 0) {
