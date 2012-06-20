@@ -15,25 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
-//define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
-
-// Define Multisite paths
-$domain = ($_SERVER['HTTP_HOST']);
-$rootpath = $dirname = dirname($_SERVER['DOCUMENT_ROOT']);
-//$domain = "htdocs/atutorgit";
-$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
-
-if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
-//if svn.php exists, this is a base installation
-	$AT_SUB_INCLUDE_PATH = "$rootpath/$domain/include";
-
-}else{
-//if svn.php does not exist, this is a subsite installation
-	$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
-}
-
-
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
@@ -115,6 +97,36 @@ function check_session()
 	return true;
 }
 
+function get_site_path(){
+	// Define Multisite paths
+	$docroot_path = $_SERVER['DOCUMENT_ROOT'];
+	$domain = ($_SERVER['HTTP_HOST']);
+	$site_path = $docroot_path . '/' . $domain . '/';
+	
+	if(file_exists($site_path."/config.inc.php")){
+		// The request is from a subdomain
+		return $site_path;
+	
+	}else{
+		// The request is from a subdirectory
+		// loop thru the URI to locate a config.inc.php
+		$uri = explode('/', $_SERVER['REQUEST_URI']);
+
+		for ($i = 1; $i < count($uri); $i++) {
+			$dir = $docroot_path . implode('/', array_slice($uri, 0, $i));
+
+			if (file_exists($dir . '/config.inc.php')) {
+				return $dir;
+			}
+		}
+	}
+	
+	// The request is from the main site
+	return AT_INCLUDE_PATH;
+}
+
+define(AT_SUBSITE_PATH, get_site_path());
+
 /*
  * structure of this document (in order):
  *
@@ -141,7 +153,7 @@ function check_session()
 	error_reporting(0);
 
 	if (!defined('AT_REDIRECT_LOADED')){
-		include($AT_SUB_INCLUDE_PATH.'/config.inc.php');
+		include_once(AT_SUBSITE_PATH.'/config.inc.php');
 
 	}
 	error_reporting(AT_ERROR_REPORTING);
@@ -328,97 +340,73 @@ require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme a
 
 // set default template paths:
 $savant = new Savant2();
-if(defined(AT_SUB_SITE)){
-	$savant->addPath('template', $AT_SUB_INCLUDE_PATH . '/themes/default/');
-}else{
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
-}
+$savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
 //if user has requested theme change, make the change here
 if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
-    //http://atutor.ca/atutor/mantis/view.php?id=4781
-    //Themes should be in the same folder, disallow '../'
-    $newTheme = str_replace("../", "", $_POST['theme']);
-    $newMobileTheme = str_replace("../", "", $_POST['mobile_theme']);
-    if ($newTheme != $_POST['theme'] || $newMobileTheme != $_POST['mobile_theme']) {
-        header('Location:'.AT_BASE_HREF.'users/preferences.php');
-	    exit;
-    }
-    
-    $_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
-    $_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
+	//http://atutor.ca/atutor/mantis/view.php?id=4781
+	//Themes should be in the same folder, disallow '../'
+	$newTheme = str_replace("../", "", $_POST['theme']);
+	$newMobileTheme = str_replace("../", "", $_POST['mobile_theme']);
+	if ($newTheme != $_POST['theme'] || $newMobileTheme != $_POST['mobile_theme']) {
+		header('Location:'.AT_BASE_HREF.'users/preferences.php');
+		exit;
+	}
+	
+	$_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
+	$_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
 } else if ($_POST['set_default']) {
-    $_SESSION['prefs']['PREF_THEME'] = 'default';
-    $_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
+	$_SESSION['prefs']['PREF_THEME'] = 'default';
+	$_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
 }
 
 // Reset PREF_THEME when:
 // 1. If PREF_THEME is not set 
 // 2. The request is from the mobile device but PREF_THEME is not a mobile theme 
 if (!isset($_SESSION['prefs']['PREF_THEME']) ||
-    $_SESSION['prefs']['PREF_THEME'] == "" ||
-    (is_mobile_device() && !is_mobile_theme($_SESSION['prefs']['PREF_THEME']))) {
+	$_SESSION['prefs']['PREF_THEME'] == "" ||
+	(is_mobile_device() && !is_mobile_theme($_SESSION['prefs']['PREF_THEME']))) {
 	// get default
-	$default_theme = get_default_theme();
-	
-	$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
+	$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 }
-//if(AT_SUB_SITE === TRUE){
-	if ((!is_dir($AT_SUB_INCLUDE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME']) && !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']))|| $_SESSION['prefs']['PREF_THEME'] == '') {
-		$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
-	}
-	//}else{
-	//if (!is_dir(AT_INCLUDE_PATH . '../themes/' . //$_SESSION['prefs']['PREF_THEME']) || $_SESSION['prefs']['PREF_THEME'] == '') {
-	//	$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
-	//}
-//}
+
+if ((!is_dir(AT_SUBSITE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME']) && 
+     !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) ||
+    $_SESSION['course_id'] == -1 ||
+    $_SESSION['prefs']['PREF_THEME'] == '') {
+	$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
+}
 // use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
 // When more mobile themes come in, this should be changed.
-if (isset($_SESSION['prefs']['PREF_THEME']) && (file_exists(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) || file_exists($AT_SUB_INCLUDE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME'])) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
-	if ($_SESSION['course_id'] == -1) {
-		if ($_SESSION['prefs']['PREF_THEME'] == '' || (!is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME']) && !is_dir($AT_SUB_INCLUDE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME']) )) {
-			$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
+if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
+	//check if the theme is enabled
+	$sql = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	
+	if ($row['status'] == 0) {
+		// get user defined default theme if the preference theme is disabled
+		$default_theme = get_default_theme();
+		if (!is_dir(AT_SUBSITE_PATH . '/themes/' . $default_theme['dir_name']) && !is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
+			$default_theme = get_system_default_theme();
 		}
-	} else {
-		//check if enabled
-		$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		if ($row['status'] > 0) {
-		} else {
-			// get default
-			$default_theme = get_default_theme();
-			//if(AT_SUB_SITE === TRUE){
-				if (!is_dir($AT_SUB_INCLUDE_PATH . '/themes/' . $default_theme['dir_name']) && !is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
-				$default_theme = array('dir_name' => get_system_default_theme());
-				}
-			/*}else{
-				if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
-				$default_theme = array('dir_name' => get_system_default_theme());
-			}
-			}*/
-			/*
-			if (!is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
-				$default_theme = array('dir_name' => get_system_default_theme());
-			}
-			*/
-			$_SESSION['prefs']['PREF_THEME'] = $default_theme['dir_name'];
-		}
+		$_SESSION['prefs']['PREF_THEME'] = $default_theme;
 	}
 }
 
-if(defined(AT_SUB_SITE)){
-	$savant->addPath('template', $AT_SUB_INCLUDE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
-	//unset($_SESSION['prefs']['PREF_THEME']);
-	//debug($_SESSION['prefs']['PREF_THEME']);
-	//exit;
-	require($AT_SUB_INCLUDE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
-}else{
-	$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
-	require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
+// find out where PREF_THEME is located
+$sql = "SELECT customized FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
+
+if ($row['customized']) {
+	$theme_folder = AT_SUBSITE_PATH . 'themes/';
+} else {
+	$theme_folder = AT_INCLUDE_PATH . '../themes/';
 }
-//$savant->addPath('template', AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/');
-//require(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
+
+$savant->addPath('template', $theme_folder . $_SESSION['prefs']['PREF_THEME'] . '/');
+require($theme_folder . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 $msg = new Message($savant);
@@ -687,9 +675,9 @@ function add_user_online() {
 	}
 	global $db, $addslashes;
 
-    $expiry = time() + 900; // 15min
-    $sql    = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.$addslashes(get_display_name($_SESSION['member_id'])).'", '.$expiry.')';
-    $result = mysql_query($sql, $db);
+	$expiry = time() + 900; // 15min
+	$sql = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.$addslashes(get_display_name($_SESSION['member_id'])).'", '.$expiry.')';
+	$result = mysql_query($sql, $db);
 
 	/* garbage collect and optimize the table every so often */
 	mt_srand((double) microtime() * 1000000);
@@ -808,12 +796,12 @@ function save_prefs( ) {
 }
 
 function save_email_notification($mnot) {
-    global $db;
-    
-    if ($_SESSION['valid_user']) {
-        $sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify =". $mnot .", creation_date=creation_date, last_login=last_login WHERE member_id =".$_SESSION['member_id'];
-        $result = mysql_query($sql, $db);
-    }
+	global $db;
+	
+	if ($_SESSION['valid_user']) {
+		$sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify =". $mnot .", creation_date=creation_date, last_login=last_login WHERE member_id =".$_SESSION['member_id'];
+		$result = mysql_query($sql, $db);
+	}
 }
 
 /**
@@ -830,7 +818,7 @@ function save_last_cid($cid) {
 	}
 	global $db;
 
-	$_SESSION['s_cid']    = intval($_GET['cid']);
+	$_SESSION['s_cid'] = intval($_GET['cid']);
 
 	if (!$_SESSION['is_admin']   && 
 		!$_SESSION['privileges'] && 
@@ -852,7 +840,7 @@ if ((!isset($_SESSION['is_admin']) || !$_SESSION['is_admin'])       &&
 	!isset($in_get)              && 
 	isset($_SESSION['s_cid']) && $_SESSION['s_cid'] && 
 	isset($_SESSION['cid_time']) && $_SESSION['cid_time'] &&
-    ($_SESSION['course_id'] > 0) && 
+	($_SESSION['course_id'] > 0) && 
 	($_SESSION['s_cid'] != $_GET['cid']) && 
 	($_SESSION['enroll'] != AT_ENROLL_NO) )  
 	{
@@ -1289,7 +1277,7 @@ function get_default_theme() {
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
 
-	return $row;
+	return $row['dir_name'];
 }
 
 function get_system_default_theme() {
@@ -1302,16 +1290,14 @@ function get_system_default_theme() {
 
 function is_mobile_theme($theme) {
 	global $db;
-	global $AT_SUB_INCLUDE_PATH;
 	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE type='".MOBILE_DEVICE."'";
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
-		if(defined(AT_SUB_SITE)){
-			if ($row['dir_name'] == $theme && is_dir($AT_SUB_INCLUDE_PATH . '/themes/' . $theme)) return true;
-		}else{
-			if ($row['dir_name'] == $theme && is_dir(AT_INCLUDE_PATH . '../themes/' . $theme)) return true;
+		if ($row['dir_name'] == $theme && 
+		    (is_dir(AT_SUBSITE_PATH . '/themes/' . $theme) ||
+		     is_dir(AT_INCLUDE_PATH . '/themes/' . $theme))) {
+			return true;
 		}
-
 	}
 
 	return false;
@@ -1580,7 +1566,6 @@ if ( !function_exists('json_decode') ){
  */
 function find_image($image_name, $actual_relative_path = AT_INCLUDE_PATH) {
 	// The returned path is determined by AT_INCLUDE_PATH. If AT_INCLUDE_PATH is undefined, return the parameter itself.
-	global $AT_SUB_INCLUDE_PATH;
 	if (!defined('AT_INCLUDE_PATH')) return $image_name;
 	
 	// string concanation cannot be used at assigning parameter default value

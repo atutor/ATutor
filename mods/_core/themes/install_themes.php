@@ -58,7 +58,7 @@ if (!$connection)
 
 // get theme list
 $theme_folder = $update_server . '/themes/';
-$local_theme_folder = "../../../themes/";
+$local_theme_folder = AT_SUBSITE_PATH. "themes/";
 
 $theme_list_xml = @file_get_contents($theme_folder . 'theme_list.xml');
 
@@ -135,12 +135,12 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 		
 			if ($archive->extract(PCLZIP_OPT_PATH, $theme_content_folder) == 0)
 			{
-		    clear_dir($theme_content_folder);
-		    $msg->addError('CANNOT_UNZIP');
-		  }
+				clear_dir($theme_content_folder);
+				$msg->addError('CANNOT_UNZIP');
+			}
 		
-		  if (!$msg->containsErrors())
-		  {
+			if (!$msg->containsErrors())
+			{
 				// find unzip theme folder name
 				clearstatcache();
 				
@@ -158,16 +158,15 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 					$msg->addError('EMPTY_ZIP_FILE');
 			}
 		
-		  // check if the same theme exists in "themes" folder. If exists, it has been installed
-		  if (!$msg->containsErrors())
-		  {
-		  debug($local_theme_folder. $this_theme_folder);
-		  	if (is_dir($local_theme_folder. $this_theme_folder))
-		  		$msg->addError('ALREADY_INSTALLED');
-		  }
+			// check if the same theme exists in "themes" folder. If exists, it has been installed
+			if (!$msg->containsErrors())
+			{
+				if (is_dir($local_theme_folder. $this_theme_folder))
+				$msg->addError('ALREADY_INSTALLED');
+			}
 
-		  if (!$msg->containsErrors())
-		  {
+			if (!$msg->containsErrors())
+			{
 				header('Location: theme_install_step_1.php?theme='.urlencode($this_theme_folder).SEP.'title='.urlencode($theme_list_array[$_POST["id"]]["name"]));
 				exit;
 			}

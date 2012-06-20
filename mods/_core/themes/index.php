@@ -66,43 +66,39 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-
 ?>
 
 <?php 
-// remove this IF once themes are enabled for multisite.
-if(!defined(AT_SUB_SITE)){
-	if (!is_writeable(realpath('./../../../themes'))): ?>
-		<div class="input-form">
-			<div class="row">
-				<?php echo _AT('install_themes_text', realpath('./../../../themes')); ?>		
-			</div>
+if (!is_writeable(AT_SUBSITE_THEME_DIR)): ?>
+	<div class="input-form">
+		<div class="row">
+			<?php echo _AT('install_themes_text', AT_SUBSITE_THEME_DIR); ?>		
 		</div>
-	<?php else: ?>
-		<form name="importForm" method="post" action="mods/_core/themes/import.php" enctype="multipart/form-data">
-		<div class="input-form" style="width:95%;">
-			<div class="row">
-				<h3><?php echo _AT('import_theme'); ?></h3>
-			</div>
-	
-			<div class="row">
-				<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
-				<input type="file" name="file" size="40" id="file" />
-			</div>
-	
-			<div class="row">
-				<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
-				<input type="text" name="url" value="http://" size="40" id="url" />
-			</div>
-				
-			<div class="row buttons">
-				<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
-			</div>
+	</div>
+<?php else: ?>
+	<form name="importForm" method="post" action="mods/_core/themes/import.php" enctype="multipart/form-data">
+	<div class="input-form" style="width:95%;">
+		<div class="row">
+			<h3><?php echo _AT('import_theme'); ?></h3>
 		</div>
-		</form>
-		<br />
-	<?php endif; 
-}
+
+		<div class="row">
+			<label for="file"><?php echo _AT('upload_theme_package'); ?></label><br />
+			<input type="file" name="file" size="40" id="file" />
+		</div>
+
+		<div class="row">
+			<label for="url"><?php echo _AT('specify_url_to_theme_package'); ?></label><br />
+			<input type="text" name="url" value="http://" size="40" id="url" />
+		</div>
+			
+		<div class="row buttons">
+			<input type= "submit" name="import" value="<?php echo _AT('import'); ?>" />
+		</div>
+	</div>
+	</form>
+	<br />
+<?php endif; 
 
 $sql    = "SELECT * FROM " . TABLE_PREFIX . "themes WHERE type='".DESKTOP_DEVICE."' ORDER BY title ASC";
 $result = mysql_query($sql, $db);
@@ -138,16 +134,19 @@ print_data_table($result, MOBILE_DEVICE);
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 		<input type="submit" name="default" value="<?php echo _AT('set_default').'&nbsp;'; if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?>" />
-<?php 
-	// remove this IF once themes are enabled for multisite.
-	if(!defined(AT_SUB_SITE)){ ?>
 		<input type="submit" name="export"  value="<?php echo _AT('export'); ?>" />
 		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
-	<?php } ?>
 	</td>
 </tr>
 </tfoot>
-<?php while($row = mysql_fetch_assoc($result)) : ?>
+<?php 
+while($row = mysql_fetch_assoc($result)) {
+	if (intval($row["customized"])) {
+		$main_theme_dir = AT_SUBSITE_THEME_DIR;
+	} else {
+		$main_theme_dir = AT_SYSTEM_THEME_DIR;
+	}
+?>
 	<tbody>
 	<tr onmousedown="document.form_<?php echo $type; ?>['t_<?php echo $row['dir_name']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['dir_name']; ?>">
 		<td valign="top">
@@ -169,16 +168,15 @@ print_data_table($result, MOBILE_DEVICE);
 		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
 		<td valign="top"><?php echo $row['extra_info']; ?></td>
 		<td valign="top"><?php
-			if (file_exists('../../../themes/'.$row['dir_name'].'/screenshot.jpg')) { ?>
-				  <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-			<?php		
-			} else if (file_exists('../../../themes/'.$row['dir_name'].'/screenshot.gif')) { ?>
-				 <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-			<?php } ?>
+			if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
+				<img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+			<?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+				<img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+			<?php }?>
 		</td>
 	</tr>
 	</tbody>
-<?php endwhile; ?>
+<?php } ?>
 </table>
 </form>
 <?php

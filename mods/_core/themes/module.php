@@ -4,6 +4,9 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 
 define('AT_ADMIN_PRIV_THEMES', $this->getAdminPrivilege());
 
+define('AT_SYSTEM_THEME_DIR', realpath(AT_INCLUDE_PATH . "../themes") . "/");
+define('AT_SUBSITE_THEME_DIR', realpath(AT_SUBSITE_PATH . "themes") . "/");
+
 if (admin_authenticate(AT_ADMIN_PRIV_THEMES, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 		$this->_pages['admin/config_edit.php']['children']      = array('mods/_core/themes/index.php');

@@ -12,7 +12,23 @@
 /****************************************************************************/
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-$db;
+
+/**
+ * Return the main theme path based on the "customized" flag
+ * @access  private
+ * @param   int customized   whether this is a customized theme
+ * @return  string           main theme folder, 
+ *          for example, 
+ *          for subsite-specific customized theme, return "[Document_root]/sub-site/themes"
+ *          for main site theme, return "[Document_root]/main-site/themes/"
+ */
+function get_main_theme_dir($customized) {
+	if ($customized) {
+		return AT_SUBSITE_THEME_DIR;
+	} else {
+		return AT_SYSTEM_THEME_DIR;
+	}
+}
 
 /**
 * Gets the name of the folder where the theme is stored
@@ -231,11 +247,12 @@ function delete_theme ($theme_dir) {
 	global $msg, $db;
 
 	//check status
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name='$theme_dir'";
+	$sql    = "SELECT status, customized FROM ".TABLE_PREFIX."themes WHERE dir_name='$theme_dir'";
 	$result = mysql_query ($sql, $db);
 	$row    = mysql_fetch_assoc($result);
 	$status = intval($row['status']);
-
+	$customized = intval($row['customized']);
+	
 	//can't delete original default or current default theme
 	if (($theme_dir == 'default') || ($status == 2)) {
 		$msg->addError('THEME_NOT_DELETED');
@@ -249,7 +266,8 @@ function delete_theme ($theme_dir) {
 			$msg->deleteFeedback('THEME_DISABLED');
 		}
 
-		$dir = '../../../themes/' . $theme_dir;
+		
+		$dir = get_main_theme_dir($customized) . $theme_dir;
 		//chmod($dir, 0777);
 		@clr_dir($dir);
 
@@ -282,8 +300,6 @@ function export_theme($theme_dir) {
 	$last_updated = $row['last_updated'];
 	$extra_info   = $row['extra_info'];
 
-
-
 	//generate 'theme_info.xml' file based on info	
 	$info_xml = str_replace(array('{TITLE}', '{VERSION}', '{TYPE}', '{LAST_UPDATED}', '{EXTRA_INFO}'), 
 							array($title, $version, $type, $last_updated, $extra_info),
@@ -294,7 +310,7 @@ function export_theme($theme_dir) {
 	$zipfile->create_dir($dir);
 
 	//update installation folder
-	$dir1 = '../../../themes/' . $dir;
+	$dir1 = get_main_theme_dir(intval($row["customized"])) . $dir;
 
 	$zipfile->add_file($info_xml, $dir . 'theme_info.xml');
 
