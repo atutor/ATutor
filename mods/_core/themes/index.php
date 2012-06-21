@@ -64,6 +64,9 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
+if (is_subsite()) {
+	$_custom_head = '    <script src="'.$_base_path.'mods/_core/themes/js/themes.js"></script>"';
+}
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
@@ -135,25 +138,26 @@ print_data_table($result, MOBILE_DEVICE);
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 		<input type="submit" name="default" value="<?php echo _AT('set_default').'&nbsp;'; if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?>" />
 		<input type="submit" name="export"  value="<?php echo _AT('export'); ?>" />
-		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
+		<input type="submit" name="delete" id="AT_del_btn" value="<?php echo _AT('delete'); ?>" />
 	</td>
 </tr>
 </tfoot>
 <?php 
+// For each theme:
+// 1. find out where the theme folder is. It could be from the main site or a subsite configuration folder.
+// 2. Disallow the deletion of the system themes if the request is from a subsite. This is achieved by using css class "AT_disable_del"
 while($row = mysql_fetch_assoc($result)) {
-	if (intval($row["customized"])) {
-		$main_theme_dir = AT_SUBSITE_THEME_DIR;
-	} else {
-		$main_theme_dir = AT_SYSTEM_THEME_DIR;
-	}
+	$customized = intval($row["customized"]);
+	
+	$main_theme_dir = get_main_theme_dir($customized);
 ?>
 	<tbody>
-	<tr onmousedown="document.form_<?php echo $type; ?>['t_<?php echo $row['dir_name']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['dir_name']; ?>">
+	<tr class="AT_theme_row <?php if (is_subsite() && !$customized) echo 'AT_disable_del'; ?>" id="AT_r_<?php echo $row['dir_name']; ?>">
 		<td valign="top">
-			<input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
+			<input type="radio" id="AT_t_<?php echo $row['dir_name']; ?>" name="AT_theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
 		</td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
+		<td nowrap="nowrap" valign="top"><label for="AT_t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
 		<td valign="top"><?php
 			if ($row['status'] == 0) {
 				echo _AT('disabled');

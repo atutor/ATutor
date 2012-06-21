@@ -125,7 +125,7 @@ function get_site_path(){
 	return AT_INCLUDE_PATH;
 }
 
-define(AT_SUBSITE_PATH, get_site_path());
+define("AT_SUBSITE_PATH", get_site_path());
 
 /*
  * structure of this document (in order):
@@ -1470,7 +1470,7 @@ function get_human_time($seconds) {
 function is_mobile_device() {
 	$http_user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
 	return ((stripos($http_user_agent, IPOD_DEVICE) !== false && stripos($http_user_agent, IPOD_DEVICE) >= 0) ||
-			(stripos($http_user_agent, IPHONE_DEVICE) !== false && stripos($http_user_agent, IPHONE_DEVICE) >= 0) ||
+	        (stripos($http_user_agent, IPHONE_DEVICE) !== false && stripos($http_user_agent, IPHONE_DEVICE) >= 0) ||
 	        (stripos($http_user_agent, BLACKBERRY_DEVICE) !== false && stripos($http_user_agent, BLACKBERRY_DEVICE) >= 0) ||
 	        (stripos($http_user_agent, IPAD_DEVICE) !== false && stripos($http_user_agent, IPAD_DEVICE) >= 0) ||
 	        (stripos($http_user_agent, ANDROID_DEVICE) !== false && stripos($http_user_agent, ANDROID_DEVICE) >= 0)) 
@@ -1528,23 +1528,23 @@ function convert_amp($input){
  * @author	Harris Wong
  * @date	April 21, 2010
  */
- if ( !function_exists('json_encode') ){
-    function json_encode($content){
+if ( !function_exists('json_encode') ){
+	function json_encode($content){
 		require_once (AT_INCLUDE_PATH.'lib/json.inc.php');
 		$json = new Services_JSON;               
-        return $json->encode($content);
-    }
+		return $json->encode($content);
+	}
 }
 if ( !function_exists('json_decode') ){
-    function json_decode($content, $assoc=false){
+	function json_decode($content, $assoc=false){
 		require_once (AT_INCLUDE_PATH.'lib/json.inc.php');
 		if ( $assoc ){
 			$json = new Services_JSON(SERVICES_JSON_LOOSE_TYPE);
         } else {
 			$json = new Services_JSON;
 		}
-        return $json->decode($content);
-    }
+		return $json->decode($content);
+	}
 }
 
 /*
@@ -1584,6 +1584,15 @@ function find_image($image_name, $actual_relative_path = AT_INCLUDE_PATH) {
 	} else {
 		return $actual_relative_path.$atutor_image_folder.$image_name;
 	}
+}
+
+/**
+ * Detects if the current installation is a subsite
+ * @param: none
+ * @return: true or false. Return true if the installation is a subsite. Otherwise, return false.
+ */
+function is_subsite() {
+	return !(AT_SUBSITE_PATH == AT_INCLUDE_PATH);
 }
 
 require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
