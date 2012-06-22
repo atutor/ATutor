@@ -15,19 +15,19 @@
 
 ATutor = ATutor || {};
 ATutor.mods = ATutor.mods || {};
-ATutor.mods.themes = ATutor.mods.themes || {};
+ATutor.mods.modules = ATutor.mods.modules || {};
 
 (function () {
-    var disableDelBtn = function (currentRow) {
+    var disableUninstallBtn = function (currentRow) {
         // Disable the delete button when the corresponding radio button is selected
-        if (jQuery(currentRow).hasClass("AT_disable_del")) {
-            jQuery('#AT_del_btn').attr("disabled", "disabled");
+        if (jQuery(currentRow).hasClass("AT_disable_uninstall")) {
+            jQuery('#AT_uninstall_btn').attr("disabled", "disabled");
         } else {
-            jQuery('#AT_del_btn').removeAttr("disabled");
+            jQuery('#AT_uninstall_btn').removeAttr("disabled");
         }
     }
 
     jQuery(document).ready(function () {
-        jQuery(".AT_theme_row").click({callback: disableDelBtn}, ATutor.highlightTableRow);
+        jQuery(".AT_module_row").click({callback: disableUninstallBtn}, ATutor.highlightTableRow);
     });
 })();

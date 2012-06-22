@@ -103,29 +103,16 @@ function get_site_path(){
 	$domain = ($_SERVER['HTTP_HOST']);
 	$site_path = $docroot_path . '/' . $domain . '/';
 	
-	if(file_exists($site_path."/config.inc.php")){
+	if(file_exists($site_path."/include/config.inc.php")){
 		// The request is from a subdomain
 		return $site_path;
-	
-	}else{
-		// The request is from a subdirectory
-		// loop thru the URI to locate a config.inc.php
-		$uri = explode('/', $_SERVER['REQUEST_URI']);
-
-		for ($i = 1; $i < count($uri); $i++) {
-			$dir = $docroot_path . implode('/', array_slice($uri, 0, $i));
-
-			if (file_exists($dir . '/config.inc.php')) {
-				return $dir;
-			}
-		}
 	}
 	
-	// The request is from the main site
-	return AT_INCLUDE_PATH;
+	// The request is from the main site, return the current path
+	return AT_INCLUDE_PATH . "../";
 }
 
-define("AT_SUBSITE_PATH", get_site_path());
+define('AT_SUBSITE_PATH', get_site_path());
 
 /*
  * structure of this document (in order):
@@ -151,13 +138,11 @@ define("AT_SUBSITE_PATH", get_site_path());
 	date_default_timezone_set($tmzn);
 */
 	error_reporting(0);
-
 	if (!defined('AT_REDIRECT_LOADED')){
-		include_once(AT_SUBSITE_PATH.'/config.inc.php');
+		include_once(AT_SUBSITE_PATH . 'include/config.inc.php');
 
 	}
 	error_reporting(AT_ERROR_REPORTING);
-
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
 		header('Cache-Control: no-store, no-cache, must-revalidate');
 		header('Pragma: no-cache');
@@ -370,8 +355,8 @@ if (!isset($_SESSION['prefs']['PREF_THEME']) ||
 	$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 }
 
-if ((!is_dir(AT_SUBSITE_PATH . '/themes/' . $_SESSION['prefs']['PREF_THEME']) && 
-     !is_dir(AT_INCLUDE_PATH . '../themes/' . $_SESSION['prefs']['PREF_THEME'])) ||
+if ((!is_dir(AT_SYSTEM_THEME_DIR . $_SESSION['prefs']['PREF_THEME']) && 
+     !is_dir(AT_SUBSITE_THEME_DIR . $_SESSION['prefs']['PREF_THEME'])) ||
     $_SESSION['course_id'] == -1 ||
     $_SESSION['prefs']['PREF_THEME'] == '') {
 	$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
@@ -387,7 +372,7 @@ if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) &&
 	if ($row['status'] == 0) {
 		// get user defined default theme if the preference theme is disabled
 		$default_theme = get_default_theme();
-		if (!is_dir(AT_SUBSITE_PATH . '/themes/' . $default_theme['dir_name']) && !is_dir(AT_INCLUDE_PATH . '../themes/' . $default_theme['dir_name'])) {
+		if (!is_dir(AT_SYSTEM_THEME_DIR . $default_theme['dir_name']) && !is_dir(AT_SUBSITE_THEME_DIR . $default_theme['dir_name'])) {
 			$default_theme = get_system_default_theme();
 		}
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme;
@@ -399,14 +384,10 @@ $sql = "SELECT customized FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESS
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 
-if ($row['customized']) {
-	$theme_folder = AT_SUBSITE_PATH . 'themes/';
-} else {
-	$theme_folder = AT_INCLUDE_PATH . '../themes/';
-}
+$main_theme_folder = get_main_theme_dir($row['customized']);
 
-$savant->addPath('template', $theme_folder . $_SESSION['prefs']['PREF_THEME'] . '/');
-require($theme_folder . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
+$savant->addPath('template', $main_theme_folder . $_SESSION['prefs']['PREF_THEME'] . '/');
+require($main_theme_folder . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 $msg = new Message($savant);
@@ -1265,6 +1246,28 @@ function admin_authenticate($privilege = 0, $check = false) {
 	return true;
 }
 
+/**
+ * Return the main theme path based on the "customized" flag
+ * @access  private
+ * @param   int customized   whether this is a customized theme
+ * @return  string           main theme folder, 
+ *          for example, 
+ *          for subsite-specific customized theme, return "[Document_root]/sub-site/themes"
+ *          for main site theme, return "[Document_root]/main-site/themes/"
+ */
+function get_main_theme_dir($customized) {
+	if ($customized) {
+		return AT_SUBSITE_THEME_DIR;
+	} else {
+		return AT_SYSTEM_THEME_DIR;
+	}
+}
+
+/**
+ * Return the directory name of the user-defined default theme
+ * @param: none
+ * @return: string - the directory name of the user-defined default theme
+ */
 function get_default_theme() {
 	global $db;
 
@@ -1294,8 +1297,8 @@ function is_mobile_theme($theme) {
 	$result = mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		if ($row['dir_name'] == $theme && 
-		    (is_dir(AT_SUBSITE_PATH . '/themes/' . $theme) ||
-		     is_dir(AT_INCLUDE_PATH . '/themes/' . $theme))) {
+		    (is_dir(AT_SYSTEM_THEME_DIR . $theme) ||
+		     is_dir(AT_SUBSITE_THEME_DIR . $theme))) {
 			return true;
 		}
 	}
@@ -1584,15 +1587,6 @@ function find_image($image_name, $actual_relative_path = AT_INCLUDE_PATH) {
 	} else {
 		return $actual_relative_path.$atutor_image_folder.$image_name;
 	}
-}
-
-/**
- * Detects if the current installation is a subsite
- * @param: none
- * @return: true or false. Return true if the installation is a subsite. Otherwise, return false.
- */
-function is_subsite() {
-	return !(AT_SUBSITE_PATH == AT_INCLUDE_PATH);
 }
 
 require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');

@@ -31,23 +31,6 @@ function get_folder ($theme_name) {
 }
 
 /**
- * Return the main theme path based on the "customized" flag
- * @access  private
- * @param   int customized   whether this is a customized theme
- * @return  string           main theme folder, 
- *          for example, 
- *          for subsite-specific customized theme, return "[Document_root]/sub-site/themes"
- *          for main site theme, return "[Document_root]/main-site/themes/"
- */
-function get_main_theme_dir($customized) {
-	if ($customized) {
-		return AT_SUBSITE_THEME_DIR;
-	} else {
-		return AT_SYSTEM_THEME_DIR;
-	}
-}
-
-/**
 * Gets the attributes of the theme from the themes database table
 * @access  private
 * @param   string $theme_dir	the name of the theme
@@ -256,8 +239,8 @@ function delete_theme ($theme_dir) {
 	//can't delete if
 	// 1. a system default 
 	// 2. current default theme
-	// 3. the request is from a subsite to delete a main site level theme
-	if (($theme_dir == 'default') || ($status == 2) || (is_subsite() && !$customized) ) {
+	// 3. a system level theme
+	if (($theme_dir == 'default') || ($status == 2) || !$customized) {
 		$msg->addError('THEME_NOT_DELETED');
 		return FALSE;
 	} else {	//disable, clear directory and delete theme from db

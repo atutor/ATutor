@@ -64,9 +64,7 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-if (is_subsite()) {
-	$_custom_head = '    <script src="'.$_base_path.'mods/_core/themes/js/themes.js"></script>"';
-}
+$_custom_head = '    <script src="'.$_base_path.'mods/_core/themes/js/themes.js"></script>"';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
@@ -148,13 +146,13 @@ print_data_table($result, MOBILE_DEVICE);
 // 2. Disallow the deletion of the system themes if the request is from a subsite. This is achieved by using css class "AT_disable_del"
 while($row = mysql_fetch_assoc($result)) {
 	$customized = intval($row["customized"]);
-	
+
 	$main_theme_dir = get_main_theme_dir($customized);
 ?>
 	<tbody>
-	<tr class="AT_theme_row <?php if (is_subsite() && !$customized) echo 'AT_disable_del'; ?>" id="AT_r_<?php echo $row['dir_name']; ?>">
+	<tr class="AT_theme_row <?php if (!$customized) echo 'AT_disable_del'; ?>">
 		<td valign="top">
-			<input type="radio" id="AT_t_<?php echo $row['dir_name']; ?>" name="AT_theme_dir" value="<?php echo $row['dir_name']; ?>" />
+			<input type="radio" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
 		</td>
 		<td nowrap="nowrap" valign="top"><label for="AT_t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
