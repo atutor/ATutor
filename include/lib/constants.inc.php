@@ -289,7 +289,7 @@ define('MOBILE_DEVICE',  'Mobile');
 
 // theme directory
 define('AT_SYSTEM_THEME_DIR', realpath(AT_INCLUDE_PATH . "../themes") . "/");
-define('AT_SUBSITE_THEME_DIR', realpath(AT_SUBSITE_PATH . "themes") . "/");
+define('AT_SUBSITE_THEME_DIR', realpath(AT_SITE_PATH . "themes") . "/");
 
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';

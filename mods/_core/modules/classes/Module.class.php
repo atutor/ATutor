@@ -25,7 +25,7 @@ define('AT_MODULE_DIR_CORE',     '_core');
 define('AT_MODULE_DIR_STANDARD', '_standard');
 
 define('AT_SYSTEM_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
-define('AT_SUBSITE_MODULE_PATH', realpath(AT_SUBSITE_PATH.'mods') . DIRECTORY_SEPARATOR);
+define('AT_SUBSITE_MODULE_PATH', realpath(AT_SITE_PATH.'mods') . DIRECTORY_SEPARATOR);
 
 /**
 * ModuleFactory //

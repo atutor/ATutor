@@ -51,14 +51,14 @@ if (!$connection)
 	$msg->addError($infos);
 	
 	require(AT_INCLUDE_PATH.'header.inc.php');
-  $msg->printAll();
+	$msg->printAll();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 // get theme list
 $theme_folder = $update_server . '/themes/';
-$local_theme_folder = AT_SUBSITE_PATH. "themes/";
+$local_theme_folder = AT_SUBSITE_THEME_DIR;
 
 $theme_list_xml = @file_get_contents($theme_folder . 'theme_list.xml');
 

@@ -18,7 +18,7 @@ define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
-define('AT_SUBSITE_PATH', get_site_path());
+define('AT_SITE_PATH', get_site_path());
 
 /*
  * structure of this document (in order):
@@ -36,7 +36,7 @@ define('AT_SUBSITE_PATH', get_site_path());
 /**** 0. start system configuration options block ****/
 	error_reporting(0);
 	if (!defined('AT_REDIRECT_LOADED')){
-		include_once(AT_SUBSITE_PATH . 'include/config.inc.php');
+		include_once(AT_SITE_PATH . 'include/config.inc.php');
 
 	}
 	error_reporting(AT_ERROR_REPORTING);
@@ -86,7 +86,7 @@ if (headers_sent()) {
 	require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 	$err = new ErrorHandler();
 	trigger_error('VITAL#<br /><code><strong>Headers already sent. ' .
-					'Cannot initialise session.</strong></code><br /><hr /><br />', E_USER_ERROR);
+	              'Cannot initialise session.</strong></code><br /><hr /><br />', E_USER_ERROR);
 	exit;
 }
 
@@ -483,6 +483,6 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 }
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
-    $_custom_head .= '    <script type="text/javascript" src="'.$_base_path.'jscripts/ATutorCourse.js"></script>';
+	$_custom_head .= '    <script type="text/javascript" src="'.$_base_path.'jscripts/ATutorCourse.js"></script>';
 }
 ?>
