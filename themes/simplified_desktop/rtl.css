@@ -1,0 +1,16 @@
+/* for right to left languages */
+html, body {
+	direction: rtl;
+}
+
+.img-size-tree {
+	vertical-align: middle;
+	margin-top: 0px;
+	height:1.45em;
+	width:1.45em;
+	float: right;
+}
+
+div.box {
+	line-height:150%;
+}

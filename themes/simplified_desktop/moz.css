@@ -1,0 +1,464 @@
+/*
+ * Contributed by Mark McLaren on the Infusion Users List
+ * http://fluidproject.org/pipermail/infusion-users/2010-April/000186.html
+ This should be deleted from mobile/when it is committed to mobile FSS. 
+ */
+
+.fl-icon {
+    -moz-border-radius: 5px;
+}
+
+/*****************************************/
+/* 					 */
+/* 					 */
+/*         fl-theme-android              */
+/* 					 */
+/* 					 */
+/*****************************************/
+
+.fl-theme-android h1,
+.fl-theme-android h2,
+.fl-theme-android h3 {
+    background: #999 -moz-linear-gradient(
+    	center top,
+    	#ccc, 
+    	#999) no-repeat top left;
+}
+
+/***************************************/
+/* Navigation Bar */
+
+.fl-theme-android .fl-navbar {
+    background-image: -moz-linear-gradient(
+    	center top,
+        #666,
+        #333 50%,
+        #000 50%,
+        #000
+    );
+    -moz-box-shadow: 0px 0px 5px rgba(0,0,0,0.5);
+}
+
+.fl-theme-android .fl-navbar .fl-button {
+    -moz-border-image:none;
+    background-image: -moz-linear-gradient(
+    	center top,    
+        #444,
+        #666 50%,
+        #333 50%,
+        #000
+    );
+}
+.fl-theme-android .fl-navbar [class*=fl-button]:active {
+    background-image: -moz-linear-gradient(
+    	center top,   
+        #ffb347,
+        #ff702f
+    );
+}
+
+.fl-theme-android .fl-navbar .fl-backButton {
+    -moz-border-image: url(../images/themes/android/navbar_back_button_insetShadow.png) 0 15 stretch;
+}
+
+.fl-theme-android .fl-navbar .fl-button-inner {
+    -moz-border-image: url(../images/themes/android/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+}
+
+/***************************************/
+/* general purpose gel buttons */
+/* effect is applied anywhere but the navbar, which has its own button look */
+
+.fl-theme-android .fl-button {
+    -moz-border-image: url(../images/themes/android/button_bg_insetShadow.png) 10 stretch;
+    -moz-background-origin: border;
+    -moz-background-clip: border;    
+}
+.fl-theme-android .fl-button-white {
+    background-image: -moz-linear-gradient(
+    	center top,   
+    	rgba(240,240,240,0.25),
+        rgba(220,220,220,0.75),
+        rgba(240,240,240,1) 50%,
+        rgba(200,200,200,0.8) 50%
+    );
+}
+.fl-theme-android .fl-button-black {
+    background-image: -moz-linear-gradient(
+    	center top,   
+        rgba(106,106,106,0.25),
+        rgba(00,00,00,0.75),
+        rgba(130,130,130,1)  50%,
+        rgba(75,75,75,0.8) 50%
+    );
+}
+.fl-theme-android .fl-button-green {
+    background-image: -moz-linear-gradient(
+    	center top,   
+        rgba(120,190,130,0.2),
+        rgba(50,170,60,0.75),
+        rgba(120,190,130,1) 50%,
+        rgba(0,150,10,0.8) 50%
+    );
+}
+.fl-theme-android .fl-button-blue {
+    background-image: -moz-linear-gradient(
+    	center top,   
+        rgba(149, 184, 239,0.2),
+        rgba(35,109,229,0.75),
+        rgba(149, 184, 239,1)  50%,
+        rgba(75,148,244,0.8) 50%
+    );
+}
+/***************************************/
+/* tabs 1: small general purpose content dividers */
+.fl-theme-android .fl-tabs li {
+    background-image: -moz-linear-gradient(
+    	center top,   
+        #666,
+        #666 50%,
+        #000 50%,
+        #000
+    );
+    -moz-border-image: url(../images/themes/android/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+    -moz-border-left-image: none;
+    -moz-background-origin: border;
+    -moz-background-clip: border;
+}
+
+.fl-theme-android .fl-tabs .fl-tabs-active {
+    background-image: -moz-linear-gradient(
+    	center top,   
+        #ff702f,
+        #ffb347
+    );
+}
+
+/*************************************************/
+/* Ordered lists, Unordererd lists, Thumbnail lists, Icon lists, Definition lists */
+/*************************************************/
+/* Default list system setup */
+
+.fl-theme-android [class*=fl-list] > li {
+    background: transparent -moz-radial-gradient(center 45deg, circle farthest-side, 
+    	#FFF 0%, 
+    	#000 100%) no-repeat bottom center;;
+    -moz-background-size: 100% 1px; 
+}
+
+/* A simulation for a:active on the device, requires JS */
+.fl-theme-android [class*=fl-list]:not(.fl-list):not(.fl-grid) a:active,
+.fl-theme-android [class*=fl-list]:not(.fl-list):not(.fl-grid) a.fl-link-hilight {
+    background: -moz-linear-gradient(
+    	center top,   
+    	#ffb347, 
+    	#ff702f);
+}
+
+.fl-theme-android [class*=fl-list]:not(.fl-list) a.fl-link-loading {
+    background: url(../images/themes/android/listmenu_loader.gif) no-repeat 97% center,
+		        -moz-linear-gradient(
+    	center top,   
+    	#ffb347, 
+    	#ff702f);
+}
+
+/***************************************/
+/* Grid overrides, removes nav coloring */
+
+.fl-theme-android .fl-grid li a:active,
+.fl-theme-android .fl-grid .fl-link-hilight {
+    background: -moz-linear-gradient(
+    	center top,   
+    	#ffb347, #ff702f);
+}
+
+/****************************/
+/* Collapsing and expanding panels */
+
+.fl-theme-android .fl-container-autoHeading > *:first-child {
+    background: -moz-linear-gradient(
+    	center top,   
+    	#CCC, #999);
+}
+.fl-theme-android .fl-container-autoHeading > *:first-child:focus {
+    background: -moz-linear-gradient(
+    	center top,   
+    	#FFF, 
+    	#CCC);
+}
+.fl-theme-android .fl-container-autoHeading > :last-child {
+        background: transparent 
+        -moz-radial-gradient(50% 0, circle, rgba(100,100,100,1) 0%, rgba(0,0,0,0) 100%);
+    );
+}
+
+/*****************************************/
+/* 					 */
+/* 					 */
+/*         fl-theme-iphone               */
+/* 					 */
+/* 					 */
+/*****************************************/
+
+.fl-theme-iphone {
+    background: -moz-repeating-linear-gradient(top left 0deg, #c5ccd3, #c5ccd3 1px, #cfd5dd 10px, #c5ccd3 10px);
+}
+
+
+/***************************************/
+/* Navigation Bar */
+
+.fl-theme-iphone .fl-navbar {
+    background-image: -moz-linear-gradient(
+        center top,
+        #B0BCCD,
+        #889BB3 50%,
+        #6D84A2 50%,
+        #6D84A2
+    )
+}
+
+.fl-theme-iphone .fl-navbar .fl-button {
+    -moz-border-image:none;
+    background-image: -moz-linear-gradient(
+        center top,
+        #9aafca,
+        #6d8cb3 50%,
+        #4b6b90 50%,
+        #4b6b90
+    );
+}
+
+.fl-theme-iphone .fl-navbar [class*=fl-button]:active {
+    background-image: -moz-linear-gradient(
+        center top,
+        rgba(149, 184, 239,1),
+        rgba(35,109,229,1),
+        rgba(149, 184, 239,1) 35%,
+        rgba(75,148,244,1) 50%
+    );
+}
+
+.fl-theme-iphone .fl-navbar .fl-backButton {
+    /* See mobile layout for details */
+    -moz-border-image: url(../images/themes/iphone/navbar_back_button_insetShadow.png) 0 15 stretch;
+}
+
+.fl-theme-iphone .fl-navbar .fl-button-inner {
+    -moz-border-image: url(../images/themes/iphone/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+}
+
+
+/***************************************/
+/* general purpose gel buttons */
+/* effect is applied anywhere but the navbar, which has its own button look */
+
+.fl-theme-iphone .fl-button {
+    -moz-border-image: url(../images/themes/iphone/button_bg_insetShadow.png) 10 stretch stretch;
+    -moz-background-origin: border;
+    -moz-background-clip: border;
+}
+.fl-theme-iphone .fl-button-white {
+    background-image: -moz-linear-gradient(center top,
+        rgba(240,240,240,0.25),
+        rgba(220,220,220,0.75),
+        rgba(240,240,240,1),
+        rgba(200,200,200,0.8)
+    );
+}
+.fl-theme-iphone .fl-button-black {
+    background-image: -moz-linear-gradient(center top,
+        rgba(106,106,106,0.25),
+        rgba(00,00,00,0.75),
+        rgba(130,130,130,1),
+        rgba(75,75,75,0.8)
+    );
+}
+.fl-theme-iphone .fl-button-green {
+    background-image: -moz-linear-gradient(center top,
+        rgba(120,190,130,0.2),
+        rgba(50,170,60,0.75),
+        rgba(120,190,130,1),
+        rgba(0,150,10,0.8)
+    );
+}
+.fl-theme-iphone .fl-button-blue {
+    background-image: -moz-linear-gradient(center top,
+        rgba(149, 184, 239,0.2),
+        rgba(35,109,229,0.75),
+        rgba(149, 184, 239,1),
+        rgba(75,148,244,0.8)
+    );
+}
+
+/***************************************/
+/* tabs 1: small general purpose content dividers */
+
+.fl-theme-iphone .fl-tabs li {
+    background-image: -moz-linear-gradient(
+        center top,
+        #9aafca,
+        #4b6b90,
+        #6d8cb3 50%,
+        #4b6b90 50%        
+    );                    
+    -moz-border-image: url(../images/themes/iphone/navbar_normal_button_insetShadow.png) 5 5 5 5 stretch;
+    -moz-background-origin: border;
+    -moz-background-clip: border;
+}
+
+.fl-theme-iphone .fl-tabs .fl-tabs-active {
+    background-image: -moz-linear-gradient(
+        center top,
+        rgba(149, 184, 239,1),
+        rgba(35,109,229,1),
+        rgba(149, 184, 239,1)  50%,
+        rgba(75,148,244,1) 50%
+    );
+}
+
+/* A simulation for a:active on the device, requires JS */
+/* since .fl-list is for mixed material lists, dont include them in these effects */
+.fl-theme-iphone [class*=fl-list]:not(.fl-list):not(.fl-grid) a:active,
+.fl-theme-iphone [class*=fl-list]:not(.fl-list):not(.fl-grid) a.fl-link-hilight {
+    background: url(../images/themes/iphone/listmenu_arrow.png) no-repeat right -25px,
+                -moz-linear-gradient(#4a94f4, #236de5);
+}
+
+.fl-theme-iphone [class*=fl-list]:not(.fl-list) a.fl-link-loading {
+    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
+		 -moz-linear-gradient(center top, #4a94f4, #236de5);
+}
+
+/****************************/
+/* Collapsing and expanding panels */
+.fl-theme-iphone .fl-container-autoHeading > *:first-child {
+    background: -moz-linear-gradient(center top, #999, #000);
+}
+.fl-theme-iphone .fl-container-autoHeading > *:first-child:focus {
+    background: -moz-linear-gradient(center top, #FFF, #CCC);
+}
+
+
+
+/*****************************************/
+/* 					 */
+/* 					 */
+/* Originates from fss-mobile-layout.css */
+/* 					 */
+/* 					 */
+/*****************************************/
+
+
+
+/***************************************/
+/**
+ * Basic overrides for fss layout
+ */
+
+.fl-icon {
+    -moz-border-radius: 5px;
+}
+
+/***************************************/
+/* iPhone general purpose gel buttons */
+/* effect is applied anywhere but the navbar, which has its own button look */
+
+.fl-button {
+    -moz-border-radius: 10px;
+}
+
+.fl-navbar .fl-button-inner {
+    -moz-background-origin: border;
+    -moz-background-clip: border;
+}
+
+
+/*************************************************/
+/* Navigation Bar
+ */
+.fl-navbar [class*=fl-button] {
+    -moz-border-radius: 5px;
+}
+
+.fl-navbar .fl-backButton {
+    -moz-border-radius: 0 5px 5px 0;  
+    -moz-background-origin: border;
+    -moz-background-clip: border;  
+}
+
+
+
+/*************************************************/
+/* iPhone tabs: general purpose dividers, or fixed to the bottom of the screen
+ */
+/*************************************************/
+
+.fl-tabs li:first-child {
+    -moz-border-radius-topleft:5px;
+    -moz-border-radius-bottomleft:5px;
+}
+.fl-tabs li:last-child {
+    -moz-border-radius-topright:5px;
+    -moz-border-radius-bottomright:5px;
+}
+
+/*************************************************/
+/* Glossy icons (and thumbnails?) */
+
+/* Glossiness for 30x30 icons */
+.fl-list-glossy > li a::before {
+    -moz-border-radius: 3px;    
+}
+
+/*************************************************/
+/* Content Panels */
+/*************************************************/
+[class*=fl-container] [class*=fl-list] > li:first-child,
+[class*=fl-container] [class*=fl-list] > li:first-child a {
+    -moz-border-radius-topleft: 8px;
+    -moz-border-radius-topright: 8px;    
+}
+
+[class*=fl-container] [class*=fl-list] > li:last-child,
+[class*=fl-container] [class*=fl-list] > li:last-child a {
+    -moz-border-radius-bottomleft:8px;
+    -moz-border-radius-bottomright:8px;    
+}
+
+[class*=fl-container] [class*=fl-list]:not(.fl-thumbnails-expanded) > li a .fl-icon {
+    -moz-border-radius-bottomleft:8px;
+    -moz-border-radius-topleft:8px;    
+}
+
+[class*=fl-container] .fl-list-thumbnails:not(.fl-thumbnails-expanded) > li,
+[class*=fl-container] .fl-list-thumbnails:not(.fl-thumbnails-expanded) > li a {
+    -moz-border-radius: 8px;
+}
+/* Panel Auto Headings */
+/* The first element found becomes the "heading" */
+.fl-container-autoHeading > *:first-child {
+	-moz-border-radius-topleft: 8px;
+	-moz-border-radius-topright: 8px;
+}
+/* The last element found becomes the "content" - list or otherwise */
+.fl-container-autoHeading > *:last-child {
+	-moz-border-radius:0px;
+	-moz-border-radius-bottomleft:8px;
+	-moz-border-radius-bottomright:8px;
+}
+.fl-container-autoHeading [class*=fl-list] > li:first-child,
+.fl-container-autoHeading [class*=fl-list] > li:first-child a {
+	-moz-border-radius:0;
+}
+.fl-container-autoHeading [class*=fl-list] > li:first-child:last-child,
+.fl-container-autoHeading [class*=fl-list] > li:first-child:last-child a {
+	-moz-border-radius-bottomleft:8px;
+	-moz-border-radius-bottomright:8px;
+}
+
+/* Collapsing and expanding panels */
+.fl-container-collapsable {
+	-moz-border-radius:8px;
+}
