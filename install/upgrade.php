@@ -38,6 +38,7 @@ if (($step == 2) && isset($_POST['override']) && ($_POST['override'] == 0)) {
 	exit;
 }
 session_start();
+
 require('include/upgrade_header.php');
 
 if ($step == 1) {
@@ -68,7 +69,7 @@ if ($step == 4) {
 if ($step == 5) {
 	// in:  determine where the old content dir is and if it has to be copied
 	// out: try to create the directory and set permissions
-	require('include/step5.php');
+	require('include/step4.php');
 }
 if ($step == 6) {
 	// in:  copy the content if needed
@@ -82,11 +83,12 @@ if ($step == 7) {
 }
 /* anonymous data collection */
 if ($step == 8) {	
-	require('include/step7.php');
+	require('include/step6.php');
 }
 
 if ($step == 9) {
 	require('include/ustep6.php');
 }
+
 require('include/footer.php');
 ?>

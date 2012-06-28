@@ -36,7 +36,7 @@ if (isset($_REQUEST['mod']))
 else if (isset($_POST['mod']))
 	$mod = $_POST['mod'];
 
-$mods_folder = '../../../mods/';
+$mods_folder = AT_SUBSITE_MODULE_PATH;
 
 if (!is_writable($mods_folder) && isset($_POST['submit_yes'])) 
 {

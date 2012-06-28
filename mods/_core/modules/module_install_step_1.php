@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_MODULES);
 
-$module_folder = '../../../mods/';
+$module_folder = AT_SUBSITE_MODULE_PATH;
 
 if (isset($_GET["mod"])) $mod = $_GET["mod"];
 else if (isset($_POST["mod"])) $mod = $_POST["mod"];

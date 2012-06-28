@@ -65,7 +65,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 } else if (isset($_GET['mod_dir'], $_GET['uninstall'])) {
 	$module = $moduleFactory->getModule($_GET['mod_dir']);
 
-	$module_folder = '../../../mods/'.$_GET['mod_dir'];
+	$module_folder = $module->getModulePath().$_GET['mod_dir'];
 	// check if the module has been un-installed
 	if (!file_exists($module_folder))
 	{
@@ -91,8 +91,9 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 
 } else if (isset($_GET['mod_dir'], $_GET['export'])) {
 	$module = $moduleFactory->getModule($_GET['mod_dir']);
+	$main_module_dir = $module->getModulePath();
 
-	$module_folder = '../../../mods/'.$_GET['mod_dir'];
+	$module_folder = $main_module_dir.$_GET['mod_dir'];
 	// check if the module has been un-installed
 	if (!file_exists($module_folder))
 	{
@@ -109,7 +110,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 		require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 		
 		$zipfile = new zipfile();
-		$zipfile->add_dir('../../../mods/'.$_GET['mod_dir'].'/', $_GET['mod_dir'].'/');
+		$zipfile->add_dir($main_module_dir.$_GET['mod_dir'].'/', $_GET['mod_dir'].'/');
 		$zipfile->close();
 		$zipfile->send_file($_GET['mod_dir']);
 		exit;
@@ -121,6 +122,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	exit;
 }
 
+$_custom_head = '    <script src="'.$_base_path.'mods/_core/modules/js/modules.js"></script>"';
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $module_status_bits = $module_type_bits = 0;

@@ -22,7 +22,7 @@ else if (isset($_POST["mod"])) $mod = $_POST["mod"];
 if (isset($_GET["args"])) $args = $_GET["args"];
 else if (isset($_POST["args"])) $args = $_POST["args"];
 
-$mods_folder = '../../../mods/';
+$mods_folder = AT_SUBSITE_MODULE_PATH;
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');

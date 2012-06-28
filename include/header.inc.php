@@ -37,7 +37,6 @@ global $_custom_css;
 global $_custom_head;
 global $substr, $strlen, $_course_id;
 global $_tool_shortcuts;
-global $AT_SUB_INCLUDE_PATH;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 //require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
@@ -49,7 +48,6 @@ $savant->assign('base_tmpl_path', $_SERVER['HTTP_HOST']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 $savant->assign('just_social', $_config['just_social']);
-$savant->assign('at_sub_include_path', $AT_SUB_INCLUDE_PATH);
 $theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
 
@@ -93,19 +91,19 @@ $custom_head .= '
 	<link rel="stylesheet" href="'.$_base_path.'jscripts/lib/jquery-ui.css" />
 	<script src="'.$_base_path.'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
 	<script src="'.$_base_path.'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
-  	<script src="'.$_base_path.'jscripts/lib/jquery.sessionTimeout.1.0.min.js" type="text/javascript"></script>
-  	<script type="text/javascript">
+	<script src="'.$_base_path.'jscripts/lib/jquery.sessionTimeout.1.0.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
 	$(document).ready(function() {
 		$.sessionTimeout({
 		    message      : "'._AT('session_will_expire').'",
-            keepAliveUrl : "'.$_base_path.'include/session_keepalive.php",
-         	redirUrl     : "'.$_base_path.'logout.php",
-            logoutUrl    : "'.$_base_path.'logout.php",
-			warnAfter: '.($_at_timeout*1000).', //session.gc_maxlifetime converted to milliseconds
-			redirAfter: '.(($_at_timeout*1000)+300000).', // allow 5 more minutes to respond, in milliseconds
-			title        : "'._AT('session_timeout_title').'",
-            button_1     : "'._AT('session_timeout_logout_now').'",
-            button_2	 : "'._AT('session_timeout_stay_connected').'"
+		    keepAliveUrl : "'.$_base_path.'include/session_keepalive.php",
+		    redirUrl     : "'.$_base_path.'logout.php",
+		    logoutUrl    : "'.$_base_path.'logout.php",
+		    warnAfter: '.($_at_timeout*1000).', //session.gc_maxlifetime converted to milliseconds
+		    redirAfter: '.(($_at_timeout*1000)+300000).', // allow 5 more minutes to respond, in milliseconds
+		    title        : "'._AT('session_timeout_title').'",
+		    button_1     : "'._AT('session_timeout_logout_now').'",
+		    button_2	 : "'._AT('session_timeout_stay_connected').'"
 		});
 	});
 	</script>

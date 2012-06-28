@@ -10,146 +10,39 @@
 /************************************************************************/
 // $Id$
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INSTALLER_INCLUDE_PATH') || !defined('AT_INCLUDE_PATH')) { exit; }
+
+include(AT_INCLUDE_PATH . 'lib/install.inc.php');
 
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
+	$response = install_step_accounts($_POST['admin_username'], $_POST['form_admin_password_hidden'], $_POST['admin_email'], $_POST['site_name'],
+                               $_POST['email'], $_POST['account_username'], $_POST['form_account_password_hidden'],
+                               $_POST['account_fname'], $_POST['account_lname'], $_POST['account_email'],
+                               $_POST['just_social'], $_POST['home_url'], $_POST['step2']['db_host'], $_POST['step2']['db_port'], 
+                               $_POST['step2']['db_login'], $_POST['step2']['db_password'], $_POST['step2']['db_name'], $_POST['step2']['tb_prefix']);
+	unset($_POST['admin_username']);
+	unset($_POST['form_admin_password_hidden']);
+	unset($_POST['admin_email']);
+	unset($_POST['account_username']);
+	unset($_POST['form_account_password_hidden']);
+	unset($_POST['account_email']);
+	unset($_POST['home_url']);
+	unset($_POST['email']);
+	unset($_POST['site_name']);
+	unset($_POST['just_social']);
+
 	unset($errors);
-
-	$_POST['admin_username'] = trim($_POST['admin_username']);
-	$_POST['admin_email']    = trim($_POST['admin_email']);
-	$_POST['site_name']      = trim($_POST['site_name']);
-	$_POST['home_url']	     = trim($_POST['home_url']);
-	$_POST['email']	         = trim($_POST['email']);
-	$_POST['account_email']  = trim($_POST['account_email']);
-	$_POST['account_fname']  = trim($_POST['account_fname']);
-	$_POST['account_lname']  = trim($_POST['account_lname']);
-
-	/* Super Administrator Account checking: */
-	if ($_POST['admin_username'] == ''){
-		$errors[] = 'Administrator username cannot be empty.';
-	} else {
-		/* check for special characters */
-		if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['admin_username']))){
-			$errors[] = 'Administrator username is not valid.';
-		}
-	}
-	if ($_POST['form_admin_password_hidden'] == '') {
-		$errors[] = 'Administrator password cannot be empty.';
-	}
-	if ($_POST['admin_email'] == '') {
-		$errors[] = 'Administrator email cannot be empty.';
-	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['admin_email'])) {
-		$errors[] = 'Administrator email is not valid.';
-	}
-
-	/* System Preferences checking: */
-	if ($_POST['site_name'] == '') {
-		$errors[] = 'Site name cannot be empty.';
-	}
-	if ($_POST['email'] == '') {
-		$errors[] = 'Contact email cannot be empty.';
-	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
-		$errors[] = 'Contact email is not valid.';
-	}
-
-	/* Personal Account checking: */
-	if ($_POST['account_username'] == ''){
-		$errors[] = 'Personal Account Username cannot be empty.';
-	} else {
-		/* check for special characters */
-		if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['account_username']))){
-			$errors[] = 'Personal Account Username is not valid.';
-		} else {
-			if ($_POST['account_username'] == $_POST['admin_username']) {
-				$errors[] = 'That Personal Account Username is already being used for the Administrator account, choose another.';
-			}
-		}
-	}
-	if ($_POST['form_account_password_hidden'] == '') {
-		$errors[] = 'Personal Account Password cannot be empty.';
-	}
-	if ($_POST['account_email'] == '') {
-		$errors[] = 'Personal Account email cannot be empty.';
-	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['account_email'])) {
-		$errors[] = 'Invalid Personal Account email is not valid.';
-	}
-
-	if ($_POST['account_fname'] == '') {
-		$errors[] = 'Personal Account First Name cannot be empty.';
-	}
-	if ($_POST['account_lname'] == '') {
-		$errors[] = 'Personal Account Last Name cannot be empty.';
-	}
-	if (!isset($errors)) {
-		$db = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
-
-		@mysql_select_db($_POST['step2']['db_name'], $db);
-
-		$_POST['account_email'] = $addslashes($_POST['account_email']);
-		$_POST['account_fname'] = $addslashes($_POST['account_fname']);
-		$_POST['account_lname'] = $addslashes($_POST['account_lname']);
-
-		$status = 3; // for instructor account
-
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[form_admin_password_hidden]', '', '$_POST[admin_email]', 'en', 1, NOW())";
-		$result= mysql_query($sql, $db);
-
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (NULL,'$_POST[account_username]','$_POST[form_account_password_hidden]','$_POST[account_email]','','$_POST[account_fname]','','$_POST[account_lname]','0000-00-00','n', '','','','','', '',$status,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
-		$result = mysql_query($sql ,$db);
-
-		$_POST['site_name'] = $addslashes($_POST['site_name']);
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('site_name', '$_POST[site_name]')";
-		$result = mysql_query($sql ,$db);
-
-		$_POST['email'] = $addslashes($_POST['email']);
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('contact_email', '$_POST[email]')";
-		$result = mysql_query($sql ,$db);
-
-		$_POST['home_url'] = $addslashes($_POST['home_url']);
-		if ($_POST['home_url'] != '') {
-			$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('home_url', '$_POST[home_url]')";
-			$result = mysql_query($sql ,$db);
-		}
-
-		$_POST['just_social'] = intval($_POST['just_social']);
-		if ($_POST['just_social'] > 0){
-			$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('just_social', '1')";
-			$result = mysql_query($sql ,$db);
-		}
-
-		//if fresh install, use SET NAME to set the mysql connection to UTF8
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('set_utf8', '1')";
-		mysql_query($sql ,$db);
-
-		// Calculate the ATutor installation path and save into database for the usage of
-		// session associated path @ include/vitals.inc.php
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."config VALUES ('session_path', '".get_atutor_installation_path(AT_INCLUDE_PATH)."')";
-		mysql_query($sql ,$db);
-		
-		unset($_POST['admin_username']);
-		unset($_POST['form_admin_password_hidden']);
-		unset($_POST['admin_email']);
-		unset($_POST['account_username']);
-		unset($_POST['form_account_password_hidden']);
-		unset($_POST['account_email']);
-		unset($_POST['home_url']);
-		unset($_POST['email']);
-		unset($_POST['site_name']);
-		unset($_POST['just_social']);
-
-		unset($errors);
-		unset($_POST['submit']);
-		unset($action);
-		store_steps($step);
-		$step++;
-		return;
-	}
+	unset($_POST['submit']);
+	unset($action);
+	store_steps($step);
+	$step++;
+	return;
 }	
 
 print_progress($step);
 
-if (isset($errors)) {
-	print_errors($errors);
+if (isset($response['errors'])) {
+	print_errors($response['errors']);
 }
 
 if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
@@ -165,7 +58,7 @@ if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {
 }
 
 ?>
-<script language="JavaScript" src="<?php echo AT_INCLUDE_PATH; ?>../../sha-1factory.js" type="text/javascript"></script>
+<script language="JavaScript" src="<?php echo AT_INSTALLER_INCLUDE_PATH; ?>../../sha-1factory.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 function encrypt_password()
