@@ -181,6 +181,7 @@ print_data_table($result, MOBILE_DEVICE);
 <?php endwhile; ?>
 </table>
 </form>
+<br />
 <?php
 }
  
