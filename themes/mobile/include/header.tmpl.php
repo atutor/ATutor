@@ -155,7 +155,6 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
 
 <head>
@@ -187,9 +186,15 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
 	<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />
 	<?php endif; ?>
-<?php endif; ?>
+	<?php if ($this->mobile_device_type == PLAYBOOK): ?>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
+	<?php endif; ?>
 
+<?php endif; ?>
+	
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+
 	<!-- Fluid Infusion mobile fss extension... Remove when it is committed to Mobile FSS.  
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/moz.css" type="text/css" />-->	
 	<!-- Fluid Infusion -->
@@ -269,8 +274,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		</div>
 
 				
-
-
+	<?php /* ?>	
 	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
@@ -279,7 +283,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
 		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
-		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
+		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?>cccc</a></li> 
 	<?php endif;?>
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
 	<?php if($_SESSION['is_admin'] == 1): ?>
@@ -296,6 +300,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</li>
 			<?php endif; ?>
 		</ul>
+	<?php */ ?>	
 	</div><!--  END navigation-contentwrapper -->
 	
 
@@ -414,7 +419,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 			</ul>  
 		<?php endif; ?>
-			
+	
 			
 	</div>
 	<?php endif; ?>	
@@ -477,32 +482,29 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</div>
 			<?php endif; ?>	
 		
-	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
+<?php  ?><ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
-	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
+	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ): ?>
+
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
-	<?php endif;?>		
+		
+	<?php endif; ?>	
+		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
-	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
-		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
+	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN): ?>
+	
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
+		
 	<?php endif;?>
+	
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
 	<?php if($_SESSION['is_admin'] == 1): ?>
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	
-	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-			<li>
-		    	<div id="guide_box">
-					<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
-      		
-				  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
-      			</div>
-			</li>
-			<?php endif; ?>
+
 		</ul>
-	
+	<?php  ?>
 	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			
 <div id="sequence-links-course-navigation">	
@@ -523,6 +525,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 						</li>
 					<?php endif; ?>
 				<?php endif; ?>
+				
 			<?php } ?>
 				&nbsp;
 			</ul> <!-- end sequence-links -->
@@ -559,29 +562,29 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 					<?php $num_pages = count($this->sub_level_pages); ?>
 						<?php for ($i=0; $i<$num_pages; $i++): ?>	
 							
-							<?php if($num_pages <= 5): ?>
+							<?php if($num_pages <= 6): ?>
 								<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
 								<li role="menuitem" class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 								<?php else: ?> 
 								<li role="menuitem" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 								<?php endif; ?> 
 							<?php endif; ?>
-							<?php if($num_pages > 5): ?>
-								<?php if($i <= 5):?>
+							<?php if($num_pages > 6): ?>
+								<?php if($i <= 6):?>
 									<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
 										<li role="menuitem" class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									<?php else: ?> 
 										<li role="menuitem" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									<?php endif; ?> 
 								<?php endif;?>
-								<?php if($i== 6): ?>
+								<?php if($i== 7): ?>
 									<li role="menuitem" class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="More menu items" title="More menu items" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
 									<li role="menuitem">
 									<ul class="subnavlist-more">
 									<li role="menuitem" class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 									
 								<?php endif;?>
-								<?php if($i > 6 && $i < $num_pages): ?>
+								<?php if($i > 7 && $i < $num_pages): ?>
 									<li role="menuitem" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 								<?php endif;?>
 								<?php if($i==$num_pages): ?>

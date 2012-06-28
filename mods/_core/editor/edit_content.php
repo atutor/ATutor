@@ -104,7 +104,7 @@ if($current_tab == 0) {
 	global $_content_tools;
 	
 	$_custom_head .= '
-    <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />
+   <!-- <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-layout.css" />  -->
     <link rel="stylesheet" type="text/css" href="'.AT_BASE_HREF.'jscripts/infusion/framework/fss/css/fss-text.css" />
     ';
 	$_content_tools = is_array($_content_tools) ? $_content_tools : array();

@@ -88,10 +88,10 @@ if($_SESSION['valid_user']){
 // Setup the timeout warning when a user logs in
 $_at_timeout = ini_get('session.gc_maxlifetime');
 $custom_head .= '
-	<link rel="stylesheet" href="'.$_base_path.'jscripts/lib/jquery-ui.css">
-	<script src="'.$_base_path.'jscripts/infusion/lib/jquery/core/js/jquery.js"></script>
-	<script src="'.$_base_path.'jscripts/lib/jquery-ui.min.js"></script>
-	<script src="'.$_base_path.'jscripts/lib/jquery.sessionTimeout.1.0.min.js"></script>
+	<link rel="stylesheet" href="'.$_base_path.'jscripts/lib/jquery-ui.css" />
+	<script src="'.$_base_path.'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
+	<script src="'.$_base_path.'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="'.$_base_path.'jscripts/lib/jquery.sessionTimeout.1.0.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$.sessionTimeout({

@@ -3,10 +3,10 @@
 <!--Created from the ATutor Themes Export Generator-->
 
 <theme>
-	<title>Mobile</title>
+	<title>Simple Desktop</title>
 	<version>1.0</version>
-	<type>Mobile</type>
-	<last_updated>2010-08-16</last_updated>
-	<extra_info>This is the default theme for Android and iPhone mobile devices.</extra_info>
+	<type>Desktop</type>
+	<last_updated>2012-06-25</last_updated>
+	<extra_info>A version of the ATutor iPad theme designed to work on a desktop monitor.</extra_info>
 </theme>
 

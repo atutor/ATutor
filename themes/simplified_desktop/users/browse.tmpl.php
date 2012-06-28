@@ -134,12 +134,12 @@
 </fieldset>
 </div>
 </div>
-<div>
+<div  id="browse-courses">
 <?php if (is_array($this->courses_rows)){ ?>
 	<?php foreach ($this->courses_rows as $row){ ?>
 	    <?php  $counter++; ?>
-		<ul class="fl-list-menu fl-list-thumbnails">
-		 <li>
+		<ul class="fl-list-menu fl-list-thumbnails my-course-list-ul">
+		 <li class="my-course-links">
 				<h3 class="browse-courses"><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities($row['title'], ENT_QUOTES, 'UTF-8'); ?></a></h3>      
 		     
 		      <?php if ($row['description']): ?>

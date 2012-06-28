@@ -70,7 +70,7 @@ if ($this->announcements): ?>
 	<?php foreach ($this->announcements as $item): ?>
 		<div class="news">
 			<h3><?php echo $item['title']; ?></h3>
-			<span class="date"><?php echo $item['date'] .' '. _AT('by').' ' . $item['author']; ?></span></p> <?php echo $item['body']; ?></span>
+			<p><span class="date"><?php echo $item['date'] .' '. _AT('by').' ' . $item['author']; ?></span></p> <?php echo $item['body']; ?></span>
 			
 		</div>
 	<?php endforeach; ?>
@@ -97,7 +97,7 @@ function print_sublinks($link){
 		<div class="outside_box">
 <?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
 			<div class="buttonbox">
-			<a href="#" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>'); return false;"><img src="<?php echo AT_BASE_HREF; ?>images/x.gif" border="0" alt="<?php echo _AT('close'); ?>"/></a>
+			<input type="image" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>');" src="<?php echo AT_BASE_HREF; ?>images/x.gif" alt="<?php echo _AT('close'); ?>" value="<?php echo _AT('close'); ?>" class="img1616"/>
 			</div>
 <?php }?>
 			<img src="<?php echo $link['img']; ?>" alt="" border="0" height="45" width="45"/>
@@ -129,47 +129,5 @@ function print_sublinks($link){
 	</div>
 </div>
 
-
-
-
-<!--
-<div class="details_ol">
-	<div class="details_or">
-		<div class="outside_box">
-<?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
-			<div class="buttonbox">
-			<a href="#" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>'); return false;"><img src="<?php echo AT_BASE_HREF; ?>images/x.gif" border="0" alt="<?php echo _AT('close'); ?>"/></a>
-			</div>
-<?php }?>
-			<img src="<?php echo $link['img']; ?>" alt="" border="0" height="51" width="51"/>
-			<span class="home-title"><a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a></span>
-			<div class="inside_box">
-				<div class="details_il">&nbsp;</div>
-				<div class="details_ir"></div>
-<?php
-	// if $link['sub_file'] is defined, print the text array returned from sub_file, otherwise, print the text defined in $link['text']
-	if($link['sub_file']!=""){
-		//$array = require(AT_INCLUDE_PATH.'../'.$link['sub_file']);
-		if(!is_array($array)){ 
-?>
-				<div class="details-text">
-				<i><?php echo _AT('none_found'); ?></i>
-				</div>
-<?php } else { ?>
-				<div class="details-text">
-<?php 	foreach($array as $sublink){ ?>
-					<img src="<?php echo $link['icon']; ?>" border="0" alt="" /> 
-<?php		if ($sublink <> '') echo $sublink."<br />"; } ?>
-				</div> 
-<?php 
-		} // end of else						
-	} else { ?>
-				<div class="details_text"><?php echo $link['text']; ?></div>
-<?php } ?>
-			</div>
-		</div>
-	</div>
-</div>
--->
 <?php } ?>
 

@@ -1,0 +1,15 @@
+/* IE specific styles */
+.fl-theme-iphone .fl-tabs li a, .fl-theme-iphone .fl-tabs .fl-tabs-active a {
+border:0;
+}
+.navigation-bar-button {
+position:absolute;
+top:.7em;
+}
+
+#course-level-navigation{
+margin-top:-2.5em;
+}
+.topnavlist-link{
+	margin-left:.5em;
+}

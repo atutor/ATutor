@@ -56,36 +56,28 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 // 1. any click on the page closes the content menu but the link "content_link" itself
 // 2. the click on link "content_link" opens the content menu
 
+//require ('TeraWurflRemoteClient.php');
+//$wurflObj = new TeraWurflRemoteClient('http://wurfl.thesedays.com/webservice.php');
+//$capabilities = array("product_info");
+//$data_format = TeraWurflRemoteClient::$FORMAT_JSON;
+//$wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 
-require ('TeraWurflRemoteClient.php');
-$wurflObj = new TeraWurflRemoteClient('http://wurfl.thesedays.com/webservice.php');
-$capabilities = array("product_info");
-$data_format = TeraWurflRemoteClient::$FORMAT_JSON;
-$wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
-
-// open/close content menu
+//open/close content menu - tablet
 $this->onload .= "
 jQuery('#content_link').click(function(e) {
   e.stopPropagation();
-  
   jQuery('#content').slideToggle(0);
-  jQuery('#content_link').toggleClass('content_link_tablet_highlight');
-  jQuery('#content_link').toggleClass('triangle-isosceles'); 
-  jQuery('#content_link').toggleClass('top'); 
-  jQuery('#content_link').toggleClass('right');    
+  jQuery('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
   ";
 $this->onload .= "});
 ";
 
-//open/close subnavlist in smartphones    
-
+//open/close subnavlist - smartphones    
 $this->onload .= "
 jQuery('#subnavlist-link').click(function(e) {
   e.stopPropagation();
-  
   jQuery('#subnavlist').slideToggle();
-  jQuery('#subnavlist-link').toggleClass('content-closed');
-  jQuery('#subnavlist-link').toggleClass('subnavcontain-active');
+  jQuery('#subnavlist-link').toggleClass('content-closed').toggleClass('subnavcontain-active');
   jQuery('.subnavcontain').toggleClass('subnavcontain3');     
   ";
 $this->onload .= "});
@@ -94,55 +86,44 @@ $this->onload .= "});
 $this->onload .= "
 jQuery('#content_link_phone').click(function(e) {
   e.stopPropagation();
-  
   jQuery('#content').slideToggle();
- 
-  jQuery('#content_link_phone').toggleClass('topnavlist-link-highlight');
-  jQuery('#content_link_phone').toggleClass('content-closed'); 
+  jQuery('#content_link_phone').toggleClass('topnavlist-link-highlight').toggleClass('content-closed');
   jQuery('.subnavcontain').toggleClass('subnavcontain3'); 
   ";
 $this->onload .= "});
 ";
 
-// open/close header navigational menu for smartphones
-// jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
+// open/close header navigational menu - smartphones
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#topnavlist').slideUp(600);}); 
 jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#topnavlist').slideToggle();
- jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight');
+ jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight').toggleClass('.topnavlist-link-highlight-background');
 });
 ";
 
-// open/close header navigational menu for tablets
-
+// open/close header navigational menu - tablets
 $this->onload .= "
 jQuery(document).click(function () {
 jQuery('#navigation-column').slideUp(200);}); 
 jQuery('.topnavlist-link').click(function(e) {
   e.stopPropagation();
   jQuery('#navigation-column').slideToggle(0);
-    jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight');
-    jQuery('#topnavlist-link').toggleClass('triangle-isosceles');
-    jQuery('#topnavlist-link').toggleClass('top');
+    jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight').toggleClass('triangle-isosceles').toggleClass('top');
 });
 ";
 
-//jQuery for Gmail dock-style "more" button that makes the subnavlist expand for more options
+// makes the subnavlist expand for more options
 $this->onload .= "
 
 jQuery('.more-button').toggle(function(e) {
   jQuery('.subnavlist-more').show();
-  jQuery('#switch').attr('src','images/hidemenu.gif' );
-  jQuery('#switch').attr('title', 'less menu items'); 
-  jQuery('#switch').attr('alt', 'less menu items');
+  jQuery('#switch').attr('src','images/hidemenu.gif' ).attr('title', 'less menu items').attr('alt', 'less menu items');
 },function(){
   jQuery('.subnavlist-more').hide(); 
-  jQuery('#switch').attr('src', 'images/showmenu.gif' );
-  jQuery('#switch').attr('title', 'more menu items'); 
-  jQuery('#switch').attr('alt', 'more menu items');
+  jQuery('#switch').attr('src', 'images/showmenu.gif' ).attr('title', 'more menu items').attr('alt', 'more menu items');
 });
 ";
 
@@ -152,8 +133,7 @@ $this->onload .= "
 jQuery('#results-hide-show-link').click(function(e) {
   e.stopPropagation();
     jQuery('#results-display').slideToggle();
-    jQuery(this).toggleClass('content-closed');
-    jQuery(this).preventDefault();
+    jQuery(this).toggleClass('content-closed').preventDefault();
   ";
 $this->onload .= "});
 ";
@@ -168,18 +148,13 @@ jQuery('.results-hide-show-link').click(function(e) {
 $this->onload .= "});
 ";
 	
-
 // Hide the addressbar
 $this->onload .= "
 setTimeout(function() { window.scrollTo(0, 1) }, 100);
 ";
-
-
-
 ?>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
 
 <head>
@@ -193,27 +168,18 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-layout.css" type="text/css"/>
 	<link rel="stylesheet" href="<?php echo $this->base_path; ?>jscripts/infusion/framework/fss/css/fss-mobile-theme-iphone.css" type="text/css"/>	
 	
-<?php if ($this->is_mobile_device == true): ?>
-	<?php if ($this->mobile_device_type == ANDROID_DEVICE): ?>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/mobile.css" type="text/css"/>
-	<meta name="viewport" content="user-scalable=no, width=device-width" />
-	<?php endif; ?>
-	<?php if ($this->mobile_device_type == IPOD_DEVICE || $this->mobile_device_type == IPHONE_DEVICE): ?>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/mobile.css" type="text/css"/>
-	<meta name="viewport" content="user-scalable=no, width=device-width" />
-	<?php endif; ?>
-	<!-- Armin 25.08.2010: Detect BLACKBERRY_DEVICE and use blackberry.css-->
-	<?php if ($this->mobile_device_type == BLACKBERRY_DEVICE): ?>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/blackberry.css" type="text/css"/>
-	<meta name="viewport" content="user-scalable=no, width=device-width" />
-	<?php endif; ?>
-	<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
-	<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />
-	<?php endif; ?>
-<?php endif; ?>
 
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
+	<meta name="viewport"  content="user-scalable=yes, width=device-width"/>
+	<!--[if IE]>
+	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
+	<![endif]-->
+	<!--[if IE8]>
+	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
+	<![endif]-->
+	
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+
 	<!-- Fluid Infusion mobile fss extension... Remove when it is committed to Mobile FSS.  
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/moz.css" type="text/css" />-->	
 	<!-- Fluid Infusion -->
@@ -238,14 +204,17 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 </head>
 
 
-<?php if ($this->mobile_device_type != IPAD_DEVICE): ?><!--  smartphone theme only -->
+<?php  if ($this->mobile_device_type != IPAD_DEVICE): ?><!--  smartphone theme only -->
 
 <body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone ui-mobile-viewport">
 
 <div id="wrapper">
 <div id="main">
 	<div id="header">
-
+	<div class="bypass">
+		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
+		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
+	</div>
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
 
@@ -263,38 +232,36 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 	<div id="contentwrapper">
-	<div id="navigation-contentwrapper">
-	<div id="navigation-bar">
-
+	<div id="navigation-contentwrapper" role="menubar" >
+	
 			<?php if ($this->current_sub_level_page): ?>
-			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
+			<div id="topnavlistcontainer" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" >
 			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-				<ul id="topnavlist"  class="fl-list-menu" role="menu">
+			
+				<div id="navigation-column">
+				<?php if ($this->current_sub_level_page): ?>
+				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
 					<?php $accesscounter = 0; //initialize ?>
 					<?php foreach ($this->top_level_pages as $page): ?>
 						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
 						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
 						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
 						<?php if ($page['url'] == $this->current_top_level_page): ?>
-							<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a></span></li>
+							<!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
 						<?php else: ?>
-							<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></span></li>
+							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
 						<?php endif; ?>
-				
 						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-					
 					<?php endforeach; ?>
-					<?php if(!$this->just_social): ?>
-					<li role="menuitem"><span class="arrow-highlight"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a></span></li>
-					<?php endif; ?> 
 				</ul>
+				<?php endif; ?>
 			</div>
-			<?php endif; ?>
-		</div>
-
+			</div>
+			<?php endif; ?>	
+		
 				
-
-
+	<?php  ?>	
 	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
@@ -320,6 +287,24 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</li>
 			<?php endif; ?>
 		</ul>
+	<?php ?>	
+		
+
+		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 	
+		<div id="course-level-navigation" role="navigation" aria-live="assertive">
+			<div id="" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content"; //_AT("content_navigation"); ?></a>	
+			</div>	
+			<div id="content">
+				<?php $contentManager->printMainMenu(); ?>
+				<script language="javascript" type="text/javascript"></script>
+			</div>
+			</div><!-- course-level navigation -->				
+		</div> <!-- end sequence-links-course-navigation -->
+		<?php endif; ?>
+		
+		
+	
 	</div><!--  END navigation-contentwrapper -->
 	
 
@@ -331,8 +316,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		<div id="subnavbacktopage">
 		<?php if (count($this->sub_level_pages) > 0): ?>
 			
-			<div id="subnavlistcontainer">
-				
+			<div id="subnavlistcontainer">		
 				<!-- id="subnavlist" -->
 			<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 				<div class="subnavcontain">
@@ -346,11 +330,11 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 								<?php endfor;?>
 					</div>
 				</div>
-					<ul id="subnavlist" class="fl-list-menu">
+					<ul id="subnavlist">
 					<?php $num_pages = count($this->sub_level_pages); ?>	
 					<?php for ($i=0; $i<$num_pages; $i++): ?>				
 						<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
-							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li> 
+							<li  class="selected"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li> 
 						<?php else: ?>
 							<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
 						<?php endif; ?>
@@ -366,7 +350,17 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 	<div id="contentcolumn">	
 		
-
+   <?php if ($this->shortcuts): ?>
+      <div id="shortcuts">
+	      <ul>
+		      <?php foreach ($this->shortcuts as $link): ?>
+			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+		      <?php endforeach; ?>
+	      </ul>
+      </div>
+      <?php endif; ?>
+      
+      
 		<!--the page title-->
 		<div id="page-title-back-to-page">
 		<a name="content" title="<?php echo _AT('content'); ?>"></a>
@@ -397,10 +391,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 			</div>
 					
-		<div id="content">
+	<!--	<div id="content">
 			<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript"></script>
-		</div>
+		</div> -->
 
 	</div>
 
@@ -409,6 +403,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			
 			<div class="subnavcontain2">
+			
+			
 			<ul class="sequence-links">
 				<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 					<?php if ($this->sequence_links['resume']): ?>
@@ -438,224 +434,19 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				</div>
 			</ul>  
 		<?php endif; ?>
-			
-			
+	
+
 	</div>
 	<?php endif; ?>	
 
 
 	
 		<!-- the sub navigation -->
-<?php endif; ?>
+<?php  endif; ?>	
 
-
-
-<!--  end header template for iphone, android, blackberry -->
-<?php if ($this->mobile_device_type == IPAD_DEVICE): ?><!-- start header template for ipad/tablets -->
-<body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone ui-mobile-viewport">
-
-<div id="wrapper">
-<div id="main">
-	
-	<div id="header" role="header">
-	
-	<div class="bypass">
-		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#page-title" accesskey="c">
-		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-</div>	
-	
-	
-	<div id="header-section-title">
-			<h1 id="section-title"><?php echo $this->section_title; ?></h1>
-		</div>
-
-	
-	<div id="navigation-contentwrapper" role="menubar" >
-	
-			<?php if ($this->current_sub_level_page): ?>
-			<div id="topnavlistcontainer" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" >
-			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
-			
-				<div id="navigation-column">
-				<?php if ($this->current_sub_level_page): ?>
-				<ul id="topnavlist-tablet"  class="fl-list-menu" role="menu">
-					<?php $accesscounter = 0; //initialize ?>
-					<?php foreach ($this->top_level_pages as $page): ?>
-						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-						<?php if ($page['url'] == $this->current_top_level_page): ?>
-							<!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
-						<?php else: ?>
-							<li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
-						<?php endif; ?>
-				
-						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-					
-					<?php endforeach; ?>
-					 
-				</ul>
-				<?php endif; ?>
-			</div>
-			</div>
-			<?php endif; ?>	
-		
-	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
-	<!--  CHECK TO SEE IF USER IS A STUDENT -->
-	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
-		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
-	<?php endif;?>		
-	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
-	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
-		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
-		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
-	<?php endif;?>
-	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
-	<?php if($_SESSION['is_admin'] == 1): ?>
-		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
-	<?php endif;?>
-	
-	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-			<li>
-		    	<div id="guide_box">
-					<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
-      		
-				  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
-      			</div>
-			</li>
-			<?php endif; ?>
-		</ul>
-	
-	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-			
-<div id="sequence-links-course-navigation">	
-		<ul class="sequence-links fl-tabs" id="sequence-links" >
-			<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
-				<?php if ($this->sequence_links['resume']): ?>
-						<li >
-						<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
-						</li>
-				<?php else:
-					if ($this->sequence_links['previous']): ?>
-						<li  class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
-						</li>
-					<?php endif;
-					if ($this->sequence_links['next']): ?>
-						<li class="arrow forward">
-						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
-						</li>
-					<?php endif; ?>
-				<?php endif; ?>
-			<?php } ?>
-				&nbsp;
-			</ul> <!-- end sequence-links -->
-		<?php endif; ?>
-		
-		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 	
-		<div id="course-level-navigation">
-		
-	
-			
-			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
-			</div>	
-			</div><!-- course-level navigation -->				
-				<div id="content">
-					<?php $contentManager->printMainMenu(); ?>
-					<script language="javascript" type="text/javascript"></script>
-				</div>
-		
-		</div> <!-- end sequence-links-course-navigation -->
-		<?php endif;?>
-	
-	
-		
-
-	
-
-	
-	</div>
-	</div> <!--  END HEADER -->
-
-<?php if (count($this->sub_level_pages) > 0): ?>
-				<div id="subnavlistcontainer" role="menu" aria-live="assertive" > 
-				
-					<!-- Markup for a subnavlist styled like a Gmail dock. Clean up this code for redundancy but it works for now. -->
-					<!-- background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#B6C0C6), to(#F8FAFB));  -->
-					<ul id="subnavlist" style="text-decoration: none; text-align: center; border-bottom: 1px #B6C0C6 solid; background: #B6C0C6; ">
-					<?php $num_pages = count($this->sub_level_pages); ?>
-						<?php for ($i=0; $i<$num_pages; $i++): ?>	
-							
-							<?php if($num_pages <= 5): ?>
-								<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
-								<li role="menuitem" class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-								<?php else: ?> 
-								<li role="menuitem" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-								<?php endif; ?> 
-							<?php endif; ?>
-							<?php if($num_pages > 5): ?>
-								<?php if($i <= 5):?>
-									<?php if($this->sub_level_pages[$i][url] == $this->current_sub_level_page): ?>
-										<li role="menuitem" class="selected" style="font-size: 14px; padding-left: .313em; padding-right: .313em;"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-									<?php else: ?> 
-										<li role="menuitem" style="font-size: 14px; padding-left: .313em; padding-right: .313em"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-									<?php endif; ?> 
-								<?php endif;?>
-								<?php if($i== 6): ?>
-									<li role="menuitem" class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="More menu items" title="More menu items" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
-									<li role="menuitem">
-									<ul class="subnavlist-more">
-									<li role="menuitem" class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-									
-								<?php endif;?>
-								<?php if($i > 6 && $i < $num_pages): ?>
-									<li role="menuitem" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-								<?php endif;?>
-								<?php if($i==$num_pages): ?>
-									<li role="menuitem" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
-									</ul>
-									</li>
-								<?php endif; ?>
-							<?php endif; ?>
-						
-						
-							
-					<?php if ($i < $num_pages-1): 
-						echo " ";?>
-					<?php endif; ?>
-					<?php endfor; ?>
-					</ul>
-
-				</div> <!--  end subnavlistcontainer -->				
-		<?php endif; ?>	
-	
-	<?php global $msg; $msg->printAll(); $_base_href;?>
-	
-	
-	<!-- </div>end #main -->
-		<div id="contentwrapper" class="fl-container" >
-		<a name="page-title" id="page-title"></a>
-		<h2 class="page-title" ><?php echo $this->page_title; ?></h2>
-		<div id="subnavbacktopage" >
-					<?php if (isset($this->back_to_page)): ?>
-						<a href="<?php echo $this->back_to_page['url']; ?>">
-						<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
-					<?php endif; ?>
-				</div>
-	
-	<!--  check if a user is logged-into a course and if so display breadcrumbs.  -->	
-		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 		
-		<?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
-		 
-			<div class="crumbcontainer">
-			  <div id="breadcrumbs">
-			  <?php foreach ($this->path as $page): ?>
-				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
-			  <?php endforeach; ?> <?php echo $this->page_title; ?>
-		  	  </div>
-			</div>
-	  <?php } ?>
-	 <?php endif; ?> 
-				
-<?php endif; ?><!--  end header template for ipad/tablets -->
+	<!--[if IE 7]>
+	  <?php 
+	  	$message = 'For an optimal experience, this theme is intended for use with Internet Explorer 8 or higher.';
+	  	$msg->addFeedback('For an optimal experience, this theme is intended for use with Internet Explorer 8 or higher.');
+	  	$msg->printAll(); ?>
+	<![endif]-->		     

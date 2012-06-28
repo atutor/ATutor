@@ -1,13 +1,11 @@
 <?php if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 <?php if ($this->mobile_device_type != IPAD_DEVICE): ?><!-- begin footer template for iphone, android, and blackberry -->
-
-
-</div> <!-- end innner-contentwrapper -->	
-</div> <!-- end contentcolumn -->
-</div> <!-- end contentwrapper -->
-</div> <!-- end main -->
+</div> 
+</div> 
+</div> 
+</div> 
+</div> 
 </div> <!-- end wrapper -->
-
 <div id="footer" class="fl-navbar fl-table">
 <div id="footer-links"> <!-- top help/search/login links -->
 	<ul class="footer-links-tabs fl-tabs flc-themer" role="menu">  
@@ -26,10 +24,10 @@
 				<?php endif; ?>
 			<?php endif; ?>
 		<?php endif; ?>
-		<!--  SEARCH MOVED TO #topnavlist 
+		<!--  SEARCH MOVED TO #topnavlist -->
 		<?php if(!$this->just_social): ?>
 			<li><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
-		<?php endif; ?> -->
+		<?php endif; ?>
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a></li>
 
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>					 
@@ -54,7 +52,7 @@
 </div> <!-- end innner-contentwrapper -->	
 </div> <!-- end contentcolumn -->
 
-<div id="footer" class="fl-navbar fl-table">
+<div id="" class="fl-navbar fl-table">
 <div id="footer-links"> <!-- top help/search/login links -->
 	<ul class="footer-links-tabs fl-tabs flc-themer" role="menu">  
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id'] > 0): ?>
