@@ -8,26 +8,20 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INSTALLER_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
 
 if ($step < 4) {
 	error_reporting(0);
-	include(AT_INCLUDE_PATH.'/include/config.inc.php');
+	include('../include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
-	//echo AT_INSTALL;
 	if (defined('AT_INSTALL')) {
-		include_once(AT_INCLUDE_PATH.'/common.inc.php');
+		include_once(AT_INSTALLER_INCLUDE_PATH.'common.inc.php');
 		echo print_meta_redirect();
 		exit;
 	}
 }
-if(isset($AT_SUBSITE)){
-	require('/srv/www/include/config.inc.php');
-}
-if(!defined(VERSION)){
-	$new_version = '';
-}
+
 $install_steps[0] = array('name' => 'Introduction');
 $install_steps[1] = array('name' => 'Terms of Use');
 $install_steps[2] = array('name' => 'Database');
@@ -40,14 +34,13 @@ $install_steps[7] = array('name' => 'Done!');
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="utf-8"> 
 <head>
-	<title>ATutor Setup</title>
+	<title>ATutor Installation</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
 </head>
 <body>
 <div style="height: 70px; vertical-align: bottom; background-color: #354A81">
-	<h1 id="header">ATutor <?php echo $new_version; ?> Setup</h1>
+	<h1 id="header">ATutor <?php echo $new_version; ?> Installation</h1>
 	<img src="../images/AT_Logo_1_sm.png" height="35" width="97" alt="ATutor Logo" id="logo" />
 </div>
 <div class="content">
-

@@ -1,4 +1,6 @@
-<?php 
+<?php
+global $db;
+ 
 if(!define(AT_SUB_SITE)){
 ?>
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
@@ -123,11 +125,13 @@ else
 	{
 		for ($i=0; $i < $num_of_modules; $i++)
 		{
+			$installed = false;
+			
 			// check if the module has been installed
-			//$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $this->module_list_array[$i]["history"][0]["install_folder"] . "'";
-			//$result = mysql_query($sql, $db) or die(mysql_error());
+			$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $this->module_list_array[$i]["history"][0]["install_folder"] . "'";
+			$result = mysql_query($sql, $db) or die(mysql_error());
 
-			if (mysql_num_rows($this->result) == 0) $installed = false;
+			if (mysql_num_rows($result) == 0) $installed = false;
 			else $installed = true;
 
 ?>

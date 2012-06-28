@@ -121,12 +121,12 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 		
 			if ($archive->extract(PCLZIP_OPT_PATH, $module_content_folder) == 0)
 			{
-		    clear_dir($module_content_folder);
-		    $msg->addError('CANNOT_UNZIP');
-		  }
+				clear_dir($module_content_folder);
+				$msg->addError('CANNOT_UNZIP');
+			}
 		
-		  if (!$msg->containsErrors())
-		  {
+			if (!$msg->containsErrors())
+			{
 				// find unzip module folder name
 				clearstatcache();
 				
@@ -144,15 +144,15 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 					$msg->addError('EMPTY_ZIP_FILE');
 			}
 		
-		  // check if the same module exists in "mods" folder. If exists, it has been installed
-		  if (!$msg->containsErrors())
-		  {
-		  	if (is_dir("../../../mods/". $module_folder))
-		  		$msg->addError('ALREADY_INSTALLED');
-		  }
+			// check if the same module exists in "mods" folder. If exists, it has been installed
+			if (!$msg->containsErrors())
+			{
+				if (is_dir(AT_SUBSITE_MODULE_PATH. $module_folder))
+					$msg->addError('ALREADY_INSTALLED');
+			}
 
-		  if (!$msg->containsErrors())
-		  {
+			if (!$msg->containsErrors())
+			{
 				header('Location: module_install_step_1.php?mod='.urlencode($module_folder).SEP.'new=1');
 				exit;
 			}

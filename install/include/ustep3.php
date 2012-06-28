@@ -10,7 +10,7 @@
 /************************************************************************/
 // $Id$
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
 $_POST['db_login']    = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);

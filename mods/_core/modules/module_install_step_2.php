@@ -33,7 +33,7 @@ else if (isset($_POST["permission_granted"])) $permission_granted = $_POST["perm
 
 if (isset($_POST['submit_no']))
 {
-	clr_dir('../../../mods/'.$_POST['mod']);
+	clr_dir(AT_SUBSITE_MODULE_PATH.$_POST['mod']);
 	
 	// if write permission on the mods folder has been granted, re-direct to the page of removing permission,
 	// otherwise, back to start page.
@@ -88,14 +88,14 @@ else if (isset($_POST['submit_yes']))
 // copy module from content folder into mods folder
 if (isset($mod) && !isset($_GET['mod_in']))
 {
-	copys($module_content_folder.$mod, '../../../mods/'.$mod);
+	copys($module_content_folder.$mod, AT_SUBSITE_MODULE_PATH.$mod);
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $moduleParser = new ModuleParser();
 
-if (!file_exists('../../../mods/'.$mod.'/module.xml')) {
+if (!file_exists(AT_SUBSITE_MODULE_PATH.$mod.'/module.xml')) {
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $mod; ?>" />
@@ -124,9 +124,9 @@ if (!file_exists('../../../mods/'.$mod.'/module.xml')) {
 	exit;
 }
 
-$readme = get_readme('../../../mods/'.$mod);
+$readme = get_readme(AT_SUBSITE_MODULE_PATH.$mod);
 
-$moduleParser->parse(file_get_contents('../../../mods/'.$mod.'/module.xml'));
+$moduleParser->parse(file_get_contents(AT_SUBSITE_MODULE_PATH.$mod.'/module.xml'));
 
 $module = $moduleFactory->getModule($mod);
 

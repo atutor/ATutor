@@ -151,7 +151,7 @@ class SqlUtility
 		return false;
 	}
 
-	function queryFromFile($sql_file_path, $table_prefix)
+	function queryFromFile($sql_file_path, $table_prefix = null)
 	{
 		global $db, $progress, $errors;
 
@@ -189,17 +189,30 @@ class SqlUtility
 								$errors[] = 'Table <b>' . $table . '</b> creation failed.';
 					}
 				}
-				elseif($prefixed_query[1] == 'INSERT INTO')
+				elseif($prefixed_query[1] == 'INSERT INTO') {
 					mysql_query($prefixed_query[0],$db);
-				elseif($prefixed_query[1] == 'REPLACE INTO')
+				} elseif($prefixed_query[1] == 'REPLACE INTO') {
 					mysql_query($prefixed_query[0],$db);
-				elseif($prefixed_query[1] == 'ALTER TABLE')
-					mysql_query($prefixed_query[0],$db);
-				elseif($prefixed_query[1] == 'DROP TABLE')
+				} elseif($prefixed_query[1] == 'ALTER TABLE') {
+					if (mysql_query($prefixed_query[0],$db) !== false) {
+						$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
+					} else {
+						if (mysql_errno($db) == 1060) 
+							$progress[] = 'Table <strong>'.$table . '</strong> fields already exists. Skipping.';
+						elseif (mysql_errno($db) == 1091) 
+							$progress[] = 'Table <strong>'.$table . '</strong> fields already dropped. Skipping.';
+						else
+							$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
+					}
+				} elseif($prefixed_query[1] == 'DROP TABLE') {
 					mysql_query($prefixed_query[1] . ' ' .$table,$db);
+				} elseif($prefixed_query[1] == 'UPDATE'){
+                    mysql_query($prefixed_query[0],$db);
+                }
 			}
 		}
-    return TRUE;
+		
+    return true;
   }
 
 	// This function only revert queries on "CREATE TABLE" and "INSERT INTO language_text"

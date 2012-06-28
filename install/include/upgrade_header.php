@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
 error_reporting(E_ALL ^ E_NOTICE);
 
@@ -18,7 +18,7 @@ if ($step < 6) {
 	include('../include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (defined('AT_INSTALL')) {
-		include_once(AT_INCLUDE_PATH.'common.inc.php');
+		include_once(AT_UPGRADE_INCLUDE_PATH.'common.inc.php');
 		echo print_meta_redirect();
 		exit;
 	}

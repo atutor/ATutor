@@ -18,7 +18,7 @@ Next ensure your webserver has a virtual host setup to point to the main ATutor 
 
 Otherwise, to install ATutor multisite simply point your browser to your installation and follow the provided instructions per a normal ATutor installation.
 
-When prompted for a content directory, take a look at include/vitals.inc.php, specifically at the $AT_SUB_INCLUDE_PATH line. Ensure that the path leading up to $domain exists on your webserver. Then create a directory inside sites with the name of the domain being configured. Ensure that said directory has write permissions enabled for the apache/www-data user depending on the webserver and platform being used.
+When prompted for a content directory, take a look at include/vitals.inc.php, specifically at the AT_SITE_PATH line. Ensure that the path leading up to $domain exists on your webserver. Then create a directory inside sites with the name of the domain being configured. Ensure that said directory has write permissions enabled for the apache/www-data user depending on the webserver and platform being used.
 
 
 For additional installation details see:

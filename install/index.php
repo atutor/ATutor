@@ -10,26 +10,12 @@
 /************************************************************************/
 // $Id$
 
-define('AT_INCLUDE_PATH', 'include/');
+define('AT_INSTALLER_INCLUDE_PATH', 'include/');
+define('AT_INCLUDE_PATH', '../include/');
 error_reporting(E_ALL ^ E_NOTICE);
-$domain = ($_SERVER['HTTP_HOST']);
-$rootpath = $dirname = dirname($_SERVER['DOCUMENT_ROOT']);
-$domain = "htdocs/atinstall";
-$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
-//echo $AT_SUB_INCLUDE_PATH;
-//exit;
-if(file_exists($AT_SUB_INCLUDE_PATH."/svn.php")){
-//if svn.php exists, this is a base installation
-	$AT_SUB_INCLUDE_PATH = "$rootpath/$domain/include";
-	require('../include/lib/constants.inc.php');
-	require_once('include/common.inc.php');
 
-}else{
-//if svn.php does not exist, this is a subsite installation
-	$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
-	require_once($AT_SUB_INCLUDE_PATH.'/install/include/common.inc.php');
-}
-
+require(AT_INCLUDE_PATH . 'lib/constants.inc.php');
+require_once('include/common.inc.php');
 
 $new_version = VERSION;
 
@@ -44,7 +30,7 @@ $session_error = ob_get_contents();
 ob_end_clean();
 error_reporting(E_ALL ^ E_NOTICE);
 
-require(AT_INCLUDE_PATH.'header.php');
+require(AT_INSTALLER_INCLUDE_PATH.'header.php');
 $bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="Bad" title="Bad" />';
 $good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="Good" title="Good" />';
 $warning = '<img src="images/warning.png" width="16" height="16" border="0" alt="Warning" title="Warning" />';
@@ -61,7 +47,9 @@ function SetCookie(cookieName,cookieValue,nDays) {
 	 expire.setTime(today.getTime() + 3600000*24*nDays);
 	 document.cookie = cookieName+"="+escape(cookieValue)
 					 + ";expires="+expire.toGMTString();
-	}
+}
+
+SetCookie('jstest','1','1');
 </script>
 <table style="float: right;
 	background-color: #FEFDEF;
@@ -383,7 +371,7 @@ function SetCookie(cookieName,cookieValue,nDays) {
 					?>
 			</td>
 		</tr>
-		</tbody>		
+		</tbody>
 		</table>
 <br />
 
@@ -465,4 +453,4 @@ if($AT_SUBSITE == '' && $no_good == ''){ ?>
 	</table>
 	<?php } ?>
 
-<?php  require(AT_INCLUDE_PATH.'footer.php'); ?>
+<?php  require(AT_INSTALLER_INCLUDE_PATH.'footer.php'); ?>

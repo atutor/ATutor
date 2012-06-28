@@ -218,7 +218,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'2.0.3');
+define('VERSION',		'2.1');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
@@ -286,6 +286,10 @@ define('IPAD_DEVICE', 'ipad');
 // machine type
 define('DESKTOP_DEVICE',  'Desktop');
 define('MOBILE_DEVICE',  'Mobile');
+
+// theme directory
+define('AT_SYSTEM_THEME_DIR', realpath(AT_INCLUDE_PATH . "../themes") . "/");
+define('AT_SUBSITE_THEME_DIR', realpath(AT_SITE_PATH . "themes") . "/");
 
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';

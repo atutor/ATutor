@@ -1,7 +1,7 @@
 <?php
 exit;
-define('AT_INCLUDE_PATH', '../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
+define('AT_INSTALLER_INCLUDE_PATH', '../include/');
+require(AT_INSTALLER_INCLUDE_PATH.'vitals.inc.php');
 
 
 $sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('contact_email', '".EMAIL."')";
