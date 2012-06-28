@@ -8,7 +8,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INSTALLER_INCLUDE_PATH') && !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 ?>
 </div>
 <div style="margin-top: 20px; height: 30px; background-color: #354A81; padding: 10px">&nbsp;</div>

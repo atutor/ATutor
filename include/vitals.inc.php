@@ -37,7 +37,6 @@ define('AT_SITE_PATH', get_site_path());
 	error_reporting(0);
 	if (!defined('AT_REDIRECT_LOADED')){
 		include_once(AT_SITE_PATH . 'include/config.inc.php');
-
 	}
 	error_reporting(AT_ERROR_REPORTING);
 	if (!defined('AT_INSTALL') || !AT_INSTALL) {
@@ -439,7 +438,7 @@ if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
 	 $strrpos = 'mb_strrpos';
 	 $strlen = 'mb_strlen';
  } else {
- 	 $strtolower = 'utf8_strtolower';
+	 $strtolower = 'utf8_strtolower';
 	 $strtoupper = 'utf8_strtoupper';
 	 $substr = 'utf8_substr';
 	 $strpos = 'utf8_strpos';

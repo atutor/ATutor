@@ -13,7 +13,7 @@
 ignore_user_abort(true); 
 @set_time_limit(0); 
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
 if (isset($_POST['submit'])) {
 	if (!isset($errors)) {

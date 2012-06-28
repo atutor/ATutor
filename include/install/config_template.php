@@ -12,11 +12,14 @@
 /****************************************************************/
 // $Id$
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
-
-function write_config_file($filename, $comments) {
-	 //print_r($filename);
-	global $config_template, $AT_SUBSITE;
+/**
+ * Create the include/config.inc.php based on the config template
+ * @param self-explanatory
+ * @param true or false. If the file is written successfully, return true, otherwise, return false.
+ */
+function write_config_file($filename, $db_login, $db_pwd, $db_host, $db_port, $db_name, $tb_prefix,
+         $comments, $content_dir, $smtp, $get_file) {
+	global $config_template, $addslashes;
 
 	$tokens = array('{USER}',
 					'{PASSWORD}',
@@ -24,97 +27,35 @@ function write_config_file($filename, $comments) {
 					'{PORT}',
 					'{DBNAME}',
 					'{TABLE_PREFIX}',
-					'{HEADER_IMG}',
-					'{HEADER_LOGO}',
 					'{GENERATED_COMMENTS}',
 					'{CONTENT_DIR}',
 					'{MAIL_USE_SMTP}',
-					'{GET_FILE}',
-					'{SUB_SITE}'
+					'{GET_FILE}'
 				);
 
-	if($AT_SUBSITE != ''){
-		//$db_pwd = MYSQL_PW;
-		$db_pwd = addslashes(urldecode($_POST['step2']['db_password']));
-	}else{
-		$db_pwd = addslashes(urldecode($_POST['step2']['db_password']));
-	}
+	$values = array(urldecode($db_login),
+				$addslashes(urldecode($db_pwd)),
+				$db_host,
+				$db_port,
+				$db_name,
+				$tb_prefix,
+				$comments,
+				addslashes(urldecode($content_dir)),
+				$smtp,
+				$get_file
+			);
 
-	if ($_POST['step1']['old_path'] != '') {
-		$values = array(urldecode($_POST['step1']['db_login']),
-					$db_pwd,
-					$_POST['step1']['db_host'],
-					$_POST['step1']['db_port'],
-					$_POST['step1']['db_name'],
-					$_POST['step1']['tb_prefix'],
-					addslashes(urldecode($_POST['step1']['header_img'])),
-					addslashes(urldecode($_POST['step1']['header_logo'])),
-					$comments,
-					addslashes(urldecode($_POST['step5']['content_dir'])),
-					$_POST['step1']['smtp'],
-					$_POST['step1']['get_file'],
-					$_POST['step4']['sub_site']
-				);
-	} else {
-		$values = array(urldecode($_POST['step2']['db_login']),
-					$db_pwd,
-					$_POST['step2']['db_host'],
-					$_POST['step2']['db_port'],
-					$_POST['step2']['db_name'],
-					$_POST['step2']['tb_prefix'],
-					'', //header image
-					'', //header logo
-					$comments,
-					addslashes(urldecode($_POST['step4']['content_dir'])),
-					$_POST['step3']['smtp'],
-					$_POST['step4']['get_file'],
-					$_POST['step4']['sub_site']
-				);
-	}
-/*
-	if ($_POST['step1']['old_path'] != '') {
-		$values = array(urldecode($_POST['step1']['db_login']),
-					addslashes(urldecode($_POST['step1']['db_password'])),
-					$_POST['step1']['db_host'],
-					$_POST['step1']['db_port'],
-					$_POST['step1']['db_name'],
-					$_POST['step1']['tb_prefix'],
-					addslashes(urldecode($_POST['step1']['header_img'])),
-					addslashes(urldecode($_POST['step1']['header_logo'])),
-					$comments,
-					addslashes(urldecode($_POST['step5']['content_dir'])),
-					$_POST['step1']['smtp'],
-					$_POST['step1']['get_file'],
-					$_POST['step4']['sub_site']
-				);
-	} else {
-		$values = array(urldecode($_POST['step2']['db_login']),
-					addslashes(urldecode($_POST['step2']['db_password'])),
-					$_POST['step2']['db_host'],
-					$_POST['step2']['db_port'],
-					$_POST['step2']['db_name'],
-					$_POST['step2']['tb_prefix'],
-					'', //header image
-					'', //header logo
-					$comments,
-					addslashes(urldecode($_POST['step4']['content_dir'])),
-					$_POST['step3']['smtp'],
-					$_POST['step4']['get_file'],
-					$_POST['step4']['sub_site']
-				);
-	}
-*/
 	$config_template = str_replace($tokens, $values, $config_template);
 
 	if (!$handle = @fopen($filename, 'wb')) {
-         return false;
-    }
-	@ftruncate($handle,0);
-    if (!@fwrite($handle, $config_template, strlen($config_template))) {
 		return false;
-    }
-        
-    @fclose($handle);
+	}
+	@ftruncate($handle,0);
+	if (!@fwrite($handle, $config_template, strlen($config_template))) {
+		return false;
+	}
+
+	@fclose($handle);
 	return true;
 }
 
@@ -166,11 +107,6 @@ define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
 /* to ATutor_install_dir/content/ and AT_CONTENT_DIR will be ignored.   */
 /* This option is used for compatability with IIS and Apache 2.         */
 define('AT_FORCE_GET_FILE', {GET_FILE});
-
-/* If this installation is a subsite set to TRUE, otherwise if it is    */
-/* a standalone installation of a base installation for multisite set   */
-/* to FALSE																*/
-define('AT_SUB_SITE', {SUB_SITE});
 
 /* DO NOT ALTER THIS LAST LINE                                          */
 define('AT_INSTALL', TRUE);

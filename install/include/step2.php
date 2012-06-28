@@ -10,95 +10,27 @@
 /************************************************************************/
 // $Id$
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
-if(isset($AT_SUBSITE)){
-// If this is a Sub-site installation, use the existing db info from the primary 
-// installation and bypass the db setup step. This assumes the primary 
-// installation was successfully installed as a standalone site
+if (!defined('AT_INSTALLER_INCLUDE_PATH') || !defined('AT_INCLUDE_PATH')) { exit; }
 
-	require($AT_SUB_INCLUDE_PATH.'/config_tmp.inc.php');
-	$hostname = gethostname();
-	$hostname = str_replace('.', '_', $hostname);
-	$_POST['submit'] = "1";
-	$_POST['db_host'] = DB_HOST;
-	$_POST['db_login'] = DB_USER;
-	$_POST['db_port'] = DB_PORT;
-	$_POST['db_password'] = DB_PASSWORD;
-	$_POST['db_name'] = $AT_SUBSITE."_".$hostname;
-	$_POST['tb_prefix'] = "AT".$AT_SUBSITE."_";
-	$_POST['get_file'] = AT_FORCE_GET_FILE;
-
-}
+include(AT_INCLUDE_PATH . 'lib/install.inc.php');
 
 if(isset($_POST['submit'])) {
-	unset($errors);
-	unset($progress);
-
 	//check DB & table connection
-	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+	$response = install_step_db($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], $_POST['db_password'], $_POST['tb_prefix'], $_POST['db_name']);
+	
+	if (!$response['errors']) {
+		print_progress($step);
 
-	if (!$db) {
-		$errors[] = 'Unable to connect to database server.';
-	} else {
-		// check mysql version number
-		$sql = "SELECT VERSION() AS version";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		$row['version'] = str_replace (array('-community-nt', '-max', '-standard'), '', strtolower($row['version']));
-		if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.1.10 or later.';
-		}
+		unset($_POST['submit']);
+		unset($_POST['action']);
+		store_steps($step);
+		print_feedback($response['progress']);
 
-		if (!isset($errors)){
-			if (!mysql_select_db($_POST['db_name'], $db)) {
-				$sql = "CREATE DATABASE `$_POST[db_name]` CHARACTER SET utf8 COLLATE utf8_general_ci";
-				$result = mysql_query($sql, $db);
-				if (!$result) {
-					$errors[] = 'Unable to select or create database <b>'.$_POST['db_name'].'</b>.';
-				} else {
-					$progress[] = 'Database <b>'.$_POST['db_name'].'</b> created successfully.';
-					mysql_select_db($_POST['db_name'], $db);
-				}
-			} else {
-				/* Check if the database that existed is in UTF-8, if not, ask for retry */
-				$sql = "SHOW CREATE DATABASE `$_POST[db_name]`";
-				$result = mysql_query($sql, $db);
-				$row = mysql_fetch_assoc($result);
-				
-				if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
-					$sql2 = 'ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
-					$result2 = mysql_query($sql2);
-					if (!$result2){
-						$errors[] = 'Database <b>'.$_POST['db_name'].'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: <br /> ALTER DATABASE `'.$_POST['db_name'].'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  <br />To use ALTER DATABASE, you need the ALTER privilege on the database.  You can also check the MySQL manual <a href="http://dev.mysql.com/doc/refman/4.1/en/alter-database.html" target="mysql_window">here</a>.';
-					}
-				}
-			}
-		}
-
-		if (!isset($errors)) {
-			$progress[] = 'Connected to database <b>'.$_POST['db_name'].'</b> successfully.';
-			$errors = array();
-			
-			/* @See include/classes/dbmanager.php */
-			queryFromFile('db/atutor_schema.sql');
-			queryFromFile('db/atutor_language_text.sql');
-
-			if (!$errors) {
-				print_progress($step);
-
-				unset($_POST['submit']);
-				unset($_POST['action']);
-				store_steps($step);
-				print_feedback($progress);
-
-				echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-				<input type="hidden" name="step" value="3" />';
-				print_hidden(3);
-				echo '<p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p></form>';
-				return;
-			}
-		}
-
+		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+		<input type="hidden" name="step" value="3" />';
+		print_hidden(3);
+		echo '<p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p></form>';
+		return;
 	}
 }
 
@@ -108,12 +40,12 @@ print_progress($step);
 echo '<p>Please enter your database information: </p>';
 
 
-if (isset($progress)) {
-	print_feedback($progress);
+if (isset($response['progress'])) {
+	print_feedback($response['progress']);
 }
 
-if (isset($errors)) {
-	print_errors($errors);
+if (isset($response['errors'])) {
+	print_errors($response['errors']);
 }
 
 ?>

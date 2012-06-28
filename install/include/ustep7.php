@@ -14,7 +14,8 @@
 ignore_user_abort(true); 
 @set_time_limit(0); 
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
+
 require('classes/TableConversion.class.php');
 $_POST['db_login'] = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
@@ -238,7 +239,8 @@ if (!$db) {
 				}				
 			} else {
 				//'Skip' was selected, convert table structure only				
-				queryFromFile('db/atutor_convert_db_to_utf8.sql');
+				$sqlUtility = new SqlUtility();
+				$sqlUtility->queryFromFile(AT_INCLUDE_PATH . 'install/db/atutor_convert_db_to_utf8.sql', $_POST['tb_prefix']);
 				$progress[] = 'Database table structure has been converted to UTF-8.';
 				print_feedback($progress);
 				if (isset($errors)){

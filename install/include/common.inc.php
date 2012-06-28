@@ -1,9 +1,5 @@
 <?php
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-$domain = ($_SERVER['HTTP_HOST']);
-$rootpath = dirname($_SERVER['DOCUMENT_ROOT']);
-//$AT_SUBSITE='';
-$AT_SUB_INCLUDE_PATH = "$rootpath/$domain";
 error_reporting(E_ALL ^ E_NOTICE);
 @set_time_limit(0);
 
@@ -33,15 +29,14 @@ $_defaults['ill_ext'] = 'exe, asp, php, php3, bat, cgi, pl, com, vbs, reg, pcd, 
 $_defaults['cache_dir'] = '';
 
 $_defaults['theme_categories'] = 'FALSE';
-$_defaults['content_dir'] = "$AT_SUB_INCLUDE_PATH/content";
+$_defaults['content_dir'] = realpath('../').DIRECTORY_SEPARATOR.'content';
 
 $_defaults['course_backups'] = 5;
 
-require('include/classes/sqlutility.php');
-
+require_once(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
 
 function my_add_null_slashes( $string ) {
-    return @mysql_real_escape_string(stripslashes($string));
+	return @mysql_real_escape_string(stripslashes($string));
 }
 function my_null_slashes($string) {
 	return $string;
@@ -55,49 +50,48 @@ if ( get_magic_quotes_gpc() == 1 ) {
 	$stripslashes = 'my_null_slashes';
 }
 
-    function queryFromFile($sql_file_path){
+	function queryFromFile($sql_file_path){
 		global $db, $progress, $errors;
 		
 		$tables = array();
 
-        if (!file_exists($sql_file_path)) {
-            return false;
-        }
+		if (!file_exists($sql_file_path)) {
+			return false;
+		}
 
-        $sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
-        SqlUtility::splitSqlFile($pieces, $sql_query);
+		$sql_query = trim(fread(fopen($sql_file_path, 'r'), filesize($sql_file_path)));
+		SqlUtility::splitSqlFile($pieces, $sql_query);
 
-	    foreach ($pieces as $piece) {
-	        $piece = trim($piece);
-            // [0] contains the prefixed query
-            // [4] contains unprefixed table name
+		foreach ($pieces as $piece) {
+			$piece = trim($piece);
+			// [0] contains the prefixed query
+			// [4] contains unprefixed table name
 
 
 			if ($_POST['tb_prefix'] || ($_POST['tb_prefix'] == '')) {
-	            $prefixed_query = SqlUtility::prefixQuery($piece, $_POST['tb_prefix']);
+				$prefixed_query = SqlUtility::prefixQuery($piece, $_POST['tb_prefix']);
 			} else {
 				$prefixed_query = $piece;
 			}
 
 			if ($prefixed_query != false ) {
-                $table = $_POST['tb_prefix'].$prefixed_query[4];
-                if($prefixed_query[1] == 'CREATE TABLE'){
-                    if (mysql_query($prefixed_query[0],$db) !== false) {
+				$table = $_POST['tb_prefix'].$prefixed_query[4];
+				if($prefixed_query[1] == 'CREATE TABLE'){
+					if (mysql_query($prefixed_query[0],$db) !== false) {
 						$progress[] = 'Table <strong>'.$table . '</strong> created successfully.';
-                    } else {
+					} else {
 						if (mysql_errno($db) == 1050) {
 							$progress[] = 'Table <strong>'.$table . '</strong> already exists. Skipping.';
 						} else {
 							$errors[] = 'Table <strong>' . $table . '</strong> creation failed.';
 						}
-                    }
-                }
-                elseif($prefixed_query[1] == 'INSERT INTO'){
-                    mysql_query($prefixed_query[0],$db);
-                }elseif($prefixed_query[1] == 'REPLACE INTO'){
-                    mysql_query($prefixed_query[0],$db);
-                }elseif($prefixed_query[1] == 'ALTER TABLE'){
-                    if (mysql_query($prefixed_query[0],$db) !== false) {
+					}
+				} elseif($prefixed_query[1] == 'INSERT INTO'){
+					mysql_query($prefixed_query[0],$db);
+				} elseif($prefixed_query[1] == 'REPLACE INTO'){
+					mysql_query($prefixed_query[0],$db);
+				} elseif($prefixed_query[1] == 'ALTER TABLE'){
+					if (mysql_query($prefixed_query[0],$db) !== false) {
 						$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 					} else {
 						if (mysql_errno($db) == 1060) 
@@ -108,15 +102,15 @@ if ( get_magic_quotes_gpc() == 1 ) {
 							$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
 					}
 
-                }elseif($prefixed_query[1] == 'DROP TABLE'){
-                    mysql_query($prefixed_query[1] . ' ' .$table,$db);
-                }elseif($prefixed_query[1] == 'UPDATE'){
-                    mysql_query($prefixed_query[0],$db);
-                }
-            }
+				} elseif($prefixed_query[1] == 'DROP TABLE'){
+					mysql_query($prefixed_query[1] . ' ' .$table,$db);
+				} elseif($prefixed_query[1] == 'UPDATE'){
+					mysql_query($prefixed_query[0],$db);
+				}
+			}
 		}
-        return true;
-    }
+		return true;
+	}
 
 function print_errors( $errors ) {
 	?>
