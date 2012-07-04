@@ -177,7 +177,10 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<!--[if IE8]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
 	<![endif]-->
-	
+
+	<?php  if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') ){ ?>	
+		<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/safari.css" type="text/css"/>
+	<?php } ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 
 	<!-- Fluid Infusion mobile fss extension... Remove when it is committed to Mobile FSS.  
@@ -207,17 +210,14 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 <?php  if ($this->mobile_device_type != IPAD_DEVICE): ?><!--  smartphone theme only -->
 
 <body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone ui-mobile-viewport">
-
 <div id="wrapper">
 <div id="main">
+
 	<div id="header">
 	<div class="bypass">
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
 	</div>
-		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
-		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-
 		<div id="header-section-title">
 			<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 					echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
@@ -279,11 +279,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	
 	<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
 			<li role="menuitem">
-		    	<div id="guide_box">
-					<!--    <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><img src="<?php echo $this->img; ?>guide-icon.png" width="30" height="30" title="guide: <?php echo $this->page_title; ?>"alt="guide: <?php echo $this->page_title; ?>"></img></a> -->
-      		
 				  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo _AT("guide"); ?></a> 
-      			</div>
 			</li>
 			<?php endif; ?>
 		</ul>
@@ -292,16 +288,16 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 	
 		<div id="course-level-navigation" role="navigation" aria-live="assertive">
-			<div id="" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content"; //_AT("content_navigation"); ?></a>	
+			<div id="content_link" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+				<a id="" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo  _AT("content"); ?></a>	
 			</div>	
 			<div id="content">
 				<?php $contentManager->printMainMenu(); ?>
 				<script language="javascript" type="text/javascript"></script>
 			</div>
-			</div><!-- course-level navigation -->				
-		</div> <!-- end sequence-links-course-navigation -->
-		<?php endif; ?>
+		</div><!-- course-level navigation -->				
+	</div> <!-- end sequence-links-course-navigation -->
+	<?php endif; ?>
 		
 		
 	
@@ -321,11 +317,13 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 				<div class="subnavcontain">
 					<div class="rectangle">
-						<?php $num_pages = count($this->sub_level_pages); ?>	
+						<?php 
+						echo $num_pages;
+						$num_pages = count($this->sub_level_pages); ?>	
 								<?php for ($i=0; $i<$num_pages; $i++): ?>	
 									<?php if($i==0): ?>
 				
-									<a id="subnavlist-link" class="content-expand" href="javascript:void(0);"> Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a>
+									<!-- <a id="subnavlist-link" class="content-expand" href="javascript:void(0);"> Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a> -->
 									<?php endif; ?>
 								<?php endfor;?>
 					</div>
@@ -362,34 +360,32 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
       
       
 		<!--the page title-->
+		
 		<div id="page-title-back-to-page">
 		<a name="content" title="<?php echo _AT('content'); ?>"></a>
 		<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 			<div id="back-to-page">
 				<?php if (isset($this->back_to_page)): ?>
 					<a href="<?php echo $this->back_to_page['url']; ?>">
-					<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;"/></a>&nbsp;
+					<img border="0" alt="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" title="<?php echo _AT('back_to').' '.$this->back_to_page['title']; ?>" src="<?php echo $this->base_href; ?>themes/simplified_desktop/images/backarrow.jpg" style="float:left;"/></a>&nbsp;
 				<?php endif; ?>
 		</div>		
-		</div><!--  end page-title-back-to-page -->
+		</div>
+		
+		<!--  end page-title-back-to-page -->
 	
 		<?php global $msg; $msg->printAll(); $_base_href;?>
 			<div id="content-sequence-links">
-			<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
-		<?php if (isset($this->course_id) && $this->course_id > 0): ?>
-	
-		<?php endif; ?>
-	
 	
 	<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 
 		
-		<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
+<!--		<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 			<div class="subnavcontain">
 				<div class="rectangle">
 				<a id="content_link_phone"  class="content-expand" href="javascript:void(0);" >View Course Content</a> 
-				<!-- <a href="#">content</a> -->
+				 <a href="#">content</a>
 				</div>
-			</div>
+			</div> -->
 					
 	<!--	<div id="content">
 			<?php $contentManager->printMainMenu(); ?>
@@ -400,7 +396,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 		
-			<?php if (isset($this->course_id) && $this->course_id > 0): ?>
+	<?php if (isset($this->course_id) && $this->course_id > 0): ?>
 			
 			<div class="subnavcontain2">
 			
@@ -409,44 +405,33 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 				<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 					<?php if ($this->sequence_links['resume']): ?>
 						
-						<li class="rectangle2">
+						<li class="rectangle2 arrow forward">
 							<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
 						</li>
-						
 					<?php else:
 						if ($this->sequence_links['previous']): ?>
-					
 						<li class="rectangle2 arrow back">
-							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous'); ?> </a>
 						</li>
-						
 					<?php endif;
-						if ($this->sequence_links['next']): ?>
-						
+						if ($this->sequence_links['next']): ?>		
 						<li class=" rectangle2 arrow forward">
-							<a  href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
+							<a  href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next'); ?></a>
 						</li>
-						
 					<?php endif; ?>
 				<?php endif; ?>
 			<?php } ?>
 				&nbsp;
 				</div>
-			</ul>  
+			</ul>
 		<?php endif; ?>
-	
-
 	</div>
-	<?php endif; ?>	
-
-
-	
-		<!-- the sub navigation -->
-<?php  endif; ?>	
-
-	<!--[if IE 7]>
-	  <?php 
-	  	$message = 'For an optimal experience, this theme is intended for use with Internet Explorer 8 or higher.';
-	  	$msg->addFeedback('For an optimal experience, this theme is intended for use with Internet Explorer 8 or higher.');
-	  	$msg->printAll(); ?>
-	<![endif]-->		     
+	<?php endif; ?><!-- the sub navigation -->
+<?php  endif; ?>
+	<!--[if lt IE 8]>
+	  <div id="feedback">
+		<ul>
+			<li>For an optimal experience, this theme should be used with Internet Explorer 8 or higher.</li>
+		</ul>
+	 </div>
+	<![endif]-->

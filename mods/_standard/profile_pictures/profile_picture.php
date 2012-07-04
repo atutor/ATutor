@@ -13,12 +13,14 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', '../../../include/');
+
 $_user_location	= 'users';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
-//require ('save_profile_picture.php');
 
+//require ('save_profile_picture.php');
+debug(AT_PA_INCLUDE);
 if (in_array('mods/_standard/photos/index.php', $_modules)){
-	//require(AT_PA_INCLUDE.'profile_album.inc.php');
+	require(AT_PA_INCLUDE.'profile_album.inc.php');
 } else {
 	require(AT_INCLUDE_PATH.'../mods/_standard/profile_pictures/html/profile_picture.inc.php'); 
 }
