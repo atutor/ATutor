@@ -18,6 +18,7 @@ body,ul,li {
 	padding:0;
 	margin:0;
 	font-size: 18px;/*fix*/
+	
 
 }
 
@@ -31,6 +32,7 @@ body,ul,li {
 	background: #999; /*fallback*/
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#999), to(black));
 	background: -moz-linear-gradient(#999, black);
+	min-height: 100%;
 }
 
 
@@ -148,8 +150,7 @@ body,ul,li {
 	position: relative;
 	left: 0em;
 	float: left;	
-	top: .6em;
-    background:transparent;
+	top: 0;
 
 }
 
@@ -166,11 +167,6 @@ ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guid
     color: #bfd9fb;
     background:transparent;
 }
-#home-guide .fl-tabs li.fl-tabs-active a, .fl-tabs li a{
-padding: 0.25em 0.35em 0.3em 0.35em;
-
-}
-
 /************************************************************************************************/
 /* main body attributes */
 /************************************************************************************************/
@@ -221,9 +217,13 @@ h2.page-title{
 
 
 #subnavbacktopage{
-	padding: .313em;
-	float: left;
+	width:2em;
+	margin-left:-.4em;
 	
+}
+#subnavbacktopage img{
+	height:1.8em;
+	width:1.8em;	
 }
 
 h3 {
@@ -274,6 +274,71 @@ h3 a {
     display: inline;
 }
 
+/*
+table.etabbed-table	{
+	padding-left:5em;
+
+}
+
+.etabbed-list-container {
+	width:75%;
+	margin-left:auto;
+	margin-right:auto;
+	margin-bottom:-.3em;
+}
+
+.prefs-tab-spacer {
+	background-color: transparent;
+	width: 1em;
+}
+
+.prefs_buttontab {
+	background-color: #eeeeee;
+
+	
+}
+.prefs_tab input[type="submit"]{
+ border:0 !important;
+}
+.prefs_tab{
+
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom: 0;
+	text-align: center;
+	white-space: nowrap;
+	background-color: #eeeeee;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: 0em .2em .3em .3em;
+	display: inline;
+	margin-left:.5em;
+	margin-bottom: -.2em;;
+	font-weight:bold;
+	text-decoration:none;
+}
+    
+.prefs_tab_selected{
+
+	border-top: 1px solid #cccccc;
+	border-left: 1px solid #cccccc;
+	border-right: 1px solid #cccccc;
+	border-bottom:0;
+	text-align:center;
+	white-space: nowrap;
+	background-color: #eeeeee;
+	border-radius:.3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: .2em .2em .3em .3em;
+	display: inline;
+	margin-left:.5em;
+	font-weight:bold;
+	text-decoration:none;
+	
+}
+
+*/
 /************************************************************************************************/
 /* link attributes */
 /************************************************************************************************/
@@ -554,7 +619,7 @@ div.preference-buttons-container li{
 	margin: 0 auto;
 }
 #feedback{
-	width: 80%;
+	width: 60%;
 	margin-top:.2em;
 }
 #defaultfontsize-wrapper{
@@ -864,7 +929,7 @@ ul.browse-list {
 
 /* feedback /errors */
 div#error {
-	width: 80%;
+	width: 60%;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top:  0.938em;
@@ -900,7 +965,7 @@ div#error ul li{
 }
 
 div#feedback, div#info {
-	width: 80%;
+	width: 60%;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: 1.313em;
@@ -920,7 +985,7 @@ div#feedback li, div#info li, div#error li{
 }
 
 div#help {
-	width: 95%;
+	width: 60%;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top:  0.938em;
@@ -932,7 +997,7 @@ div#help {
 }
 
 div#warning {
-	width: 95%;
+	width: 60%;
 	margin-left: auto;
 	margin-right: auto;
 	margin-top:  0.938em;
@@ -1663,7 +1728,6 @@ table.data .odd img.headicon{
 }
 div.course div.shortcuts {
 	text-align: right;
-	clear: left;
 	vertical-align: middle;
 	width: 12.5em;
 }
@@ -1967,7 +2031,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
  li.top-tool { 
  	width:96%;
 	list-style: none;
-	padding: 0.125em 0.125em 0.125em  0.938em;
+	padding: 0.325em 0.125em 0.325em  0.938em;
 	margin-bottom: 0.313em; 
 	line-height: 200%; 
 	border: solid 1px #A9ADB0;
@@ -1976,10 +2040,30 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 	border-radius: 8px;
 	background: white;
 }
-	
+li.top-tool a { 
+	border: solid 1px #A9ADB0;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background: white;
+	padding:.5em;
+	-webkit-border-radius:8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+   -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
+	 -moz-linear-gradient(#4a94f4, #236de5);
+
+    background-color: #354D68;
+	color:white;
+}
+ 
+ 	
 li.child-tool a { 
-	font-size: x-small;
+	font-size: small;
 	font-weight: normal; 
+	padding:.5em;
+	background-color:
+	text-decoration:none;
 }
 
 ul.child-top-tool {
@@ -1994,6 +2078,35 @@ li.child-tool {
 	margin-right: 0.313em;
 	font-size: x-small;
 }
+
+
+/*
+#home-guide{
+	padding-top: 0;
+	margin-top: 0;
+	padding-right: .313em;
+	position: relative;
+	left: 0em;
+	float: left;	
+	top: 0;
+
+}
+
+#home-guide li.menuitem{
+	-moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 0 0 5 stretch;
+}
+
+#home-guide li.menuitem:hover{
+	-moz-border-image: url("images/navbar_normal_button_insetShadow-rev.png") 5 0 0 5 stretch;
+}
+ul.home-guide li a:hover, ul.home-guide li a:focus, ul.home-guide li a:active,
+ul.home-guide li.back a:hover, ul.home-guide li.back a:focus, ul.home-guide li.back a:active,
+ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guide li.forward a:active {
+    color: #bfd9fb;
+    background:transparent;
+}
+
+*/
 
 
 /* browse courses */
@@ -2340,14 +2453,11 @@ div#contentcolumn{
 	margin-top: .313em;
 	padding: .313em;
 	margin-bottom: 1em;
-	position: absolute; 
-	top: .7em;
-	top: 1.2em;
-	top: 2em;
+
 }
 #content-text{
 	position: relative;
-	top: .7em;
+
 }
 
 /* Content Editor */	
@@ -2577,7 +2687,7 @@ Ensure styling matches that in fl-tabs.*/
 	padding-top: .1em;
 	color: white;
 	position: relative;
-	top: 1em; 
+	top: .4em; 
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -2619,10 +2729,9 @@ div#content-link-container{
 	padding-left: .3em;
 	padding-right: .3em;
 	padding-top: .1em;
-	padding-bottom: .05em;
-	margin-right: .213em;
-position:relative;
-top:.6em;
+	padding-bottom: .1em;
+	margin-right: .313em;
+
 	
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
@@ -2642,9 +2751,6 @@ top:.6em;
     margin-bottom: -0.25em;
 
 
-}
-.content_link_tablet a:active, .content_link_tablet a:hover, .content_link_tablet a:focus{
-	color: #BFD9FB;
 }
 .flc-screenNavigator-navbar .content_link{
 	color: white;
@@ -2734,8 +2840,8 @@ ul#subnavlist{
 	margin-bottom:-.2em;
 }
 ul#subnavlist li{
-	height:1em;
-	padding-top:.3em;
+height:1em;
+	padding-top:.4em;
 	padding-bottom:.4em;
 	padding-right:.3em;
 	padding-left:.3em;
@@ -2863,7 +2969,6 @@ ul#subnavlist li a{
 	float: left;
 	padding-right:0;
 	position: relative; 
-	top:.6em;
 	right: -.313em;
 }
 
@@ -2991,14 +3096,8 @@ https://github.com/fluid-project/infusion/blob/25ad6755ef78347b414d60bd4037a0f19
 .fl-tabs li:first-child {
     border-bottom-left-radius: 5px;
     border-top-left-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
 }
-.fl-tabs li:last-child {
 
-    border-bottom-right-radius: 5px;
-    border-top-right-radius: 5px;
-}
 .fl-theme-iphone .fl-tabs li {
     -moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
     background-color: #354D68;
@@ -3099,7 +3198,7 @@ table.etabbed-table	{
 	-moz-border-radius: .3em .3em 0em 0em;
 /*	-moz-box-shadow:.1em .0em .1em #999999;
 	box-shadow: .1em .0em .1em #999999;*/
-	padding: 0em .2em 0em .2em ;
+	padding: .1em .2em .1em .2em ;
 	height:1.4em;
 }
 .editor_tab:hover, .editor_tab input[type=submit]:hover{
@@ -3127,4 +3226,45 @@ table.etabbed-table	{
 	font-size:.8em;
 	border:0;
 	padding:.3em;
+}
+div#shortcuts{
+	border-left:thin solid #F2F7F7;
+	border-right:thin solid #F2F7F7;
+	border-bottom:thin solid #F2F7F7;
+	border-radius: 0em 0em .5em .5em;
+	-moz-border-radius: 0em 0em .5em .5em;
+	float:right;
+
+/*	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;*/
+	background-color:#eeeeee;
+	margin-right:1em;
+	padding:.1em;
+	overflow:hidden;
+}
+div#shortcuts img{
+	height:1.5em;
+	width:1.5em;
+}
+#shortcuts legend {
+	border-radius:.5em;
+	-moz-border-radius: .5em .5em .5em .5em;
+	padding:.2em
+}
+#shortcuts ul {
+float:right;
+	margin-bottom: 0em;
+	margin-left: 0em;
+	list-style-type:  none;
+	padding-left: 0em; 
+}
+#shortcuts li{
+	display: inline;
+}
+#shortcuts li a{
+	height:1.3em;
+}
+
+.test_message{
+	margin-left:4em;
 }

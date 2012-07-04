@@ -172,22 +172,28 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<?php if ($this->mobile_device_type == ANDROID_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/mobile.css" type="text/css"/>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
-	<?php endif; ?>
-	<?php if ($this->mobile_device_type == IPOD_DEVICE || $this->mobile_device_type == IPHONE_DEVICE): ?>
+	<?php //endif; ?>
+	<?php elseif ($this->mobile_device_type == IPOD_DEVICE || $this->mobile_device_type == IPHONE_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/mobile.css" type="text/css"/>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
-	<?php endif; ?>
+	<?php //endif; ?>
 	<!-- Armin 25.08.2010: Detect BLACKBERRY_DEVICE and use blackberry.css-->
-	<?php if ($this->mobile_device_type == BLACKBERRY_DEVICE): ?>
+	<?php elseif ($this->mobile_device_type == BLACKBERRY_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/blackberry.css" type="text/css"/>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
-	<?php endif; ?>
-	<?php if ($this->mobile_device_type == IPAD_DEVICE): ?>
+	<?php //endif; ?>
+	<?php elseif ($this->mobile_device_type == IPAD_DEVICE): ?>
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
 	<meta name="viewport" content="width=768px, minimum-scale=1.0, maximum-scale=1.0" />
-	<?php endif; ?>
-	<?php if ($this->mobile_device_type == PLAYBOOK): ?>
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet.css" type="text/css"/>
+	<?php ///endif; ?>
+	<?php elseif ($this->mobile_device_type == PLAYBOOK): ?>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet_other.css" type="text/css"/>
+	<meta name="viewport" content="user-scalable=no, width=device-width" />
+	<?php else: 
+		$other_tablet =1;
+	
+	?>
+	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/tablet_other.css" type="text/css"/>
 	<meta name="viewport" content="user-scalable=no, width=device-width" />
 	<?php endif; ?>
 
@@ -219,7 +225,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 </head>
 
 
-<?php if ($this->mobile_device_type != IPAD_DEVICE): ?><!--  smartphone theme only -->
+<?php if ($this->mobile_device_type != IPAD_DEVICE && $this->mobile_device_type != PLAYBOOK && !isset($other_tablet)): ?><!--  smartphone theme only -->
 
 <body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone ui-mobile-viewport">
 
@@ -274,7 +280,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 		</div>
 
 				
-	<?php /* ?>	
+	<?php  ?>	
 	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
@@ -283,7 +289,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
 		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
-		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?>cccc</a></li> 
+		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
 	<?php if($_SESSION['is_admin'] == 1): ?>
@@ -300,7 +306,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 			</li>
 			<?php endif; ?>
 		</ul>
-	<?php */ ?>	
+	<?php ?>	
 	</div><!--  END navigation-contentwrapper -->
 	
 
@@ -432,7 +438,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 
 <!--  end header template for iphone, android, blackberry -->
-<?php if ($this->mobile_device_type == IPAD_DEVICE): ?><!-- start header template for ipad/tablets -->
+<?php if ($this->mobile_device_type == IPAD_DEVICE || $this->mobile_device_type == PLAYBOOK || isset($other_tablet)): ?><!-- start header template for ipad/tablets -->
 <body onload="<?php echo $this->onload; ?>" class="fl-theme-iphone ui-mobile-viewport">
 
 <div id="wrapper">

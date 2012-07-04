@@ -1460,7 +1460,9 @@ img#profile{
 dd{
     margin: 0;
 }
-
+#comment_template{
+width:90%;
+}
 /** forum stuff **/
 #forum-thread li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
 #forum-thread li.even { background-color: #F7F3ED; border-top: none; }
