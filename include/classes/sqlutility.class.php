@@ -151,9 +151,9 @@ class SqlUtility
 		return false;
 	}
 
-	function queryFromFile($sql_file_path, $table_prefix = null)
+	function queryFromFile($sql_file_path, $table_prefix = null, $in_plain_msg = true)
 	{
-		global $db, $progress, $errors;
+		global $db, $progress, $errors, $msg;
 
 		$tables = array();
 
@@ -179,14 +179,28 @@ class SqlUtility
 				$table = $table_prefix.$prefixed_query[4];
 				if($prefixed_query[1] == 'CREATE TABLE')
 				{
-					if (mysql_query($prefixed_query[0],$db) !== false)
-						$progress[] = 'Table <b>'.$table . '</b> created successfully.';
+					if (mysql_query($prefixed_query[0],$db) !== false) {
+						if ($in_plain_msg) {
+							$progress[] = 'Table <b>'.$table . '</b> created successfully.';
+						} else {
+							$msg->addFeedback(array('TABLE_CREATED', $table));
+						}
+					}
 					else
 					{
-						if (mysql_errno($db) == 1050)
-							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
-						else
-							$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+						if (mysql_errno($db) == 1050) {
+							if ($in_plain_msg) {
+								$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
+							} else {
+								$msg->addFeedback(array('TABLE_EXIST', $table));
+							}
+						} else {
+							if ($in_plain_msg) {
+								$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+							} else {
+								$msg->addError(array('CREATE_TABLE_FAIL', $table));
+							}
+						}
 					}
 				}
 				elseif($prefixed_query[1] == 'INSERT INTO') {
@@ -195,20 +209,37 @@ class SqlUtility
 					mysql_query($prefixed_query[0],$db);
 				} elseif($prefixed_query[1] == 'ALTER TABLE') {
 					if (mysql_query($prefixed_query[0],$db) !== false) {
-						$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
+						if ($in_plain_mag) {
+							$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
+						} else {
+							$msg->addFeedback(array('TABLE_ALTERED', $table));
+						}
 					} else {
-						if (mysql_errno($db) == 1060) 
-							$progress[] = 'Table <strong>'.$table . '</strong> fields already exists. Skipping.';
-						elseif (mysql_errno($db) == 1091) 
-							$progress[] = 'Table <strong>'.$table . '</strong> fields already dropped. Skipping.';
-						else
-							$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
+						if (mysql_errno($db) == 1060) {
+							if ($in_plain_msg) {
+								$progress[] = 'Table <strong>'.$table . '</strong> fields already exists. Skipping.';
+							} else {
+								$msg->addFeedback(array('TABLE_FIELD_EXIST', $table));
+							}
+						} elseif (mysql_errno($db) == 1091) {
+							if ($in_plain_msg) {
+								$progress[] = 'Table <strong>'.$table . '</strong> fields already dropped. Skipping.';
+							} else {
+								$msg->addFeedback(array('TABLE_FIELD_DROPPED', $table));
+							}
+						} else {
+							if ($in_plain_msg) {
+								$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
+							} else {
+								$msg->addError(array('ALTER_TABLE_FAIL', $table));
+							}
+						}
 					}
 				} elseif($prefixed_query[1] == 'DROP TABLE') {
 					mysql_query($prefixed_query[1] . ' ' .$table,$db);
 				} elseif($prefixed_query[1] == 'UPDATE'){
-                    mysql_query($prefixed_query[0],$db);
-                }
+					mysql_query($prefixed_query[0],$db);
+				}
 			}
 		}
 		
