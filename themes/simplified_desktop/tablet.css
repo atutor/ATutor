@@ -28,7 +28,7 @@ body,ul,li {
 	line-height:1em;
 	padding-top: .1em; 
 	font-size:1.063em;
-	height: 3.8em;
+	height: 4em;
 	background-color: #4b6b90; 
 	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#06388A), to(#B3CBF2));
 	background: -moz-linear-gradient(#06388A, #B3CBF2);
@@ -71,11 +71,14 @@ body,ul,li {
 	margin-right:auto;
 }
 #header-section-title {
-	width: 100%;
+	width: 60%;
 	position: relative;
  	color: white;
  	font-size: 0.938em;
  	height: .3em;
+ 	margin-left:auto;
+ 	margin-right:auto;
+
  	
 }
 
@@ -83,7 +86,7 @@ body,ul,li {
 	width: 100%;
 	color: white;
 	text-shadow: none;
-	
+
 }
 
 /************************************************************************************************/
@@ -142,15 +145,16 @@ body,ul,li {
 top:-3.5em;
 left:-13em;
 */
+	font-size:16px;
 	padding-top: 0;
 	margin-top: 0;
 	margin-left:.5em;
 	padding-right: .113em;
 	position: absolute;
-	top:1em;
-	left:6.5em;
-
-
+	top:1.55em;
+	left:7em;
+    border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
 	/*
 	position: relative;
 	left: 0em;
@@ -162,21 +166,27 @@ left:-13em;
 #home-guide fl-tab{
 background-image: 0;
 }
+
 #home-guide a{
-padding: .48em;
+padding: .39em;
 }
 #home-guide li.menuitem{
-	-moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 0 0 5 stretch;
+	-moz-border-image: url("images/navbar_normal_button_insetShadow.png") 3 0 0 3 stretch;
 }
 
 #home-guide li.menuitem:hover{
-	-moz-border-image: url("images/navbar_normal_button_insetShadow-rev.png") 5 0 0 5 stretch;
+	-moz-border-image: url("images/navbar_normal_button_insetShadow-rev.png") 3 0 0 3 stretch;
 }
 ul.home-guide li a:hover, ul.home-guide li a:focus, ul.home-guide li a:active,
 ul.home-guide li.back a:hover, ul.home-guide li.back a:focus, ul.home-guide li.back a:active,
 ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guide li.forward a:active {
     color: #bfd9fb;
     background:transparent;
+}
+
+#home-guide .fl-tabs li.fl-tabs-active a, .fl-tabs li a{
+padding: 0.25em 0.35em 0.2em 0.35em;
+
 }
 /************************************************************************************************/
 /* main body attributes */
@@ -221,7 +231,7 @@ h2 {
     font-size: 150%;
 }
 h2.page-title{
-	padding-top: .313em;
+	margin-left:.5em;
 	margin-bottom:.2em;
 }
 
@@ -257,7 +267,7 @@ table.etabbed-table	{
 }
 /* Preference Editor tabs */
 .etabbed-list-container {
-	width:75%;
+	width:95%;
 	margin-left:auto;
 	margin-right:auto;
 	margin-bottom:-.3em;
@@ -333,6 +343,7 @@ a:hover, a:visited, a:focus {
 .fl-list-menu{
 	padding:0;
 }
+
 /* main submit button */
 .button {
 	background-color: #808080;
@@ -427,8 +438,9 @@ td.selected{
 float:left;
 clear:both;
 }
-#paste div{
+#paste{
 float:left;
+clear:both;
 }
 
 
@@ -672,7 +684,7 @@ div#toctoggle {
 h1#section-title {
 	font-size: 100%;
 	position: absolute;
-	top: 0em;
+	top: -1em;
  	text-align: center;
 	white-space:nowrap;
 	display: inline;
@@ -998,6 +1010,7 @@ acronym {
 div.news p {
 	margin: 0;
 	padding:0;
+
 }
 div.news span.date {
 	font-family:Helevetica, Arial, sans-serif;
@@ -1009,7 +1022,9 @@ div.news span.date {
 	padding: 0;
 	margin-bottom: 1em;
 	margin-top: 1em;
+		padding:1em;
 }
+
 /* home page links */
 div.home-link {
 	padding: 0.125em;
@@ -1762,7 +1777,6 @@ float:right;
 }
 
 div#content-test, div.content-from-module {	
-
 	margin-top: 2em;
 	margin-bottom: 2em;
 	padding-right: 5pt;
@@ -1997,7 +2011,7 @@ dd{
 .forum-thread li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED;margin-left:auto; margin-right:auto;width: 96%; list-style: none; }
 .forum-thread li.even { background-color: #eeeeee; border-top: none; }
 .forum-thread li.odd { background-color: #fff; }
-div.forum-post-author { float:left;width:6.375em;padding:0.5em 0.625em; }
+div.forum-post-author { float:left;clear:left;width:6.375em;padding:0.5em 0.625em; }
 div.forum-post-author a.title {font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
 div.forum-post-author img.profile-picture { background-color:#F0F8FF	; text-align:right; height:5em; width:5em;}
 div.forum-post-content { margin-left: 6.375em; padding: 0.313em 0.125em 1.125em 2.125em;}
@@ -2351,7 +2365,7 @@ div#navigation-column{
 	border-radius: 8px;
 	z-index: 1000;
 	position: absolute; 
-	top: 3em;
+	top:3.5em;
 	display: none;
 	padding:0;
 	-moz-box-shadow: 3px 0 3px #000000;
@@ -2360,13 +2374,13 @@ div#navigation-column{
 div#contentcolumn{
 
 	padding: .313em;
-	margin-bottom: 1em;
 
 
 }
 #content-text{
-	position: relative;
-	top: .7em;
+
+	padding-left:1em;
+	padding-right:1em;
 }
 
 /* Content Editor */	
@@ -2397,6 +2411,9 @@ ul#content-tool-links img{
 	width:100%;
 	overflow:hidden;
 	
+}
+#inner-contentwrapper{
+padding-bottom:2em;
 }
 
 #leftcolumn{
@@ -2582,7 +2599,6 @@ Ensure styling matches that in fl-tabs.*/
 } 
 
 
-
 /*this CSS creates a button that looks exactly like a Mobile FSS tab.*/
 .navigation-bar-button{
     border-width:5px;
@@ -2592,11 +2608,11 @@ Ensure styling matches that in fl-tabs.*/
 	font-size: 18px;/*keep this in px*/
 	padding-left: .3em;
 	padding-right: .3em;
-	padding-top: .3em;
+	padding-top: .1em;
 	padding-bottom: -.1em;
 	color: white;
-	position: relative;
-	top: -2em; 
+	position: absolute;
+	top: 1em; 
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
         color-stop(0.5, #374e6b),
@@ -2613,7 +2629,7 @@ Ensure styling matches that in fl-tabs.*/
     -moz-background-origin: border;
     -webkit-background-clip: border;
 	-moz-background-clip: border;
-	margin-top: .3em;
+	margin-top: .4em;
 	margin-bottom: -1em;
 }
 
@@ -2625,7 +2641,6 @@ div#content-link-container{
 	padding-top: .316em;
 	float: right;
 }
- 
 
 .content_link_tablet {
 	border-width:5px;
@@ -2634,14 +2649,8 @@ div#content-link-container{
 	border-radius: 5px;
 	font-size: 0.875em;/*keep this in px*/
 	font-size: 18px;
-	/*padding: .1em;*/
-	padding-left: .3em;
-	padding-right: .3em;
-	padding-top: .1em;
-	padding-bottom: .1em;
 	margin-right: .313em;
 
-	
     /* default mobile fss color scheme for tabs not AA compliant. Here is a compliant bg image: */
     background-image: -webkit-gradient(linear, left top, left bottom,
      	from(#3b5371),
@@ -2657,9 +2666,11 @@ div#content-link-container{
     -moz-background-origin: border;
     -webkit-background-clip: border;
     -moz-background-clip: border;
-    margin-bottom: -0.25em;
 
-
+}
+#content_link{
+ 	margin-top:0em;
+ 	padding: .1em .1em .1em .1em;
 }
 .flc-screenNavigator-navbar .content_link{
 	color: white;
@@ -2674,13 +2685,11 @@ div#content-link-container{
 	
 }
 
-
 #content{
 	position: absolute;
-	top: 3.3em; 
+	top: 3em; 
 	right: 1.313em;
 	white-space:nowrap;
-	width: 40%;
 	float: right;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -2724,14 +2733,31 @@ ul#topnavlist li {
 	
 ul#topnavlist>li:hover, ul#topnavlist>li:hover a,  ul#topnavlist>li:active, ul#topnavlist>li:active a,
 ul#topnavlist>li:focus, ul#topnavlist>li:focus a {
-	color: #fff;
+
+	color: #4a94f4;
    -moz-linear-gradient(#4a94f4, #236de5);
+}
+
+ul#topnavlist-tablet>li:hover, ul#topnavlist-tablet>li:hover a,  ul#topnavlist-tablet>li:active, ul#topnavlist-tablet>li a:active,
+ul#topnavlist-tablet>li:focus, ul#topnavlist-tablet>li a:focus {
+	background-color: #236de5;
+	color: #ffffff;
+   background: -moz-linear-gradient(#4a94f4, #236de5);
+   background: -webkit-linear-gradient(#4a94f4, #236de5);
+   background: linear-gradient(#4a94f4, #236de5);
+   border-radius:0;
+   	background-color: #236de5;
 }
 
 ul#topnavlist li a  {
  	color: #4C566C;
  	text-decoration: none;
 }
+ul#topnavlist-tablet li{
+	border-radius:0;
+}
+
+
 .content-expand {
 	background-image:url("images/plus.png");
 	background-position: 100% 100%;
@@ -2776,10 +2802,9 @@ ul#subnavlist{
 }
 ul#subnavlist li{
 	padding-top:.2em;
-	padding-bottom:.12em;
+	padding-bottom:.2em;
 	padding-right:.3em;
 	padding-left:.3em;
-	border:1px solid #cccccc;
 	background-color:#dddddd;
 	-webkit-border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
@@ -2789,9 +2814,6 @@ ul#subnavlist li{
 }
 ul#subnavlist li:hover, ul#subnavlist li:focus{
 	background-color:white;
-	border-top:1px solid #cccccc;
-	border-left:1px solid #cccccc;
-	border-right:1px solid #cccccc;
 	border-bottom:none;
 	-webkit-border-radius: 5px 5px 0px 0px;
 	-moz-border-radius: 5px 5px 0px 0px;
@@ -2851,7 +2873,7 @@ ul#subnavlist li a{
  /*creates a little up-facing arrow to help mimick an ipad-style popover.  
  See http://nicolasgallagher.com/pure-css-speech-bubbles/demo/ */
 .triangle-isosceles {
-     position: relative;
+  /*   position: relative;*/
 }
 
 .triangle-isosceles:after {
@@ -2903,43 +2925,68 @@ ul#subnavlist li a{
 #sequence-links{
 	float: left;
 	padding-right:0;
-	position: relative; 
+	position: relative;
+	top:1em; 
 	right: -.313em;
 }
 
+
 #course-level-navigation, #sequence-links-course-navigation{	
-		float: right;
-		margin-top:-3.5em;
-		margin-right:2em;
+	float: right;
+	margin-top:-3.65em;
+	padding-top:1.6em;
+	margin-right:-.2em;
+		
 }
 #course-level-navigation a{
-	padding:.3em;
+	 padding:.17em .4em .15em .4em;
 }
 /************************************************************************************************/
 /*Adds arrows to Fluid Tabs. Here is a good guide for creating triangles with CSS: 
 http://jonrohan.me/guide/css/creating-triangles-in-css/ */
 /************************************************************************************************/
 
+ul.sequence-links{
+	margin-top: 0;
+	margin-left:.5em;
+	padding-right: .113em;
+	position: absolute;
+	top:1.4em;
+	right:5.7em;
+	-moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
+    background-color: #354D68;
+    	border-radius: .3em .3em .3em .3em;
+	-moz-border-radius: .3em .3em .3em .3em;
+     padding:.25em .2em .25em .2em;
+}
+
 ul.sequence-links li {
     position:relative;
     z-index:1;
     overflow:hidden;
     list-style:none;
+    display:inline;
 }
-
+ul.sequence-links a {
+	font-weight: 700;
+	text-decoration:none;
+}
 ul.sequence-links li.back a:link, 
 ul.sequence-links li.back a:visited {
-    display:block;
     padding-left:12px;
     color:white;
 }
 
 ul.sequence-links li.forward a:link, 
 ul.sequence-links li.forward a:visited {
-    display:block;
+
     padding-right:0.75em;
     color:white;
 }
+ul.sequence-links  a.resume{
+    color:white;
+}
+
 /*WCAG*/
 ul.sequence-links li a:hover, ul.sequence-links li a:focus, ul.sequence-links li a:active,
 ul.sequence-links li.back a:hover, ul.sequence-links li.back a:focus, ul.sequence-links li.back a:active,
@@ -2971,20 +3018,22 @@ ul.sequence-links li a:after {
      border-style: solid;
      border-width: 5px 0pt 5px 6px;
      left: .5em;
-     margin-top: -0.438em;
+     margin-top: -0.338em;
 }
 
 /*left and right triangle icons change color*/
-.arrow a:hover:after, .arrow a:focus:after, .arrow a:active:after, 
-.arrow.forward a:hover:after, .arrow.forward a:focus:after, .arrow.forward a:active:after{
-	border-color: transparent #bfd9fb;
-}
 
+.arrow.forward a:hover:after, .arrow.forward a:focus:after, .arrow.forward a:active:after{
+
+	border-color: transparent transparent transparent #bfd9fb;
+}
+.arrow a:hover:after, .arrow a:focus:after, .arrow a:active:after{
+	border-color: transparent #bfd9fb transparent transparent ;
+}
 .arrow.back a:after {
      border-width: 6px 6px 6px 0pt;    
-     left: 0.188em;
-     
-     top: .75em;
+     left: 0.1em;
+     top: .5em;
 }
 
 }
@@ -2996,15 +3045,14 @@ ul.sequence-links li a:after {
      margin-top: -0.425em;   
 }
 .arrow.forward a:after {
-  
-      background: none repeat scroll 0% 0% transparent;
+    background: none repeat scroll 0% 0% transparent;
      border-color: transparent transparent transparent white;
   	 border-width: 6px;
   	 border-style: solid;
   	 width:0;
   	 height:0;
-  	 right: -0.313em;
-  	 top: 0.85em;
+  	 right: -0.1em;
+  	 top: 0.7em;
 }
 /* style for "last modified" information of course content*/
 #content-info{
@@ -3015,9 +3063,7 @@ ul.sequence-links li a:after {
 ul.my-courses-list-ul > li:hover{
 	background-color: #4c96f4;
  	color: #fff;
-    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
     -webkit-gradient(linear, left top, left bottom, from(#4a94f4), to(#236de5));
-    background: url(../images/themes/iphone/listmenu_loader.gif) no-repeat 97% center,
     -moz-linear-gradient(#4a94f4, #236de5);
 } 
 ul.my-courses-list-ul > li:hover a{
@@ -3030,6 +3076,9 @@ https://github.com/fluid-project/infusion/blob/25ad6755ef78347b414d60bd4037a0f19
 
 
 .fl-tabs li:first-child {
+    border-radius: 5px 5px 5px 5px;
+}
+.fl-tabs li:last-child {
     border-radius: 5px 5px 5px 5px;
 }
 
@@ -3067,6 +3116,7 @@ https://github.com/fluid-project/infusion/blob/25ad6755ef78347b414d60bd4037a0f19
 /* since .fl-list is for mixed material lists, dont include them in these effects */
 .fl-theme-iphone [class*=fl-list]:not(.fl-list):not(.fl-grid) a:active,
 .fl-theme-iphone [class*=fl-list]:not(.fl-list):not(.fl-grid) a.fl-link-hilight {
+	background-color: #236de5;
     background: url(../images/themes/iphone/listmenu_arrow.png) no-repeat right -25px,
     -moz-linear-gradient(#4a94f4, #236de5);
 }
@@ -3102,7 +3152,7 @@ table.etabbed-table	{
 /* Preference Editor tabs */
 .etabbed-list-container {
 /*	font-size:10pt;*/
-	width:75%;
+	width:90%;
 	margin-left:auto;
 	margin-right:auto;
 

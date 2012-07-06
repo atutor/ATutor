@@ -22,18 +22,14 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="'.$_SERVER['PHP_SELF'].'?cid='.$this->cid.(($_GET['alternative'] == $alt_info['0']) ? '' : htmlentities_utf8(SEP).'alternative='.$alt_info[0]).'">
 			<img src="'.AT_BASE_HREF.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[3] : $alt_info[4]).'" alt="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" title="'.(($_GET['alternative'] == $alt_info[0]) ? $alt_info[2] : $alt_info[1]).'" border="0" class="img1616"/></a>';
 	} 
-?>
-</div>
-
+?></div>
 <?php 
 if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") 
 	echo $this->content_table;
 ?>
-
 <div id="content-text">
 	<?php echo $this->body; ?>
 </div>
-
 <?php if (!empty($this->test_ids)): ?>
 <div id="content-test" class="input-form">
 	<ol>
@@ -50,7 +46,6 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "")
 	</li></ol>
 </div>
 <?php endif; ?>
-
 <?php
 
 if (!empty($this->forum_ids)): ?>

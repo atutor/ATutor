@@ -26,7 +26,7 @@
 		<?php endif; ?>
 		<!--  SEARCH MOVED TO #topnavlist -->
 		<?php if(!$this->just_social): ?>
-			<li><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
+			<li role="menuitem"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> </li>
 		<?php endif; ?>
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a></li>
 
