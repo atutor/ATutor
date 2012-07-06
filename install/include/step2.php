@@ -12,25 +12,32 @@
 
 if (!defined('AT_INSTALLER_INCLUDE_PATH') || !defined('AT_INCLUDE_PATH')) { exit; }
 
-include(AT_INCLUDE_PATH . 'lib/install.inc.php');
+include(AT_INCLUDE_PATH . 'install/install.inc.php');
 
 if(isset($_POST['submit'])) {
 	//check DB & table connection
-	$response = install_step_db($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], $_POST['db_password'], $_POST['tb_prefix'], $_POST['db_name']);
+	$db = create_and_switch_db($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], $_POST['db_password'], $_POST['tb_prefix'], $_POST['db_name'], true);
 	
-	if (!$response['errors']) {
-		print_progress($step);
-
-		unset($_POST['submit']);
-		unset($_POST['action']);
-		store_steps($step);
-		print_feedback($response['progress']);
-
-		echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
-		<input type="hidden" name="step" value="3" />';
-		print_hidden(3);
-		echo '<p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p></form>';
-		return;
+	if (!isset($errors)) {
+	
+		$sqlUtility = new SqlUtility();
+		$sqlUtility->queryFromFile(AT_INCLUDE_PATH . 'install/db/atutor_schema.sql', $addslashes($_POST['tb_prefix']));
+		$sqlUtility->queryFromFile(AT_INCLUDE_PATH . 'install/db/atutor_language_text.sql', $addslashes($_POST['tb_prefix']));
+		
+		if (!$errors) {
+			print_progress($step);
+	
+			unset($_POST['submit']);
+			unset($_POST['action']);
+			store_steps($step);
+			print_feedback($progress);
+	
+			echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">
+			<input type="hidden" name="step" value="3" />';
+			print_hidden(3);
+			echo '<p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p></form>';
+			return;
+		}
 	}
 }
 
@@ -40,12 +47,12 @@ print_progress($step);
 echo '<p>Please enter your database information: </p>';
 
 
-if (isset($response['progress'])) {
-	print_feedback($response['progress']);
+if (isset($progress)) {
+	print_feedback($progress);
 }
 
-if (isset($response['errors'])) {
-	print_errors($response['errors']);
+if (isset($errors)) {
+	print_errors($errors);
 }
 
 ?>

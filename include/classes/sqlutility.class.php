@@ -186,7 +186,7 @@ class SqlUtility
 						if (mysql_errno($db) == 1050)
 							$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
 						else
-								$errors[] = 'Table <b>' . $table . '</b> creation failed.';
+							$errors[] = 'Table <b>' . $table . '</b> creation failed.';
 					}
 				}
 				elseif($prefixed_query[1] == 'INSERT INTO') {
