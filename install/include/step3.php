@@ -12,37 +12,40 @@
 
 if (!defined('AT_INSTALLER_INCLUDE_PATH') || !defined('AT_INCLUDE_PATH')) { exit; }
 
-include(AT_INCLUDE_PATH . 'lib/install.inc.php');
+include(AT_INCLUDE_PATH . 'install/install.inc.php');
 
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
-	$response = install_step_accounts($_POST['admin_username'], $_POST['form_admin_password_hidden'], $_POST['admin_email'], $_POST['site_name'],
+	install_step_accounts($_POST['admin_username'], $_POST['form_admin_password_hidden'], $_POST['admin_email'], $_POST['site_name'],
                                $_POST['email'], $_POST['account_username'], $_POST['form_account_password_hidden'],
                                $_POST['account_fname'], $_POST['account_lname'], $_POST['account_email'],
                                $_POST['just_social'], $_POST['home_url'], $_POST['step2']['db_host'], $_POST['step2']['db_port'], 
-                               $_POST['step2']['db_login'], $_POST['step2']['db_password'], $_POST['step2']['db_name'], $_POST['step2']['tb_prefix']);
-	unset($_POST['admin_username']);
-	unset($_POST['form_admin_password_hidden']);
-	unset($_POST['admin_email']);
-	unset($_POST['account_username']);
-	unset($_POST['form_account_password_hidden']);
-	unset($_POST['account_email']);
-	unset($_POST['home_url']);
-	unset($_POST['email']);
-	unset($_POST['site_name']);
-	unset($_POST['just_social']);
-
-	unset($errors);
-	unset($_POST['submit']);
-	unset($action);
-	store_steps($step);
-	$step++;
-	return;
+                               $_POST['step2']['db_login'], $_POST['step2']['db_password'], $_POST['step2']['db_name'], $_POST['step2']['tb_prefix'], true);
+	
+	if (!isset($errors)) {
+		unset($_POST['admin_username']);
+		unset($_POST['form_admin_password_hidden']);
+		unset($_POST['admin_email']);
+		unset($_POST['account_username']);
+		unset($_POST['form_account_password_hidden']);
+		unset($_POST['account_email']);
+		unset($_POST['home_url']);
+		unset($_POST['email']);
+		unset($_POST['site_name']);
+		unset($_POST['just_social']);
+	
+		unset($errors);
+		unset($_POST['submit']);
+		unset($action);
+		store_steps($step);
+		$step++;
+		return;
+	}
 }	
 
 print_progress($step);
 
-if (isset($response['errors'])) {
-	print_errors($response['errors']);
+if (isset($errors)) {
+	print_errors($errors);
 }
 
 if (isset($_POST['step1']['old_version']) && $_POST['upgrade_action']) {

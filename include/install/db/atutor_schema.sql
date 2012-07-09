@@ -935,7 +935,7 @@ CREATE TABLE `themes` (
   `extra_info` TEXT ,
   `status` tinyint(3) unsigned NOT NULL default '1',
   `customized` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY  (`title`)
+	PRIMARY KEY  (`title`)
 ) ENGINE = MyISAM;
 
 # --------------------------------------------------------
