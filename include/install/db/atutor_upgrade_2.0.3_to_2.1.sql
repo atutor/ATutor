@@ -18,4 +18,4 @@ UPDATE `themes` SET customized = 0 WHERE dir_name in ('default', 'fluid', 'defau
 
 
 #--------------- Add new simple desktop theme --------------
-INSERT INTO `themes` VALUES('Simple', '2.0.3', 'simplified_desktop', 'Desktop', NOW(), 'An adapted version of the iPad theme, designed to make a desktop look like an iPad.', 1, 0);
+INSERT INTO `themes` VALUES('Simple', '2.1', 'simplified_desktop', 'Desktop', NOW(), 'An adapted version of the iPad theme, designed to make a desktop look like an iPad.', 1, 0);
