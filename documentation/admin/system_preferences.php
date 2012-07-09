@@ -37,6 +37,10 @@
 
 			<dt>Allow Self-Registration</dt>
 			<dd>If enabled, users can self-register. Disable to remove registration functions</dd>
+			<dt>Course Browser</dt>
+			<dd>If enabled, students are able to browse through the available course in ATutor.</dd>
+			<dt>Show Things Current on My Start Page</dt>
+			<dd>If enabled, students and instructors are presented with a list of current changes in their course on My Start Page, such as current announcements, new forum posts, upcoming tests, new files for download, and much more.</dd>
 
 			<dt>Allow Instructors to enroll users from the system registration list.</dt>
 			<dd>If enabled, instructors are allowed to enroll users from the system registration list.</dd>
@@ -46,7 +50,6 @@
 
 			<dt>Allow Students to Unenroll</dt>
 			<dd>If enabled, students can unenroll themselves from courses. If disabled, the Unenroll functions are removed.</dd>
-
 
 			<dt>Require Email Confirmation Upon Registration</dt>
 			<dd>If  email confirmation is enabled, before they can login, registrants must confirm their registration by replying to a message sent to the email address they registered with.  </dd>
