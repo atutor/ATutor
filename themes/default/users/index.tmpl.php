@@ -1,5 +1,5 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-<div id="my_courses_container">
+<div id="my_courses_container" <?php if($_config['show_current'] != 1){ echo ' style="width:90%;"'; } ?>">
 <table class="data" style="width:100%;">
 <tr><th></th>
 <th><?php echo _AT('course'); ?></th>
@@ -94,7 +94,7 @@
 <?php endforeach; ?>
 </table>
 </div>
-
+<?php if($_config['show_current'] == 1){ ?>
 <div class="current_box">
 <div class="current_head"> <h3><?php echo _AT('things_current'); ?></h3></div>
     <?php
@@ -141,5 +141,5 @@
 	  }?>
 <br /><br />
 </div>  
-
+<?php } ?>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

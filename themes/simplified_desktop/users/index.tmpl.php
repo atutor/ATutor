@@ -31,7 +31,7 @@
 
 </ul>
 </div>
-
+<?php if($_config['show_current'] == 1){ ?>
 <div class="current_box">
 <div class="current_head"> <h3><?php echo _AT('things_current'); ?></h3></div>
     <?php
@@ -76,4 +76,5 @@
     <?php } ?>
 <br /><br />
 </div>  
+<?php } ?>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

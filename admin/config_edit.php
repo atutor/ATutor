@@ -36,6 +36,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['max_course_float']   = max(0, $_POST['max_course_float']);
 	$_POST['allow_registration']   = intval($_POST['allow_registration']);
 	$_POST['allow_browse']   = intval($_POST['allow_browse']);
+	$_POST['show_current']   = intval($_POST['show_current']);
 	$_POST['allow_instructor_registration']   = intval($_POST['allow_instructor_registration']);
 	$_POST['allow_unenroll']   = intval($_POST['allow_unenroll']);
 	$_POST['master_list']        = intval($_POST['master_list']);
