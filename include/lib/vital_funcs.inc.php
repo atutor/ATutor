@@ -97,11 +97,11 @@ function get_site_path(){
 	// Define Multisite paths
 	$docroot_path = $_SERVER['DOCUMENT_ROOT'];
 	$domain = ($_SERVER['HTTP_HOST']);
-	$site_path = $docroot_path . '/' . $domain . '/';
+	$site_path = realpath($docroot_path . '/../' . $domain . '/');
 	
 	if(file_exists($site_path."/include/config.inc.php")){
 		// The request is from a subdomain
-		return $site_path;
+		return $site_path . '/';
 	}
 	
 	// The request is from the main site, return the current path

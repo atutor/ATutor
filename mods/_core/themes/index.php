@@ -64,7 +64,7 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
-$_custom_head = '    <script src="'.$_base_path.'mods/_core/themes/js/themes.js"></script>"';
+$_custom_head = '    <script src="'.$_base_path.'mods/_core/themes/js/themes.js" type="text/javascript"></script>';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>

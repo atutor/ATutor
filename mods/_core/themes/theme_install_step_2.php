@@ -51,7 +51,7 @@ if (isset($_GET["theme"]))
 		$xml_parser->parse($theme_xml);
 
 		$version = $xml_parser->theme_rows['version'];
-		$type = $xml_parser->theme_rows['type'];
+		$type = $xml_parser->theme_rows['type'] ? $xml_parser->theme_rows['type'] : DESKTOP_DEVICE;  // accommodate the old themes, set default type to "desktop"
 		$extra_info = $xml_parser->theme_rows['extra_info'];
 	}
 
