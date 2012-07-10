@@ -100,7 +100,7 @@ if (isset($_POST['submit'])) {
 		$header .= "Host: atutor.ca\r\n";
 		$header .= "Content-Type: application/x-www-form-urlencoded\r\n";
 		$header .= "Content-Length: " . strlen($request) . "\r\n\r\n";
-		$fp = fsockopen('www.atutor.ca', 80, $errno, $errstr, 30);
+		$fp = @fsockopen('www.atutor.ca', 80, $errno, $errstr, 30);
 
 		if ($fp) {
 			fputs($fp, $header . $request . "\r\n\r\n");
