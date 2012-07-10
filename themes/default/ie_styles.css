@@ -156,14 +156,6 @@ ul.current_list{
       margin-left:0;
 }
 
-.outside_box{
-    /* For IE 8 */    
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999')";
-     /* For IE 5.5 - 7 */
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999');
-
-}
-
 #top-links-jump{
 	background-color:#eeeeee;
 	padding-right:.5em;
@@ -177,7 +169,7 @@ div#top-links {
 	height:1.7em;
 	padding-right: 5px;
 	margin-right:20px;
-	margin-top:0em;
+	margin-top:1.1em;
 }
 #course_title_container{
 	margin-top:-2em;
