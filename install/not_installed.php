@@ -24,8 +24,8 @@ header('Pragma: no-cache');
 require(AT_INSTALLER_INCLUDE_PATH.'header.php');
 ?>
 
-
-<p>ATutor does not appear to be installed. <a href="index.php">Continue on to the installation</a>.</p>
-
+<div id="feedback">
+<p>ATutor is ready to be installed or upgraded. <a href="index.php">Continue on to Step 1 of the setup process</a>.</p>
+</div>
 
 <?php require(AT_INSTALLER_INCLUDE_PATH.'footer.php'); ?>
