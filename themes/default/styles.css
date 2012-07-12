@@ -1551,8 +1551,6 @@ div#topnavlistcontainer {
 	height:1.6em;
 	margin-left:1em;
 	clear:both;
-
-
 }
 
 ul#topnavlist {
@@ -1570,9 +1568,7 @@ ul#topnavlist li {
 	height:auto;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-/*	-moz-box-shadow:.1em .0em .1em #999999;
-	box-shadow: .1em .0em .1em #999999;*/
-	padding: 0em 0em 0em 0em;
+
 
 }
 
@@ -1582,7 +1578,6 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 	text-decoration:none;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	padding: .1em 1.8em .2em 1.8em;
 	border-bottom: 1px solid #F2F7F7;
 
 }
@@ -1598,7 +1593,8 @@ ul#topnavlist li a {
 	background-color:white;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	padding: .2em 1.8em .1em 1.8em;
+	padding: .1em 1.8em .3em 1.8em;
+		margin-bottom:0em;
 
 }
 
@@ -1609,7 +1605,7 @@ ul#topnavlist li a.selected {
 	font-weight: normal;
 	border-radius:.3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: 1em 1.8em 1em 1.8em;
+	padding: 1em 1.8em 1.1em 1.8em;
 	margin-bottom:0em;
 }
 

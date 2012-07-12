@@ -45,6 +45,9 @@ ul#topnavlist li {
 	min-height:3.5em;
 
 }
+ul#topnavlist li a {
+	padding: .1em 1.8em .1em 1.8em;
+}
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 	margin-bottom:-25px;	
 	padding: .2em 1.8em .1em 1.8em;
@@ -71,12 +74,14 @@ div#top-links a:active{
 }
 
 
-ul#subnavlist li {
+ul#subnavlist li{
 	*display: inline;
 	margin-right:.5em;
-	
+	margin-bottom:-.1em;
+	height:.9em;
 
 }
+
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
   	color: black;
 	text-decoration:none;
@@ -151,14 +156,6 @@ ul.current_list{
       margin-left:0;
 }
 
-.outside_box{
-    /* For IE 8 */    
-    -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999')";
-     /* For IE 5.5 - 7 */
-    filter: progid:DXImageTransform.Microsoft.Shadow(Strength=2, Direction=135, Color='#999999');
-
-}
-
 #top-links-jump{
 	background-color:#eeeeee;
 	padding-right:.5em;
@@ -172,7 +169,7 @@ div#top-links {
 	height:1.7em;
 	padding-right: 5px;
 	margin-right:20px;
-	margin-top:0em;
+	margin-top:1.1em;
 }
 #course_title_container{
 	margin-top:-2em;
