@@ -18,8 +18,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	install_step_accounts($_POST['admin_username'], $_POST['form_admin_password_hidden'], $_POST['admin_email'], $_POST['site_name'],
                                $_POST['email'], $_POST['account_username'], $_POST['form_account_password_hidden'],
                                $_POST['account_fname'], $_POST['account_lname'], $_POST['account_email'],
-                               $_POST['just_social'], $_POST['home_url'], $_POST['step2']['db_host'], $_POST['step2']['db_port'], 
-                               $_POST['step2']['db_login'], $_POST['step2']['db_password'], $_POST['step2']['db_name'], $_POST['step2']['tb_prefix'], true);
+                               $_POST['just_social'], $_POST['home_url'], get_atutor_installation_path(AT_INSTALLER_INCLUDE_PATH),
+                               $_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], 
+                               $_POST['step2']['db_password'], $_POST['step2']['db_name'], $_POST['step2']['tb_prefix'], true);
 	
 	if (!isset($errors)) {
 		unset($_POST['admin_username']);

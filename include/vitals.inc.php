@@ -19,6 +19,7 @@ define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, 
 define('AT_DEVEL_TRANSLATE', 0);
 
 define('AT_SITE_PATH', get_site_path());
+define('AT_SUBSITE_THEME_DIR', realpath(AT_SITE_PATH . "themes") . "/");
 
 /*
  * structure of this document (in order):
