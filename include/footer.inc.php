@@ -40,7 +40,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	}
 }
 
-$theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
+$theme_img  = AT_print($_base_path, 'url.base') . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
 
 if (isset($err)) {
