@@ -1,7 +1,7 @@
 <?php
 // input string. DO NOT CHANGE.
 global $_input, $_content_base_href;
-
+debug($_content_base_href);
 // Output for flowplayer module.
 // Note: The properly functioning of flowplayer requires flash to be installed. 
 // The conversion performed by this module converts the [media] tag into flowplayer class

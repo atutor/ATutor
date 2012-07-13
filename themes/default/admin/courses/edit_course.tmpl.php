@@ -235,8 +235,11 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 			<option value="1" selected="selected"><?php echo _AT('create_basic'); ?></option>
 			<?php 
 			
+			$sql = "SELECT course_id from ".TABLE_PREFIX."courses WHERE member_id = '$_SESSION[member_id]'";
+			$result = mysql_query($sql, $db);
 			if ($course_row = @mysql_fetch_assoc($result)) {
 				do {
+					$Backup = new Backup($db, $course_row['course_id']);
 					$Backup->setCourseID($course_row['course_id']);
 					$list = $Backup->getAvailableList();
 

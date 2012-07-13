@@ -457,7 +457,7 @@ if(isset($_COOKIE["flash"])){
 }
 
 if (!isset($_SESSION["flash"])) {
-	$_custom_head .= '    <script type="text/javascript" src="'.$_base_path.'jscripts/flash_detection.js"></script>';
+	$_custom_head .= '    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/flash_detection.js"></script>';
 }
 
 /*~~~~~~~~~~~~~~end flash detection~~~~~~~~~~~~~~~*/
@@ -483,6 +483,6 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
 }
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
-	$_custom_head .= '    <script type="text/javascript" src="'.$_base_path.'jscripts/ATutorCourse.js"></script>';
+	$_custom_head .= '    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorCourse.js"></script>';
 }
 ?>

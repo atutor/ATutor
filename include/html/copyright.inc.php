@@ -31,9 +31,9 @@ global $_config;
 	*/
 
 ?>
-	<small><?php echo _AT('copyright').'. '; echo '<a href="'.$_base_path.'about.php">'._AT('about_atutor').'</a>.'; ?><br />
+	<small><?php echo _AT('copyright').'. '; echo '<a href="'.AT_print($_base_path,'url.base').'about.php">'._AT('about_atutor').'</a>.'; ?><br />
 	<?php if($_config['just_social'] != "1"){ ?>
-		<span id="howto"><?php echo _AT('general_help', AT_GUIDES_PATH.'index_list.php?lang='.$_SESSION['lang']);
+		<span id="howto"><?php echo _AT('general_help', AT_print(AT_GUIDES_PATH,'url.base').'index_list.php?lang='.$_SESSION['lang']);
 	?></span>
 	<?php } ?>
 	</small>

@@ -41,14 +41,15 @@ global $_tool_shortcuts;
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 //require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
 
+$_custom_css = AT_print($_custom_css, 'url.css');
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
-$savant->assign('base_path', $_base_path);
+$savant->assign('base_path', AT_print($_base_path, 'url.self'));
 $savant->assign('base_tmpl_path', $_SERVER['HTTP_HOST']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
 $savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 $savant->assign('just_social', $_config['just_social']);
-$theme_img  = $_base_path . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
+$theme_img  = AT_print($_base_path, 'url.base') . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
 $savant->assign('img', $theme_img);
 
 $_tmp_base_href = AT_BASE_HREF;
@@ -59,8 +60,8 @@ if (isset($course_base_href) || isset($content_base_href)) {
 	}
 }
 
-$savant->assign('content_base_href', $_tmp_base_href);
-$savant->assign('base_href', AT_BASE_HREF);
+$savant->assign('content_base_href', AT_print($_tmp_base_href, 'url.self'));
+$savant->assign('base_href', AT_print(AT_BASE_HREF, 'url.self'));
 
 //Handle pretty url pages
 if ((($_config['course_dir_name'] + $_config['pretty_url']) > 0) && ($temp = strpos($_SERVER['PHP_SELF'], AT_PRETTY_URL_HANDLER)) > 0){
@@ -68,7 +69,7 @@ if ((($_config['course_dir_name'] + $_config['pretty_url']) > 0) && ($temp = str
 }
 
 if ($myLang->isRTL()) {
-	$savant->assign('rtl_css', '<link rel="stylesheet" href="'.$_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME'].'/rtl.css" type="text/css" />');
+	$savant->assign('rtl_css', '<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'themes/'.$_SESSION['prefs']['PREF_THEME'].'/rtl.css" type="text/css" />');
 } else {
 	$savant->assign('rtl_css', '');
 }
@@ -88,17 +89,17 @@ if($_SESSION['valid_user']){
 // Setup the timeout warning when a user logs in
 $_at_timeout = ini_get('session.gc_maxlifetime');
 $custom_head .= '
-	<link rel="stylesheet" href="'.$_base_path.'jscripts/lib/jquery-ui.css" />
-	<script src="'.$_base_path.'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
-	<script src="'.$_base_path.'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="'.$_base_path.'jscripts/lib/jquery.sessionTimeout.1.0.min.js" type="text/javascript"></script>
+	<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
+	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
+	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
+	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.sessionTimeout.1.0.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$.sessionTimeout({
 		    message      : "'._AT('session_will_expire').'",
-		    keepAliveUrl : "'.$_base_path.'include/session_keepalive.php",
-		    redirUrl     : "'.$_base_path.'logout.php",
-		    logoutUrl    : "'.$_base_path.'logout.php",
+		    keepAliveUrl : "'.AT_print($_base_path, 'url.base').'include/session_keepalive.php",
+		    redirUrl     : "'.AT_print($_base_path, 'url.base').'logout.php",
+		    logoutUrl    : "'.AT_print($_base_path, 'url.base').'logout.php",
 		    warnAfter: '.($_at_timeout*1000).', //session.gc_maxlifetime converted to milliseconds
 		    redirAfter: '.(($_at_timeout*1000)+300000).', // allow 5 more minutes to respond, in milliseconds
 		    title        : "'._AT('session_timeout_title').'",
@@ -165,15 +166,15 @@ if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == 
 }
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
-	$_path[] = array('url' => $_base_path . url_rewrite('index.php'), 'title' => $_SESSION['course_title']);
+	$_path[] = array('url' => AT_print($_base_path . url_rewrite('index.php'),'url.base'), 'title' => $_SESSION['course_title']);
 } else if (isset($_SESSION['course_id']) && $_SESSION['course_id'] < 0) {
-	$_path[] = array('url' => $_base_path . 'admin/index.php', 'title' => _AT('administration'));
+	$_path[] = array('url' => AT_print($_base_path . 'admin/index.php', 'url.base'), 'title' => _AT('administration'));
 }
 
 if (isset($_SESSION['member_id']) && $_SESSION['member_id']) {
-	$_path[] = array('url' => $_base_path . 'bounce.php?course=0', 'title' => _AT('my_start_page'));
+	$_path[] = array('url' =>  AT_print($_base_path . 'bounce.php?course=0', 'url.base'), 'title' => _AT('my_start_page'));
 } else if (!isset($_SESSION['course_id']) || !$_SESSION['course_id']) {
-	$_path[] = array('url' => $_base_path . 'login.php', 'title' => SITE_NAME);
+	$_path[] = array('url' =>  AT_print($_base_path . 'login.php', 'url.base'), 'title' => SITE_NAME);
 }
 
 $_path = array_reverse($_path);
@@ -201,12 +202,12 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 		$custom_icon_path = AT_CONTENT_DIR.$_SESSION['course_id']."/custom_icons/";
 		if (file_exists($custom_icon_path.$row['icon'])) {
 			if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
-				$course_icon = $_base_path.'get_course_icon.php/?id='.$_SESSION['course_id'];
+				$course_icon = AT_print($_base_path, 'url.base').'get_course_icon.php/?id='.$_SESSION['course_id'];
 			} else {
-				$course_icon = $_base_path.'content/' . $_SESSION['course_id'] . '/';
+				$course_icon = AT_print($_base_path, 'url.base').'content/' . $_SESSION['course_id'] . '/';
 			}
 		} else {
-			$course_icon = $_base_path.'images/courses/'.$row['icon'];
+			$course_icon = AT_print($_base_path, 'url.base').'images/courses/'.$row['icon'];
 		}
 		$savant->assign('icon', $course_icon);
 	}
@@ -224,7 +225,7 @@ $savant->assign('current_top_level_page', $_current_top_level_page);
 $savant->assign('sub_level_pages', $_sub_level_pages);
 $savant->assign('current_sub_level_page', $_current_sub_level_page);
 
-$savant->assign('path', $_path);
+$savant->assign('path', AT_print($_path, 'url.base'));
 $savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
 $savant->assign('top_level_pages', $_top_level_pages);

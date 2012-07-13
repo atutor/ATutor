@@ -386,7 +386,6 @@ function _AT() {
 	*/
 	function AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting, $_config;
-
 		if (!isset($_field_formatting[$name])) {
 			/* field not set, check if there's a global setting */
 			$parts = explode('.', $name);
@@ -414,6 +413,7 @@ function _AT() {
 			/* what special things do we have to do if this is HTML ? remove unwanted HTML? validate? */
 		} else {
 			$input = str_replace('<', '&lt;', $input);
+			$input = str_replace('>', '&gt;', $input);
 			$input = nl2br($input);
 		}
 

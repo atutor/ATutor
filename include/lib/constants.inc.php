@@ -319,6 +319,8 @@ define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS
 							   + AT_FORMAT_CONTENT_DIR);
 
 $_field_formatting = array();
+$_field_formatting['url.*']          = AT_FORMAT_QUOTES & AT_FORMAT_HTML;
+
 $_field_formatting['assignment.title']          = AT_FORMAT_QUOTES;
 
 $_field_formatting['backups.description']       = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
