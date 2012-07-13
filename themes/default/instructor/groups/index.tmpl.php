@@ -1,4 +1,3 @@
-<?php debug($this->group_type_rows);?>
 <div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 <fieldset class="group_form" margin:auto;"><legend class="group_form"><?php echo _AT('groups'); ?></legend>

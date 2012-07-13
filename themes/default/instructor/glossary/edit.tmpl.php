@@ -1,5 +1,4 @@
 <?php global $stripslashes; ?>
-<?php debug($result_related);?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="gid" value="<?php echo $this->gid; ?>" />
 
