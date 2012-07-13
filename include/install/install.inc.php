@@ -16,13 +16,12 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /**
  * Set up initial admin and instructor accounts as well as a few other configurations.
  * @param: A bunch of self-explanatory fields
- * @return An array of progress or error information.
- * @see function construct_rtn()
+ * @return An array of progress/error information or the same message in $msg depending on the flag $in_plain_msg.
  */
 function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email, $site_name,
                                $email, $account_username, $account_pwd_hidden,
                                $account_fname, $account_lname, $account_email,
-                               $just_social, $home_url, $db_host, $db_port, 
+                               $just_social, $home_url, $session_path, $db_host, $db_port, 
                                $db_login, $db_pwd, $db_name, $tb_prefix, $in_plain_msg = false) {
 	global $addslashes, $stripslashes, $db;
 	global $errors, $progress, $msg;
@@ -159,7 +158,6 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
 	
 	if (isset($errors)) {
 		return;
-//		return construct_rtn(null, $errors);
 	}
 	
 	$db = @mysql_connect($db_host . ':' . $db_port, $db_login, urldecode($db_pwd));
@@ -207,7 +205,7 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
 
 	// Calculate the ATutor installation path and save into database for the usage of
 	// session associated path @ include/vitals.inc.php
-	$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('session_path', '".get_atutor_installation_path(AT_INSTALLER_INCLUDE_PATH)."')";
+	$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('session_path', '".$session_path."')";
 	mysql_query($sql ,$db);
 }
 
@@ -219,8 +217,7 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
  *         db_pwd      The password of the login id
  *         db_name     DB name to create
  *         schema_file The location of atutor_schema.sql
- * @return An array of progress or error information.
- * @see function construct_rtn()
+ * @return An array of progress/error information or the same message in $msg depending on the flag $in_plain_msg.
  */
 function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix, $db_name, $in_plain_msg = false) {
 	global $addslashes;
@@ -241,7 +238,6 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 		} else {
 			$msg->addError('UNABLE_CONNECT_DB');
 		}
-//		return construct_rtn(null, $errors, $in_plain_msg);
 	} 
 	// check mysql version number
 	$sql = "SELECT VERSION() AS version";
@@ -254,7 +250,6 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 		} else {
 			$msg->addError(array('LOW_MYSQL_VERSION', $row['version']));
 		}
-//		return construct_rtn(null, $errors);
 	}
 
 	if (!mysql_select_db($db_name, $db)) {
@@ -266,7 +261,6 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 			} else {
 				$msg->addError(array('UNABLE_SELECT_DB', $db_name));
 			}
-//			return construct_rtn(null, $errors);
 		} else {
 			if ($in_plain_msg) {
 				$progress[] = 'Database <b>'.$db_name.'</b> created successfully.';
@@ -290,43 +284,9 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 				} else {
 					$msg->addFeedback(array('DB_NOT_UTF8', $db_name));
 				}
-//				return construct_rtn(null, $errors);
 			}
 		}
 	}
 	return $db;
-
-//	return construct_rtn($progress, $errors);
 }
-
-/**
- * Construct the return value from the installation step functions
- * @param: progress   The array of the progress information. Null if error happens and no progress
- *         errors     The array of the progress information. Leave blank if no errors
- * @return: An array of progress and/or error information
- * Array(
- *     "progress" => Array,
- *     "errors" => Array
- * )
- */
-function construct_rtn($progress, $errors = null, $in_plain_msg = false) {
-	global $msg;
-	
-	$rtn = Array();
-	
-	if (is_array($progress) && count($progress) > 0) {
-		$rtn["progress"] = $progress;
-	}
-	if (is_array($errors) && count($errors) > 0) {
-		if ($in_plain_msg) {
-			
-			$rtn["errors"] = $errors['msg'];
-		} else {
-			$msg->addError($errors['msg_code']);
-		}
-	}
-	debug($rtn);
-	return $rtn;
-}
-
 ?>

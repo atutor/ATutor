@@ -188,7 +188,7 @@ if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 	$server_protocol = 'http://';
 }
 
-
+define('AT_SERVER_PROTOCOL', $server_protocol);
 
 /* Handles pretty url - @author Harris */
 define('AT_PRETTY_URL_HANDLER',		'go.php');	
@@ -290,7 +290,6 @@ define('MOBILE_DEVICE',  'Mobile');
 
 // theme directory
 define('AT_SYSTEM_THEME_DIR', realpath(AT_INCLUDE_PATH . "../themes") . "/");
-define('AT_SUBSITE_THEME_DIR', realpath(AT_SITE_PATH . "themes") . "/");
 
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';

@@ -243,8 +243,8 @@ class SqlUtility
 			}
 		}
 		
-    return true;
-  }
+		return true;
+	}
 
 	// This function only revert queries on "CREATE TABLE" and "INSERT INTO language_text"
 	function revertQueryFromFile($sql_file_path, $table_prefix)
