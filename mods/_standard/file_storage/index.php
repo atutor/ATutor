@@ -186,15 +186,18 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 				$file_mime = 'application/octet-stream';
 			}
 			$file_path = fs_get_file_path($file_id) . $file_id;
-
+			$row['file_name'] = str_replace(array('"', "'", ' ', ','), '_', $row['file_name']);
 			ob_end_clean();
 			header("Content-Encoding: none");
-			header('Content-Type: ' . $file_mime);
+			header("Content-Type: ' . $file_mime .'", true);
 			header('Content-transfer-encoding: binary'); 
 			header('Content-Disposition: attachment; filename="'.htmlspecialchars($row['file_name']).'"');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
+			// This header appears to be problematic on some systems Mantis 5014
+			// see http://atutor.ca/view/3/23234/1.html
+			// Commenting out this header may help 
 			header('Content-Length: '.$row['file_size']);
 
 			// see the note in get.php about the use of x-Sendfile
