@@ -18,9 +18,24 @@ define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 define('AT_DEVEL_TRANSLATE', 0);
 
+// Multisite constants and checks
 define('AT_SITE_PATH', get_site_path());
 define('AT_SUBSITE_THEME_DIR', realpath(AT_SITE_PATH . "themes") . "/");
+define('AT_MULTISITE_CONFIG_FILE', AT_INCLUDE_PATH . 'config_multisite.inc.php');
 
+// check if the subsite is enabled
+if (defined('IS_SUBSITE') && IS_SUBSITE) {
+	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
+	mysql_select_db(DB_NAME_MULTISITE, $db_multisite);
+	$site_url = $_SERVER['HTTP_HOST'];
+	$sql = "SELECT * FROM " . TABLE_PREFIX_MULTISITE . "subsites where site_url = '" . $addslashes($site_url) . "'";
+	$result = mysql_query($sql, $db_multisite);
+	$row = mysql_fetch_assoc($result);
+	if (!$row['enabled']) {
+		echo $site_url . ' has been disabled!';
+		exit;
+	}
+}
 /*
  * structure of this document (in order):
  *

@@ -23,7 +23,7 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
                                $account_fname, $account_lname, $account_email,
                                $just_social, $home_url, $session_path, $db_host, $db_port, 
                                $db_login, $db_pwd, $db_name, $tb_prefix, $in_plain_msg = false) {
-	global $addslashes, $stripslashes, $db;
+	global $addslashes, $stripslashes;
 	global $errors, $progress, $msg;
 	
 	$admin_username = trim($admin_username);
@@ -210,13 +210,201 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
 }
 
 /**
- * Installation step to create and set up ATutor database
+ * Create all the content subdirectories
+ */
+function create_content_subdir($content_dir, $index_html_location, $in_plain_msg = false) {
+	global $errors, $msg;
+	
+	if (!is_dir($content_dir.'/import')) {
+		if (!@mkdir($content_dir.'/import')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/import</strong> directory does not exist and cannot be created.';
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/import'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/import')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/import</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/import'));
+		}
+	} 
+
+	if (!is_dir($content_dir.'/chat')) {
+		if (!@mkdir($content_dir.'/chat')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/chat</strong> directory does not exist and cannot be created.';
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/chat'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/chat')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/chat</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/chat'));
+		}
+	}
+
+	if (!is_dir($content_dir.'/backups')) {
+		if (!@mkdir($content_dir.'/backups')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/backups</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/backups'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/backups')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/backups</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/backups'));
+		}
+	}
+	if (!is_dir($content_dir.'/feeds')) {
+		if (!@mkdir($content_dir.'/feeds')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/feeds</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/feeds'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/feeds')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/feeds</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/feeds'));
+		}
+	}
+
+	if (!is_dir($content_dir.'/file_storage')) {
+		if (!@mkdir($content_dir.'/file_storage')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/file_storage</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/file_storage'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/file_storage')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/file_storage</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/file_storage'));
+		}
+	}
+
+	if (!is_dir($content_dir.'/profile_pictures')) {
+		if (!@mkdir($content_dir.'/profile_pictures')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/profile_pictures</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/profile_pictures'));
+			}
+		} else {
+			mkdir($content_dir.'/profile_pictures/originals');
+			mkdir($content_dir.'/profile_pictures/thumbs');
+			mkdir($content_dir.'/profile_pictures/profile');
+		}
+	} else if (!is_writable($content_dir.'/profile_pictures')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/profile_pictures</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/profile_pictures'));
+		}
+	}
+	if (!is_dir($content_dir.'/patcher')) {
+		if (!@mkdir($content_dir.'/patcher')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/patcher</strong> directory does not exist and cannot be created.';
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/patcher'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/patcher')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/patcher</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/patcher'));
+		}
+	}
+	if (!is_dir($content_dir.'/social')) {
+		if (!@mkdir($content_dir.'/social')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/social</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/social'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/social')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/social</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/social'));
+		}
+	}
+	if (!is_dir($content_dir.'/photos')) {
+		if (!@mkdir($content_dir.'/photos')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/photos</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/photos'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/photos')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/photos</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/photos'));
+		}
+	}
+	if (!is_dir($content_dir.'/module')) {
+		if (!@mkdir($content_dir.'/module')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/module</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/module'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/module')){
+		$errors[] = '<strong>'.$content_dir.'/module</strong> directory is not writable.';
+	}
+	if (!is_dir($content_dir.'/theme')) {
+		if (!@mkdir($content_dir.'/theme')) {
+			if ($in_plain_msg) {
+				$errors[] = '<strong>'.$content_dir.'/theme</strong> directory does not exist and cannot be created.';  
+			} else {
+				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/theme'));
+			}
+		}
+	} else if (!is_writable($content_dir.'/theme')){
+		if ($in_plain_msg) {
+			$errors[] = '<strong>'.$content_dir.'/theme</strong> directory is not writable.';
+		} else {
+			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/theme'));
+		}
+	}
+
+	// save blank index.html pages to those directories
+	@copy($index_html_location, $content_dir . '/import/index.html');
+	@copy($index_html_location, $content_dir . '/chat/index.html');
+	@copy($index_html_location, $content_dir . '/backups/index.html');
+	@copy($index_html_location, $content_dir . '/feeds/index.html');
+	@copy($index_html_location, $content_dir . '/file_storage/index.html');
+	@copy($index_html_location, $content_dir . '/profile_pictures/index.html');
+	@copy($index_html_location, $content_dir . '/index.html');
+}
+
+/**
+ * Installation step to create and switch to ATutor database
  * @param: db_host     DB host
  *         db_port     DB port
  *         db_login    DB login ID. This id must have "create database" privilege.
  *         db_pwd      The password of the login id
  *         db_name     DB name to create
  *         schema_file The location of atutor_schema.sql
+ *         in_plain_msg if true, save the progress msg into global arrays $errors & $progress, 
+ *                      otherwise, save into global Message object $msg
  * @return An array of progress/error information or the same message in $msg depending on the flag $in_plain_msg.
  */
 function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix, $db_name, $in_plain_msg = false) {
