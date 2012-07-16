@@ -29,12 +29,12 @@ ATutor.course = ATutor.course || {};
 
 (function () {
 
-    ATutor.base_href = "<?php echo AT_BASE_HREF; ?>";
+    ATutor.base_href = "<?php echo AT_print(AT_BASE_HREF, 'url.base'); ?>";
     ATutor.course.show = "<?php echo _AT('show'); ?>";
     ATutor.course.hide = "<?php echo _AT('hide'); ?>";
     ATutor.course.theme = "<?php echo $_SESSION['prefs']['PREF_THEME']; ?>";
-    ATutor.course.collapse_icon = "<?php echo $tree_collapse_icon; ?>";
-    ATutor.course.expand_icon = "<?php echo $tree_expand_icon; ?>";
+    ATutor.course.collapse_icon = "<?php echo AT_print($tree_collapse_icon, 'url.tree'); ?>";
+    ATutor.course.expand_icon = "<?php echo AT_print($tree_expand_icon,  'url.tree'); ?>";
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
