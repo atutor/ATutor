@@ -96,11 +96,12 @@ function check_session()
 function get_site_path(){
 	// Define Multisite paths
 	$docroot_path = $_SERVER['DOCUMENT_ROOT'];
-	$domain = ($_SERVER['HTTP_HOST']);
+	$domain = $_SERVER['HTTP_HOST'];
 	$site_path = realpath($docroot_path . '/../' . $domain . '/');
 	
 	if(file_exists($site_path."/include/config.inc.php")){
 		// The request is from a subdomain
+		define('IS_SUBSITE', true);
 		return $site_path . '/';
 	}
 	
