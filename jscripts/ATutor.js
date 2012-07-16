@@ -649,7 +649,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         // add "selected" class to current table row to highlight the selected row
         jQuery(this).addClass("selected");
 
-        if (e.data.callback) {
+        if (e.data && e.data.callback) {
             e.data.callback(this);
         }
     };
