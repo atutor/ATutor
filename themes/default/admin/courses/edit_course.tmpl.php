@@ -234,10 +234,23 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 			<option value="0"><?php echo _AT('empty'); ?></option>
 			<option value="1" selected="selected"><?php echo _AT('create_basic'); ?></option>
 			<?php 
+			////////////////////////
+			// This should be rewritten and moved into course_properties.inc.php
+			////////////////////////
+			global $db;
+			$sql = "SELECT * FROM ".TABLE_PREFIX."backups";
+			$result = mysql_query($sql,$db);
 			
-			$sql = "SELECT course_id from ".TABLE_PREFIX."courses WHERE member_id = '$_SESSION[member_id]'";
-			$result = mysql_query($sql, $db);
-			if ($course_row = @mysql_fetch_assoc($result)) {
+			if($_SESSION['privileges'] == 1){
+				$sql = "SELECT course_id from ".TABLE_PREFIX."courses";
+				$result2 = mysql_query($sql, $db);
+			}else{
+				$sql = "SELECT course_id from ".TABLE_PREFIX."courses WHERE member_id = '$_SESSION[member_id]'";
+				$result2 = mysql_query($sql, $db);
+			}
+			
+			
+			if ($backup_row = mysql_fetch_assoc($result)) {
 				do {
 					$Backup = new Backup($db, $course_row['course_id']);
 					$Backup->setCourseID($course_row['course_id']);
@@ -250,7 +263,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 						}
 						echo '</optgroup>';
 					}
-				} while ($course_row = mysql_fetch_assoc($result));
+				} while ($course_row = mysql_fetch_assoc($result2));
 			}
 			?>
 			</select>
