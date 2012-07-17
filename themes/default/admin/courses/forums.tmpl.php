@@ -25,9 +25,8 @@
 foreach ($this->shared_forums as $forum) {
 
 ?>
-<!--     <tr onmousedown="document.form[\'f'.$forum['forum_id'].'\'].checked = true; rowselect(this);"  id="r_'.$forum['forum_id'].'"></tr> -->      
     <tr onkeydown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['id']; ?>">
-    <td><input type="radio" name="id" value= "<?php echo $forum['id']; ?>" id="f<?php echo $forum['id']; ?>"</td>
+    <td><input type="radio" name="id" value= "<?php echo $forum['id']; ?>" id="f<?php echo $forum['id']; ?>" /></td>
 	<td><label for="f<?php echo $forum['id']; ?>"> <?php echo	AT_print($forum['title'], 'forums.title'); ?>  </label></td>
 	<td><?php echo AT_print($forum['desc'], 'forums.description'); ?></td>
 	<td> <?php foreach ($forum["courses"] as $course) {echo $course. "  ";} ?>
