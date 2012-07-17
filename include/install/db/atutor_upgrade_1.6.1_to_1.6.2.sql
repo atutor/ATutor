@@ -50,7 +50,7 @@ INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
 
 #Add the scaffold tools module 
-INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, 2048, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, max(admin_privilege) * 2, 0, 0);
 
 # End Access4All setup
 
@@ -130,7 +130,7 @@ INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from,
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Adequate', 60, 69);
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Inadequate', 0, 59);
 
-INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) VALUES('_standard/gradebook', 2, 1048576, 4096, 0, 0);
+INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) VALUES('_standard/gradebook', 2, max(privilege)*2, max(admin_privilege) * 2, 0, 0);
 
 DELETE FROM `modules` WHERE dir_name = 'gradebook';
 
@@ -153,7 +153,7 @@ ALTER TABLE `tests` ADD COLUMN `show_guest_form` TINYINT(1) UNSIGNED NOT NULL DE
 
 #move the old student toos to course tool, and add the new student tools
 UPDATE `modules` SET `dir_name` = '_standard/course_tools' WHERE `dir_name` = '_standard/student_tools' LIMIT 1 ;
-INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/student_tools', '2', '2097152', '0', '0', '0');
+INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/student_tools', '2', 'max(privilege)*2', '0', '0', '0');
 
 CREATE TABLE `fha_student_tools` (
    `course_id` mediumint(8) unsigned NOT NULL,
@@ -161,4 +161,4 @@ CREATE TABLE `fha_student_tools` (
    PRIMARY KEY ( `course_id` )
 );
 # Add the forum archiver to standard modules
-INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/farchive', '2', '4194304', '0', '0', '0');
+INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/farchive', '2', 'max(privilege)*2', '0', '0', '0');

@@ -226,7 +226,7 @@ INSERT INTO social_groups_types SET title='sports_recreation', type_id=8;
 # END Social Networking setup
 
 # Module setting
-INSERT INTO `modules` VALUES ('_standard/social',	 2, 8388608, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/social',	 2, max(privilege)*2, 0, 0, 0);
 
 # Login attempt control table
 CREATE TABLE `member_login_attempt` (

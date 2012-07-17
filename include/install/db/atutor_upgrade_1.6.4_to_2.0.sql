@@ -2,7 +2,7 @@
 
 UPDATE `modules` SET `dir_name` = '_core/imscp' WHERE `modules`.`dir_name` = '_core/content_packaging' LIMIT 1 ;
 
-INSERT INTO `modules` VALUES ('_core/modules', 2, 0, 8192, 0, 0);
+INSERT INTO `modules` VALUES ('_core/modules', 2, 0, max(admin_privilege) * 2, 0, 0);
 
 # --------------------------------------------------------
 # Adding feature of oauth client
@@ -37,7 +37,7 @@ CREATE TABLE `oauth_client_tokens` (
 # END Adding feature of oauth client
 
 # -------------- Photo Album Module Setup ----------------
-INSERT INTO `modules` VALUES ('_standard/photos',	 2, 16777216, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/photos',	 2,max(privilege)*2, 0, 0, 0);
 # Photo Album Table
 CREATE TABLE `pa_albums` (
   `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
@@ -105,7 +105,7 @@ INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
 # -------------- Photo Album Module Ends -----------------
 
 # ----------------Flowplayer Module ------------------------
-INSERT INTO `modules` VALUES ('_standard/flowplayer',	 2, 33554432, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/flowplayer',2, max(privilege)*2,  0, 0, 0);
 
 # Add Transformable configuration
 
