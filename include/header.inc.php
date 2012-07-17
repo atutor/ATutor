@@ -221,11 +221,12 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 } else if (!$_SESSION['course_id']) {
 	$section_title = _AT('my_start_page');
 }
+//debug($_path);
 $savant->assign('current_top_level_page', $_current_top_level_page);
 $savant->assign('sub_level_pages', $_sub_level_pages);
 $savant->assign('current_sub_level_page', $_current_sub_level_page);
 
-$savant->assign('path', AT_print($_path, 'url.base'));
+$savant->assign('path', $_path);
 $savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
 $savant->assign('top_level_pages', $_top_level_pages);
