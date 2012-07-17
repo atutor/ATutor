@@ -59,6 +59,34 @@ function write_config_file($filename, $db_login, $db_pwd, $db_host, $db_port, $d
 	return true;
 }
 
+/**
+ * Parse config.inc.php that is created by write_config_file()
+ * @param the path to the config file
+ * @return an array that contains config info
+ */
+function parse_config_file($config_file) {
+	if (!file_exists($config_file)) {
+		return false;
+	}
+	
+	$file_content = file_get_contents($config_file);
+	$rows = explode("\n", $file_content);
+	
+	$configs = array();
+	
+	$term_define = 'define(';
+	
+	foreach($rows as $row => $data) {
+		$data = str_replace(' ', '', $data);
+		if (substr($data, 0, 7) == $term_define) {
+			$data = str_replace("'", "", substr(substr($data, 7, strlen($data)), 0, -2));
+			$one_config = explode(',', $data);
+			$configs[$one_config[0]] = $one_config[1];
+		}
+	}
+	return $configs;
+}
+
 $config_template = "<"."?php 
 /************************************************************************/
 /* ATutor                                                               */
