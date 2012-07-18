@@ -142,17 +142,35 @@ if (isset($_POST['form_course'])) {
 	$row['rss']                 = 0; // default to off
 	$row['release_date']		= '0';
 	$row['end_date']            = '0';
+
+	// retrieve backups
+	if ($_SESSION['privileges'] == 1) { // admin
+		$sql = "SELECT course_id, title from ".TABLE_PREFIX."courses";
+	} else { // instructor
+		$sql = "SELECT course_id, title from ".TABLE_PREFIX."courses WHERE member_id = '$_SESSION[member_id]'";
+	}
+	$course_result = mysql_query($sql, $db);
+	
+	$backup_list = array();
+	
+	while ($course_row = mysql_fetch_assoc($course_result)) {
+		$Backup = new Backup($db, $course_row['course_id']);
+		$Backup->setCourseID($course_row['course_id']);
+		$list = $Backup->getAvailableList();
+		
+		if (count($list) > 0) {
+			$backup_list[$course_row['title']] = $list;
+		}
+	}
 }
-/*
-if (($_POST['setvisual'] || $_POST['settext']) && !$_POST['submit']){
-	$anchor =  "#banner";
-} */
 
 if ($_POST['customicon']) {
     echo "<script language='javascript' type='text/javascript'>document.getElementById('uploadform').focus();</script>";
 }
+
 $savant->assign('course', $course);
 $savant->assign('row', $row);
+$savant->assign('backup_list', $backup_list);
 $savant->display('admin/courses/edit_course.tmpl.php');
 ?>
 
