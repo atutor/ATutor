@@ -43,7 +43,7 @@ function blogs_news() {
                     'alt'=>_AT('blogs'),
                     'course'=>$system_courses[$row['course_id']]['title'],
                     'thumb'=>'images/home-blogs_sm.png', 
-                    'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id']).'"'.
+                    'link'=>'<a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$row['group_id']).'"'.
                       (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($link_title, 'blog_posts.title').'"' : '') .'>'. 
                       AT_print(validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'blog_posts.title') .'</a>');
                 }

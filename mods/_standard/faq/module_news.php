@@ -31,7 +31,7 @@ function faq_news() {
             'alt'=>_AT('faq'),'object'=>$row,
             'course'=>$system_courses[$row['course_id']]['title'], 
             'thumb'=>'images/home-faq_sm.png', 
-            'link'=>'<a href="bounce.php?course='.$row['course_id'].'&p='.urlencode('mods/_standard/faq/index.php#'.$row['entry_id']).'"'.
+            'link'=>'<a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('mods/_standard/faq/index.php#'.$row['entry_id']).'"'.
             (strlen($row['question']) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($row['question'], 'faqs.question').'"' : '') .'>'. 
             AT_print(validate_length($row['question'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'faqs.question') .'</a>');
         }
