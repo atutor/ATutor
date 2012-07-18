@@ -1,3 +1,10 @@
+<?php
+/**
+ * Accept parameter:
+ * 
+ * $this->categories: An array of course categories created by admin
+ */ 
+?>
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table summary="" class="data" rules="cols" align="center" style="width: 95%;">
 
