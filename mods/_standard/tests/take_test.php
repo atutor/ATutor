@@ -213,7 +213,7 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 
 
 	<?php if ($instructions!=''): ?>
-		<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
+		<div class="test_instruction">
 			<strong><?php echo _AT('instructions'); ?></strong>
 		</div>
 		<div class="row" style="padding-bottom: 20px"><?php echo $instructions; ?></div>
@@ -234,7 +234,7 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 		$obj->display($row);
 	}
 	?>
-	<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
+	<div class="test_instruction">
 		<strong><?php echo _AT('done'); ?>!</strong>
 	</div>
 	<div class="row buttons">

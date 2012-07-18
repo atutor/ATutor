@@ -169,14 +169,14 @@ while ($row = mysql_fetch_assoc($result)) {
 	?>
 
 	<?php if ($this_total): ?>
-		<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
+		<div class="test_instruction">
 			<strong>
 				<span style="float: right"><?php echo $my_score .' / '.$this_total; ?> <?php echo _AT('points'); ?></span>
 				<?php echo _AT('final_score'); ?>:
 			</strong>
 		</div>
 	<?php else: ?>
-		<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
+		<div class="test_instruction">
 			<strong>
 				<?php echo _AT('done'); ?>!
 			</strong>

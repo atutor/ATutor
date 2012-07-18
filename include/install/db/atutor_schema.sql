@@ -1025,6 +1025,8 @@ INSERT INTO `themes` VALUES ('Fluid', '2.1', 'fluid', 'Desktop', NOW(), 'Theme t
 INSERT INTO `themes` VALUES ('ATutor Classic', '2.1', 'default_classic', 'Desktop', NOW(), 'This is the ATutor Classic theme which makes use of the custom Header and logo images. To customize those images you must edit the <code>theme.cfg.php</code> in this themes directory.', 1,0);
 INSERT INTO `themes` VALUES ('Blumin', '2.1', 'blumin', 'Desktop', NOW(), 'This is the plone look-alike theme.', 1, 0); 
 INSERT INTO `themes` VALUES ('Greenmin', '2.1', 'greenmin', 'Desktop', NOW(), 'This is the plone look-alike theme in green.', 1, 0);
+INSERT INTO `themes` VALUES ('ATutor 2.0', '2.1', 'default20', 'Desktop', NOW(), 'This is the ATutor 2.0 series Default theme.', 1, 0);
+
 INSERT INTO `themes` VALUES ('ATutor 1.5', '2.1', 'default15', 'Desktop', NOW(), 'This is the 1.5 series default theme.', 1, 0);
 INSERT INTO `themes` VALUES ('ATutor 1.6', '2.1', 'default16', 'Desktop', NOW(), 'This is the 1.6 series default theme.', 1, 0);
 INSERT INTO `themes` VALUES ('IDI Theme', '2.1', 'idi', 'Desktop', NOW(), 'The theme created for the IDI course server.', 1, 0);

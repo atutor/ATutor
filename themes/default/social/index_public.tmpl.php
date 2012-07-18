@@ -22,7 +22,7 @@
 		<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index_public.php');?>" method="POST" id="search_friends_form">
 			<label for="searchFriends" style="display:none;"><?php echo _AT('search'); ?></label>
 			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', '<?php echo AT_SOCIAL_BASENAME; ?>index_public.php')"/>
-			<input type="submit" name="search" value="<?php echo _AT('search'); ?>">
+			<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button">
 			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>" />
 			
 			<div id="livesearch"></div>

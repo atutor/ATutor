@@ -383,7 +383,7 @@ h3 {
 /* error box */
 table.errbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: #FF0000;
+	background-color: #E49E7A;
 	border: 2px #EEEEEE solid;
 }
 tr.errbox {
