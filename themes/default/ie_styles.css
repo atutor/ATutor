@@ -42,15 +42,15 @@ ul#topnavlist li {
 	padding:0.3em;
 	margin-bottom:-3px;
 	border-bottom:0;
-	min-height:3.5em;
+
 
 }
 ul#topnavlist li a {
-	padding: .1em 1.8em .1em 1.8em;
+	padding: .1em 1.8em .2em 1.8em;
 }
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 	margin-bottom:-25px;	
-	padding: .2em 1.8em .1em 1.8em;
+	padding: .2em 1.8em .2em 1.8em;
 	border-bottom: none;
 }
 
@@ -65,7 +65,6 @@ div#top-links{
 
 div#top-links a:active{
 	color:black;
-	background-color:#F6EAD6;
 
 }
 
@@ -85,9 +84,6 @@ ul#subnavlist li{
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
   	color: black;
 	text-decoration:none;
-	background-color: #F8F8F8;
-	border-bottom:thin solid #F8F8F8;
-
 
 }
 

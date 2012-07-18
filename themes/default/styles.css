@@ -2483,10 +2483,9 @@ div.social-wrapper{
     padding-bottom:0.2em;
 }
 .logo{
-float:left;
-clear:right;
+width:15em;
 margin-left:2em;
-margin-top:-3.5em;
+margin-top:-2.5em;
 }
 .content-settings{
 	width: 30%;
@@ -2840,10 +2839,10 @@ div.comment_panel .comment_feeds{
 div.comment_panel .photo_actions{
 	margin: 0.5em;
 	max-width: 49%;
-	background: #F7F7F7;
+	background: #F4F0CB;
 	float:right;
 	padding:1em;
-	border:thin solid #DED29E;
+	border:thin solid #685642;
 	border-radius:.3em;
 	-moz-border-radius: .3em .3em .3em .3em;
 }
@@ -2873,7 +2872,7 @@ div.comment_box{
 	margin: 0.5em;
 	padding-top: 0.5em;
 	padding-bottom: 0.5em;
-	background: #F7F7F7;
+	background: #F4F0CB;
 }
 div.comment_box .comment_actions{
 	float: left;
