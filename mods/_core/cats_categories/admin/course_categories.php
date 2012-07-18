@@ -28,16 +28,23 @@ if (isset($_POST['delete'], $_POST['cat_id'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
+$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
 $result = mysql_query($sql, $db);
-//not working? 
-$sql_cat	= "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$row['cat_parent'];
-$result_cat = mysql_query($sql_cat, $db);
-$row_cat = mysql_fetch_assoc($result_cat);
-			
 
-$savant->assign('row_cat', $row_cat);
-$savant->assign('result', $result);
+$categories = array();
+while ($row = mysql_fetch_assoc($result)) { 
+	if ($row['cat_parent']) {
+		$sql_cat = "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$row['cat_parent'];
+		$result_cat = mysql_query($sql_cat, $db);
+		$row_cat = mysql_fetch_assoc($result_cat);
+		$row['parent_cat_name'] = $row_cat['cat_name'];
+	} else {
+		$row['parent_cat_name'] = '';
+	}
+	$categories[] = $row;
+}
+
+$savant->assign('categories', $categories);
 $savant->display('admin/courses/course_categories.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
 
