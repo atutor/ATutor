@@ -411,13 +411,6 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 	global $addslashes;
 	global $errors, $progress, $msg;
 	
-	$db_host = $addslashes($db_host);
-	$db_port = $addslashes($db_port);
-	$db_login = $addslashes($db_login);
-	$db_pwd = $addslashes($db_pwd);
-	$tb_prefix = $addslashes($tb_prefix);
-	$db_name = $addslashes($db_name);
-	
 	$db = @mysql_connect($db_host . ':' . $db_port, $db_login, $db_pwd);
 	
 	if (!$db) {
@@ -427,6 +420,10 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 			$msg->addError('UNABLE_CONNECT_DB');
 		}
 	} 
+
+	$tb_prefix = $addslashes($tb_prefix);
+	$db_name = $addslashes($db_name);
+	
 	// check mysql version number
 	$sql = "SELECT VERSION() AS version";
 	$result = mysql_query($sql, $db);

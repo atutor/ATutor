@@ -19,7 +19,7 @@
  */
 function write_config_file($filename, $db_login, $db_pwd, $db_host, $db_port, $db_name, $tb_prefix,
          $comments, $content_dir, $smtp, $get_file) {
-	global $config_template, $addslashes;
+	global $config_template;
 
 	$tokens = array('{USER}',
 					'{PASSWORD}',
@@ -34,13 +34,13 @@ function write_config_file($filename, $db_login, $db_pwd, $db_host, $db_port, $d
 				);
 
 	$values = array(urldecode($db_login),
-				$addslashes(urldecode($db_pwd)),
+				urldecode($db_pwd),
 				$db_host,
 				$db_port,
 				$db_name,
 				$tb_prefix,
 				$comments,
-				addslashes(urldecode($content_dir)),
+				urldecode($content_dir),
 				$smtp,
 				$get_file
 			);

@@ -24,6 +24,7 @@ if (isset($_POST['submit'])) {
 	} else if (!is_writable($_POST['content_dir'])){
 		$errors[] = 'The Content Directory is not writable. To make it writable, at the command prompt from within the ATutor directory enter the command <strong>chmod 2777 content</strong>';
 	} else {
+		include(AT_INCLUDE_PATH . 'install/install.inc.php');
 
 		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
 
