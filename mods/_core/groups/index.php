@@ -56,7 +56,7 @@ $result = mysql_query($sql, $db);
 ?>
 <div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
-<fieldset class="group_form" margin:auto;"><legend class="group_form"><?php echo _AT('groups'); ?></legend>
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('groups'); ?></legend>
 <table class="data" summary="" rules="cols" style="width: 80%">
 <tfoot>
 <tr>
@@ -79,7 +79,7 @@ $result = mysql_query($sql, $db);
 		<tr onmousedown="document.form['g<?php echo $row['type_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id']; ?>">
 			<th>
 				<input type="radio" id="g<?php echo $row['type_id']; ?>" name="id" value="<?php echo $row['type_id']; ?>" />
-				<label for="g<?php echo $row['type_id']; ?>"><?php echo AT_print($row['title'], 'groups.title'); ?></label> (<?php echo $num_groups.' '._AT('groups'); ?>)</td>
+				<label for="g<?php echo $row['type_id']; ?>"><?php echo AT_print($row['title'], 'groups.title'); ?></label> (<?php echo $num_groups.' '._AT('groups'); ?>)
 			</th>
 		</tr>
 		<?php if ($num_groups) : ?>

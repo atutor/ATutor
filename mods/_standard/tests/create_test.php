@@ -341,23 +341,23 @@ function disable_texts (name) {
 
 	<div class="row">
 		<?php echo _AT('pass_score'); ?><br />
-		<input type="radio" name="pass_score" value="0" id="no" <?php if ($_POST['passpercent'] == 0 && $_POST['passscore'] == 0){echo 'checked="true"';} ?> 
+		<input type="radio" name="pass_score" value="0" id="no" <?php if ($_POST['passpercent'] == 0 && $_POST['passscore'] == 0){echo 'checked="checked"';} ?> 
 		 onfocus="disable_texts('both');" />
 
 		<label for="no" title="<?php echo _AT('pass_score'). ': '. _AT('no_pass_score');  ?>"><?php echo _AT('no_pass_score'); ?></label><br />
 
-		<input type="radio" name="pass_score" value="1" id="percentage"  <?php if ($_POST['passpercent'] <> 0){echo 'checked="true"';} ?>
+		<input type="radio" name="pass_score" value="1" id="percentage"  <?php if ($_POST['passpercent'] <> 0){echo 'checked="checked"';} ?>
 		 onfocus="disable_texts('points');" />
 
 		<input type="text" name="passpercent" id="passpercent" size="2" value="<?php echo $_POST['passpercent']; ?>" 
-		 <?php if ($_POST['passpercent'] == 0){echo 'disabled="true"';} ?> /> 
+		 <?php if ($_POST['passpercent'] == 0){echo 'disabled="disabled"';} ?> /> 
 		<label for="percentage" title="<?php echo _AT('pass_score'). ': '. _AT('percentage_score');  ?>"><?php  echo '% ' . _AT('percentage_score'); ?></label><br />
 
-		<input type="radio" name="pass_score" value="2" id="points"  <?php if ($_POST['passscore'] <> 0){echo 'checked="true"';} ?>
+		<input type="radio" name="pass_score" value="2" id="points"  <?php if ($_POST['passscore'] <> 0){echo 'checked="checked"';} ?>
 		 onfocus="disable_texts('percentage');" />
 
 		<input type="text" name="passscore" id="passscore" size="2" value="<?php echo $_POST['passscore']; ?>" 
-		 <?php if ($_POST['passscore'] == 0){echo 'disabled="true"';} ?>/> 
+		 <?php if ($_POST['passscore'] == 0){echo 'disabled="disabled"';} ?>/> 
 		<label for="points" title="<?php echo _AT('pass_score'). ': '. _AT('points_score');  ?>"><?php  echo _AT('points_score'); ?></label>
 	</div>
 

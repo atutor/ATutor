@@ -35,7 +35,7 @@ function links_news() {
 							'thumb'=>'images/home-links_sm.png', 
 							'link'=>'<a href="bounce.php?course='.$row['owner_id'].SEP.'p='.urlencode('mods/_standard/links/index.php?view='.$row['link_id']).'"'.
 									(strlen($row['LinkName']) > SUBLINK_TEXT_LEN ? ' title="'.$row['LinkName'].'"' : '') .'>'. 
-									validate_length($row['LinkName'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
+									validate_length($row['LinkName'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a> <small>');
 		}
 	}
 	return $news;

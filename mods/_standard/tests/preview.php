@@ -106,7 +106,7 @@ if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
 
 
 	<?php if ($test_row['instructions'] != ''): ?>
-		<div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
+		<div class="test_instruction">
 			<strong><?php echo _AT('instructions'); ?></strong>
 		</div>
 		<div class="row" style="padding-bottom: 20px"><?php echo $test_row['instructions']; ?></div>
