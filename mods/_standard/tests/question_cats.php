@@ -50,6 +50,7 @@ if ($row = mysql_fetch_assoc($result)) {
 			<input type="submit" value="<?php echo _AT('edit'); ?>"   name="edit" />
 			<input type="submit" value="<?php echo _AT('delete'); ?>" name="delete" />
 		</div>
+		</fieldset>
 	</div>
 	</form>
 <?php

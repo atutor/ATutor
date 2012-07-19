@@ -105,8 +105,8 @@ if (mysql_num_rows($result) == 0) {
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="tid" value="<?php echo $tid; ?>">
-<input type="hidden" name="rid" value="<?php echo $rid; ?>">
+<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
+<input type="hidden" name="rid" value="<?php echo $rid; ?>" />
 
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo AT_print($test_title, 'tests.title'); ?></legend>
