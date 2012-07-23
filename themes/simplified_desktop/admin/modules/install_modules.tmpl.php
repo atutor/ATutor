@@ -1,4 +1,8 @@
-
+<?php
+global $db;
+ 
+if ($this->enable_upload) {
+?>
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	
 <div class="input-form">
@@ -18,6 +22,8 @@
 </form>
 
 <?php 
+} // end of enable_upload
+
 if (count($this->keys) > 0)
 {
 ?>
@@ -60,8 +66,19 @@ if (count($this->keys) > 0)
 </form>
 <br />
 <?php 
-}
+} else {
 ?>
+<div style="border:1p solid #F6F4DA">
+<p> No modules available to install</p>
+
+</div>
+
+<?php } // end of displaying local modules
+
+// Disallow subsites to download and install the remote modules from update.atutor.ca
+if ($this->enable_remote_installation === true) {
+?>
+
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 
@@ -110,11 +127,13 @@ else
 	{
 		for ($i=0; $i < $num_of_modules; $i++)
 		{
+			$installed = false;
+			
 			// check if the module has been installed
-			//$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $this->module_list_array[$i]["history"][0]["install_folder"] . "'";
-			//$result = mysql_query($sql, $db) or die(mysql_error());
+			$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $this->module_list_array[$i]["history"][0]["install_folder"] . "'";
+			$result = mysql_query($sql, $db) or die(mysql_error());
 
-			if (mysql_num_rows($this->result) == 0) $installed = false;
+			if (mysql_num_rows($result) == 0) $installed = false;
 			else $installed = true;
 
 ?>
@@ -140,3 +159,4 @@ else
 ?>
 </table>
 </form>
+<?php } // end of enable_remote_installation ?>

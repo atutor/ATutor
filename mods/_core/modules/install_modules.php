@@ -188,13 +188,16 @@ if (isset($_POST['mod'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
+if (defined('IS_SUBSITE')) {
+	$enable_upload = false;
+	$enable_remote_installtion = false;  // Disallow subsites to download and install the remote modules from update.atutor.ca
+} else {
+	$enable_upload = true;
+	$enable_remote_installtion = true;
+}
 $module_list = $moduleFactory->getModules(AT_MODULE_STATUS_UNINSTALLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED, AT_MODULE_TYPE_EXTRA);
 $keys = array_keys($module_list);
 natsort($keys);
-
-// check if the module has been installed
-$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $module_list_array[$i]["history"][0]["install_folder"] . "'";
-$result = mysql_query($sql, $db) or die(mysql_error());
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
@@ -230,8 +233,9 @@ function validate_filename() {
 </script>
 
 <?php 
+$savant->assign('enable_upload', $enable_upload);
+$savant->assign('enable_remote_installation', $enable_remote_installtion);
 $savant->assign('keys', $keys);
-$savant->assign('result', $result);
 $savant->assign('module_list', $module_list);
 $savant->assign('module_list_array', $module_list_array);
 $savant->display('admin/modules/install_modules.tmpl.php');

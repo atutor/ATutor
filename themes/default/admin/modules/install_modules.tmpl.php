@@ -1,6 +1,7 @@
 <?php
 global $db;
  
+if ($this->enable_upload) {
 ?>
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 	
@@ -21,6 +22,8 @@ global $db;
 </form>
 
 <?php 
+} // end of enable_upload
+
 if (count($this->keys) > 0)
 {
 ?>
@@ -70,7 +73,10 @@ if (count($this->keys) > 0)
 
 </div>
 
-<?php }
+<?php } // end of displaying local modules
+
+// Disallow subsites to download and install the remote modules from update.atutor.ca
+if ($this->enable_remote_installation === true) {
 ?>
 
 
@@ -153,3 +159,4 @@ else
 ?>
 </table>
 </form>
+<?php } // end of enable_remote_installation ?>
