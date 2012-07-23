@@ -99,7 +99,7 @@ function get_site_path(){
 	$domain = $_SERVER['HTTP_HOST'];
 	$site_path = realpath($docroot_path . '/../' . $domain . '/');
 	
-	if(file_exists($site_path."/include/config.inc.php")){
+	if(file_exists($site_path."/include/config.inc.php") && !file_exists($site_path . "/login.php")){
 		// The request is from a subdomain
 		define('IS_SUBSITE', true);
 		return $site_path . '/';

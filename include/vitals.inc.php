@@ -253,10 +253,10 @@ if (!isset($_SESSION['prefs']['PREF_THEME']) ||
 
 if ((!is_dir(AT_SYSTEM_THEME_DIR . $_SESSION['prefs']['PREF_THEME']) && 
      !is_dir(AT_SUBSITE_THEME_DIR . $_SESSION['prefs']['PREF_THEME'])) ||
-    $_SESSION['course_id'] == -1 ||
     $_SESSION['prefs']['PREF_THEME'] == '') {
 	$_SESSION['prefs']['PREF_THEME'] = get_system_default_theme();
 }
+
 // use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
 // When more mobile themes come in, this should be changed.
 if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {

@@ -25,7 +25,13 @@ define('AT_MODULE_DIR_CORE',     '_core');
 define('AT_MODULE_DIR_STANDARD', '_standard');
 
 define('AT_SYSTEM_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
-define('AT_SUBSITE_MODULE_PATH', realpath(AT_SITE_PATH.'mods') . DIRECTORY_SEPARATOR);
+
+// The commented line points to the subsite mods directory where the subsite owned
+// modules are planned to be installed/loaded from there. The feture is not applicable
+// for the time being untill the module layer is extended to accept the modules from
+// different directories.
+//define('AT_SUBSITE_MODULE_PATH', realpath(AT_SITE_PATH.'mods') . DIRECTORY_SEPARATOR);
+define('AT_SUBSITE_MODULE_PATH', AT_SYSTEM_MODULE_PATH);
 
 /**
 * ModuleFactory //
