@@ -788,7 +788,7 @@ div#error {
 	border: 1px solid #DD0000;
 	padding: 5px;
 	background-color: #E49E7A;
-	color: #F4F0CB;
+	color:  #000000;
 	background-color: #F69E94;
 	padding-left: 25px;
 	font-weight: bold;
@@ -825,7 +825,7 @@ div#feedback {
 	border: 1px solid #17B506;
 	padding: 5px;
 	background-color: #B7C68B;
-	color: #F4F0CB;
+	color: #000000;
 	font-weight: bold;
 	border-radius: .5em;
 	-moz-border-radius: .5em;
@@ -840,7 +840,7 @@ div#help {
 	border: 1px solid #ACCFCC;
 	padding: 5px;
 	background-color: #E9F4F3;
-	color: #024C41;
+	color:  #000000;
 	border-radius: .5em;
 	-moz-border-radius: .5em;
 }
@@ -854,7 +854,7 @@ div#info {
 	border: 1px solid #B8AE9C;
 	padding: 5px;
 	background-color: #B8D0E8;
-	color: #595241;
+	color:  #000000;
 	font-weight: bold;
 	border-radius: .5em;
 	-moz-border-radius: .5em;
@@ -872,7 +872,7 @@ div#warning {
 	border: 1px solid #FF8400;
 	padding: 5px;
 	background-color: #FFF6ED;
-	color: #D95900;
+	color:  #000000;
 	font-weight: bold;
 	border-radius: .5em;
 	-moz-border-radius: .5em;
