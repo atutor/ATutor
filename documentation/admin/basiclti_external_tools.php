@@ -2,7 +2,7 @@
 
 <h2>Creating and Adding External Tools</h2>
 	<p>The External Tools utility allows ATutor administrators and instructors to link external tools into ATutor, and to
-associate those tools with content as learning activities. External tools that support the <strong>BasicLTI</strong> tool provider standard may be added to content here.</p>
+associate those tools with content as learning activities. External tools that support the <strong>LTI 1.0</strong> tool provider standard may be added to content here.</p>
 
 
 <h3>Setup A New External Tool </h3>
@@ -10,7 +10,7 @@ associate those tools with content as learning activities. External tools that s
 <li> Title:  Enter a name for the tool being created in the title field</li>
 <li> ToolID: Create an ID for the tool that will be unique across all tools on the system (e.g. demo_tool.ocadu.ca) any unique string will do</li>
 <li> Description: Describe the tool, its function, and how it might be used.</li>
-<li> Tool Launch URL: Copy the URL of the tool's BasicLTI launch location. Ensure there is no space at the end of the URL (see the Sample LTI Tool below for demo purposes)</li>
+<li> Tool Launch URL: Copy the URL of the tool's LTI launch location. Ensure there is no space at the end of the URL (see the Sample LTI Tool below for demo purposes)</li>
 <li> Enter the Tool Key and secret</li>
 <li> Set various options and Save</li>
 </ol>
@@ -51,23 +51,23 @@ paused part-way through to allow you to examine the data to be sent to the exter
 by pressing a button. This option may be specified for a tool by the administrator, or the administrator may allow the instructor to specify this option.</li>
 
 <li>Send User Names to External Tool<br />
-This option determines whether you want to send user names to the external tool. You should only send user names to trusted tools and you should make sure that if you share user names with the external tools that you are following all appropriate regulations regarding student privacy. Sending user names is optional data in the Basic LTI specification although some tools may require user names to function properly.  
+This option determines whether you want to send user names to the external tool. You should only send user names to trusted tools and you should make sure that if you share user names with the external tools that you are following all appropriate regulations regarding student privacy. Sending user names is optional data in the LTI 1.0 specification although some tools may require user names to function properly.  
 This option may be specified for a tool by the administrator, or the administrator may allow the instructor to specify this option.</li>
 
 <li>Send User Mail Addresses to External Tool<br />
 This option determines whether you want to send user mail addresses to the external tool.You should only send user mail addresses to trusted tools and you should make sure that
 if you share user addresses with the external tools that you are following all appropriate regulations regarding student privacy.
-Sending user mail addresses is optional data in the Basic LTI specification although some tools may require user names to function properly.  
+Sending user mail addresses is optional data in the LTI 1.0 specification although some tools may require user names to function properly.  
 This option may be specified for a tool by the administrator, or the administrator may allow the instructor to specify this option.</li>
 
 <li>Accept Grades From External Tool<br />
-Some tools can send grades back to ATutor through a Basic LTI extension REST web service.   If the external tool has the capability of
+Some tools can send grades back to ATutor through an LTI extension REST web service.   If the external tool has the capability of
 using these services and you would like to allow the tool to send grades back to ATutor, you can enable this option.   When you author
 an external tool content item and enable this option, the tool will only be able to read and write grades in a single grade book item that 
 you associate with the content item. This option may be specified for a tool by the administrator, or the administrator may allow the instructor to specify this option.</li>
 
 <li>Allow External Tool To Retrieve Roster<br />
-Some tools can retrieve the entire course roster through a Basic LTI extension REST web service.  If the external tool has the capability of 
+Some tools can retrieve the entire course roster through a LTI 1.0 extension REST web service.  If the external tool has the capability of 
 using these services and you would like to provide the entire course roster to the tool then you can enable this option.  If this option is enabled, it respects the privacy option setting as to whether or not to release user names and email addresses.   If these are configured to be provided on launches and the tool can retrieve the entire roster, then user names and mail addresses are included in the roster when it is retrieved.  This option may be specified for a tool by the administrator, or the administrator may allow the instructor to specify this option.</li>
 
 <li>Allow External Tool to use the Setting Service<br />
@@ -80,14 +80,14 @@ Sometimes the external tool requires that you send additional custom parameters 
 <strong>isbn=929293939</strong>
 </li>
 </ul>
-<h3>BasicLTI Resources</h3>
+<h3>LTI Resources</h3>
 <p>Sample LTI Tool for Testing/Demo Purposes. Copy this URL, and its associated key and secret, into the corresponding fields in the Create External Tool screen to setup a simple demonstration tool.<br />
 http://www.imsglobal.org/developers/BLTI/tool.php<br />
 key: lmsng.school.edu<br />
 secret: secret<br />
 </p>
 
-<h4>Tools Currently with BasicLTI Provider Capability</h4>
+<h4>Tools Currently with LTI Provider Capability</h4>
 <ul>
 <li>QuestionMark<br />
 <a href="http://www.questionmark.com/">http://www.questionmark.com/</a></li>
@@ -99,10 +99,10 @@ http://www.wimba.com/</a></li>
 <a href="http://www.elluminate.com/">http://www.elluminate.com/</a></li>
 </ul>
 
-<p>A current list of BasicLTI conformant systems can be found at:<br />
+<p>A current list of LTI conformant systems can be found at:<br />
 <a href="http://www.imsglobal.org/cc/statuschart.html">http://www.imsglobal.org/cc/statuschart.html</a></p>
 <p>
-More about the BasicLTI Standard
+More about the LTI Standard
 <a href="http://www.imsglobal.org/lti/">http://www.imsglobal.org/lti/</a></p>
 
 <p>Here are a couple videos with more information:<br />
