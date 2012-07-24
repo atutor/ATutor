@@ -37,6 +37,7 @@ $install_steps[7] = array('name' => 'Done!');
 	<title>ATutor Installation</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
+	<script type="text/javascript" src="../jscripts/infusion/InfusionAll.js"></script>
 </head>
 <body>
 <div style="height: 70px; vertical-align: bottom; background-color: #354A81">

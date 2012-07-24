@@ -39,18 +39,6 @@ $no_good = FALSE;
 $not_as_good = FALSE;
 ?>
 
-<script type="text/javascript">
-function SetCookie(cookieName,cookieValue,nDays) {
-	 var today = new Date();
-	 var expire = new Date();
-	 if (nDays==null || nDays==0) nDays=1;
-	 expire.setTime(today.getTime() + 3600000*24*nDays);
-	 document.cookie = cookieName+"="+escape(cookieValue)
-					 + ";expires="+expire.toGMTString();
-}
-
-SetCookie('jstest','1','1');
-</script>
 <table style="float: right;
 	background-color: #FEFDEF;
 	border: 1pt solid #B8AE9C;
@@ -359,30 +347,17 @@ SetCookie('jstest','1','1');
 		<tr>
 			<td>Javascript Enabled?</td>
 			<td>
-			<?php if ($_COOKIE['jstest'] == 1) {
-						echo 'Enabled </td><td align="center">';
-						echo $good;
-					} else {
-						echo 'Disabled</td><td align="center">';
-						echo $bad;
-						$no_good = TRUE;
-					} 
-
-					?>
+			<?php 
+				echo '<span id="AT_js_status_text">Disabled</span></td><td align="center">';
+				echo '<span id="AT_js_status_icon">' . $bad . '</span>';
+			?>
 			</td>
 		</tr>
 		</tbody>
 		</table>
 <br />
 
-<?php if ($no_good): ?>
-	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-	<tr>
-		<td class="row1"><strong>Your server does not meet the minimum requirements!<br />
-						Please correct the above errors to continue.</strong></td>
-	</tr>
-	</table>
-<?php elseif ($not_as_good): ?>
+<?php if ($not_as_good): ?>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
 		<td class="row1"><strong>ATutor has indicated that the 'mbstring' library is missing from the PHP.  <br />
@@ -421,36 +396,57 @@ SetCookie('jstest','1','1');
 	</tr>
 	</table>
 <?php else: ?>
-	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-	<tr>
-		<td align="right" class="row1" nowrap="nowrap"><strong>New Installation &raquo;</strong></td>
-		<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
-		<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-		<input type="submit" class="button" value="  Install  " name="next" />
-		</form></td>
-	</tr>
-	</table>
-		<?php endif;		?>	
+	<div id="AT_no_good" class="show">
+		<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+		<tr>
+			<td class="row1"><strong>Your server does not meet the minimum requirements!<br />
+							Please correct the above errors to continue.</strong></td>
+		</tr>
+		</table>
+		
+		<?php if (!$no_good) {?><!-- Only need to check whether javascript is enabled -->
+		<div id="AT_check_js_only"></div><?php }?>
+	</div>
 
-<?php	
+	<div id="AT_good" class="hidden">
+		<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+		<tr>
+			<td align="right" class="row1" nowrap="nowrap"><strong>New Installation &raquo;</strong></td>
+			<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
+			<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+			<input type="submit" class="button" value="  Install  " name="next" />
+			</form></td>
+		</tr>
+		</table>
+	
+		<table cellspacing="0" cellpadding="10" align="center" width="45%">
+		<tr>
+			<td align="center"><b>Or</b></td>
+		</tr>
+		</table>
+	
+	
+		<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+		<tr>
+			<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation &raquo;</strong></td>
+			<td class="row1" width="150" align="center"><form action="upgrade.php" method="post" name="form">
+			<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+			<input type="submit" class="button" value="Upgrade" name="next" />
+			</form></td>
+		</tr>
+		</table>
+	</div>
+<?php endif;?>	
 
-if($AT_SUBSITE == '' && $no_good == ''){ ?>
-	<table cellspacing="0" cellpadding="10" align="center" width="45%">
-	<tr>
-		<td align="center"><b>Or</b></td>
-	</tr>
-	</table>
-
-
-	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-	<tr>
-		<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation &raquo;</strong></td>
-		<td class="row1" width="150" align="center"><form action="upgrade.php" method="post" name="form">
-		<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-		<input type="submit" class="button" value="Upgrade" name="next" />
-		</form></td>
-	</tr>
-	</table>
-	<?php } ?>
+<script type="text/javascript">
+$(document).ready(function () {
+    if ($("#AT_check_js_only").length > 0) {
+        $("#AT_js_status_text").html('Enabled');
+        $("#AT_js_status_icon").html('<?php echo $good; ?>');
+        $("#AT_no_good").removeAttr('class', 'show').attr('class', 'hidden');
+        $("#AT_good").removeAttr('class', 'hidden').attr('class', 'show');
+    }
+});
+</script>
 
 <?php  require(AT_INSTALLER_INCLUDE_PATH.'footer.php'); ?>

@@ -489,3 +489,9 @@ div.optional {
 	height: 15px;
 	padding-right: 3px;
 }
+.hidden {
+	display: none;
+}
+.show {
+	display: block;
+}
