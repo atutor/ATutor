@@ -378,7 +378,9 @@ $_field_formatting['themes.title']				= AT_FORMAT_NONE;
 
 $_field_formatting['tests_answers.answer']		= AT_FORMAT_NONE;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
-$_field_formatting['tests_questions.*']			= AT_FORMAT_ALL;
+$_field_formatting['tests_questions.*']			= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
+// This constant is used to in the test question template scripts to display the preview and result.
+$_field_formatting['tests_questions.quotesNotConverted']	= AT_FORMAT_ALL;
 $_field_formatting['tests_questions_categories.title']	= AT_FORMAT_NONE;
 
 $_field_formatting['photo_albums.*']            = AT_FORMAT_QUOTES;
@@ -388,15 +390,13 @@ $_field_formatting['polls.*']                   = AT_FORMAT_QUOTES;
 
 $_field_formatting['social.*']                  = AT_FORMAT_QUOTES;
 
-$_field_formatting['input.*']                   = AT_FORMAT_QUOTES; /* All input should have '<' and quotes escaped.
-
+$_field_formatting['input.*']                   = AT_FORMAT_QUOTES; // All input should have '<' and quotes escaped.
 
 if (isset($_GET['cid'])) {
 	$cid = intval($_GET['cid']);
 } else if (isset($_POST['cid'])) {
 	$cid = intval($_POST['cid']);
 }
-
 
 /* google type constants - @author Harris */
 define('GOOGLE_TYPE_SOAP',		0);		//The original soap search with key generated before Dec 2005.

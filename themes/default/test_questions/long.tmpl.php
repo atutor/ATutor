@@ -1,4 +1,4 @@
-<p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
+<p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
 <?php if ($this->row['properties'] == 1): /* one word */ ?>
 	<input type="text" name="answers[<?php echo $this->row['question_id']; ?>]" class="formfield" size="15" value="<?php echo htmlspecialchars($this->response); ?>" />

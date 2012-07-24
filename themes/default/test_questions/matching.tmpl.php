@@ -1,4 +1,4 @@
-<p><?php echo AT_print($this->row['question'], 'tests_questions.question'); ?></p>
+<p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
 <table class="matching-question">
 <tr>
