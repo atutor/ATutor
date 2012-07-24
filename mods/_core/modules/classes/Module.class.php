@@ -111,7 +111,7 @@ class ModuleFactory {
 		$keys = array_keys($all_modules);
 		foreach ($keys as $dir_name) {
 			$module =$all_modules[$dir_name];
-			if ($module->checkStatus($status) && $module->checkType($type)) {
+			if ($module->checkStatus($status) && $module->checkType($type) && $module->checkPrivacy()) {
 				$modules[$dir_name] = $module;
 			}
 		}
@@ -221,6 +221,26 @@ class Module {
 	function isCore()     { return ($this->_type == AT_MODULE_TYPE_CORE)     ? true : false; }
 	function isStandard() { return ($this->_type == AT_MODULE_TYPE_STANDARD) ? true : false; }
 	function isExtra()    { return ($this->_type == AT_MODULE_TYPE_EXTRA)    ? true : false; }
+	
+	// privacy
+	// public function
+	// return true if
+	// 1. the request is from an ATutor standalone site or the main site of a multisite installation;
+	// 2. this is a public module;
+	// 3. this is a private module of the site that the request is sent from
+	// otherwise, return false
+	function checkPrivacy() {
+		// main site can see all the modules including the subsite owned modules
+		if (!defined('IS_SUBSITE')) return true;
+		
+		$properties = $this->getProperties(array('subsite'));
+		if (count($properties['subsite']) == 0) return true;  // a public module
+		
+		foreach ($properties['subsite'] as $subsite) {
+			if ($subsite == $_SERVER['HTTP_HOST']) return true;
+		}
+		return false;
+	}
 	
 	// module path
 	function getModulePath() { return $this->_module_path; }
