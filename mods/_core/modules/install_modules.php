@@ -201,6 +201,9 @@ natsort($keys);
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
+if (defined('IS_SUBSITE') && defined('SUBSITE_SUPPORT_EMAIL')) {
+	$msg->addFeedback(array('SUBSITE_INSTALL_MODULE', SUBSITE_SUPPORT_EMAIL));
+}
 $msg->printAll();
 
 ?>
