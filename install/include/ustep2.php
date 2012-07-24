@@ -13,13 +13,15 @@
 ignore_user_abort(true); 
 @set_time_limit(0); 
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
-function update_one_ver($up_file) {
+function update_one_ver($up_file, $tb_prefix) {
 	global $progress;
 	$update_file = implode('_',$up_file);
-	queryFromFile('db/'.$update_file.'sql');
-	//$progress[] = 'Successful update from version '.$up_file[2].' to '.$up_file[4];
+	
+	$sqlUtility = new SqlUtility();
+	$sqlUtility->queryFromFile(AT_INCLUDE_PATH . 'install/db/'.$update_file.'sql', $tb_prefix);
+
 	return $up_file[4];
 }
 
@@ -71,7 +73,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			@mysql_query($sql, $db);
 
 			//get list of all update scripts minus sql extension
-			$files = scandir('db'); 
+			$files = scandir(AT_INCLUDE_PATH . 'install/db'); 
 			foreach ($files as $file) {
 				if(count($file = explode('_',$file))==5) {
 					$file[4] = substr($file[4],0,-3);
@@ -83,7 +85,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			ksort($update_files);
 			foreach ($update_files as $up_file) {
 				if(version_compare($curr_ver, $up_file[4], '<')) {
-					update_one_ver($up_file);
+					update_one_ver($up_file, $_POST['tb_prefix']);
 				}
 			}
 			
@@ -95,7 +97,8 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			$sql = "UPDATE ".$_POST['tb_prefix']."courses SET primary_language='en' WHERE primary_language=''";
 			@mysql_query($sql, $db);
 
-			queryFromFile('db/atutor_language_text.sql');
+			$sqlUtility = new SqlUtility();
+			$sqlUtility->queryFromFile(AT_INCLUDE_PATH . 'install/db/atutor_language_text.sql', $_POST['tb_prefix']);
 
 			if (!$errors) {
 				print_progress($step);

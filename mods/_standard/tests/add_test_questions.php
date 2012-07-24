@@ -29,6 +29,12 @@ $_pages['mods/_standard/tests/questions.php?tid='.$_GET['tid']]['children'] = ar
 $_pages['mods/_standard/tests/add_test_questions.php']['title_var']    = 'add_questions';
 $_pages['mods/_standard/tests/add_test_questions.php']['parent']   = 'mods/_standard/tests/questions.php?tid='.$_GET['tid'];
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$course_base_href = 'get.php/';
+} else {
+	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 

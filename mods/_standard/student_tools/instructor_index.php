@@ -92,7 +92,7 @@ $num_modules = count($fha_student_tools);
 <table class="data" rules="rows" summary="">
 <thead>
 <tr>
-	<th scope="cols"><?php echo _AT('section'); ?></th>
+	<th scope="col"><?php echo _AT('section'); ?></th>
 	<th><?php echo _AT('order'); ?></th>
 </tr>
 </thead>

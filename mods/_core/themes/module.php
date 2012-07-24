@@ -15,9 +15,11 @@ if (admin_authenticate(AT_ADMIN_PRIV_THEMES, TRUE) || admin_authenticate(AT_ADMI
 
 
 	//admin
+
 	$this->_pages['mods/_core/themes/index.php']['title_var'] = 'themes';
 	$this->_pages['mods/_core/themes/index.php']['guide']     = 'admin/?p=themes.php';
 	$this->_pages['mods/_core/themes/index.php']['children']  = array('mods/_core/themes/install_themes.php');
+
 	$this->_pages['mods/_core/themes/install_themes.php']['guide']   = 'admin/?p=importing_themes.php';	
 
 	$this->_pages['mods/_core/themes/delete.php']['title_var'] = 'delete';

@@ -66,19 +66,16 @@
 		<input type="submit" name="details" value="<?php echo _AT('details'); ?>" />
 		<input type="submit" name="enable"  value="<?php echo _AT('enable'); ?>" />
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
-		<input type="submit" name="uninstall" value="<?php echo _AT('uninstall'); ?>" />
+		<input type="submit" name="uninstall" id="AT_uninstall_btn" value="<?php echo _AT('uninstall'); ?>" />
 		<input type="submit" name="export" value="<?php echo _AT('export'); ?>" />
 	</td>
 </tr>
 </tfoot>
 <tbody>
 
-
-
 <?php foreach($this->keys as $dir_name) : $module =& $this->module_list[$dir_name]; $i++; $readme = get_readme(AT_INCLUDE_PATH.'../mods/'.$dir_name);?>
-
-	<tr onkeydown="document.form['t_<?php echo $i; ?>'].checked = true; rowselect(this);" onmousedown="document.form['t_<?php echo $i; ?>'].checked = true; rowselect(this);" id="r_<?php echo $i; ?>">
-		<td valign="top"><input type="radio" id="t_<?php echo $i; ?>" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
+	<tr class="AT_module_row <?php if ($module->isCore() || $module->isStandard()) echo 'AT_disable_uninstall'; ?>">
+		<td valign="top"><input type="radio" name="mod_dir" value="<?php echo $dir_name; ?>" /></td>
 		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $i; ?>"><?php echo $module->getName(); if ($readme <> '') echo '&nbsp;<a href="#" onclick="ATutor.poptastic(\''.AT_BASE_HREF.'mods/'.$dir_name.'/'.$readme.'\');return false;">'._AT('view_readme').'</a>'; ?></label></td>
 		<td valign="top"><?php
 			if ($module->isCore()) {

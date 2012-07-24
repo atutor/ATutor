@@ -1,11 +1,11 @@
 <p><?php echo AT_print($this->row['question'], 'tests_questions.quotesNotConverted'); ?></p>
 
-<table style="width: 100%">
+<table class="matching-question">
 <tr>
 	<td valign="top">
-		<ul style="padding: 0px; margin: 0px; list-style-type: none">
+		<ul class="matching-question">
 			<?php for ($i=0; $i < $this->num_choices; $i++): ?>
-				<li style="padding: 4px">
+				<li class="matching-question"">
 				<select name="answers[<?php echo $this->row['question_id']; ?>][<?php echo $i; ?>]">
 					<option value="-1" <?php if ('' === $this->response[$i] || -1 == $this->response[$i]): ?>selected="selected"<?php endif; ?>>-</option>
 					<?php for ($j=0; $j < $this->num_options; $j++): ?>
@@ -18,9 +18,9 @@
 		</ul>
 	</td>
 	<td valign="top">
-		<ul style="list-style-type: none; margin: 0px; padding: 0px">
+		<ul class="matching-question">
 			<?php for ($i=0; $i < $this->num_options; $i++): ?>
-				<li style="padding: 4px"><?php echo $this->letters[$i]; ?>. <?php echo AT_print($this->row['option_'. $i], 'tests_questions.option_'.$i); ?></li>
+				<li class="matching-question"><?php echo $this->letters[$i]; ?>. <?php echo AT_print($this->row['option_'. $i], 'tests_questions.option_'.$i); ?></li>
 			<?php endfor; ?>
 		</ul>
 	</td>

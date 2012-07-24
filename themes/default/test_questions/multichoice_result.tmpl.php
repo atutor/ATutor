@@ -18,6 +18,7 @@
 					<img src="<?php echo $this->base_path; ?>images/checkbox_empty.gif" alt="<?php echo _AT('unchecked'); ?>" title="<?php echo _AT('unchecked'); ?>" height="13" width="13" style="vertical-align: middle" />
 				<?php endif; ?>
 				<?php echo AT_print($this->row['choice_'.$i], 'tests_questions.choice_'.$i); ?>
+				</li>
 		<?php endif; ?>
 	<?php endfor; ?>
 </ul>

@@ -64,13 +64,16 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
+$_custom_head = '    <script src="'.$_base_path.'mods/_core/themes/js/themes.js" type="text/javascript"></script>';
 require(AT_INCLUDE_PATH.'header.inc.php');
+
 ?>
 
-<?php if (!is_writeable(realpath('./../../../themes'))): ?>
+<?php 
+if (!is_writeable(AT_SUBSITE_THEME_DIR)): ?>
 	<div class="input-form">
 		<div class="row">
-			<?php echo _AT('install_themes_text', realpath('./../../../themes')); ?>		
+			<?php echo _AT('install_themes_text', AT_SUBSITE_THEME_DIR); ?>		
 		</div>
 	</div>
 <?php else: ?>
@@ -133,18 +136,26 @@ print_data_table($result, MOBILE_DEVICE);
 		<input type="submit" name="disable" value="<?php echo _AT('disable'); ?>" />
 		<input type="submit" name="default" value="<?php echo _AT('set_default').'&nbsp;'; if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?>" />
 		<input type="submit" name="export"  value="<?php echo _AT('export'); ?>" />
-		<input type="submit" name="delete"  value="<?php echo _AT('delete'); ?>" />
+		<input type="submit" name="delete" id="AT_del_btn" value="<?php echo _AT('delete'); ?>" />
 	</td>
 </tr>
 </tfoot>
-<?php while($row = mysql_fetch_assoc($result)) : ?>
+<?php 
+// For each theme:
+// 1. find out where the theme folder is. It could be from the main site or a subsite configuration folder.
+// 2. Disallow the deletion of the system themes if the request is from a subsite. This is achieved by using css class "AT_disable_del"
+while($row = mysql_fetch_assoc($result)) {
+	$customized = intval($row["customized"]);
+
+	$main_theme_dir = get_main_theme_dir($customized);
+?>
 	<tbody>
-	<tr onmousedown="document.form_<?php echo $type; ?>['t_<?php echo $row['dir_name']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['dir_name']; ?>">
+	<tr class="AT_theme_row <?php if (!$customized) echo 'AT_disable_del'; ?>">
 		<td valign="top">
-			<input type="radio" id="t_<?php echo $row['dir_name']; ?>" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
+			<input type="radio" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
 		</td>
-		<td nowrap="nowrap" valign="top"><label for="t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
+		<td nowrap="nowrap" valign="top"><label for="AT_t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
 		<td valign="top"><?php
 			if ($row['status'] == 0) {
 				echo _AT('disabled');
@@ -159,20 +170,20 @@ print_data_table($result, MOBILE_DEVICE);
 		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
 		<td valign="top"><?php echo $row['extra_info']; ?></td>
 		<td valign="top"><?php
-			if (file_exists('../../../themes/'.$row['dir_name'].'/screenshot.jpg')) { ?>
-				  <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-			<?php		
-			} else if (file_exists('../../../themes/'.$row['dir_name'].'/screenshot.gif')) { ?>
-				 <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-			<?php } ?>
+			if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
+				<img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+			<?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+				<img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+			<?php }?>
 		</td>
 	</tr>
 	</tbody>
-<?php endwhile; ?>
+<?php } ?>
 </table>
 </form>
 <?php
 }
  
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
+
 ?>

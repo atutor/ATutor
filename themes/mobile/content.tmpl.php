@@ -71,7 +71,7 @@ if (!empty($this->forum_ids)): ?>
 </div>
 <?php endif; ?>
 
-
+<br style="clear:both;"/>
 <div id="content-info">
 	<?php echo $this->content_info; ?>
 

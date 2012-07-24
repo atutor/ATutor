@@ -28,7 +28,9 @@ $checked_display_as_pages		= '';
 $checked_display_as_summaries	= '';
 
 /* some error checking can go here: */
+global $msg, $addslashes;
 if (isset($_GET['search'])) {
+
 	$_GET['words'] = stripslashes($addslashes($_GET['words']));
 	$_GET['words'] = str_replace(array('"', '\''), '', $_GET['words']);
 	if ($_GET['include'] == 'all') {
@@ -91,7 +93,7 @@ if (isset($_GET['search']) && !$_GET['words']) {
 
 ?>
 
-<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>#search_results" name="form">
+<form method="get" action="<?php echo AT_print($_SERVER['PHP_SELF'], 'url.self'); ?>#search_results" name="form">
 <input type="hidden" name="search" value="1" />
 <div class="input-form">
 	<div class="row">

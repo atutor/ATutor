@@ -112,6 +112,9 @@ class ModuleParser {
 		} else if ($this->element_path === array('module', 'release', 'notes')) {
 			$this->rows[$this->row_num]['notes'] = trim($this->character_data);
 
+		} else if ($this->element_path === array('module', 'private', 'subsite')) {
+			$this->rows[$this->row_num]['subsite'][] = trim($this->character_data);
+
 		} else if ($this->element_path === array('module')) {
 			$this->row_num++;
 		}

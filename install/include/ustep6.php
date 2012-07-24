@@ -10,7 +10,7 @@
 /************************************************************************/
 // $Id$
 
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
 print_progress($step);
 

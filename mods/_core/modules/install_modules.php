@@ -17,7 +17,6 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_MODULES);
 require(AT_INCLUDE_PATH.'../mods/_core/modules/classes/ModuleListParser.class.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
-
 // delete all folders and files in $dir
 function clear_dir($dir)
 {
@@ -122,12 +121,12 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 		
 			if ($archive->extract(PCLZIP_OPT_PATH, $module_content_folder) == 0)
 			{
-		    clear_dir($module_content_folder);
-		    $msg->addError('CANNOT_UNZIP');
-		  }
+				clear_dir($module_content_folder);
+				$msg->addError('CANNOT_UNZIP');
+			}
 		
-		  if (!$msg->containsErrors())
-		  {
+			if (!$msg->containsErrors())
+			{
 				// find unzip module folder name
 				clearstatcache();
 				
@@ -145,15 +144,15 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 					$msg->addError('EMPTY_ZIP_FILE');
 			}
 		
-		  // check if the same module exists in "mods" folder. If exists, it has been installed
-		  if (!$msg->containsErrors())
-		  {
-		  	if (is_dir("../../../mods/". $module_folder))
-		  		$msg->addError('ALREADY_INSTALLED');
-		  }
+			// check if the same module exists in "mods" folder. If exists, it has been installed
+			if (!$msg->containsErrors())
+			{
+				if (is_dir(AT_SUBSITE_MODULE_PATH. $module_folder))
+					$msg->addError('ALREADY_INSTALLED');
+			}
 
-		  if (!$msg->containsErrors())
-		  {
+			if (!$msg->containsErrors())
+			{
 				header('Location: module_install_step_1.php?mod='.urlencode($module_folder).SEP.'new=1');
 				exit;
 			}
@@ -189,16 +188,22 @@ if (isset($_POST['mod'])) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 
+if (defined('IS_SUBSITE')) {
+	$enable_upload = false;
+	$enable_remote_installtion = false;  // Disallow subsites to download and install the remote modules from update.atutor.ca
+} else {
+	$enable_upload = true;
+	$enable_remote_installtion = true;
+}
 $module_list = $moduleFactory->getModules(AT_MODULE_STATUS_UNINSTALLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED, AT_MODULE_TYPE_EXTRA);
 $keys = array_keys($module_list);
 natsort($keys);
 
-// check if the module has been installed
-$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $module_list_array[$i]["history"][0]["install_folder"] . "'";
-$result = mysql_query($sql, $db) or die(mysql_error());
-
 require (AT_INCLUDE_PATH.'header.inc.php');
 
+if (defined('IS_SUBSITE') && defined('SUBSITE_SUPPORT_EMAIL')) {
+	$msg->addFeedback(array('SUBSITE_INSTALL_MODULE', SUBSITE_SUPPORT_EMAIL));
+}
 $msg->printAll();
 
 ?>
@@ -231,8 +236,9 @@ function validate_filename() {
 </script>
 
 <?php 
+$savant->assign('enable_upload', $enable_upload);
+$savant->assign('enable_remote_installation', $enable_remote_installtion);
 $savant->assign('keys', $keys);
-$savant->assign('result', $result);
 $savant->assign('module_list', $module_list);
 $savant->assign('module_list_array', $module_list_array);
 $savant->display('admin/modules/install_modules.tmpl.php');

@@ -8,6 +8,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * this file must only be included within a Module obj
  */
 if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module'))) { exit(__FILE__ . ' is not a Module'); }
+if (defined('IS_SUBSITE') && IS_SUBSITE) { return; }
 
 /*******
  * assign the instructor and admin privileges to the constants.
@@ -40,5 +41,4 @@ if (admin_authenticate(AT_ADMIN_PRIV_PATCHER, TRUE) || admin_authenticate(AT_ADM
 }
 $this->_pages['mods/_standard/patcher/index_admin.php']['guide']     = '../documentation/admin/?p=patcher.php';
 $this->_pages['mods/_standard/patcher/patch_create.php']['guide']     = '../documentation/admin/?p=create_patches.php';
-
 ?>

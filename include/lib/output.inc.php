@@ -65,6 +65,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	AT_DATE_INDEX_VALUE:		0-x, index into a date array
 */
 function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME) {	
+
 	static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
 	global $_config;
 
@@ -111,11 +112,10 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 								'date_nov',
 								'date_dec');
 	}
-
 	if ($format_type == AT_DATE_INDEX_VALUE) {
 		// apply timezone offset
-//		$timestamp = apply_timezone($timestamp);
-	
+	//	$timestamp = apply_timezone($timestamp);
+
 		if ($format == '%D') {
 			return _AT($day_name_con[$timestamp-1]);
 		} else if ($format == '%l') {
@@ -140,7 +140,9 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 		$hour	= substr($timestamp,11,2);
 		$min	= substr($timestamp,14,2);
 		$sec	= substr($timestamp,17,2);
+		//debug("y: ". $year . "; mon: ". $month. "; day: " . $day. "; h: ". $hour. "; min: ". $min. "; sec: ".$sec);
 	    $timestamp	= mktime($hour, $min, $sec, $month, $day, $year);
+
 
 	} else if ($format_type == AT_DATE_MYSQL_TIMESTAMP_14) {
 	    $year		= substr($timestamp,0,4);
@@ -149,7 +151,9 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 		$hour		= substr($timestamp,8,2);
 	    $minute		= substr($timestamp,10,2);
 	    $second		= substr($timestamp,12,2);
+		//debug("y: ". $year . "; mon: ". $month. "; day: " . $day. "; h: ". $hour. "; min: ". $min. "; sec: ".$sec);
 	    $timestamp	= mktime($hour, $minute, $second, $month, $day, $year);  
+
 	}
 
 	// apply timezone offset
@@ -192,8 +196,34 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 			} /* else: this token isn't valid. so don't replace it. Eg. try %q */
 		}
 	}
-
+//debug( $output);
 	return $output;
+}
+
+/**
+* apply_timezone
+* converts a unix timestamp into another UNIX timestamp with timezone offset added up.
+* Adds the user's timezone offset, then converts back to a MYSQL timestamp
+* Available both as a system config option, and a user preference, if both are set
+* they are added together
+* @param   date	 MYSQL timestamp.
+* @return  date  MYSQL timestamp plus user's and/or system's timezone offset.
+* @author  Greg Gay  .
+*/
+function apply_timezone($timestamp){
+	global $_config;
+
+	if($_config['time_zone']){
+	//debug($_config['time_zone']);
+		$timestamp = ($timestamp + ($_config['time_zone']*3600));
+	}
+
+	if(isset($_SESSION['prefs']['PREF_TIMEZONE'])){
+		$timestamp = ($timestamp + ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
+	}
+
+	return $timestamp;
+
 }
 
 /**
@@ -356,7 +386,6 @@ function _AT() {
 	*/
 	function AT_print($input, $name, $runtime_html = true) {
 		global $_field_formatting, $_config;
-
 		if (!isset($_field_formatting[$name])) {
 			/* field not set, check if there's a global setting */
 			$parts = explode('.', $name);
@@ -370,7 +399,6 @@ function _AT() {
 				return $input;
 			}
 		}
-
 		if (query_bit($_field_formatting[$name], AT_FORMAT_QUOTES)) {
 			$input = str_replace('"', '&quot;', $input);
             $input = str_replace('\'', '&apos;', $input);
@@ -384,6 +412,7 @@ function _AT() {
 			/* what special things do we have to do if this is HTML ? remove unwanted HTML? validate? */
 		} else {
 			$input = str_replace('<', '&lt;', $input);
+			$input = str_replace('>', '&gt;', $input);
 			$input = nl2br($input);
 		}
 
@@ -1411,28 +1440,5 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
 	}
 }	
 		
-/**
-* apply_timezone
-* converts a unix timestamp into another UNIX timestamp with timezone offset added up.
-* Adds the user's timezone offset, then converts back to a MYSQL timestamp
-* Available both as a system config option, and a user preference, if both are set
-* they are added together
-* @param   date	 MYSQL timestamp.
-* @return  date  MYSQL timestamp plus user's and/or system's timezone offset.
-* @author  Greg Gay  .
-*/
-function apply_timezone($timestamp){
-	global $_config;
-/*
-	if($_config['time_zone']){
-		$timestamp = ($timestamp + ($_config['time_zone']*3600));
-	}
-*/
 
-	if(isset($_SESSION['prefs']['PREF_TIMEZONE'])){
-		$timestamp = ($timestamp + ($_SESSION['prefs']['PREF_TIMEZONE']*3600));
-	}
-
-	return $timestamp;
-}
 ?>

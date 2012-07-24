@@ -54,7 +54,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 // will have to be moved to the header.inc.php
 global $system_courses, $_custom_css, $db;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
@@ -65,14 +64,18 @@ global $system_courses, $_custom_css, $db;
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	    <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
 	<!--[if IE8]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
 	<![endif]-->
-    <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 
+	<?php  if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') ){ ?>	
+		<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/safari.css" type="text/css"/>
+	<?php } ?>
+	
 <?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
@@ -108,9 +111,9 @@ global $system_courses, $_custom_css, $db;
 	endif; ?>
 
 	<div id="top-links"> <!-- top help/search/login links -->
-			  <div id="top-links-jump">
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<?php if(!$this->just_social): ?>
+			 <div id="top-links-jump">
 			<!-- start the jump menu -->
 			<?php if (empty($_GET)): ?>
 				<form method="post" action="<?php echo $this->base_path; ?>bounce.php?p=<?php echo urlencode($this->rel_url); ?>" target="_top">
@@ -127,8 +130,10 @@ global $system_courses, $_custom_css, $db;
 					</optgroup>
 				</select> <input type="submit" name="jump" value="<?php echo _AT('jump'); ?>" class="button" /> </form>
 			<!-- /end the jump menu -->
-			<?php endif; ?>
 			</div>
+			<?php endif; ?>
+			<?php endif; ?>
+			
 			<div id="top-links-text">
 			<?php if ($_SESSION['is_super_admin']): ?>
 				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
@@ -141,13 +146,12 @@ global $system_courses, $_custom_css, $db;
 					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a>
 				<?php endif; ?>
 			<?php endif; ?>
-		<?php endif; ?>
+
 		<?php if(!$this->just_social): ?>
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> 
 		<?php endif; ?>
-		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>
+		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>	
 		</div>
-
 	</div>
 
 	<?php // if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
@@ -168,11 +172,20 @@ global $system_courses, $_custom_css, $db;
 
 	<!-- Course Title -->
 	<div id="course_title_container" <?php if(empty($this->icon)){echo ' style="left:1em;"';}   ?>>
+	<?php if(isset($_SESSION['valid_user'])):?>
+	
 	<h1 id="section-title"><?php echo $this->section_title; ?>
 		<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
 	</h1>
+	
+	<?php else: ?>
+	
+	<h1 id="site-name-lrg"><?php echo $this->section_title; ?>
+	</h1>
+	
+	<?php endif; ?>
 	</div>
 
 

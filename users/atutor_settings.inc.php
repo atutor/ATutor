@@ -50,19 +50,16 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 	
 	<div class="row">
 		<?php echo _AT('time_zone');  ?><br />
-		
-		
 		<?php
-		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.2
-		global $utc_timezones; // set in include/lib/constants.inc.php
-		$local_offset = (((date(Z)/3600)+$_config['time_zone']));
-		echo '<select name="time_zone">';	
-			echo '<option value="0">'._AT('none').'</option>';
-		foreach ($utc_timezones as $zone => $offset){
-			if(($offset[1]) == $_SESSION['prefs']['PREF_TIMEZONE']){
-			echo '<option value="'.($offset[1]).'" selected="selected">'.$offset[0].'</option>';
+		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.2+
+		echo '<select name="time_zone" id="time_zone">';	
+		echo '<option value="0">'._AT('none').'</option>';
+		for($i = -14.25; $i <= 14; $i += .25){	
+		
+		if($i == $_SESSION['prefs']['PREF_TIMEZONE']){
+			echo '<option value="'.$i.'" selected="selected">'.$i.'</option>';
 			}else{
-			echo '<option value="'.($offset[1]).'">'.$offset[0].'</option>';
+			echo '<option value="'.$i.'">'.$i.'</option>';
 
 			}
 		}
@@ -88,6 +85,7 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 				$no  = ' checked="checked"';
 			}
 		?>
+		
 		<input type="radio" name="mnot" id="mnot_yes" value="1" <?php echo $yes; ?> /><label for="mnot_yes"><?php echo _AT('enable'); ?></label> 
 		<input type="radio" name="mnot" id="mnot_no" value="0" <?php echo $no; ?> /><label for="mnot_no"><?php echo _AT('disable'); ?></label>		
 	</div>

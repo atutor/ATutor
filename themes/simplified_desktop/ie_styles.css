@@ -1,0 +1,30 @@
+/* IE specific styles */
+.fl-theme-iphone .fl-tabs li a, .fl-theme-iphone .fl-tabs .fl-tabs-active a {
+	border:0;
+}
+.navigation-bar-button {
+	*position:absolute;
+	*top:.7em;
+}
+
+#course-level-navigation{
+	margin-top:-2.5em;
+}
+.topnavlist-link{
+	margin-left:.5em;
+}
+ul#subnavlist li {
+	margin-top:-.4em\9;
+
+	*margin-top:-.2em;
+	padding:.15em .3em .15em .3em;
+}
+#content_link{
+	margin-top:-1.4em;
+	*margin-top:-1.6em;
+
+}
+#content_link a{
+	padding:.25em;
+	*padding:.4em;
+}

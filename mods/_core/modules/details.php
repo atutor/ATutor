@@ -54,7 +54,11 @@ $moduleParser = new ModuleParser();
 
 $_REQUEST['mod'] = str_replace(array('.','..'), '', $_REQUEST['mod']);
 
-if (!file_exists('../../../mods/'.$_GET['mod'].'/module.xml')) {
+$module = $moduleFactory->getModule($_GET['mod']);
+
+$main_module_dir = $module->getModulePath();
+
+if (!file_exists($main_module_dir.$_GET['mod'].'/module.xml')) {
 ?>
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
@@ -82,7 +86,7 @@ if (!file_exists('../../../mods/'.$_GET['mod'].'/module.xml')) {
 	exit;
 }
 
-$moduleParser->parse(file_get_contents('../../../mods/'.$_GET['mod'].'/module.xml'));
+$moduleParser->parse(file_get_contents($main_module_dir.$_GET['mod'].'/module.xml'));
 
 $module = $moduleFactory->getModule($_GET['mod']);
 

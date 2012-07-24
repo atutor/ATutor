@@ -12,16 +12,14 @@
 /****************************************************************************/
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-$db;
 
 /**
-* Gets the name of the folder where the theme is stored
+* Gets the name of the folder where the theme is stored. Used by preferences.tmpl.php only
 * @access  private
 * @param   string $theme_dir	the name of the theme
 * @return  string				theme folder
 * @author  Shozub Qureshi
 */
-//used by preferences.tmpl.php only
 function get_folder ($theme_name) {
 	global $db;
 
@@ -31,7 +29,6 @@ function get_folder ($theme_name) {
 
 	return $row['dir_name'];
 }
-
 
 /**
 * Gets the attributes of the theme from the themes database table
@@ -230,26 +227,31 @@ function set_theme_as_default ($theme_dir, $type) {
 function delete_theme ($theme_dir) {
 	global $msg, $db;
 
+	$theme_dir = addslashes($theme_dir);
+	
 	//check status
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name='$theme_dir'";
+	$sql    = "SELECT status, customized FROM ".TABLE_PREFIX."themes WHERE dir_name='".$theme_dir."'";
 	$result = mysql_query ($sql, $db);
 	$row    = mysql_fetch_assoc($result);
 	$status = intval($row['status']);
-
-	//can't delete original default or current default theme
-	if (($theme_dir == 'default') || ($status == 2)) {
+	$customized = intval($row['customized']);
+	
+	//can't delete if
+	// 1. a system default 
+	// 2. current default theme
+	// 3. a system level theme
+	if (($theme_dir == 'default') || ($status == 2) || !$customized) {
 		$msg->addError('THEME_NOT_DELETED');
 		return FALSE;
-
 	} else {	//disable, clear directory and delete theme from db
-
 		require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); /* for clr_dir() */
 		if ($status != 0) {
 			disable_theme($theme_dir);
 			$msg->deleteFeedback('THEME_DISABLED');
 		}
 
-		$dir = '../../../themes/' . $theme_dir;
+		
+		$dir = get_main_theme_dir($customized) . $theme_dir;
 		//chmod($dir, 0777);
 		@clr_dir($dir);
 
@@ -282,8 +284,6 @@ function export_theme($theme_dir) {
 	$last_updated = $row['last_updated'];
 	$extra_info   = $row['extra_info'];
 
-
-
 	//generate 'theme_info.xml' file based on info	
 	$info_xml = str_replace(array('{TITLE}', '{VERSION}', '{TYPE}', '{LAST_UPDATED}', '{EXTRA_INFO}'), 
 							array($title, $version, $type, $last_updated, $extra_info),
@@ -294,7 +294,7 @@ function export_theme($theme_dir) {
 	$zipfile->create_dir($dir);
 
 	//update installation folder
-	$dir1 = '../../../themes/' . $dir;
+	$dir1 = get_main_theme_dir(intval($row["customized"])) . $dir;
 
 	$zipfile->add_file($info_xml, $dir . 'theme_info.xml');
 

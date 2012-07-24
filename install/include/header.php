@@ -8,7 +8,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-if (!defined('AT_INCLUDE_PATH')) { exit; }
+if (!defined('AT_INSTALLER_INCLUDE_PATH')) { exit; }
 error_reporting(E_ALL ^ E_NOTICE);
 
 if ($step < 4) {
@@ -16,7 +16,7 @@ if ($step < 4) {
 	include('../include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
 	if (defined('AT_INSTALL')) {
-		include_once(AT_INCLUDE_PATH.'common.inc.php');
+		include_once(AT_INSTALLER_INCLUDE_PATH.'common.inc.php');
 		echo print_meta_redirect();
 		exit;
 	}
@@ -37,6 +37,7 @@ $install_steps[7] = array('name' => 'Done!');
 	<title>ATutor Installation</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 	<link rel="stylesheet" href="stylesheet.css" type="text/css" />
+	<script type="text/javascript" src="../jscripts/infusion/InfusionAll.js"></script>
 </head>
 <body>
 <div style="height: 70px; vertical-align: bottom; background-color: #354A81">

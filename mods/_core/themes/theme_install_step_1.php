@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
-$theme_folder = '../../../themes/';
+$theme_folder = AT_SUBSITE_THEME_DIR;
 
 if (isset($_GET["theme"])) $theme = $_GET["theme"];
 else if (isset($_POST["theme"])) $theme = $_POST["theme"];

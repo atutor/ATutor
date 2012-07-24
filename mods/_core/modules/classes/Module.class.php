@@ -24,7 +24,14 @@ define('AT_MODULE_TYPE_EXTRA',    4);
 define('AT_MODULE_DIR_CORE',     '_core');
 define('AT_MODULE_DIR_STANDARD', '_standard');
 
-define('AT_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
+define('AT_SYSTEM_MODULE_PATH', realpath(AT_INCLUDE_PATH.'../mods') . DIRECTORY_SEPARATOR);
+
+// The commented line points to the subsite mods directory where the subsite owned
+// modules are planned to be installed/loaded from there. The feture is not applicable
+// for the time being untill the module layer is extended to accept the modules from
+// different directories.
+//define('AT_SUBSITE_MODULE_PATH', realpath(AT_SITE_PATH.'mods') . DIRECTORY_SEPARATOR);
+define('AT_SUBSITE_MODULE_PATH', AT_SYSTEM_MODULE_PATH);
 
 /**
 * ModuleFactory //
@@ -39,14 +46,6 @@ class ModuleFactory {
 
 	function ModuleFactory($auto_load = FALSE) {
 		global $db;
-
-		/* snippit to use when extending Module classes:
-		$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		require(AT_MODULE_PATH . $row['dir_name'].'/module.php');
-		$module = new PropertiesModule($row);
-		***/
 
 		$this->_modules = array();
 
@@ -91,7 +90,7 @@ class ModuleFactory {
 
 		// small performance addition:
 		if ($status & AT_MODULE_STATUS_UNINSTALLED) {
-			$dir = opendir(AT_MODULE_PATH);
+			$dir = opendir(AT_SUBSITE_MODULE_PATH);
 			while (false !== ($dir_name = readdir($dir))) {
 				if (($dir_name == '.') 
 					|| ($dir_name == '..') 
@@ -101,7 +100,7 @@ class ModuleFactory {
 					continue;
 				}
 
-				if (is_dir(AT_MODULE_PATH . $dir_name) && !isset($all_modules[$dir_name])) {
+				if (is_dir(AT_SUBSITE_MODULE_PATH . $dir_name) && !isset($all_modules[$dir_name])) {
 					$module = new Module($dir_name);
 					$all_modules[$dir_name] = $module;
 				}
@@ -112,7 +111,7 @@ class ModuleFactory {
 		$keys = array_keys($all_modules);
 		foreach ($keys as $dir_name) {
 			$module =$all_modules[$dir_name];
-			if ($module->checkStatus($status) && $module->checkType($type)) {
+			if ($module->checkStatus($status) && $module->checkType($type) && $module->checkPrivacy()) {
 				$modules[$dir_name] = $module;
 			}
 		}
@@ -164,6 +163,7 @@ class Module {
 	var $_display_defaults; // bit(s)
 	var $_pages;
 	var $_type; // core, standard, extra
+	var $_module_path; // module path is different for core/standard module and extra module
 	var $_properties; // array from xml
 	var $_cron_interval; // cron interval
 	var $_cron_last_run; // cron last run date stamp
@@ -189,6 +189,13 @@ class Module {
 			} else {
 				$this->_type = AT_MODULE_TYPE_EXTRA;
 			}
+			
+			if ($this->_type == AT_MODULE_TYPE_EXTRA) {
+				$this->_module_path = AT_SUBSITE_MODULE_PATH;
+			} else {
+				$this->_module_path = AT_SYSTEM_MODULE_PATH;
+			}
+			
 		} else {
 			$this->_directoryName   = $row;
 			$this->_status          = AT_MODULE_STATUS_UNINSTALLED;
@@ -196,6 +203,7 @@ class Module {
 			$this->_admin_privilege = 0;
 			$this->_display_defaults= 0;
 			$this->_type            = AT_MODULE_TYPE_EXTRA; // standard/core are installed by default
+			$this->_module_path = AT_SUBSITE_MODULE_PATH;
 		}
 		$this->_content_tools   = array();
 	}
@@ -213,16 +221,39 @@ class Module {
 	function isCore()     { return ($this->_type == AT_MODULE_TYPE_CORE)     ? true : false; }
 	function isStandard() { return ($this->_type == AT_MODULE_TYPE_STANDARD) ? true : false; }
 	function isExtra()    { return ($this->_type == AT_MODULE_TYPE_EXTRA)    ? true : false; }
+	
+	// privacy
+	// public function
+	// return true if
+	// 1. the request is from an ATutor standalone site or the main site of a multisite installation;
+	// 2. this is a public module;
+	// 3. this is a private module of the site that the request is sent from
+	// otherwise, return false
+	function checkPrivacy() {
+		// main site can see all the modules including the subsite owned modules
+		if (!defined('IS_SUBSITE')) return true;
+		
+		$properties = $this->getProperties(array('subsite'));
+		if (count($properties['subsite']) == 0) return true;  // a public module
+		
+		foreach ($properties['subsite'] as $subsite) {
+			if ($subsite == $_SERVER['HTTP_HOST']) return true;
+		}
+		return false;
+	}
+	
+	// module path
+	function getModulePath() { return $this->_module_path; }
 
 	// privileges
 	function getPrivilege()      { return $this->_privilege;       }
 	function getAdminPrivilege() { return $this->_admin_privilege; }
 
 	function load() {
-		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module.php')) {
+		if (is_file($this->_module_path . $this->_directoryName.'/module.php')) {
 			global $_modules, $_pages, $_stacks, $_list, $_tool, $_content_tools, $_callbacks;  // $_list is for sublinks on "detail view"
 
-			require(AT_MODULE_PATH . $this->_directoryName.'/module.php');
+			require($this->_module_path . $this->_directoryName.'/module.php');
 
 			if (isset($this->_pages)) {
 				$_pages = array_merge_recursive((array) $_pages, $this->_pages);
@@ -248,7 +279,7 @@ class Module {
 			}
 			
 			//TODO***********BOLOGNA***********REMOVE ME***********/
-                        //tool manager (content editing)
+			//tool manager (content editing)
 			if(isset($this->_tool)) {
 				$_tool = array_merge((array)$_tool, $this->_tool);
                         }
@@ -271,7 +302,7 @@ class Module {
 		if (!isset($this->_properties)) {
 			require_once(dirname(__FILE__) . '/ModuleParser.class.php');
 			$moduleParser = new ModuleParser();
-			$moduleParser->parse(@file_get_contents(AT_MODULE_PATH . $this->_directoryName.'/module.xml'));
+			$moduleParser->parse(@file_get_contents($this->_module_path . $this->_directoryName.'/module.xml'));
 			if ($moduleParser->rows[0]) {
 				$this->_properties = $moduleParser->rows[0];
 			} else {
@@ -362,12 +393,12 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function isBackupable() {
-		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
+		return is_file($this->_module_path . $this->_directoryName.'/module_backup.php');
 	}
 
 	function createGroup($group_id) {
-		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php')) {
-			require_once(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php');
+		if (is_file($this->_module_path . $this->_directoryName.'/module_groups.php')) {
+			require_once($this->_module_path . $this->_directoryName.'/module_groups.php');
 			$fn_name = basename($this->_directoryName) .'_create_group';
 			$fn_name($group_id);
 		}
@@ -376,8 +407,8 @@ class Module {
 	function deleteGroup($group_id) {
 		$fn_name = basename($this->_directoryName) .'_delete_group';
 
-		if (!function_exists($fn_name) && is_file(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php')) {
-			require_once(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php');
+		if (!function_exists($fn_name) && is_file($this->_module_path . $this->_directoryName.'/module_groups.php')) {
+			require_once($this->_module_path . $this->_directoryName.'/module_groups.php');
 		} 
 		if (function_exists($fn_name)) {
 			$fn_name($group_id);
@@ -393,7 +424,7 @@ class Module {
 	}
 
 	function isGroupable() {
-		return is_file(AT_MODULE_PATH . $this->_directoryName.'/module_groups.php');
+		return is_file($this->_module_path . $this->_directoryName.'/module_groups.php');
 	}
 
 	/**
@@ -413,7 +444,7 @@ class Module {
 		$now = time();
 
 		if ($this->isBackupable()) {
-			require(AT_MODULE_PATH . $this->_directoryName . '/module_backup.php');
+			require($this->_module_path . $this->_directoryName . '/module_backup.php');
 			if (isset($sql)) {
 				foreach ($sql as $file_name => $table_sql) {
 					$content = $CSVExport->export($table_sql, $course_id);
@@ -443,7 +474,7 @@ class Module {
 	*/
 	function restore($course_id, $version, $import_dir) {
 		static $CSVImport;
-		if (!file_exists(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php')) {
+		if (!file_exists($this->_module_path . $this->_directoryName.'/module_backup.php')) {
 			return;
 		}
 
@@ -452,7 +483,7 @@ class Module {
 			$CSVImport = new CSVImport();
 		}
 
-		require(AT_MODULE_PATH . $this->_directoryName.'/module_backup.php');
+		require($this->_module_path . $this->_directoryName.'/module_backup.php');
 
 		if (isset($sql)) {
 			foreach ($sql as $table_name => $table_sql) {
@@ -483,8 +514,8 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function delete($course_id, $groups) {
-		if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php')) {
-			require(AT_MODULE_PATH . $this->_directoryName.'/module_delete.php');
+		if (is_file($this->_module_path . $this->_directoryName.'/module_delete.php')) {
+			require($this->_module_path . $this->_directoryName.'/module_delete.php');
 			if (function_exists(basename($this->_directoryName).'_delete')) {
 				$fnctn = basename($this->_directoryName).'_delete';
 				$fnctn($course_id);
@@ -518,7 +549,7 @@ class Module {
 	function setIsMissing($force = false) {
 		global $db;
 		// if the directory doesn't exist then set the status to MISSING
-		if ($force || !is_dir(AT_MODULE_PATH . $this->_directoryName)) {
+		if ($force || !is_dir($this->_module_path . $this->_directoryName)) {
 			$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_MISSING.' WHERE dir_name="'.$this->_directoryName.'"';
 			$result = mysql_query($sql, $db);
 		}
@@ -561,9 +592,8 @@ class Module {
 		global $msg;
 
 		// should check if this module is already installed...
-
-		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_install.php')) {
-			require(AT_MODULE_PATH . $this->_directoryName . '/module_install.php');
+		if (file_exists($this->_module_path . $this->_directoryName . '/module_install.php')) {
+			require($this->_module_path . $this->_directoryName . '/module_install.php');
 		}
 
 		if (!$msg->containsErrors()) {
@@ -611,17 +641,17 @@ class Module {
 	function uninstall($del_data='') {
 		global $msg;
 
-		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_uninstall.php') && $del_data == 1) 
+		if (file_exists($this->_module_path . $this->_directoryName . '/module_uninstall.php') && $del_data == 1) 
 		{
-			require(AT_MODULE_PATH . $this->_directoryName . '/module_uninstall.php');
+			require($this->_module_path . $this->_directoryName . '/module_uninstall.php');
 		}
 
 		if (!$msg->containsErrors()) 
 		{
 			require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 						
-			if (!clr_dir(AT_MODULE_PATH . $this->_directoryName))
-				$msg->addError(array('MODULE_UNINSTALL', '<li>'.AT_MODULE_PATH . $this->_directoryName.' can not be removed. Please manually remove it.</li>'));
+			if (!clr_dir($this->_module_path . $this->_directoryName))
+				$msg->addError(array('MODULE_UNINSTALL', '<li>'.$this->_module_path . $this->_directoryName.' can not be removed. Please manually remove it.</li>'));
 		}
 		
 		if (!$msg->containsErrors()) 
@@ -652,8 +682,8 @@ class Module {
 
 	function runCron() {
 		if ( ($this->_cron_last_run + ($this->_cron_interval * 60)) < time()) {
-			if (is_file(AT_MODULE_PATH . $this->_directoryName.'/module_cron.php')) {
-				require(AT_MODULE_PATH . $this->_directoryName.'/module_cron.php');
+			if (is_file($this->_module_path . $this->_directoryName.'/module_cron.php')) {
+				require($this->_module_path . $this->_directoryName.'/module_cron.php');
 				if (function_exists(basename($this->_directoryName).'_cron')) {
 					$fnctn = basename($this->_directoryName).'_cron';
 					$fnctn();
@@ -696,8 +726,8 @@ class Module {
 			}
 		}
 
-		if (file_exists(AT_MODULE_PATH . $this->_directoryName . '/module_news.php')) {
-			require(AT_MODULE_PATH . $this->_directoryName . '/module_news.php');
+		if (file_exists($this->_module_path . $this->_directoryName . '/module_news.php')) {
+			require($this->_module_path . $this->_directoryName . '/module_news.php');
 			if (function_exists(basename($this->_directoryName).'_news')) {
 				$fnctn = basename($this->_directoryName).'_news';
 				return $fnctn($course_id);
@@ -712,10 +742,10 @@ class Module {
 	 * @date	Dec 7, 2010
 	 */
 	function getContent($cid){
-		if (file_exists(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php') &&
+		if (file_exists($this->_module_path . $this->_directoryName.'/ModuleCallbacks.class.php') &&
 		    isset($this->_callbacks[basename($this->_directoryName)])) 
 		{
-			require(AT_MODULE_PATH . $this->_directoryName.'/ModuleCallbacks.class.php');
+			require($this->_module_path . $this->_directoryName.'/ModuleCallbacks.class.php');
 			if (method_exists($this->_callbacks[basename($this->_directoryName)], "appendContent")) {
 				eval('$output = '.$this->_callbacks[basename($this->_directoryName)]."::appendContent($cid);");
 				return $output;

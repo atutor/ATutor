@@ -36,6 +36,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['max_course_float']   = max(0, $_POST['max_course_float']);
 	$_POST['allow_registration']   = intval($_POST['allow_registration']);
 	$_POST['allow_browse']   = intval($_POST['allow_browse']);
+	$_POST['show_current']   = intval($_POST['show_current']);
 	$_POST['allow_instructor_registration']   = intval($_POST['allow_instructor_registration']);
 	$_POST['allow_unenroll']   = intval($_POST['allow_unenroll']);
 	$_POST['master_list']        = intval($_POST['master_list']);
@@ -59,6 +60,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['course_dir_name']			= intval($_POST['course_dir_name']);
 	$_POST['max_login']					= intval($_POST['max_login']);		//max login attempt
 	$_POST['use_captcha']				= $_POST['use_captcha'] ? 1 : 0;
+
 
 	//apache_mod_rewrite can only be enabled if pretty_url is.
 	if ($_POST['pretty_url']==1){
@@ -101,7 +103,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['home_url']      = $addslashes($_POST['home_url']);
 		$_POST['default_language']      = $addslashes($_POST['default_language']);
 		$_POST['contact_email'] = $addslashes($_POST['contact_email']);
-		$_POST['time_zone']     = floatval($_POST['time_zone']);
+		$_POST['time_zone']     = $addslashes($_POST['time_zone']);
 
 		foreach ($_config as $name => $value) {
 			// the isset() is needed to avoid overridding settings that don't get set here (ie. modules)

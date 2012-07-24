@@ -106,7 +106,7 @@ function import_theme() {
 	// new directory name is the filename minus the extension
 	$fldrname    = substr($_FILES['file']['name'], 0, -4);
 	$fldrname   = str_replace(' ', '_', $fldrname);
-	$import_path = '../../../themes/' . $fldrname;
+	$import_path = AT_SUBSITE_THEME_DIR . $fldrname;
 
 	//check if Folder by that name already exists
 	if (is_dir($import_path)) {
@@ -185,7 +185,8 @@ function import_theme() {
 	}
 
 	//save information in database
-	$sql = "INSERT INTO ".TABLE_PREFIX."themes VALUES ('$title', '$version', '$fldrname', '$type', '$last_updated', '$extra_info', '$status')";
+	$sql = "INSERT INTO ".TABLE_PREFIX."themes (title, version, dir_name, type, last_updated, extra_info, status, customized) ".
+	       "VALUES ('$title', '$version', '$fldrname', '$type', '$last_updated', '$extra_info', '$status', 1)";
 	$result = mysql_query($sql, $db);	
 	
 	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);

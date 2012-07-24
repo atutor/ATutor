@@ -23,6 +23,7 @@ if (!isset($_GET['category_id'])) {
 }
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 ?>
+<br style="clear:both;" />
 <fieldset class="group_form" style="width:93%"><legend class="group_form"><?php echo _AT('category'); ?></legend>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<input type="hidden" name="tid" value="<?php echo $tid; ?>" />
@@ -62,10 +63,11 @@ while ($row = mysql_fetch_assoc($result)) {
 	$cols = 3;
 ?>
 <?php if ($tid): ?>
-	<form method="post" action="mods/_standard/tests/add_test_questions_confirm.php" name="form">
+	<form method="post" action="<?php echo AT_BASE_HREF; ?>mods/_standard/tests/add_test_questions_confirm.php" name="form">
 <?php else: ?>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php endif; ?>
+<br style="clear:both;" />
 <table class="data" summary="" rules="cols">
 <thead>
 <tr>
@@ -122,7 +124,7 @@ foreach ($cats as $cat) {
 			echo '<td>';
 			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
 			echo '<td>';
-			echo '<a title="'.AT_print($row[question], 'tests_questions.question').'">';
+			echo '<a title="'.strip_tags($row[question]).'">';
 			echo AT_print((validate_length($row['question'], 100, VALIDATE_LENGTH_FOR_DISPLAY)), 'tests_questions.question');
 			echo '</a>';
 			echo '</td>';

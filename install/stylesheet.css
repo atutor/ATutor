@@ -383,7 +383,7 @@ h3 {
 /* error box */
 table.errbox{
 	font-family: Verdana, Arial, Helvetica, sans-serif;
-	background-color: #FF0000;
+	background-color: #E49E7A;
 	border: 2px #EEEEEE solid;
 }
 tr.errbox {
@@ -422,7 +422,16 @@ img#logo {
 	margin: 10px;
 	float: right;
 }
-
+div#feedback {
+    background-color: #F2FCF0;
+    border: 1px solid #17B506;
+    border-radius: 0.5em 0.5em 0.5em 0.5em;
+    color: #595241;
+    font-weight: bold;
+    margin: 15px auto;
+    padding: 5px;
+    width: 50%;
+}
 div.install {
 	border: 1px solid #354A81;
 }
@@ -479,4 +488,10 @@ div.optional {
 	margin-top: -3px;
 	height: 15px;
 	padding-right: 3px;
+}
+.hidden {
+	display: none;
+}
+.show {
+	display: block;
 }

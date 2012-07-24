@@ -36,5 +36,4 @@ function reading_list_news() {
 	}
 	return $news;
 }
-
 ?>

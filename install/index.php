@@ -10,10 +10,12 @@
 /************************************************************************/
 // $Id$
 
-define('AT_INCLUDE_PATH', 'include/');
+define('AT_INSTALLER_INCLUDE_PATH', 'include/');
+define('AT_INCLUDE_PATH', '../include/');
 error_reporting(E_ALL ^ E_NOTICE);
 
-require('../include/lib/constants.inc.php');
+require(AT_INCLUDE_PATH . 'lib/constants.inc.php');
+require_once('include/common.inc.php');
 
 $new_version = VERSION;
 
@@ -28,7 +30,7 @@ $session_error = ob_get_contents();
 ob_end_clean();
 error_reporting(E_ALL ^ E_NOTICE);
 
-require(AT_INCLUDE_PATH.'header.php');
+require(AT_INSTALLER_INCLUDE_PATH.'header.php');
 $bad  = '<img src="images/bad.gif" width="14" height="13" border="0" alt="Bad" title="Bad" />';
 $good = '<img src="images/feedback.gif" width="16" height="13" border="0" alt="Good" title="Good" />';
 $warning = '<img src="images/warning.png" width="16" height="16" border="0" alt="Warning" title="Warning" />';
@@ -36,6 +38,7 @@ $warning = '<img src="images/warning.png" width="16" height="16" border="0" alt=
 $no_good = FALSE;
 $not_as_good = FALSE;
 ?>
+
 <table style="float: right;
 	background-color: #FEFDEF;
 	border: 1pt solid #B8AE9C;
@@ -335,17 +338,26 @@ $not_as_good = FALSE;
 					} ?></td>
 		</tr>
 		</tbody>
+		<tbody>
+		<tr>
+			<th scope="col">Javascript</th>
+			<th scope="col">Detected</th>
+			<th scope="col">Status</th>
+		</tr>
+		<tr>
+			<td>Javascript Enabled?</td>
+			<td>
+			<?php 
+				echo '<span id="AT_js_status_text">Disabled</span></td><td align="center">';
+				echo '<span id="AT_js_status_icon">' . $bad . '</span>';
+			?>
+			</td>
+		</tr>
+		</tbody>
 		</table>
 <br />
 
-<?php if ($no_good): ?>
-	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-	<tr>
-		<td class="row1"><strong>Your server does not meet the minimum requirements!<br />
-						Please correct the above errors to continue.</strong></td>
-	</tr>
-	</table>
-<?php elseif ($not_as_good): ?>
+<?php if ($not_as_good): ?>
 	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
 	<tr>
 		<td class="row1"><strong>ATutor has indicated that the 'mbstring' library is missing from the PHP.  <br />
@@ -384,29 +396,57 @@ $not_as_good = FALSE;
 	</tr>
 	</table>
 <?php else: ?>
-	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-	<tr>
-		<td align="right" class="row1" nowrap="nowrap"><strong>New Installation &raquo;</strong></td>
-		<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
-		<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-		<input type="submit" class="button" value="  Install  " name="next" />
-		</form></td>
-	</tr>
-	</table>
-	<table cellspacing="0" cellpadding="10" align="center" width="45%">
-	<tr>
-		<td align="center"><b>Or</b></td>
-	</tr>
-	</table>
-	<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
-	<tr>
-		<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation &raquo;</strong></td>
-		<td class="row1" width="150" align="center"><form action="upgrade.php" method="post" name="form">
-		<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
-		<input type="submit" class="button" value="Upgrade" name="next" />
-		</form></td>
-	</tr>
-	</table>
-<?php endif; ?>
+	<div id="AT_no_good" class="show">
+		<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+		<tr>
+			<td class="row1"><strong>Your server does not meet the minimum requirements!<br />
+							Please correct the above errors to continue.</strong></td>
+		</tr>
+		</table>
+		
+		<?php if (!$no_good) {?><!-- Only need to check whether javascript is enabled -->
+		<div id="AT_check_js_only"></div><?php }?>
+	</div>
 
-<?php require(AT_INCLUDE_PATH.'footer.php'); ?>
+	<div id="AT_good" class="hidden">
+		<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+		<tr>
+			<td align="right" class="row1" nowrap="nowrap"><strong>New Installation &raquo;</strong></td>
+			<td class="row1" width="150" align="center"><form action="install.php" method="post" name="form">
+			<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+			<input type="submit" class="button" value="  Install  " name="next" />
+			</form></td>
+		</tr>
+		</table>
+	
+		<table cellspacing="0" cellpadding="10" align="center" width="45%">
+		<tr>
+			<td align="center"><b>Or</b></td>
+		</tr>
+		</table>
+	
+	
+		<table cellspacing="0" class="tableborder" cellpadding="1" align="center" width="70%">
+		<tr>
+			<td align="right" class="row1" nowrap="nowrap"><strong>Upgrade an Existing Installation &raquo;</strong></td>
+			<td class="row1" width="150" align="center"><form action="upgrade.php" method="post" name="form">
+			<input type="hidden" name="new_version" value="<?php echo $new_version; ?>" />
+			<input type="submit" class="button" value="Upgrade" name="next" />
+			</form></td>
+		</tr>
+		</table>
+	</div>
+<?php endif;?>	
+
+<script type="text/javascript">
+$(document).ready(function () {
+    if ($("#AT_check_js_only").length > 0) {
+        $("#AT_js_status_text").html('Enabled');
+        $("#AT_js_status_icon").html('<?php echo $good; ?>');
+        $("#AT_no_good").removeAttr('class', 'show').attr('class', 'hidden');
+        $("#AT_good").removeAttr('class', 'hidden').attr('class', 'show');
+    }
+});
+</script>
+
+<?php  require(AT_INSTALLER_INCLUDE_PATH.'footer.php'); ?>

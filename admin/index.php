@@ -162,6 +162,7 @@ $savant->assign('db_size', $_config['db_size']);
 $savant->assign('du_size', $_config['du_size']);
 $savant->assign('row', $row);
 
+
 $savant->display('admin/index.tmpl.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 

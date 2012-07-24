@@ -23,12 +23,10 @@ function apply_category_theme($category_id) {
 			if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
 				$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
 			} else {			
-				$th = get_default_theme();
-				$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+				$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 			}
 		} else {			
-			$th = get_default_theme();
-			$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+			$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 		}
 	}
 }
@@ -114,6 +112,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 		$_SESSION['course_id']  = -1;
 		$_SESSION['privileges'] = intval($row['privileges']);
 		$_SESSION['lang'] = $row['language'];
+		unset($_SESSION['prefs']);
 		assign_session_prefs(unserialize(stripslashes($_config['pref_defaults'])), 1);
 		unset($_SESSION['member_id']);
 		unset($_SESSION['is_super_admin']);
@@ -198,8 +197,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
 
 	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
-		$th = get_default_theme();
-		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+		$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 	}
     /* http://atutor.ca/atutor/mantis/view.php?id=4587
      * 	for users with no enrolled courses, default to the Browse Bourses screen instead of My Courses. 
@@ -221,8 +219,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	$_SESSION['last_updated'] = time()/60 - ONLINE_UPDATE - 1;
 
 	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
-		$th = get_default_theme();
-		$_SESSION['prefs']['PREF_THEME'] = $th['dir_name'];
+		$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 	}
 
 	header('Location: users/index.php');

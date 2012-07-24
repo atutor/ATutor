@@ -100,8 +100,8 @@
 			<div>
 				<form action="<?php echo AT_PA_BASENAME;?>addComment.php" method="post" class="input-form">
 					<div class="row"><label for="comments"><?php echo _AT('comments');?></label></div>
-					<div class="row"><textarea name="comment" id="comment_template" onclick="jQuery(this).hide();c=jQuery('#comment');c.show();c.focus();" onkeyup="jQuery(this).hide();c=jQuery('#comment');c.show();c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
-					<div class="row"><textarea name="comment" id="comment" style="display:none;"></textarea></div>
+					<div class="row"><textarea name="comment" cols="60"  id="comment_template" onclick="jQuery(this).hide();c=jQuery('#comment');c.show();c.focus();" onkeyup="jQuery(this).hide();c=jQuery('#comment');c.show();c.focus();"><?php echo _AT('pa_write_a_comment'); ?></textarea></div>
+					<div class="row"><textarea name="comment" id="comment" cols="60" style="display:none;"></textarea></div>
 					<div class="row">
 						<input type="hidden" name="aid" value="<?php echo $this->album_info['id'];?>" />
 						<input type="submit" name="submit" value="<?php echo _AT('comment');?>" class="button"/>

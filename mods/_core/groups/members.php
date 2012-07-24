@@ -164,7 +164,7 @@ $count = 0;
 ?>
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
-<table class="data static" style="width: 60%" rules="rows">
+<table class="data static"  rules="rows">
 <thead>
 	<tr>
 		<th><?php echo _AT('login');      ?></th>
@@ -184,7 +184,7 @@ $count = 0;
 </tfoot>
 <tbody>
 	<?php while ($row = mysql_fetch_assoc($result)): ?>
-		<tr <?php if ($_GET['gid'] && $_GET['gid'] == $groups_members[$row['member_id']]) { echo 'style="background-color: #dfd; font-weight: bold;"';} ?> id="r<?php echo ++$count; ?>">
+		<tr <?php if ($_GET['gid'] && $_GET['gid'] == $groups_members[$row['member_id']]) { echo 'class="group-selected"';} ?> id="r<?php echo ++$count; ?>">
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['first_name']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['last_name']; ?></label></td>

@@ -1,5 +1,5 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-<div id="my_courses_container">
+<div id="my_courses_container" <?php if($_config['show_current'] != 1){ echo ' style="width:90%;"'; } ?>>
 <table class="data" style="width:100%;">
 <tr><th></th>
 <th><?php echo _AT('course'); ?></th>
@@ -70,16 +70,16 @@
     </small></td>
     <td>
 <?php if($_config['allow_unenroll'] || $row['tests']){  ?>
-  <ul>
+
     <?php if ($row['member_id'] != $_SESSION['member_id']  && $_config['allow_unenroll'] == 1): ?>
-	    <li><a href="users/remove_course.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('unenroll_me'); ?></a></li>
+	      <ul><li><a href="users/remove_course.php?course=<?php echo $row['course_id']; ?>"><?php echo _AT('unenroll_me'); ?></a></li>   </ul>  
     <?php endif; ?>
     <?php if ($row['tests']): ?>
 	    <?php foreach ($row['tests'] as $test): ?>
-		    <li><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('mods/_standard/tests/test_intro.php?tid='.$test['test_id']); ?>"><span title="<?php echo _AT('tests'); ?>:<?php echo $test['title']; ?>"><?php echo $test['title']; ?></span></a> </li>
+		     <ul> <li><a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('mods/_standard/tests/test_intro.php?tid='.$test['test_id']); ?>"><span title="<?php echo _AT('tests'); ?>:<?php echo $test['title']; ?>"><?php echo $test['title']; ?></span></a> </li>   </ul>  
 	    <?php endforeach ;?>
     <?php endif; ?>
-    </ul>  
+ 
 <?php }  ?>
 
     <?php if ($row['last_cid']): ?>
@@ -94,7 +94,7 @@
 <?php endforeach; ?>
 </table>
 </div>
-
+<?php if($_config['show_current'] == 1){ ?>
 <div class="current_box">
 <div class="current_head"> <h3><?php echo _AT('things_current'); ?></h3></div>
     <?php
@@ -121,13 +121,13 @@
     for($i=$start;$i<=$end; $i++){
 	$count = $i;
 	if (isset($this->all_news)) {
-	    echo '<ul class="current_list">';
+	    echo '<ul class="current_list">'."\n";
 	      if(isset($this->all_news[$i]['thumb'])){
-		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'" class="img1616"/> ' . $this->all_news[$i]['link'] .' <br />';
+		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'" class="img1616"/> ' . $this->all_news[$i]['link'] .' <br />'."\n";
 		    if($this->all_news[$i]['object']['course_id']){
-		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)|';
+		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)|'."\n";
 		    }
-		    echo '('.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).')</small><hr style=""/></li>';
+		    echo '('.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).')</small><hr style=""/></li>'."\n";
 		}
 	    echo '</ul>';
 	}
@@ -141,5 +141,5 @@
 	  }?>
 <br /><br />
 </div>  
-
+<?php } ?>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

@@ -23,6 +23,7 @@
  * WORKSPACE_PERSONAL      member_id
  * WORKSPACE_GROUP         group_id
  */
+ 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); // for get_human_size()
@@ -186,15 +187,18 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 				$file_mime = 'application/octet-stream';
 			}
 			$file_path = fs_get_file_path($file_id) . $file_id;
-
+			$row['file_name'] = str_replace(array('"', "'", ' ', ','), '_', $row['file_name']);
 			ob_end_clean();
 			header("Content-Encoding: none");
-			header('Content-Type: ' . $file_mime);
+			header("Content-Type: ' . $file_mime .'", true);
 			header('Content-transfer-encoding: binary'); 
 			header('Content-Disposition: attachment; filename="'.htmlspecialchars($row['file_name']).'"');
 			header('Expires: 0');
 			header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 			header('Pragma: public');
+			// This header appears to be problematic on some systems Mantis 5014
+			// see http://atutor.ca/view/3/23234/1.html
+			// Commenting out this header may help 
 			header('Content-Length: '.$row['file_size']);
 
 			// see the note in get.php about the use of x-Sendfile
@@ -443,8 +447,8 @@ while ($row = mysql_fetch_assoc($result)) {
 <?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
 	<form method="post" action="<?php echo 'mods/_standard/file_storage/index.php'.$owner_arg_prefix; ?>" enctype="multipart/form-data" name="form0">
 	<input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />
-	<div style="margin-left:auto; margin-right:auto;width: 95%;">
-			<div class="input-form" style="width: 48%; float: right;" >
+	<div class="fs_tools">
+			<div class="input-form" >
 				<div class="row">
 					<h3><a href="mods/_standard/file_storage/index.php" onclick="javascript:toggleform('c_folder'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'" onfocus="this.style.cursor='pointer'"><?php echo _AT('create_folder'); ?></a></h3>
 				</div>
@@ -458,9 +462,8 @@ while ($row = mysql_fetch_assoc($result)) {
 					</div>
 				</div>
 			</div>
-	
-	
-			<div class="input-form" style="float: left; width: 48%;">
+
+			<div class="input-form">
 				<div class="row">
 					<h3><a href="mods/_standard/file_storage/index.php" onclick="javascript:toggleform('upload'); return false;" style="font-family: Helevetica, Arial, sans-serif;" onmouseover="this.style.cursor='pointer'" onfocus="this.style.cursor='pointer'"><?php echo _AT('new_file'); ?></a></h3>
 				</div>
@@ -479,8 +482,9 @@ while ($row = mysql_fetch_assoc($result)) {
 					</div>
 				</div>
 			</div>
-
+	<br />	<br />
 	</div>
+
 	</form>
 
 <?php endif; ?>
@@ -519,6 +523,7 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 	}
 }
 ?>
+<br /><br />
 <div style="margin-left:auto;margin-right:auto; clear:both;width:95%;">
 <form method="get" action="<?php echo url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER);?>" name="form">
 <input type="hidden" name="folder" value="<?php echo $folder_id; ?>" />

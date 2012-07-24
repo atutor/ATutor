@@ -89,7 +89,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
         <small>(<?php echo _AT('customized_head_note'); ?>)</small></label>
         <input type="checkbox" name="use_customized_head" id="use_customized_head" value="1" <?php if ($_POST['use_customized_head']) { echo 'checked="checked"'; } ?> />
         <label for="use_customized_head"><?php echo _AT('use_customized_head'); ?></label>
-		<textarea id="headtext" name="head" cols="" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
+		<textarea id="headtext" name="head" cols="80" rows="10"><?php echo htmlspecialchars($_POST['head']); ?></textarea>	
 	</div>
 		
     <!-- Paste from file -->
@@ -108,11 +108,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	       $_POST['body_text'] = $stripslashes($_POST['body_text']);
         }
     ?>
-
+<br style="clear:both;"/>
     <div class="row">
         <span id="textSpan">
             <label for="body_text"><strong><?php echo _AT('body');  ?></strong></label><br />
-		    <textarea name="body_text" id="body_text" cols="" rows="20"><?php echo htmlspecialchars($_POST['body_text']);?></textarea>
+		    <textarea name="body_text" id="body_text" cols="80" rows="20"><?php echo htmlspecialchars($_POST['body_text']);?></textarea>
 		</span>
 		<span id="weblinkSpan">	
 	        <label for="weblink_text"><?php echo _AT('weblink');  ?></label>

@@ -13,7 +13,7 @@ function confirmSubmit(input, confirmMsg){
 	//jquery submit button alternation
 	input_button.attr('id', 'submit_test');
 	input_button.removeAttr('onclick');
-
+	input_button.prop("onclick", null);
 	//label for the modified submit button
 	input_label = jQuery('<label>').attr('for', 'submit_test');
 	input_label.text(confirmMsg);

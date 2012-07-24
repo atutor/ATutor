@@ -33,6 +33,7 @@ $_config_defaults['home_url']                  = ''; // empty means disabled
 $_config_defaults['default_language']          = 'en';
 $_config_defaults['allow_registration']        = 1;
 $_config_defaults['allow_browse']              = 1;
+$_config_defaults['show_current']				= 1;
 $_config_defaults['just_social']              = 0;
 $_config_defaults['allow_instructor_registration']        = 1;
 $_config_defaults['use_captcha']			   = 0;	//use captcha?
@@ -47,7 +48,7 @@ $_config_defaults['theme_categories']          = 0; // disabled
 $_config_defaults['main_defaults']	           = 'mods/_standard/forums/forum/list.php|mods/_core/glossary/index.php|mods/_standard/file_storage/index.php|mods/_standard/social/index.php|mods/_standard/sitemap/sitemap.php|mods/_standard/photos/index.php';
 $_config_defaults['home_defaults']             = 'mods/_standard/file_storage/index.php|mods/_standard/tests/my_tests.php|mods/_standard/tracker/my_stats.php|mods/_standard/directory/directory.php';
 $_config_defaults['side_defaults']             = 'social|menu_menu|related_topics|users_online|glossary|search|poll|posts';
-$_config_defaults['pref_defaults']	       = 'a:35:{s:10:"PREF_THEME";s:7:"default";s:17:"PREF_MOBILE_THEME";s:6:"mobile";s:15:"PREF_FORM_FOCUS";i:1;s:14:"PREF_NUMBERING";i:0;s:13:"PREF_TIMEZONE";s:1:"0";s:18:"PREF_JUMP_REDIRECT";i:1;s:19:"PREF_CONTENT_EDITOR";i:2;s:15:"PREF_SHOW_GUIDE";i:1;s:14:"PREF_FONT_FACE";s:0:"";s:15:"PREF_FONT_TIMES";s:3:"0.8";s:14:"PREF_FG_COLOUR";s:0:"";s:14:"PREF_BG_COLOUR";s:0:"";s:14:"PREF_HL_COLOUR";s:0:"";s:28:"PREF_USE_ALTERNATIVE_TO_TEXT";i:0;s:16:"PREF_ALT_TO_TEXT";s:5:"audio";s:34:"PREF_ALT_TO_TEXT_APPEND_OR_REPLACE";s:6:"append";s:25:"PREF_ALT_TEXT_PREFER_LANG";s:2:"en";s:29:"PREF_USE_ALTERNATIVE_TO_AUDIO";i:0;s:17:"PREF_ALT_TO_AUDIO";s:4:"text";s:35:"PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE";s:6:"append";s:26:"PREF_ALT_AUDIO_PREFER_LANG";s:2:"en";s:30:"PREF_USE_ALTERNATIVE_TO_VISUAL";i:0;s:18:"PREF_ALT_TO_VISUAL";s:4:"text";s:36:"PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE";s:6:"append";s:27:"PREF_ALT_VISUAL_PREFER_LANG";s:2:"en";s:15:"PREF_DICTIONARY";i:1;s:14:"PREF_THESAURUS";i:1;s:16:"PREF_NOTE_TAKING";i:1;s:15:"PREF_CALCULATOR";i:1;s:11:"PREF_ABACUS";i:1;s:10:"PREF_ATLAS";i:1;s:17:"PREF_ENCYCLOPEDIA";i:1;s:18:"PREF_SHOW_CONTENTS";i:1;s:31:"PREF_SHOW_NEXT_PREVIOUS_BUTTONS";i:1;s:22:"PREF_SHOW_BREAD_CRUMBS";i:1;}';
+$_config_defaults['pref_defaults']	       = 'a:35:{s:10:"PREF_THEME";s:7:"atspaces";s:17:"PREF_MOBILE_THEME";s:6:"mobile";s:15:"PREF_FORM_FOCUS";i:1;s:14:"PREF_NUMBERING";i:0;s:13:"PREF_TIMEZONE";s:1:"0";s:18:"PREF_JUMP_REDIRECT";i:1;s:19:"PREF_CONTENT_EDITOR";i:2;s:15:"PREF_SHOW_GUIDE";i:1;s:14:"PREF_FONT_FACE";s:0:"";s:15:"PREF_FONT_TIMES";s:3:"0.8";s:14:"PREF_FG_COLOUR";s:0:"";s:14:"PREF_BG_COLOUR";s:0:"";s:14:"PREF_HL_COLOUR";s:0:"";s:28:"PREF_USE_ALTERNATIVE_TO_TEXT";i:0;s:16:"PREF_ALT_TO_TEXT";s:5:"audio";s:34:"PREF_ALT_TO_TEXT_APPEND_OR_REPLACE";s:6:"append";s:25:"PREF_ALT_TEXT_PREFER_LANG";s:2:"en";s:29:"PREF_USE_ALTERNATIVE_TO_AUDIO";i:0;s:17:"PREF_ALT_TO_AUDIO";s:4:"text";s:35:"PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE";s:6:"append";s:26:"PREF_ALT_AUDIO_PREFER_LANG";s:2:"en";s:30:"PREF_USE_ALTERNATIVE_TO_VISUAL";i:0;s:18:"PREF_ALT_TO_VISUAL";s:4:"text";s:36:"PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE";s:6:"append";s:27:"PREF_ALT_VISUAL_PREFER_LANG";s:2:"en";s:15:"PREF_DICTIONARY";i:1;s:14:"PREF_THESAURUS";i:1;s:16:"PREF_NOTE_TAKING";i:1;s:15:"PREF_CALCULATOR";i:1;s:11:"PREF_ABACUS";i:1;s:10:"PREF_ATLAS";i:1;s:17:"PREF_ENCYCLOPEDIA";i:1;s:18:"PREF_SHOW_CONTENTS";i:1;s:31:"PREF_SHOW_NEXT_PREVIOUS_BUTTONS";i:1;s:22:"PREF_SHOW_BREAD_CRUMBS";i:1;}';
 $_config_defaults['pref_inbox_notify']		= 0; // disabled
 $_config_defaults['pref_is_auto_login']		   = "disable"; // disabled
 $_config_defaults['check_version']	           = 0; // disabled
@@ -172,11 +173,22 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 }
 
 /* get the base url	*/
+/*
 if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 	$server_protocol = 'https://';
 } else {
 	$server_protocol = 'http://';
 }
+*/
+if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
+	$server_protocol = 'https://';
+} else if (@$_SERVER['HTTP_X_FORWARDED_PROTO'] =='https') {
+	$server_protocol = 'https://';
+} else {
+	$server_protocol = 'http://';
+}
+
+define('AT_SERVER_PROTOCOL', $server_protocol);
 
 /* Handles pretty url - @author Harris */
 define('AT_PRETTY_URL_HANDLER',		'go.php');	
@@ -207,7 +219,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'2.0.3');
+define('VERSION',		'2.1');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
@@ -276,6 +288,9 @@ define('IPAD_DEVICE', 'ipad');
 define('DESKTOP_DEVICE',  'Desktop');
 define('MOBILE_DEVICE',  'Mobile');
 
+// theme directory
+define('AT_SYSTEM_THEME_DIR', realpath(AT_INCLUDE_PATH . "../themes") . "/");
+
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';
 $_rl_types[RL_TYPE_URL]		= 'rl_url';
@@ -304,6 +319,8 @@ define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS
 							   + AT_FORMAT_CONTENT_DIR);
 
 $_field_formatting = array();
+$_field_formatting['url.*']          = AT_FORMAT_QUOTES & AT_FORMAT_HTML;
+
 $_field_formatting['assignment.title']          = AT_FORMAT_QUOTES;
 
 $_field_formatting['backups.description']       = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
@@ -373,15 +390,13 @@ $_field_formatting['polls.*']                   = AT_FORMAT_QUOTES;
 
 $_field_formatting['social.*']                  = AT_FORMAT_QUOTES;
 
-$_field_formatting['input.*']                   = AT_FORMAT_QUOTES; /* All input should have '<' and quotes escaped.
-
+$_field_formatting['input.*']                   = AT_FORMAT_QUOTES; // All input should have '<' and quotes escaped.
 
 if (isset($_GET['cid'])) {
 	$cid = intval($_GET['cid']);
 } else if (isset($_POST['cid'])) {
 	$cid = intval($_POST['cid']);
 }
-
 
 /* google type constants - @author Harris */
 define('GOOGLE_TYPE_SOAP',		0);		//The original soap search with key generated before Dec 2005.
@@ -409,12 +424,12 @@ array("UTC-11, X","-11","Pacific/Midway"),
 array("UTC-10, W","-10","Pacific/Honolulu"),
 array("UTC-9:30, V","-9.5","Pacific/Polynesia"),
 array("UTC-9, V","-9","America/Anchorage"),
-array("UTC-8, U","-8","	America/Los_Angeles"),
+array("UTC-8, U","-8","America/Los_Angeles"),
 array("UTC-7, T","-7","America/Denver"),
 array("UTC-6, S","-6","America/Chicago"),
 array("UTC-5, R","-5","America/New_York"),
 array("UTC-4:30, Q","-4.5","America/Caracas"),
-array("UTC-4, Q","-4","	America/Antigua"),
+array("UTC-4, Q","-4","America/Antigua"),
 array("UTC-3:30, P","-3.5","America/St_Johns"),
 array("UTC-3, P","-3","Antarctica/Rothera"),
 array("UTC-2, O","-2","Atlantic/South_Georgia"),
@@ -437,7 +452,7 @@ array("UTC+8:45, H","8.75","Australia/Eucla"),
 array("UTC+9, I","9","Asia/Seoul"),
 array("UTC+9:30, I","9.5","Australia/Darwin"),
 array("UTC+10, K","10","Australia/Lindeman"),
-array("UTC+10:30, K","10.5","	Australia/Lord_Howe"),
+array("UTC+10:30, K","10.5","Australia/Lord_Howe"),
 array("UTC+11, L","11","Pacific/Ponape"),
 array("UTC+11:30, L","11.5","Pacific/Norfolk"),
 array("UTC+12, M","12","Antarctica/McMurdo"),

@@ -34,9 +34,9 @@ else if (isset($_POST["permission_granted"])) $permission_granted = $_POST["perm
 // copy theme from content folder into themes folder
 if (isset($_GET["theme"]))
 {
-	copys($theme_content_folder.$theme, '../../../themes/'.$theme);
+	copys($theme_content_folder.$theme, AT_SUBSITE_THEME_DIR . $theme);
 
-	$theme_xml = @file_get_contents('../../../themes/'.$theme . '/theme_info.xml');
+	$theme_xml = @file_get_contents(AT_SUBSITE_THEME_DIR . $theme . '/theme_info.xml');
 
 	//Check if XML file exists (if it doesnt send error and clear directory)
 	if ($theme_xml == false) 
@@ -51,7 +51,7 @@ if (isset($_GET["theme"]))
 		$xml_parser->parse($theme_xml);
 
 		$version = $xml_parser->theme_rows['version'];
-		$type = $xml_parser->theme_rows['type'];
+		$type = $xml_parser->theme_rows['type'] ? $xml_parser->theme_rows['type'] : DESKTOP_DEVICE;  // accommodate the old themes, set default type to "desktop"
 		$extra_info = $xml_parser->theme_rows['extra_info'];
 	}
 
@@ -63,8 +63,8 @@ if (isset($_GET["theme"]))
 	if ($version != VERSION) $status = '0';
 	
 	//save information in database
-	$sql = "INSERT INTO ".TABLE_PREFIX."themes (title, version, dir_name, type, last_updated, extra_info, status) ".
-				"VALUES ('$title', '$version', '$theme', '$type', '$last_updated', '$extra_info', '$status')";
+	$sql = "INSERT INTO ".TABLE_PREFIX."themes (title, version, dir_name, type, last_updated, extra_info, status, customized) ".
+				"VALUES ('$title', '$version', '$theme', '$type', '$last_updated', '$extra_info', '$status', 1)";
 	$result = mysql_query($sql, $db);
 	
 	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);

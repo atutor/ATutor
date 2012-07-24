@@ -12,262 +12,133 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-if (isset($_POST['submit'])) {
-	$_POST['content_dir'] = $stripslashes($_POST['content_dir']);
+if(isset($_POST['submit'])) {
+	unset($_POST['submit']);
+	unset($action);
+	store_steps($step);
+	$step++;
+	return;
+}
 
-	unset($errors);
+$file = '../include/config.inc.php';
 
-	if (!file_exists($_POST['content_dir']) || !realpath($_POST['content_dir'])) {
-		$errors[] = '<strong>Content Directory</strong> entered does not exist.';
-	} else if (!is_dir($_POST['content_dir'])) {
-		$errors[] = '<strong>Content Directory</strong> is not a directory.';
-	} else if (!is_writable($_POST['content_dir'])){
-		$errors[] = 'The Content Directory is not writable. To make it writable, at the command prompt from within the ATutor directory enter the command <strong>chmod 2777 content</strong>';
-	} else {
+unset($errors);
+unset($progress);
 
-		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
-
-		if (!is_dir($_POST['content_dir'].'/import')) {
-			if (!@mkdir($_POST['content_dir'].'/import')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/import</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/import')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/import</strong> directory is not writable.';
-		} 
-
-		if (!is_dir($_POST['content_dir'].'/chat')) {
-			if (!@mkdir($_POST['content_dir'].'/chat')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/chat</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/chat')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/chat</strong> directory is not writable.';
-		}
-
-		if (!is_dir($_POST['content_dir'].'/backups')) {
-			if (!@mkdir($_POST['content_dir'].'/backups')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/backups</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/backups')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/backups</strong> directory is not writable.';
-		}
-		if (!is_dir($_POST['content_dir'].'/feeds')) {
-			if (!@mkdir($_POST['content_dir'].'/feeds')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/feeds</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/feeds')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/feeds</strong> directory is not writable.';
-		}
-
-		if (!is_dir($_POST['content_dir'].'/file_storage')) {
-			if (!@mkdir($_POST['content_dir'].'/file_storage')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/file_storage</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/file_storage')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/file_storage</strong> directory is not writable.';
-		}
-
-		if (!is_dir($_POST['content_dir'].'/profile_pictures')) {
-			if (!@mkdir($_POST['content_dir'].'/profile_pictures')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/profile_pictures</strong> directory does not exist and cannot be created.';  
-			} else {
-				mkdir($_POST['content_dir'].'/profile_pictures/originals');
-				mkdir($_POST['content_dir'].'/profile_pictures/thumbs');
-				mkdir($_POST['content_dir'].'/profile_pictures/profile');
-			}
-		} else if (!is_writable($_POST['content_dir'].'/profile_pictures')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/profile_pictures</strong> directory is not writable.';
-		}
-		if (!is_dir($_POST['content_dir'].'/patcher')) {
-			if (!@mkdir($_POST['content_dir'].'/patcher')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/patcher</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/patcher')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/patcher</strong> directory is not writable.';
-		}
-		if (!is_dir($_POST['content_dir'].'/social')) {
-			if (!@mkdir($_POST['content_dir'].'/social')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/social</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/social')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/social</strong> directory is not writable.';
-		}
-		if (!is_dir($_POST['content_dir'].'/photos')) {
-			if (!@mkdir($_POST['content_dir'].'/photos')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/photos</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/photos')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/photos</strong> directory is not writable.';
-		}
-		if (!is_dir($_POST['content_dir'].'/module')) {
-			if (!@mkdir($_POST['content_dir'].'/module')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/module</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/module')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/module</strong> directory is not writable.';
-		}
-		if (!is_dir($_POST['content_dir'].'/theme')) {
-			if (!@mkdir($_POST['content_dir'].'/theme')) {
-				$errors[] = '<strong>'.$_POST['content_dir'].'/theme</strong> directory does not exist and cannot be created.';  
-			}
-		} else if (!is_writable($_POST['content_dir'].'/theme')){
-			$errors[] = '<strong>'.$_POST['content_dir'].'/theme</strong> directory is not writable.';
-		}
-
-		// save blank index.html pages to those directories
-		@copy('../images/index.html', $_POST['content_dir'] . '/import/index.html');
-		@copy('../images/index.html', $_POST['content_dir'] . '/chat/index.html');
-		@copy('../images/index.html', $_POST['content_dir'] . '/backups/index.html');
-		@copy('../images/index.html', $_POST['content_dir'] . '/feeds/index.html');
-		@copy('../images/index.html', $_POST['content_dir'] . '/file_storage/index.html');
-		@copy('../images/index.html', $_POST['content_dir'] . '/profile_pictures/index.html');
-		@copy('../images/index.html', $_POST['content_dir'] . '/index.html');
+if ( file_exists($file) ) {
+	@chmod($file, 0666);
+	if (!is_writeable($file)) {
+		$errors[] = '<strong>' . $file . '</strong> is not writeable.';
+	}else{
+		$progress[] = '<strong>' . $file . '</strong> is writeable.';
 	}
-
-	if (!isset($errors)) {
-		unset($errors);
-		unset($_POST['submit']);
-		unset($action);
-
-		if (substr($_POST['content_dir'], -1) !='\\'){
-			$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
-		}
-
-		// kludge to fix the missing slashes when magic_quotes_gpc is On
-		if ($addslashes != 'mysql_real_escape_string') {
-			$_POST['content_dir'] = addslashes($_POST['content_dir']);
-		}
-
-		store_steps($step);
-		$step++;
-		return;
-	} else {
-		// kludge to fix the missing slashes when magic_quotes_gpc is On
-		if ($addslashes != 'mysql_real_escape_string') {
-			$_POST['content_dir'] = addslashes($_POST['content_dir']);
-		}
-	}
-}	
+} else {
+	$errors[] = '<strong>' . $file . '</strong> does not exist.';
+}
 
 print_progress($step);
 
+echo '<form action="'.$_SERVER['PHP_SELF'].'" method="post" name="form">';
+
 if (isset($errors)) {
-	print_errors($errors);
-}
-
-if (isset($_POST['step1']['old_version'])) {
-	//get real path to old content
-
-	$old_install   = realpath('../../' . DIRECTORY_SEPARATOR . $_POST['step1']['old_path']);
-	$old_config_cd = urldecode($_POST['step1']['content_dir']); // this path may not exist
-	$new_install   = realpath('../');
-
-	$path_info = pathinfo($old_config_cd);
-	$content_dir_name = $path_info['basename'];
-
-	if ($new_install . DIRECTORY_SEPARATOR . $content_dir_name . DIRECTORY_SEPARATOR == $old_config_cd) {
-		// case 2
-		$copy_from     = $old_install . DIRECTORY_SEPARATOR . $content_dir_name;
-	} else {
-		// case 3 + 4
-		// it's outside
-		$copy_from = '';
+	if (isset($progress)) {
+		print_feedback($progress);
 	}
+	print_errors($errors);
 
-	$_defaults['content_dir'] = $old_config_cd;
+	echo'<input type="hidden" name="step" value="'.$step.'" />';
+
+	unset($_POST['step']);
+	unset($_POST['action']);
+	unset($errors);
+	print_hidden($step);
+
+	echo '<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>';
+
+	echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
 
 } else {
-	$defaults = $_defaults;
-	$blurb = '';
+	require(AT_INCLUDE_PATH . 'install/config_template.php');
+		
+	$comments = '/*'.str_pad(' This file was generated by the ATutor '.$new_version. ' installation script.', 70, ' ').'*/
+/*'.str_pad(' File generated '.date('Y-m-d H:m:s'), 70, ' ').'*/';
 
-	// the following code checks to see if get.php is being executed, then sets $_POST['get_file'] appropriately:
-	$headers = array();
-	$path  = substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php')) . 'get.php/?test';
-	$port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
-
-	$host = parse_url($_SERVER['HTTP_HOST']);
-
-	if (isset($host['path'])) {
-		$host = $host['path'];
-	} else if (isset($host['host'])) {
-		$host = $host['host'];
-	} else {
-		$_SERVER['HTTP_HOST'];
+	if ($_POST['step1']['db_login']) {
+		$db_login = $_POST['step1']['db_login'];
+		$db_pwd = $_POST['step1']['db_password'];
+		$db_host = $_POST['step1']['db_host'];
+		$db_port = $_POST['step1']['db_port'];
+		$db_name = $_POST['step1']['db_name'];
+		$tb_prefix = $_POST['step1']['tb_prefix'];
+		$content_dir = $_POST['step1']['content_dir'];
+		$smtp = $_POST['step1']['smtp'];
+		$get_file = $_POST['step1']['get_file'];
+	} else if ($_POST['step2']['db_login']) {
+		$db_login = $_POST['step2']['db_login'];
+		$db_pwd = $_POST['step2']['db_password'];
+		$db_host = $_POST['step2']['db_host'];
+		$db_port = $_POST['step2']['db_port'];
+		$db_name = $_POST['step2']['db_name'];
+		$tb_prefix = $_POST['step2']['tb_prefix'];
+		$content_dir = $_POST['step4']['content_dir'];
+		$smtp = $_POST['step3']['smtp'];
+		$get_file = $_POST['step4']['get_file'];
 	}
-	if ($port == 443) {
-		// if we're using SSL, but don't know if support is compiled into PHP:
-		$fd = @fopen('https://'.$host.$path, 'rb');
-		if ($fd === false) {
-			$content = false;
-		} else {
-			$content = @fread($fd, filesize($filename));
-			@fclose($fd);
-		}
+	
+	if (!write_config_file('../include/config.inc.php', 
+	         $db_login,
+	         $db_pwd,
+	         $db_host,
+	         $db_port,
+	         $db_name,
+	         $tb_prefix,
+	         $comments,
+	         $content_dir,
+	         $smtp,
+	         $get_file
+	)) {
+		echo '<input type="hidden" name="step" value="'.$step.'" />';
 
-		if (strlen($content) == 0) {
-			$headers[] = 'ATutor-Get: OK';
-		} else {
-			$headers[] = '';
-		}
+		print_feedback($progress);
+
+		$errors[] = 'include/config.inc.php cannot be written! Please verify that the file exists and is writeable. On Unix issue the command <kbd>chmod a+rw include/config.inc.php</kbd> to make the file writeable. On Windows edit the file\'s properties ensuring that the <kbd>Read-only</kbd> attribute is <em>not</em> checked and that <kbd>Everyone</kbd> access permissions are given to that file.';
+		print_errors($errors);
+
+		echo '<p><strong>Note:</strong> To change permissions on Unix use <kbd>chmod a+rw</kbd> then the file name.</p>';
+
+		echo '<p align="center"><input type="submit" class="button" value=" Try Again " name="retry" />';
+
 	} else {
-		$fp   = @fsockopen($host, $port, $errno, $errstr, 15);
+		/* if header img and logo were carried forward AND the upgrade was from 1.4.3 to 1.5 then */
+		if (($_POST['step1']['header_img'] != '' || $_POST['step1']['header_logo'] != '') 
+			&& $new_version == '1.5' && $_POST['step1']['old_version'] == '1.4.3')
+			{
+				$db = mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+				mysql_select_db($_POST['step1']['db_name'], $db);
 
-		if($fp) {
-			$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$host."\r\n\r\n";
-			fputs($fp, $head);
-			while(!feof($fp)) {
-				if ($header = trim(fgets($fp, 1024))) {
-					$headers[] = $header;
-				}
+				$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."themes VALUES ('ATutor_alt', '1.5', 'default_oldheader', NOW() , 'Backwards compatible default theme', 2)";
+				@mysql_query($sql, $db);
+
+				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes SET status=0, version='1.5' WHERE dir_name = 'default'";
+				@mysql_query($sql, $db);
 			}
-		}
-	}
-	if (in_array('ATutor-Get: OK', $headers)) {
-		$get_file = 'TRUE';
-	} else {
-		$get_file = 'FALSE';
+
+		echo '<input type="hidden" name="step" value="'.$step.'" />';
+		print_hidden($step);
+
+		$progress[] =  'Data has been saved successfully.';
+
+		$cdir = urldecode(trim($_POST['step4']['content_dir']));
+
+		@chmod('../include/config.inc.php', 0444);
+
+		print_feedback($progress);
+
+		echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p>';
+		
 	}
 }
 
 ?>
-<br />
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="step" value="<?php echo $step; ?>" />
-	<input type="hidden" name="copy_from" value="<?php echo $copy_from; ?>" />
-	<input type="hidden" name="get_file" value="<?php echo $get_file; ?>" />
-	<?php print_hidden($step); ?>
 
-<?php if (isset($_POST['step1']['old_version'])) : ?>
-	<input type="hidden" name="content_dir" value="<?php echo $_defaults['content_dir']; ?>" />
-	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
-	<tr>
-		<td class="row1">The content directory at <strong><?php echo $_defaults['content_dir']; ?> </strong> will be used for this installation's content. Please create it if it does not already exist.</td>
-	</tr>
-	</table>
-<?php elseif ($get_file == 'FALSE') : ?>
-	<input type="hidden" name="content_dir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" />
-
-	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
-	<tr>
-		<td class="row1"><span class="required" title="Required Field">*</span><strong><label for="contentdir">Content Directory</label></strong>
-		<p>It has been detected that your webserver does not support the protected content directory feature. The content directory stores all of the courses' files.</p>
-		<p>Due to that restriction your content directory must exist within your ATutor installation directory and cannot be moved. Its path is specified below. Please create it if it does not already exist.</p>
-		<br /><br />
-		<input type="text" name="content_dir_disabled" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" disabled="disabled" /></td>
-	</tr>
-	</table>
-<?php else: ?>
-	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
-	<tr>
-		<td class="row1"><span class="required" title="Required Field">*</span><strong><label for="contentdir">Content Directory</label></strong>
-		<p>Please specify where the content directory should be. The content directory stores all of the courses' files. As a security measure, the content directory should be placed <em>outside</em> of your ATutor installation (for example, to a non-web-accessible location that is not publically available).</p>
-		
-		<p>On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>.</p>
-		
-		<p>The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod 2777 content</kbd>. Also be sure the path may not contain any symbolic links.</p>
-
-		<input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" /></td>
-	</tr>
-	</table>
-<?php endif; ?>
-	<br /><br /><p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p>
 </form>

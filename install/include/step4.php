@@ -1,6 +1,4 @@
 <?php
-exit('this file is no longer used');
-
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
@@ -14,68 +12,49 @@ exit('this file is no longer used');
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
+if (isset($_POST['submit'])) {
+	$_POST['content_dir'] = $stripslashes($_POST['content_dir']);
+
 	unset($errors);
-	$_POST['username'] = trim($_POST['username']);
-	$_POST['password'] = trim($_POST['password']);
-	$_POST['email']    = trim($_POST['email']);
 
-	$_POST['instructor'] = intval($_POST['instructor']);
-	$_POST['welcome_course'] = intval($_POST['welcome_course']);
-
-	/* login name check */
-	if ($_POST['username'] == ''){
-		$errors[] = 'Username cannot be empty.';
+	if (!file_exists($_POST['content_dir']) || !realpath($_POST['content_dir'])) {
+		$errors[] = '<strong>Content Directory</strong> entered does not exist.';
+	} else if (!is_dir($_POST['content_dir'])) {
+		$errors[] = '<strong>Content Directory</strong> is not a directory.';
+	} else if (!is_writable($_POST['content_dir'])){
+		$errors[] = 'The Content Directory is not writable. To make it writable, at the command prompt from within the ATutor directory enter the command <strong>chmod 2777 content</strong>';
 	} else {
-		/* check for special characters */
-		if (!(preg_match("/^[a-zA-Z0-9_]([a-zA-Z0-9_])*$/i", $_POST['username']))){
-			$errors[] = 'Username is not valid.';
-		} else {
-			if ($_POST['username'] == $_POST['step3']['admin_username']) {
-				$errors[] = 'That Username is already being used for the Administrator account, choose another.';
-			}
-		}
+		include(AT_INCLUDE_PATH . 'install/install.inc.php');
+
+		$_POST['content_dir'] = realpath(urldecode($_POST['content_dir']));
+
+		create_content_subdir($_POST['content_dir'], '../images/index.html', true);
 	}
 
-	if ($_POST['password'] == '') {
-		$errors[] = 'Password cannot be empty.';
-	}
-
-	if ($_POST['email'] == '') {
-		$errors[] = 'Email cannot be empty.';
-	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
-		$errors[] = 'Invalid email format.';
-	}
-	
 	if (!isset($errors)) {
+		unset($errors);
 		unset($_POST['submit']);
-		unset($_POST['action']);
+		unset($action);
 
-		if ($_POST['instructor']) {
-			$status = 3;
-		} else {
-			$status = 2;
+		if (substr($_POST['content_dir'], -1) !='\\'){
+			$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
 		}
 
-		$db = mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
-		mysql_select_db($_POST['step2']['db_name'], $db);
-
-		$sql = "INSERT INTO ".$_POST['step2']['tb_prefix']."members VALUES (NULL,'$_POST[username]','$_POST[password]','$_POST[email]','','','','', '','', '','','','','', '',$status,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
-		$result = mysql_query($sql ,$db);
-		$m_id	= mysql_insert_id($db);
-
-		if ($_POST['welcome_course'] && $_POST['instructor']) {
-			$_POST['tb_prefix'] = $_POST['step2']['tb_prefix'];
-			queryFromFile('db/atutor_welcome_course.sql');
+		// kludge to fix the missing slashes when magic_quotes_gpc is On
+		if ($addslashes != 'mysql_real_escape_string') {
+			$_POST['content_dir'] = addslashes($_POST['content_dir']);
 		}
-		
+
 		store_steps($step);
 		$step++;
 		return;
+	} else {
+		// kludge to fix the missing slashes when magic_quotes_gpc is On
+		if ($addslashes != 'mysql_real_escape_string') {
+			$_POST['content_dir'] = addslashes($_POST['content_dir']);
+		}
 	}
-} else {
-	unset($_POST['email']);
-}
+}	
 
 print_progress($step);
 
@@ -83,44 +62,120 @@ if (isset($errors)) {
 	print_errors($errors);
 }
 
-?>
-<p>You will need a personal account to view and, optionally, create courses.</p>
+if (isset($_POST['step1']['old_version'])) {
+	//get real path to old content
 
+	$old_install   = realpath('../../' . DIRECTORY_SEPARATOR . $_POST['step1']['old_path']);
+	$old_config_cd = urldecode($_POST['step1']['content_dir']); // this path may not exist
+	$new_install   = realpath('../');
+
+	$path_info = pathinfo($old_config_cd);
+	$content_dir_name = $path_info['basename'];
+
+	if ($new_install . DIRECTORY_SEPARATOR . $content_dir_name . DIRECTORY_SEPARATOR == $old_config_cd) {
+		// case 2
+		$copy_from     = $old_install . DIRECTORY_SEPARATOR . $content_dir_name;
+	} else {
+		// case 3 + 4
+		// it's outside
+		$copy_from = '';
+	}
+
+	$_defaults['content_dir'] = $old_config_cd;
+
+} else {
+	$defaults = $_defaults;
+	$blurb = '';
+
+	// the following code checks to see if get.php is being executed, then sets $_POST['get_file'] appropriately:
+	$headers = array();
+	$path  = substr($_SERVER['PHP_SELF'], 0, -strlen('install/install.php')) . 'get.php/?test';
+	$port = isset($_SERVER['SERVER_PORT']) ? $_SERVER['SERVER_PORT'] : 80;
+
+	$host = parse_url($_SERVER['HTTP_HOST']);
+
+	if (isset($host['path'])) {
+		$host = $host['path'];
+	} else if (isset($host['host'])) {
+		$host = $host['host'];
+	} else {
+		$_SERVER['HTTP_HOST'];
+	}
+	if ($port == 443) {
+		// if we're using SSL, but don't know if support is compiled into PHP:
+		$fd = @fopen('https://'.$host.$path, 'rb');
+		if ($fd === false) {
+			$content = false;
+		} else {
+			$content = @fread($fd, filesize($filename));
+			@fclose($fd);
+		}
+
+		if (strlen($content) == 0) {
+			$headers[] = 'ATutor-Get: OK';
+		} else {
+			$headers[] = '';
+		}
+	} else {
+		$fp   = @fsockopen($host, $port, $errno, $errstr, 15);
+
+		if($fp) {
+			$head = 'HEAD '.@$path. " HTTP/1.0\r\nHost: ".@$host."\r\n\r\n";
+			fputs($fp, $head);
+			while(!feof($fp)) {
+				if ($header = trim(fgets($fp, 1024))) {
+					$headers[] = $header;
+				}
+			}
+		}
+	}
+	if (in_array('ATutor-Get: OK', $headers)) {
+		$get_file = 'TRUE';
+	} else {
+		$get_file = 'FALSE';
+	}
+}
+
+?>
+<br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="step" value="4" />
-	<input type="hidden" name="action" value="process" />
-	<?php
-		print_hidden($step);
-	?>
-	<table width="70%" class="tableborder" cellspacing="0" cellpadding="1" align="center">
+	<input type="hidden" name="step" value="<?php echo $step; ?>" />
+	<input type="hidden" name="copy_from" value="<?php echo $copy_from; ?>" />
+	<input type="hidden" name="get_file" value="<?php echo $get_file; ?>" />
+	<?php print_hidden($step); ?>
+
+<?php if (isset($_POST['step1']['old_version'])) : ?>
+	<input type="hidden" name="content_dir" value="<?php echo $_defaults['content_dir']; ?>" />
+	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
 	<tr>
-		<td class="row1"><small><b><label for="username">Username:</label></b><br />
-		May contain only letters, numbers, or underscores.<br />20 character maximum.</small></td>
-		<td class="row1"><input type="text" name="username" id="username" maxlength="20" size="20" value="<?php if (!empty($_POST['username'])) { echo $stripslashes(htmlspecialchars($_POST['username'])); } ?>" class="formfield" /></td>
-	</tr>
-	<tr>
-		<td class="row1"><small><b><label for="password">Password:</label></b><br />
-		Use a combination of letters, numbers and symbols.<br />15 character maximum.</small></td>
-		<td class="row1"><input type="text" name="password" id="password" maxlength="15" size="15" value="<?php if (!empty($_POST['password'])) { echo $stripslashes(htmlspecialchars($_POST['password'])); } ?>" class="formfield" /></td>
-	</tr>
-	<tr>
-		<td class="row1"><small><b><label for="email">Email:</label></b></small></td>
-		<td class="row1"><input type="text" name="email" id="email" size="30" maxlength="60" value="<?php if (!empty($_POST['email'])) { echo $stripslashes(htmlspecialchars($_POST['email'])); } ?>" class="formfield" /></td>
-	</tr>
-	<tr>
-		<td class="row1"><small><b>Instructor Account:</b><br />
-		Do you want this to be an instructor account allowing you to create courses?<br />
-		Default: <kbd>Yes</kbd></small></td>
-		<td class="row1"><input type="radio" name="instructor" value="1" id="en_y" <?php if($_POST['instructor']== 1 || empty($_POST['instructor'])) { echo "checked"; }?>/><label for="en_y">Yes</label>, <input type="radio" name="instructor" value="0" id="en_n" <?php if($_POST['instructor']===0) { echo "checked"; }?>/><label for="en_n">No</label></td>
-	</tr>
-	<tr>
-		<td class="row1"><small><b>Welcome Course:</b><br />
-		Do you want the basic <em>Welcome Course</em> created? Only possible if an instructor account above is created.<br />
-		Default: <kbd>Yes</kbd></small></td>
-		<td class="row1"><input type="radio" name="welcome_course" value="1" id="wc_y" <?php if($_POST['welcome_course']== 1 || empty($_POST['welcome_course'])) { echo 'checked'; }?>/><label for="wc_y">Yes</label>, <input type="radio" name="welcome_course" value="0" id="wc_n" <?php if ($_POST['welcome_course'] === 0) { echo 'checked'; }?>/><label for="wc_n">No</label></td>
+		<td class="row1">The content directory at <strong><?php echo $_defaults['content_dir']; ?> </strong> will be used for this installation's content. Please create it if it does not already exist.</td>
 	</tr>
 	</table>
+<?php elseif ($get_file == 'FALSE') : ?>
+	<input type="hidden" name="content_dir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" />
 
-	<br /><br /><p align="center"><input type="submit" class="button" value="Next &raquo; " name="submit" /></p>
+	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
+	<tr>
+		<td class="row1"><span class="required" title="Required Field">*</span><strong><label for="contentdir">Content Directory</label></strong>
+		<p>It has been detected that your webserver does not support the protected content directory feature. The content directory stores all of the courses' files.</p>
+		<p>Due to that restriction your content directory must exist within your ATutor installation directory and cannot be moved. Its path is specified below. Please create it if it does not already exist.</p>
+		<br /><br />
+		<input type="text" name="content_dir_disabled" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" disabled="disabled" /></td>
+	</tr>
+	</table>
+<?php else: ?>
+	<table width="80%" class="tableborder" cellspacing="0" cellpadding="1" align="center">	
+	<tr>
+		<td class="row1"><span class="required" title="Required Field">*</span><strong><label for="contentdir">Content Directory</label></strong>
+		<p>Please specify where the content directory should be. The content directory stores all of the courses' files. As a security measure, the content directory should be placed <em>outside</em> of your ATutor installation (for example, to a non-web-accessible location that is not publically available).</p>
+		
+		<p>On a Windows machine, the path should look like <kbd>C:\content</kbd>, while on Unix it should look like <kbd>/var/content</kbd>.</p>
+		
+		<p>The directory you specify must be created if it does not already exist and be writeable by the webserver. On Unix machines issue the command <kbd>chmod 2777 content</kbd>. Also be sure the path may not contain any symbolic links.</p>
 
+		<input type="text" name="content_dir" id="contentdir" value="<?php if (!empty($_POST['content_dir'])) { echo $_POST['content_dir']; } else { echo $_defaults['content_dir']; } ?>" class="formfield" size="70" /></td>
+	</tr>
+	</table>
+<?php endif; ?>
+	<br /><br /><p align="center"><input type="submit" class="button" value=" Next &raquo;" name="submit" /></p>
 </form>

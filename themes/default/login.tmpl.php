@@ -15,10 +15,11 @@ function encrypt_password() {
 	return true;
 }
 
+
 </script>
 <div class="input-form">
 	<div class="column" style="margin-top:0;">
-		<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+		<form action="<?php echo AT_print($_SERVER['PHP_SELF'], 'url.self'); ?>" method="post" name="form">
 		<input type="hidden" name="form_login_action" value="true" />
 		<input type="hidden" name="form_course_id" value="<?php echo $this->form_course_id; ?>" />
 		<input type="hidden" name="form_password_hidden" value="" />

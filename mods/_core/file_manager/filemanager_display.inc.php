@@ -175,6 +175,7 @@ if (TRUE || $framed != TRUE) {
 		|| (($my_MaxCourseSize == AT_COURSESIZE_DEFAULT) && ($course_total < $MaxCourseSize))
 		|| ($my_MaxCourseSize-$course_total > 0)) {
 		echo '	<div class="row" style="float: left;">'._AT('OR').'</div>'."\n".'	<div class="row" style="float: left;">'."\n";
+
 		if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 		?>
 		<div id="uploader-error-container"></div>
@@ -182,31 +183,31 @@ if (TRUE || $framed != TRUE) {
 				<div id="uploader">
 				<!-- Basic upload controls, used when JavaScript is unavailable -->
         <form method="post" enctype="multipart/form-data" class="fl-progEnhance-basic">
-            <p>Use the Browse button to add a file, and the Save button to upload it.</p>
+            <p><?php echo _AT('mfu_browse_to_add'); ?></p>
             <input name="fileData" type="file" />
             <input class="fl-uploader-basic-save" type="submit" value="Save"/>
         </form>
-        
+
         <!-- Uploader container -->
         <form class="flc-uploader fl-uploader fl-progEnhance-enhanced" method="get" enctype="multipart/form-data">
-            
+                             
             <!-- File Queue, which is split up into two separate tables: one for the header and body -->
             <table class="fl-uploader-header">
            		<tr>
-					<th class="fl-uploader-file-name">File Name</th>
-					<th class="fl-uploader-file-size">Size</th>
+					<th class="fl-uploader-file-name"><?php echo _AT('mfu_filename'); ?></th>
+					<th class="fl-uploader-file-size"><?php echo _AT('mfu_size'); ?></th>
 					<th class="fl-uploader-file-actions"></th>
-				</tr>u
+				</tr>
             </table>
-            
+
             <!-- File Queue body, which is the default container for the FileQueueView component -->
             <table summary="The list of files" class="flc-uploader-queue fl-uploader-queue">
-				<caption>File Upload Queue:</caption>
+				<caption><?php echo _AT('mfu_upload_queue'); ?></caption>
 				<tbody>
 					<!-- Template for file row -->
 					<tr class="flc-uploader-file-tmplt flc-uploader-file">
-						<td class="flc-uploader-file-name fl-uploader-file-name">File Name Placeholder</td>
-						<td class="flc-uploader-file-size fl-uploader-file-size">0 KB</td>
+						<td class="flc-uploader-file-name fl-uploader-file-name"><?php echo _AT('mfu_filename_placeholder'); ?></td>
+						<td class="flc-uploader-file-size fl-uploader-file-size">0 <?php echo _AT('mfu_kb'); ?></td>
 						<td class="fl-uploader-file-actions">
 							<button type="button" class="flc-uploader-file-action" tabindex="-1"></button>
 						</td>
@@ -218,29 +219,29 @@ if (TRUE || $framed != TRUE) {
 					</tr>
 				</tbody>
 			</table>
-            
+
             <!-- File progress bar template, used to generate progress bars for each file in the queue -->
             <div class="flc-uploader-file-progressor-tmplt fl-uploader-file-progress"></div>            
 
             <!-- Initial instructions -->
             <div class="flc-uploader-browse-instructions fl-uploader-browse-instructions">
-                Choose <em>Browse files</em> to add files to the queue. 
+                <?php echo _AT('mfu_add_to_queue'); ?>
             </div>            
 
             <!-- Status footer -->
             <div class="flc-uploader-queue-footer fl-uploader-queue-footer fl-fix">
                 <div class="flc-uploader-total-progress-text fl-uploader-total-progress-text fl-force-left">
-                    Total: 0 files (0 KB)
+                    <?php echo _AT('mfu_default_total'); ?>
                 </div>
                 <div class="fl-text-align-right fl-force-right">
                     <span class="flc-uploader-button-browse fl-uploader-browse">
-                        <span class="flc-uploader-button-browse-text">Browse files</span>
+                        <span class="flc-uploader-button-browse-text"><?php echo _AT('mfu_browse_files'); ?></span>
                     </span>
                 </div>
                 <!-- Total progress bar -->
                 <div class="flc-uploader-total-progress fl-uploader-total-progress-okay"></div>
                 <div class="flc-uploader-errorsPanel fl-uploader-errorsPanel">
-                     <div class="fl-uploader-errorsPanel-header"><span class="flc-uploader-errorPanel-header">Warnings:</span></div>
+                     <div class="fl-uploader-errorsPanel-header"><span class="flc-uploader-errorPanel-header"><?php echo _AT('mfu_warnings'); ?></span></div>
     
                      <!-- The markup for each error section will be rendered into these containers. -->
                      <div class="flc-uploader-errorPanel-section-fileSize"></div>
@@ -249,17 +250,17 @@ if (TRUE || $framed != TRUE) {
                      <!-- Error section template.-->
                      <div class="flc-uploader-errorPanel-section-tmplt fl-uploader-hidden-templates">
                          <div class="flc-uploader-errorPanel-section-title fl-uploader-errorPanel-section-title">
-                             x files were too y and were not added to the queue.
+                             <?php echo _AT('mfu_files_not_added'); ?>
                          </div>
                          
                          <div class="flc-uploader-errorPanel-section-details fl-uploader-errorPanel-section-details">
-                             <p>The following files were not added:</p>
+                             <p><?php echo _AT('mfu_files_not_added2'); ?></p>
                              <p class="flc-uploader-errorPanel-section-files">file_1, file_2, file_3, file_4, file_5 </p>
                          </div>
                          
-                         <button type="button" class="flc-uploader-errorPanel-section-toggleDetails fl-uploader-errorPanel-section-toggleDetails">Hide this list</button>
+                         <button type="button" class="flc-uploader-errorPanel-section-toggleDetails fl-uploader-errorPanel-section-toggleDetails"><?php echo _AT('mfu_hide_list'); ?></button>
                          <button type="button" class="flc-uploader-errorPanel-section-removeButton fl-uploader-errorPanel-section-removeButton">
-                             <span class="flc-uploader-erroredButton-text fl-uploader-hidden">Remove error</span>
+                             <span class="flc-uploader-erroredButton-text fl-uploader-hidden"><?php echo _AT('mfu_remove_error'); ?></span>
                          </button>
                      </div>
                  </div>                
@@ -267,13 +268,13 @@ if (TRUE || $framed != TRUE) {
             
             <!-- Upload buttons -->
             <div class="fl-uploader-buttons">
-                <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden">Stop Upload</button>
-                <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim">Upload</button>
+                <button type="button" class="flc-uploader-button-pause fl-uploader-button-stop fl-uploader-hidden"><?php echo _AT('mfu_stop_upload'); ?></button>
+                <button type="button" class="flc-uploader-button-upload fl-uploader-button-upload fl-uploader-dim"><?php echo _AT('mfu_upload'); ?></button>
             </div>
             
             <div class="flc-uploader-status-region fl-offScreen-hidden"></div>
         </form>        
-            
+
         <script type="text/javascript">
             var myUploader = fluid.uploader(".flc-uploader", {
                 queueSettings: {
@@ -304,6 +305,30 @@ if (TRUE || $framed != TRUE) {
                         ]
                     }
                 },
+                strings: {
+					progress: {
+						fileUploadLimitLabel: "<?php echo _AT('mfu_upload_limit', '%fileUploadLimit', '%fileLabel'); ?>",
+						toUploadLabel:  "<?php echo _AT('mfu_to_upload', '%fileCount', '%fileLabel', '%totalBytes'); ?>" ,
+						totalProgressLabel: "<?php echo _AT('mfu_uploading', '%curFileN', '%totalFilesN', '%fileLabel', '%currBytes', '%totalBytes'); ?>",
+						completedLabel: "<?php echo _AT('mfu_uploaded', '%curFileN', '%totalFilesN', '%fileLabel', '%totalCurrBytes','%errorString'); ?>",
+						numberOfErrors: "<?php echo _AT('mfu_error_msg', '%errorsN', '%errorLabel'); ?>",
+						singleFile: "<?php echo _AT('mfu_file'); ?>",
+						pluralFiles: "<?php echo _AT('mfu_files'); ?>",
+						singleError: "<?php echo _AT('mfu_error'); ?>",
+						pluralErrors: "<?php echo _AT('mfu_errors'); ?>"
+					},
+					buttons: {
+						browse: "<?php echo _AT('mfu_browse_files'); ?>",
+						addMore: "<?php echo _AT('mfu_add_more'); ?>",
+						stopUpload: "<?php echo _AT('mfu_stop_upload'); ?>",
+						cancelRemaning: "<?php echo _AT('mfu_cancel_uploads'); ?>",
+						resumeUpload: "<?php echo _AT('mfu_resume_uploads'); ?>"
+					},
+					queue: {
+       					emptyQueue:  "<?php echo _AT('mfu_no_file_list'); ?>",
+        				queueSummary: "<?php echo _AT('mfu_file_list_waiting', '%totalUploaded', '%totalInUploadQueue'); ?>" 
+    				}
+				},
                 listeners: {
             		onSuccess: function (response){
 		                // example assumes that the server code passes the new image URL in the serverData
@@ -329,7 +354,42 @@ if (TRUE || $framed != TRUE) {
                                 flashButtonImageURL: "<?php echo AT_BASE_HREF; ?>jscripts/infusion/components/uploader/images/browse.png"
                             }
                         }
-                    }
+                    },
+                	errorPanel:{
+                		options:{
+                			strings: {
+								headerText: "<?php echo _AT('mfu_warnings'); ?>",
+								exceedsNumFilesLimit: "<?php echo _AT('mfu_tomany_files','%numFiles'); ?>",
+								exceedsFileSize: "<?php echo _AT('mfu_tolarge_files','%numFiles'); ?>"
+							}
+                		}
+                	},
+                	fileQueueView: {
+                		options: {
+							strings: {
+								progress: {
+									toUploadLabel: "<?php echo _AT('mfu_to_upload', '%fileCount', '%fileLabel', '%totalBytes'); ?>",
+									singleFile: "<?php echo _AT('mfu_file'); ?>",
+									pluralFiles: "<?php echo _AT('mfu_files'); ?>"
+								},
+								status: {
+									success: "<?php echo _AT('mfu_file_uploaded'); ?>",
+									error: "<?php echo _AT('mfu_file_upload_error'); ?>",
+									remove: "<?php echo _AT('mfu_press_delete'); ?>"
+								},
+								errors: {
+									HTTP_ERROR: "<?php echo _AT('mfu_error_unknown'); ?>",
+									IO_ERROR: "<?php echo _AT('mfu_error_network'); ?>",
+									UPLOAD_LIMIT_EXCEEDED: "<?php echo _AT('mfu_error_allowed'); ?>",
+									UPLOAD_FAILED: "<?php echo _AT('mfu_error_failed'); ?>",
+									QUEUE_LIMIT_EXCEEDED: "<?php echo _AT('mfu_error_queue_limit'); ?>",
+									FILE_EXCEEDS_SIZE_LIMIT: "<?php echo _AT('mfu_error_size_limit','%fileSizeLimit'); ?>",
+									ZERO_BYTE_FILE: "<?php echo _AT('mfu_error_file_empty'); ?>",
+									INVALID_FILETYPE: "<?php echo _AT('mfu_error_file_type'); ?>"
+								}
+							}
+                		}                		
+                	}
                 }
             });
             

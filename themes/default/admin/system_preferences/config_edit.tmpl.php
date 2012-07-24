@@ -41,7 +41,8 @@
 
 		// Replace this hack to use the PHP timezone functions when the PHP requirement is raised to 5.3
 		global $utc_timezones; // set in include/lib/constants.inc.php
-		$local_offset = ((date(Z)/3600));
+		//$local_offset = ((date(Z)/3600));
+
 		echo '<select name="time_zone" id="time_zone">';	
 			echo '<option value="0">'._AT('none').'</option>';
 		foreach ($utc_timezones as $zone => $offset){
@@ -76,7 +77,9 @@
 		}
 		echo '</select>';
 */
+
 echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
+
 ?>
 	</div>
 
@@ -133,7 +136,14 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		<input type="radio" name="allow_browse" value="1" id="browse_y" <?php if($_config['allow_browse']) { echo 'checked="checked"'; }?>  /><label for="browse_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_browse" value="0" id="browse_n" <?php if(!$_config['allow_browse']) { echo 'checked="checked"'; }?>  /><label for="browse_n"><?php echo _AT('disable'); ?></label>
 	</fieldset>
 	</div>
-
+	
+	<div class="row">
+	<fieldset><legend>	<?php echo _AT('show_current'); ?> </legend>
+	(<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['show_current'] ? _AT('enable') : _AT('disable')); ?>)<br />
+		<input type="radio" name="show_current" value="1" id="current_y" <?php if($_config['show_current']) { echo 'checked="checked"'; }?>  /><label for="current_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="show_current" value="0" id="current_n" <?php if(!$_config['show_current']) { echo 'checked="checked"'; }?>  /><label for="current_n"><?php echo _AT('disable'); ?></label>
+	</fieldset>
+	</div>
+	
 	<div class="row">
 	<fieldset>
 	<legend><?php echo _AT('allow_instructor_registration'); ?> </legend>

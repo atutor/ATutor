@@ -203,25 +203,6 @@ if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION
 	$_pages['users/browse.php']['parent']    = AT_NAV_START;
 	$_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
 
-
-if (isset($_SESSION['member_id']) && get_instructor_status() === TRUE)	
-{
-	$_pages['mods/_core/courses/users/create_course.php']['title_var'] = 'create_course';
-$_pages['mods/_core/courses/users/create_course.php']['parent']    = 'users/index.php';
-$_pages['mods/_core/courses/users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
-$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
-
-}
-else if (isset($_SESSION['member_id']) && ALLOW_INSTRUCTOR_REQUESTS)
-{
-
-	  $_pages['mods/_core/courses/users/create_course.php']['title_var'] = 'request_instructor_priv';
-$_pages['mods/_core/courses/users/create_course.php']['parent']    = 'users/index.php';
-$_pages['mods/_core/courses/users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
-$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
-
-}
-
 $_pages['users/private_enroll.php']['title_var'] = 'enroll';
 $_pages['users/private_enroll.php']['parent']    = 'users/index.php';
 
@@ -370,7 +351,7 @@ function get_main_navigation($current_page) {
 					$table = '';
 				}
 
-                $_top_level_pages[] = array('url' => $_base_path . url_rewrite($page), 'title' => $_page_title, 'img' => $_base_path.$_pages[$page]['img'], 'tool_file' => $tool_file, 'table' => $table);
+                $_top_level_pages[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($page), 'title' => $_page_title, 'img' => AT_print($_base_path, 'url.page').$_pages[$page]['img'], 'tool_file' => $tool_file, 'table' => $table);
             }
         }
     } else if (isset($parent_page)) {
@@ -385,7 +366,7 @@ function get_current_main_page($current_page) {
     $parent_page = $_pages[$current_page]['parent'];
 
     if (isset($parent_page) && defined($parent_page)) {
-        return $_base_path . url_rewrite($current_page);
+        return AT_print($_base_path, 'url.page'). url_rewrite($current_page);
     } else if (isset($parent_page)) {
             return get_current_main_page($parent_page);
         }
@@ -404,7 +385,7 @@ function get_sub_navigation($current_page) {
                 $_page_title = _AT($_pages[$current_page]['title_var']);
             }
 
-            $_sub_level_pages[] = array('url' => $_base_path . $current_page, 'title' => $_page_title);
+            $_sub_level_pages[] = array('url' => AT_print($_base_path, 'url.page') . $current_page, 'title' => $_page_title);
             foreach ($_pages[$current_page]['children'] as $child) {
             	if (!page_available($child)) continue;
             	
@@ -414,7 +395,7 @@ function get_sub_navigation($current_page) {
                     $_page_title = _AT($_pages[$child]['title_var']);
                 }
 
-                $_sub_level_pages[] = array('url' => $_base_path . $child, 'title' => $_page_title, 'has_children' => isset($_pages[$child]['children']));
+                $_sub_level_pages[] = array('url' => AT_print($_base_path, 'url.page') . $child, 'title' => $_page_title, 'has_children' => isset($_pages[$child]['children']));
             }
         } else if (isset($_pages[$current_page]['parent'])) {
             // no children
@@ -434,9 +415,9 @@ function get_current_sub_navigation_page($current_page) {
     $parent_page = $_pages[$current_page]['parent'];
 
     if (isset($parent_page) && defined($parent_page)) {
-        return $_base_path . $current_page;
+        return AT_print($_base_path, 'url.page') . $current_page;
     } else {
-        return $_base_path . $current_page;
+        return AT_print($_base_path, 'url.page') . $current_page;
     }
 }
 
@@ -458,13 +439,13 @@ function get_path($current_page) {
     }
 
     if (isset($parent_page) && defined($parent_page)) {
-        $path[] = array('url' => $_base_path . url_rewrite($current_page), 'title' => $_page_title);
+        $path[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($current_page), 'title' => $_page_title);
         return $path;
     } else if (isset($parent_page)) {
-            $path[] = array('url' => $_base_path . url_rewrite($current_page), 'title' => $_page_title);
+            $path[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($current_page), 'title' => $_page_title);
             $path = array_merge((array) $path, get_path($parent_page));
         } else {
-            $path[] = array('url' => $_base_path . url_rewrite($current_page), 'title' => $_page_title);
+            $path[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($current_page), 'title' => $_page_title);
         }
 
     return $path;
@@ -489,7 +470,7 @@ function get_home_navigation($home_array='') {
                 $title = _AT($_pages[$child]['title_var']);
             }
             if(isset($_pages[$child]['icon'])) {                                //si controlla se è presente l'icona inserita nel modulo di rifrimento. si ricorda che l'icona � inserita solo per i moduli che prevedono possibili sottocontenuti.
-                $icon = $_base_path.$_pages[$child]['icon'];                    //in caso positivo viene prelevata e inserita in una variabile di appoggio che poi sar� a sua volta inserita all'interno dell'array finale home_links[]
+                $icon = AT_print($_base_path, 'url.page').$_pages[$child]['icon'];                    //in caso positivo viene prelevata e inserita in una variabile di appoggio che poi sar� a sua volta inserita all'interno dell'array finale home_links[]
             } 
             if(isset($_pages[$child]['text'])) {                         //nel caso in cui non sia presente un' icona associata si controlla se � stato settata il testo (per moduli privi di sottocontenuti).
                 $text = $_pages[$child]['text'];				//il testo viene inserito in una variabile d'appoggio e successivamente nell'array.
@@ -504,16 +485,16 @@ function get_home_navigation($home_array='') {
              }
 
             $real_image_in_theme = AT_INCLUDE_PATH.'../themes/'.$_SESSION['prefs']['PREF_THEME'].'/'.$_pages[$child]['img'];
-            $image_in_theme = $_base_path.'themes/'.$_SESSION['prefs']['PREF_THEME'].'/'.$_pages[$child]['img'];
+            $image_in_theme = AT_print($_base_path, 'url.page').'themes/'.$_SESSION['prefs']['PREF_THEME'].'/'.$_pages[$child]['img'];
 
             // look for images in theme folder. If not exists, use images relative to ATutor root folder
             if (file_exists($real_image_in_theme))
                 $image = $image_in_theme;
             else
-                $image = $_base_path.$_pages[$child]['img'];
+                $image = AT_print($_base_path, 'url.page').$_pages[$child]['img'];
 
             // inclusion of all data necessary for displaying the modules on the home-page. Set by default to check the visible because the modules will be loaded all visible in the home.
-            $home_links[] = array('url' => $_base_path . url_rewrite($child), 'title' => $title, 'img' => $image, 'icon' => $icon, 'text' => $text, 'sub_file' => $sub_file, 'tool_file' => $tool_file, 'table' => $table);
+            $home_links[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($child), 'title' => $title, 'img' => $image, 'icon' => $icon, 'text' => $text, 'sub_file' => $sub_file, 'tool_file' => $tool_file, 'table' => $table);
         }
     }
     return $home_links;

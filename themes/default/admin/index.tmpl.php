@@ -19,7 +19,7 @@
 			</form>
 
 	</div>
-	<div class="input-form" style="width: 98%;">
+	<!--<div class="input-form" style="width: 98%;">
 			<div class="row">
 				<h3><?php echo _AT('donate'); ?></h3>
 				<p><?php echo _AT('donate_text'); ?></p>
@@ -28,7 +28,7 @@
 			<div style="text-align:center;">
 				<a href="http://www.atutor.ca/payment/index.php?project=ATutor-Donation"><img src="<?php echo $this->base_href; ?>/images/donate.gif" height="28" width="136" border="0" alt="<?php echo _AT('donate'); ?>" /></a><br /><br />
 			</div>
-	</div>
+	</div> -->
 
 	<div class="input-form" style="width: 98%;">
 	
@@ -50,7 +50,7 @@
 		
 	</div>
 
-	
+	<?php if(!defined('IS_SUBSITE')){ ?>
 	<div class="input-form" style="width: 98%;">
 		<form method="get" action="mods/_standard/patcher/index_admin.php">
 			<div class="row">
@@ -63,6 +63,8 @@
 			</div>
 		</form>
 	</div>
+	<?php } ?>
+	
 	<div class="input-form" style="width: 98%">
 		<div class="row">
 			<h3><?php echo _AT('statistics_information'); ?></h3>
