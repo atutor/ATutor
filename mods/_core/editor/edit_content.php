@@ -70,14 +70,14 @@ if (isset($_POST['current_tab'])) {
 }
 
 if (isset($_POST['submit_file'])) {
-	paste_from_file(body_text);
+	paste_from_file();
 } else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
 	/* we're saving. redirects if successful. */
 	save_changes(true, $current_tab);
 }
 
 if (isset($_POST['submit_file_alt'])) {
-	paste_from_file(body_text_alt);
+	paste_from_file();
 } else if (isset($_POST['submit']) && ($_POST['submit'] != 'submit1')) {
 	/* we're saving. redirects if successful. */
 	save_changes(true, $current_tab);

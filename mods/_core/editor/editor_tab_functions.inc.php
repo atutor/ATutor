@@ -556,6 +556,12 @@ function paste_from_file() {
 		$msg->addError('FILE_NOT_SELECTED');
 		return;
 	}
+	
+	if ($_FILES['uploadedfile_paste']['size'] >= memory_get_usage()) {
+		$msg->addError(array('TOO_BIG_TO_UPLOAD', $_FILES['uploadedfile_paste']['size']));
+		return;
+	}
+	
 	if ($_FILES['uploadedfile_paste']['name']
 		&& (($_FILES['uploadedfile_paste']['type'] == 'text/plain')
 			|| ($_FILES['uploadedfile_paste']['type'] == 'text/html')) )
