@@ -2103,9 +2103,8 @@ table.etabbed-table	{
 /* Preference Editor tabs */
 .etabbed-list-container {
 /*	font-size:10pt;*/
-	width:75%;
-	margin-left:auto;
-	margin-right:auto;
+	width:90%;
+
 
 }
 .etabbed-list{
