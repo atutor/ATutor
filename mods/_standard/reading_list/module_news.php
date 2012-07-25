@@ -22,7 +22,7 @@ function reading_list_news() {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."reading_list R INNER JOIN ".TABLE_PREFIX."external_resources E ON E.resource_id = R.resource_id WHERE R.course_id in ".$enrolled_courses." ORDER BY R.reading_id DESC";
 	$result = mysql_query($sql, $db);
 
-	if (mysql_num_rows($result) > 0) {
+	if (@mysql_num_rows($result) > 0) {
 		while ($row = mysql_fetch_assoc($result)) {
 			$news[] = array('time'=>$row['date_end'], 
 							'object'=>$row,
