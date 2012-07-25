@@ -65,9 +65,9 @@ mv 'ATutor' $atutor_dir/ATutor
 sleep 1
 
 echo "Dumping language_text"
-rm $atutor_dir/ATutor/install/db/atutor_language_text.sql
-echo 'DROP TABLE `language_text`;' > $atutor_dir/ATutor/install/db/atutor_language_text.sql
-wget --output-document=- http://atutor.ca/atutor/translate/dump_lang.php >> $atutor_dir/ATutor/install/db/atutor_language_text.sql
+rm $atutor_dir/ATutor/include/install/db/atutor_language_text.sql
+echo 'DROP TABLE `language_text`;' > $atutor_dir/ATutor/include/install/db/atutor_language_text.sql
+wget --output-document=- http://atutor.ca/atutor/translate/dump_lang.php >> $atutor_dir/ATutor/include/install/db/atutor_language_text.sql
 
 sleep 1
 
@@ -76,12 +76,12 @@ rm -f $atutor_dir/ATutor/include/config.inc.php
 echo -n "<?php /* This file is a placeholder. Do not delete. Use the automated installer. */ ?>" > $atutor_dir/ATutor/include/config.inc.php
 sleep 1
 
-echo "Removing $atutor_dir/ATutor/install/db/atutor_upgrade sql < 1.4"
-rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.0_to_1.1.sql
-rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.1_to_1.2.sql
-rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.2_to_1.3.sql
-rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.3_to_1.3.2.sql
-rm -r $atutor_dir/ATutor/install/db/atutor_upgrade_1.3.2_to_1.4.sql
+echo "Removing $atutor_dir/ATutor/include/install/db/atutor_upgrade sql < 1.4"
+rm -r $atutor_dir/ATutor/include/install/db/atutor_upgrade_1.0_to_1.1.sql
+rm -r $atutor_dir/ATutor/include/install/db/atutor_upgrade_1.1_to_1.2.sql
+rm -r $atutor_dir/ATutor/include/install/db/atutor_upgrade_1.2_to_1.3.sql
+rm -r $atutor_dir/ATutor/include/install/db/atutor_upgrade_1.3_to_1.3.2.sql
+rm -r $atutor_dir/ATutor/include/install/db/atutor_upgrade_1.3.2_to_1.4.sql
 sleep 1
 
 
@@ -93,10 +93,10 @@ sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $atut
 sleep 1
 set date = `date`
 echo -n "<?php "'$svn_data = '"'" >> $atutor_dir/ATutor/svn.php
-echo $date >> $atutor_dir/ATutor/svn.ph
+echo $date >> $atutor_dir/ATutor/svn.php
 #echo "Bundled" `date` >> $atutor_dir/ATutor/svn.php
 echo "';?>" >> $atutor_dir/ATutor/svn.php
-
+rm -Rf $atutor_dir/ATutor/.git
 echo "Targz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
 sleep 1
 
