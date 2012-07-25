@@ -402,10 +402,10 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         'HL_COLOR FG_COLOR' +
         '}' +
         '.tab a:hover {' +
-        'background-color:  #FF0000;    ; FG_COLOR' +
+        'BG_COLOR' +
         '}' +
         '.button:focus, .button2:focus {' +
-        'background-color:  #FF0000;    ; FG_COLOR' +
+        'BG_COLOR' +
         '}' +
         'table.data tfoot {' +
         'HL_COLOR FG_COLOR' +
