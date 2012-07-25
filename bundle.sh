@@ -93,10 +93,10 @@ sed "s/define('AT_DEVEL_TRANSLATE', 1);/define('AT_DEVEL_TRANSLATE', 0);/" $atut
 sleep 1
 set date = `date`
 echo -n "<?php "'$svn_data = '"'" >> $atutor_dir/ATutor/svn.php
-echo $date >> $atutor_dir/ATutor/svn.ph
+echo $date >> $atutor_dir/ATutor/svn.php
 #echo "Bundled" `date` >> $atutor_dir/ATutor/svn.php
 echo "';?>" >> $atutor_dir/ATutor/svn.php
-
+rm -Rf $atutor_dir/ATutor/.git
 echo "Targz'ing $bundle${extension}.tar.gz $atutor_dir/ATutor/"
 sleep 1
 
