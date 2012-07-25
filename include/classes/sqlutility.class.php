@@ -209,7 +209,7 @@ class SqlUtility
 					mysql_query($prefixed_query[0],$db);
 				} elseif($prefixed_query[1] == 'ALTER TABLE') {
 					if (mysql_query($prefixed_query[0],$db) !== false) {
-						if ($in_plain_mag) {
+						if ($in_plain_msg) {
 							$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 						} else {
 							$msg->addFeedback(array('TABLE_ALTERED', $table));
