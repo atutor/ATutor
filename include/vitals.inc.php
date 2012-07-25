@@ -239,6 +239,12 @@ if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
 } else if ($_POST['set_default']) {
 	$_SESSION['prefs']['PREF_THEME'] = 'default';
 	$_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
+	// Remove the preference vars that are set on user preference page
+	unset($_SESSION["prefs"]["PREF_BG_COLOUR"]);
+	unset($_SESSION["prefs"]["PREF_FG_COLOUR"]);
+	unset($_SESSION["prefs"]["PREF_HL_COLOUR"]);
+	unset($_SESSION["prefs"]["PREF_FONT_FACE"]);
+	unset($_SESSION["prefs"]["PREF_FONT_TIMES"]);
 }
 
 // Reset PREF_THEME when:
