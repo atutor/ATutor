@@ -237,8 +237,11 @@ if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
 	$_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
 	$_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
 } else if ($_POST['set_default']) {
-	$_SESSION['prefs'] = array();
-	assign_session_prefs(unserialize(stripslashes($_config["pref_defaults"])), 1);
+	// Once users select to reset theme to the default theme in user perference popup window,
+	// apply the default theme immediate. See users/pref_wizard/index.php for
+	// resetting other prefs.
+	$_SESSION['prefs']['PREF_THEME'] = 'default';
+	$_SESSION['prefs']['PREF_MOBILE_THEME'] = 'mobile';
 }
 
 // Reset PREF_THEME when:
