@@ -2016,9 +2016,9 @@ tr.odd {
 }
 .editor_tab{
 
-	border-top: 1px solid #DED29E;
-	border-left: 1px solid #DED29E;
-	border-right: 1px solid #DED29E;
+	border-top: 1px solid #685642;
+	border-left: 1px solid #685642;
+	border-right: 1px solid #685642;
 	border-bottom:0;
 	margin-bottom:-.5em;
 	text-align: center;
@@ -2036,17 +2036,17 @@ tr.odd {
 }
 
 .editor_tab_selected{
-	border-top: 1px solid #DED29E;
-	border-left: 1px solid #DED29E;
-	border-right: 1px solid #DED29E;
+	border-top: 1px solid #685642;
+	border-left: 1px solid #685642;
+	border-right: 1px solid #685642;
 	border-bottom:0;
-	padding: 0em .2em 0em .2em ;
+	padding: 0em .2em .2em .2em;
   	background-color: #F4F0CB;
 	font-weight:bold;
 	text-align:center;
 	white-space: nowrap;
 	text-decoration:none;
-	border-radius:.3em;
+	border-radius:.3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.4em;
 }
