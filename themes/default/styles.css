@@ -2125,8 +2125,7 @@ table.etabbed-table	{
 	border-left:0;
 	border-right:0;
 	border-bottom:0;
-
-	
+	border-top:0;
 }
 .prefs_buttontab input[type="submit"]:active, .prefs_buttontab:hover, .prefs_buttontab  input[type="submit"]:focus{
 	background-color: #F4F0CB;
@@ -2144,7 +2143,7 @@ table.etabbed-table	{
 	background-color: #DED29E;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: 0em .2em .15em .3em;
+	padding: .2em .2em .15em .3em;
 	display: inline;
 	margin-left:.5em;
 	font-weight:bold;
@@ -2166,7 +2165,7 @@ table.etabbed-table	{
 	background-color: #F4F0CB;
 	border-radius:.3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .3em .5em .3em .5em;
+	padding: .5em .5em .3em .5em;
 	display: inline;
 	margin-left:.5em;
 	font-weight:bold;
