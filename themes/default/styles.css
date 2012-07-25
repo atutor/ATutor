@@ -2166,7 +2166,7 @@ table.etabbed-table	{
 	background-color: #F4F0CB;
 	border-radius:.3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .2em .5em .4em .5em;
+	padding: .3em .5em .3em .5em;
 	display: inline;
 	margin-left:.5em;
 	font-weight:bold;
@@ -2572,7 +2572,7 @@ div.album_panel{
 	float: left;
 	background: #F4F0CB;
 	border: 1px solid #685642;	
-	width: 96%;
+	width: 95.5%;
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 /*	-moz-box-shadow:.2em .2em .1em #999999;
@@ -2729,8 +2729,8 @@ div.album .search_paginator {
 
 div.add_photo{
 	float: left;
-	background: #F7F7F7;
-	border: 1px solid #D2D2D2;	
+	background: #F4F0CB;
+	border: 1px solid #685642;	
 	width: 96%;
 	border-radius:.5em;
 	-moz-border-radius: .3em .3em .3em .3em;
@@ -2823,7 +2823,7 @@ div.photo_panel .flc-inlineEditable{
 div.comment_panel{
 	background: #FFFFFF;
 	float: left;
-	border: 1px solid #D2D2D2;
+	border: 1px solid #685642;
 	width: 95%;
 	padding:.5em;
 	border-radius: .3em .3em .3em .3em;
