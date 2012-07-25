@@ -186,7 +186,8 @@ a.dropdown-title {
 
 /* main submit button */
 .button {
-	background-color: #efefef;
+  	background-color: #B3A580;
+  	color: #FFFDE0;
 	font-weight: normal;
 	border:  #AAA  solid 1px;
 	border-radius: .3em .3em .3em .3em;
@@ -196,23 +197,25 @@ a.dropdown-title {
 /*	font-size:100%;*/
 
 }
-.button:focus {
-
+.button:focus, .button:hover {
+        background-color: #685642;
         border:1px solid #DED29E;
 
 }
 .button:active {
-        background-color: #000000;
+        background-color: #685642;
+        color: #F4F0CB;
 }
 /* small submit button at top */
 .button2 {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
-	background-color: #E9F4F3;
+	background-color: #B3A580;
 
 }
 .button2:focus {
-	background-color: #E9F4F3;
+	background-color: #685642;
 	border:  #ACCFCC  solid 1px;
+	color: #F4F0CB;
 }
 
 /* date attributes */
@@ -2021,6 +2024,7 @@ tr.odd {
 	border-right: 1px solid #685642;
 	border-bottom:0;
 	margin-bottom:-.5em;
+	margin-top:1.5em;
 	text-align: center;
 	white-space: nowrap;
 	background-color: #DED29E;
@@ -2098,6 +2102,8 @@ ul.current_list{
 
 table.etabbed-table	{
 	padding-left:5em;
+	margin-top:1em;
+
 /*	font-size:10pt;*/
 }
 /* Preference Editor tabs */
