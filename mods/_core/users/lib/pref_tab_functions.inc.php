@@ -100,7 +100,7 @@ global $addslashes;
 	if (isset($_POST['theme'])) $temp_prefs['PREF_THEME'] = $addslashes($_POST['theme']);
 	if (isset($_POST['mobile_theme'])) $temp_prefs['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
 	if (isset($_POST['time_zone'])) $temp_prefs['PREF_TIMEZONE'] = $addslashes($_POST['time_zone']);
-	if (isset($_POST['use_jump_direct'])) $temp_prefs['PREF_JUMP_REDIRECT'] = intval($_POST['use_jump_redirect']);
+	if (isset($_POST['use_jump_redirect'])) $temp_prefs['PREF_JUMP_REDIRECT'] = intval($_POST['use_jump_redirect']);
 	if (isset($_POST['form_focus'])) $temp_prefs['PREF_FORM_FOCUS'] = intval($_POST['form_focus']);
 	if (isset($_POST['content_editor'])) $temp_prefs['PREF_CONTENT_EDITOR'] = intval($_POST['content_editor']);
 	if (isset($_POST['show_guide']))$temp_prefs['PREF_SHOW_GUIDE'] = intval($_POST['show_guide']);
