@@ -43,10 +43,11 @@ class Patch {
 	var $patch_suffix;                    // suffix appended for patch files copied from update.atutor.ca
 	var $skipFilesModified = false;       // if set to true, report error for files that have been modified by user
 	var $module_content_dir;              // content folder used to create patch.sql
-	var $svn_server_connected;            // flag indicating if can connect to svn server, if not, consider all files manipulated by patch as modified
+	var $github_server_connected;         // flag indicating if can connect to github server, if not, consider all files manipulated by patch as modified
 
-	// constant, URL of user's ATutor release version in SVN 
-	var $svn_tag_folder = 'http://atutorsvn.atrc.utoronto.ca/repos/atutor/tags/';
+	// constant, URL of user's ATutor release version in github 
+	var $github_tag_folder = 'https://raw.github.com/atutor/ATutor/';
+	var $github_fetch_tags_url = 'https://api.github.com/repos/atutor/ATutor/tags';
 	var $sql_file = 'patch.sql';
 	var $relative_to_atutor_root = '../../../';   // relative path from mods/_standard/patcher to root
 	
@@ -107,7 +108,7 @@ class Patch {
 		
 		// Checks on
 		// 1. if there's error from class constructor 
-		// 2. if svn server is up. If not, consider all files manipulated by patch as modified
+		// 2. if github server is up. If not, consider all files manipulated by patch as modified
 		// 3. if the local file is customized by user
 		// 4. if script has write priviledge on local file/folder
 		// 5. if dependent patches have been installed
@@ -119,14 +120,14 @@ class Patch {
 			return false;
 		}
 		
-		if (!$this->pingDomain($this->svn_tag_folder)) 
+		if (!$this->pingDomain($this->github_tag_folder) || !$this->pingDomain($this->github_fetch_tags_url)) 
 		{
-			$msg->addInfo('CANNOT_CONNECT_SVN_SERVER');
+			$msg->addInfo('CANNOT_CONNEC_GITHUB_SERVER');
 			$msg->printInfos();
-			$this->svn_server_connected = false;
+			$this->github_server_connected = false;
 		}
 		else
-			$this->svn_server_connected = true;
+			$this->github_server_connected = true;
 		
 		if (!$this->checkDependentPatches()) return false;
 
@@ -458,7 +459,7 @@ class Patch {
 	}
 
 	/**
-	* Compare user's local file with SVN backup for user's ATutor version,
+	* Compare user's local file with github backup for user's ATutor version,
 	* if different, check table at_patches_files to see if user's local file
 	* was altered by previous patch installation. If it is, return false 
 	* (not modified), otherwise, return true (modified).
@@ -473,18 +474,18 @@ class Patch {
 	{
 		global $db;
 
-		if (!$this->svn_server_connected) return true;
+		if (!$this->github_server_connected) return true;
 		
-		$svn_file = $this->svn_tag_folder . 'atutor_' . str_replace('.', '_', VERSION) .
-		            str_replace(substr($this->relative_to_atutor_root, 0, -1), '' , $folder) .$file;
-		$local_file = $folder.$file;
+		$github_file_content = file_get_contents($this->github_tag_folder . $this->getReleaseCommitNum() .
+		            str_replace(substr($this->relative_to_atutor_root, 0, -1), '' , $folder) .$file);
+		
+		$local_file_content = file_get_contents($folder.$file);
 
-		// if svn script does not exist, consider the script is modified
-		if (!file_get_contents($svn_file)) return true;
+		// if github script does not exist, consider the script is modified
+		if (!$github_file_content) return true;
 
 		// check if the local file has been modified by user. if it is, don't overwrite
-		if ($this->compareFiles($svn_file, $local_file) <> 0)
-		{
+		if (strcasecmp($github_file_content, $local_file_content)) {
 			// check if the file was changed by previous installed patches
 			$sql = "SELECT count(*) num_of_updates FROM " . TABLE_PREFIX. "patches patches, " . TABLE_PREFIX."patches_files patches_files " .
 			       "WHERE patches.applied_version = '" . VERSION . "' ".
@@ -500,6 +501,23 @@ class Patch {
 		return false;
 	}
 
+	/**
+	 * Get the commit hash for the current ATutor release
+	 * @access  private
+	 */
+	private function getReleaseCommitNum() {
+		$releases_json = file_get_contents($this->github_fetch_tags_url);
+		$release_tags = json_decode($releases_json);
+		$atutor_tag_name = 'atutor_' . str_replace('.', '_', VERSION);
+
+		foreach ($release_tags as $release_obj) {
+			if ($release_obj->name == $atutor_tag_name) {
+				return $release_obj->commit->sha;
+			}
+		}
+		return false;
+	}
+	
 	/**
 	* Run SQL defined in patch.xml
 	* @access  private
@@ -669,28 +687,6 @@ class Patch {
 		fclose($fp);
 		
 		return true;
-	}
-	
-	/**
-	* Compare files $src against $dest
-	* @access  private
-	* @param   $src	location of the source file
-	*          $dest	location of the destination file
-	* @return  Returns < 0 if $src is less than $dest ; > 0 if $src is greater than $dest, and 0 if they are equal.
-	* @author  Cindy Qi Li
-	*/
-	function compareFiles($src, $dest)
-	{
-		// use preg_replace to delete 
-		// 1. the line starting with // $Id:
-		// 2. the line starting with $lm = '$LastChangedDate, ending with ;
-		// These lines are created by SVN. It could be different in different copies of the same file.
-		$pattern = '/\/\/ \$Id.*\$|\$lm = \'\$LastChangedDate.*;/';
-		
-		$src_content = preg_replace($pattern, '', file_get_contents($src));
-		$dest_content = preg_replace($pattern, '', file_get_contents($dest));
-
-		return strcasecmp($src_content, $dest_content);
 	}
 	
 	/**
