@@ -81,7 +81,7 @@ class UrlParser {
 		//check if this is a course slug or course id.
 		if (preg_match('/^[\d]+$/', $matches[1])==0){
 			//it's a course slug, log into the course.
-			$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE course_dir_name='$matches[1]'";
+			$sql = "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE course_dir_name='$matches[1]'";
 			$result = mysql_query($sql, $db);
 			$row = mysql_fetch_assoc($result);
 			if ($row['course_id']!=''){

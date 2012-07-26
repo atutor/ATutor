@@ -17,8 +17,11 @@ define('AT_REDIRECT_LOADED', true);
 
 $_user_location	= 'public';  //like browse, and registration, doesn't need username/passwords to get into
 
+include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
+define('AT_SITE_PATH', get_site_path());
+
 require_once(AT_INCLUDE_PATH . 'classes/UrlRewrite/UrlParser.class.php');
-include_once(AT_INCLUDE_PATH.'config.inc.php');
+include_once(AT_SITE_PATH.'include/config.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/constants.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 //require_once(AT_INCLUDE_PATH.'vitals.inc.php');
