@@ -56,7 +56,8 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	<?php if ($_config['course_dir_name']): ?>
 	<div class="row">
 		<label for="course_dir_name"><?php echo _AT('course_dir_name'); ?></label><br />
-		<input type="text" id="course_dir_name" name="course_dir_name" size="40" value="<?php echo htmlspecialchars($this->row['course_dir_name']); ?>" />
+		<input type="text" id="course_dir_name" name="course_dir_name" size="40" value="<?php echo htmlspecialchars($this->row['course_dir_name']); ?>" /><br />
+		<small>&middot; <?php echo _AT('course_dir_name_contain_only'); ?></small>
 	</div>
 	<?php endif; ?>
 

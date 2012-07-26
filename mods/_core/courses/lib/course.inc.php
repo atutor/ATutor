@@ -92,8 +92,8 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	// Course directory name (aka course slug)
 	if ($_POST['course_dir_name'] != ''){
-		//validate the course_dir_name, allow only alphanumeric, dash, underscore.
-		if (preg_match('/^[\w][\w\d\-\_]+$/', $_POST['course_dir_name'])==0){
+		//validate the course_dir_name, allow only alphanumeric, underscore.
+		if (preg_match('/^[\w][\w\d\_]+$/', $_POST['course_dir_name'])==0){
 			$msg->addError('COURSE_DIR_NAME_INVALID');
 		}
 
