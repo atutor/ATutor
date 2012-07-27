@@ -16,6 +16,21 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require_once (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_PATCHER);
 
+// remove the beginning slash and add the trailing slash
+function sanitizeDir($dir) {
+	if ($dir == '') return $dir; // ATutor root folder
+	
+	if (substr($dir, 0, 1) == '/') {
+		$dir = substr($dir, 1);
+	}
+	
+	if (substr($dir, -1) != '/') {
+		$dir .= '/';
+	}
+	
+	return $dir;
+}
+
 if ($_POST['create'] || $_POST['save'])
 {
 	if (isset($_REQUEST["myown_patch_id"])) $patch_id = $_REQUEST["myown_patch_id"];
@@ -56,9 +71,9 @@ if ($_POST['create'] || $_POST['save'])
 	if (!$msg->containsErrors()) 
 	{
 		$patch_info = array("atutor_patch_id"=>$_POST["atutor_patch_id"],
-	                      "atutor_version_to_apply"=>$_POST["atutor_version_to_apply"],
-	                      "description"=>$_POST["description"],
-	                      "sql_statement"=>$_POST["sql_statement"]);
+		                  "atutor_version_to_apply"=>$_POST["atutor_version_to_apply"],
+		                  "description"=>$_POST["description"],
+		                  "sql_statement"=>$_POST["sql_statement"]);
 
 		// remove empty dependent patches
 		if (is_array($_POST["dependent_patch"]))
@@ -77,40 +92,50 @@ if ($_POST['create'] || $_POST['save'])
 			{
 				if ($action == "add" && $_POST['add_filename'][$i] <> "")
 				{
+					$_POST['add_dir'][$i] = sanitizeDir($_POST['add_dir'][$i]);
+					
 					if ($_FILES['add_upload_file']['tmp_name'][$i] <> "")
 						$upload_file = $_FILES['add_upload_file']['tmp_name'][$i];
 					else
 						$upload_file = $_POST['add_uploaded_file'][$i];
 					
 					$patch_info["files"][] = array("action"=>$action,
-					                             "file_name"=>$_POST['add_filename'][$i],
-				                               "directory"=>$_POST['add_dir'][$i],
-				                               "upload_tmp_name"=>$upload_file);
+					                           "file_name"=>$_POST['add_filename'][$i],
+					                           "directory"=>$_POST['add_dir'][$i],
+					                           "upload_tmp_name"=>$upload_file);
 				}
 				
-				if ($action == "alter" && $_POST['alter_filename'][$i] <> "")
+				if ($action == "alter" && $_POST['alter_filename'][$i] <> "") {
+					$_POST['alter_dir'][$i] = sanitizeDir($_POST['alter_dir'][$i]);
+					
 					$patch_info["files"][] = array("action"=>$action,
-								                       "file_name"=>$_POST['alter_filename'][$i],
-				                               "directory"=>$_POST['alter_dir'][$i],
-				                               "code_from"=>$_POST['alter_code_from'][$i],
-				                               "code_to"=>$_POST['alter_code_to'][$i]);
-	
-				if ($action == "delete" && $_POST['delete_filename'][$i] <> "")
+					                           "file_name"=>$_POST['alter_filename'][$i],
+					                           "directory"=>$_POST['alter_dir'][$i],
+					                           "code_from"=>$_POST['alter_code_from'][$i],
+					                           "code_to"=>$_POST['alter_code_to'][$i]);
+				}
+				
+				if ($action == "delete" && $_POST['delete_filename'][$i] <> "") {
+					$_POST['delete_dir'][$i] = sanitizeDir($_POST['delete_dir'][$i]);
+					
 					$patch_info["files"][] = array("action"=>$action,
-					                             "file_name"=>$_POST['delete_filename'][$i],
-				                               "directory"=>$_POST['delete_dir'][$i]);
-	
+					                           "file_name"=>$_POST['delete_filename'][$i],
+					                           "directory"=>$_POST['delete_dir'][$i]);
+				}
+				
 				if ($action == "overwrite" && $_POST['overwrite_filename'][$i] <> "")
 				{
+					$_POST['overwrite_dir'][$i] = sanitizeDir($_POST['overwrite_dir'][$i]);
+					
 					if ($_FILES['overwrite_upload_file']['tmp_name'][$i] <> "")
 						$upload_file = $_FILES['overwrite_upload_file']['tmp_name'][$i];
 					else
 						$upload_file = $_POST['overwrite_uploaded_file'][$i];
 					
 					$patch_info["files"][] = array("action"=>$action,
-					                             "file_name"=>$_POST['overwrite_filename'][$i],
-				                               "directory"=>$_POST['overwrite_dir'][$i],
-				                               "upload_tmp_name"=>$upload_file);
+					                           "file_name"=>$_POST['overwrite_filename'][$i],
+					                           "directory"=>$_POST['overwrite_dir'][$i],
+					                           "upload_tmp_name"=>$upload_file);
 				}
 			}
 		}
