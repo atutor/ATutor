@@ -41,7 +41,11 @@ function file_storage_news() {
 	          WHERE owner_type = ".WORKSPACE_GROUP." 
 	            AND f.owner_id = g.group_id 
 	            AND g.type_id = gt.type_id 
-	            AND gt.course_id IN ".$enrolled_courses.")
+	            AND gt.course_id IN ".$enrolled_courses."
+	            AND " . $_SESSION['member_id'] . " in 
+	               (select member_id 
+	                from " . TABLE_PREFIX . "groups_members gm 
+	                where gm.group_id = g.group_id))
 	         ORDER BY date DESC";
 	$result = mysql_query($sql, $db);
 	
