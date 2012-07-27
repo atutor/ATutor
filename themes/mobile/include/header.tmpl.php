@@ -61,97 +61,6 @@ $wurflObj = new TeraWurflRemoteClient('http://wurfl.thesedays.com/webservice.php
 $capabilities = array("product_info");
 $data_format = TeraWurflRemoteClient::$FORMAT_JSON;
 $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
-
-//open/close content menu - tablet
-$this->onload .= "
-jQuery('#content_link').click(function(e) {
-  e.stopPropagation();
-  jQuery('#content').slideToggle(0);
-  jQuery('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
-  ";
-$this->onload .= "});
-";
-
-//open/close subnavlist - smartphones    
-$this->onload .= "
-jQuery('#subnavlist-link').click(function(e) {
-  e.stopPropagation();
-  jQuery('#subnavlist').slideToggle();
-  jQuery('#subnavlist-link').toggleClass('content-closed').toggleClass('subnavcontain-active');
-  jQuery('.subnavcontain').toggleClass('subnavcontain3');     
-  ";
-$this->onload .= "});
-";
-// open/close content menu - smartphones 
-$this->onload .= "
-jQuery('#content_link_phone').click(function(e) {
-  e.stopPropagation();
-  jQuery('#content').slideToggle();
-  jQuery('#content_link_phone').toggleClass('topnavlist-link-highlight').toggleClass('content-closed');
-  jQuery('.subnavcontain').toggleClass('subnavcontain3'); 
-  ";
-$this->onload .= "});
-";
-
-// open/close header navigational menu - smartphones
-$this->onload .= "
-jQuery(document).click(function () {
-jQuery('#topnavlist').slideUp(600);}); 
-jQuery('.topnavlist-link').click(function(e) {
-  e.stopPropagation();
-  jQuery('#topnavlist').slideToggle();
- jQuery('#topnavlist-link').toggleClass('.topnavlist-link-highlight').toggleClass('.topnavlist-link-highlight-background');
-});
-";
-
-// open/close header navigational menu - tablets
-$this->onload .= "
-jQuery(document).click(function () {
-jQuery('#navigation-column').slideUp(200);}); 
-jQuery('.topnavlist-link').click(function(e) {
-  e.stopPropagation();
-  jQuery('#navigation-column').slideToggle(0);
-    jQuery('#topnavlist-link').toggleClass('topnavlist-link-highlight').toggleClass('triangle-isosceles').toggleClass('top');
-});
-";
-
-// makes the subnavlist expand for more options
-$this->onload .= "
-
-jQuery('.more-button').toggle(function(e) {
-  jQuery('.subnavlist-more').show();
-  jQuery('#switch').attr('src','images/hidemenu.gif' ).attr('title', 'less menu items').attr('alt', 'less menu items');
-},function(){
-  jQuery('.subnavlist-more').hide(); 
-  jQuery('#switch').attr('src', 'images/showmenu.gif' ).attr('title', 'more menu items').attr('alt', 'more menu items');
-});
-";
-
-//hide and show results	on Browse Courses page
-
-$this->onload .= "
-jQuery('#results-hide-show-link').click(function(e) {
-  e.stopPropagation();
-    jQuery('#results-display').slideToggle();
-    jQuery(this).toggleClass('content-closed').preventDefault();
-  ";
-$this->onload .= "});
-";
-
-//hide and show results	elsewhere (uses classes) 
-$this->onload .= "
-jQuery('.results-hide-show-link').click(function(e) {
-  e.stopPropagation();
-	jQuery(this).parent().next('.results-display').slideToggle(); 
-	  jQuery(this).toggleClass('content-closed');
-  ";
-$this->onload .= "});
-";
-	
-// Hide the addressbar
-$this->onload .= "
-setTimeout(function() { window.scrollTo(0, 1) }, 100);
-";
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
@@ -212,8 +121,8 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 	//-->
 	</script>
 	<script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
+	<script src="<?php echo $this->base_path; ?>jscripts/mobile.js" type="text/javascript"></script>   
 
-	
 <?php echo $this->rtl_css; ?>
 <?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
@@ -255,7 +164,7 @@ setTimeout(function() { window.scrollTo(0, 1) }, 100);
 
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
-			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);" tabindex="1"><?php echo _AT('navigation'); ?></a>
+			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="#" tabindex="1"><?php echo _AT('navigation'); ?></a>
 				<ul id="topnavlist"  class="fl-list-menu" role="menu">
 					<?php $accesscounter = 0; //initialize ?>
 					<?php foreach ($this->top_level_pages as $page): ?>
