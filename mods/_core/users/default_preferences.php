@@ -104,42 +104,63 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_SERVER['PHP_SELF'].'?current_tab='.$_POST['current_tab']);
 	exit;
+} else {
+	// save the current mobile theme that's calculated by vitals.inc.php
+	// so it can be restored into $_SESSION['prefs']['PREF_THEME'] before 
+	// headers.inc.php gets called. This session var will be overwritten by
+	// the following config calculation
+	if (is_mobile_device()) {
+		$current_theme = $_SESSION['prefs']['PREF_THEME'];
+	}
+	
+	// Calculates the actual default theme
+	// set defaults with the $_config_defaults and overwrite them with what's defined in table `config`
+	$pref_defaults = unserialize($_config_defaults['pref_defaults']);
+	
+	if (is_array(unserialize($_config['pref_defaults']))) {
+		foreach (unserialize($_config['pref_defaults']) as $name => $value) {
+			$pref_defaults[$name] = $value;
+		}
+	}
+	
+	// Save the desktop theme
+	$desktop_theme = $pref_defaults['PREF_THEME'];
+	
+	// $_SESSION['prefs']['PREF_THEME'] is overwritten here into the desktop theme
+	assign_session_prefs($pref_defaults);
+	
+	// restore the mobile theme
+	if (is_mobile_device()) {
+		$_SESSION['prefs']['PREF_THEME'] = $current_theme;
+	}
+	
+	$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
+	$result = mysql_query($sql, $db);
+	if (mysql_num_rows($result) > 0)
+	{
+		$row_notify = mysql_fetch_assoc($result);
+		$notify = $row_notify['value'];
+	}
+	else
+		$notify = $_config_defaults['pref_inbox_notify'];
+	
+	$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_is_auto_login'";
+	$result = mysql_query($sql, $db);
+	if (mysql_num_rows($result) > 0)
+	{
+		$row_is_auto_login = mysql_fetch_assoc($result);
+		$auto_login = $row_is_auto_login["value"];
+	}
+	else
+		$auto_login = $_config_defaults['pref_is_auto_login'];
 }
-
-// set defaults with the $_config_defaults and overwrite the configs that are defined in table `config`
-$pref_defaults = unserialize($_config_defaults['pref_defaults']);
-
-if (is_array(unserialize($_config['pref_defaults'])))
-	foreach (unserialize($_config['pref_defaults']) as $name => $value)
-		$pref_defaults[$name] = $value;
-		
-assign_session_prefs($pref_defaults, 1);
-
-$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
-$result = mysql_query($sql, $db);
-if (mysql_num_rows($result) > 0)
-{
-	$row_notify = mysql_fetch_assoc($result);
-	$notify = $row_notify['value'];
-}
-else
-	$notify = $_config_defaults['pref_inbox_notify'];
-
-$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_is_auto_login'";
-$result = mysql_query($sql, $db);
-if (mysql_num_rows($result) > 0)
-{
-	$row_is_auto_login = mysql_fetch_assoc($result);
-	$auto_login = $row_is_auto_login["value"];
-}
-else
-	$auto_login = $_config_defaults['pref_is_auto_login'];
 
 $languages = $languageManager->getAvailableLanguages();
 
 $savant->assign('notify', $notify);
 $savant->assign('languages', $languages);
 $savant->assign('is_auto_login', $auto_login);
+$savant->assign('desktop_theme', $desktop_theme);
 
 $savant->display('users/preferences.tmpl.php');
 

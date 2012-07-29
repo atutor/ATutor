@@ -30,21 +30,20 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 <?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES){
 	echo _AT('themes_disabled'); 
 } else { 
-	if (isset($_POST['theme']))
-		$selected_theme = $_POST['theme'];
-	else
-		$selected_theme = $_SESSION['prefs']['PREF_THEME'];
-		
+	// $desktop_theme is passed from preferences.tmpl.php 
+	// which is inherited from users/perferences.php or 
+	// mods/_core/users/default_preferences.php
 	$_themes = get_enabled_themes(DESKTOP_DEVICE);
-	print_theme_selectbox($_themes, $selected_theme, DESKTOP_DEVICE);
+	print_theme_selectbox($_themes, $desktop_theme, DESKTOP_DEVICE);
 	
 	if (isset($_POST['mobile_theme']))
-		$selected_theme = $_POST['mobile_theme'];
+		$selected_theme = $_REQUEST['mobile_theme'];
 	else
 		$selected_theme = $_SESSION['prefs']['PREF_MOBILE_THEME'];
-		
+	
+	// $selected_mobile_theme is passed from users/perferences.php
 	$_themes = get_enabled_themes(MOBILE_DEVICE);
-	print_theme_selectbox($_themes, $selected_theme, MOBILE_DEVICE);
+	print_theme_selectbox($_themes, $selected_mobile_theme, MOBILE_DEVICE);
 }
 ?>
 	

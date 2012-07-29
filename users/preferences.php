@@ -53,24 +53,31 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	save_prefs();
 
 	//update email notification and auto-login settings separately
-    save_email_notification($mnot);
+	save_email_notification($mnot);
 	if (isset($auto_login)) {
-        $is_auto_login = setAutoLoginCookie($auto_login);
-    }
+		$is_auto_login = setAutoLoginCookie($auto_login);
+	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: preferences.php?current_tab='.$current_tab);
 	exit;
 }
 
-// re-set session prefs if the request is from a mobile device 
+// Re-set selected desktop theme if the request is from a mobile device 
 // because now $_SESSION['prefs']['PREF_THEME'] == $_SESSION['prefs']['PREF_MOBILE_THEME'] instead of the desktop theme
 // The code below re-assign $_SESSION['prefs']['PREF_THEME'] back to what it should be
 if (is_mobile_device()) {
 	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$_SESSION['member_id'];
 	$result = mysql_query($sql, $db);
 	$row = mysql_fetch_assoc($result);
-	assign_session_prefs(unserialize(stripslashes($row['preferences'])));
+	
+	foreach (unserialize(stripslashes($row['preferences'])) as $pref_name => $value) {
+		if ($pref_name == 'PREF_THEME') {
+			$desktop_theme = $value;
+		}
+	}
+} else {
+	$desktop_theme = $_SESSION['prefs']['theme'];
 }
 
 if ($_SESSION['first_login']) {
@@ -88,6 +95,7 @@ $languages = $languageManager->getAvailableLanguages();
 /* page contents starts here */
 $savant->assign('notify', $row_notify['inbox_notify']);
 $savant->assign('languages', $languages);
+$savant->assign('desktop_theme', $desktop_theme);
 
 //problem here - if auto login is enabled, but we don't check that there is a cookie, how do we know if it is enabled?
 

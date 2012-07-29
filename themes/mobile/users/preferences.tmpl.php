@@ -17,8 +17,8 @@ for ($i=0; $i < $num_tabs; $i++)
 	}
 }
 
-if (!$switch_tab && isset($_POST['current_tab'])) {
-	$current_tab = intval($_POST['current_tab']);
+if (!$switch_tab && isset($_REQUEST['current_tab'])) {
+	$current_tab = intval($_REQUEST['current_tab']);
 }
 
 if ($current_tab == 1)
@@ -28,6 +28,10 @@ if ($current_tab == 1)
 	$_custom_head = "<script language=\"JavaScript\" src=\"jscripts/lib/TILE.js\" type=\"text/javascript\"></script>";
 	$onload = "setPreviewFace(); setPreviewSize(); setPreviewColours();";
 }
+
+// desktop theme is passed from main script since in the case of mobile theme,
+// $_SESSION['prefs']['theme'] is using the default mobile theme instead of the desktop.
+$desktop_theme = $this->desktop_theme;
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
@@ -49,11 +53,8 @@ echo '<div id="container"><br />';
 	if ($current_tab != 0) 
 	{
 		// save selected options on tab 0 (ATutor settings)
-		if (isset($_POST['theme']))
-			echo '	<input type="hidden" name="theme" value="'.$_POST['theme'].'" />'."\n\r";
-		else if (isset($_SESSION['prefs']['PREF_THEME']))
-			echo '	<input type="hidden" name="theme" value="'.$_SESSION['prefs']['PREF_THEME'].'" />'."\n\r";
-		
+		echo '	<input type="hidden" name="theme" value="'.$desktop_theme.'" />'."\n\r";
+
 		if (isset($_POST['mnot']))
 			echo '	<input type="hidden" name="mnot" value="'.$_POST['mnot'].'" />'."\n\r";
 		else if (isset($this->notify))
