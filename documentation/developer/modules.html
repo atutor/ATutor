@@ -208,8 +208,15 @@ acronym {
         &lt;state>stable&lt;/state> 
         &lt;notes>Fixes several bugs in previous version.&lt;/notes> 
     &lt;/release> 
+    &lt;private>
+        &lt;subsite>mysubsite.atutor.com&lt;/subsite>
+        &lt;subsite>mysubsite1.atutor.com&lt;/subsite>
+    &lt;/private>
 &lt;/module>
 </pre>
+<p>Notes: The &lt;private&gt; section is only applicable for ATutor multisite. It's used to identify the private modules that are only viewable and installable by specified
+subsites and the ATutor main site. In the above example, only subsites "mysubsite.atutor.com", "mysubsites.atutor.com" and the ATutor main site have this module listed on 
+the admin "install module" page. Other subsites don't see this module.</p>
 
 <a name="module.php"></a>
 	<h3>The <kbd>module.php</kbd> File</h3>
