@@ -371,6 +371,17 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  *    if non-zero specifies in minutes how often the module's cron job should be run.
  *    set to 0 or not set to disable.
  */
+ 
+/****
+ * Modules can be limited to installation on main ATutor sites only in a multisite installation by 
+ * adding the following line to the module_install.php file 
+ ***/
+//if (defined('IS_SUBSITE') && IS_SUBSITE) {
+//	$msg->addError(array('MODULE_INSTALL', '<li>This module cannot be installed on subsites.</li>'));
+//}
+
+
+
 $_course_privilege = TRUE; // possible values: FALSE | AT_PRIV_ADMIN | TRUE
 $_admin_privilege  = TRUE; // possible values: FALSE | TRUE
 $_cron_interval    = 35; // run every 30 minutes
