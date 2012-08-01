@@ -1032,6 +1032,7 @@ INSERT INTO `themes` VALUES ('ATutor 1.6', '2.1', 'default16', 'Desktop', NOW(),
 INSERT INTO `themes` VALUES ('IDI Theme', '2.1', 'idi', 'Desktop', NOW(), 'The theme created for the IDI course server.', 1, 0);
 INSERT INTO `themes` VALUES ('Mobile', '2.1', 'mobile', 'Mobile', NOW(), 'This is the default theme for mobile devices.', 3, 0);
 INSERT INTO `themes` VALUES('Simple', '2.1', 'simplified_desktop', 'Desktop', NOW(), 'An adapted version of the iPad theme, designed to make a desktop look like an iPad.', 1, 0);
+INSERT INTO `themes` VALUES('ATutorSpaces', '2.1', 'atspaces', 'Desktop', NOW(), 'This is the default theme for the ATutorSpaces.com hosting service.', 1, 0);
 
 # --------------------------------------------------------
 # Table structure for table `users_online`
