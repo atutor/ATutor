@@ -24,6 +24,13 @@
 				<td width="20%"><label for="words2"><?php echo _AT('keywords'); ?></label></td>
 				<td><input type="text" name="keywords" size="100" id="words2" value="<?php echo $_REQUEST['keywords']; ?>" /></td>
 			</tr>
+			<?php
+				// ***
+				// ACC
+				// Add some content search filters
+				// Lesson
+				// Pages
+			?>
 <!--
 			<tr>
 				<td colspan="2">
@@ -79,13 +86,24 @@ if (isset($this->result_list))
 	
 	<dl class="browse-result">
 <?php if (isset($this->instructor_role)) { ?>
-		<dt class="tr_results_tools">
+		<dt class="tr_results_tools">&nbsp;
           <a href="<?php echo AT_TILE_EXPORT_CP_URL.$result['courseID']; ?>">
             <img src="<?php echo AT_BASE_HREF. 'images/download.png'?>" alt="<?php echo _AT('download_content_package'); ?>" title="<?php echo _AT("download_content_package").' '.$result['title']; ?>" border="0">
           </a>&nbsp;
           <a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>">
             <img src="<?php echo AT_BASE_HREF. 'images/archive.gif'?>" alt="<?php echo _AT('import'); ?>" title="<?php echo _AT("import").' '.$result['title']; ?>" border="0">
-          </a>
+          </a>&nbsp;
+          <?php
+			// ***
+			// ACC
+			// Add some content search filters
+			// Lesson
+			// Pages
+			?>
+          <!--<a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>&url=<?php echo urlencode(AT_TILE_VIEW_COURSE_URL.$result['courseID']); ?>">-->
+          <a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>&mode=LCL&desc=<?php echo urlencode($result['description']); ?>">
+            <img src="<?php echo AT_BASE_HREF. 'images/add-course.png'?>" alt="<?php echo _AT('import'); ?>" style="border-left:1px solid #CCC; padding-left: 15px;" title="<?php echo _AT("import").' '.$result['title']; ?>" border="0">
+          </a>&nbsp;
         </dt>
 <?php }?>
 		<dd>
@@ -106,8 +124,60 @@ if (isset($this->result_list))
 		<dd><?php if ($result['creativeCommons'] == "true") echo _AT('yes'); else echo _AT('no'); ?></dd>
 
 	</dl>
+	<?php
+		// ***
+		// ACC
+		/*
+	?>
+	<div>
+    	<?php
+    		echo $result['courseID'];
+
+
+    	?>
+    </div>
+	<dl class="browse-result">
+		<dt>
+			<a href="#">
+				<img src="<?php echo AT_BASE_HREF. 'images/folder.gif'?>" alt="<?php echo _AT('folder'); ?>" title="<?php echo _AT("folder").' '.$result['title']; ?>" border="0" />&nbsp;
+				Folder name
+			</a>
+		</dt>
+
+		<dt>
+			<img src="<?php echo AT_BASE_HREF. 'images/tree/tree_end.gif'?>" alt="<?php echo _AT('file'); ?>" title="<?php echo _AT("file").' '.$result['title']; ?>" border="0" />
+			<a href="#">
+				<img src="<?php echo AT_BASE_HREF. 'images/file_types/generic.gif'?>" alt="<?php echo _AT('file'); ?>" title="<?php echo _AT("file").' '.$result['title']; ?>" border="0" />&nbsp;
+				File name
+			</a>
+		</dt>
+		<dt>
+			<img src="<?php echo AT_BASE_HREF. 'images/tree/tree_end.gif'?>" alt="<?php echo _AT('file'); ?>" title="<?php echo _AT("file").' '.$result['title']; ?>" border="0" />
+			<a href="#">
+				<img src="<?php echo AT_BASE_HREF. 'images/file_types/generic.gif'?>" alt="<?php echo _AT('file'); ?>" title="<?php echo _AT("file").' '.$result['title']; ?>" border="0" />&nbsp;
+				File name
+			</a>
+		</dt>
+		
+		<dt>
+			<a href="#">
+				<img src="<?php echo AT_BASE_HREF. 'images/folder.gif'?>" alt="<?php echo _AT('folder'); ?>" title="<?php echo _AT("folder").' '.$result['title']; ?>" border="0" />&nbsp;
+				Folder name
+			</a>
+		</dt>
+
+		<dt>
+			<img src="<?php echo AT_BASE_HREF. 'images/tree/tree_end.gif'?>" alt="<?php echo _AT('file'); ?>" title="<?php echo _AT("file").' '.$result['title']; ?>" border="0" />
+			<a href="#">
+				<img src="<?php echo AT_BASE_HREF. 'images/file_types/generic.gif'?>" alt="<?php echo _AT('file'); ?>" title="<?php echo _AT("file").' '.$result['title']; ?>" border="0" />&nbsp;
+				File name
+			</a>
+		</dt>
+	</dl>
+
 	<br />
 	<?php
+		 */
 				}
 			}
 			echo '</div>';

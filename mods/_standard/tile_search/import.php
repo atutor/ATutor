@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
+// $Id: import.php 10155 2010-09-08 18:05:52Z greg $
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -48,9 +48,56 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 		print_menu_sections($menu, $children['content_id'], $depth+1, $new_ordering);
 	}
 }
+
 ?>
 
-<form name="form1" method="post" action="mods/_core/imscp/ims_import.php?tile=1" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');">
+<?php
+	// ***
+	// ACC
+	// changes the form action url
+	// Lesson
+	// Pages
+	
+	// LCL = Live Content Link
+	if(isset($_GET['mode']) AND $_GET['mode'] == 'LCL')
+		$action	= 'mods/_standard/tile_search/classes/AContent_LiveContentLink.class.php';
+	else
+		$action	= 'mods/_core/imscp/ims_import.php?tile=1';
+
+
+	$vars	= array('tile_course_id'	=> htmlentities($_GET['tile_course_id']),
+					'cid'				=> '',
+					'title'				=> htmlentities($_GET['title']),
+					'desc'				=> htmlentities($_GET['desc']),
+					'ordering'			=> '',
+					'pid'				=> 0,
+					'day'				=> date('d'),
+					'month'				=> date('m'),
+					'year'				=> date('Y'),
+					'hour'				=> date('H'),
+					'minute'			=> date('i'),
+					'min'				=> 0,
+					'alternatives'		=> '',
+					'current_tab'		=> 0,
+					'keywords'			=> '',
+					'test_message'		=> '',
+					'allow_test_export'	=> 0,
+					'submit'			=> 'Save',
+					'displayhead'		=> 0,
+					'displaypaste'		=> 0,
+					'complexeditor'		=> 0,
+					'formatting'		=> 2,
+					'head'				=> htmlentities($_GET['tile_course_id']),
+					'body_text'			=> '',
+					'weblink_text'		=> htmlentities($_GET['url']));	
+?>
+
+<form name="form1" method="post" action="<?php echo $action; ?>" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');">
+	<?php
+		foreach($vars as $name => $value){
+			echo '<input type="hidden" value="'.$value.'" name="'.$name.'" />';
+		}
+	?>
 	<input type="hidden" name="url" value="<?php echo AT_TILE_EXPORT_CC_URL.$_GET['tile_course_id']; ?>" />
 	<input type="hidden" name="allow_a4a_import" value="1" />
 <div class="input-form">
@@ -60,14 +107,13 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	</div>
 
 	<div class="row">
-	<strong><?php echo _AT('import_content_package_where'); ?>:</strong> 
+	<strong><?php echo _AT('import_content_package_where'); ?>:</strong>
 	<select name="cid">
 		<option value="0"><?php echo _AT('import_content_package_bottom_subcontent'); ?></option>
 		<option>--------------------------</option>
 		<?php print_menu_sections($_main_menu); ?>
 	</select>
 	</div>
-
 	<div class="row">
 		<strong><?php echo _AT('import_content_package'); ?>:</strong> <?php echo urldecode($stripslashes($_GET['title'])); ?>
 	</div>

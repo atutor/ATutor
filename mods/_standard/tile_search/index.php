@@ -10,11 +10,13 @@
 /* modify it under the terms of the GNU General Public License  */
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
-// $Id$
+// $Id: index.php 10142 2010-08-17 19:17:26Z hwong $
 
 define('AT_INCLUDE_PATH', '../../../include/');
+define('TR_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require_once('classes/ResultParser.class.php');
+require_once('classes/ContentDAO.class.php');
 
 //$default_results_per_page = 25;
 $default_results_per_page = 20;
@@ -25,13 +27,26 @@ if (!isset($_REQUEST["results_per_page"])) $_REQUEST["results_per_page"] = $defa
 
 if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 {
+	// ***
+	// ACC
+	// Add some filter to the input
+
+	// Convert all applicable characters to HTML entities
+	$_REQUEST['keywords']	= htmlentities($_REQUEST['keywords']);
+	// Remove all % chars to prevent unnecessary execution of the SQL query
+	$_REQUEST['keywords']	= str_replace('%', '', $_REQUEST['keywords']);
+	// Escapes special characters in a string for use in an SQL statement
+	$_REQUEST['keywords']	= mysql_real_escape_string($_REQUEST['keywords']);
+	
+
 	$keywords = trim($_REQUEST['keywords']);
+
 	//$title = trim($_REQUEST['title']);
 	//$description = trim($_REQUEST['description']);
 	//$author = trim($_REQUEST['author']);
 	$results_per_page = intval(trim($_REQUEST['results_per_page']));
-	
-	if($keywords <> "") 
+
+	if($keywords <> "")
 	// || $title <> "" || $description <> "" || $author <> "" || $_REQUEST["creativeCommons"] == "true"
 	{
 		$page = intval($_REQUEST['p']);
@@ -81,7 +96,7 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 	//	}
 		
 		$url = AT_TILE_SEARCH_URL."?id=".$_config['transformable_web_service_id'].$url_search;
-	
+
 		$xml_results = file_get_contents($url);
 		
 		if (!$xml_results)
@@ -92,6 +107,7 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 		else
 		{
 			$resultParser = new ResultParser();
+
 			$resultParser->parse($xml_results);
 			$result_list = $resultParser->getParsedArray();
 			
@@ -100,6 +116,25 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 			$savant->assign('results_per_page', $results_per_page);
 			$savant->assign('page_str', $page_str);
 			$savant->assign('instructor_role', 1);
+
+			// ***
+			// ACC
+			// Search for folders / subfolders and pages
+			// as content of the selected course
+			// if the search filter is checked
+			if(1==1){
+				//AContent_LiveContentLinkDAO::getContent('20');
+				$contentDAO = new ContentDAO();
+				$rows = $contentDAO->getContentByCourseID('3');
+				
+				//$course_tree	= '';
+				//var_dump($rows);
+
+			}
+
+			//var_dump($rows);
+
+			$savant->assign('course_tree', $course_tree);
 		}
 	}
 }
@@ -111,6 +146,7 @@ $onload = "document.form.keywords.focus();";
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $savant->display('tile_search/index.tmpl.php');
-
+//var_dump($savant->display('tile_search/index.tmpl.php'));
+//die();
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
