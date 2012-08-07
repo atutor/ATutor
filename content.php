@@ -291,7 +291,7 @@ if(strstr($fp, 'AContent Handbook')){
 
 	// overwrite the original content with the filtered one
 	$savant->assign('body', $content);
-	$savant->assign('module_contents', $content);
+	$savant->assign('module_contents', '');
 }
 
 $savant->display('content.tmpl.php');
