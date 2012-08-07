@@ -10,15 +10,15 @@
 	require_once("../ims-blti/blti_util.php");
 	require_once('ContentDAO.class.php');
 
-	new AContent_LiveContentLink();
+	$ret = new AContent_LiveContentLink();
 
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	if($ret->status){
+		$msg->addError('IMPORT_FAILED');
+	}else
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+
 	header('Location: ../index.php');
 	exit();
-
-/*
-	die('END');
-*/
 
 ?>
 
@@ -27,6 +27,7 @@
 	class AContent_LiveContentLink{
 
 		public static $_singleton	= null;
+		public $status = 0;
 		
 		// LTI version (now, 1p1 or 2p0)
 		private $_LTI_version	= '1p1';
@@ -34,9 +35,7 @@
 		private $_AContent_URL	= '';
 		private $_consumer_url	= '';
 
-		//private $_LTI_Resource	= array('launch_URL'	=> 'http://localhost/AContent_local/oauth/tool.php',//'http://localhost/LTI_1.1/tool.php',		// endpoint
-		//private $_LTI_Resource	= array('launch_URL'	=> 'http://137.204.74.112/oauth/tool.php',//'http://localhost/LTI_1.1/tool.php',		// endpoint
-		private $_LTI_Resource	= array('launch_URL'	=> 'oauth/lti/tool.php',//'http://localhost/LTI_1.1/tool.php',		// endpoint
+		private $_LTI_Resource	= array('launch_URL'	=> 'oauth/lti/tool.php',
 										'key'			=> '12345',
 										'secret'		=> 'secret');
 
@@ -245,7 +244,6 @@
 
 				return true;
 			}
-
 		}
 
 		/**
@@ -261,7 +259,7 @@
 			$reg_consumer	= '';
 			$reg_vars		= '';
 
-			$reg_consumer	= file_get_contents(ACONTENT_OAUTH_HOST . '/oauth/register_consumer.php?consumer=' . $this->_consumer_url . '&expire=' . $GLOBALS['_config']['transformable_oauth_expire'] . 'lti=' . $this->_LTI_version);
+			$reg_consumer	= @file_get_contents(ACONTENT_OAUTH_HOST . '/oauth/register_consumer.php?consumer=' . $this->_consumer_url . '&expire=' . $GLOBALS['_config']['transformable_oauth_expire'] . 'lti=' . $this->_LTI_version);
 		    $reg_vars		= explode('&',$reg_consumer);
 
 
@@ -365,13 +363,20 @@
 		 */
 		private function _import($dataStructure){
 
-/*
-			var_dump($dataStructure);
-			die('Stop right now!');
-*/
 			$xml	= simplexml_load_string($dataStructure);
 
-			$this->_recursiveFolderScan($xml, htmlentities($_POST['cid']));
+			// import error
+			if(!$xml){
+				echo '<pre>';
+					var_dump(htmlentities($xml));
+				echo '</pre>';
+				die("!xml");
+				$this->status = 1;
+				return;
+				die();
+			}
+
+			$this->_recursiveFolderScan($xml, (int)htmlentities($_POST['cid']));
 
 			return;
 		}
@@ -386,18 +391,18 @@
 		 */
 		private function _recursiveFolderScan($current_node, $import_into_id){
 
+			if(!is_int($import_into_id)){
+				$import_into_id = 0;
+			}
+
 			// course id
 			$course_id			= htmlentities($_SESSION['course_id']);
-
-if($import_into_id == NULL)
-	$import_into_id = 0;
 
 			// for each item to import (child)
 			for($i = 0; $i < count($current_node->content_id); $i++){
 
-				$current	= $current_node->content_id[$i];
-
-				$new_parent_id = $this->_storeData($current, $course_id, $import_into_id);
+				$current		= $current_node->content_id[$i];
+				$new_parent_id	= $this->_storeData($current, $course_id, $import_into_id);
 
 				$this->_recursiveFolderScan($current, $new_parent_id);
 			}
@@ -414,7 +419,6 @@ if($import_into_id == NULL)
 		 * @author  Mauro Donadio
 		 */
 		private function _storeData($current_item, $course_id, $content_parent_id){
-
 
 			$ContentDAO = self::getInstance();
 
