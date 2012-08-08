@@ -10,6 +10,14 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+	/*
+	 * Twitauth
+	 * 
+	 * This class gets the data structure as an array and prints it
+	 * like a tree or checkbox tree or in other many ways
+	 * 
+	*/
+
 	class TreeGenerator{
 
 		// xml structure

@@ -10,6 +10,15 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 
+	/*	
+	 * AContent lcl process xml
+	 * 
+	 * This class parses the XML data requested to the Tool Provider (TP)
+	 * and transforms the structure into an array directly usable for the creation
+	 * of the tree view
+	 * 
+	*/
+
 	class AContent_lcl_processxml{
 
 		private $_tree	= null;

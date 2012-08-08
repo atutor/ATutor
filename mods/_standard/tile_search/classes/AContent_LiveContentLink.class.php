@@ -24,6 +24,16 @@
 
 <?php
 
+	/*	
+	 * AContent Live Content Link
+	 * 
+	 * This class establishes an oauth authentication
+	 * and submits the LTI form to request the data to the Tool Provider (TP).
+	 * Then, it stores the TP data into the ATutor database.
+	 * 
+	*/
+
+
 	class AContent_LiveContentLink{
 
 		public static $_singleton	= null;
@@ -35,10 +45,42 @@
 		private $_AContent_URL	= '';
 		private $_consumer_url	= '';
 
+		// LTI settings
+		// this settings are all required
+		//
+		//	VAR				EXAMPLE				DEFINITION
+		//
+		//	launch_URL		oauth/tool.php		where the page tool.php is located on the Tool Consumer server (AContent/oauth/tool.php)
+		//	key				12345				(automatically generated) consumer key required for the OAuth authentication
+		//	secret			secret				(automatically generated) consumer secret required for the OAuth authentication
+		//
 		private $_LTI_Resource	= array('launch_URL'	=> 'oauth/lti/tool.php',
 										'key'			=> '12345',
 										'secret'		=> 'secret');
 
+		// LTI parameters
+		// this settings are all recommended or required (* required fields)
+		//
+		//	VAR								EXAMPLE						DEFINITION
+		//
+		//	*resource_link_id				120988f929-274612			unique resource link id to differentiate the content/features
+		//	resource_link_title				Weekly Blog				A plain text1 title for the resource (appears in the link)
+		//	resource_link_description		A weekly blog.				A plain text description of the link’s destination
+		//	user_id							292832126					Uniquely identifies the user (should not contain any identifying info for the user)
+		//	roles							Instructor					A comma-separated list of URN (Uniform Resource Name) values for roles
+		//	lis_person_name_full			Jane Q. Public				info about the user account that is performing this launch
+		//	lis_person_name_family			Public						info about the user account that is performing this launch
+		//	lis_person_name_given			Given						info about the user account that is performing this launch
+		//	lis_person_contact_email_primary	user@school.edu			info about the user account that is performing this launch
+		//	lis_person_sourcedid			school.edu:user				LIS id for the user account that is performing this launch
+		//	context_id						456434513					opaque id that uniquely identifies the context that contains the link being launched
+		//	context_title					Design of Personal Env.		A plain text title of the context
+		//	context_label					SI182						A plain text label for the context
+		//	tool_consumer_instance_guid		lmsng.school.edu			This is a unique identifier for the TC.
+		//	tool_consumer_instance_desc		Univ of School (LMSng)		This is a plain text user visible field
+		//	tool_consumer_info_product_family_code	desire2learn		Info about product family code
+		//	tool_consumer_info_version		2.0.3						Consumer info version
+		//
 		private $_Launch_Data	= array('resource_link_id'					=> '120988f929-274612',
 										'resource_link_title'				=> 'Weekly Blog',
 										'resource_link_description'			=> 'A weekly blog.',
@@ -58,6 +100,13 @@
 										'tool_consumer_instance_guid'		=> 'lmsng.school.edu',
 										'tool_consumer_instance_desc'		=> 'University of School (LMSng)');
 
+		/**
+		 * Singleton Design Pattern
+		 * Return the instance of the class DAO.class.php
+		 * @access  private
+		 * @return  DAO class instance
+		 * @author  Mauro Donadio
+		 */
 		static function getInstance(){
 
 			if (AContent_LiveContentLink::$_singleton == null){ 
@@ -156,8 +205,6 @@
 				// CURL (auto submit form)
 				//
 				$url = $endpoint;
-				
-				//$url="http://www.imsglobal.org/developers/LTI/test/v1p1/tool.php";
 
 				$result			= $this->_curlFormAutoSubmit($url, $parms);
 				//-- CURL
@@ -165,11 +212,6 @@
 				$xmlStructure	= strstr($result, 'aContent_LiveContentLink() = ');
 				$xmlStructure	= ltrim($xmlStructure, 'aContent_LiveContentLink() = ');
 				$xmlStructure	= trim($xmlStructure);
-
-/*
-				echo $xmlStructure;
-				die("<div>-------------</div>");
-*/
 
 				$xmlStructure	= html_entity_decode($xmlStructure);
 
@@ -367,10 +409,6 @@
 
 			// import error
 			if(!$xml){
-				echo '<pre>';
-					var_dump(htmlentities($xml));
-				echo '</pre>';
-				die("!xml");
 				$this->status = 1;
 				return;
 				die();

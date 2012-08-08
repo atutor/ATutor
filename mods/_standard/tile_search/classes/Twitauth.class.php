@@ -1,5 +1,12 @@
 <?php
 
+	/*
+	 * Twitauth
+	 * 
+	 * This class takes care of the OAuth authentication
+	 * 
+	*/
+
 	class Twitauth
 	    {
 	      var $key = '';

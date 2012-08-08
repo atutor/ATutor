@@ -14,6 +14,14 @@
 	require_once("../launch/ims-blti/blti_util.php");
 	require_once('ContentDAO.class.php');
 
+	/*	
+	 * AContent lcl import xml
+	 * 
+	 * This class parses the XML data requested to the Tool Provider (TP)
+	 * and stores them into the ATutor database.
+	 * 
+	*/
+
 	class AContent_lcl_importxml{
 
 		private static $_singleton	= null;
@@ -54,7 +62,7 @@
 
 			$xml	= simplexml_load_string($dataStructure);
 
-			// id del corso padre
+			// id of the current course parent
 			if(isset($_GET['cid']))
 				$import_into_id	= htmlentities($_GET['cid']);
 			else
