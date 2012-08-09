@@ -165,26 +165,22 @@ if(isset($_POST['save'])){
 			// format the course structure as tree
 
 			// AContent course
-			include_once '../classes/AContent_LiveContentLink.class.php';
+			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
 			//$course_id	= htmlentities($_POST['course_list']);
 
 			$content_id	= $res[$i];
-			$ac_lcl		= new AContent_LiveContentLink($content_id, 0);
-			$xml		= $ac_lcl->getXMLdata();
+			$xml	= null;
+			$xml	= new AContent_LiveContentLink($content_id, 0);
 
 			// store the XML data into the database
 			// (implementation of AContent Live Content Link)
 
-			include_once '../classes/AContent_lcl_importxml.class.php';
+			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_lcl_importxml.class.php');
 			$ac_xml	= new AContent_lcl_importxml();
 			// ATutor course
 			$course_id			= htmlentities($_SESSION['course_id']);
-			/*
-			var_dump($xml);
-			echo '<hr />';
-			var_dump($res[$i]);
-			*/
-			$import	= $ac_xml->importXML($xml, $course_id);
+
+			$import	= $ac_xml->importXML($xml->xmlStructure, $course_id);
 
 			/*
 			if($import)
@@ -195,7 +191,7 @@ if(isset($_POST['save'])){
 	}
 	
 	// show "Close window" button
-	echo '<div style="text-align:center; padding: 20px">';
+	echo '<div style="text-align:center; margin:0 auto; padding: 20px">';
 		echo '<input type="submit" onclick="window.opener.location.reload(); javascript:window.close()" value="Close Window" class="button" />';
 	echo '</div>';
 
@@ -296,18 +292,19 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 		##
 
 		echo '<div style="padding: 10px">';
-			
-			echo '<div style="border-bottom: 1px solid #CCC; border-left: 10px solid #CCC; padding-left: 10px; font-weight: bold; margin-top:10px; margin-bottom:20px">';
-				echo 'Courses list'._AT('');
-			echo '</div>';
+
+			$tool		= @get_headers($GLOBALS['_config']['transformable_uri'] . 'oauth/tool.php');
+
+			if($tool[0] != 'HTTP/1.1 404 Not Found'){
+
+				echo '<div style="border-bottom: 1px solid #CCC; border-left: 10px solid #CCC; padding-left: 10px; font-weight: bold; margin-top:10px; margin-bottom:20px">';
+					echo 'Courses list'._AT('');
+				echo '</div>';
 	
 				// SEARCH
 	
-				echo '<table style="width:100%; margin:auto; border-bottom: 1px solid #CCC">';
+				echo '<table style="width:100%; margin:auto; margin-bottom: 10px; border-bottom: 1px solid #CCC">';
 	
-					$tool		= @get_headers($GLOBALS['_config']['transformable_uri'] . 'oauth/tool.php');
-	
-					if($tool[0] != 'HTTP/1.1 404 Not Found'){
 						echo '<tr>';
 							echo '<td>';
 								echo '<div>';
@@ -378,7 +375,7 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 					echo '<td style="padding-top:10px; padding-bottom:10px" id="tree_box">';
 		
 					echo '<div style="padding-top: 10px; padding-bottom: 10px">';
-						echo '<b>* Select pages to -import-</b>';
+						echo '<b>* Select pages to import-</b>';
 					echo '</div>';
 		
 		
@@ -390,21 +387,22 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 		
 					// create LTI connection to get the course structure
 					// format the course structure as tree
-		
-					include_once '../classes/AContent_LiveContentLink.class.php';
-					$ac_lcl	= new AContent_LiveContentLink($course_id, 1);
-					$xml	= $ac_lcl->getXMLdata();
-		
+
+					require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
+
+					$xml	= null;
+					$xml	= new AContent_LiveContentLink($course_id, 1);
+
 					// transform the XML to a particular array
 					// required by the TreeGenerator class
 		
-					include_once '../classes/AContent_lcl_processxml.class.php';
+					require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_lcl_processxml.class.php');
 					$ac_xml	= new AContent_lcl_processxml();
-					$struct	= $ac_xml->XMLtoArray($xml);
+					$struct	= $ac_xml->XMLtoArray($xml->xmlStructure);
 		
 					// create the tree view of the choosen course
 		
-					include_once '../classes/TreeGenerator.class.php';
+					require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/TreeGenerator.class.php');
 					$ac_tree= new TreeGenerator($struct);
 					//$ac_tree->plainTree();
 					//$ac_tree->plainFolderTree();
@@ -415,8 +413,8 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 				}
 		
 				echo '</tr>';
-			} // LTI supported
-	
+
+			/*
 			echo '<tr>';
 				echo '<td style="padding-top:10px; padding-bottom:10px">';
 	
@@ -428,7 +426,17 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 				echo '</td>';
 	
 			echo '</tr>';
+			*/
+
 			echo '</table>';
+
+		} // LTI supported
+
+		if ( $basiclti_tool_row !== false ) {
+		    $blti_content_edit_form = filterForm($basiclti_tool_row, $blti_content_edit_form);
+		    at_form_generate($basiclti_content_row, $blti_content_edit_form);
+			echo('<input type="submit" name="save" value="' . _AT('save') . '" class="button" />'."\n");
+		}
 
 		echo '</div>';
 	

@@ -16,7 +16,6 @@ define('AT_INCLUDE_PATH', '../../../include/');
 define('TR_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require_once('classes/ResultParser.class.php');
-require_once('classes/ContentDAO.class.php');
 
 //$default_results_per_page = 25;
 $default_results_per_page = 20;
@@ -116,23 +115,6 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 			$savant->assign('results_per_page', $results_per_page);
 			$savant->assign('page_str', $page_str);
 			$savant->assign('instructor_role', 1);
-
-			// ***
-			// ACC
-			// Search for folders / subfolders and pages
-			// as content of the selected course
-			// if the search filter is checked
-			if(1==1){
-				//AContent_LiveContentLinkDAO::getContent('20');
-				$contentDAO = new ContentDAO();
-				$rows = $contentDAO->getContentByCourseID('3');
-				
-				//$course_tree	= '';
-				//var_dump($rows);
-
-			}
-
-			//var_dump($rows);
 
 			$savant->assign('course_tree', $course_tree);
 		}

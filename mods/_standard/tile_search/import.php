@@ -1,4 +1,26 @@
 <?php
+
+	if(isset($_POST['tile_course_id'])){
+
+		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+		ini_set("display_errors", 1);
+
+		define('AT_INCLUDE_PATH', '../../../include/');
+		define('TR_INCLUDE_PATH', '../../../include/');
+		require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+		require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
+
+		$ret = new AContent_LiveContentLink();
+	
+		if($ret->status){
+			$msg->addError('IMPORT_FAILED');
+		}else
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	
+		header('Location: index.php');
+		exit();
+	}
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
@@ -59,10 +81,12 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	// Pages
 	
 	// LCL = Live Content Link
+	/*
 	if(isset($_GET['mode']) AND $_GET['mode'] == 'LCL')
 		$action	= 'mods/_standard/tile_search/classes/AContent_LiveContentLink.class.php';
-	else
-		$action	= 'mods/_core/imscp/ims_import.php?tile=1';
+	else*/
+		//$action	= 'mods/_core/imscp/ims_import.php?tile=1';
+	$action	= $_SERVER['PHP_SELF'];
 
 
 	$vars	= array('tile_course_id'	=> htmlentities($_GET['tile_course_id']),
