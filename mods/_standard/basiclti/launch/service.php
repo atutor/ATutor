@@ -4,7 +4,8 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'config.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 
-    require_once("ims-blti/OAuth.php");
+	require_once(AT_INCLUDE_PATH . "classes/AContent_lcl/ims-blti/OAuth.php");
+    //require_once("ims-blti/OAuth.php");
     require_once("TrivialStore.php");
 
 error_reporting(E_ALL & ~E_NOTICE);

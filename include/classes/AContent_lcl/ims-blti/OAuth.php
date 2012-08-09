@@ -623,6 +623,14 @@ class OAuthServer {
         "Expired timestamp, yours $timestamp, ours $now"
       );
     }
+	echo "$now " + $now;
+	echo '<br />';
+	echo "$timestamp " + $timestamp;
+	echo '<br />';
+	echo "$this->timestamp_threshold = " + $this->timestamp_threshold;
+	echo '<br />';
+
+	die("Wait a minute!");
   }
 
   /**
@@ -748,11 +756,11 @@ class OAuthUtil {
   public static function parse_parameters( $input ) {
     if (!isset($input) || !$input) return array();
 
-    $pairs = explode('&', $input);
+    $pairs = split('&', $input);
 
     $parsed_parameters = array();
     foreach ($pairs as $pair) {
-      $split = explode('=', $pair, 2);
+      $split = split('=', $pair, 2);
       $parameter = OAuthUtil::urldecode_rfc3986($split[0]);
       $value = isset($split[1]) ? OAuthUtil::urldecode_rfc3986($split[1]) : '';
 

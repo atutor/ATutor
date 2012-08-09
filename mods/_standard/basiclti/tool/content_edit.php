@@ -1,4 +1,5 @@
 <?php
+
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_BASICLTI);
@@ -96,8 +97,6 @@ if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg))
     }
 }
 
-// echo("<hr>$sql<hr>\n");
-
 $cid = intval($_REQUEST['cid']);
 
 global $framed, $popup;
@@ -116,6 +115,91 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) &&
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+
+// Mauro Donadio
+// donadiomauro@gmail.com
+
+if(isset($_POST['save'])){
+
+	// get all checked boxes
+	// about the selected lesson(s) to import
+	if(isset($_POST['lesson']) AND is_array($_POST['lesson'])){
+
+		$res		= array();
+		$offspring	= array();
+		$current_log= null;
+
+		for($i=0; $i<count($_POST['lesson']); $i++){
+
+			$value	= explode('|', $_POST['lesson'][$i]);
+			list($log, $depth, $key) = $value;
+
+			//echo '<div>'.$_POST['lesson'][$i].'</div>';
+
+			//
+			
+			if($log != $current_log){
+				$current_log = $log;
+				// empty the stack
+				$offspring	= null;
+			}
+
+			if(!empty($offspring) AND $depth > end($offspring)){
+				/*
+				echo 'JUMP: '.$key;
+				echo '<br/>';
+				*/
+				continue;
+			}else{
+				$res[]	= $key;
+			}
+
+			$offspring[]	= $depth;
+		}
+		
+		$res = array_unique($res);
+
+		for($i = 0; $i < count($res); $i++){
+
+			// create LTI connection to get the course structure
+			// format the course structure as tree
+
+			// AContent course
+			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
+			//$course_id	= htmlentities($_POST['course_list']);
+
+			$content_id	= $res[$i];
+			$xml	= null;
+			$xml	= new AContent_LiveContentLink($content_id, 0);
+
+			// store the XML data into the database
+			// (implementation of AContent Live Content Link)
+
+			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_lcl_importxml.class.php');
+			$ac_xml	= new AContent_lcl_importxml();
+			// ATutor course
+			$course_id			= htmlentities($_SESSION['course_id']);
+
+			$import	= $ac_xml->importXML($xml->xmlStructure, $course_id);
+
+			/*
+			if($import)
+				echo '<div>DEBUG: Ok!</div>';
+			else
+				echo '<div>DEBUG: Error!</div>';
+			*/		}
+	}
+	
+	// show "Close window" button
+	echo '<div style="text-align:center; margin:0 auto; padding: 20px">';
+		echo '<input type="submit" onclick="window.opener.location.reload(); javascript:window.close()" value="Close Window" class="button" />';
+	echo '</div>';
+
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+
+	die();
+}
+//--
 
 /* get a list of all the tools, we have */
 $sql    = "SELECT * FROM ".TABLE_PREFIX."basiclti_tools WHERE course_id = 0".
@@ -193,33 +277,182 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 }
 ?>
    <input type="hidden" name="cid" value="<?php echo($cid);?>" />
-<?php
-if ( $basiclti_tool_row !== false ) {
-    $blti_content_edit_form = filterForm($basiclti_tool_row, $blti_content_edit_form);
-    at_form_generate($basiclti_content_row, $blti_content_edit_form);
-   echo('<input type="submit" name="save" value="Save" class="button" />'."\n");
-}
-?>
+
 </div>
 </legend>
-</form>
+<!--</form>-->
 </div>
-<?php 
-if($basiclti_tool_row){
-	echo '<h3>'.$basiclti_tool_row['title'].' '._AT('bl_settings').'</h3>';
-	echo '<ul style="list-style-type:none;">';
-	foreach($basiclti_tool_row as $title=>$setting){
-		if($title == "password" || $title == "resourcekey" && $basiclti_tool_row['course_id'] == 0){
-			// Hide the tool password if its not an instructor created tool //
-			// Don't print out the key or password id its an admin added tool
-			continue;
-		} else {
 
-			echo '<li>'.$title.' = '.$setting.'</li>';
+<?php
+
+	if($basiclti_tool_row){
+
+		##
+		## Mauro Donadio (donadiomauro@gmail.com)
+		##
+
+		echo '<div style="padding: 10px">';
+
+			$tool		= @get_headers($GLOBALS['_config']['transformable_uri'] . 'oauth/tool.php');
+
+			if($tool[0] != 'HTTP/1.1 404 Not Found'){
+
+				echo '<div style="border-bottom: 1px solid #CCC; border-left: 10px solid #CCC; padding-left: 10px; font-weight: bold; margin-top:10px; margin-bottom:20px">';
+					echo 'Courses list'._AT('');
+				echo '</div>';
+	
+				// SEARCH
+	
+				echo '<table style="width:100%; margin:auto; margin-bottom: 10px; border-bottom: 1px solid #CCC">';
+	
+						echo '<tr>';
+							echo '<td>';
+								echo '<div>';
+									echo '<label for="words2"><b>' . _AT('tile_howto') . '</b></label>';
+								echo '</div>';
+		
+								if(isset($_POST['keywords']) AND htmlentities($_POST['keywords']) != '')
+									echo '<input type="text" name="keywords" style="width: 100%" id="words2" value="'.htmlentities($_POST['keywords']).'" /> ';
+								else
+									echo '<input type="text" name="keywords" style="width: 100%" id="words2" /> ';
+								echo '<input type="submit" class="button" value="' . _AT('search') . '" />';
+							echo '<td>';
+					echo '</tr>';
+					echo '<tr>';
+		
+					// COURSES
+		
+					echo '<td style="padding-top:10px">';
+					
+					echo '<div>';
+						echo '<label for="courses"><b>' . _AT('browse_courses') . '</b></label>';
+						//echo '<br />';
+						//echo '<label for="courses"><b>' . _AT('course_list') . '</b></label>';
+					echo '</div>';
+		
+					echo '<select name="course_list" id="courses" size="10" style="width: 100%; border: 1px solid #CCC">';
+						if(isset($_POST['keywords']) AND htmlentities($_POST['keywords']) != ''){
+		
+							$url	= explode('home', $basiclti_tool_row['toolurl']);
+							$xmlfp	= file_get_contents($url[0] . 'search.php?id='.$GLOBALS['_config']['transformable_web_service_id'].'&keywords='.htmlentities($_POST['keywords']));
+		
+							$xml	= simplexml_load_string(trim($xmlfp));
+							$i		= 1;
+		
+							foreach($xml->results->result as $res) {
+		
+								if(isset($_POST['course_list']) AND $res->courseID == $_POST['course_list']){
+									$choosen_course = $res->title;
+									echo '<option value="'.trim($res->courseID).'" selected="selected" style="padding-top:5px; padding-left:5px">'.$i.'. '.$res->title.'</option>';
+								}elseif($i==1)
+									echo '<option value="'.trim($res->courseID).'" selected="selected" style="padding-top:5px; padding-left:5px">'.$i.'. '.$res->title.'</option>';
+								else
+									echo '<option value="'.trim($res->courseID).'" style="padding-top:5px; padding-left:5px">'.$i.'. '.$res->title.'</option>';
+								$i++;
+							}
+						}
+		
+					echo '</select>';
+		
+					echo '</td>';
+				echo '</tr>';
+				echo '<tr>';
+					echo '<td>';
+		
+						echo '<div>';
+							echo '<input type="submit" value="' . _AT('show_pages') . '" class="button" />';
+						echo '</div>';
+		
+					echo '</td>';
+		
+				// LESSONS
+		
+		
+				if(isset($_POST['course_list']) AND $_POST['course_list'] != null){
+					
+					echo '</tr>';
+					echo '<tr>';
+					echo '<td style="padding-top:10px; padding-bottom:10px" id="tree_box">';
+		
+					echo '<div style="padding-top: 10px; padding-bottom: 10px">';
+						echo '<b>* Select pages to import-</b>';
+					echo '</div>';
+		
+		
+					echo '<div style="padding-bottom: 5px"><u>';
+						echo $choosen_course;
+					echo '</u></div>';
+		
+					$course_id		= htmlentities($_POST['course_list']);	
+		
+					// create LTI connection to get the course structure
+					// format the course structure as tree
+
+					require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
+
+					$xml	= null;
+					$xml	= new AContent_LiveContentLink($course_id, 1);
+
+					// transform the XML to a particular array
+					// required by the TreeGenerator class
+		
+					require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_lcl_processxml.class.php');
+					$ac_xml	= new AContent_lcl_processxml();
+					$struct	= $ac_xml->XMLtoArray($xml->xmlStructure);
+		
+					// create the tree view of the choosen course
+		
+					require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/TreeGenerator.class.php');
+					$ac_tree= new TreeGenerator($struct);
+					//$ac_tree->plainTree();
+					//$ac_tree->plainFolderTree();
+					$ac_tree->checkBoxTree('lesson');
+					//$ac_tree->radioButtonTree('lesson');
+		
+					echo '</td>';
+				}
+		
+				echo '</tr>';
+
+			echo '</table>';
+
+		} // LTI supported
+
+		if ( $basiclti_tool_row !== false ) {
+		    $blti_content_edit_form = filterForm($basiclti_tool_row, $blti_content_edit_form);
+		    at_form_generate($basiclti_content_row, $blti_content_edit_form);
+			echo('<input type="submit" name="save" value="' . _AT('save') . '" class="button" />'."\n");
 		}
+
+		echo '</div>';
+		
+			//--
+		
+			// // // // //
+	
+		echo '</form>';
+	
+	
+		echo '<h3>'.$basiclti_tool_row['title'].' '._AT('bl_settings').'</h3>';
+		echo '<ul style="list-style-type:none;">';
+		foreach($basiclti_tool_row as $title=>$setting){
+			if($title == "password" || $title == "resourcekey" && $basiclti_tool_row['course_id'] == 0){
+				// Hide the tool password if its not an instructor created tool //
+				// Don't print out the key or password id its an admin added tool
+				continue;
+			} else {
+	
+				echo '<li>'.$title.' = '.$setting.'</li>';
+			}
+		}
+		echo '</ul>';
 	}
-	echo '</ul>';
-}
+
+	if ( $basiclti_tool_row == false ) {
+	    $blti_content_edit_form = filterForm($basiclti_tool_row, $blti_content_edit_form);
+	    at_form_generate($basiclti_content_row, $blti_content_edit_form);
+		echo('<input type="submit" name="save" value="' . _AT('save') . '" class="button" />'."\n");
+	}
 //echo("<hr><pre>\n");print_r($basiclti_tool_row); echo("\n</pre>\n"); 
 ?>
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
