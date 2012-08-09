@@ -87,7 +87,8 @@ $course_id = $atutor_content_row['course_id'];
         }
     }
 
-require_once("ims-blti/blti_util.php");
+//require_once("ims-blti/blti_util.php");
+require_once(AT_INCLUDE_PATH . "classes/AContent_lcl/ims-blti/blti_util.php");
 
     if ( strlen($basiclti_tool_row['customparameters']) > 0 ) {
         $lmsdata = merge_custom_parameters($lmsdata,$basiclti_tool_row['customparameters']);
