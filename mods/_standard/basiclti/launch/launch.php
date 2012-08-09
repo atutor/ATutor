@@ -8,6 +8,20 @@ function loadError($message) {
     exit();
 }
 
+function merge_custom_parameters($retval, $custom) {
+    $lines = preg_split("/[\n;]/",$custom);
+    foreach ($lines as $line){
+        $pos = strpos($line,"=");
+        if ( $pos === false || $pos < 1 ) continue;
+        $key = trim(substr($line, 0, $pos));
+        $val = trim(substr($line, $pos+1));
+        $key = 'custom_'.map_keyname($key);
+        if ( isset($retval[$key])) continue;
+        $retval[$key] = $val;
+    }
+    return $retval;
+}
+
 $cid = intval($_GET['cid']);
 
 $content_id = $cid;
@@ -31,6 +45,8 @@ $course_id = $atutor_content_row['course_id'];
       "context_id" => $atutor_course_row['course_id'],
       "context_title" => $atutor_course_row['title'],
       "context_label" => $atutor_course_row['title'],
+      "tool_consumer_info_product_family_code"	=> "desire2learn",
+      "tool_consumer_info_version"	=> "2.1",
       );
 
     $lmsdata['ext_lms'] = 'ATutor';
@@ -89,6 +105,7 @@ $course_id = $atutor_content_row['course_id'];
 
 //require_once("ims-blti/blti_util.php");
 require_once(AT_INCLUDE_PATH . "classes/AContent_lcl/ims-blti/blti_util.php");
+
 
     if ( strlen($basiclti_tool_row['customparameters']) > 0 ) {
         $lmsdata = merge_custom_parameters($lmsdata,$basiclti_tool_row['customparameters']);

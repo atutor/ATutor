@@ -224,7 +224,6 @@ function do_post_request($url, $data, $optional_headers = null)
               'method' => 'POST',
               'content' => $data
             ));
-    
   if ($optional_headers !== null) {
      $header = $optional_headers . "\r\n";
   }

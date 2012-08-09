@@ -414,20 +414,6 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 		
 				echo '</tr>';
 
-			/*
-			echo '<tr>';
-				echo '<td style="padding-top:10px; padding-bottom:10px">';
-	
-					if ( $basiclti_tool_row !== false ) {
-					    $blti_content_edit_form = filterForm($basiclti_tool_row, $blti_content_edit_form);
-					    at_form_generate($basiclti_content_row, $blti_content_edit_form);
-						echo('<input type="submit" name="save" value="' . _AT('save') . '" class="button" />'."\n");
-					}
-				echo '</td>';
-	
-			echo '</tr>';
-			*/
-
 			echo '</table>';
 
 		} // LTI supported
@@ -439,9 +425,6 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 		}
 
 		echo '</div>';
-	
-		
-			//die("finish");
 		
 			//--
 		
