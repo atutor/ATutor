@@ -62,21 +62,16 @@ require_once 'OAuth.php';
     return array("launch_url" => $launch_url, "custom" => $custom ) ;
   }
 
-function split_custom_parameters($custom) {
+function split_custom_parameters($customstr) {
+    $lines = preg_split("/[\n;]/",$customstr);
     $retval = array();
-    return merge_custom_parameters($retval, $custom);
-}
-
-function merge_custom_parameters($retval, $custom) {
-    $lines = preg_split("/[\n;]/",$custom);
     foreach ($lines as $line){
         $pos = strpos($line,"=");
         if ( $pos === false || $pos < 1 ) continue;
         $key = trim(substr($line, 0, $pos));
         $val = trim(substr($line, $pos+1));
-        $key = 'custom_'.map_keyname($key);
-        if ( isset($retval[$key])) continue;
-        $retval[$key] = $val;
+        $key = map_keyname($key);
+        $retval['custom_'.$key] = $val;
     }
     return $retval;
 }
@@ -105,6 +100,27 @@ function signParameters($oldparms, $endpoint, $method, $oauth_consumer_key, $oau
     if ( $org_id ) $parms["tool_consumer_instance_guid"] = $org_id;
     if ( $org_desc ) $parms["tool_consumer_instance_description"] = $org_desc;
     if ( $submit_text ) $parms["ext_submit"] = $submit_text;
+
+    $test_token = '';
+
+    $hmac_method = new OAuthSignatureMethod_HMAC_SHA1();
+    $test_consumer = new OAuthConsumer($oauth_consumer_key, $oauth_consumer_secret, NULL);
+
+    $acc_req = OAuthRequest::from_consumer_and_token($test_consumer, $test_token, $method, $endpoint, $parms);
+    $acc_req->sign_request($hmac_method, $test_consumer, $test_token);
+
+    // Pass this back up "out of band" for debugging
+    $last_base_string = $acc_req->get_signature_base_string();
+
+    $newparms = $acc_req->get_parameters();
+
+    return $newparms;
+}
+
+function signOnly($oldparms, $endpoint, $method, $oauth_consumer_key, $oauth_consumer_secret)
+{
+    global $last_base_string;
+    $parms = $oldparms;
 
     $test_token = '';
 
@@ -209,8 +225,10 @@ function do_post_request($url, $data, $optional_headers = null)
               'content' => $data
             ));
   if ($optional_headers !== null) {
-    $params['http']['header'] = $optional_headers;
+     $header = $optional_headers . "\r\n";
   }
+  // $header = $header . "Content-type: application/x-www-form-urlencoded\r\n";
+  $params['http']['header'] = $header;
   $ctx = stream_context_create($params);
   $fp = @fopen($url, 'rb', false, $ctx);
   if (!$fp) {

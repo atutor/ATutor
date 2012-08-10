@@ -10,7 +10,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id$
+// $Id: ResultParser.class.php 10142 2010-08-17 19:17:26Z hwong $
 
 /**
 * ResultParser
@@ -30,6 +30,7 @@ class ResultParser {
 	var $history_num;
 
 	function ResultParser() {
+
 		$this->parser = xml_parser_create(''); 
 
 		xml_set_object($this->parser, $this);
@@ -41,6 +42,7 @@ class ResultParser {
 
 	// public
 	function parse($xml_data) {
+
 		$xml_data = trim($xml_data);
 		
 		$this->element_path   = array();

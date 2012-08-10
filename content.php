@@ -273,7 +273,29 @@ $savant->assign('content_info', _AT('page_info', AT_date(_AT('inbox_date_format'
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+//
+// Mauro Donadio
+//
+
+$fp	= @file_get_contents($content_row['text']);
+// just for AContent content
+if(strstr($fp, 'AContent Handbook')){
+
+	// a new dom object
+	$dom		= new DomDocument('1.0', 'utf-8');
+	// load the html into the object
+	$dom->loadHTML($fp);
+	//discard white space
+	$dom->preserveWhiteSpace = false;
+	$content	= $dom->saveHTML($dom->getElementById('content-text'));
+
+	// overwrite the original content with the filtered one
+	$savant->assign('body', $content);
+	$savant->assign('module_contents', '');
+}
+
 $savant->display('content.tmpl.php');
+// --
 
 //save last visit page.
 $_SESSION['last_visited_page'] = $server_protocol . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
