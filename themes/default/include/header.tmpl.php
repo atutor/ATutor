@@ -110,7 +110,7 @@ global $system_courses, $_custom_css, $db;
 		echo '<br />';	
 	endif; ?>
 
-	<div id="top-links"> <!-- top help/search/login links -->
+	<div id="top-links"  role="navigation"> <!-- top help/search/login links -->
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<?php if(!$this->just_social): ?>
 			 <div id="top-links-jump">
@@ -209,7 +209,7 @@ global $system_courses, $_custom_css, $db;
 	</ul>
 </div>
 
-<div class="logoutbar" role="navigation">
+<div class="logoutbar">
 
 	<div>
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
