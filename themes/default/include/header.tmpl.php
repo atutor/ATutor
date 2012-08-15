@@ -260,7 +260,7 @@ global $system_courses, $_custom_css, $db;
 			echo 'style="'.$style.'"';
 		endif; ?>>
 	<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
-		<div id="leftcolumn"  role="complamentary">
+		<div id="leftcolumn"  role="complementary">
 		  <a name="menu"></a>
 		     <div id="side-menu">
 		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
