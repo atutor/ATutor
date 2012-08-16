@@ -929,20 +929,35 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 		$input = str_replace('<', '&lt;', $input);
 		$input = str_replace('&lt;?php', '<?php', $input); // for bug #2087
 	} elseif ($html==2) {
+
+		
+
+		//preg_match("/<div id=\"content-text\">(.*?)<\/div>/", $fp, $match);
+		//$match = explode('<a name="content" title="Content"></a>', $fp);
+
+
 		$output = '<iframe width="100%" frameborder="0" id="content_frame" marginheight="0" marginwidth="0" src="'.$input.'"></iframe>';
+		$output .= '<script type="text/javascript">
+
+					</script>
+		'; 
+		/*
 		$output .=	'<script type="text/javascript">
 					function resizeIframe() {
 						var height = document.documentElement.clientHeight;
 						
 						// not sure how to get this dynamically
-						height -= 20; /* whatever you set your body bottom margin/padding to be */
+						height -= 20; // whatever you set your body bottom margin/padding to be
 						
 						document.getElementById(\'content_frame\').style.height = height +"px";
+						
+						//document.getElementById(\'content_frame\').style.height = "100px";
 						
 					};
 					document.getElementById(\'content_frame\').onload = resizeIframe;
 					window.onresize = resizeIframe;
 					</script>';
+		*/
 		return $output;
 	}
 

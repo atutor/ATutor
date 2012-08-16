@@ -106,7 +106,14 @@
 		 */
 		private function _storeData($current_item, $course_id, $content_parent_id){
 
-			$ContentDAO = self::_getInstance();
+			$ContentDAO					= self::_getInstance();
+
+			$url						= explode('home/course', $current_item->text);
+			
+			$uri						= $GLOBALS['_config']['transformable_uri'] . 'home/course' . $url[1];
+
+			$current_item->text			= $uri;
+			$current_item->content_path = $uri;
 
 			if($current_item->content_type == 0){
 				$current_item->content_type = 2;
