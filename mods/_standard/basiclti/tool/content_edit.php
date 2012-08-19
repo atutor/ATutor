@@ -375,7 +375,7 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 					echo '<td style="padding-top:10px; padding-bottom:10px" id="tree_box">';
 		
 					echo '<div style="padding-top: 10px; padding-bottom: 10px">';
-						echo '<b>* Select pages to import-</b>';
+						echo '<b>* Select pages to import</b>';
 					echo '</div>';
 		
 		
@@ -401,7 +401,7 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 					$struct	= $ac_xml->XMLtoArray($xml->xmlStructure);
 		
 					// create the tree view of the choosen course
-		
+
 					require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/TreeGenerator.class.php');
 					$ac_tree= new TreeGenerator($struct);
 					//$ac_tree->plainTree();

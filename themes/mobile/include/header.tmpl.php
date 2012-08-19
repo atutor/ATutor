@@ -164,32 +164,33 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 
 			<?php if ($this->current_sub_level_page): ?>
 			<div id="topnavlistcontainer" role="menu" aria-live="assertive" class="topnavlistcontainer" >
-			<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="#" tabindex="1"><?php echo _AT('navigation'); ?></a>
-				<ul id="topnavlist"  class="fl-list-menu" role="menu">
-					<?php $accesscounter = 0; //initialize ?>
-					<?php foreach ($this->top_level_pages as $page): ?>
-						<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-						<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-						<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-						<?php if ($page['url'] == $this->current_top_level_page): ?>
-							<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a></span></li>
-						<?php else: ?>
-							<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></span></li>
-						<?php endif; ?>
-				
-						<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+				<a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="#" tabindex="1"><?php echo _AT('navigation'); ?></a>
+			
+				<div id="navigation-column">
+					<ul id="topnavlist"  class="fl-list-menu" role="menu">
+						<?php $accesscounter = 0; //initialize ?>
+						<?php foreach ($this->top_level_pages as $page): ?>
+							<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+							<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+							<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+							<?php if ($page['url'] == $this->current_top_level_page): ?>
+								<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a></span></li>
+							<?php else: ?>
+								<li role="menuitem"><span class="arrow-highlight"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></span></li>
+							<?php endif; ?>
 					
-					<?php endforeach; ?>
-					<?php if(!$this->just_social): ?>
-					<li role="menuitem"><span class="arrow-highlight"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a></span></li>
-					<?php endif; ?> 
-				</ul>
+							<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+						
+						<?php endforeach; ?>
+						<?php if(!$this->just_social): ?>
+						<li role="menuitem"><span class="arrow-highlight"><a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a></span></li>
+						<?php endif; ?> 
+					</ul>
+				</div>
 			</div>
 			<?php endif; ?>
 		</div>
 
-				
-	<?php  ?>	
 	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
 	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>

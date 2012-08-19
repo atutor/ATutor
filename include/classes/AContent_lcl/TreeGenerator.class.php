@@ -40,12 +40,12 @@
 		 */
 		public function __construct($struct){
 
-			$this->_tree_images	= array('tree_space'		=> $_SERVER['PHP_SELF'].'../../../images/tree/tree_space.gif',
-										'tree_end'			=> $_SERVER['PHP_SELF'].'../../../images/tree/tree_end.gif',
-										'tree_split'		=> $_SERVER['PHP_SELF'].'../../../images/tree/tree_split.gif',
-										'tree_vertline'		=> $_SERVER['PHP_SELF'].'../../../images/tree/tree_vertline.gif',
-										'tree_horizontal'	=> $_SERVER['PHP_SELF'].'../../../images/tree/tree_horizontal.gif',
-										'tree_collapse'		=> $_SERVER['PHP_SELF'].'../../../images/tree/tree_collapse.gif');
+			$this->_tree_images	= array('tree_space'		=> 'images/tree/tree_space.gif',
+										'tree_end'			=> 'images/tree/tree_end.gif',
+										'tree_split'		=> 'images/tree/tree_split.gif',
+										'tree_vertline'		=> 'images/tree/tree_vertline.gif',
+										'tree_horizontal'	=> 'images/tree/tree_horizontal.gif',
+										'tree_collapse'		=> 'images/tree/tree_collapse.gif');
 
 			$this->_struct	= $struct;
 
@@ -153,11 +153,11 @@
 				// if father == root
 				if($params['father'] == 0){
 					$j++;
-					echo '<input type="checkbox" name="'.$inputName.'[]" value="'.$j.'|'.$i.'|'.$key.'" /> ';
+					echo '<label for="'.$j.'|'.$i.'|'.$key.'"><input type="checkbox" id="'.$j.'|'.$i.'|'.$key.'" name="'.$inputName.'[]" value="'.$j.'|'.$i.'|'.$key.'" /> ';
 				}else
-					echo '<input type="checkbox" name="'.$inputName.'[]" value="'.$j.'|'.$i.'|'.$key.'" /> ';
+					echo '<label for="'.$j.'|'.$i.'|'.$key.'"><input type="checkbox" id="'.$j.'|'.$i.'|'.$key.'" name="'.$inputName.'[]" value="'.$j.'|'.$i.'|'.$key.'" /> ';
 
-				echo $params['title'];
+				echo $params['title'].'</label>';
 
 				echo '<br />';
 				

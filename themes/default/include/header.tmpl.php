@@ -110,7 +110,7 @@ global $system_courses, $_custom_css, $db;
 		echo '<br />';	
 	endif; ?>
 
-	<div id="top-links"> <!-- top help/search/login links -->
+	<div id="top-links"  role="navigation"> <!-- top help/search/login links -->
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<?php if(!$this->just_social): ?>
 			 <div id="top-links-jump">
@@ -171,7 +171,7 @@ global $system_courses, $_custom_css, $db;
 	<!-- section title -->
 
 	<!-- Course Title -->
-	<div id="course_title_container" <?php if(empty($this->icon)){echo ' style="left:1em;"';}   ?>>
+	<div id="course_title_container" <?php if(empty($this->icon)){echo ' style="left:1em;"';}   ?> role="banner">
 	<?php if(isset($_SESSION['valid_user'])):?>
 	
 	<h1 id="section-title"><?php echo $this->section_title; ?>
@@ -191,7 +191,7 @@ global $system_courses, $_custom_css, $db;
 
 </div>
 
-<div id="topnavlistcontainer">
+<div id="topnavlistcontainer"  role="navigation">
 <!-- the main navigation. in our case, tabs -->
 	<ul id="topnavlist">
 		<?php $accesscounter = 0; //initialize ?>
@@ -229,7 +229,7 @@ global $system_courses, $_custom_css, $db;
 
 	  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 		  <!-- the bread crumbs -->
-		<div class="crumbcontainer">
+		<div class="crumbcontainer" role="navigation">
 		  <div id="breadcrumbs">
 			  <?php foreach ($this->path as $page): ?>
 				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
@@ -260,7 +260,7 @@ global $system_courses, $_custom_css, $db;
 			echo 'style="'.$style.'"';
 		endif; ?>>
 	<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
-		<div id="leftcolumn">
+		<div id="leftcolumn"  role="complementary">
 		  <a name="menu"></a>
 		     <div id="side-menu">
 		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
@@ -268,7 +268,7 @@ global $system_courses, $_custom_css, $db;
 		</div>
 	<?php endif; ?>
 
-	<div id="contentcolumn">
+	<div id="contentcolumn"  role="main">
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
 		   <a href="javascript:void(0)" accesskey="n"><img src="" title="" alt="" border="0" class="img1616"/></a>
@@ -315,7 +315,7 @@ global $system_courses, $_custom_css, $db;
 	</ul>
 </div> -->
 
-		<div id="subnavlistcontainer">
+		<div id="subnavlistcontainer" role="navigation">
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">

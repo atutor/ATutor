@@ -33,31 +33,35 @@ ATutor.mobile = ATutor.mobile || {};
         
         // open/close the content menu - tablets
         $('#content_link').click(function (e) {
-            e.stopPropagation();
             $('#content').slideToggle(0);
             $('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
+            
+            return false;
         });
         
         // open/close content menu - smartphones
         $('#content_link_phone').click(function (e) {
-            e.stopPropagation();
             $('#content').slideToggle();
             $('#content_link_phone').toggleClass('topnavlist-link-highlight').toggleClass('content-closed');
             $('.subnavcontain').toggleClass('subnavcontain3');
+            
+            return false;
         });
         
         $('#subnavlist-link').click(function (e) {
-            e.stopPropagation();
             $('#subnavlist').slideToggle();
             $('#subnavlist-link').toggleClass('content-closed').toggleClass('subnavcontain-active');
             $('.subnavcontain').toggleClass('subnavcontain3');
+            
+            return false;
         });
     
         // open/close header navigational menu - tablets & smartphones
         $('.topnavlist-link').click(function (e) {
-            e.stopPropagation();
             $('#navigation-column').slideToggle(0);
             $('#topnavlist-link').toggleClass('topnavlist-link-highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('topnavlist-link-highlight-background');
+            
+            return false;
         });
     
         // makes the subnavlist expand for more options
@@ -71,9 +75,10 @@ ATutor.mobile = ATutor.mobile || {};
     
         // hide and show results on Browse Courses page
         $('.results-hide-show-link').click(function (e) {
-            e.stopPropagation();
             $(this).parent().next('.results-display').slideToggle(); 
             $(this).toggleClass('content-closed');
+            
+            return false;
         });
     
         // Hide the addressbar

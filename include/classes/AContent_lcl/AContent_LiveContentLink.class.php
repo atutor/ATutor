@@ -32,7 +32,7 @@
 		// content type: course 1, content 0
 		private $_course		= 1;
 		
-		public $xmlStructure	= null;
+		public $xmlStructure	= '';
 
 		// LTI settings
 		// this settings are all required
@@ -200,6 +200,7 @@
 				//-- CURL
 
 				$result		= $this->_LTIrequest($endpoint);
+
 				// max num of iterations (we want avoid an infinite loop)
 				$nmax		= 100;
 
@@ -210,14 +211,32 @@
 						break;
 					else
 						$nmax--;
-
 				}
 
-				$xmlStructure	= strstr($result, 'aContent_LiveContentLink() = ');
-				$xmlStructure	= ltrim($xmlStructure, 'aContent_LiveContentLink() = ');
-				$xmlStructure	= trim($xmlStructure);
-
+				// we could improve this rows ny using a regular expression
+				/*
+				$xmlStructure	= stristr($result, 'aContent_LiveContentLink() = ');
+				$xmlStructure	= stristr($xmlStructure, 'xml version');
+				$xmlStructure	= '<' . $xmlStructure;
 				$xmlStructure	= html_entity_decode($xmlStructure);
+				*/
+
+				$xmlStructure = $result;
+				$xmlStructure	= html_entity_decode($xmlStructure);
+
+				preg_match("/<AContent_LiveContentLink>(.*?)<\/AContent_LiveContentLink>/", $xmlStructure, $match);
+
+				//var_dump(html_entity_decode($match));
+				/*
+				var_dump($xmlStructure);
+				echo '<hr />';
+				*/
+
+				$xmlStructure	= (string)$match[0];
+
+				//var_dump($xmlStructure);
+				//$dom = simplexml_load_string((string)$xmlStructure);
+				//die('DIE');
 
 				if(is_null($content_id) AND is_null($course)){
 					$this->_import($xmlStructure);
@@ -240,7 +259,10 @@
 
 			$parms			= signParameters($this->_Launch_Data, $endpoint, "POST", $this->_LTI_Resource['key'], $this->_LTI_Resource['secret'], "Press to Launch", $this->_Launch_Data['tool_consumer_instance_guid'], $this->_Launch_Data['tool_consumer_instance_desc']);
 			$result			= $this->_curlFormAutoSubmit($endpoint, $parms);
-			
+
+			if(!strstr($result, 'AContent_LiveContentLink'))
+				$result		= $this->_LTIrequest($endpoint);
+
 			return $result;
 		}
 
@@ -494,6 +516,13 @@
 		private function _storeData($current_item, $course_id, $content_parent_id){
 
 			$ContentDAO = self::getInstance();
+
+			$url						= explode('home/course', $current_item->text);
+			
+			$uri						= $GLOBALS['_config']['transformable_uri'] . 'home/course' . $url[1];
+
+			$current_item->text			= $uri;
+			$current_item->content_path = $uri;
 
 			if($current_item->content_type == 0){
 				$current_item->content_type = 2;

@@ -279,15 +279,26 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $fp	= @file_get_contents($content_row['text']);
 // just for AContent content
-if(strstr($fp, 'AContent Handbook')){
+if(strstr($fp, 'AContentXX')){
+
+	//$fp		= str_ireplace('<head>','<MAURO>',$fp);
+	//<base href="http://www.w3schools.com/images/" target="_blank" />
 
 	// a new dom object
-	$dom		= new DomDocument('1.0', 'utf-8');
+	$dom		= new DomDocument();
+	libxml_use_internal_errors(TRUE);
 	// load the html into the object
 	$dom->loadHTML($fp);
+	libxml_use_internal_errors(FALSE);
+	$doc->formatOutput = TRUE;
+	
 	//discard white space
 	$dom->preserveWhiteSpace = false;
-	$content	= $dom->saveHTML($dom->getElementById('content-text'));
+	
+	$node = $dom->getElementById('content-text');
+	// row commented because of the old version of PHP
+	//$content	= $dom->saveHTML($node);
+	$content	= $dom->saveXML($node, LIBXML_NOEMPTYTAG);
 
 	// overwrite the original content with the filtered one
 	$savant->assign('body', $content);
@@ -295,6 +306,7 @@ if(strstr($fp, 'AContent Handbook')){
 }
 
 $savant->display('content.tmpl.php');
+
 // --
 
 //save last visit page.

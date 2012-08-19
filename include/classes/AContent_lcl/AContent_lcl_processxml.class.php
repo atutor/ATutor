@@ -35,7 +35,7 @@
 		 */
 		public function XMLtoArray($xmlFile){
 
-			$xml	= simplexml_load_string($xmlFile);
+			$xml	= simplexml_load_string('<?xml version="1.0" encoding="UTF-8" ?>' . $xmlFile);
 
 			if($xml)
 				$this->_recursiveParse($xml);
@@ -57,7 +57,7 @@
 		private function _recursiveParse($root, $dad = null, $height = 0){
 
 			// for each item to import (child)
-			for($i = 0; $i < $root->content_id->count(); $i++){
+			for($i = 0; $i < count($root->content_id); $i++){
 
 				// get current branch
 				$branch		= $root->content_id[$i];
@@ -74,7 +74,7 @@
 					$this->_tree[0][$i]['content_type']	= (string)$branch->content_type;
 
 					// if has children
-					if($branch->content_id->count() > 0)
+					if(count($branch->content_id) > 0)
 						$this->_recursiveParse($branch, $bid, ($height + 1));
 				}
 				

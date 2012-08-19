@@ -164,8 +164,11 @@ body,ul,li {
 .fl-theme-iphone .topnavlistcontainer .topnavlist-link-highlight-background{
 	background-color: white;
 }
-ul#topnavlist {
+#navigation-column {
 	display: none;
+}
+
+ul#topnavlist {
 	position: relative;
 	top: 1.2em;
 	z-index: 1000;
