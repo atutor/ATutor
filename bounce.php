@@ -199,6 +199,21 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES) {
 		$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 	}
+	
+	// If instructor with no course, direct to create course screen
+	$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
+    $result = mysql_query($sql, $db);
+    $row = mysql_fetch_assoc($result);
+	if ($row['status'] == 3) {
+		$sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'courses WHERE member_id='.$_SESSION['member_id'];
+  		$result = mysql_query($sql, $db);
+ 		$row = mysql_fetch_assoc($result);
+  		if ($row['count'] == 0) {
+  		$msg->addFeedback('CREATE_NEW_COURSE');
+        header('Location: mods/_core/courses/users/create_course.php');
+        exit;
+        }
+    }
     /* http://atutor.ca/atutor/mantis/view.php?id=4587
      * 	for users with no enrolled courses, default to the Browse Bourses screen instead of My Courses. 
      */
