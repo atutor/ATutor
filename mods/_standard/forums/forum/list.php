@@ -53,7 +53,7 @@ if ($num_shared || $num_nonshared || $num_groups) {
 				echo '</tr>';
 			}
 		}
-
+	echo '<tbody>';
 		foreach ($forums as $row) : ?>
 			<tr>
 				<td><a href="<?php echo url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id']); ?>"><?php echo AT_print($row['title'], 'forums.title'); ?></a> <?php
