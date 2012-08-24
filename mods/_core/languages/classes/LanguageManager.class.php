@@ -343,7 +343,7 @@ class LanguageManager {
 	function getXML() {
 		global $db;
 
-		$lang_xml = '<?xml version="1.0" encoding="iso-8859-1"?>
+		$lang_xml = '<?xml version="1.0" encoding="UTF-8"?>
 		<!-- These are ATutor language packs - http://www.atutor.ca-->
 
 		<!DOCTYPE languages [
