@@ -187,7 +187,7 @@ class Language {
 
 	function getXML($part=FALSE) {
 		if (!$part) {
-			$xml = '<?xml version="1.0" encoding="iso-8859-1"?>
+			$xml = '<?xml version="1.0" encoding="UTF-8"?>
 			<!-- This is an ATutor language pack - http://www.atutor.ca-->
 
 			<!DOCTYPE language [
