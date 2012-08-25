@@ -210,8 +210,14 @@ if (($course === 0) && $_SESSION['valid_user']) {
  		$row = mysql_fetch_assoc($result);
   		if ($row['count'] == 0) {
   		$msg->addFeedback('CREATE_NEW_COURSE');
-        header('Location: mods/_core/courses/users/create_course.php');
-        exit;
+  		if($_config['disable_create'] == 1){
+       	 header('Location: mods/_core/services/users/create_course.php');
+       	 exit;
+        }else{
+         header('Location: mods/_core/courses/users/create_course.php');
+         exit;
+        }
+
         }
     }
     /* http://atutor.ca/atutor/mantis/view.php?id=4587
