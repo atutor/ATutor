@@ -1811,7 +1811,7 @@ div#menutoggle{
 
 
 /* format of "table of contents" on content page */
-#toc a 		{ display:block; margin:3px; float:left;}
+#toc a 		{ display:block; margin:3px; }
 #toc .h2		{ padding:0 0 0 10px;}
 #toc .h3		{ padding:0 0 0 30px;}
 #toc .h4		{ padding:0 0 0 40px; }
