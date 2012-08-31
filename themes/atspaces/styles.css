@@ -3146,3 +3146,8 @@ margin: 0;
  * 
  * 
  */
+.fs_tools .input-form {
+    float: left;
+    margin-left: 1em;
+    width: 45%;
+}
