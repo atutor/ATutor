@@ -941,23 +941,20 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 
 					</script>
 		'; 
-		/*
+		
 		$output .=	'<script type="text/javascript">
 					function resizeIframe() {
-						var height = document.documentElement.clientHeight;
-						
+						var height = document.documentElement.clientHeight;	
 						// not sure how to get this dynamically
 						height -= 20; // whatever you set your body bottom margin/padding to be
-						
 						document.getElementById(\'content_frame\').style.height = height +"px";
-						
 						//document.getElementById(\'content_frame\').style.height = "100px";
 						
 					};
 					document.getElementById(\'content_frame\').onload = resizeIframe;
 					window.onresize = resizeIframe;
 					</script>';
-		*/
+	
 		return $output;
 	}
 
