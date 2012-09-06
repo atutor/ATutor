@@ -15,6 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 define('TR_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/Utils.php');
 require_once('classes/ResultParser.class.php');
 
 //$default_results_per_page = 25;
@@ -66,33 +67,6 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 			$page_str .= SEP."keywords=".urlencode($keywords);
 			$url_search .= "&keywords=".urlencode($keywords);
 		}
-	//	if ($title <> "") 
-	//	{
-	//		$page_str .= SEP."title=".urlencode($title);
-	//		$url_search .= "&title=".urlencode($title);
-	//	}
-	//	if ($description <> "") 
-	//	{
-	//		$page_str .= SEP. "description=".urlencode($description);
-	//		$url_search .= "&description=".urlencode($description);
-	//	}
-	//	if ($author <> "") 
-	//	{
-	//		$page_str .= SEP. "author=".urlencode($author);
-	//		$url_search .= "&author=".urlencode($author);
-	//	}
-	//	
-	//	if (isset($_REQUEST["search_type"])) 
-	//		$page_str .= SEP."search_type=".$_REQUEST["search_type"];
-	//	
-	//	if ($_REQUEST["search_type"] == 0) $url_search .= "&allKeyWords=true";
-	//	if ($_REQUEST["search_type"] == 1) $url_search .= "&anyKeyWords=true";
-	//	if ($_REQUEST["search_type"] == 2) $url_search .= "&exactPhraseKeyWords=true";
-	//	if ($_REQUEST["creativeCommons"] == "true") 
-	//	{
-	//		$page_str .= SEP. "creativeCommons=true";
-	//		$url_search .= "&creativeCommons=true";
-	//	}
 		
 		$url = AT_TILE_SEARCH_URL."?id=".$_config['transformable_web_service_id'].$url_search;
 
@@ -128,7 +102,6 @@ $onload = "document.form.keywords.focus();";
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $savant->display('tile_search/index.tmpl.php');
-//var_dump($savant->display('tile_search/index.tmpl.php'));
-//die();
+
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

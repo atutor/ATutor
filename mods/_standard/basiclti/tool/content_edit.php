@@ -4,6 +4,7 @@ define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_BASICLTI);
 
+require_once(AT_INCLUDE_PATH.'classes/AContent_lcl/Utils.php');
 require_once('forms.php');
 
 ;
@@ -293,9 +294,7 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 
 		echo '<div style="padding: 10px">';
 
-			$tool		= @get_headers($GLOBALS['_config']['transformable_uri'] . 'oauth/tool.php');
-
-			if($tool[0] != 'HTTP/1.1 404 Not Found'){
+			if (AContent_has_lcl_support()){
 
 				echo '<div style="border-bottom: 1px solid #CCC; border-left: 10px solid #CCC; padding-left: 10px; font-weight: bold; margin-top:10px; margin-bottom:20px">';
 					echo 'Courses list'._AT('');

@@ -99,11 +99,8 @@ if (isset($this->result_list))
 			// Add some content search filters
 			// Lesson
 			// Pages
-			$tool		= @get_headers($GLOBALS['_config']['transformable_uri'] . 'oauth/tool.php');
-
-			if($tool[0] != 'HTTP/1.1 404 Not Found'){
+			if (AContent_has_lcl_support()){
 			?>
-          <!--<a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>&url=<?php echo urlencode(AT_TILE_VIEW_COURSE_URL.$result['courseID']); ?>">-->
           <a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>&mode=LCL&desc=<?php echo urlencode($result['description']); ?>">
             <img src="<?php echo AT_BASE_HREF. 'images/add-course.png'?>" alt="<?php echo _AT('import'); ?>" style="border-left:1px solid #CCC; padding-left: 15px;" title="<?php echo _AT("import").' '.$result['title']; ?>" border="0">
           </a>&nbsp;
