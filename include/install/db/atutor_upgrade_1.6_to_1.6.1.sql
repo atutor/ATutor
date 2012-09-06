@@ -118,8 +118,9 @@ CREATE TABLE `myown_patches_files` (
 # Include Patcher as a standard module
 # since 1.6.1
 
-INSERT INTO `modules`
-SELECT '_standard/patcher', 2, 0, MAX(admin_privilege)*2, 0, 0 FROM `modules`;
+# INSERT INTO `modules`
+# SELECT '_standard/patcher', 2, 0, MAX(admin_privilege)*2, 0, 0 FROM `modules`;
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/patcher', 2, 0,  max(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 # --------------------------------------------------------
 # Support customized head
