@@ -50,7 +50,8 @@ INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.
 INSERT INTO `config` (`name`, `value`) VALUES('abacas', 'http://www.mandarintools.com/abacus.html');
 
 #Add the scaffold tools module 
-INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, max(admin_privilege) * 2, 0, 0);
+#INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, max(admin_privilege) * 2, 0, 0);
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/support_tools', 2, 0,  max(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 # End Access4All setup
 

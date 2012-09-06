@@ -14,9 +14,16 @@ ALTER TABLE `groups` CHANGE `course_id` `type_id` MEDIUMINT( 8 ) UNSIGNED DEFAUL
 ALTER TABLE `groups` ADD `description` TEXT NOT NULL default '' , ADD `modules` VARCHAR(100) NOT NULL default '';
 
 UPDATE `modules` SET `privilege`=1048576 WHERE `dir_name`='_core/groups';
-INSERT INTO `modules` VALUES ('_standard/reading_list',  2, max(privilege)*2,    0);
-INSERT INTO `modules` VALUES ('_standard/file_storage',  2, max(privilege)*2,    0);
-INSERT INTO `modules` VALUES ('_standard/assignments',   2, max(privilege)*2,    0);
+
+#INSERT INTO `modules` VALUES ('_standard/reading_list',  2, max(privilege)*2,    0);
+#INSERT INTO `modules` VALUES ('_standard/file_storage',  2, max(privilege)*2,    0);
+#INSERT INTO `modules` VALUES ('_standard/assignments',   2, max(privilege)*2,    0);
+
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/reading_list', 2, max(privilege)*2,  0, 0, 0 FROM `modules`;
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/file_storage', 2, max(privilege)*2,  0, 0, 0 FROM `modules`;
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/assignments', 2, max(privilege)*2,  0, 0, 0 FROM `modules`;
+
+
 
 # cron support for modules
 #Dec 6, 2007 - duplicated column name

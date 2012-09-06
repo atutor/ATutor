@@ -2,7 +2,8 @@
 
 UPDATE `modules` SET `dir_name` = '_core/imscp' WHERE `modules`.`dir_name` = '_core/content_packaging' LIMIT 1 ;
 
-INSERT INTO `modules` VALUES ('_core/modules', 2, 0, max(admin_privilege) * 2, 0, 0);
+#INSERT INTO `modules` VALUES ('_core/modules', 2, 0, max(admin_privilege) * 2, 0, 0);
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_core/modules', 2, 0, max(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 # --------------------------------------------------------
 # Adding feature of oauth client
