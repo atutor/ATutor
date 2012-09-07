@@ -1,4 +1,27 @@
 <?php
+
+	define('AT_INCLUDE_PATH', '../../../include/');
+	define('TR_INCLUDE_PATH', '../../../include/');
+
+	if(isset($_POST['tile_course_id'], $_POST['aclcl'])){
+
+		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
+		ini_set("display_errors", 1);
+
+		require(AT_INCLUDE_PATH.'vitals.inc.php');
+
+		require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
+
+		$ret = new AContent_LiveContentLink();
+	
+		if($ret->status){
+			$msg->addError('IMPORT_FAILED');
+		}else
+			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	
+		header('Location: index.php');
+		exit();
+	}
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
@@ -12,35 +35,9 @@
 /****************************************************************/
 // $Id: import.php 10155 2010-09-08 18:05:52Z greg $
 
-// Importing AContent course using LCL (Live Content Link), which is supported by AContent 1.3+
-if(isset($_POST['tile_course_id'])){
-
-	error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
-	ini_set("display_errors", 1);
-
-	define('AT_INCLUDE_PATH', '../../../include/');
-	define('TR_INCLUDE_PATH', '../../../include/');
-	require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-	require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
-
-	$ret = new AContent_LiveContentLink();
-
-	if($ret->status){
-		$msg->addError('IMPORT_FAILED');
-	}else
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-
-	header('Location: index.php');
-	exit();
-}
-
-// UI
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
-
-require(AT_INCLUDE_PATH.'classes/AContent_lcl/Utils.php');
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -78,12 +75,8 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 ?>
 
 <?php
-	// Generate the form action url based on whether AContent supports LCL feature (Live Content Link)
-	if(AContent_has_lcl_support()) {
-		$action	= $_SERVER['PHP_SELF'];
-	} else {
-		$action	= 'mods/_core/imscp/ims_import.php?tile=1';
-	}
+
+	$action	= $_SERVER['PHP_SELF'];
 
 	$vars	= array('tile_course_id'	=> htmlentities($_GET['tile_course_id']),
 					'cid'				=> '',
@@ -109,7 +102,22 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 					'formatting'		=> 2,
 					'head'				=> htmlentities($_GET['tile_course_id']),
 					'body_text'			=> '',
-					'weblink_text'		=> htmlentities($_GET['url']));	
+					'weblink_text'		=> htmlentities($_GET['url']));
+
+	// ***
+	// ACC
+	// changes the form action url
+	// Lesson
+	// Pages
+
+	// LCL = Live Content Link
+
+	// if I need to Link (AContent Live Content Link) the content
+	if(isset($_GET['mode']) AND $_GET['mode'] == 'LCL')
+		$vars['aclcl']		= 1;
+	else
+		$action	= 'mods/_core/imscp/ims_import.php?tile=1';
+
 ?>
 
 <form name="form1" method="post" action="<?php echo $action; ?>" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');">
