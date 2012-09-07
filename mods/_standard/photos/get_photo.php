@@ -75,7 +75,7 @@ $real = realpath($file);
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 
-	header('Content-Disposition: filename="'.$photo_file_path.'"');
+	header('Content-Disposition: inline; filename="'.$photo_file_path.'"');
 	
 	/**
 	 * although we can check if mod_xsendfile is installed in apache2

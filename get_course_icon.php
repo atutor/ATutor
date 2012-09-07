@@ -43,7 +43,7 @@ $real = realpath($file);
 
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 
-	header('Content-Disposition: filename="'.$size.$id.'.'.$pathinfo['extension'].'"');
+	header('Content-Disposition: inline; filename="'.$size.$id.'.'.$pathinfo['extension'].'"');
 	
 	/**
 	 * although we can check if mod_xsendfile is installed in apache2

@@ -104,7 +104,7 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 		header('Content-transfer-encoding: binary'); 
 		header('Content-Disposition: attachment; filename="'.$pathinfo['basename'].'"');
 	} else {
-		header('Content-Disposition: filename="'.$pathinfo['basename'].'"');
+		header('Content-Disposition: inline; filename="'.$pathinfo['basename'].'"');
 	}
 	
 	/**
