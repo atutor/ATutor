@@ -107,7 +107,6 @@ INSERT INTO `config` VALUES ('pa_max_memory_per_member', '50');
 # -------------- Photo Album Module Ends -----------------
 
 # ----------------Flowplayer Module ------------------------
-#INSERT INTO `modules` VALUES ('_standard/flowplayer',2, max(privilege)*2,  0, 0, 0);
 INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`) SELECT '_standard/flowplayer', 2, MAX(privilege)*2, 0, 0, 0 FROM `modules`;
 
 # Add Transformable configuration

@@ -131,7 +131,6 @@ INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from,
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Adequate', 60, 69);
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Inadequate', 0, 59);
 
-#INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) VALUES('_standard/gradebook', 2, max(privilege)*2, max(admin_privilege)*2, 0, 0);
 INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`) SELECT '_standard/gradebook', 2, MAX(privilege)*2,  MAX(admin_privilege)*2, 0, 0 FROM `modules`;
 
 DELETE FROM `modules` WHERE dir_name = 'gradebook';
@@ -155,7 +154,6 @@ ALTER TABLE `tests` ADD COLUMN `show_guest_form` TINYINT(1) UNSIGNED NOT NULL DE
 
 #move the old student toos to course tool, and add the new student tools
 UPDATE `modules` SET `dir_name` = '_standard/course_tools' WHERE `dir_name` = '_standard/student_tools' LIMIT 1 ;
-#INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/student_tools', '2', 'max(privilege)*2', '0', '0', '0');
 INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`) SELECT '_standard/student_tools', 2, MAX(privilege)*2, 0, 0, 0 FROM `modules`;
 
 CREATE TABLE `fha_student_tools` (
@@ -164,5 +162,4 @@ CREATE TABLE `fha_student_tools` (
    PRIMARY KEY ( `course_id` )
 );
 # Add the forum archiver to standard modules
-#INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`)VALUES ('_standard/farchive', '2', 'max(privilege)*2', '0', '0', '0');
 INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`) SELECT '_standard/farchive', 2, MAX(privilege)*2, 0, 0, 0 FROM `modules`;
