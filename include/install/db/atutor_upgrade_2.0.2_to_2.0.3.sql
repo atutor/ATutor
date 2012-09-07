@@ -84,10 +84,10 @@ CREATE TABLE `basiclti_content` (
 ) ENGINE = MyISAM;
 
 # Add BasicLTI to modules
-INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/basiclti', 2, max(privilege)*2, max(admin_privilege) * 2, 0, 0 FROM `modules`;
+INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/basiclti', 2, MAX(privilege)*2, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 # Add Assignment Dropbox to modules
-INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/assignment_dropbox', 2, max(privilege)*2, 0, 0, 0 FROM `modules`;
+INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/assignment_dropbox', 2, MAX(privilege)*2, 0, 0, 0 FROM `modules`;
 
 # -------------- External Tools/BasicLTI  Ends -----------------
 
