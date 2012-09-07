@@ -227,7 +227,8 @@ INSERT INTO social_groups_types SET title='sports_recreation', type_id=8;
 
 # Module setting
 #INSERT INTO `modules` VALUES ('_standard/social',	 2, max(privilege)*2, 0, 0, 0);
-INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/social', 2, max(privilege) * 2, 0, 0, 0 FROM `modules`;
+#INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run) SELECT '_standard/social', 2, max(privilege) * 2, 0, 0, 0 FROM `modules`;
+INSERT INTO `modules` (`dir_name` ,`status` ,`privilege` ,`admin_privilege` ,`cron_interval` ,`cron_last_run`) SELECT '_standard/social', 2, MAX(privilege)*2, 0, 0, 0 FROM `modules`;
 
 # Login attempt control table
 CREATE TABLE `member_login_attempt` (
