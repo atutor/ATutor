@@ -146,6 +146,14 @@ class SqlUtility
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
 			$replace = "\\1 ".$prefix."\\4\\5";
 			$matches[0] = preg_replace($pattern, $replace, $query);
+			
+			// handle the subquery of "SELECT ... FROM ..."
+			$pattern_from = "/^(.*FROM)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
+	
+			if (preg_match($pattern_from, $query, $matches_from)) {
+				$replace = "\\1 ".$prefix."\\4\\5";
+				$matches[0] = preg_replace($pattern_from, $replace, $query);
+			}
 			return $matches;
 		}
 		return false;
