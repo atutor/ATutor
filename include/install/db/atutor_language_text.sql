@@ -110,7 +110,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_COMBINE_TESTS','\"<s
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CONFIG_NOT_WRITEABLE','It is not possible to edit these settings because the configuration file is locked for security reasons. If you want to make changes, you need to unlock the config.inc.php file first by changing its permissions with the command <kbd>chmod a+rw config.inc.php</kbd>.','2005-03-03 10:14:48','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CONFIRM_BAD','Your email address and account could not be confirmed.','2005-05-31 12:55:25','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CONTACT_INFO_NOT_FOUND','Contact Support is not available, because an email address has not been specified.','2005-03-17 11:33:38','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_COURSE_DIR_NAME_INVALID','The course directory name is invalid. It may contain only letters, numbers, and underscores, and may not contain spaces.','2008-10-06 13:18:28','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_COURSE_DIR_NAME_INVALID','The course directory name is invalid. It may contain only letters, numbers, and underscores, and may not contain spaces and hyphens.','2012-07-26 13:58:12','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_COURSE_DIR_NAME_IN_USE','The course directory name is already in use. Please try another.','2008-10-06 13:19:17','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_COURSE_ENDED','This course ended on %s.','2007-07-16 11:53:27','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_COURSE_NOT_RELEASED','This course can only be accessed on %s.','2006-04-10 14:28:27','');
@@ -322,6 +322,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_COURSE_DEFAULT_FS
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_COURSE_PREFS_SAVED','Course preferences were saved','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_COURSE_PROPERTIES','Course properties were successfully updated.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_COURSE_REMOVED','Course was removed successfully.','2003-05-16 13:47:01','feedback msg');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_CREATE_NEW_COURSE','To create a new course, enter at least a course title in the form below. For additional details see the Create Course handbook page linked above.','2012-08-20 10:33:46','bounce');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_DIRS_MOVED','Directories successfully moved.','2004-11-10 14:12:11','file manager');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_DIR_DELETED','Folder was successfully deleted.','2003-05-16 13:47:01','feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_ENROLLED','The following unique accounts were successfully added to the course list: <ul> %s </ul>','2005-06-23 12:51:35','enrollment manager, confirm enrollmnet');
@@ -364,7 +365,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LANG_DELETED','La
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LANG_UPDATED','Language successfully updated.','2005-04-26 16:04:36','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LEFT_GROUP_SUCCESSFULLY','Successfully removed from group.','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LINK_ADDED','Link added successfully.  Link will become visible if approved.','2005-02-23 12:07:59','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LOGIN_SUCCESS','You have logged in successfully. Welcome back!','2005-02-15 17:07:45','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LOGIN_SUCCESS','You have logged in successfully.','2012-08-20 10:38:28','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_LOGOUT','You have successfully been logged out.','2003-10-29 10:00:12','after logging out');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_MASTER_LIST_NO_CHANGES','No changes were done to the Master Student List.','2005-06-16 12:32:19','When action to master list yields no changes');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_FEEDBACK_MASTER_LIST_UPLOADED','Master Student List has been updated successfully.','2005-04-04 16:12:52','');
@@ -422,9 +423,9 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ACCOUNT_APPROVED','Y
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ALREADY_ENROLLED','You have already made a request to enroll in this course and you have not yet been approved by the instructor. You will be notifed when your request has been approved.','2004-11-05 10:29:01','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_APPROVAL_PENDING','Your request has been made. You will be notified when your request has been approved.<br /><br />Return to <a href=\"users/index.php\">My Courses</a>.','2009-09-17 14:48:30','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_ASSIGNMENT_FS_SUBMISSIONS','Assignments can be submitted using the Assignment Dropbox or through My Files in the  File Storage tool. Assign an assignment to all students, or create a group and enable File Storage for that group, to add an assignment drop-box.','2011-05-30 10:08:46','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_CANNOT_CONNECT_GITHUB_SERVER','Failed to connect to GitHub server to determine if the files that will be modified by the patch script have previously been modified. So, to protect any customizations you\\\'ve made, all local scripts manipulated by patch are considered locally customized.','2012-07-26 13:37:10','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_CANNOT_CONNECT_MOD_SERVER','Unable to connect to module server. Be sure your Internet connection is functioning, and your firewall is not blocking access.','2009-12-16 18:45:05','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_CANNOT_CONNECT_PATCH_SERVER','Failed to connect to patch server: %s so patches provided by the patch server can not be listed. Please proceed with installing private patch.','2008-10-08 12:51:54','');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_CANNOT_CONNECT_SVN_SERVER','Failed to connect to SVN server to determine if the files that will be modified by the patch script have previously been modified. So, to protect any customizations you\'ve made, all local scripts manipulated by patch are considered locally customized.','2008-10-08 12:55:18','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_COURSE_ENDED','This course has ended on %s.','2007-07-16 11:56:16','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_COURSE_RELEASE','This course has not yet been released. It is scheduled to be released on %s.','2006-04-11 12:36:49','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_DECISION_NOT_REVERSED','Decisions could not be reversed.','2004-08-18 12:08:25','AChecker - can\'t reverse decision');
@@ -959,6 +960,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','course_available_zip2','C
 INSERT INTO `language_text` VALUES ('en', '_template','course_backups','Course Backups','2005-03-03 10:21:39','');
 INSERT INTO `language_text` VALUES ('en', '_template','course_copyright','Optional Copyright Notice','2003-05-18 13:47:33','course copyright label');
 INSERT INTO `language_text` VALUES ('en', '_template','course_dir_name','Course Directory Name','2008-05-14 12:03:39','');
+INSERT INTO `language_text` VALUES ('en', '_template','course_dir_name_contain_only','May contain only letters, numbers and underscore.','2012-07-26 13:56:52','');
 INSERT INTO `language_text` VALUES ('en', '_template','course_email','Course Email','2003-05-18 13:51:48','taught courses table in instructor control centre');
 INSERT INTO `language_text` VALUES ('en', '_template','course_enrolment','Enrollment Manager','2003-10-01 18:54:09','instructor - course enrollment (previously ATutor Course Enrollment)');
 INSERT INTO `language_text` VALUES ('en', '_template','course_files','Course Files','2006-03-20 14:40:32','');
@@ -1543,6 +1545,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','light_gray','Light Gray',
 INSERT INTO `language_text` VALUES ('en', '_template','limit_to_group','Assign To Groups','2004-12-10 14:39:53','');
 INSERT INTO `language_text` VALUES ('en', '_template','link','Link','2003-05-20 12:41:18','links database');
 INSERT INTO `language_text` VALUES ('en', '_template','links','Links','2005-02-09 13:25:20','');
+INSERT INTO `language_text` VALUES ('en', '_template','link_alc','Link from AContent:','2012-09-07 10:56:48','tile search');
 INSERT INTO `language_text` VALUES ('en', '_template','list_add_course_list','Add to Course List','2004-10-19 14:39:08','Enrollment manager, add students manually button');
 INSERT INTO `language_text` VALUES ('en', '_template','list_add_enrolled_list','Add to Enrolled List','2004-10-19 14:51:02','enrollment manager, add to enrolled students list button');
 INSERT INTO `language_text` VALUES ('en', '_template','list_add_unenrolled_list','Add to Un-enrolled List','2004-10-19 14:47:31','enrollment manager, add to unenrolled students list button');
