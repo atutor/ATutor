@@ -102,7 +102,7 @@ if (isset($this->result_list))
 			if (AContent_has_lcl_support()){
 			?>
           <a href="mods/_standard/tile_search/import.php?tile_course_id=<?php echo $result['courseID']; ?>&title=<?php echo urlencode($result['title']); ?>&mode=LCL&desc=<?php echo urlencode($result['description']); ?>">
-            <img src="<?php echo AT_BASE_HREF. 'images/add-course.png'?>" alt="<?php echo _AT('link_alc'); ?>" style="border-left:1px solid #CCC; padding-left: 15px;" title="<?php echo _AT("link_acl").' '.$result['title']; ?>" border="0">
+            <img src="<?php echo AT_BASE_HREF. 'images/add-course.png'?>" alt="<?php echo _AT('link_alc'); ?>" style="border-left:1px solid #CCC; padding-left: 15px;" title="<?php echo _AT("link_alc").' '.$result['title']; ?>" border="0">
           </a>&nbsp;
           <?php
 			}
