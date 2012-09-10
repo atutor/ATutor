@@ -3151,3 +3151,8 @@ margin: 0;
     margin-left: 1em;
     width: 45%;
 }
+
+li.multichoice-question{
+list-style-type: none;
+padding:.4em;
+}

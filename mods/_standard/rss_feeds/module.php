@@ -40,8 +40,9 @@ if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_P
 //make the rss files side menu stacks
 $rss_files = array();
 $dh  = opendir(AT_CONTENT_DIR.'/feeds');
+
 $count = 0;
-while (false !== ($file = readdir($dh))) {
+while (false !== ($file = @readdir($dh))) {
 	if (strpos($file, '_rss.inc.php')) {
 		$feed_id = intval($file);
 		if (file_exists(AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss_title.cache')) {
