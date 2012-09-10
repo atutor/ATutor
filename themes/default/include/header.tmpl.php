@@ -68,7 +68,7 @@ global $system_courses, $_custom_css, $db;
 	<!--[if IE]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
-	<!--[if IE8]>
+	<!--[if IE 8]>
 	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
 	<![endif]-->
 
