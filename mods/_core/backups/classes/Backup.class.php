@@ -148,14 +148,14 @@ class Backup {
 	}
 
 	// public
-	function upload($_FILES, $description) {
+	function upload($file_info, $description) {
 		global $addslashes, $msg;
 	
-		$ext = pathinfo($_FILES['file']['name']);
+		$ext = pathinfo($file_info['file']['name']);
 		$ext = $ext['extension'];
 
-		if (!$_FILES['file']['name'] || !is_uploaded_file($_FILES['file']['tmp_name']) || ($ext != 'zip')) {
-			if ($_FILES['file']['error'] == 1) { // LEQ to UPLOAD_ERR_INI_SIZE
+		if (!$file_info['file']['name'] || !is_uploaded_file($file_info['file']['tmp_name']) || ($ext != 'zip')) {
+			if ($file_info['file']['error'] == 1) { // LEQ to UPLOAD_ERR_INI_SIZE
 				$errors = array('FILE_TOO_BIG', ini_get('upload_max_filesize'));
 				$msg->addError($errors); 
 			} else {
@@ -163,7 +163,7 @@ class Backup {
 			}
 		}
 
-		if ($_FILES['file']['size'] == 0) {
+		if ($file_info['file']['size'] == 0) {
 			$msg->addError('IMPORTFILE_EMPTY');
 		}
 
@@ -175,8 +175,8 @@ class Backup {
 		$row['description'] = $addslashes($description);
 		$row['system_file_name'] =  md5(time());
 		$row['contents'] = '';
-		$row['file_size'] = $_FILES['file']['size'];
-		$row['file_name'] = $addslashes($_FILES['file']['name']);
+		$row['file_size'] = $file_info['file']['size'];
+		$row['file_name'] = $addslashes($file_info['file']['name']);
 
 		if (!is_dir(AT_BACKUP_DIR)) {
 			@mkdir(AT_BACKUP_DIR);
@@ -188,7 +188,7 @@ class Backup {
 
 		$backup_path = AT_BACKUP_DIR . DIRECTORY_SEPARATOR . $this->course_id . DIRECTORY_SEPARATOR;
 
-		move_uploaded_file($_FILES['file']['tmp_name'], $backup_path . $row['system_file_name'].'.zip');
+		move_uploaded_file($file_info['file']['tmp_name'], $backup_path . $row['system_file_name'].'.zip');
 
 		$this->add($row);
 
