@@ -62,7 +62,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		
 		<td  style="background:green;"><a href="javascript:smilie('[green] [/green]')" title="[green] [/green]" style="color:white;margin:.5em;"><?php echo _AT('green'); ?></a></td>
 		
-		<td  style="background:orange;" style="color:white;margin:.5em;"><a href="javascript:smilie('[orange] [/orange]')" title="[orange] [/orange]" style="color:white;margin:.5em;"> <?php echo _AT('orange'); ?></a></td>
+		<td  style="background:orange;"><a href="javascript:smilie('[orange] [/orange]')" title="[orange] [/orange]" style="color:white;margin:.5em;"> <?php echo _AT('orange'); ?></a></td>
 		
 		<td  style="background:purple;"><a href="javascript:smilie('[purple] [/purple]')" title="[purple] [/purple]" style="color:white;margin:.5em;"><?php echo _AT('purple'); ?></a></td>
 		
