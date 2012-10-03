@@ -26,7 +26,7 @@ class SqlUtility
  	* @return  boolean  always true
  	* @access  public
  	*/
-	function splitSqlFile(&$ret, $sql)
+	public static function splitSqlFile(&$ret, $sql)
 	{
 		$sql               = trim($sql);
 		$sql_len           = strlen($sql);
@@ -139,7 +139,7 @@ class SqlUtility
      * @param   string  $prefix prefix to add to all table names
 	 * @return  mixed   FALSE on failure
 	 */
-	function prefixQuery($query, $prefix)
+	public static function prefixQuery($query, $prefix)
 	{
 		$pattern = "/^(REPLACE INTO|INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
@@ -161,7 +161,7 @@ class SqlUtility
 		return false;
 	}
 
-	function queryFromFile($sql_file_path, $table_prefix = null, $in_plain_msg = true)
+	public static function queryFromFile($sql_file_path, $table_prefix = null, $in_plain_msg = true)
 	{
 		global $db, $progress, $errors, $msg;
 
@@ -257,7 +257,7 @@ class SqlUtility
 	}
 
 	// This function only revert queries on "CREATE TABLE" and "INSERT INTO language_text"
-	function revertQueryFromFile($sql_file_path, $table_prefix)
+	public static function revertQueryFromFile($sql_file_path, $table_prefix)
 	{
 		global $db, $progress, $errors;
 
