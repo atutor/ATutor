@@ -188,7 +188,7 @@ if ($_config['time_zone']) {
 require(AT_INCLUDE_PATH . '../mods/_core/languages/classes/LanguageManager.class.php');
 $languageManager = new LanguageManager();
 
-$myLang =& $languageManager->getMyLanguage();
+$myLang = $languageManager->getMyLanguage();
 
 if ($myLang === FALSE) {
 	echo 'There are no languages installed!';
