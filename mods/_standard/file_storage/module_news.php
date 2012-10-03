@@ -15,6 +15,7 @@
  * Get the latest updates of this module
  * @return list of news, [timestamp]=>
  */
+
 function file_storage_news() {
 	global $db, $enrolled_courses, $system_courses;
 	$news = array();
@@ -51,11 +52,21 @@ function file_storage_news() {
 	
 	if($result){
 		while($row = mysql_fetch_assoc($result)){
+		//debug($row);
+		
 			if($row['description'] !=""){
 				$filetext = $row['description'];
 			} else {
 				$filetext = $row['file_name'];
 			}
+			$sql = "SELECT course_id, home_links, main_links from ".TABLE_PREFIX."courses WHERE course_id = '$row[course_id]'";
+			$result = mysql_query($sql, $db);
+			$row2 = mysql_fetch_assoc($result);
+			
+			// check if course has file storage enabled
+			
+			if(strstr( $row2['home_links'], 'file_storage') || strstr( $row2['main_links'], 'file_storage') ){
+			
 			$news[] = array('time'=>$row['date'], 
 			      'object'=>$row, 
 			      'course'=>$system_courses[$row['course_id']]['title'],
@@ -64,6 +75,7 @@ function file_storage_news() {
 			      'link'=>'<a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('mods/_standard/file_storage/index.php?download=1'.SEP.'files[]='. $row['file_id']).'"'.
 		          (strlen($filetext) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($filetext, 'input.text').'"' : '') .'>'. 
 		          AT_print(validate_length($filetext, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'input.text') .'</a>');
+		    }
 		}
 	}
 	return $news;
