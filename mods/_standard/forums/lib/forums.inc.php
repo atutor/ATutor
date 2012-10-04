@@ -176,15 +176,15 @@ function valid_forum_user($forum_id) {
 * @see     $addslashes			in include/vitals.inc.php
 * @author  Heidi Hazelton
 */
-function add_forum($_POST) {
+function add_forum($forum_prop) {
 	global $db;
 	global $addslashes;
 
-	$_POST['title'] = $addslashes($_POST['title']);
-	$_POST['body']  = $addslashes($_POST['body']);
-	$_POST['edit']  = intval($_POST['edit']);
+	$forum_prop['title'] = $addslashes($forum_prop['title']);
+	$forum_prop['body']  = $addslashes($forum_prop['body']);
+	$forum_prop['edit']  = intval($forum_prop['edit']);
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'$_POST[title]', '$_POST[body]', 0, 0, NOW(), $_POST[edit])";
+	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'$forum_prop[title]', '$forum_prop[body]', 0, 0, NOW(), $forum_prop[edit])";
 	$result = mysql_query($sql,$db);
 
 	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(),  $_SESSION[course_id])";
@@ -201,17 +201,17 @@ function add_forum($_POST) {
 * @see     $addslashes			in include/vitals.inc.php
 * @author  Heidi Hazelton
 */
-function edit_forum($_POST) {
+function edit_forum($forum_prop) {
 	global $db;
 	global $addslashes;
 
-	$_POST['title']  = $addslashes($_POST['title']);
-	$_POST['body']   = $addslashes($_POST['body']);
+	$forum_prop['title']  = $addslashes($forum_prop['title']);
+	$forum_prop['body']   = $addslashes($forum_prop['body']);
 
-	$_POST['fid']    = intval($_POST['fid']);
-	$_POST['edit']    = intval($_POST['edit']);
+	$forum_prop['fid']    = intval($forum_prop['fid']);
+	$forum_prop['edit']    = intval($forum_prop['edit']);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$_POST[title]', description='$_POST[body]', last_post=last_post, mins_to_edit=$_POST[edit] WHERE forum_id=$_POST[fid]";
+	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$forum_prop[title]', description='$forum_prop[body]', last_post=last_post, mins_to_edit=$forum_prop[edit] WHERE forum_id=$forum_prop[fid]";
 	$result = mysql_query($sql,$db);
 
 	return;
