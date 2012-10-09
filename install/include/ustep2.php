@@ -71,6 +71,12 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 
 			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";
 			@mysql_query($sql, $db);
+			
+			// make sure English exists in the language table when upgrading
+			$sql = "INSERT INTO `".$_POST['tb_prefix']."languages` VALUES ('en', 'utf-8', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3)";
+			@mysql_query($sql, $db);
+
+
 
 			//get list of all update scripts minus sql extension
 			$files = scandir(AT_INCLUDE_PATH . 'install/db'); 
