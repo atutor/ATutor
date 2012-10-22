@@ -148,7 +148,7 @@ class SqlUtility
 			$matches[0] = preg_replace($pattern, $replace, $query);
 			
 			// handle the subquery of "SELECT ... FROM ..."
-			$pattern_from = "/^(.*FROM)(\s)+([`]?)([^`\s]+)\\3(\s|$)+/siU";
+			$pattern_from = "/^(.*FROM)(\s)+([`]?)([^`\s]+)\\3(\s|$)+/sU";
 	
 			if (preg_match($pattern_from, $matches[0])) {
 				//print_r($matches_from);
