@@ -1320,7 +1320,7 @@ dl#public-profile dd {
 #contentcolumn {
 	padding-right: 1em;
 	padding-left: 1em;
-	overflow:hidden;
+	overflow:auto;
 }
 
 #leftcolumn{

@@ -1526,13 +1526,13 @@ div.social-wrapper{
 #contentwrapper{
 	float: left;
 	width: 100%;
-overflow:hidden;
+overflow:auto;
 
 }
 #contentcolumn {
 	padding-right: 1em;
 	padding-left: 1em;
-	overflow:inherit;
+	overflow:auto;
 }
 
 #leftcolumn{
