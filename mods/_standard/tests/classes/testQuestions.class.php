@@ -740,17 +740,17 @@ class OrderingQuestion extends AbstractTestQuestion {
 	}
 
 	//QTI Import Ordering Question
-	function importQTI($_POST){
+	function importQTI($question){
 		global $msg, $db;
 
-		if ($_POST['question'] == ''){
+		if ($question['question'] == ''){
 			$missing_fields[] = _AT('question');
 		}
 
-		if (trim($_POST['choice'][0]) == '') {
+		if (trim($question['choice'][0]) == '') {
 			$missing_fields[] = _AT('item').' 1';
 		}
-		if (trim($_POST['choice'][1]) == '') {
+		if (trim($question['choice'][1]) == '') {
 			$missing_fields[] = _AT('item').' 2';
 		}
 
@@ -768,35 +768,35 @@ class OrderingQuestion extends AbstractTestQuestion {
 				 * Db defined it to be 255 length, chop strings off it it's less than that
 				 * @harris
 				 */
-				$_POST['choice'][$i] = validate_length($_POST['choice'][$i], 255);
-				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+				$question['choice'][$i] = validate_length($question['choice'][$i], 255);
+				$question['choice'][$i] = trim($question['choice'][$i]);
 
-				if ($_POST['choice'][$i] != '') {
+				if ($question['choice'][$i] != '') {
 					/* filter out empty choices/ remove gaps */
-					$choice_new[] = $_POST['choice'][$i];
+					$choice_new[] = $question['choice'][$i];
 					$answer_new[] = $order++;
 				}
 			}
 
-			$_POST['choice']   = array_pad($choice_new, 10, '');
+			$question['choice']   = array_pad($choice_new, 10, '');
 			$answer_new        = array_pad($answer_new, 10, 0);
-//			$_POST['feedback'] = $addslashes($_POST['feedback']);
-//			$_POST['question'] = $addslashes($_POST['question']);
+//			$question['feedback'] = $addslashes($question['feedback']);
+//			$question['question'] = $addslashes($question['question']);
 		
-			$sql_params = array(	$_POST['category_id'], 
+			$sql_params = array(	$question['category_id'], 
 									$_SESSION['course_id'],
-									$_POST['feedback'], 
-									$_POST['question'], 
-									$_POST['choice'][0], 
-									$_POST['choice'][1], 
-									$_POST['choice'][2], 
-									$_POST['choice'][3], 
-									$_POST['choice'][4], 
-									$_POST['choice'][5], 
-									$_POST['choice'][6], 
-									$_POST['choice'][7], 
-									$_POST['choice'][8], 
-									$_POST['choice'][9], 
+									$question['feedback'], 
+									$question['question'], 
+									$question['choice'][0], 
+									$question['choice'][1], 
+									$question['choice'][2], 
+									$question['choice'][3], 
+									$question['choice'][4], 
+									$question['choice'][5], 
+									$question['choice'][6], 
+									$question['choice'][7], 
+									$question['choice'][8], 
+									$question['choice'][9], 
 									$answer_new[0], 
 									$answer_new[1], 
 									$answer_new[2], 
@@ -865,30 +865,30 @@ class TruefalseQuestion extends AbstracttestQuestion {
 	}
 
 	//QTI Import True/False Question
-	function importQTI($_POST){
+	function importQTI($question){
 		global $msg, $db;
 
-		if ($_POST['question'] == ''){
+		if ($question['question'] == ''){
 			$msg->addError(array('EMPTY_FIELDS', _AT('statement')));
 		}
 
 		//assign true answer to 1, false answer to 2, idk to 3, for ATutor
-		if  ($_POST['answer'] == 'ChoiceT'){
-			$_POST['answer'] = 1;
+		if  ($question['answer'] == 'ChoiceT'){
+			$question['answer'] = 1;
 		} else {
-			$_POST['answer'] = 2;	
+			$question['answer'] = 2;	
 		}
 
 		if (!$msg->containsErrors()) {
-//			$_POST['feedback'] = $addslashes($_POST['feedback']);
-//			$_POST['question'] = $addslashes($_POST['question']);
+//			$question['feedback'] = $addslashes($question['feedback']);
+//			$question['question'] = $addslashes($question['question']);
 
 
-			$sql_params = array(	$_POST['category_id'], 
+			$sql_params = array(	$question['category_id'], 
 									$_SESSION['course_id'],
-									$_POST['feedback'], 
-									$_POST['question'], 
-									$_POST['answer']);
+									$question['feedback'], 
+									$question['question'], 
+									$question['answer']);
 
 			$sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);
 			$result	= mysql_query($sql, $db);
@@ -962,19 +962,18 @@ class LikertQuestion extends AbstracttestQuestion {
 	}
 
 	//QTI Import Likert Question
-	function importQTI($_POST){
+	function importQTI($question){
 		global $msg, $db;
-//		$_POST = $this->_POST; 
 
 		$empty_fields = array();
-		if ($_POST['question'] == ''){
+		if ($question['question'] == ''){
 			$empty_fields[] = _AT('question');
 		}
-		if ($_POST['choice'][0] == '') {
+		if ($question['choice'][0] == '') {
 			$empty_fields[] = _AT('choice').' 1';
 		}
 
-		if ($_POST['choice'][1] == '') {
+		if ($question['choice'][1] == '') {
 			$empty_fields[] = _AT('choice').' 2';
 		}
 
@@ -983,43 +982,43 @@ class LikertQuestion extends AbstracttestQuestion {
 		}
 
 		if (!$msg->containsErrors()) {
-			$_POST['feedback']   = '';
-//			$_POST['question']   = $addslashes($_POST['question']);
+			$question['feedback']   = '';
+//			$question['question']   = $addslashes($question['question']);
 
 			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
-				$_POST['answer'][$i] = intval($_POST['answer'][$i]);
+				$question['choice'][$i] = trim($question['choice'][$i]);
+				$question['answer'][$i] = intval($question['answer'][$i]);
 
-				if ($_POST['choice'][$i] == '') {
+				if ($question['choice'][$i] == '') {
 					/* an empty option can't be correct */
-					$_POST['answer'][$i] = 0;
+					$question['answer'][$i] = 0;
 				}
 			}
 
-			$sql_params = array(	$_POST['category_id'], 
+			$sql_params = array(	$question['category_id'], 
 									$_SESSION['course_id'],
-									$_POST['feedback'], 
-									$_POST['question'], 
-									$_POST['choice'][0], 
-									$_POST['choice'][1], 
-									$_POST['choice'][2], 
-									$_POST['choice'][3], 
-									$_POST['choice'][4], 
-									$_POST['choice'][5], 
-									$_POST['choice'][6], 
-									$_POST['choice'][7], 
-									$_POST['choice'][8], 
-									$_POST['choice'][9], 
-									$_POST['answer'][0], 
-									$_POST['answer'][1], 
-									$_POST['answer'][2], 
-									$_POST['answer'][3], 
-									$_POST['answer'][4], 
-									$_POST['answer'][5], 
-									$_POST['answer'][6], 
-									$_POST['answer'][7], 
-									$_POST['answer'][8], 
-									$_POST['answer'][9]);
+									$question['feedback'], 
+									$question['question'], 
+									$question['choice'][0], 
+									$question['choice'][1], 
+									$question['choice'][2], 
+									$question['choice'][3], 
+									$question['choice'][4], 
+									$question['choice'][5], 
+									$question['choice'][6], 
+									$question['choice'][7], 
+									$question['choice'][8], 
+									$question['choice'][9], 
+									$question['answer'][0], 
+									$question['answer'][1], 
+									$question['answer'][2], 
+									$question['answer'][3], 
+									$question['answer'][4], 
+									$question['answer'][5], 
+									$question['answer'][6], 
+									$question['answer'][7], 
+									$question['answer'][8], 
+									$question['answer'][9]);
 
 			$sql = vsprintf(AT_SQL_QUESTION_LIKERT, $sql_params);
 			$result	= mysql_query($sql, $db);
@@ -1071,27 +1070,26 @@ class LongQuestion extends AbstracttestQuestion {
 	}
 
 	//QTI Import Open end/long Question
-	function importQTI($_POST){
+	function importQTI($question){
 		global $msg, $db;
-//		$_POST = $this->_POST; 
 
-		if ($_POST['question'] == ''){
+		if ($question['question'] == ''){
 //			$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 		}
 
 		if (!$msg->containsErrors()) {
-//			$_POST['feedback'] = $addslashes($_POST['feedback']);
-//			$_POST['question'] = $addslashes($_POST['question']);
+//			$question['feedback'] = $addslashes($question['feedback']);
+//			$question['question'] = $addslashes($question['question']);
 
-			if ($_POST['property']==''){
-				$_POST['property'] = 4;	//essay
+			if ($question['property']==''){
+				$question['property'] = 4;	//essay
 			}
 
-			$sql_params = array(	$_POST['category_id'], 
+			$sql_params = array(	$question['category_id'], 
 									$_SESSION['course_id'],
-									$_POST['feedback'], 
-									$_POST['question'], 
-									$_POST['property']);
+									$question['feedback'], 
+									$question['question'], 
+									$question['property']);
 
 			$sql = vsprintf(AT_SQL_QUESTION_LONG, $sql_params);
 
@@ -1227,70 +1225,69 @@ class MatchingQuestion extends AbstracttestQuestion {
 	}
 
 	//QTI Import Matching Question
-	function importQTI($_POST){
+	function importQTI($question){
 		global $msg, $db;
-//		$_POST = $this->_POST; 
 
-		if (!is_array($_POST['answer'])){
-			$temp = $_POST['answer'];
-			$_POST['answer'] = array();
-			$_POST['answer'][0] = $temp;
+		if (!is_array($question['answer'])){
+			$temp = $question['answer'];
+			$question['answer'] = array();
+			$question['answer'][0] = $temp;
 		}
-		ksort($_POST['answer']);	//array_pad returns an array disregard of the array keys
+		ksort($question['answer']);	//array_pad returns an array disregard of the array keys
 		//default for matching is '-'
-		$_POST['answer']= array_pad($_POST['answer'], 10, -1);
+		$question['answer']= array_pad($question['answer'], 10, -1);
 
 		for ($i = 0 ; $i < 10; $i++) {
-			$_POST['groups'][$i]        = trim($_POST['groups'][$i]);
-			$_POST['answer'][$i] = (int) $_POST['answer'][$i];
-			$_POST['choice'][$i]          = trim($_POST['choice'][$i]);
+			$question['groups'][$i]        = trim($question['groups'][$i]);
+			$question['answer'][$i] = (int) $question['answer'][$i];
+			$question['choice'][$i]          = trim($question['choice'][$i]);
 		}
 
-		if (!$_POST['groups'][0] 
-			|| !$_POST['groups'][1] 
-			|| !$_POST['choice'][0] 
-			|| !$_POST['choice'][1]) {
+		if (!$question['groups'][0] 
+			|| !$question['groups'][1] 
+			|| !$question['choice'][0] 
+			|| !$question['choice'][1]) {
 //			$msg->addError('QUESTION_EMPTY');
 		}
 
 		if (!$msg->containsErrors()) {
-//			$_POST['feedback']     = $addslashes($_POST['feedback']);
-//			$_POST['instructions'] = $addslashes($_POST['instructions']);
+//			$question['feedback']     = $addslashes($question['feedback']);
+//			$question['instructions'] = $addslashes($question['instructions']);
 		
-			$sql_params = array(	$_POST['category_id'], 
+			$sql_params = array(	$question['category_id'], 
 									$_SESSION['course_id'],
-									$_POST['feedback'], 
-									$_POST['question'], 
-									$_POST['groups'][0], 
-									$_POST['groups'][1], 
-									$_POST['groups'][2], 
-									$_POST['groups'][3], 
-									$_POST['groups'][4], 
-									$_POST['groups'][5], 
-									$_POST['groups'][6], 
-									$_POST['groups'][7], 
-									$_POST['groups'][8], 
-									$_POST['groups'][9], 
-									$_POST['answer'][0], 
-									$_POST['answer'][1], 
-									$_POST['answer'][2], 
-									$_POST['answer'][3], 
-									$_POST['answer'][4], 
-									$_POST['answer'][5], 
-									$_POST['answer'][6], 
-									$_POST['answer'][7], 
-									$_POST['answer'][8], 
-									$_POST['answer'][9],
-									$_POST['choice'][0], 
-									$_POST['choice'][1], 
-									$_POST['choice'][2], 
-									$_POST['choice'][3], 
-									$_POST['choice'][4], 
-									$_POST['choice'][5], 
-									$_POST['choice'][6], 
-									$_POST['choice'][7], 
-									$_POST['choice'][8], 
-									$_POST['choice'][9]);
+									$question['feedback'], 
+									$question['question'], 
+									$question['groups'][0], 
+									$question['groups'][1], 
+									$question['groups'][2], 
+									$question['groups'][3], 
+									$question['groups'][4], 
+									$question['groups'][5], 
+									$question['groups'][6], 
+									$question['groups'][7], 
+									$question['groups'][8], 
+									$question['groups'][9], 
+									$question['answer'][0], 
+									$question['answer'][1], 
+									$question['answer'][2], 
+									$question['answer'][3], 
+									$question['answer'][4], 
+									$question['answer'][5], 
+									$question['answer'][6], 
+									$question['answer'][7], 
+									$question['answer'][8], 
+									$question['answer'][9],
+									$question['choice'][0], 
+									$question['choice'][1], 
+									$question['choice'][2], 
+									$question['choice'][3], 
+									$question['choice'][4], 
+									$question['choice'][5], 
+									$question['choice'][6], 
+									$question['choice'][7], 
+									$question['choice'][8], 
+									$question['choice'][9]);
 
 			$sql = vsprintf(AT_SQL_QUESTION_MATCHINGDD, $sql_params);
 
@@ -1397,41 +1394,41 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 	}
 
 	//QTI Import Multiple Choice Question
-	function importQTI($_POST){
+	function importQTI($question){
 		global $msg, $db;
-//		$_POST = $this->_POST; 
-		if ($_POST['question'] == ''){
+
+		if ($question['question'] == ''){
 			$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 		}
 		
 		if (!$msg->containsErrors()) {
-//			$_POST['question']   = $addslashes($_POST['question']);
+//			$question['question']   = $addslashes($question['question']);
 
 			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = trim($_POST['choice'][$i]);
+				$question['choice'][$i] = trim($question['choice'][$i]);
 			}
 
 			$answers = array_fill(0, 10, 0);
-			if (is_array($_POST['answer'])){
+			if (is_array($question['answer'])){
 				$answers[0] = 1;	//default the first to be the right answer. TODO, use summation of points.
 			} else {
-				$answers[$_POST['answer']] = 1;
+				$answers[$question['answer']] = 1;
 			}
 		
-			$sql_params = array(	$_POST['category_id'], 
+			$sql_params = array(	$question['category_id'], 
 									$_SESSION['course_id'],
-									$_POST['feedback'], 
-									$_POST['question'], 
-									$_POST['choice'][0], 
-									$_POST['choice'][1], 
-									$_POST['choice'][2], 
-									$_POST['choice'][3], 
-									$_POST['choice'][4], 
-									$_POST['choice'][5], 
-									$_POST['choice'][6], 
-									$_POST['choice'][7], 
-									$_POST['choice'][8], 
-									$_POST['choice'][9], 
+									$question['feedback'], 
+									$question['question'], 
+									$question['choice'][0], 
+									$question['choice'][1], 
+									$question['choice'][2], 
+									$question['choice'][3], 
+									$question['choice'][4], 
+									$question['choice'][5], 
+									$question['choice'][6], 
+									$question['choice'][7], 
+									$question['choice'][8], 
+									$question['choice'][9], 
 									$answers[0], 
 									$answers[1], 
 									$answers[2], 
@@ -1493,49 +1490,48 @@ class MultianswerQuestion extends MultichoiceQuestion {
 	}
 
 	//QTI Import multianswer Question
-	function importQTI($_POST){
+	function importQTI($question){
 		global $msg, $db;
-//		$_POST = $this->_POST; 
 
-		if ($_POST['question'] == ''){
+		if ($question['question'] == ''){
 			$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 		}
 
 		//Multiple answer can have 0+ answers, in the QTIImport.class, if size(answer) < 2, answer will be came a scalar.
-		//The following code will change $_POST[answer] back to a vector.
-		$_POST['answer'] = $_POST['answers'];
+		//The following code will change $question[answer] back to a vector.
+		$question['answer'] = $question['answers'];
 
 		if (!$msg->containsErrors()) {
 			$choice_new = array(); // stores the non-blank choices
 			$answer_new = array(); // stores the associated "answer" for the choices
 
-			foreach ($_POST['choice'] as $choiceNum=>$choiceOpt) {
+			foreach ($question['choice'] as $choiceNum=>$choiceOpt) {
 				$choiceOpt = validate_length($choiceOpt, 255);
 				$choiceOpt = trim($choiceOpt);
-				$_POST['answer'][$choiceNum] = intval($_POST['answer'][$choiceNum]);
+				$question['answer'][$choiceNum] = intval($question['answer'][$choiceNum]);
 				if ($choiceOpt == '') {
 					/* an empty option can't be correct */
-					$_POST['answer'][$choiceNum] = 0;
+					$question['answer'][$choiceNum] = 0;
 				} else {
 					/* filter out empty choices/ remove gaps */
 					$choice_new[] = $choiceOpt;
-					if (in_array($choiceNum, $_POST['answer'])){
+					if (in_array($choiceNum, $question['answer'])){
 						$answer_new[] = 1;
 					} else {
 						$answer_new[] = 0;
 					}
 
-					if ($_POST['answer'][$choiceNum] != 0)
+					if ($question['answer'][$choiceNum] != 0)
 						$has_answer = TRUE;
 				}
 			}
 
 			if ($has_answer != TRUE) {
 		
-				$hidden_vars['required']    = htmlspecialchars($_POST['required']);
-				$hidden_vars['feedback']    = htmlspecialchars($_POST['feedback']);
-				$hidden_vars['question']    = htmlspecialchars($_POST['question']);
-				$hidden_vars['category_id'] = htmlspecialchars($_POST['category_id']);
+				$hidden_vars['required']    = htmlspecialchars($question['required']);
+				$hidden_vars['feedback']    = htmlspecialchars($question['feedback']);
+				$hidden_vars['question']    = htmlspecialchars($question['question']);
+				$hidden_vars['category_id'] = htmlspecialchars($question['category_id']);
 
 				for ($i = 0; $i < count($choice_new); $i++) {
 					$hidden_vars['answer['.$i.']'] = htmlspecialchars($answer_new[$i]);
@@ -1545,38 +1541,38 @@ class MultianswerQuestion extends MultichoiceQuestion {
 				$msg->addConfirm('NO_ANSWER', $hidden_vars);
 			} else {			
 				//add slahes throughout - does that fix it?
-				$_POST['answer'] = $answer_new;
-				$_POST['choice'] = $choice_new;
-				$_POST['answer'] = array_pad($_POST['answer'], 10, 0);
-				$_POST['choice'] = array_pad($_POST['choice'], 10, '');
+				$question['answer'] = $answer_new;
+				$question['choice'] = $choice_new;
+				$question['answer'] = array_pad($question['answer'], 10, 0);
+				$question['choice'] = array_pad($question['choice'], 10, '');
 			
-//				$_POST['feedback'] = $addslashes($_POST['feedback']);
-//				$_POST['question'] = $addslashes($_POST['question']);
+//				$question['feedback'] = $addslashes($question['feedback']);
+//				$question['question'] = $addslashes($question['question']);
 
-				$sql_params = array(	$_POST['category_id'], 
+				$sql_params = array(	$question['category_id'], 
 										$_SESSION['course_id'],
-										$_POST['feedback'], 
-										$_POST['question'], 
-										$_POST['choice'][0], 
-										$_POST['choice'][1], 
-										$_POST['choice'][2], 
-										$_POST['choice'][3], 
-										$_POST['choice'][4], 
-										$_POST['choice'][5], 
-										$_POST['choice'][6], 
-										$_POST['choice'][7], 
-										$_POST['choice'][8], 
-										$_POST['choice'][9], 
-										$_POST['answer'][0], 
-										$_POST['answer'][1], 
-										$_POST['answer'][2], 
-										$_POST['answer'][3], 
-										$_POST['answer'][4], 
-										$_POST['answer'][5], 
-										$_POST['answer'][6], 
-										$_POST['answer'][7], 
-										$_POST['answer'][8], 
-										$_POST['answer'][9]);
+										$question['feedback'], 
+										$question['question'], 
+										$question['choice'][0], 
+										$question['choice'][1], 
+										$question['choice'][2], 
+										$question['choice'][3], 
+										$question['choice'][4], 
+										$question['choice'][5], 
+										$question['choice'][6], 
+										$question['choice'][7], 
+										$question['choice'][8], 
+										$question['choice'][9], 
+										$question['answer'][0], 
+										$question['answer'][1], 
+										$question['answer'][2], 
+										$question['answer'][3], 
+										$question['answer'][4], 
+										$question['answer'][5], 
+										$question['answer'][6], 
+										$question['answer'][7], 
+										$question['answer'][8], 
+										$question['answer'][9]);
 
 				$sql = vsprintf(AT_SQL_QUESTION_MULTIANSWER, $sql_params);
 
