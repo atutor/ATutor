@@ -32,7 +32,7 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 	// Add some filter to the input
 
 	// Convert all applicable characters to HTML entities
-	$_REQUEST['keywords']	= htmlentities($_REQUEST['keywords']);
+	$_REQUEST['keywords']	= htmlentities_utf8($_REQUEST['keywords']);
 	// Remove all % chars to prevent unnecessary execution of the SQL query
 	$_REQUEST['keywords']	= str_replace('%', '', $_REQUEST['keywords']);
 	// Escapes special characters in a string for use in an SQL statement

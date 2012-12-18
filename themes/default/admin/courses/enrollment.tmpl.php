@@ -47,9 +47,9 @@
 <ul id="subnavlist">
 	<?php for ($i = 0; $i< $this->num_tabs; $i++): ?>
 		<?php if ($this->current_tab == $i): ?>
-			<li class="active"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$this->page_string; ?>" class="active"><strong><?php echo _AT($this->tabs[$i]); ?> - <?php echo $this->tab_counts[$i]; ?></strong></a></li>
+			<li class="active"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$this->page_string; ?><?php if(isset($this->course_id)){ echo SEP.'course_id='.$this->course_id;} ?>" class="active"><strong><?php echo _AT($this->tabs[$i]); ?> - <?php echo $this->tab_counts[$i]; ?></strong></a></li>
 		<?php else: ?>
-			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$this->page_string; ?>"><?php echo _AT($this->tabs[$i]); ?> - <?php echo $this->tab_counts[$i]; ?></a></li>
+			<li><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$this->page_string; ?><?php if(isset($this->course_id)){ echo SEP.'course_id='.$this->course_id;} ?>"><?php echo _AT($this->tabs[$i]); ?> - <?php echo $this->tab_counts[$i]; ?></a></li>
 		<?php endif; ?>
 	<?php endfor; ?>
 </ul>

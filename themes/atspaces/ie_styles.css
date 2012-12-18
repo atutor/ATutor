@@ -52,7 +52,7 @@ div#guide_box{
 
 }
 #contentcolumn {
-	*overflow:hidden;
+	overflow:auto;
 }
 .fl-force-right{
 	*margin-top:-1.3em;

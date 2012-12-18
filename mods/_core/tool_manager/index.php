@@ -23,7 +23,12 @@ $cid = intval($_REQUEST['cid']);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
+//$tool_file= AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];	// viene prelevato il path del file necessario per prelevare le informazioni relative ai sottocontenuti
+
+$_REQUEST['tool_file'] = str_replace('..', '', $_REQUEST['tool_file']);
 $tool_file= AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];	// viene prelevato il path del file necessario per prelevare le informazioni relative ai sottocontenuti
+
+
 $tool_list = require($tool_file);                            //si richiede la lista ei contenuti per lo strumento. i contenuti trovati potranno essere inseriti all'interno del materiale didattico come collegamento.
 ?>
 <div class="input-form">

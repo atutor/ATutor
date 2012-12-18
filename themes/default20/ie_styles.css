@@ -197,7 +197,7 @@ div#guide_box{
 	*margin-top:-1.2em;
 }
 #contentcolumn {
-	overflow:hidden;
+	overflow:auto;
 }
 
 .logoutbar{

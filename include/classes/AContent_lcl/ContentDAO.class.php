@@ -56,7 +56,7 @@ class ContentDAO extends DAO {
 			               ".$revision.",
 			               ".$formatting.",
 			               '".$addslashes($keywords)."',
-			               '".$content_path."', 
+			               '', 
 			               '".$addslashes($title)."',
 			               '".$addslashes($text)."',
 			               '".$addslashes($head)."',

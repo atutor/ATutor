@@ -1554,7 +1554,7 @@ overflow:hidden;
 #contentcolumn {
 	padding-right: 1em;
 	padding-left: 1em;
-	overflow:inherit;
+	overflow:auto;
 }
 
 #leftcolumn{
