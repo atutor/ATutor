@@ -93,7 +93,7 @@ if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg))
             if ($result===false) {
                 $msg->addError('MYSQL_FAILED');
             } else {
-                $msg->addFeedback('BASICLTI_SAVED');
+             //   $msg->addFeedback('BASICLTI_SAVED');
             }
     }
 }
@@ -175,6 +175,14 @@ if(isset($_POST['save'])){
 
 			// store the XML data into the database
 			// (implementation of AContent Live Content Link)
+			// Hack to change parent page to a folder
+			if(isset($_SESSION['s_cid'])){
+				$this_cid = $_SESSION['s_cid'];
+			}else{
+				$this_cid = $_REQUEST['cid'];
+			}
+			$sql_folder = "UPDATE ".TABLE_PREFIX."content SET content_type ='1', content_parent_id = '0', formatting = '0' WHERE content_id = '".$this_cid."'";
+			$result = mysql_query($sql_folder, $db);
 
 			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_lcl_importxml.class.php');
 			$ac_xml	= new AContent_lcl_importxml();
@@ -182,7 +190,9 @@ if(isset($_POST['save'])){
 			$course_id			= htmlentities($_SESSION['course_id']);
 
 			$import	= $ac_xml->importXML($xml->xmlStructure, $course_id);
-
+			if($import){
+				$msg->addFeedback('BASICLTI_SAVED');
+			}
 			/*
 			if($import)
 				echo '<div>DEBUG: Ok!</div>';
@@ -297,7 +307,7 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 			if (AContent_has_lcl_support()){
 
 				echo '<div style="border-bottom: 1px solid #CCC; border-left: 10px solid #CCC; padding-left: 10px; font-weight: bold; margin-top:10px; margin-bottom:20px">';
-					echo 'Courses list'._AT('');
+					echo 'Courses list';
 				echo '</div>';
 	
 				// SEARCH
