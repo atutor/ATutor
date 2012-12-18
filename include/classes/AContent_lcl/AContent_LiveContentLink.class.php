@@ -222,7 +222,8 @@
 				*/
 
 				$xmlStructure = $result;
-				$xmlStructure	= html_entity_decode($xmlStructure);
+				$xmlStructure   = preg_replace('/\s+/',' ', $xmlStructure);
+                                $xmlStructure	= html_entity_decode($xmlStructure);
 
 				preg_match("/<AContent_LiveContentLink>(.*?)<\/AContent_LiveContentLink>/", $xmlStructure, $match);
 

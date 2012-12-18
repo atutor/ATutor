@@ -22,6 +22,8 @@ $cid = intval($_REQUEST['cid']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+$_REQUEST['tool_file'] = str_replace('..', '', $_REQUEST['tool_file']);
+
 
 //$tool_file= AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];	// viene prelevato il path del file necessario per prelevare le informazioni relative ai sottocontenuti
 

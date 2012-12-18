@@ -175,15 +175,6 @@ if(isset($_POST['save'])){
 
 			// store the XML data into the database
 			// (implementation of AContent Live Content Link)
-		
-			// Hack to change parent page to a folder
-			if(isset($_SESSION['s_cid'])){
-				$this_cid = $_SESSION['s_cid'];
-			}else{
-				$this_cid = $_REQUEST['cid'];
-			}
-			$sql_folder = "UPDATE ".TABLE_PREFIX."content SET content_type ='1', content_parent_id = '0', formatting = '0' WHERE content_id = '".$this_cid."'";
-			$result = mysql_query($sql_folder, $db);
 
 			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_lcl_importxml.class.php');
 			$ac_xml	= new AContent_lcl_importxml();
