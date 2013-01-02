@@ -293,6 +293,7 @@ switch ($row['access']){
 			$_SESSION['member_id']	= 0;
 			$_SESSION['is_admin']	= false;
 			$_SESSION['is_guest']	= true;
+			$_SESSION['course_title'] = $row['title'];
 
 			/* add guest login to counter: */
 			count_login();
