@@ -17,5 +17,17 @@ $_user_location = 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require(AT_INCLUDE_PATH.'html/browse.inc.php');
+unset($_SESSION['course_id']);
+
+if($_config['allow_browse']){
+	unset($_SESSION['course_id']);
+
+if($_config['allow_browse']){
+	require(AT_INCLUDE_PATH.'html/browse.inc.php');
+} else {
+ 	header("Location:".$_base_href );
+}
+} else {
+ 	header("Location:".$_base_href );
+}
 ?>

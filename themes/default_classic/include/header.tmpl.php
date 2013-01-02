@@ -84,6 +84,11 @@ global $system_courses, $_custom_css, $_base_path;
 				<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a> | 
 			<?php endif; ?>
 		<?php endif; ?>
+		<?php
+				global $_config;
+				if($_SESSION['course_id'] > 0 && isset($_SESSION['is_guest']) && $_SESSION['is_guest'] > 0 && $_config['allow_browse'] == '1'){ ?>
+			<a href="<?php echo $this->base_path; ?>browse.php"><?php echo _AT('browse_courses'); ?></a> 
+			<?php } ?>
 		<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> | 
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a> |
 		<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>

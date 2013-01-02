@@ -154,6 +154,11 @@ global $system_courses, $_custom_css, $db;
 			<?php endif; ?>
 
 		<?php if(!$this->just_social): ?>
+			<?php
+				global $_config;
+				if($_SESSION['course_id'] > 0 && isset($_SESSION['is_guest']) && $_SESSION['is_guest'] > 0 && $_config['allow_browse'] == '1'){ ?>
+			<a href="<?php echo $this->base_path; ?>browse.php"><?php echo _AT('browse_courses'); ?></a> 
+			<?php } ?>
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> 
 		<?php endif; ?>
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>	
