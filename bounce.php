@@ -276,6 +276,7 @@ if ($set_to_public) {
 	$row['access'] = "public";
 }
 
+
 switch ($row['access']){
 	case 'public':
 		if ($_GET['f']) {
