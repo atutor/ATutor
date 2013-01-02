@@ -58,6 +58,8 @@ $num_in_path = count($path);
 /* the page title: */
 $page_title = '';
 $page_title .= $content_row['title'];
+$content_keywords = $content_row['keywords'];
+$content_description = preg_replace('/\s\s+/', ' ',substr(str_replace(' ', ' ',str_replace('"', '', strip_tags($content_row['text']))), 0, 350));
 
 for ($i=0; $i<$num_in_path; $i++) {
 	$content_info = $path[$i];

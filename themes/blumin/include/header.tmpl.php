@@ -54,6 +54,12 @@ global $system_courses, $_custom_css, $_base_path;
 <head>
 	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
+    <?php if(isset($this->content_keywords) && $this->content_keywords != ''){ ?>
+    <meta name="keywords" content="<?php echo $this->content_keywords; ?>" />
+    <?php } ?>
+    <?php if(isset($this->content_description) && $this->content_description != ''){ ?>
+    <meta name="description" content="<?php echo $this->content_description; ?>" />
+    <?php } ?>
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />

@@ -37,6 +37,8 @@ global $_custom_css;
 global $_custom_head;
 global $substr, $strlen, $_course_id;
 global $_tool_shortcuts;
+global $content_description;
+global $content_keywords;
 
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 //require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
@@ -231,6 +233,8 @@ $savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
 $savant->assign('top_level_pages', $_top_level_pages);
 $savant->assign('section_title', $section_title);
+$savant->assign('content_keywords', $content_keywords);
+$savant->assign('content_description', $content_description);
 
 if (isset($_pages[$current_page]['guide'])) {
 	$savant->assign('guide', AT_GUIDES_PATH . $_pages[$current_page]['guide']);
