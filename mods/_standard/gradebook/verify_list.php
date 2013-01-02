@@ -32,7 +32,7 @@ else if (isset($_POST['import']))
 	if ($_FILES['file']['size'] < 1) 
 	{
 		$msg->addError('FILE_EMPTY');
-		header('Location: import_course_list.php');
+		header('Location: import_export_external_marks.php');
 		exit;
 	} 
 	else 
@@ -52,14 +52,14 @@ else if (isset($_POST['import']))
 				{
 					$errors = array('INCORRECT_FILE_FORMAT', $line_number);
 					$msg->addError($errors);
-					header('Location: import_course_list.php');
+					header('Location: import_export_external_marks.php');
 					exit;
 				} 
 				else if (($num_fields == 1) && (trim($data[0]) != '')) 
 				{
 					$errors = array('INCORRECT_FILE_FORMAT', $line_number);
 					$msg->addError($errors);
-					header('Location: import_course_list.php');
+					header('Location: import_export_external_marks.php');
 					exit;
 				}
 			}
