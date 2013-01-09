@@ -29,7 +29,7 @@ define('AT_SQL_QUESTION_TRUEFALSE', "INSERT INTO ".TABLE_PREFIX."tests_questions
 define('AT_SQL_QUESTION_LONG', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 3, '%s', '%s', 
 							'', '', '', '', '', '', '', '', '', '', 
 							0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-							'', '', '', '', '', '', '', '', '', '', %s, 0)");
+							'', '', '', '', '', '', '', '', '', '', %s, 0, '%s')");
 
 //Question for Likert
 define('AT_SQL_QUESTION_LIKERT', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 4, '%s', '%s', 

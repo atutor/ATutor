@@ -126,8 +126,7 @@ if ($_POST['answer'] == '') {
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('statement'); ?></label> 
 		<?php print_VE('question'); ?>	
-		<textarea id="question" cols="50" rows="6" name="question"><?php 
-			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 
 	<div class="row">
@@ -135,21 +134,8 @@ if ($_POST['answer'] == '') {
 		<input type="radio" name="answer" value="1" id="answer1"<?php echo $ans_yes; ?> /><label for="answer1"><?php echo _AT('true'); ?></label>, <input type="radio" name="answer" value="2" id="answer2"<?php echo $ans_no; ?> /><label for="answer2"><?php echo _AT('false'); ?></label>
 	</div>
 	
-	<div class="row"><br /></div>
-	
-	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label>
-		<?php print_VE('optional_feedback'); ?>
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback" placeholder="<?php echo _AT('remedial_content_placeholder'); ?>"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?>
-		</textarea>
-	</div>
-	
-	<?php require('remedial_content.php'); ?>
+	<?php require('question_footer.php'); ?>
 
-	<div class="row buttons">
-		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s"/>
-		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
-	</div>
 	</fieldset>
 </div>
 </form>

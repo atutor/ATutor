@@ -26,36 +26,41 @@ if ($qid == 0){
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	if ($_POST['tid']) {
-		header('Location: questions.php?tid='.$_POST['tid']);			
+		header('Location: questions.php?tid='.$_POST['tid']);
 	} else {
 		header('Location: question_db.php');
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['feedback']    = trim($_POST['feedback']);
-	$_POST['question']    = trim($_POST['question']);
-	$_POST['category_id'] = intval($_POST['category_id']);
-	$_POST['properties']  = intval($_POST['properties']);
+	$_POST['feedback']			= trim($_POST['feedback']);
+	$_POST['question']			= trim($_POST['question']);
+	$_POST['category_id']		= intval($_POST['category_id']);
+	$_POST['properties']		= intval($_POST['properties']);
+	$_POST['remedial_content']	= trim($_POST['remedial_content']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
+		$_POST['question']			= $addslashes($_POST['question']);
+		$_POST['feedback']			= $addslashes($_POST['feedback']);
+		$_POST['remedial_content']	= $addslashes($_POST['remedial_content']);
 
 		$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
-			properties=$_POST[properties]
+			properties=$_POST[properties],
+			remedial_content='$_POST[remedial_content]'
 		WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 
+		error_log(print_r($sql, TRUE), 0);
+		
 		$result	= mysql_query($sql, $db);
 
 		$msg->addFeedback('QUESTION_UPDATED');
 		if ($_POST['tid']) {
-			header('Location: questions.php?tid='.$_POST['tid']);			
+			header('Location: questions.php?tid='.$_POST['tid']);
 		} else {
 			header('Location: question_db.php');
 		}
@@ -94,18 +99,9 @@ $msg->printErrors();
 	</div>
 
 	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
-		<?php print_VE('optional_feedback'); ?>
-
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
-	</div>
-
-	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label>
 		<?php print_VE('question'); ?>
-
-		<textarea id="question" cols="50" rows="6" name="question"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 	
 	<div class="row">
@@ -115,11 +111,9 @@ $msg->printErrors();
 		<input type="radio" name="properties" value="3" id="az3" <?php if ($_POST['properties'] == 3) { echo 'checked="checked"'; } ?> /><label for="az3"><?php echo _AT('short_paragraph'); ?></label><br />
 		<input type="radio" name="properties" value="4" id="az4" <?php if ($_POST['properties'] == 4) { echo 'checked="checked"'; } ?> /><label for="az4"><?php echo _AT('one_page'); ?></label>
 	</div>
-
-	<div class="row buttons">
-		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
-		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
-	</div>
+	
+	<?php require('question_footer.php'); ?>
+	
 	</fieldset>
 </div>
 </form>
