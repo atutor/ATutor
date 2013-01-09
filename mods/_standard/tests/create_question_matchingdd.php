@@ -24,9 +24,10 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php');
 	exit;
 } else if ($_POST['submit']) {
-	$_POST['feedback']    = trim($_POST['feedback']);
-	$_POST['instructions'] = trim($_POST['instructions']);
-	$_POST['category_id'] = intval($_POST['category_id']);
+	$_POST['feedback']			= trim($_POST['feedback']);
+	$_POST['instructions']		= trim($_POST['instructions']);
+	$_POST['category_id']		= intval($_POST['category_id']);
+	$_POST['remedial_content']	= trim($_POST['remedial_content']);
 
 	for ($i = 0 ; $i < 10; $i++) {
 		$_POST['question'][$i]        = $addslashes(trim($_POST['question'][$i]));
@@ -44,8 +45,9 @@ if (isset($_POST['cancel'])) {
 	
 
 	if (!$msg->containsErrors()) {
-		$_POST['feedback']     = $addslashes($_POST['feedback']);
-		$_POST['instructions'] = $addslashes($_POST['instructions']);
+		$_POST['feedback']			= $addslashes($_POST['feedback']);
+		$_POST['instructions']		= $addslashes($_POST['instructions']);
+		$_POST['remedial_content']	= $addslashes($_POST['remedial_content']);
 	
 		$sql_params = array(	$_POST['category_id'], 
 								$_SESSION['course_id'],
@@ -80,7 +82,8 @@ if (isset($_POST['cancel'])) {
 								$_POST['answer'][6], 
 								$_POST['answer'][7], 
 								$_POST['answer'][8], 
-								$_POST['answer'][9]);
+								$_POST['answer'][9],
+								$_POST['remedial_content']);
 
 		$sql = vsprintf(AT_SQL_QUESTION_MATCHINGDD, $sql_params);
 
@@ -112,14 +115,7 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 	</div>
 
 	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
-		<?php print_VE('optional_feedback'); ?>
-
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
-	</div>
-
-	<div class="row">
-		<label for="instructions"><?php echo _AT('instructions'); ?></label> 
+		<label for="instructions"><?php echo _AT('instructions'); ?></label>
 		<?php print_VE('instructions'); ?>
 		<textarea id="instructions" cols="50" rows="3" name="instructions"><?php echo htmlspecialchars(stripslashes($_POST['instructions'])); ?></textarea>
 	</div>
@@ -145,8 +141,7 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 			<?php endforeach; ?>
 		</select>
 		
-		<textarea id="question_<?php echo $i; ?>" cols="50" rows="2" name="question[<?php echo $i; ?>]"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'][$i])); ?></textarea> 
+		<textarea id="question_<?php echo $i; ?>" cols="50" rows="2" name="question[<?php echo $i; ?>]"><?php echo htmlspecialchars(stripslashes($_POST['question'][$i])); ?></textarea> 
 	</div>
 <?php endfor; ?>
 	
@@ -161,15 +156,11 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 			<?php echo _AT('answer'); ?> <?php echo $_letters[$i]; ?>
 			<?php print_VE('answer_' . $i); ?>
 			<br />
-			<textarea id="answer_<?php echo $i; ?>" cols="50" rows="2" name="answer[<?php echo $i; ?>]"><?php 
-			echo htmlspecialchars(stripslashes($_POST['answer'][$i])); ?></textarea>
+			<textarea id="answer_<?php echo $i; ?>" cols="50" rows="2" name="answer[<?php echo $i; ?>]"><?php echo htmlspecialchars(stripslashes($_POST['answer'][$i])); ?></textarea>
 		</div>
 	<?php endfor; ?>
 
-	<div class="row buttons">
-		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
-		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
-	</div>
+	<?php require('question_footer.php'); ?>
 	</fieldset>
 </div>
 </form>
