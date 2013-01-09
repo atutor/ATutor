@@ -66,11 +66,11 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 
-		$_POST['choice']   = array_pad($choice_new, 10, '');
-		$answer_new        = array_pad($answer_new, 10, 0);
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['remedial_content']    = $addslashes($_POST['remedial_content']);
+		$_POST['choice']			= array_pad($choice_new, 10, '');
+		$answer_new					= array_pad($answer_new, 10, 0);
+		$_POST['feedback']			= $addslashes($_POST['feedback']);
+		$_POST['question']			= $addslashes($_POST['question']);
+		$_POST['remedial_content']	= $addslashes($_POST['remedial_content']);
 	
 		$sql_params = array(	$_POST['category_id'], 
 								$_SESSION['course_id'],

@@ -31,13 +31,14 @@ if (isset($_POST['cancel'])) {
 	}
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
-	$_POST['tid']	   = intval($_POST['tid']);
-	$_POST['qid']	   = intval($_POST['qid']);
-	$_POST['weight']   = intval($_POST['weight']);
-	$_POST['answer']   = intval($_POST['answer']);
+	$_POST['required']			= intval($_POST['required']);
+	$_POST['feedback']			= trim($_POST['feedback']);
+	$_POST['question']			= trim($_POST['question']);
+	$_POST['tid']				= intval($_POST['tid']);
+	$_POST['qid']				= intval($_POST['qid']);
+	$_POST['weight']			= intval($_POST['weight']);
+	$_POST['answer']			= intval($_POST['answer']);
+	$_POST['remedial_content']	= trim($_POST['remedial_content']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
@@ -51,8 +52,9 @@ if (isset($_POST['cancel'])) {
 			$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
 		}
 
-		$_POST['feedback']   = $addslashes($_POST['feedback']);
-		$_POST['question']   = $addslashes($_POST['question']);
+		$_POST['feedback']			= $addslashes($_POST['feedback']);
+		$_POST['question']			= $addslashes($_POST['question']);
+		$_POST['remedial_content']	= $addslashes($_POST['remedial_content']);
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
             category_id=$_POST[category_id],
@@ -77,7 +79,8 @@ if (isset($_POST['cancel'])) {
 			answer_6={$answers[6]},
 			answer_7={$answers[7]},
 			answer_8={$answers[8]},
-			answer_9={$answers[9]}
+			answer_9={$answers[9]},
+			remedial_content='$_POST[remedial_content]'
 
 			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 
@@ -103,11 +106,13 @@ if (!isset($_POST['submit'])) {
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-	$_POST['category_id'] = $row['category_id'];
-	$_POST['feedback']	  = $row['feedback'];
-	$_POST['required']	  = $row['required'];
-	$_POST['weight']	  = $row['weight'];
-	$_POST['question']	  = $row['question'];
+	$_POST['category_id']		= $row['category_id'];
+	$_POST['feedback']			= $row['feedback'];
+	$_POST['required']			= $row['required'];
+	$_POST['weight']			= $row['weight'];
+	$_POST['question']			= $row['question'];
+	$_POST['remedial_content']	= $row['remedial_content'];
+	
 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
@@ -131,19 +136,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
 	</div>
-	
-	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
-		<?php print_VE('optional_feedback'); ?>	
-
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
-	</div>
 
 	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
-		<?php print_VE('question'); ?>		
-		<textarea id="question" cols="50" rows="4" name="question"><?php 
-			echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label>
+		<?php print_VE('question'); ?>
+		<textarea id="question" cols="50" rows="4" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 
 	<?php 
@@ -159,10 +156,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 	<?php } ?>
 
-	<div class="row buttons">
-		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
-		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
-	</div>
+	<?php require('question_footer.php'); ?>
 	</fieldset>
 </div>
 </form>

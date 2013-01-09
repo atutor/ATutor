@@ -24,11 +24,12 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 	header('Location: question_db.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['required'] = intval($_POST['required']);
-	$_POST['feedback'] = trim($_POST['feedback']);
-	$_POST['question'] = trim($_POST['question']);
-	$_POST['category_id'] = intval($_POST['category_id']);
-	$_POST['answer']      = intval($_POST['answer']);
+	$_POST['required']			= intval($_POST['required']);
+	$_POST['feedback']			= trim($_POST['feedback']);
+	$_POST['question']			= trim($_POST['question']);
+	$_POST['category_id']		= intval($_POST['category_id']);
+	$_POST['answer']			= intval($_POST['answer']);
+	$_POST['remedial_content']	= trim($_POST['remedial_content']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError(array('EMPTY_FIELDS', _AT('question')));
@@ -42,8 +43,9 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 		$answers = array_fill(0, 10, 0);
 		$answers[$_POST['answer']] = 1;
 
-		$_POST['feedback']   = $addslashes($_POST['feedback']);
-		$_POST['question']   = $addslashes($_POST['question']);
+		$_POST['feedback']			= $addslashes($_POST['feedback']);
+		$_POST['question']			= $addslashes($_POST['question']);
+		$_POST['remedial_content']	= $addslashes($_POST['remedial_content']);
 
 		$sql_params = array(	$_POST['category_id'], 
 								$_SESSION['course_id'],
@@ -68,7 +70,8 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
 								$answers[6], 
 								$answers[7], 
 								$answers[8], 
-								$answers[9]);
+								$answers[9],
+								$_POST['remedial_content']);
 		$sql = vsprintf(AT_SQL_QUESTION_MULTI, $sql_params);
 		
 		$result	= mysql_query($sql, $db);
@@ -99,16 +102,9 @@ $msg->printConfirm();
 	</div>
 
 	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label>
-		<?php print_VE('optional_feedback'); ?>	
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
-	</div>
-
-	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label>
 		<?php print_VE('question'); ?>
-		<textarea id="question" cols="50" rows="4" name="question" style="width:90%;"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		<textarea id="question" cols="50" rows="4" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
 	</div>
 
 <?php
@@ -121,17 +117,14 @@ $msg->printConfirm();
 		
 		<br />
 
-		<small><input type="radio" name="answer" id="answer_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($_POST['answer'] == $i) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>			
+		<small><input type="radio" name="answer" id="answer_<?php echo $i; ?>" value="<?php echo $i; ?>" <?php if($_POST['answer'] == $i) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>
 		
-		<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php 
-		echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea> 
+		<textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea>
 	</div>
 	<?php } ?>
-
-	<div class="row buttons">
-		<input type="submit" value="<?php echo _AT('save'); ?>" name="submit" accesskey="s" />
-		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />
-	</div>
+	
+	<?php require('question_footer.php'); ?>
+	
 	</fieldset>
 </div>
 </form>

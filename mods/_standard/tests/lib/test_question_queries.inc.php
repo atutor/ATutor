@@ -16,7 +16,7 @@
 define('AT_SQL_QUESTION_MULTI', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 1, '%s', '%s', 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-							'', '', '', '', '', '', '', '', '', '', 5, 0)");
+							'', '', '', '', '', '', '', '', '', '', 5, 0, '%s')");
 
 //Question for True/False
 define('AT_SQL_QUESTION_TRUEFALSE', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 2, '%s', '%s', 
@@ -47,7 +47,7 @@ define('AT_SQL_QUESTION_ORDERING', "INSERT INTO ".TABLE_PREFIX."tests_questions 
 define('AT_SQL_QUESTION_MULTIANSWER', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 7, '%s', '%s', 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-							'', '', '', '', '', '', '', '', '', '', 0, 0)");
+							'', '', '', '', '', '', '', '', '', '', 0, 0, '%s')");
 
 //Question for Matching Simple
 define('AT_SQL_QUESTION_MATCHING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 5, '%s', '%s', 
