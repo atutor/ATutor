@@ -1487,6 +1487,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','install_themes','Install 
 INSERT INTO `language_text` VALUES ('en', '_template','install_themes_text','To install new themes the <code>%s</code> directory must be set to writeable. Use the command <kbd>chmod a+w themes</kbd> on Unix machines, while on Windows the web server must have write permissions on that directory.','2005-12-14 12:36:08','');
 INSERT INTO `language_text` VALUES ('en', '_template','institution','School/Institution','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','instructions','Instructions','2005-04-05 14:25:07','');
+INSERT INTO `language_text` VALUES ('en', '_template','instructions_placeholder','Placeholder','2013-01-08 14:25:07','');
 INSERT INTO `language_text` VALUES ('en', '_template','instructor','Instructor','2003-05-20 12:02:59','global instructor label');
 INSERT INTO `language_text` VALUES ('en', '_template','instructors','Instructors','2003-05-20 12:03:37','admin general statistics label for number of instructors');
 INSERT INTO `language_text` VALUES ('en', '_template','instructor_contact_form','Instructor Contact Form','2003-05-20 12:12:32','instructor contact form heading');

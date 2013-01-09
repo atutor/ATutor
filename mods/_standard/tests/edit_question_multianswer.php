@@ -25,7 +25,7 @@ if ($qid == 0){
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	if ($_POST['tid']) {
-		header('Location: questions.php?tid='.$_POST['tid']);			
+		header('Location: questions.php?tid='.$_POST['tid']);
 	} else {
 		header('Location: question_db.php');
 	}
@@ -106,7 +106,7 @@ if (isset($_POST['cancel'])) {
 
 		$msg->addFeedback('QUESTION_UPDATED');
 		if ($_POST['tid']) {
-			header('Location: questions.php?tid='.$_POST['tid']);			
+			header('Location: questions.php?tid='.$_POST['tid']);
 		} else {
 			header('Location: question_db.php');
 		}

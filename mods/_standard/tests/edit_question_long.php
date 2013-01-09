@@ -53,8 +53,6 @@ if (isset($_POST['cancel'])) {
 			properties=$_POST[properties],
 			remedial_content='$_POST[remedial_content]'
 		WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
-
-		error_log(print_r($sql, TRUE), 0);
 		
 		$result	= mysql_query($sql, $db);
 

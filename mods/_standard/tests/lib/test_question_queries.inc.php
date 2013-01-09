@@ -53,7 +53,7 @@ define('AT_SQL_QUESTION_MULTIANSWER', "INSERT INTO ".TABLE_PREFIX."tests_questio
 define('AT_SQL_QUESTION_MATCHING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 5, '%s', '%s', 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 0)");
+							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 0, 0, '%s')");
 
 //Question for Matching Graphical
 define('AT_SQL_QUESTION_MATCHINGDD', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 8, '%s', '%s', 
