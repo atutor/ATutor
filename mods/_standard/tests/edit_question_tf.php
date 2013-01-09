@@ -26,7 +26,7 @@ if ($qid == 0){
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	if ($_POST['tid']) {
-		header('Location: questions.php?tid='.$_POST['tid']);			
+		header('Location: questions.php?tid='.$_POST['tid']);
 	} else {
 		header('Location: question_db.php');
 	}
@@ -40,15 +40,17 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['feedback']    = $addslashes(trim($_POST['feedback']));
-		$_POST['question']    = $addslashes($_POST['question']);
-		$_POST['qid']	      = intval($_POST['qid']);
-		$_POST['category_id'] = intval($_POST['category_id']);
-		$_POST['answer']      = intval($_POST['answer']);
+		$_POST['feedback']			= $addslashes(trim($_POST['feedback']));
+		$_POST['question']			= $addslashes($_POST['question']);
+		$_POST['qid']				= intval($_POST['qid']);
+		$_POST['category_id']		= intval($_POST['category_id']);
+		$_POST['answer']			= intval($_POST['answer']);
+		$_POST['remedial_content']	= $addslashes(trim($_POST['remedial_content']));
 
 		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET	category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
+			remedial_content='$_POST[remedial_content]',
 			answer_0={$_POST[answer]}
 			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
 
@@ -56,14 +58,14 @@ if (isset($_POST['cancel'])) {
 		
 		$msg->addFeedback('QUESTION_UPDATED');
 		if ($_POST['tid']) {
-			header('Location: questions.php?tid='.$_POST['tid']);			
+			header('Location: questions.php?tid='.$_POST['tid']);
 		} else {
 			header('Location: question_db.php');
 		}
 		exit;
 	}
 }
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!$_POST['submit']) {
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=2";
@@ -122,12 +124,6 @@ if ($_POST['answer'] == '') {
 	</div>
 
 	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
-		<?php print_VE('optional_feedback'); ?>
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
-	</div>
-
-	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('statement'); ?></label> 
 		<?php print_VE('question'); ?>	
 		<textarea id="question" cols="50" rows="6" name="question"><?php 
@@ -138,6 +134,17 @@ if ($_POST['answer'] == '') {
 		<?php echo _AT('answer'); ?><br />
 		<input type="radio" name="answer" value="1" id="answer1"<?php echo $ans_yes; ?> /><label for="answer1"><?php echo _AT('true'); ?></label>, <input type="radio" name="answer" value="2" id="answer2"<?php echo $ans_no; ?> /><label for="answer2"><?php echo _AT('false'); ?></label>
 	</div>
+	
+	<div class="row"><br /></div>
+	
+	<div class="row">
+		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label>
+		<?php print_VE('optional_feedback'); ?>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback" placeholder="<?php echo _AT('remedial_content_placeholder'); ?>"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?>
+		</textarea>
+	</div>
+	
+	<?php require('remedial_content.php'); ?>
 
 	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s"/>

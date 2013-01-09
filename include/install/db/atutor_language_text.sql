@@ -1265,6 +1265,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','farchive','Forum Archiver
 INSERT INTO `language_text` VALUES ('en', '_template','farchive_export','Export Forum','2008-11-07 10:42:18','');
 INSERT INTO `language_text` VALUES ('en', '_template','farchive_select_forum','Select Forum to Export:','2008-11-07 10:42:50','');
 INSERT INTO `language_text` VALUES ('en', '_template','feedback','Feedback','2003-05-20 09:09:40','global feedback label');
+INSERT INTO `language_text` VALUES ('en', '_template','feedback_placeholder','Placeholder','2013-01-08 09:09:40','');
 INSERT INTO `language_text` VALUES ('en', '_template','female','Female','2003-05-20 09:18:03','registration, profile');
 INSERT INTO `language_text` VALUES ('en', '_template','fg_colour','Foreground Colour','2008-09-09 09:01:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','field','Area of Study','2009-05-27 12:01:11','');
@@ -2068,6 +2069,9 @@ INSERT INTO `language_text` VALUES ('en', '_template','release_immediate','Once 
 INSERT INTO `language_text` VALUES ('en', '_template','release_marked','Once quiz has been submitted and all questions have been marked','2004-12-13 13:55:57','');
 INSERT INTO `language_text` VALUES ('en', '_template','release_never','Do not release results','2004-12-13 14:02:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','release_on','Release on','2006-04-10 14:37:58','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content','Remedial Content','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_header','Remedial Content','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_placeholder','Placeholder','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove','Remove','2003-05-21 12:40:11','control centre, admin user manager, instructor enrolment manager');
 INSERT INTO `language_text` VALUES ('en', '_template','removed','Removed','2004-02-03 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove_frame','Remove Frame','2005-01-10 14:31:34','filemanager preview');

@@ -25,7 +25,7 @@ if ($qid == 0){
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	if ($_POST['tid']) {
-		header('Location: questions.php?tid='.$_POST['tid']);			
+		header('Location: questions.php?tid='.$_POST['tid']);
 	} else {
 		header('Location: question_db.php');
 	}
@@ -53,8 +53,9 @@ if (isset($_POST['cancel'])) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 	if (!$msg->containsErrors()) {
-		$_POST['question'] = $addslashes($_POST['question']);
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
+		$_POST['question']            = $addslashes($_POST['question']);
+		$_POST['feedback']            = $addslashes($_POST['feedback']);
+		$_POST['remedial_content']    = $addslashes(trim($_POST['remedial_content']));
 
 		$choice_new = array(); // stores the non-blank choices
 		$answer_new = array(); // stores the non-blank answers
@@ -81,6 +82,7 @@ if (isset($_POST['cancel'])) {
 			category_id=$_POST[category_id],
 			feedback='$_POST[feedback]',
 			question='$_POST[question]',
+			remedial_content='$_POST[remedial_content]',
 			choice_0='{$_POST[choice][0]}',
 			choice_1='{$_POST[choice][1]}',
 			choice_2='{$_POST[choice][2]}',
@@ -107,7 +109,7 @@ if (isset($_POST['cancel'])) {
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if ($_POST['tid']) {
-			header('Location: questions.php?tid='.$_POST['tid']);			
+			header('Location: questions.php?tid='.$_POST['tid']);
 		} else {
 			header('Location: question_db.php');
 		}
@@ -124,10 +126,11 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 
-	$_POST['required']		= $row['required'];
-	$_POST['question']		= $row['question'];
-	$_POST['category_id']	= $row['category_id'];
-	$_POST['feedback']		= $row['feedback'];
+	$_POST['required']			= $row['required'];
+	$_POST['question']			= $row['question'];
+	$_POST['category_id']		= $row['category_id'];
+	$_POST['feedback']			= $row['feedback'];
+	$_POST['remedial_content']	= $row['remedial_content'];
 
 	for ($i=0; $i<10; $i++) {
 		$_POST['choice'][$i] = $row['choice_'.$i];
@@ -149,14 +152,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label> 
-		<?php print_VE('optional_feedback'); ?>
-
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
-	</div>
-
-	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label>
 		
 		<?php print_VE('question'); ?>
 		
@@ -177,7 +173,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea> 
 		</div>
 	<?php endfor; ?>
-
+	
+	<div class="row"><br /></div>
+	
+	<div class="row">
+		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label>
+		<?php print_VE('optional_feedback'); ?>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback" placeholder="<?php echo _AT('remedial_content_placeholder'); ?>"><?php echo htmlspecialchars(stripslashes($_POST['feedback'])); ?></textarea>
+	</div>
+	
+	<?php require('remedial_content.php'); ?>
+	
 	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />
 		<input type="submit" value="<?php echo _AT('cancel'); ?>" name="cancel" />

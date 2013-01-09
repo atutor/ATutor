@@ -24,19 +24,21 @@ if (isset($_POST['cancel'])) {
 	header('Location: question_db.php');
 	exit;
 } else if ($_POST['submit']) {
-	$_POST['required']     = 1; //intval($_POST['required']);
-	$_POST['feedback']     = trim($_POST['feedback']);
-	$_POST['question']     = trim($_POST['question']);
-	$_POST['category_id']  = intval($_POST['category_id']);
-	$_POST['answer']       = intval($_POST['answer']);
+	$_POST['required']			= 1; //intval($_POST['required']);
+	$_POST['feedback']			= trim($_POST['feedback']);
+	$_POST['question']			= trim($_POST['question']);
+	$_POST['category_id']		= intval($_POST['category_id']);
+	$_POST['answer']			= intval($_POST['answer']);
+	$_POST['remedial_content']	= trim($_POST['remedial_content']);
 
 	if ($_POST['question'] == ''){
 		$msg->addError(array('EMPTY_FIELDS', _AT('statement')));
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['feedback'] = $addslashes($_POST['feedback']);
-		$_POST['question'] = $addslashes($_POST['question']);
+		$_POST['feedback']			= $addslashes($_POST['feedback']);
+		$_POST['question']			= $addslashes($_POST['question']);
+		$_POST['remedial_content']	= $addslashes($_POST['remedial_content']);
 
 		/*
 		$sql = 'SELECT content_id FROM '.TABLE_PREFIX."tests WHERE test_id=$_POST[tid]";
@@ -48,7 +50,8 @@ if (isset($_POST['cancel'])) {
 								$_SESSION['course_id'],
 								$_POST['feedback'], 
 								$_POST['question'], 
-								$_POST['answer']);
+								$_POST['answer'],
+								$_POST['remedial_content']);
 
 		$sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);
 		$result	= mysql_query($sql, $db);
@@ -63,6 +66,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <form action="mods/_standard/tests/create_question_tf.php" method="post" name="form">
+
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('test_tf'); ?></legend>
 	<div class="row">
@@ -70,14 +74,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<select name="category_id" id="cats">
 			<?php print_question_cats($_POST['category_id']); ?>
 		</select>
-	</div>
-
-	<div class="row">
-		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label>		
-		<?php print_VE('optional_feedback'); ?>
-		<br />
-	
-		<textarea id="optional_feedback" cols="50" rows="3" name="feedback"><?php echo htmlspecialchars($stripslashes($_POST['feedback'])); ?></textarea>
 	</div>
 	
 	<div class="row">
@@ -93,6 +89,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<input type="radio" name="answer" value="1" id="answer1" /><label for="answer1"><?php echo _AT('true'); ?></label>, 
 		<input type="radio" name="answer" value="2" id="answer2" checked="checked" /><label for="answer2"><?php echo _AT('false'); ?></label>
 	</div>
+	
+	<div class="row"><br /></div>
+	
+	<div class="row">
+		<label for="optional_feedback"><?php echo _AT('optional_feedback'); ?></label>
+		<?php print_VE('optional_feedback'); ?>
+		<textarea id="optional_feedback" cols="50" rows="3" name="feedback" placeholder="<?php echo _AT('feedback_placeholder'); ?>"><?php echo htmlspecialchars($stripslashes($_POST['feedback'])); ?>
+		</textarea>
+	</div>
+	
+	<?php require('remedial_content.php'); ?>
 
 	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('save'); ?>"   name="submit" accesskey="s" />

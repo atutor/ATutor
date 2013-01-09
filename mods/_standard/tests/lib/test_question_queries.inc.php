@@ -22,7 +22,7 @@ define('AT_SQL_QUESTION_MULTI', "INSERT INTO ".TABLE_PREFIX."tests_questions VAL
 define('AT_SQL_QUESTION_TRUEFALSE', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 2, '%s', '%s', 
 							'', '', '', '', '', '', '', '', '', '', 
 							%s, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
-							'', '', '', '', '', '', '', '', '', '', 5, 0)");
+							'', '', '', '', '', '', '', '', '', '', 5, 0, '%s')");
 
 
 //Question for Open ended
@@ -41,7 +41,7 @@ define('AT_SQL_QUESTION_LIKERT', "INSERT INTO ".TABLE_PREFIX."tests_questions VA
 define('AT_SQL_QUESTION_ORDERING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 6, '%s', '%s', 
 							'%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
 							%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-							'', '', '', '', '', '', '', '', '', '', 0, 0)");
+							'', '', '', '', '', '', '', '', '', '', 0, 0, '%s')");
 
 //Question for MultiAnswer
 define('AT_SQL_QUESTION_MULTIANSWER', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (	NULL, %d, %d, 7, '%s', '%s', 
