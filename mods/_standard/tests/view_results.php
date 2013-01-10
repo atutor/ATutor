@@ -165,6 +165,16 @@ while ($row = mysql_fetch_assoc($result)) {
 			echo '<div class="row"><p><strong>'._AT('feedback').':</strong> ';
 			echo AT_print(nl2br($row['feedback']), 'tests_questions.feedback').'</p></div>';
 		}
+		
+		if ($row['remedial_content']) {
+		?>
+		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('remedial_content'); ?>&nbsp;<a href='#' onclick='toggleFieldset(event); return false;'>Hide</a></legend>
+			<div class="row">
+				<?php echo $row['remedial_content']; ?>
+			</div>
+		</fieldset>
+		<?php
+		}
 	}
 	?>
 
@@ -192,5 +202,50 @@ while ($row = mysql_fetch_assoc($result)) {
 	</div>
 </div>
 </form>
+
+<script type="text/javascript">
+// <!--
+function toggleFieldset(event) {
+	event.preventDefault();
+	event.stopPropagation();
+	
+	var link = $(event.currentTarget),
+		fieldset = link.parent().parent(),
+		row = fieldset.find(".row"),
+		collapsedClass = "collapsed",
+		isCollapsed = fieldset.hasClass(collapsedClass),
+		linkNewText, addRemoveClass, fieldsetHeight, rowShowHide;
+	
+	if (row.is(":animated")) {
+		return;
+	}
+	
+	if (isCollapsed) {
+		linkNewText = "Hide";
+		addRemoveClass = "removeClass";
+		fieldsetHeight = "170px";
+		rowShowHide = "slideDown";
+		
+		fieldset[addRemoveClass](collapsedClass);
+		fieldset.animate({"min-height": fieldsetHeight}, "slow");
+		row[rowShowHide]("slow");
+	} else {
+		linkNewText = "Show";
+		addRemoveClass = "addClass";
+		fieldsetHeight = "5px";
+		rowShowHide = "slideUp";
+		
+		fieldset.animate({"min-height": fieldsetHeight}, "slow");
+		
+		row[rowShowHide]('slow', function() {
+			fieldset[addRemoveClass](collapsedClass);
+		});
+	}
+	
+	link.text(linkNewText);
+	link.focus();
+};
+// -->
+</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
