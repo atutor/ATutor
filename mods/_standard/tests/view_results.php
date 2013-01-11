@@ -172,7 +172,7 @@ while ($row = mysql_fetch_assoc($result)) {
 			echo AT_print(nl2br($row['feedback']), 'tests_questions.feedback').'</p></div>';
 		}
 		
-		if ($row['remedial_content'] && $answer_row['score'] == '0') {
+		if ($row['remedial_content'] && $answer_row['score'] != $row['weight']) {
 		?>
 		<fieldset class="group_form">
 			<legend class="group_form"><?php echo _AT('remedial_content'); ?>&nbsp;
