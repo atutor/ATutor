@@ -1561,6 +1561,10 @@ fieldset.group_form{
 	border-radius: 5px;
 	margin-top: .5em;
 }
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 
 legend.group_form{
 	background-color:white;

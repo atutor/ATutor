@@ -1474,6 +1474,10 @@ fieldset.group_form{
 	width:90%;
 	padding:.5em;
 }
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 
 legend.group_form{
 	border:thin #6D7B8D solid;

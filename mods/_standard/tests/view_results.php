@@ -15,6 +15,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php'); // for print_result and print_score
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
+$_custom_head .= '<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/tests/js/tests.js"></script>'.'\n';
 $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
@@ -166,9 +167,15 @@ while ($row = mysql_fetch_assoc($result)) {
 			echo AT_print(nl2br($row['feedback']), 'tests_questions.feedback').'</p></div>';
 		}
 		
-		if ($row['remedial_content']) {
+		if ($row['remedial_content'] && $answer_row['score'] == '0') {
 		?>
-		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('remedial_content'); ?>&nbsp;<a href='#' onclick='toggleFieldset(event); return false;'>Hide</a></legend>
+		<fieldset class="group_form">
+			<legend class="group_form"><?php echo _AT('remedial_content'); ?>&nbsp;
+				<a href='#' class='collapsible'>
+					<span class="hideLabel"><?php echo _AT('hide'); ?></span>
+					<span class="showLabel" style="display:none;"><?php echo _AT('show'); ?></span>
+				</a>
+			</legend>
 			<div class="row">
 				<?php echo $row['remedial_content']; ?>
 			</div>
@@ -202,50 +209,5 @@ while ($row = mysql_fetch_assoc($result)) {
 	</div>
 </div>
 </form>
-
-<script type="text/javascript">
-// <!--
-function toggleFieldset(event) {
-	event.preventDefault();
-	event.stopPropagation();
-	
-	var link = $(event.currentTarget),
-		fieldset = link.parent().parent(),
-		row = fieldset.find(".row"),
-		collapsedClass = "collapsed",
-		isCollapsed = fieldset.hasClass(collapsedClass),
-		linkNewText, addRemoveClass, fieldsetHeight, rowShowHide;
-	
-	if (row.is(":animated")) {
-		return;
-	}
-	
-	if (isCollapsed) {
-		linkNewText = "Hide";
-		addRemoveClass = "removeClass";
-		fieldsetHeight = "170px";
-		rowShowHide = "slideDown";
-		
-		fieldset[addRemoveClass](collapsedClass);
-		fieldset.animate({"min-height": fieldsetHeight}, "slow");
-		row[rowShowHide]("slow");
-	} else {
-		linkNewText = "Show";
-		addRemoveClass = "addClass";
-		fieldsetHeight = "5px";
-		rowShowHide = "slideUp";
-		
-		fieldset.animate({"min-height": fieldsetHeight}, "slow");
-		
-		row[rowShowHide]('slow', function() {
-			fieldset[addRemoveClass](collapsedClass);
-		});
-	}
-	
-	link.text(linkNewText);
-	link.focus();
-};
-// -->
-</script>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

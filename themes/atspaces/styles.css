@@ -1870,6 +1870,10 @@ fieldset.group_form{
 	padding:.5em;
 	background-color:#ffffff;
 
+}
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
 } 
 fieldset.group_form legend{
 border:1px #D1C82E solid;

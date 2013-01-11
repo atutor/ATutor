@@ -2268,7 +2268,12 @@ fieldset.group_form{
 	padding:.5em;
 	background-color:transparent;
 
-} 
+}
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
+
 fieldset.group_form legend{
 	border:1px #70A1CA solid;
 	background-color: #F4F9FE;

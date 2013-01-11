@@ -40,6 +40,10 @@ fieldset.group_form{
 	border:thin #ffffff solid;
 	padding-bottom: 0em;
 }
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 
 /* on registration page, group form fields to the left */
 fieldset.group_form .row{
