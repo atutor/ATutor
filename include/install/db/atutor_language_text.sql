@@ -1419,6 +1419,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','have_not','Have not','200
 INSERT INTO `language_text` VALUES ('en', '_template','help','Help','2003-05-20 10:41:08','global help label');
 INSERT INTO `language_text` VALUES ('en', '_template','hidden','Hidden','2003-05-20 10:42:27','instructor/admin contact form');
 INSERT INTO `language_text` VALUES ('en', '_template','hide','Hide','2005-03-15 11:37:50','');
+INSERT INTO `language_text` VALUES ('en', '_template','hide_all_remedial','Hide All Remedial Content','2013-01-11 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','hide_course','Hide this course from the Browse Courses list','2003-05-20 10:42:41','create course screen');
 INSERT INTO `language_text` VALUES ('en', '_template','history','History','2003-05-25 08:36:00','context (removed after v1.1)');
 INSERT INTO `language_text` VALUES ('en', '_template','hits','Hits','2003-05-20 10:44:14','links database link hit count');
@@ -2261,6 +2262,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','shortcuts','Shortcuts','2
 INSERT INTO `language_text` VALUES ('en', '_template','short_paragraph','Short Paragraph','2003-05-21 20:13:03','test manager test type');
 INSERT INTO `language_text` VALUES ('en', '_template','show','Show','2005-03-15 11:37:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_all','show all','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','show_all_remedial','Show All Remedial Content','2013-01-11 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_available_applications','Show Available Gadgets','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_bread_crumbs','Show Breadcrumb Link Navigation','2008-09-24 13:05:06','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_contents','Show page Table of Contents','2010-10-07 10:42:22','');

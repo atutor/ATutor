@@ -3224,3 +3224,7 @@ table.etabbed-table	{
 	border:0;
 	padding:.3em;
 }
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}

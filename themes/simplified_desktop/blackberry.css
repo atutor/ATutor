@@ -2265,3 +2265,7 @@ border-style:none;}
 }
 
 .recent_item {padding-bottom:1em;}
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}

@@ -3160,3 +3160,7 @@ li.multichoice-question{
 list-style-type: none;
 padding:.4em;
 }
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}

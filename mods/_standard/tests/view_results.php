@@ -15,7 +15,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php'); // for print_result and print_score
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
-$_custom_head .= '<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/tests/js/tests.js"></script>'.'\n';
+$_custom_head .= '<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/tests/js/tests.js"></script>';
 $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
@@ -123,7 +123,12 @@ while ($row = mysql_fetch_assoc($result)) {
 
 <div class="input-form">
 	<div class="row">
-		<h2><?php echo AT_print($test_title, 'tests.title'); ?></h2>
+		<h2><?php echo AT_print($test_title, 'tests.title'); ?>
+			<a href="#" style="display:none;" class="hideAllRemedialLink">
+				<span class="hideAllLabel"><?php echo _AT('hide_all_remedial'); ?></span>
+				<span class="showAllLabel" style="display:none;"><?php echo _AT('show_all_remedial'); ?></span>
+			</a>
+		</h2>
 	</div>
 
 	<div class="row">
@@ -171,7 +176,7 @@ while ($row = mysql_fetch_assoc($result)) {
 		?>
 		<fieldset class="group_form">
 			<legend class="group_form"><?php echo _AT('remedial_content'); ?>&nbsp;
-				<a href='#' class='collapsible'>
+				<a href='#' class='collapsible hide'>
 					<span class="hideLabel"><?php echo _AT('hide'); ?></span>
 					<span class="showLabel" style="display:none;"><?php echo _AT('show'); ?></span>
 				</a>

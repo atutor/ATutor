@@ -3272,3 +3272,7 @@ float:right;
 .test_message{
 	margin-left:4em;
 }
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}

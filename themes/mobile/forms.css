@@ -153,4 +153,6 @@ div.input-form div.row_alternatives {
 	/*border-bottom: 1px #CCCCCC solid;*/
 
 }
-
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}

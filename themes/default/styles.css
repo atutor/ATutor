@@ -3090,3 +3090,7 @@ ol.dd-question{
 .group-selected{
 background-color:#F4F0CB;
 }
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}

@@ -2314,3 +2314,7 @@ background-color: #e6e6e6;
 ul.my-courses-list-ul > li:hover a{
 	color: white;
 }
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
