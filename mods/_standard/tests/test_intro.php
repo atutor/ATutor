@@ -281,6 +281,8 @@ if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) 
 	</fieldset>
 </div>
 
+<?php echo render_remedial_content($_SESSION['member_id'], $tid); ?>
+
 </form>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

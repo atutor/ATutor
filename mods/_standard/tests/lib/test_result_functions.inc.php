@@ -218,13 +218,13 @@ function get_next_guest_id()
 //
 // Note: Query by itself returns an array which represents remedial content sorted ASC by the time when the test attempt was made
 function assemble_remedial_content($student_id, $test_id) {
-	global $db;
+	global $db, $msg;
 	
 	$resultArray = array();
 	$separator = "<BR />";
 	
 	if ($student_id < 0 || $test_id < 0) {
-		return -1;
+		return false;
 	}
 	
 	$sqlQuery = "SELECT TEMP.remedial_content FROM 
@@ -242,12 +242,36 @@ function assemble_remedial_content($student_id, $test_id) {
 	$sql_params = array($student_id, $test_id);
 	
 	$sql = vsprintf($sqlQuery, $sql_params);
-	$result	= mysql_query($sql, $db);
+	try {
+		$result	= mysql_query($sql, $db);
+	}
+	catch (Exception $e) {
+		$msg->addError("AT_ERROR_UNKNOWN");
+		return false;
+	}
 	
 	while ($row = mysql_fetch_array($result)) {
 		array_push($resultArray, $row[0]);
 	}
 	
 	return $resultArray;
+}
+// Function to generate HTML markup for the remedial contenti if it is available
+// Returns a string HTML with remedial content
+function render_remedial_content($student_id, $test_id) {
+	$remedial_content = assemble_remedial_content($student_id, $test_id);
+	
+	// If there is no content then just simply exit
+	if (count($remedial_content) == 0) {
+		return "";
+	}
+	
+	$remedial_content = array_map(function($content) {
+		return vsprintf("<fieldset class='group_form'><div class='row'>%s</div></fieldset>", array($content));
+	}, $remedial_content);
+	array_unshift($remedial_content, "<div class='input-form'>");
+	array_push($remedial_content, "</div>");
+	
+	return implode(" ", $remedial_content);
 }
 ?>
