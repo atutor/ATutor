@@ -216,7 +216,7 @@ function get_next_guest_id()
 // function to build and return all Remedial content for the specific test and a specific student
 // Returns array of Remedial Content for every failed question
 //
-// Note: Query by itself returns remedial content sorted ASC by the time when the test attempt was made
+// Note: Query by itself returns an array which represents remedial content sorted ASC by the time when the test attempt was made
 function assemble_remedial_content($student_id, $test_id) {
 	global $db;
 	
@@ -227,10 +227,7 @@ function assemble_remedial_content($student_id, $test_id) {
 		return -1;
 	}
 	
-	$sql_params = array($student_id, 
-						$test_id);
-	
-	$sqlQuery = "SELECT TEMP.remedial_content FROM
+	$sqlQuery = "SELECT TEMP.remedial_content FROM 
 		( 
 		SELECT TA.question_id, TQ.remedial_content 
 		FROM ".TABLE_PREFIX."tests_results TR 
@@ -241,6 +238,8 @@ function assemble_remedial_content($student_id, $test_id) {
 			AND (TQA.weight != TA.score AND TQ.remedial_content <> '') 
 		) AS TEMP 
 		GROUP BY TEMP.question_id ";
+	
+	$sql_params = array($student_id, $test_id);
 	
 	$sql = vsprintf($sqlQuery, $sql_params);
 	$result	= mysql_query($sql, $db);
