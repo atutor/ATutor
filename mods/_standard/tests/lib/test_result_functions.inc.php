@@ -266,12 +266,16 @@ function render_remedial_content($student_id, $test_id) {
 		return "";
 	}
 	
+	// Wrap every remedial content into a specified HTML markup
 	$remedial_content = array_map(function($content) {
 		return vsprintf("<fieldset class='group_form'><div class='row'>%s</div></fieldset>", array($content));
 	}, $remedial_content);
-	array_unshift($remedial_content, "<div class='input-form'>");
+	// Adding the start part for our HTML markup by placing everything into the div
+	array_unshift($remedial_content, "<h2>"._AT("remedial_content")."</h2><div class='input-form'>");
+	// Adding the end part for our HTML markup by closing the div
 	array_push($remedial_content, "</div>");
 	
+	// Return HTML string with markup
 	return implode(" ", $remedial_content);
 }
 ?>
