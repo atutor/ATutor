@@ -244,8 +244,7 @@ function assemble_remedial_content($student_id, $test_id) {
 	$sql = vsprintf($sqlQuery, $sql_params);
 	try {
 		$result	= mysql_query($sql, $db);
-	}
-	catch (Exception $e) {
+	} catch (Exception $e) {
 		$msg->addError("AT_ERROR_UNKNOWN");
 		return false;
 	}
@@ -256,9 +255,35 @@ function assemble_remedial_content($student_id, $test_id) {
 	
 	return $resultArray;
 }
+// Function which allows to check if test shows Remedial Content upon test failure for students
+// test_id - id of the test we are going to check against
+// Returns an integer value associated with remedial content for the particular test (currently 0 or 1)
+function can_show_remedial_content($test_id) {
+	global $db, $msg;
+	
+	$sql = sprintf("SELECT remedial_content FROM ".TABLE_PREFIX."tests WHERE test_id=%d", $test_id);
+	
+	try {
+		$result	= mysql_query($sql, $db);
+	} catch (Exception $e) {
+		$msg->addError("AT_ERROR_UNKNOWN");
+		return 0;
+	}
+	
+	if ($row = mysql_fetch_array($result)) {
+		return intval($row['remedial_content']);
+	}
+	
+	return 0;
+}
 // Function to generate HTML markup for the remedial contenti if it is available
 // Returns a string HTML with remedial content
 function render_remedial_content($student_id, $test_id) {
+	// First check if the test allows to show Remedial Content
+	if (can_show_remedial_content($test_id) == 0) {
+		return;
+	}
+	
 	$remedial_content = assemble_remedial_content($student_id, $test_id);
 	
 	// If there is no content then just simply exit
@@ -268,15 +293,10 @@ function render_remedial_content($student_id, $test_id) {
 	
 	// Wrap every remedial content into a specified HTML markup
 	$remedial_content = array_map(function($content) {
-		return vsprintf("<fieldset class='group_form'><div class='row'>%s</div></fieldset>", array($content));
+		return sprintf("<fieldset class='group_form'><div class='row'>%s</div></fieldset>", $content);
 	}, $remedial_content);
-	// Adding the start part for our HTML markup by placing everything into the div
-	array_unshift($remedial_content, "<h2>"._AT("remedial_content")."</h2><div class='input-form'>");
-	// Adding the end part for our HTML markup by closing the div
-	array_push($remedial_content, "</div>");
 	
-	// Return HTML string with markup
-	return implode(" ", $remedial_content);
+	return sprintf('<h2>%s</h2><div class="input-form">%s</div>', _AT("remedial_content"), implode(" ", $remedial_content));
 }
 // Function to generate two radio buttons with Yes and No options.
 // options array consist of the following parameters:
@@ -322,7 +342,7 @@ function generate_radio_button_options($options) {
 		$disable_elements_n = $disable_elements_y = '';
 	}
 	
-	$generate_radio_button_markup = function ($isHide, $name, $checked, $label_name, $disabled, $disable_elements) {
+	$generate_radio_button_markup = function($isHide, $name, $checked, $label_name, $disabled, $disable_elements) {
 		if ($isHide) {
 			$postfix = 'N';
 			$value = 0;

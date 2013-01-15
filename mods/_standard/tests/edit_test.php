@@ -329,6 +329,7 @@ function disable_elements (name, disableFlag) {
 		$disable_show_guest_form = ($_POST['allow_guests'] == 1) ? '' : 'disabled="disabled"';
 		$show_guest_form = sprintf('<br /><input type="checkbox" name="show_guest_form" id="show_guest_form" value="1" %s %s /><label for="show_guest_form">%s</label>', $y, $disable_show_guest_form, _AT('show_guest_form'));
 		
+		// Before rendering add a checkbox into the div after radio buttons
 		echo str_replace("</div>", $show_guest_form."</div>", $allow_guests);
 		
 		echo generate_radio_button_options(array(	'radio_name' => 'display',
