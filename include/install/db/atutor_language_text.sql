@@ -2073,7 +2073,9 @@ INSERT INTO `language_text` VALUES ('en', '_template','release_never','Do not re
 INSERT INTO `language_text` VALUES ('en', '_template','release_on','Release on','2006-04-10 14:37:58','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content','Remedial Content','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_header','Remedial Content','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_hide','Do not show Remedial Content to students after failing the test','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_placeholder','Placeholder','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_show','Show Remedial Content to students after failing the test','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove','Remove','2003-05-21 12:40:11','control centre, admin user manager, instructor enrolment manager');
 INSERT INTO `language_text` VALUES ('en', '_template','removed','Removed','2004-02-03 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove_frame','Remove Frame','2005-01-10 14:31:34','filemanager preview');

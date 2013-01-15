@@ -278,4 +278,62 @@ function render_remedial_content($student_id, $test_id) {
 	// Return HTML string with markup
 	return implode(" ", $remedial_content);
 }
+// Function to generate two radio buttons with Yes and No options.
+// options array consist of the following parameters:
+//		section_name		- Name/Caption which would be rendered above the radio buttons
+//		radio_name			- Name of the variable which would be posted to the server AND also read to determine what options is selected
+//		radio_label_N		- Label which is used to describe No option
+//		radio_label_Y		- Label which is used to describe Yes option
+//		(optional) disabled	- If True it would disable radio buttons and also add (Disabled) to the radio labels
+// Returns a HTML markup for the radio buttons
+function generate_radio_button_options($options) {
+	$options = ($options) ? $options : array();
+	
+	if ($options['disabled']) {
+		$disabled = 'disabled';
+		$disabled_label = '('._AT('disabled').')';
+	} else {
+		$disabled = $disabled_label = '';
+	}
+	
+	$disabled = ($options['disabled']) ? 'disabled' : '';
+	
+	$name = $options['radio_name'];
+	if ($options['section_name']) {
+		$label = $options['section_name'];
+	} else {
+		$label = ($name) ? $name : '';
+	}
+	
+	if ($options[$name] == 1) {
+		$y = 'checked="checked"';
+		$n = '';
+	} else {
+		$y = '';
+		$n = 'checked="checked"';
+	}
+	
+	$generate_radio_button_markup = function ($isHide, $name, $checked, $label_name, $disabled) {
+		if ($isHide) {
+			$postfix = 'N';
+			$value = 0;
+		} else {
+			$postfix = 'Y';
+			$value = 1;
+		}
+		
+		$id = $name.$postfix;
+		
+		return sprintf('<input type="radio" name="%s" id="%s" value="%d" onclick="this.focus();" %s %s/><label for="%s">%s</label>', $name, $id, $value, $checked, $disabled, $id, $label_name);
+	};
+	
+	return implode(" ", array(
+		'<div class="row">',
+			_AT($label), '<br />',
+			$generate_radio_button_markup(TRUE, $name, $n, $options['radio_label_N'], $disabled),
+			$generate_radio_button_markup(FALSE, $name, $y, $options['radio_label_Y'], $disabled),
+		$disabled_label,
+		'</div>'
+	));
+}
 ?>

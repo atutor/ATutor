@@ -14,6 +14,7 @@
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 
 authenticate(AT_PRIV_TESTS);
 
@@ -24,22 +25,23 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	$missing_fields        = array();
-	$_POST['title']        = $addslashes(trim($_POST['title']));
-	$_POST['description']  = $addslashes(trim($_POST['description']));
-	$_POST['num_questions']	= intval($_POST['num_questions']);
-	$_POST['num_takes']	   = intval($_POST['num_takes']);
-	$_POST['content_id']   = intval($_POST['content_id']);
-	$_POST['passpercent']	= intval($_POST['passpercent']);
-	$_POST['passscore']	= intval($_POST['passscore']);
-	$_POST['passfeedback']  = $addslashes(trim($_POST['passfeedback']));
-	$_POST['failfeedback']  = $addslashes(trim($_POST['failfeedback']));
-	$_POST['num_takes']    = intval($_POST['num_takes']);
-	$_POST['anonymous']    = intval($_POST['anonymous']);
-	$_POST['allow_guests'] = $_POST['allow_guests'] ? 1 : 0;
-	$_POST['show_guest_form'] = $_POST['show_guest_form'] ? 1 : 0;
-	$_POST['instructions'] = $addslashes($_POST['instructions']);
-	$_POST['display']	   = intval($_POST['display']);
+	$missing_fields				= array();
+	$_POST['title']				= $addslashes(trim($_POST['title']));
+	$_POST['description']		= $addslashes(trim($_POST['description']));
+	$_POST['num_questions']		= intval($_POST['num_questions']);
+	$_POST['num_takes']			= intval($_POST['num_takes']);
+	$_POST['content_id']		= intval($_POST['content_id']);
+	$_POST['passpercent']		= intval($_POST['passpercent']);
+	$_POST['passscore']			= intval($_POST['passscore']);
+	$_POST['passfeedback']		= $addslashes(trim($_POST['passfeedback']));
+	$_POST['failfeedback']		= $addslashes(trim($_POST['failfeedback']));
+	$_POST['num_takes']			= intval($_POST['num_takes']);
+	$_POST['anonymous']			= intval($_POST['anonymous']);
+	$_POST['allow_guests']		= $_POST['allow_guests'] ? 1 : 0;
+	$_POST['show_guest_form']	= $_POST['show_guest_form'] ? 1 : 0;
+	$_POST['instructions']		= $addslashes($_POST['instructions']);
+	$_POST['display']			= intval($_POST['display']);
+	$_POST['remedial_content']	= intval($_POST['remedial_content']);
 
 	// currently these options are ignored for tests:
 	$_POST['result_release'] = intval($_POST['result_release']); 
@@ -150,7 +152,8 @@ if (isset($_POST['cancel'])) {
              out_of,
              guests,
              display,
-             show_guest_form)" .
+             show_guest_form,
+             remedial_content)" .
 		       "VALUES 
 		        (NULL, 
 		         $_SESSION[course_id], 
@@ -175,7 +178,8 @@ if (isset($_POST['cancel'])) {
 		         '', 
 		         $_POST[allow_guests], 
 		         $_POST[display],
-		         $_POST[show_guest_form])";
+		         $_POST[show_guest_form],
+		         $_POST[remedial_content])";
 
 		$result = mysql_query($sql, $db);
 		$tid = mysql_insert_id($db);
@@ -208,25 +212,32 @@ $msg->printErrors();
 
 ?>
 <script language="javascript" type="text/javascript">
-function disable_texts (name) {
-	if (name == 'both')
-	{
-		document.form['passpercent'].disabled=true;
-		document.form['passscore'].disabled=true;
-		document.form['passpercent'].value=0;
-		document.form['passscore'].value=0;
-	}
-	else if (name == 'percentage')
-	{
-		document.form['passpercent'].disabled=true;
-		document.form['passpercent'].value=0;
-		document.form['passscore'].disabled=false;
-	}
-	else if (name == 'points')
-	{
-		document.form['passpercent'].disabled=false;
-		document.form['passscore'].disabled=true;
-		document.form['passscore'].value=0;
+function disable_elements (name, disableFlag) {
+	passpercent = $('#passpercent');
+	passscore = $('#passscore');
+	num_questions = $('#num_questions');
+	show_guest_form = $('#show_guest_form');
+	
+	if (name === 'both') {
+		passpercent.attr('disabled', 'disabled');
+		passscore.attr('disabled', 'disabled');
+		passpercent.val(0);
+		passscore.val(0);
+	} else if (name === 'percentage') {
+		passpercent.attr('disabled', 'disabled');
+		passscore.removeAttr('disabled');
+		passpercent.val(0);
+	} else if (name === 'points') {
+		passpercent.removeAttr('disabled');
+		passscore.attr('disabled', 'disabled');
+		passscore.val(0);
+	} else if (name === "num_questions") {
+		num_questions[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
+	} else if (name === "show_guest_form") {
+		show_guest_form[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
+		if (disableFlag) {
+			show_guest_form.attr('checked', false);
+		}
 	}
 }
 </script>
@@ -249,52 +260,28 @@ function disable_texts (name) {
 		<label for="num_t"><?php echo _AT('num_takes_test'); ?></label><br />
 		<select name="num_takes" id="num_t">
 			<option value="<?php echo AT_TESTS_TAKE_UNLIMITED; ?>" <?php if ($_POST['num_takes'] == AT_TESTS_TAKE_UNLIMITED) { echo 'selected="selected"'; } ?>><?php echo _AT('unlimited'); ?></option>
-		
-			<option value="1"<?php if ($_POST['num_takes'] == 1) { echo ' selected="selected"'; } ?>>1</option>
-			<option value="2"<?php if ($_POST['num_takes'] == 2) { echo ' selected="selected"'; } ?>>2</option>
-			<option value="3"<?php if ($_POST['num_takes'] == 3) { echo ' selected="selected"'; } ?>>3</option>
-			<option value="4"<?php if ($_POST['num_takes'] == 4) { echo ' selected="selected"'; } ?>>4</option>
-			<option value="5"<?php if ($_POST['num_takes'] == 5) { echo ' selected="selected"'; } ?>>5</option>
-			<option value="6"<?php if ($_POST['num_takes'] == 6) { echo ' selected="selected"'; } ?>>6</option>
-			<option value="7"<?php if ($_POST['num_takes'] == 7) { echo ' selected="selected"'; } ?>>7</option>
-			<option value="8"<?php if ($_POST['num_takes'] == 8) { echo ' selected="selected"'; } ?>>8</option>
-			<option value="9"<?php if ($_POST['num_takes'] == 9) { echo ' selected="selected"'; } ?>>9</option>
-			<option value="10"<?php if ($_POST['num_takes'] == 10) { echo ' selected="selected"'; } ?>>10</option>
-			<option value="15"<?php if ($_POST['num_takes'] == 15) { echo ' selected="selected"'; } ?>>15</option>
-			<option value="20"<?php if ($_POST['num_takes'] >= 20) { echo ' selected="selected"'; } ?>>20</option>
+			<?php 
+			foreach(array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20) as $e) {
+				$selected = ($_POST['num_takes'] == $e) ? ' selected="selected"' : '';
+				echo sprintf('<option value="%d" %s>%d</option>', $e, $selected, $e);
+			}
+			?>
 		</select>
 	</div>
 
-	<div class="row">
-		<?php echo _AT('available_on_my_courses'); ?><br />
-		<?php 
-			if ($_POST['format'] == 1) {
-				$y = 'checked="checked"';
-				$n = '';
-			} else {
-				$y = '';
-				$n = 'checked="checked"';
-			}
-		?>
-		<input type="radio" name="format" id="formatN" value="0" <?php echo $n; ?> /><label for="formatN"><?php echo _AT('no'); ?></label> 
-		<input type="radio" name="format" id="formatY" value="1" <?php echo $y; ?> /><label for="formatY"><?php echo _AT('yes'); ?></label>
-	</div>
+	<?php
+		echo generate_radio_button_options(array('radio_value' => $_POST['format'],
+												'section_name' => 'available_on_my_courses',
+												'radio_name' => 'format',
+												'radio_label_N' => _AT('no'),
+												'radio_label_Y' => _AT('yes')));
 
-	<div class="row">
-		<?php echo _AT('anonymous_test'); ?><br />
-		<?php 
-			if ($_POST['anonymous'] == 1) {
-				$y = 'checked="checked"';
-				$n = '';
-			} else {
-				$y = '';
-				$n = 'checked="checked"';
-			}
-		?>
-
-		<input type="radio" name="anonymous" id="anonN" value="0" <?php echo $n; ?> /><label for="anonN"><?php echo _AT('no'); ?></label> 
-		<input type="radio" name="anonymous" value="1" id="anonY" <?php echo $y; ?> /><label for="anonY"><?php echo _AT('yes'); ?></label>
-	</div>
+		echo generate_radio_button_options(array(	'radio_value' => $_POST['anonymous'],
+													'section_name' => 'anonymous_test',
+													'radio_name' => 'anonymous',
+													'radio_label_N' => _AT('no'),
+													'radio_label_Y' => _AT('yes')));
+	?>
 
 	<div class="row">
 		<?php echo _AT('allow_guests'); ?><br />
@@ -310,8 +297,8 @@ function disable_texts (name) {
 			}
 		?>
 
-		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> onfocus="document.form.show_guest_form.checked=false; document.form.show_guest_form.disabled=true;" /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
-		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> onfocus="document.form.show_guest_form.disabled=false;" /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
+		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> onfocus="disable_elements('show_guest_form', true);" onclick="this.focus();" /><label for="allow_guestsN"><?php echo _AT('no'); ?></label> 
+		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> onfocus="disable_elements('show_guest_form', false);" onclick="this.focus();" /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
     <br />
 		<?php 
 			if ($_POST['show_guest_form'] == 1)
@@ -323,38 +310,34 @@ function disable_texts (name) {
 		<input type="checkbox" name="show_guest_form" id="show_guest_form" value="1" <?php echo $y . ' '. $disable_show_guest_form; ?> /><label for="show_guest_form"><?php echo _AT('show_guest_form'); ?></label> 
 	</div>
 
-	<div class="row">
-		<?php echo _AT('display'); ?><br />
-		<?php 
-			if ($_POST['display'] == 1) {
-				$y = 'checked="checked"';
-				$n = '';
-			} else {
-				$y = '';
-				$n = 'checked="checked"';
-			}
-		?>
-
-		<input type="radio" name="display" id="displayN" value="0" <?php echo $n; ?> /><label for="displayN"><?php echo _AT('all_questions_on_page'); ?></label> 
-		<input type="radio" name="display" id="displayY" value="1" <?php echo $y; ?> /><label for="displayY"><?php echo _AT('one_question_per_page'); ?></label>
-	</div>
+	<?php
+		echo generate_radio_button_options(array(	'radio_value' => $_POST['display'],
+													'radio_name' => 'display',
+													'radio_label_N' => _AT('all_questions_on_page'),
+													'radio_label_Y' => _AT('one_question_per_page')));
+		
+		echo generate_radio_button_options(array(	'radio_value' => $_POST['remedial_content'],
+													'radio_name' => 'remedial_content',
+													'radio_label_N' => _AT('remedial_content_hide'),
+													'radio_label_Y' => _AT('remedial_content_show')));
+	?>
 
 	<div class="row">
 		<?php echo _AT('pass_score'); ?><br />
 		<input type="radio" name="pass_score" value="0" id="no" <?php if ($_POST['passpercent'] == 0 && $_POST['passscore'] == 0){echo 'checked="checked"';} ?> 
-		 onfocus="disable_texts('both');" />
+		onfocus="disable_elements('both');" onclick="this.onfocus();" />
 
 		<label for="no" title="<?php echo _AT('pass_score'). ': '. _AT('no_pass_score');  ?>"><?php echo _AT('no_pass_score'); ?></label><br />
 
 		<input type="radio" name="pass_score" value="1" id="percentage"  <?php if ($_POST['passpercent'] <> 0){echo 'checked="checked"';} ?>
-		 onfocus="disable_texts('points');" />
+		onfocus="disable_elements('points');" onclick="this.onfocus();" />
 
 		<input type="text" name="passpercent" id="passpercent" size="2" value="<?php echo $_POST['passpercent']; ?>" 
 		 <?php if ($_POST['passpercent'] == 0){echo 'disabled="disabled"';} ?> /> 
 		<label for="percentage" title="<?php echo _AT('pass_score'). ': '. _AT('percentage_score');  ?>"><?php  echo '% ' . _AT('percentage_score'); ?></label><br />
 
 		<input type="radio" name="pass_score" value="2" id="points"  <?php if ($_POST['passscore'] <> 0){echo 'checked="checked"';} ?>
-		 onfocus="disable_texts('percentage');" />
+		onfocus="disable_elements('percentage');" onclick="this.onfocus();" />
 
 		<input type="text" name="passscore" id="passscore" size="2" value="<?php echo $_POST['passscore']; ?>" 
 		 <?php if ($_POST['passscore'] == 0){echo 'disabled="disabled"';} ?>/> 
@@ -404,7 +387,7 @@ function disable_texts (name) {
 				$disabled = 'disabled="disabled" ';
 			}
 		?>
-		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="document.form.num_questions.disabled=true;" /><label for="random"><?php echo _AT('no'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="document.form.num_questions.disabled=false;" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes'); ?></label>, <input type="text" name="num_questions" id="num_questions" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label>
+		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="disable_elements('num_questions', true);" onclick="this.onfocus();" /><label for="random"><?php echo _AT('no'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="disable_elements('num_questions', false);" onclick="this.onfocus();" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes'); ?></label>, <input type="text" name="num_questions" id="num_questions" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label>
 	</div>
 
 
