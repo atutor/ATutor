@@ -280,11 +280,12 @@ function render_remedial_content($student_id, $test_id) {
 }
 // Function to generate two radio buttons with Yes and No options.
 // options array consist of the following parameters:
-//		section_name		- Name/Caption which would be rendered above the radio buttons
-//		radio_name			- Name of the variable which would be posted to the server AND also read to determine what options is selected
-//		radio_label_N		- Label which is used to describe No option
-//		radio_label_Y		- Label which is used to describe Yes option
-//		(optional) disabled	- If True it would disable radio buttons and also add (Disabled) to the radio labels
+//		section_name				- Name/Caption which would be rendered above the radio buttons
+//		radio_name					- Name of the variable which would be posted to the server AND also read to determine what options is selected
+//		radio_label_N				- Label which is used to describe No option
+//		radio_label_Y				- Label which is used to describe Yes option
+//		(optional) disabled			- If True it would disable radio buttons and also add (Disabled) to the radio labels
+//		(optional) disable_elements	- If present it will generate onfocus="disable_elements('value', false/true);" code for the radiobuttons
 // Returns a HTML markup for the radio buttons
 function generate_radio_button_options($options) {
 	$options = ($options) ? $options : array();
@@ -297,6 +298,7 @@ function generate_radio_button_options($options) {
 	}
 	
 	$disabled = ($options['disabled']) ? 'disabled' : '';
+	$disable_elements = $options['disable_elements'];
 	
 	$name = $options['radio_name'];
 	if ($options['section_name']) {
@@ -305,7 +307,7 @@ function generate_radio_button_options($options) {
 		$label = ($name) ? $name : '';
 	}
 	
-	if ($options[$name] == 1) {
+	if ($_POST[$name] == 1) {
 		$y = 'checked="checked"';
 		$n = '';
 	} else {
@@ -313,7 +315,14 @@ function generate_radio_button_options($options) {
 		$n = 'checked="checked"';
 	}
 	
-	$generate_radio_button_markup = function ($isHide, $name, $checked, $label_name, $disabled) {
+	if ($disable_elements) {
+		$disable_elements_n = sprintf('onfocus=\'disable_elements("%s", true);\'', $disable_elements);
+		$disable_elements_y = sprintf('onfocus=\'disable_elements("%s", false);\'', $disable_elements);
+	} else {
+		$disable_elements_n = $disable_elements_y = '';
+	}
+	
+	$generate_radio_button_markup = function ($isHide, $name, $checked, $label_name, $disabled, $disable_elements) {
 		if ($isHide) {
 			$postfix = 'N';
 			$value = 0;
@@ -324,14 +333,14 @@ function generate_radio_button_options($options) {
 		
 		$id = $name.$postfix;
 		
-		return sprintf('<input type="radio" name="%s" id="%s" value="%d" onclick="this.focus();" %s %s/><label for="%s">%s</label>', $name, $id, $value, $checked, $disabled, $id, $label_name);
+		return sprintf('<input type="radio" name="%s" id="%s" value="%d" onclick="this.focus();" %s %s %s/><label for="%s">%s</label>', $name, $id, $value, $disable_elements, $checked, $disabled, $id, $label_name);
 	};
 	
 	return implode(" ", array(
 		'<div class="row">',
 			_AT($label), '<br />',
-			$generate_radio_button_markup(TRUE, $name, $n, $options['radio_label_N'], $disabled),
-			$generate_radio_button_markup(FALSE, $name, $y, $options['radio_label_Y'], $disabled),
+			$generate_radio_button_markup(TRUE, $name, $n, $options['radio_label_N'], $disabled, $disable_elements_n),
+			$generate_radio_button_markup(FALSE, $name, $y, $options['radio_label_Y'], $disabled, $disable_elements_y),
 		$disabled_label,
 		'</div>'
 	));

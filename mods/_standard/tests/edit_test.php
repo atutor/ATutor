@@ -299,8 +299,7 @@ function disable_elements (name, disableFlag) {
 	</div>
 	
 	<?php
-		echo generate_radio_button_options(array(	'radio_value' => $_POST['format'],
-													'section_name' => 'available_on_my_courses',
+		echo generate_radio_button_options(array(	'section_name' => 'available_on_my_courses',
 													'radio_name' => 'format',
 													'radio_label_N' => _AT('no'),
 													'radio_label_Y' => _AT('yes')));
@@ -315,49 +314,28 @@ function disable_elements (name, disableFlag) {
 			$anonymous_disabled = TRUE;
 		}
 		
-		echo generate_radio_button_options(array(	'radio_value' => $_POST['anonymous'],
-													'section_name' => 'anonymous_test',
+		echo generate_radio_button_options(array(	'section_name' => 'anonymous_test',
 													'radio_name' => 'anonymous',
 													'radio_label_N' => _AT('no'),
 													'radio_label_Y' => _AT('yes'),
 													'disabled' => $anonymous_disabled));
-	?>
-
-	<div class="row">
-		<?php echo _AT('allow_guests'); ?><br />
-		<?php 
-			if ($_POST['allow_guests'] == 1) {
-				$y = 'checked="checked"';
-				$n = '';
-				$disable_show_guest_form = '';
-			} else {
-				$y = '';
-				$n = 'checked="checked"';
-				$disable_show_guest_form = 'disabled="disabled"';
-			}
-		?>
-
-		<input type="radio" name="allow_guests" id="allow_guestsN" value="0" <?php echo $n; ?> onfocus="disable_elements('show_guest_form', true);" onclick="this.focus();" /><label for="allow_guestsN"><?php echo _AT('no'); ?></label>
-		<input type="radio" name="allow_guests" value="1" id="allow_guestsY" <?php echo $y; ?> onfocus="disable_elements('show_guest_form', false);" onclick="this.focus();" /><label for="allow_guestsY"><?php echo _AT('yes'); ?></label>
-    <br />
-		<?php 
-			if ($_POST['show_guest_form'] == 1)
-				$y = 'checked="checked"';
-			else
-				$y = '';
-		?>
-
-		<input type="checkbox" name="show_guest_form" id="show_guest_form" value="1" <?php echo $y . ' '. $disable_show_guest_form; ?> /><label for="show_guest_form"><?php echo _AT('show_guest_form'); ?></label> 
-	</div>
 	
-	<?php
-		echo generate_radio_button_options(array(	'radio_value' => $_POST['display'],
-													'radio_name' => 'display',
+		$allow_guests = generate_radio_button_options(array(	'radio_name' => 'allow_guests',
+																'radio_label_N' => _AT('no'),
+																'radio_label_Y' => _AT('yes'),
+																'disable_elements' => 'show_guest_form'));
+		
+		$y = ($_POST['show_guest_form'] == 1) ? 'checked="checked"' : '';
+		$disable_show_guest_form = ($_POST['allow_guests'] == 1) ? '' : 'disabled="disabled"';
+		$show_guest_form = sprintf('<br /><input type="checkbox" name="show_guest_form" id="show_guest_form" value="1" %s %s /><label for="show_guest_form">%s</label>', $y, $disable_show_guest_form, _AT('show_guest_form'));
+		
+		echo str_replace("</div>", $show_guest_form."</div>", $allow_guests);
+		
+		echo generate_radio_button_options(array(	'radio_name' => 'display',
 													'radio_label_N' => _AT('all_questions_on_page'),
 													'radio_label_Y' => _AT('one_question_per_page')));
 		
-		echo generate_radio_button_options(array(	'radio_value' => $_POST['remedial_content'],
-													'radio_name' => 'remedial_content',
+		echo generate_radio_button_options(array(	'radio_name' => 'remedial_content',
 													'radio_label_N' => _AT('remedial_content_hide'),
 													'radio_label_Y' => _AT('remedial_content_show')));
 	?>
