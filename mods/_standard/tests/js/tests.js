@@ -19,66 +19,82 @@ ATutor.mods = ATutor.mods || {};
 ATutor.mods.tests = ATutor.mods.tests || {};
 
 (function () {
+	"use strict";
+	
+	// Function mainly for edit_test and create_test for disabling/enabling elements depending on user interactions
 	ATutor.mods.tests.disable_elements = function(name, disableFlag) {
-		passpercent = $('#passpercent');
-		passscore = $('#passscore');
-		num_questions = $('#num_questions');
-		show_guest_form = $('#show_guest_form');
+		var passpercent = $("#passpercent"),
+			passscore = $("#passscore"),
+			num_questions = $("#num_questions"),
+			show_guest_form = $("#show_guest_form");
 		
-		if (name === 'both') {
-			passpercent.attr('disabled', 'disabled');
-			passscore.attr('disabled', 'disabled');
+		// Disable/Enable elements based on what user clicked
+		if (name === "both") {
+			passpercent.attr("disabled", "disabled");
+			passscore.attr("disabled", "disabled");
 			passpercent.val(0);
 			passscore.val(0);
-		} else if (name === 'percentage') {
-			passpercent.attr('disabled', 'disabled');
-			passscore.removeAttr('disabled');
+		} else if (name === "percentage") {
+			passpercent.attr("disabled", "disabled");
+			passscore.removeAttr("disabled");
 			passpercent.val(0);
-		} else if (name === 'points') {
-			passpercent.removeAttr('disabled');
-			passscore.attr('disabled', 'disabled');
+		} else if (name === "points") {
+			passpercent.removeAttr("disabled");
+			passscore.attr("disabled", "disabled");
 			passscore.val(0);
 		} else if (name === "num_questions") {
-			num_questions[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
+			num_questions[(disableFlag) ? "attr" : "removeAttr"]("disabled", "");
 		} else if (name === "show_guest_form") {
-			show_guest_form[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
+			show_guest_form[(disableFlag) ? "attr" : "removeAttr"]("disabled", "");
 			if (disableFlag) {
-				show_guest_form.attr('checked', false);
+				show_guest_form.attr("checked", false);
 			}
 		}
 	};
 	
+	// Function to activate Slide All link for the Remedial Content divs
 	var activateHideAllLink = function(collapsibleElements, hideAllLink) {
-		if (collapsibleElements.length > 0) {
-			hideAllLink.show();
+		// If there is no remedial content then just exit
+		if (collapsibleElements.length === 0) {
+			return;
+		}
+		
+		// Show the link
+		hideAllLink.show();
+		
+		// Assign a click to the link
+		hideAllLink.click(function (event) {
+			var link = (event.currentTarget) ? $(event.currentTarget) : $(event.srcElement),
+				linkHideText = link.find(".hideAllLabel"),
+				linkShowText = link.find(".showAllLabel"),
+				isAllHidden = linkShowText.is(":visible"),
+				linkClass;
 			
-			hideAllLink.click(function (event) {
-				var link = (event.currentTarget) ? $(event.currentTarget) : $(event.srcElement),
-					linkHideText = link.find(".hideAllLabel"),
-					linkShowText = link.find(".showAllLabel"),
-					isAllHidden = linkShowText.is(":visible"),
-					linkClass;
-				
-				if (isAllHidden) {
-					linkHideText.show();
-					linkShowText.hide();
-					linkClass = ".show";
-				} else {
-					linkHideText.hide();
-					linkShowText.show();
-					linkClass = ".hide";
-				}
-				
-				collapsibleElements.filter(linkClass).click();
-				
-				link.focus();
-				return false;
-			});
-		}	
+			if (isAllHidden) {
+				linkHideText.show();
+				linkShowText.hide();
+				linkClass = ".show";
+			} else {
+				linkHideText.hide();
+				linkShowText.show();
+				linkClass = ".hide";
+			}
+			
+			collapsibleElements.filter(linkClass).click();
+			
+			link.focus();
+			return false;
+		});	
 	};
 	
+	// Function which would assign a slide function to all areas with links which have a specified class
+	// options consist of:
+	//		collapsibleElements				- jQuery links which would have a click event bind to them
+	//		collapsedClass					- class which will be added/removed to the div area which will have a slide effect
+	//		fieldsetNotCollapsedMinHeight	- min-height for the div area when it is not collapsed
+	//		fieldsetCollapsedMinHeight		- min-height for the div area when it is collapsed
 	var makeCollapsibles = function(options) {
-		options || (options = {});
+		options = options || {};
 		
 		var collapsibleElements = options.collapsibleElements;
 		
@@ -86,6 +102,7 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 			return;
 		}
 		
+		// Bind the click event
 		collapsibleElements.click(function (event) {
 			var link = (event.currentTarget) ? $(event.currentTarget) : $(event.srcElement),
 				linkHideText = link.find(".hideLabel"),
@@ -94,8 +111,9 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 				row = fieldset.find(".row"),
 				collapsedClass = options.collapsedClass,
 				isCollapsed = fieldset.hasClass(collapsedClass),
-				linkNewText, addRemoveClass, rowShowHide;
+				addRemoveClass, rowShowHide;
 			
+			// If area is currently sliding then just do not do anything
 			if (row.is(":animated")) {
 				return;
 			}
@@ -123,7 +141,7 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 				
 				fieldset.animate({"min-height": options.fieldsetCollapsedMinHeight}, "slow");
 				
-				row[rowShowHide]('slow', function() {
+				row[rowShowHide]("slow", function() {
 					fieldset[addRemoveClass](collapsedClass);
 				});
 			}
@@ -133,10 +151,13 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 		});
 	};
 	
+	// Function to be called upon page load
 	var initialize = function() {
+		// Get all the links for remedial content and Hide All Remedial content link
 		var collapsibleElements = $(".collapsible"),
 			hideAllLink = $(".hideAllRemedialLink");
 		
+		// Set up Remedial Content Hide/Show separate links
 		makeCollapsibles({
 			collapsibleElements: collapsibleElements,
 			collapsedClass: "collapsed",
@@ -144,6 +165,7 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 			fieldsetCollapsedMinHeight: "5px"
 		});
 		
+		// Set up Hide All Remedial Content link
 		activateHideAllLink(collapsibleElements, hideAllLink);
 	};
 
