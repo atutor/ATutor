@@ -1,15 +1,7 @@
-/************************************************************************/
-/* ATutor                                                               */
-/************************************************************************/
-/* Copyright (c) 2010 by Laurel Williams                                */
-/* Inclusive Design Institute                                           */
-/* http://atutor.ca                                                     */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or        */
-/* modify it under the terms of the GNU General Public License          */
-/* as published by the Free Software Foundation.                        */
-/************************************************************************/
-// $Id: $
+/**
+ * @author Alexey Novak
+ * @copyright Copyright © 2013, ATutor, All rights reserved.
+ */
 
 /*global jQuery*/
 /*global ATutor */
@@ -21,7 +13,10 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 (function () {
 	"use strict";
 	
-	// Function mainly for edit_test and create_test for disabling/enabling elements depending on user interactions
+	/**
+	* Function mainly for edit_test and create_test for disabling/enabling elements depending on user interactions
+	* @author	Alexey Novak
+	*/
 	ATutor.mods.tests.disable_elements = function(name, disableFlag) {
 		var passpercent = $("#passpercent"),
 			passscore = $("#passscore"),
@@ -52,7 +47,10 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 		}
 	};
 	
-	// Function to activate Slide All link for the Remedial Content divs
+	/**
+	* Function to activate Slide All link for the Remedial Content divs
+	* @author	Alexey Novak
+	*/
 	var activateHideAllLink = function(collapsibleElements, hideAllLink) {
 		// If there is no remedial content then just exit
 		if (collapsibleElements.length === 0) {
@@ -87,12 +85,15 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 		});	
 	};
 	
-	// Function which would assign a slide function to all areas with links which have a specified class
-	// options consist of:
-	//		collapsibleElements				- jQuery links which would have a click event bind to them
-	//		collapsedClass					- class which will be added/removed to the div area which will have a slide effect
-	//		fieldsetNotCollapsedMinHeight	- min-height for the div area when it is not collapsed
-	//		fieldsetCollapsedMinHeight		- min-height for the div area when it is collapsed
+	/**
+	* Function which would assign a slide function to all areas with links which have a specified class
+	* @options
+	*	collapsibleElements				- jQuery links which would have a click event bind to them
+	*	collapsedClass					- class which will be added/removed to the div area which will have a slide effect
+	*	fieldsetNotCollapsedMinHeight	- min-height for the div area when it is not collapsed
+	*	fieldsetCollapsedMinHeight		- min-height for the div area when it is collapsed
+	* @author	Alexey Novak
+	*/
 	var makeCollapsibles = function(options) {
 		options = options || {};
 		
@@ -151,7 +152,10 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 		});
 	};
 	
-	// Function to be called upon page load
+	/**
+	* Function to be called upon page load
+	* @author	Alexey Novak
+	*/
 	var initialize = function() {
 		// Get all the links for remedial content and Hide All Remedial content link
 		var collapsibleElements = $(".collapsible"),

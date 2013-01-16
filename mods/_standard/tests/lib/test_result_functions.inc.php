@@ -213,10 +213,15 @@ function get_next_guest_id()
 	else
 		return "G_". $row["next_guest_id"];
 }
-// function to build and return all Remedial content for the specific test and a specific student
-// Returns array of Remedial Content for every failed question
-//
-// Note: Query by itself returns an array which represents remedial content sorted ASC by the time when the test attempt was made
+
+/**
+* Function to build and return all Remedial content for the specific test and a specific student.
+* Note: SQL query returns rows which represent remedial content sorted ASC by the test attempt timestamp
+* @param	student ID
+* @param	test ID
+* @return	array of Remedial Content for every failed question
+* @author	Alexey Novak
+*/
 function assemble_remedial_content($student_id, $test_id) {
 	global $db, $msg;
 	
@@ -255,9 +260,13 @@ function assemble_remedial_content($student_id, $test_id) {
 	
 	return $resultArray;
 }
-// Function which allows to check if test shows Remedial Content upon test failure for students
-// test_id - id of the test we are going to check against
-// Returns an integer value associated with remedial content for the particular test (currently 0 or 1)
+
+/**
+* Function which allows to check if test shows Remedial Content upon test failure for students
+* @param	test ID
+* @return	an integer value associated with remedial content for the particular test (currently 0 or 1)
+* @author	Alexey Novak
+*/
 function can_show_remedial_content($test_id) {
 	global $db, $msg;
 	
@@ -276,8 +285,14 @@ function can_show_remedial_content($test_id) {
 	
 	return 0;
 }
-// Function to generate HTML markup for the remedial contenti if it is available
-// Returns a string HTML with remedial content
+
+/**
+* Function to generate HTML markup for the remedial contenti if it is available
+* @param	student ID
+* @param	test ID
+* @return	a string HTML with remedial content
+* @author	Alexey Novak
+*/
 function render_remedial_content($student_id, $test_id) {
 	// First check if the test allows to show Remedial Content
 	if (can_show_remedial_content($test_id) == 0) {
@@ -298,15 +313,19 @@ function render_remedial_content($student_id, $test_id) {
 	
 	return sprintf('<h2>%s</h2><div class="input-form">%s</div>', _AT("remedial_content"), implode(" ", $remedial_content));
 }
-// Function to generate two radio buttons with Yes and No options.
-// options array consist of the following parameters:
-//		section_name				- Name/Caption which would be rendered above the radio buttons
-//		radio_name					- Name of the variable which would be posted to the server AND also read to determine what options is selected
-//		radio_label_N				- Label which is used to describe No option
-//		radio_label_Y				- Label which is used to describe Yes option
-//		(optional) disabled			- If True it would disable radio buttons and also add (Disabled) to the radio labels
-//		(optional) disable_elements	- If present it will generate onfocus="disable_elements('value', false/true);" code for the radiobuttons
-// Returns a HTML markup for the radio buttons
+
+/**
+* Function to generate two radio buttons with Yes and No options.
+* @param	array consist of the following parameters:
+*		section_name				- Name/Caption which would be rendered above the radio buttons
+*		radio_name					- Name of the variable which would be posted to the server AND also read to determine what options is selected
+*		radio_label_N				- Label which is used to describe No option
+*		radio_label_Y				- Label which is used to describe Yes option
+*		(optional) disabled			- If True it would disable radio buttons and also add (Disabled) to the radio labels
+*		(optional) disable_elements	- If present it will generate onfocus="disable_elements('value', false/true);" code for the radiobuttons
+* @return	HTML markup for the radio buttons
+* @author	Alexey Novak
+*/
 function generate_radio_button_options($options) {
 	$options = ($options) ? $options : array();
 	
