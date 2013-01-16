@@ -336,8 +336,8 @@ function generate_radio_button_options($options) {
 	}
 	
 	if ($disable_elements) {
-		$disable_elements_n = sprintf('onfocus=\'disable_elements("%s", true);\'', $disable_elements);
-		$disable_elements_y = sprintf('onfocus=\'disable_elements("%s", false);\'', $disable_elements);
+		$disable_elements_n = sprintf('onfocus=\'ATutor.mods.tests.disable_elements("%s", true);\'', $disable_elements);
+		$disable_elements_y = sprintf('onfocus=\'ATutor.mods.tests.disable_elements("%s", false);\'', $disable_elements);
 	} else {
 		$disable_elements_n = $disable_elements_y = '';
 	}

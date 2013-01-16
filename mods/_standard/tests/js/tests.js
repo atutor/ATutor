@@ -19,7 +19,36 @@ ATutor.mods = ATutor.mods || {};
 ATutor.mods.tests = ATutor.mods.tests || {};
 
 (function () {
-	var activateHideAllLink = function (collapsibleElements, hideAllLink) {
+	ATutor.mods.tests.disable_elements = function(name, disableFlag) {
+		passpercent = $('#passpercent');
+		passscore = $('#passscore');
+		num_questions = $('#num_questions');
+		show_guest_form = $('#show_guest_form');
+		
+		if (name === 'both') {
+			passpercent.attr('disabled', 'disabled');
+			passscore.attr('disabled', 'disabled');
+			passpercent.val(0);
+			passscore.val(0);
+		} else if (name === 'percentage') {
+			passpercent.attr('disabled', 'disabled');
+			passscore.removeAttr('disabled');
+			passpercent.val(0);
+		} else if (name === 'points') {
+			passpercent.removeAttr('disabled');
+			passscore.attr('disabled', 'disabled');
+			passscore.val(0);
+		} else if (name === "num_questions") {
+			num_questions[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
+		} else if (name === "show_guest_form") {
+			show_guest_form[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
+			if (disableFlag) {
+				show_guest_form.attr('checked', false);
+			}
+		}
+	};
+	
+	var activateHideAllLink = function(collapsibleElements, hideAllLink) {
 		if (collapsibleElements.length > 0) {
 			hideAllLink.show();
 			
@@ -48,7 +77,7 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 		}	
 	};
 	
-	var makeCollapsibles = function (options) {
+	var makeCollapsibles = function(options) {
 		options || (options = {});
 		
 		var collapsibleElements = options.collapsibleElements;
@@ -104,7 +133,7 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 		});
 	};
 	
-	var initialize = function () {
+	var initialize = function() {
 		var collapsibleElements = $(".collapsible"),
 			hideAllLink = $(".hideAllRemedialLink");
 		

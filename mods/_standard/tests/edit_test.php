@@ -16,6 +16,7 @@ $page = 'tests';
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
+$_custom_head .= '<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/tests/js/tests.js"></script>';
 
 authenticate(AT_PRIV_TESTS);
 
@@ -236,37 +237,6 @@ $msg->printErrors();
 
 ?>
 
-<script language="javascript" type="text/javascript">
-function disable_elements (name, disableFlag) {
-	passpercent = $('#passpercent');
-	passscore = $('#passscore');
-	num_questions = $('#num_questions');
-	show_guest_form = $('#show_guest_form');
-	
-	if (name === 'both') {
-		passpercent.attr('disabled', 'disabled');
-		passscore.attr('disabled', 'disabled');
-		passpercent.val(0);
-		passscore.val(0);
-	} else if (name === 'percentage') {
-		passpercent.attr('disabled', 'disabled');
-		passscore.removeAttr('disabled');
-		passpercent.val(0);
-	} else if (name === 'points') {
-		passpercent.removeAttr('disabled');
-		passscore.attr('disabled', 'disabled');
-		passscore.val(0);
-	} else if (name === "num_questions") {
-		num_questions[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
-	} else if (name === "show_guest_form") {
-		show_guest_form[(disableFlag) ? 'attr' : 'removeAttr']('disabled', '');
-		if (disableFlag) {
-			show_guest_form.attr('checked', false);
-		}
-	}
-}
-</script>
-
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 <input type="hidden" name="randomize_order" value="1" />
@@ -344,19 +314,19 @@ function disable_elements (name, disableFlag) {
 	<div class="row">
 		<?php echo _AT('pass_score'); ?><br />
 		<input type="radio" name="pass_score" value="0" id="no" <?php if ($_POST['passpercent'] == 0 && $_POST['passscore'] == 0){echo 'checked="true"';} ?>
-		onfocus="disable_elements('both');" onclick="this.onfocus();" />
+		onfocus="ATutor.mods.tests.disable_elements('both');" onclick="this.onfocus();" />
 
 		<label for="no" title="<?php echo _AT('pass_score'). ': '. _AT('no_pass_score');  ?>"><?php echo _AT('no_pass_score'); ?></label><br />
 
 		<input type="radio" name="pass_score" value="1" id="percentage"  <?php if ($_POST['passpercent'] <> 0){echo 'checked="true"';} ?>
-		onfocus="disable_elements('points');" onclick="this.onfocus();" />
+		onfocus="ATutor.mods.tests.disable_elements('points');" onclick="this.onfocus();" />
 
 		<input type="text" name="passpercent" id="passpercent" size="2" value="<?php echo $_POST['passpercent']; ?>"
 		<?php if ($_POST['passpercent'] == 0){echo 'disabled="true"';} ?> /> 
 		<label for="percentage" title="<?php echo _AT('pass_score'). ': '. _AT('percentage_score');  ?>"><?php  echo '% ' . _AT('percentage_score'); ?></label><br />
 
 		<input type="radio" name="pass_score" value="2" id="points"  <?php if ($_POST['passscore'] <> 0){echo 'checked="true"';} ?>
-		onfocus="disable_elements('percentage');" onclick="this.onfocus();" />
+		onfocus="ATutor.mods.tests.disable_elements('percentage');" onclick="this.onfocus();" />
 
 		<input type="text" name="passscore" id="passscore" size="2" value="<?php echo $_POST['passscore']; ?>"
 		<?php if ($_POST['passscore'] == 0){echo 'disabled="true"';} ?>/> 
@@ -407,7 +377,7 @@ function disable_elements (name, disableFlag) {
 				$disabled = 'disabled="disabled" ';
 			}
 		?>
-		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="disable_elements('num_questions', true);" onclick="this.onfocus();" /><label for="random"><?php echo _AT('no'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="disable_elements('num_questions', false);" onclick="this.onfocus();" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes'); ?></label>, <input type="text" name="num_questions" id="num_questions" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label>
+		<input type="radio" name="random" id="random" value="0" checked="checked" onfocus="ATutor.mods.tests.disable_elements('num_questions', true);" onclick="this.onfocus();" /><label for="random"><?php echo _AT('no'); ?></label>. <input type="radio" name="random" value="1" id="ry" onfocus="ATutor.mods.tests.disable_elements('num_questions', false);" onclick="this.onfocus();" <?php echo $y; ?> /><label for="ry"><?php echo _AT('yes'); ?></label>, <input type="text" name="num_questions" id="num_questions" size="2" value="<?php echo $_POST['num_questions']; ?>" <?php echo $disabled . $n; ?> /> <label for="num_questions"><?php echo _AT('num_questions_per_test'); ?></label>
 	</div>
 
 	<div class="row">
