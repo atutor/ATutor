@@ -67,7 +67,7 @@
 		//	context_label					SI182						A plain text label for the context
 		//	tool_consumer_instance_guid		lmsng.school.edu			This is a unique identifier for the TC.
 		//	tool_consumer_instance_desc		Univ of School (LMSng)		This is a plain text user visible field
-		//	tool_consumer_info_product_family_code	desire2learn		Info about product family code
+		//	tool_consumer_info_product_family_code	atutor		Info about product family code
 		//	tool_consumer_info_version		2.0.3						Consumer info version
 		//
 		private $_Launch_Data	= array('resource_link_id'					=> '120988f929-274612',
@@ -225,7 +225,7 @@
 				$xmlStructure   = preg_replace('/\s+/',' ', $xmlStructure);
                                 $xmlStructure	= html_entity_decode($xmlStructure);
 
-				preg_match("/<AContent_LiveContentLink>(.*?)<\/AContent_LiveContentLink>/", $xmlStructure, $match);
+				preg_match("'<AContent_LiveContentLink>(.*?)</AContent_LiveContentLink>'si", $xmlStructure, $match);
 
 				//var_dump(html_entity_decode($match));
 				/*
