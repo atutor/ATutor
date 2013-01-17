@@ -171,6 +171,11 @@ if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) 
 	$test_row['num_questions'] = $row['num_questions'];
 }
 
+// Add header to notify users that Remedial Content is available
+if (can_show_remedial_content($tid)) {
+	$msg->addInfo(array('REMEDIAL_CONTENT_AVAILABLE', sprintf('<a href="#" onclick="ATutor.mods.tests.jumpTo(\'a[name=remedial_content]\'); return false;">%s</a>', _AT('remedial_content_goto_link'))));
+	$msg->printInfos();
+}
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

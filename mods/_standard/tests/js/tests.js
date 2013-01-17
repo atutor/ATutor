@@ -48,6 +48,24 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 	};
 	
 	/**
+	* Function to scroll to the selector
+	* @author	Alexey Novak
+	*/
+	ATutor.mods.tests.jumpTo = function(selector) {
+		$("html, body").animate({
+			scrollTop: $(selector).offset().top
+		}, 1);
+	};
+	
+	/**
+	* Function to scroll to the top of the window and focus on the Test Begin button.
+	* @author	Alexey Novak
+	*/
+	ATutor.mods.tests.focusBegin = function() {
+		ATutor.mods.tests.jumpTo("a[name=content]");
+		$(".row.buttons input[name=submit]").focus();
+	};
+	/**
 	* Function to activate Slide All link for the Remedial Content divs
 	* @author	Alexey Novak
 	*/

@@ -3276,3 +3276,10 @@ float:right;
 a.hideAllRemedialLink {
 	font-size: 0.8em;
 }
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
+}

@@ -13,6 +13,7 @@
 // $Id$
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+$_custom_head .= '<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/tests/js/tests.js"></script>';
 
 // if a valid user, then can come from the DB, otherwise
 // this might come from _POST or even _SESSION
@@ -232,17 +233,17 @@ function assemble_remedial_content($student_id, $test_id) {
 		return false;
 	}
 	
-	$sqlQuery = "SELECT TEMP.remedial_content FROM 
+	$sqlQuery = 'SELECT TEMP.remedial_content FROM 
 		( 
 		SELECT TA.question_id, TQ.remedial_content 
-		FROM ".TABLE_PREFIX."tests_results TR 
-			JOIN ".TABLE_PREFIX."TESTS_ANSWERS TA ON TA.result_id = TR.result_id 
-			JOIN ".TABLE_PREFIX."TESTS_QUESTIONS_ASSOC TQA ON (TQA.question_id = TA.question_id AND TR.test_id = TQA.test_id) 
-			JOIN ".TABLE_PREFIX."TESTS_QUESTIONS TQ ON (TA.question_id = TQ.question_id) 
+		FROM '.TABLE_PREFIX.'tests_results TR 
+			JOIN '.TABLE_PREFIX.'TESTS_ANSWERS TA ON TA.result_id = TR.result_id 
+			JOIN '.TABLE_PREFIX.'TESTS_QUESTIONS_ASSOC TQA ON (TQA.question_id = TA.question_id AND TR.test_id = TQA.test_id) 
+			JOIN '.TABLE_PREFIX.'TESTS_QUESTIONS TQ ON (TA.question_id = TQ.question_id) 
 		WHERE (TR.member_id = %d AND TR.test_id = %d) 
-			AND (TQA.weight != TA.score AND TQ.remedial_content <> '') 
+			AND (TQA.weight != TA.score AND TQ.remedial_content <> "") 
 		) AS TEMP 
-		GROUP BY TEMP.question_id ";
+		GROUP BY TEMP.question_id ';
 	
 	$sql_params = array($student_id, $test_id);
 	
@@ -250,7 +251,7 @@ function assemble_remedial_content($student_id, $test_id) {
 	try {
 		$result	= mysql_query($sql, $db);
 	} catch (Exception $e) {
-		$msg->addError("AT_ERROR_UNKNOWN");
+		$msg->addError('AT_ERROR_UNKNOWN');
 		return false;
 	}
 	
@@ -270,12 +271,12 @@ function assemble_remedial_content($student_id, $test_id) {
 function can_show_remedial_content($test_id) {
 	global $db, $msg;
 	
-	$sql = sprintf("SELECT remedial_content FROM ".TABLE_PREFIX."tests WHERE test_id=%d", $test_id);
+	$sql = sprintf('SELECT remedial_content FROM '.TABLE_PREFIX.'tests WHERE test_id=%d', $test_id);
 	
 	try {
 		$result	= mysql_query($sql, $db);
 	} catch (Exception $e) {
-		$msg->addError("AT_ERROR_UNKNOWN");
+		$msg->addError('AT_ERROR_UNKNOWN');
 		return 0;
 	}
 	
@@ -308,10 +309,10 @@ function render_remedial_content($student_id, $test_id) {
 	
 	// Wrap every remedial content into a specified HTML markup
 	$remedial_content = array_map(function($content) {
-		return sprintf("<fieldset class='group_form'><div class='row'>%s</div></fieldset>", $content);
+		return sprintf('<fieldset class="group_form"><div class="row">%s</div></fieldset>', $content);
 	}, $remedial_content);
 	
-	return sprintf('<h2>%s</h2><div class="input-form">%s</div>', _AT("remedial_content"), implode(" ", $remedial_content));
+	return sprintf('<h2>%s</h2><div class="input-form remedialContent">%s%s<div class="onRight"><a href="#" onclick="ATutor.mods.tests.focusBegin(); return false;">%s</a></div></div>', _AT('remedial_content'), '<a title="Remedial Content" name="remedial_content"></a>', implode(' ', $remedial_content), _AT('remedial_back_to_the_test'));
 }
 
 /**
@@ -375,7 +376,7 @@ function generate_radio_button_options($options) {
 		return sprintf('<input type="radio" name="%s" id="%s" value="%d" onclick="this.focus();" %s %s %s/><label for="%s">%s</label>', $name, $id, $value, $disable_elements, $checked, $disabled, $id, $label_name);
 	};
 	
-	return implode(" ", array(
+	return implode(' ', array(
 		'<div class="row">',
 			_AT($label), '<br />',
 			$generate_radio_button_markup(TRUE, $name, $n, $options['radio_label_N'], $disabled, $disable_elements_n),

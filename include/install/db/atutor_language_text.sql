@@ -465,6 +465,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_PRETEST_FAILED','You
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_PRETEST_NO_PRIV','You can\'t view this content before taking the prerequisite test <span style=\"font-weight:bold\">\"%s\"</span>.','2009-11-13 15:51:15','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_PRIVATE_ENROL','The course you are trying to access is <strong>private</strong>. Enrollment in this course requires instructor approval.<br />','2003-10-24 15:31:11','info msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_REG_DISABLED','Public registration is disabled.','2008-09-10 14:09:17','registration form');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_REMEDIAL_CONTENT_AVAILABLE','Remedial Content available for this test %s','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_SAVE_CONTENT','Content must be saved before using this tool.','2008-11-11 15:49:25','AChecker requirement in ATutor content');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_SERVICE_UNAVAILABLE','Service currently unavailable.','2004-08-18 12:00:53','Used for AChecker');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_TRACKING_NO_INST','You have chosen your own ID number. Tracking information is not recorded for course instructors. Choose another user.','2003-10-24 15:31:44','info msg');
@@ -2072,6 +2073,8 @@ INSERT INTO `language_text` VALUES ('en', '_template','release_marked','Once qui
 INSERT INTO `language_text` VALUES ('en', '_template','release_never','Do not release results','2004-12-13 14:02:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','release_on','Release on','2006-04-10 14:37:58','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content','Remedial Content','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_back_to_the_test','Go back to the test','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_goto_link','Go to remedial Content','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_header','Remedial Content','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_hide','Do not show Remedial Content to students after failing the test','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_placeholder','Placeholder','2013-01-08 09:36:19','');
