@@ -2075,7 +2075,6 @@ INSERT INTO `language_text` VALUES ('en', '_template','release_on','Release on',
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content','Remedial Content','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_back_to_the_test','Go back to the test','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_goto_link','Go to remedial Content','2013-01-08 09:36:19','');
-INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_header','Remedial Content','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_hide','Do not show Remedial Content to students after failing the test','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_placeholder','Placeholder','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_show','Show Remedial Content to students after failing the test','2013-01-08 09:36:19','');
