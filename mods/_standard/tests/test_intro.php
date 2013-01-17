@@ -172,7 +172,8 @@ if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) 
 }
 
 // Add header to notify users that Remedial Content is available
-if (can_show_remedial_content($tid)) {
+$remedial_content = render_remedial_content($_SESSION['member_id'], $tid);
+if ($remedial_content && count($remedial_content) > 0) {
 	$msg->addInfo(array('REMEDIAL_CONTENT_AVAILABLE', sprintf('<a href="#" onclick="ATutor.mods.tests.jumpTo(\'a[name=remedial_content]\'); return false;">%s</a>', _AT('remedial_content_goto_link'))));
 	$msg->printInfos();
 }
@@ -286,7 +287,7 @@ if (can_show_remedial_content($tid)) {
 	</fieldset>
 </div>
 
-<?php echo render_remedial_content($_SESSION['member_id'], $tid); ?>
+<?php echo $remedial_content; ?>
 
 </form>
 

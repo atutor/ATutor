@@ -52,6 +52,12 @@ ATutor.mods.tests = ATutor.mods.tests || {};
 	* @author	Alexey Novak
 	*/
 	ATutor.mods.tests.jumpTo = function(selector) {
+		var selector = $(selector);
+		
+		if (selector.length === 0) {
+			return;
+		}
+		
 		$("html, body").animate({
 			scrollTop: $(selector).offset().top
 		}, 1);
