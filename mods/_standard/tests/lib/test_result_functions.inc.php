@@ -308,9 +308,16 @@ function render_remedial_content($student_id, $test_id) {
 	}
 	
 	// Wrap every remedial content into a specified HTML markup
+/*
+	This Anonymous Function code can be supported only with PHP > 5.3.0 Commenting it out until we update php version
 	$remedial_content = array_map(function($content) {
 		return sprintf('<fieldset class="group_form"><div class="row">%s</div></fieldset>', $content);
 	}, $remedial_content);
+*/
+	// This code is here only because ^ code is not supported yet by the php version we use
+	for ($i = 0, $l = count($remedial_content); $i < $l; $i++) {
+		$remedial_content[$i] = sprintf('<fieldset class="group_form"><div class="row">%s</div></fieldset>', $remedial_content[$i]);
+	}
 	
 	return sprintf('<h2>%s</h2><div class="input-form remedialContent">%s%s<div class="onRight"><a href="#" onclick="ATutor.mods.tests.focusBegin(); return false;">%s</a></div></div>', _AT('remedial_content'), '<a title="Remedial Content" name="remedial_content"></a>', implode(' ', $remedial_content), _AT('remedial_back_to_the_test'));
 }
@@ -356,12 +363,14 @@ function generate_radio_button_options($options) {
 	}
 	
 	if ($disable_elements) {
-		$disable_elements_n = sprintf('onfocus=\'ATutor.mods.tests.disable_elements("%s", true);\'', $disable_elements);
-		$disable_elements_y = sprintf('onfocus=\'ATutor.mods.tests.disable_elements("%s", false);\'', $disable_elements);
+		$disable_elements_n = sprintf('ATutor.mods.tests.disable_elements(\'%s\', true);', $disable_elements);
+		$disable_elements_y = sprintf('ATutor.mods.tests.disable_elements(\'%s\', false);', $disable_elements);
 	} else {
 		$disable_elements_n = $disable_elements_y = '';
 	}
 	
+/*
+	This Anonymous Function code can be supported only with PHP > 5.3.0 Commenting it out until we update php version
 	$generate_radio_button_markup = function($isHide, $name, $checked, $label_name, $disabled, $disable_elements) {
 		if ($isHide) {
 			$postfix = 'N';
@@ -375,14 +384,46 @@ function generate_radio_button_options($options) {
 		
 		return sprintf('<input type="radio" name="%s" id="%s" value="%d" onclick="this.focus();" %s %s %s/><label for="%s">%s</label>', $name, $id, $value, $disable_elements, $checked, $disabled, $id, $label_name);
 	};
+*/
 	
 	return implode(' ', array(
 		'<div class="row">',
 			_AT($label), '<br />',
+/*
+			This Anonymous Function code can be supported only with PHP > 5.3.0 Commenting it out until we update php version
 			$generate_radio_button_markup(TRUE, $name, $n, $options['radio_label_N'], $disabled, $disable_elements_n),
 			$generate_radio_button_markup(FALSE, $name, $y, $options['radio_label_Y'], $disabled, $disable_elements_y),
+*/
+			generate_radio_button_markup(TRUE, $name, $n, $options['radio_label_N'], $disabled, $disable_elements_n),
+			generate_radio_button_markup(FALSE, $name, $y, $options['radio_label_Y'], $disabled, $disable_elements_y),
 		$disabled_label,
 		'</div>'
 	));
+}
+
+/**
+* Function to generate HTML markup for the remedial contenti if it is available
+* (NOTE) This function is here only because ^ code is not supported yet in the currently running php version
+* @param	True if it is a radio button for NO option
+* @param	Name attribute of the HTML radio button markup
+* @param	Set as True if the radio button should be checked
+* @param	Label Text
+* @param	True if a radio button should appear disabled
+* @param	onFocus JavaScript function for a radio button
+* @return	HTML markup for the radio button
+* @author	Alexey Novak
+*/
+function generate_radio_button_markup($isNO, $name, $checked, $label_name, $disabled, $on_focus) {
+	if ($isNO) {
+		$postfix = 'N';
+		$value = 0;
+	} else {
+		$postfix = 'Y';
+		$value = 1;
+	}
+	
+	$id = $name.$postfix;
+	
+	return sprintf('<input type="radio" name="%s" id="%s" value="%d" onclick="this.focus();" onfocus="%s" %s %s/><label for="%s">%s</label>', $name, $id, $value, $on_focus, $checked, $disabled, $id, $label_name);
 }
 ?>
