@@ -241,7 +241,7 @@ function assemble_remedial_content($student_id, $test_id) {
 			JOIN '.TABLE_PREFIX.'tests_questions_assoc TQA ON (TQA.question_id = TA.question_id AND TR.test_id = TQA.test_id) 
 			JOIN '.TABLE_PREFIX.'tests_questions TQ ON (TA.question_id = TQ.question_id) 
 		WHERE (TR.member_id = %d AND TR.test_id = %d) 
-			AND (TQA.weight != TA.score AND TQ.remedial_content <> "") 
+			AND (TQA.weight != TA.score AND TA.score IS NOT NULL AND TA.score <> "" AND TQ.remedial_content <> "") 
 		) AS TEMP 
 		GROUP BY TEMP.question_id ';
 	
