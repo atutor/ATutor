@@ -237,9 +237,9 @@ function assemble_remedial_content($student_id, $test_id) {
 		( 
 		SELECT TA.question_id, TQ.remedial_content 
 		FROM '.TABLE_PREFIX.'tests_results TR 
-			JOIN '.TABLE_PREFIX.'TESTS_ANSWERS TA ON TA.result_id = TR.result_id 
-			JOIN '.TABLE_PREFIX.'TESTS_QUESTIONS_ASSOC TQA ON (TQA.question_id = TA.question_id AND TR.test_id = TQA.test_id) 
-			JOIN '.TABLE_PREFIX.'TESTS_QUESTIONS TQ ON (TA.question_id = TQ.question_id) 
+			JOIN '.TABLE_PREFIX.'tests_answers TA ON TA.result_id = TR.result_id 
+			JOIN '.TABLE_PREFIX.'tests_questions_assoc TQA ON (TQA.question_id = TA.question_id AND TR.test_id = TQA.test_id) 
+			JOIN '.TABLE_PREFIX.'tests_questions TQ ON (TA.question_id = TQ.question_id) 
 		WHERE (TR.member_id = %d AND TR.test_id = %d) 
 			AND (TQA.weight != TA.score AND TQ.remedial_content <> "") 
 		) AS TEMP 
