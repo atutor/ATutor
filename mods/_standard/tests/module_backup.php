@@ -2,11 +2,11 @@
 
 $sql = array();
 
-$sql['tests'] = 'SELECT test_id, title, format, start_date, end_date, randomize_order, num_questions, instructions, content_id, result_release, random, difficulty, num_takes, anonymous, out_of, guests, display, description, passscore, passpercent, passfeedback, failfeedback, show_guest_form FROM '.TABLE_PREFIX.'tests WHERE course_id=? ORDER BY test_id ASC';
+$sql['tests'] = 'SELECT test_id, title, format, start_date, end_date, randomize_order, num_questions, instructions, content_id, result_release, random, difficulty, num_takes, anonymous, out_of, guests, display, description, passscore, passpercent, passfeedback, failfeedback, show_guest_form, remedial_content FROM '.TABLE_PREFIX.'tests WHERE course_id=? ORDER BY test_id ASC';
 
 $sql['tests_questions_categories'] = 'SELECT category_id, title FROM '.TABLE_PREFIX.'tests_questions_categories WHERE course_id=?';
 
-$sql['tests_questions'] = 'SELECT question_id, category_id, type, feedback, question, choice_0, choice_1, choice_2, choice_3, choice_4, choice_5, choice_6, choice_7, choice_8, choice_9, answer_0, answer_1, answer_2, answer_3, answer_4, answer_5, answer_6, answer_7, answer_8, answer_9, option_0, option_1, option_2, option_3, option_4, option_5, option_6, option_7, option_8, option_9, properties, content_id FROM '.TABLE_PREFIX.'tests_questions WHERE course_id=?';
+$sql['tests_questions'] = 'SELECT question_id, category_id, type, feedback, question, choice_0, choice_1, choice_2, choice_3, choice_4, choice_5, choice_6, choice_7, choice_8, choice_9, answer_0, answer_1, answer_2, answer_3, answer_4, answer_5, answer_6, answer_7, answer_8, answer_9, option_0, option_1, option_2, option_3, option_4, option_5, option_6, option_7, option_8, option_9, properties, content_id, remedial_content FROM '.TABLE_PREFIX.'tests_questions WHERE course_id=?';
 
 $sql['tests_questions_assoc'] = 'SELECT TQ.test_id, question_id, weight, ordering, required FROM '.TABLE_PREFIX.'tests_questions_assoc TQ, '.TABLE_PREFIX.'tests T WHERE T.course_id=? AND T.test_id=TQ.test_id ORDER BY TQ.test_id';
 
@@ -24,30 +24,31 @@ $sql['content_prerequisites'] = 'SELECT cp.content_id, cp.type, cp.item_id FROM 
 
 function tests_convert($row, $course_id, $table_id_map, $version) {
 	$new_row = array();
-	$new_row[0]  = $row[0];
+	$new_row[0]  = $row[0];	// test_id
 	$new_row[1]  = $course_id;
-	$new_row[2]  = $row[1];
-	$new_row[3]  = $row[2];
-	$new_row[4]  = $row[3];
-	$new_row[5]  = $row[4];
-	$new_row[6]  = $row[5];
-	$new_row[7]  = $row[6];
-	$new_row[8]  = $row[7];
-	$new_row[9]  = 0;
-	$new_row[10] = $row[9]  ? $row[9]  : 0;
-	$new_row[11] = $row[10] ? $row[10] : 0;
-	$new_row[12] = $row[11] ? $row[11] : 0;
-	$new_row[13] = $row[12] ? $row[12] : 0;
-	$new_row[14] = $row[13] ? $row[13] : 0;
-	$new_row[15] = $row[14] ? $row[14] : 0;
+	$new_row[2]  = $row[1];	// title
+	$new_row[3]  = $row[2];	// format
+	$new_row[4]  = $row[3];	// start_date
+	$new_row[5]  = $row[4];	// end_date
+	$new_row[6]  = $row[5];	// randomize_order
+	$new_row[7]  = $row[6];	// num_questions
+	$new_row[8]  = $row[7];	// instructions
+	$new_row[9]  = 0;		// content_id
+	$new_row[10] = $row[9]  ? $row[9]  : 0;	// result_release
+	$new_row[11] = $row[10] ? $row[10] : 0;	// random
+	$new_row[12] = $row[11] ? $row[11] : 0;	// difficulty
+	$new_row[13] = $row[12] ? $row[12] : 0;	// num_takes
+	$new_row[14] = $row[13] ? $row[13] : 0;	// anonymous
+	$new_row[15] = $row[14] ? $row[14] : 0;	// out_of
 	$new_row[16] = $row[15] ? $row[15] : 0; // `guests`  added 1.5.4
 	$new_row[17] = $row[16] ? $row[16] : 0; // `display` added 1.5.6
-	$new_row[18]  = $row[17];
-	$new_row[19]  = $row[18];
-	$new_row[20]  = $row[19];
-	$new_row[21]  = $row[20];
-	$new_row[22]  = $row[21];
-	$new_row[23]  = $row[22];
+	$new_row[18]  = $row[17];	// description
+	$new_row[19]  = $row[18];	// passscore
+	$new_row[20]  = $row[19];	// passpercent
+	$new_row[21]  = $row[20];	// passfeedback
+	$new_row[22]  = $row[21];	// failfeedback
+	$new_row[23]  = $row[22];	// show_guest_form
+	$new_row[24]  = $row[23];	// remedial_content
 	return $new_row;
 }
 
@@ -102,6 +103,7 @@ function tests_questions_convert($row, $course_id, $table_id_map, $version) {
 		$new_row[35] = '';       // option_9
 		$new_row[36] = $row[25]; // properties
 		$new_row[37] = $row[26]; // content_id
+		// remedial_content is not available for lower versions of ATutor
 	} else {
 		$new_row[26] = $row[25]; // option_0
 		$new_row[27] = $row[26]; // option_1
@@ -115,6 +117,7 @@ function tests_questions_convert($row, $course_id, $table_id_map, $version) {
 		$new_row[35] = $row[34]; // option_9
 		$new_row[36] = $row[35]; // properties
 		$new_row[37] = $row[36]; // content_id
+		$new_row[38] = $row[37]; // remedial_content
 	}
 
 	return $new_row;
