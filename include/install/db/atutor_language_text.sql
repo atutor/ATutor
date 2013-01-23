@@ -465,6 +465,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_PRETEST_FAILED','You
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_PRETEST_NO_PRIV','You can\'t view this content before taking the prerequisite test <span style=\"font-weight:bold\">\"%s\"</span>.','2009-11-13 15:51:15','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_PRIVATE_ENROL','The course you are trying to access is <strong>private</strong>. Enrollment in this course requires instructor approval.<br />','2003-10-24 15:31:11','info msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_REG_DISABLED','Public registration is disabled.','2008-09-10 14:09:17','registration form');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_REMEDIAL_CONTENT_AVAILABLE','Remedial Content available for this test %s','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_SAVE_CONTENT','Content must be saved before using this tool.','2008-11-11 15:49:25','AChecker requirement in ATutor content');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_SERVICE_UNAVAILABLE','Service currently unavailable.','2004-08-18 12:00:53','Used for AChecker');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_TRACKING_NO_INST','You have chosen your own ID number. Tracking information is not recorded for course instructors. Choose another user.','2003-10-24 15:31:44','info msg');
@@ -1265,6 +1266,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','farchive','Forum Archiver
 INSERT INTO `language_text` VALUES ('en', '_template','farchive_export','Export Forum','2008-11-07 10:42:18','');
 INSERT INTO `language_text` VALUES ('en', '_template','farchive_select_forum','Select Forum to Export:','2008-11-07 10:42:50','');
 INSERT INTO `language_text` VALUES ('en', '_template','feedback','Feedback','2003-05-20 09:09:40','global feedback label');
+INSERT INTO `language_text` VALUES ('en', '_template','feedback_placeholder','Placeholder','2013-01-08 09:09:40','');
 INSERT INTO `language_text` VALUES ('en', '_template','female','Female','2003-05-20 09:18:03','registration, profile');
 INSERT INTO `language_text` VALUES ('en', '_template','fg_colour','Foreground Colour','2008-09-09 09:01:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','field','Area of Study','2009-05-27 12:01:11','');
@@ -1418,6 +1420,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','have_not','Have not','200
 INSERT INTO `language_text` VALUES ('en', '_template','help','Help','2003-05-20 10:41:08','global help label');
 INSERT INTO `language_text` VALUES ('en', '_template','hidden','Hidden','2003-05-20 10:42:27','instructor/admin contact form');
 INSERT INTO `language_text` VALUES ('en', '_template','hide','Hide','2005-03-15 11:37:50','');
+INSERT INTO `language_text` VALUES ('en', '_template','hide_all_remedial','Hide All Remedial Content','2013-01-11 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','hide_course','Hide this course from the Browse Courses list','2003-05-20 10:42:41','create course screen');
 INSERT INTO `language_text` VALUES ('en', '_template','history','History','2003-05-25 08:36:00','context (removed after v1.1)');
 INSERT INTO `language_text` VALUES ('en', '_template','hits','Hits','2003-05-20 10:44:14','links database link hit count');
@@ -1486,6 +1489,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','install_themes','Install 
 INSERT INTO `language_text` VALUES ('en', '_template','install_themes_text','To install new themes the <code>%s</code> directory must be set to writeable. Use the command <kbd>chmod a+w themes</kbd> on Unix machines, while on Windows the web server must have write permissions on that directory.','2005-12-14 12:36:08','');
 INSERT INTO `language_text` VALUES ('en', '_template','institution','School/Institution','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','instructions','Instructions','2005-04-05 14:25:07','');
+INSERT INTO `language_text` VALUES ('en', '_template','instructions_placeholder','Placeholder','2013-01-08 14:25:07','');
 INSERT INTO `language_text` VALUES ('en', '_template','instructor','Instructor','2003-05-20 12:02:59','global instructor label');
 INSERT INTO `language_text` VALUES ('en', '_template','instructors','Instructors','2003-05-20 12:03:37','admin general statistics label for number of instructors');
 INSERT INTO `language_text` VALUES ('en', '_template','instructor_contact_form','Instructor Contact Form','2003-05-20 12:12:32','instructor contact form heading');
@@ -2068,6 +2072,12 @@ INSERT INTO `language_text` VALUES ('en', '_template','release_immediate','Once 
 INSERT INTO `language_text` VALUES ('en', '_template','release_marked','Once quiz has been submitted and all questions have been marked','2004-12-13 13:55:57','');
 INSERT INTO `language_text` VALUES ('en', '_template','release_never','Do not release results','2004-12-13 14:02:13','');
 INSERT INTO `language_text` VALUES ('en', '_template','release_on','Release on','2006-04-10 14:37:58','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content','Remedial Content','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_back_to_the_test','Go back to the test','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_goto_link','Go to remedial Content','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_hide','Do not show Remedial Content to students after failing the test','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_placeholder','Placeholder','2013-01-08 09:36:19','');
+INSERT INTO `language_text` VALUES ('en', '_template','remedial_content_show','Show Remedial Content to students after failing the test','2013-01-08 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove','Remove','2003-05-21 12:40:11','control centre, admin user manager, instructor enrolment manager');
 INSERT INTO `language_text` VALUES ('en', '_template','removed','Removed','2004-02-03 09:36:19','');
 INSERT INTO `language_text` VALUES ('en', '_template','remove_frame','Remove Frame','2005-01-10 14:31:34','filemanager preview');
@@ -2256,6 +2266,7 @@ INSERT INTO `language_text` VALUES ('en', '_template','shortcuts','Shortcuts','2
 INSERT INTO `language_text` VALUES ('en', '_template','short_paragraph','Short Paragraph','2003-05-21 20:13:03','test manager test type');
 INSERT INTO `language_text` VALUES ('en', '_template','show','Show','2005-03-15 11:37:59','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_all','show all','2009-05-27 12:01:11','');
+INSERT INTO `language_text` VALUES ('en', '_template','show_all_remedial','Show All Remedial Content','2013-01-11 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_available_applications','Show Available Gadgets','2009-05-27 12:01:11','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_bread_crumbs','Show Breadcrumb Link Navigation','2008-09-24 13:05:06','');
 INSERT INTO `language_text` VALUES ('en', '_template','show_contents','Show page Table of Contents','2010-10-07 10:42:22','');

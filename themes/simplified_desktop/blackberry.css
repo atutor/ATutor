@@ -1758,6 +1758,10 @@ fieldset.group_form{
 	/*border: 1px #6D7B8D solid;*/
 	/*-webkit-border-radius:5px;*/
 }
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 
 legend.group_form{
 	background-color:white;
@@ -2261,3 +2265,14 @@ border-style:none;}
 }
 
 .recent_item {padding-bottom:1em;}
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
+}

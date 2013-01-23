@@ -40,6 +40,10 @@ fieldset.group_form{
 	border:thin #ffffff solid;
 	padding-bottom: 0em;
 }
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 
 /* on registration page, group form fields to the left */
 fieldset.group_form .row{
@@ -149,4 +153,13 @@ div.input-form div.row_alternatives {
 	/*border-bottom: 1px #CCCCCC solid;*/
 
 }
-
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
+}

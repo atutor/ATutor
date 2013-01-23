@@ -1561,6 +1561,10 @@ fieldset.group_form{
 	border-radius: 5px;
 	margin-top: .5em;
 }
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 
 legend.group_form{
 	background-color:white;
@@ -2294,4 +2298,15 @@ https://github.com/fluid-project/infusion/blob/25ad6755ef78347b414d60bd4037a0f19
 .fl-theme-iphone [class*=fl-list]:not(.fl-list):not(.fl-grid) a.fl-link-hilight {
     background: url(../images/themes/iphone/listmenu_arrow.png) no-repeat right -25px,
                 -moz-linear-gradient(#4a94f4, #236de5);
+}
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
 }

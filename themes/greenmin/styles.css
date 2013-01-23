@@ -1999,7 +1999,12 @@ fieldset.group_form{
 	padding:.5em;
 	margin-right:1em;
 
-} 
+}
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
+
 fieldset.group_form legend{
 	border:1px #4F7643 solid;
 	background-color: #DEECE2;
@@ -2512,3 +2517,13 @@ margin-right:.5em;
  * 
  * 
  */
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
+}

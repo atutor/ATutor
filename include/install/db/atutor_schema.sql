@@ -811,6 +811,7 @@ CREATE TABLE `tests` (
   `passfeedback` TEXT,
   `failfeedback` TEXT,
   `show_guest_form` TINYINT(1) UNSIGNED NOT NULL default '0',
+  `remedial_content` tinyint(1) unsigned DEFAULT '0',
   PRIMARY KEY  (`test_id`)
 ) ENGINE = MyISAM;
 
@@ -878,7 +879,8 @@ CREATE TABLE `tests_questions` (
   `option_8` TEXT ,
   `option_9` TEXT ,
   `properties` tinyint(4) NOT NULL default '0',
-  `content_id` mediumint(8) NOT NULL,  
+  `content_id` mediumint(8) NOT NULL,
+  `remedial_content` text,
   PRIMARY KEY  (`question_id`),
   KEY `category_id` (category_id)
 ) ENGINE = MyISAM;
