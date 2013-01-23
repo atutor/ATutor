@@ -2104,6 +2104,10 @@ fieldset.group_form{
 	border: 1px #A9ADB0 solid;
 	background-color: white;
 }
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 
 legend.group_form{
 	background-color:white;
@@ -3219,4 +3223,15 @@ table.etabbed-table	{
 	font-size:.8em;
 	border:0;
 	padding:.3em;
+}
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
 }

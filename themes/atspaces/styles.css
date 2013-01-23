@@ -1870,6 +1870,10 @@ fieldset.group_form{
 	padding:.5em;
 	background-color:#ffffff;
 
+}
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
 } 
 fieldset.group_form legend{
 border:1px #D1C82E solid;
@@ -3155,4 +3159,15 @@ margin: 0;
 li.multichoice-question{
 list-style-type: none;
 padding:.4em;
+}
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
 }

@@ -1741,7 +1741,11 @@ fieldset.group_form{
 	padding:.5em;
 	background-color:#ffffff;
 
-} 
+}
+fieldset.group_form.collapsed{
+	border:none;
+	background-color:inherit;
+}
 legend.group_form{
 	border:1px #6D7B8D solid;
 	background-color: #F4F0CB;
@@ -3085,4 +3089,15 @@ ol.dd-question{
 }
 .group-selected{
 background-color:#F4F0CB;
+}
+
+a.hideAllRemedialLink {
+	font-size: 0.8em;
+}
+div.onRight {
+	float: right;
+	font-size: smaller;
+}
+div.input-form.remedialContent {
+	overflow: auto;
 }
