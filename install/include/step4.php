@@ -36,7 +36,8 @@ if (isset($_POST['submit'])) {
 		unset($_POST['submit']);
 		unset($action);
 
-		if (substr($_POST['content_dir'], -1) !='\\'){
+		$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
+		if (substr($_POST['content_dir'], -1) =='\\'){
 			$_POST['content_dir'] .= DIRECTORY_SEPARATOR;
 		}
 
