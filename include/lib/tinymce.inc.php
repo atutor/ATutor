@@ -85,7 +85,7 @@ echo 'theme: "advanced",
 
     //these are the simple tools used on the content editor page
     var simpleToolBars = {
-        theme_advanced_buttons1 : "swap_toolbar_complex,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,pasteword,link,unlink,|,image,|,acheck,|,tiny_mce_wiris_formulaEditor,tiny_mce_wiris_CAS",
+        theme_advanced_buttons1 : "swap_toolbar_complex,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,pasteword,link,unlink,|,image,|,acheck,|,tiny_mce_wiris_formulaEditor",
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 : "",
         theme_advanced_buttons4 : ""
@@ -96,7 +96,7 @@ echo 'theme: "advanced",
         theme_advanced_buttons1 : "swap_toolbar_simple,|,bold,italic,underline,strikethrough,|,justifyleft,justifycenter,justifyright,justifyfull,styleselect,formatselect,fontselect,fontsizeselect",
         theme_advanced_buttons2 : "bullist,numlist,|,outdent,indent,ltr,rtl,blockquote,|,forecolor,backcolor,|,sub,sup,|,tablecontrols",
         theme_advanced_buttons3 : "cut,copy,paste,pastetext,pasteword,|,link,unlink,anchor,image,|,abbr,acronym,|,charmap,emotions,advhr,|,insert_term_tag, insert_media_tag, insert_tex_tag",
-        theme_advanced_buttons4 : "search,replace,|,removeformat,undo,redo,|,styleprops,attribs,|,cleanup,code,|,fullscreen,|,acheck "
+        theme_advanced_buttons4 : "search,replace,|,removeformat,undo,redo,|,styleprops,attribs,|,cleanup,code,|,fullscreen,|,tiny_mce_wiris_formulaEditor,|,acheck "
     };
 
     ATutor.tinymce.initSimple = function() {
