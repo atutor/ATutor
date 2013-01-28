@@ -17,11 +17,24 @@
 //  You should have received a copy of the GNU General Public License
 //  along with WIRIS Plugin. If not, see <http://www.gnu.org/licenses/>.
 //
+////////////////////////////////
+// CUSTOMIZATION FOR ATUTOR ////
+//require_once("../../../../../include/vitals.inc.php");
+define('AT_CONTENT_DIR', "../../../../../content/");
+define('WRS_CACHE_DIRECTORY',  AT_CONTENT_DIR.'cache');
+define('WRS_FORMULA_DIRECTORY',  AT_CONTENT_DIR.'formulas');
+
+if(!is_dir(WRS_FORMULA_DIRECTORY)){
+	@mkdir(WRS_FORMULA_DIRECTORY);
+	@mkdir(WRS_CACHE_DIRECTORY);
+}
+
+//define('WRS_CACHE_DIRECTORY', dirname(__FILE__) . '/../cache');
+//define('WRS_FORMULA_DIRECTORY', dirname(__FILE__) . '/../formulas');
+////////////////////////////////
 
 define('WRS_DEFAULT_CONFIG_FILE', dirname(__FILE__) . '/../default_configuration.ini');
 define('WRS_CONFIG_FILE', dirname(__FILE__) . '/../configuration.ini');
-define('WRS_CACHE_DIRECTORY', dirname(__FILE__) . '/../cache');
-define('WRS_FORMULA_DIRECTORY', dirname(__FILE__) . '/../formulas');
 
 global $wrs_imageConfigProperties, $wrs_xmlFileAttributes;
 
