@@ -71,7 +71,7 @@ echo 'theme: "advanced",
       accessibility_warnings : true,
       entity_encoding : "raw",
       accessibility_focus : true,
-      plugins : "-insert_tag, -swap_toolbar, acheck, table,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template",
+      plugins : "-insert_tag, -swap_toolbar, acheck, table,safari,pagebreak,style,layer,table,save,advhr,advimage,advlink,emotions,iespell,inlinepopups,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,xhtmlxtras,template, tiny_mce_wiris",
       theme_advanced_toolbar_location : "top",
       theme_advanced_toolbar_align : "left",
       theme_advanced_path_location : "bottom",
@@ -85,7 +85,7 @@ echo 'theme: "advanced",
 
     //these are the simple tools used on the content editor page
     var simpleToolBars = {
-        theme_advanced_buttons1 : "swap_toolbar_complex,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,pasteword,link,unlink,|,image,|,acheck",
+        theme_advanced_buttons1 : "swap_toolbar_complex,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,|,formatselect,fontselect,fontsizeselect,|,forecolor,backcolor,|,pasteword,link,unlink,|,image,|,acheck,|,tiny_mce_wiris_formulaEditor,tiny_mce_wiris_CAS",
         theme_advanced_buttons2 : "",
         theme_advanced_buttons3 : "",
         theme_advanced_buttons4 : ""

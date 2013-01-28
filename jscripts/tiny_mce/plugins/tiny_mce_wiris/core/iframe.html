@@ -1,0 +1,61 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+	<head>
+		<style type="text/css">
+			body {
+				cursor: pointer;
+				margin: 0;
+				margin: 0;
+				overflow: hidden;
+			}
+		</style>
+		
+		<script type="text/javascript" src="../integration/editor/viewer.js"></script>
+		
+		<script type="text/javascript">
+			window.onload = function () {
+				var myIframe = null;
+				var iframes = parent.document.getElementsByTagName('iframe');
+				
+				for (var i = 0; i < iframes.length && myIframe == null; ++i) {
+					if (iframes[i].contentWindow == this) {
+						myIframe = iframes[i];
+					}
+				}
+				
+				if (myIframe != null) {
+					var viewer = new com.wiris.jsEditor.JsViewerMain('../integration/editor');
+					viewer.insertCSS();
+					
+					var formulaContainer = document.createElement('div');
+					document.body.appendChild(formulaContainer);
+					
+					var mathml = myIframe.getAttribute(document.location.hash.substring(1));
+					
+					if (mathml == null) {
+						alert('Error: MathML attribute on iframe not found.');
+					}
+					else {
+						viewer.paintFormulaOnContainer(mathml, formulaContainer, null);
+						
+						function prepareIframe() {
+							if (viewer.isReady()) {
+								parent.document.wrs_assignIframeEvents(myIframe);
+								myIframe.style.height = formulaContainer.style.height;
+								myIframe.style.width = formulaContainer.style.width;
+								myIframe.style.verticalAlign = formulaContainer.style.verticalAlign;
+							}
+							else {
+								setTimeout(prepareIframe, 100);
+							}
+						};
+						
+						prepareIframe();
+					}
+				}
+			};
+		</script>
+	</head>
+	<body>
+	</body>
+</html>
