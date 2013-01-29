@@ -98,7 +98,7 @@ class TestQuestions {
 			return $objs[$question_type];
 		}
 
-		$question_classes = TestQuestions::getQuestionClasses();
+		$question_classes = $this->getQuestionClasses();
 
 		if (isset($question_classes[$question_type])) {
 			global $savant;

@@ -16,6 +16,8 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
 
+$testQuestions = new TestQuestions();
+
 $tid = intval($_REQUEST['tid']);
 if (isset($_REQUEST['gid'])) $gid = $addslashes($_REQUEST['gid']);
 if (isset($_REQUEST['cid']))
@@ -82,7 +84,7 @@ if (isset($_POST['submit'])) {
 	$result	= mysql_query($sql, $db);
 	while ($row = mysql_fetch_assoc($result)) {
 		if (isset($_POST['answers'][$row['question_id']])) {
-			$obj = TestQuestions::getQuestion($row['type']);
+			$obj = $testQuestions->getQuestion($row['type']);
 			$score = $obj->mark($row);
 
 			if (!isset($_POST["gid"])) {
@@ -172,7 +174,6 @@ if ($row = mysql_fetch_assoc($result)) {
 	
 	$num_required = count($required_questions);
 	if ($num_required < max(1, $num_questions)) {
-		shuffle($non_required_questions);
 		$required_questions = array_merge($required_questions, array_slice($non_required_questions, 0, $num_questions - $num_required));
 	}
 
@@ -188,6 +189,10 @@ $result	= mysql_query($sql, $db);
 $questions = array();
 while ($row = mysql_fetch_assoc($result)) {
 	$questions[] = $row;
+}
+
+if ($test_row['random']) {
+    shuffle($questions);
 }
 
 if (!$result || !$questions) {
@@ -230,7 +235,7 @@ if (!isset($_REQUEST['gid']) && !$in_progress) {
 			mysql_query($sql, $db);
 		}
 
-		$obj = TestQuestions::getQuestion($row['type']);
+		$obj = $testQuestions->getQuestion($row['type']);
 		$obj->display($row);
 	}
 	?>
