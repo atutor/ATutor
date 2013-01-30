@@ -80,12 +80,12 @@ if (isset($_POST['cancel'])) {
 	}
 
 	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
-	if ($_POST['password_error'] <> "")
-	{
-		$pwd_errors = explode(",", $_POST['password_error']);
+	$password_error = $_POST['password_error'];
+	if ($password_error && $password_error <> "") {
+		$separator = ',';
+		$pwd_errors = explode($separator, $password_error);
 
-		foreach ($pwd_errors as $pwd_error)
-		{
+		foreach ($pwd_errors as $pwd_error) {
 			$pwd_error = strip_tags($pwd_error);
 			if ($pwd_error == "missing_password") {
     			$missing_fields[] = _AT('password');
