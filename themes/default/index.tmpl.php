@@ -63,7 +63,14 @@ if($this->view_mode==0){
 <?php
 } // end of if
 
-if ($this->announcements): ?>
+if ($this->announcements): 
+	global $system_courses; ?>
+
+<?php if ($system_courses[$this->course_id]['rss']): ?>
+<div style="float:right;">
+<a title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2"><img src="<?php echo $this->base_href;?>images/rss-icon.jpg" alt ="Announcements RSS Feed" style="height:2em;width:2em;"></a>
+</div>
+<?php endif;  ?>
 	<br style="clear:both;" />
 <h2 class="page-title"><?php echo _AT('announcements'); ?></h2>
 	<?php foreach ($this->announcements as $item): ?>
