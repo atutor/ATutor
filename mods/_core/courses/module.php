@@ -8,16 +8,20 @@ if (!defined('AT_PRIV_ADMIN')) {
 if (!defined('AT_ADMIN_PRIV_COURSES')) {
 	define('AT_ADMIN_PRIV_COURSES', $this->getAdminPrivilege());
 }
-global $_config;
+global $_config, $db;
 
 // for admin
 if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+		$sql = "SELECT * from ".TABLE_PREFIX."modules WHERE dir_name = '_core/services' && status ='2'";
+		if($result = @mysql_query($sql, $db)){
+		    $service_installed = mysql_num_rows($result);
+		}
 
 		$this->_pages[AT_NAV_ADMIN] = array('mods/_core/courses/admin/courses.php');
 		$this->_pages['mods/_core/courses/admin/courses.php']['title_var'] = 'courses';
 		$this->_pages['mods/_core/courses/admin/courses.php']['parent']    = AT_NAV_ADMIN;
 		$this->_pages['mods/_core/courses/admin/courses.php']['guide']     = 'admin/?p=courses.php';
-	if($_config['disable_create'] != "1"){	
+	if(!$service_installed){	
 		$this->_pages['mods/_core/courses/admin/courses.php']['children']  = array('mods/_core/enrolment/admin/index.php', 'mods/_core/courses/admin/default_mods.php', 'mods/_core/courses/admin/default_side.php','mods/_core/courses/admin/auto_enroll.php', 'mods/_core/courses/admin/create_course.php');
 
 	} else{
@@ -26,7 +30,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 	}
 		$this->_pages['mods/_core/courses/admin/instructor_login.php']['title_var'] = 'view';
 		$this->_pages['mods/_core/courses/admin/instructor_login.php']['parent']    = 'mods/_core/courses/admin/courses.php';
-	if($_config['disable_create'] != "1"){
+	if(!$service_installed){
 			// if the service module is installed, disable create course when
 			// the course limit is exceeded
 		$this->_pages['mods/_core/courses/admin/create_course.php']['title_var'] = 'create_course';
@@ -59,6 +63,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 
 }
 
+//echo $sql;
 //if(!defined('DISABLE_CREATE_COURSE')){
 
 if($_config['disable_create'] != "1"){

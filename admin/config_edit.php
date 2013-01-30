@@ -44,6 +44,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['email_notification'] = intval($_POST['email_notification']);
 	$_POST['sent_msgs_ttl']      = intval($_POST['sent_msgs_ttl']);
 	$_POST['allow_instructor_requests'] = intval($_POST['allow_instructor_requests']);
+	$_POST['disable_create'] 			= intval($_POST['disable_create']);
 	$_POST['auto_approve_instructors']  = intval($_POST['auto_approve_instructors']);
 	$_POST['theme_categories']          = intval($_POST['theme_categories']);
 	$_POST['user_notes']                = intval($_POST['user_notes']);

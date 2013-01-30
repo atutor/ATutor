@@ -22,6 +22,7 @@ $_config_defaults = array();
 $_config_defaults['contact_email']             = '';
 $_config_defaults['email_notification']        = 1; // enabled
 $_config_defaults['allow_instructor_requests'] = 1; // enabled
+$_config_defaults['disable_create'] 		   = 0; // disabled (Instructors can create courses)
 $_config_defaults['auto_approve_instructors']  = 0; // disabled
 $_config_defaults['max_file_size']             = 10485760;  // 10MB
 $_config_defaults['max_course_size']           = 104857600; // 100 MB

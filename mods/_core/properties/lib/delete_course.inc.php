@@ -43,10 +43,10 @@ function delete_course($course, $material) {
 		if ($module_name == '_core/enrolment') {
 			continue;
 		}
-		$module =& $module_list[$module_name];
+		$module = $module_list[$module_name];
 
 		if (($material === TRUE) || isset($material[$module_name])) {
-			$module->delete($course, $groups);
+			$module->delete($course, $groups);  ////// Breaks here
 		}
 	}
 
