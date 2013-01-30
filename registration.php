@@ -86,7 +86,7 @@ if (isset($_POST['cancel'])) {
 		$pwd_errors = explode($separator, $password_error);
 
 		foreach ($pwd_errors as $pwd_error) {
-			$pwd_error = strip_tags($pwd_error);
+			$pwd_error = strip_tags(urldecode($pwd_error));
 			if ($pwd_error == "missing_password") {
     			$missing_fields[] = _AT('password');
 			} else {
