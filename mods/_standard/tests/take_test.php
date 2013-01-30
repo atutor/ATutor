@@ -22,13 +22,9 @@ $member_id = $_SESSION['member_id'];
 $enroll = $_SESSION['enroll'];
 
 $tid = intval($_REQUEST['tid']);
-if (isset($_REQUEST['gid'])) {
-    $gid = $addslashes($_REQUEST['gid']);
-}
-if (isset($_REQUEST['cid'])) {
-	$cid = $addslashes($_REQUEST['cid']);
-	$cid_url = SEP.'cid='.$cid;
-}
+$gid = $addslashes($_REQUEST['gid']);
+$cid = $addslashes($_REQUEST['cid']);
+$cid_url = SEP.'cid='.$cid;
 
 //make sure max attempts not reached, and still on going
 $sql = sprintf('SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM %stests WHERE test_id=%d AND course_id=%d;', TABLE_PREFIX, $tid, $course_id);
@@ -38,7 +34,6 @@ $test_row = mysql_fetch_assoc($result);
 if (!$test_row['guests'] && ($enroll == AT_ENROLL_NO || $enroll == AT_ENROLL_ALUMNUS)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printInfos('NOT_ENROLLED');
-
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
@@ -153,7 +148,7 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	// retrieve the test questions that were saved to `tests_answers`
 
-	$sql	= "SELECT R.*, A.*, Q.* FROM ".TABLE_PREFIX."tests_answers R INNER JOIN ".TABLE_PREFIX."tests_questions_assoc A USING (question_id) INNER JOIN ".TABLE_PREFIX."tests_questions Q USING (question_id) WHERE R.result_id=$result_id AND A.test_id=$tid ORDER BY Q.question_id";
+	$sql = sprintf("SELECT TA.*, TQA.*, TQ.* FROM %stests_answers TA INNER JOIN %stests_questions_assoc TQA USING (question_id) INNER JOIN %stests_questions TQ USING (question_id) WHERE TA.result_id=%d AND TQA.test_id=%d ORDER BY TQ.question_id", TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $result_id, $tid);
 	
 } else if ($test_row['random']) {
 	/* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
@@ -179,9 +174,9 @@ if ($row = mysql_fetch_assoc($result)) {
 
 	$id_string = implode(',', $required_questions);
 
-	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$course_id AND TQA.test_id=$tid AND TQA.question_id IN ($id_string) ORDER BY TQ.question_id";
+	$sql = sprintf('SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d AND TQA.question_id IN (%s) ORDER BY TQ.question_id', TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid, $id_string);
 } else {
-	$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$course_id AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+	$sql = sprintf("SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id", TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid);
 }
 
 $result	= mysql_query($sql, $db);
