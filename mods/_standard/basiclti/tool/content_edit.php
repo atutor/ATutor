@@ -307,7 +307,7 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 			if (AContent_has_lcl_support()){
 
 				echo '<div style="border-bottom: 1px solid #CCC; border-left: 10px solid #CCC; padding-left: 10px; font-weight: bold; margin-top:10px; margin-bottom:20px">';
-					echo 'Courses list';
+				echo _AT('course_list');
 				echo '</div>';
 	
 				// SEARCH
