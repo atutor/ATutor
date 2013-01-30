@@ -43,6 +43,18 @@ if (isset($_POST['social_submit'])) {
 	$_config['just_social'] = $_POST['just_social'];
 }
 
+$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
+$result = mysql_query($sql, $db);
+$row = mysql_fetch_assoc($result);
+$num_courses = $row['cnt'];
+
+/////////
+// Tell the admin howto create courses if there are not any yet created
+
+if($num_courses == 0 && $_config['just_social'] == 0){
+    $msg->addFeedback('ADMIN_NO_COURSES');
+}
+//////////
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_config['check_version']) {
@@ -132,11 +144,15 @@ if (!isset($_config['db_size']) || ($_config['db_size_ttl'] < time())) {
 	mysql_query($sql, $db);
 	
 }
-
+/*
 $sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
 $num_courses = $row['cnt'];
+if($num_courses == 0 ){
+$msg->addFeedback('ADMIN_NO_COURSES');
+}
+*/
 $savant->assign('num_courses', $num_courses);
 
 $sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members";
