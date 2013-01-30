@@ -183,7 +183,12 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		<input type="radio" name="allow_instructor_requests" value="1" id="air_y" <?php if($_config['allow_instructor_requests']) { echo 'checked="checked"'; }?>  /><label for="air_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="allow_instructor_requests" value="0" id="air_n" <?php if(!$_config['allow_instructor_requests']) { echo 'checked="checked"'; }?>  /><label for="air_n"><?php echo _AT('disable'); ?></label>
 	</fieldset>
 	</div>
-
+	<div class="row">
+	<fieldset><legend><?php echo _AT('allow_instructor_create_course'); ?></legend>
+	 (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['disable_create'] ? _AT('disable') : _AT('enable')); ?>)<br />	
+		<input type="radio" name="disable_create" value="0" id="create_n" <?php if(!$_config['disable_create']) { echo 'checked="checked"'; }?>  /><label for="create_n"><?php echo _AT('enable'); ?></label><input type="radio" name="disable_create" value="1" id="create_y" <?php if($_config['disable_create']) { echo 'checked="checked"'; }?>  /><label for="create_y"><?php echo _AT('disable'); ?></label> 
+	</fieldset>
+	</div>
 	<div class="row">
 	<fieldset>
 	<legend><?php echo _AT('instructor_request_email_notification'); ?></legend>
