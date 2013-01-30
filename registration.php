@@ -43,7 +43,7 @@ if (isset($_POST['cancel'])) {
 	$chk_login = $addslashes($_POST['login']);
 
 	//CAPTCHA
-	if (isset($_config['use_captcha']) && $_config['use_captcha']==1){
+	if (isset($_config['use_captcha']) && $_config['use_captcha']==1) {
 		$img = new Securimage();
 		$valid = $img->check($_POST['secret']);
 		if (!$valid)
@@ -86,10 +86,12 @@ if (isset($_POST['cancel'])) {
 
 		foreach ($pwd_errors as $pwd_error)
 		{
-			if ($pwd_error == "missing_password")
-				$missing_fields[] = _AT('password');
-			else
-				$msg->addError($pwd_error);
+			$pwd_error = strip_tags($pwd_error);
+			if ($pwd_error == "missing_password") {
+    			$missing_fields[] = _AT('password');
+			} else {
+    			$msg->addError($pwd_error);
+			}
 		}
 	}
 
