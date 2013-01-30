@@ -45,7 +45,7 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
 	return $result;
 }
 
-function add_update_course($_POST, $isadmin = FALSE) {
+function add_update_course($course_prop, $isadmin = FALSE) {
 	require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
 	global $addslashes;
@@ -60,10 +60,10 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	$Backup = new Backup($db);
 	$missing_fields = array();
 
-	if ($_POST['title'] == '') {
+	if ($course_prop['title'] == '') {
 		$missing_fields[] = _AT('title');
 	} 
-	if (!$_POST['instructor']) {
+	if (!$course_prop['instructor']) {
 		$missing_fields[] = _AT('instructor');
 	}
 
@@ -72,33 +72,33 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 
-	$_POST['access']		  = $addslashes($_POST['access']);
-	$_POST['title']			  = $addslashes($_POST['title']);
-	$_POST['description']	  = $addslashes($_POST['description']);
-	$_POST['hide']			  = $addslashes($_POST['hide']);
-	$_POST['pri_lang']		  = $addslashes($_POST['pri_lang']);
-	$_POST['created_date']	  = $addslashes($_POST['created_date']);
-	$_POST['copyright']		  = $addslashes($_POST['copyright']);
-	$_POST['icon']			  = $addslashes($_POST['icon']);
-	$_POST['banner']		  = $addslashes($_POST['banner']);
-	$_POST['course_dir_name'] = $addslashes($_POST['course_dir_name']);
+	$course_prop['access']		  = $addslashes($course_prop['access']);
+	$course_prop['title']			  = $addslashes($course_prop['title']);
+	$course_prop['description']	  = $addslashes($course_prop['description']);
+	$course_prop['hide']			  = $addslashes($course_prop['hide']);
+	$course_prop['pri_lang']		  = $addslashes($course_prop['pri_lang']);
+	$course_prop['created_date']	  = $addslashes($course_prop['created_date']);
+	$course_prop['copyright']		  = $addslashes($course_prop['copyright']);
+	$course_prop['icon']			  = $addslashes($course_prop['icon']);
+	$course_prop['banner']		  = $addslashes($course_prop['banner']);
+	$course_prop['course_dir_name'] = $addslashes($course_prop['course_dir_name']);
 
-	$_POST['course']	= intval($_POST['course']);
-	$_POST['notify']	= intval($_POST['notify']);
-	$_POST['hide']		= intval($_POST['hide']);
-	$_POST['instructor']= intval($_POST['instructor']);
-	$_POST['category_parent']	= intval($_POST['category_parent']);
-	$_POST['rss']       = intval($_POST['rss']);
+	$course_prop['course']	= intval($course_prop['course']);
+	$course_prop['notify']	= intval($course_prop['notify']);
+	$course_prop['hide']		= intval($course_prop['hide']);
+	$course_prop['instructor']= intval($course_prop['instructor']);
+	$course_prop['category_parent']	= intval($course_prop['category_parent']);
+	$course_prop['rss']       = intval($course_prop['rss']);
 
 	// Course directory name (aka course slug)
-	if ($_POST['course_dir_name'] != ''){
+	if ($course_prop['course_dir_name'] != ''){
 		//validate the course_dir_name, allow only alphanumeric, underscore.
-		if (preg_match('/^[\w][\w\d\_]+$/', $_POST['course_dir_name'])==0){
+		if (preg_match('/^[\w][\w\d\_]+$/', $course_prop['course_dir_name'])==0){
 			$msg->addError('COURSE_DIR_NAME_INVALID');
 		}
 
 		//check if the course_dir_name is already being used
-		$sql = 'SELECT COUNT(course_id) as cnt FROM '.TABLE_PREFIX."courses WHERE course_id!=$_POST[course] AND course_dir_name='$_POST[course_dir_name]'";
+		$sql = 'SELECT COUNT(course_id) as cnt FROM '.TABLE_PREFIX."courses WHERE course_id!=$course_prop[course] AND course_dir_name='$course_prop[course_dir_name]'";
 		$result = mysql_query($sql);
 		$num_of_dir = mysql_fetch_assoc($result);
 		if (intval($num_of_dir['cnt']) > 0){
@@ -109,18 +109,18 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	// Custom icon
 	if ($_FILES['customicon']['name'] != ''){
 		// Use custom icon instead if it exists
-		$_POST['icon']	  = $addslashes($_FILES['customicon']['name']);
+		$course_prop['icon']	  = $addslashes($_FILES['customicon']['name']);
 	} 
 	if ($_FILES['customicon']['error'] == UPLOAD_ERR_FORM_SIZE){
 		// Check if filesize is too large for a POST
 		$msg->addError(array('FILE_MAX_SIZE', $_config['prof_pic_max_file_size'] . ' ' . _AT('bytes')));
 	}
-	if ($_POST['release_date']) {
-		$day_release	= intval($_POST['day_release']);
-		$month_release	= intval($_POST['month_release']);
-		$year_release	= intval($_POST['year_release']);
-		$hour_release	= intval($_POST['hour_release']);
-		$min_release	= intval($_POST['min_release']);
+	if ($course_prop['release_date']) {
+		$day_release	= intval($course_prop['day_release']);
+		$month_release	= intval($course_prop['month_release']);
+		$year_release	= intval($course_prop['year_release']);
+		$hour_release	= intval($course_prop['hour_release']);
+		$min_release	= intval($course_prop['min_release']);
 
 		if (!checkdate($month_release, $day_release, $year_release)) { //or date is in the past
 			$msg->addError('RELEASE_DATE_INVALID');
@@ -143,12 +143,12 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$release_date = "0000-00-00 00:00:00";
 	}
 
-	if ($_POST['end_date']) {
-		$day_end	= intval($_POST['day_end']);
-		$month_end	= intval($_POST['month_end']);
-		$year_end	= intval($_POST['year_end']);
-		$hour_end	= intval($_POST['hour_end']);
-		$min_end	= intval($_POST['min_end']);
+	if ($course_prop['end_date']) {
+		$day_end	= intval($course_prop['day_end']);
+		$month_end	= intval($course_prop['month_end']);
+		$year_end	= intval($course_prop['year_end']);
+		$hour_end	= intval($course_prop['hour_end']);
+		$min_end	= intval($course_prop['min_end']);
 
 		if (!checkdate($month_end, $day_end, $year_end)) { //or date is in the past
 			$msg->addError('END_DATE_INVALID');
@@ -171,15 +171,15 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$end_date = "0000-00-00 00:00:00";
 	}
 
-	$initial_content_info = explode('_', $_POST['initial_content'], 2);
+	$initial_content_info = explode('_', $course_prop['initial_content'], 2);
 	//admin
 	$course_quotas = '';
 	if ($isadmin) {
-		$instructor		= $_POST['instructor'];
-		$quota			= intval($_POST['quota']);
-		$quota_entered  = intval($_POST['quota_entered']);
-		$filesize		= intval($_POST['filesize']);
-		$filesize_entered= intval($_POST['filesize_entered']);
+		$instructor		= $course_prop['instructor'];
+		$quota			= intval($course_prop['quota']);
+		$quota_entered  = intval($course_prop['quota_entered']);
+		$filesize		= intval($course_prop['filesize']);
+		$filesize_entered= intval($course_prop['filesize_entered']);
 
 		//if they checked 'other', set quota=entered value, if it is empty or negative, set to default (-2)
 		if ($quota == '2') {
@@ -206,7 +206,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	} else {
 		$instructor = $_SESSION['member_id'];
-		if (!$_POST['course'])	{
+		if (!$course_prop['course'])	{
 			$course_quotas    =  "max_quota=".AT_COURSESIZE_DEFAULT.", max_file_size=".AT_FILESIZE_DEFAULT.",";
 			$row = $Backup->getRow($initial_content_info[0], $initial_content_info[1]);
 
@@ -217,12 +217,12 @@ function add_update_course($_POST, $isadmin = FALSE) {
 						$msg->addError('RESTORE_TOO_BIG');	
 					}
 			} else {
-				$initial_content_info = intval($_POST['initial_content']);
+				$initial_content_info = intval($course_prop['initial_content']);
 			}
 
 		} else {
 			unset($initial_content_info);
-			$course_quotas  =  "max_quota='{$system_courses[$_POST[course]][max_quota]}', max_file_size='{$system_courses[$_POST[course]][max_file_size]}',";
+			$course_quotas  =  "max_quota='{$system_courses[$course_prop[course]][max_quota]}', max_file_size='{$system_courses[$course_prop[course]][max_file_size]}',";
 		}
 	}
 
@@ -231,13 +231,13 @@ function add_update_course($_POST, $isadmin = FALSE) {
 	}
 
 	//display defaults
-	if (!$_POST['course']) {
+	if (!$course_prop['course']) {
 		$menu_defaults = ",home_links='$_config[home_defaults]', main_links='$_config[main_defaults]', side_menu='$_config[side_defaults]'";
 	} else {
-		$menu_defaults = ',home_links=\''.$system_courses[$_POST['course']]['home_links'].'\', main_links=\''.$system_courses[$_POST['course']]['main_links'].'\', side_menu=\''.$system_courses[$_POST['course']]['side_menu'].'\'';
+		$menu_defaults = ',home_links=\''.$system_courses[$course_prop['course']]['home_links'].'\', main_links=\''.$system_courses[$course_prop['course']]['main_links'].'\', side_menu=\''.$system_courses[$course_prop['course']]['side_menu'].'\'';
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$_POST[course], member_id='$_POST[instructor]', access='$_POST[access]', title='$_POST[title]', description='$_POST[description]', course_dir_name='$_POST[course_dir_name]', cat_id='$_POST[category_parent]', content_packaging='$_POST[content_packaging]', notify=$_POST[notify], hide=$_POST[hide], $course_quotas primary_language='$_POST[pri_lang]', created_date='$_POST[created_date]', rss=$_POST[rss], copyright='$_POST[copyright]', icon='$_POST[icon]', banner='$_POST[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
+	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$course_prop[course], member_id='$course_prop[instructor]', access='$course_prop[access]', title='$course_prop[title]', description='$course_prop[description]', course_dir_name='$course_prop[course_dir_name]', cat_id='$course_prop[category_parent]', content_packaging='$course_prop[content_packaging]', notify=$course_prop[notify], hide=$course_prop[hide], $course_quotas primary_language='$course_prop[pri_lang]', created_date='$course_prop[created_date]', rss=$course_prop[rss], copyright='$course_prop[copyright]', icon='$course_prop[icon]', banner='$course_prop[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
 
 	$result = mysql_query($sql, $db);
 	if (!$result) {
@@ -253,18 +253,18 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	if ($isadmin) {
 		//get current instructor and unenroll from course if different from POST instructor	
-		$old_instructor = $system_courses[$_POST['course']]['member_id'];
+		$old_instructor = $system_courses[$course_prop['course']]['member_id'];
 		
-		if ($old_instructor != $_POST['instructor']) {
+		if ($old_instructor != $course_prop['instructor']) {
 			//remove old from course enrollment
-			$sql = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=".$_POST['course']." AND member_id=".$old_instructor;
+			$sql = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=".$course_prop['course']." AND member_id=".$old_instructor;
 			$result = mysql_query($sql, $db);
 			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
 		} 
 	}
 
 	//enroll new instructor
-	$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_POST[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
+	$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($course_prop[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
 	if ($isadmin) {
 		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', mysql_affected_rows($db), $sql);
@@ -282,7 +282,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	/* insert some default content: */
 
-	if (!$_POST['course_id'] && ($_POST['initial_content'] == '1')) {
+	if (!$course_prop['course_id'] && ($course_prop['initial_content'] == '1')) {
 		$contentManager = new ContentManager($db, $new_course_id);
 		$contentManager->initContent( );
 
@@ -317,16 +317,16 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		}
 		***/
 
-	} else if (!$_POST['course'] && (count($initial_content_info) == 2)){
+	} else if (!$course_prop['course'] && (count($initial_content_info) == 2)){
 
 		$Backup->setCourseID($new_course_id);
 		$Backup->restore($material = TRUE, 'append', $initial_content_info[0], $initial_content_info[1]);
 	}
  
  	// custom icon, have to be after directory is created
-//	$_FILES['customicon'] = $_POST['customicon'];	//copy to $_FILES.
+//	$_FILES['customicon'] = $course_prop['customicon'];	//copy to $_FILES.
 	if($_FILES['customicon']['tmp_name'] != ''){
-        $_POST['comments'] = trim($_POST['comments']);
+        $course_prop['comments'] = trim($course_prop['comments']);
 
         $owner_id = $_SESSION['course_id'];
         $owner_type = "1";
@@ -340,10 +340,10 @@ function add_update_course($_POST, $isadmin = FALSE) {
         }
         
         if (!$msg->containsErrors()) {
-            $_POST['description'] = $addslashes(trim($_POST['description']));
+            $course_prop['description'] = $addslashes(trim($course_prop['description']));
             $_FILES['customicon']['name'] = addslashes($_FILES['customicon']['name']);
 
-            if ($_POST['comments']) {
+            if ($course_prop['comments']) {
                 $num_comments = 1;
             } else {
                 $num_comments = 0;
@@ -413,7 +413,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 
 	/* delete the RSS feeds just in case: */
 	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $new_course_id . '/RSS1.0.xml')) {
-		@unlink(AT_CONTENT_DIR . 'feeds/' . $_POST['course'] . '/RSS1.0.xml');
+		@unlink(AT_CONTENT_DIR . 'feeds/' . $course_prop['course'] . '/RSS1.0.xml');
 	}
 	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $new_course_id . '/RSS2.0.xml')) {
 		@unlink(AT_CONTENT_DIR . 'feeds/' . $new_course_id . '/RSS2.0.xml');
@@ -423,7 +423,7 @@ function add_update_course($_POST, $isadmin = FALSE) {
 		$_SESSION['course_id'] = -1;
 	}
 
-	$_SESSION['course_title'] = $stripslashes($_POST['title']);
+	$_SESSION['course_title'] = $stripslashes($course_prop['title']);
 	return $new_course_id;
 }
 
