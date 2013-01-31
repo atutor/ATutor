@@ -295,6 +295,9 @@ define('MOBILE_DEVICE',  'Mobile');
 // theme directory
 define('AT_SYSTEM_THEME_DIR', realpath(AT_INCLUDE_PATH . "../themes") . "/");
 
+// subsites
+define('AT_SITES_DIR',  $_base_path. "sites/");
+
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';
 $_rl_types[RL_TYPE_URL]		= 'rl_url';
