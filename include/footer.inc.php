@@ -51,7 +51,7 @@ $savant->assign('side_menu', $stack_files);
 // this js is indep of the theme used:
 ?>
 <script language="javascript" type="text/javascript">
-//<!--
+//<!--z
 var selected;
 function rowselect(obj) {
 	obj.className = 'selected';
@@ -94,6 +94,7 @@ if (defined('AT_DEVEL') && AT_DEVEL) {
 	debug(TABLE_PREFIX, 'TABLE_PREFIX');
 	debug(DB_NAME, 'DB_NAME');
 	debug(VERSION, 'VERSION');
-	debug($_SESSION);
+	debug($_SESSION, 'SESSION:');
+	debug($_config, 'CONFIGURATION');
 }
 ?>

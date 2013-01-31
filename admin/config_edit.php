@@ -28,6 +28,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['home_url']           = trim($_POST['home_url']);
 	$_POST['default_language']   = trim($_POST['default_language']);
 	$_POST['contact_email']      = trim($_POST['contact_email']);
+	$_POST['session_timeout']   = intval($_POST['session_timeout']);
 	$_POST['max_file_size']      = intval($_POST['max_file_size']);
 	$_POST['max_file_size']      = max(0, $_POST['max_file_size']);
 	$_POST['max_course_size']    = intval($_POST['max_course_size']);

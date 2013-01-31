@@ -52,7 +52,11 @@ global $system_courses, $_custom_css, $_base_path;
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>">
 <head>
-	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
+	<?php if(isset($this->section_title)){ ?>
+		<title><?php echo $this->section_title; ?>:	 <?php echo $this->page_title; ?></title>
+	<?php }else { ?>
+		<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
+	<?php } ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
    <?php if(isset($this->content_keywords) && $this->content_keywords != ''){ ?>
     <meta name="keywords" content="<?php echo $this->content_keywords; ?>" />

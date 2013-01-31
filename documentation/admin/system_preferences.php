@@ -16,7 +16,9 @@
 
 			<dt>Time Zone Offset</dt>
     			<dd>Add or subtract hours from the times and dates displayed in ATutor, so they match the local time for the ATutor installation. Valid values range from -12 to 12. The positive sign is <strong>not</strong> required when adding hours. The minus sign is required when subtracting hours. Individual users may also modify their own Time Zone Offset setting, if their local time differs from that of the ATutor installation.</dd>
-
+    			
+			<dt>Session Timeout</dt>
+    			<dd>To help prevent a person's ATutor session from being abused if they walk away without logging out, a timeout period can be set to automatically end a person's session after a certain period of inactivity. A reasonably short period of time is advised if users might be expected to use ATutor at a public workstation. Users are warned of the timeout 5 minutes in advance, then are automatically logged out if they do not acknowledge the warning.  Default: 20 minutes</dd>
 			<dt>Maximum File Size</dt>
 			<dd>Maximum allowable file size in Bytes that can be uploaded to the course's File Manager. This does not override the value set for <kbd>upload_max_filesize</kbd> in <kbd>php.ini</kbd>.</dd>
 
@@ -56,7 +58,10 @@
 
 			<dt>Allow Instructor Requests</dt>
 			<dd>If enabled, students will be allowed to request that their account be upgraded to an instructor account. Instructor account requests must be approved by administrators using the <a href="instructor_requests.php">Instructor Requests</a> section. If disabled then the <em>Create Course</em> link used for requesting an instructor account will be removed and only the administrators will be able to create instructor accounts.</dd>
-
+			
+			<dt>Allow Instructors to Create Courses</dt>
+			<dd>If the ATutor administrator should be responsible for creating new courses, disable this setting. Otherwise the default setting allows instructors to create their own courses. This feature may not be avaible on some systems. </dd>
+			
 			<dt>Instructor Request Email Notification</dt>
 			<dd>If enabled, and if <em>Allow Instructor Requests</em> is enabled, then an email notification message will be sent to the <em>Contact Email</em> each time a new instructor account request is made. This does not affect whether or not instructor requests can be made, only whether or not a notification message is sent out each time.</dd>
 
