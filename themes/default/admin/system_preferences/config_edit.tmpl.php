@@ -82,7 +82,45 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 
 ?>
 	</div>
-
+	
+<?php
+// disable this setting on ATutorSpaces
+global $db;
+$sql = "SELECT * from ".TABLE_PREFIX."modules WHERE dir_name = '_core/services' && status ='2'";
+if($result = @mysql_query($sql, $db)){
+	$service_installed = mysql_num_rows($result);
+}
+if(!$service_installed){
+?>
+	<div class="row">
+		<?php
+		$timeout_arr = array(10,15,20,30,60,120,1440);
+		?>
+		<label for="session_timeout"><?php echo _AT('session_timeout'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['session_timeout'].' '._AT('timeout_minutes'); ?>)<br />
+		<select name="session_timeout" id="session_timeout">
+		<?php foreach($timeout_arr as $timeout_val){
+			
+			 if($timeout_val == $_config['session_timeout']){
+			 
+				if($timeout_val == '1440'){
+					echo '<option value="'.$timeout_val.'" selected="selected">'._AT('maximum').' 1 '. _AT('day').'</option>';
+				}else{
+					echo '<option value="'.$timeout_val.'" selected="selected">'.$timeout_val.'</option>';
+				}
+			}else{
+				if($timeout_val == '1440'){
+					echo '<option value="'.$timeout_val.'">'._AT('maximum').' 1 '. _AT('day').'</option>';
+				}else{
+					echo '<option value="'.$timeout_val.'">'.$timeout_val.'</option>';
+				}
+			}
+		}
+		?>
+		</select>
+			
+		<?php echo _AT('timeout_minutes'); ?>
+	</div>
+<?php } ?>
 	<div class="row">
 		<label for="maxfile"><?php echo _AT('maximum_file_size'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_file_size']; ?>)<br />
 		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo $stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $_config['max_file_size']; } ?>"  /> <?php echo _AT('bytes'); ?>

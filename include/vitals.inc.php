@@ -15,8 +15,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
 define('AT_DEVEL', 1);
-define('AT_ERROR_REPORTING', E_ALL ^ E_NOTICE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
-define('AT_DEVEL_TRANSLATE', 0);
+define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
+define('AT_DEVEL_TRANSLATE', 1);
 
 // Multisite constants and checks
 define('AT_SITE_PATH', get_site_path());
@@ -92,7 +92,13 @@ if (headers_sent()) {
 }
 
 @set_time_limit(0);
-@ini_set('session.gc_maxlifetime', '1200'); /* 20 minutes in seconds  */
+if($_config['session_timeout']){
+	$_at_timeout = ($_config['session_timeout']*60);
+}else {
+	$_at_timeout = '1200'; // Default timeout is 20 minutes
+}
+
+@ini_set('session.gc_maxlifetime', $_at_timeout); 
 @session_cache_limiter('private, must-revalidate');
 session_name('ATutorID');
 error_reporting(AT_ERROR_REPORTING);

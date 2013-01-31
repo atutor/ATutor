@@ -61,6 +61,7 @@ $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be en
 $_config_defaults['auto_install_languages']    = 0; // auto install languages can only be enabled if cron is running
 $_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_name_formats
 $_config_defaults['time_zone']                 = ''; // empty means disabled or not supported
+$_config_defaults['session_timeout']           = '20'; // timeout after 20 minutes
 $_config_defaults['prof_pic_max_file_size']	   = 819200; // max size of an uploaded profile pic, in bytes. default 800 KB
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent inbox msgs are deleted
 $_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled/unsupported, (non-zero is the actual mysql value)
