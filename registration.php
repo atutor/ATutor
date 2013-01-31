@@ -43,7 +43,7 @@ if (isset($_POST['cancel'])) {
 	$chk_login = $addslashes($_POST['login']);
 
 	//CAPTCHA
-	if (isset($_config['use_captcha']) && $_config['use_captcha']==1){
+	if (isset($_config['use_captcha']) && $_config['use_captcha']==1) {
 		$img = new Securimage();
 		$valid = $img->check($_POST['secret']);
 		if (!$valid)
@@ -80,16 +80,18 @@ if (isset($_POST['cancel'])) {
 	}
 
 	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
-	if ($_POST['password_error'] <> "")
-	{
-		$pwd_errors = explode(",", $_POST['password_error']);
+	$password_error = $_POST['password_error'];
+	if ($password_error && $password_error <> "") {
+		$separator = ',';
+		$pwd_errors = explode($separator, $password_error);
 
-		foreach ($pwd_errors as $pwd_error)
-		{
-			if ($pwd_error == "missing_password")
-				$missing_fields[] = _AT('password');
-			else
-				$msg->addError($pwd_error);
+		foreach ($pwd_errors as $pwd_error) {
+			$pwd_error = strip_tags(urldecode($pwd_error));
+			if ($pwd_error == "missing_password") {
+    			$missing_fields[] = _AT('password');
+			} else {
+    			$msg->addError($pwd_error);
+			}
 		}
 	}
 
