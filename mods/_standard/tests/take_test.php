@@ -16,7 +16,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
 
-$testQuestions = new TestQuestions();
 $course_id = $_SESSION['course_id'];
 $member_id = $_SESSION['member_id'];
 $enroll = $_SESSION['enroll'];
@@ -86,7 +85,7 @@ if (isset($_POST['submit'])) {
         $row_question_id = $row['question_id'];
         $answer_question_id = $_POST['answers'][$row_question_id];
         if (isset($answer_question_id)) {
-            $obj = $testQuestions->getQuestion($row['type']);
+            $obj = TestQuestions::getQuestion($row['type']);
             $score = $obj->mark($row);
 
             if (!isset($post_gid)) {
@@ -237,7 +236,7 @@ if (!$gid && !$in_progress) {
             mysql_query($sql, $db);
         }
 
-        $obj = $testQuestions->getQuestion($row['type']);
+        $obj = TestQuestions::getQuestion($row['type']);
         $obj->display($row);
     }
     ?>
