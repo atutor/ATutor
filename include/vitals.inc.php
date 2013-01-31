@@ -285,11 +285,7 @@ if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) &&
 }
 
 // find out where PREF_THEME is located
-$sql = "SELECT customized FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
-
-$main_theme_folder = get_main_theme_dir($row['customized']);
+$main_theme_folder = get_main_theme_dir(is_customized_theme($_SESSION['prefs']['PREF_THEME']));
 
 $savant->addPath('template', $main_theme_folder . $_SESSION['prefs']['PREF_THEME'] . '/');
 require($main_theme_folder . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');

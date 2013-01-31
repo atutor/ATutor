@@ -669,6 +669,21 @@ function admin_authenticate($privilege = 0, $check = false) {
 }
 
 /**
+ * Check if the give theme is a subsite customized theme. Return true if it is, otherwise, return false
+ * @access public
+ * @param string $theme_name
+ * @return true or false
+ */
+function is_customized_theme($theme_name) {
+	global $db;
+	$sql = "SELECT customized FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$theme_name."'";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	
+	return !!$row["customized"];
+}
+
+/**
  * Return the main theme path based on the "customized" flag
  * @access  private
  * @param   int customized   whether this is a customized theme
