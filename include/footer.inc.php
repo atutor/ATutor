@@ -75,14 +75,11 @@ function rowselectbox(obj, checked, handler) {
 //TODO******************BOLOGNA***************REMOVE ME ***********************/
 
 $popup = intval($_GET['popup']);
+$footerName = 'footer';
 if ($framed || $popup) {
-    if(isset($tool_flag) && ($tool_flag))                    //footer for the toolmanager
-        $savant->display('include/tm_footer.tmpl.php');
-    else
-	$savant->display('include/fm_footer.tmpl.php');
-} else {
-	$savant->display('include/footer.tmpl.php');
+    $footerName = (isset($tool_flag) && ($tool_flag)) ? 'tm_footer' : 'fm_footer';
 }
+$savant->display(sprintf('include/%s.tmpl.php', $footerName));
 
 //Harris Timer
   $mtime = microtime(); 
