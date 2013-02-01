@@ -147,7 +147,7 @@ left:-13em;
 */
 	font-size:16px;
 	padding-top: 0;
-	margin-top: 0;
+	margin-top: .0em;
 	margin-left:.5em;
 	padding-right: .113em;
 	position: absolute;
@@ -168,9 +168,10 @@ background-image: 0;
 }
 
 #home-guide a{
-padding: .39em;
+padding: .47em;
 }
 #home-guide li.menuitem{
+    margin-right:.2em;
 	-moz-border-image: url("images/navbar_normal_button_insetShadow.png") 3 0 0 3 stretch;
 }
 
@@ -186,8 +187,20 @@ ul.home-guide li.forward a:hover, ul.home-guide li.forward a:focus, ul.home-guid
 
 #home-guide .fl-tabs li.fl-tabs-active a, .fl-tabs li a{
 padding: 0.25em 0.35em 0.2em 0.35em;
+border-right-color:0;
 
 }
+
+.fl-tabs li{
+margin-right:1px;
+
+}
+.fl-theme-iphone .fl-tabs li a, .fl-theme-iphone .fl-tabs .fl-tabs-active a {
+    border-left-color: transparent;
+    border-right-color: transparent;
+    color: #FFFFFF;
+}
+
 /************************************************************************************************/
 /* main body attributes */
 /************************************************************************************************/
@@ -2292,9 +2305,9 @@ div.home_box {
 	cursor: move;
 }
 
-div.menuedit{
-	float:right;
-	border:1px solid #cccccc;
+div.menuedit a{
+text-decoration:none;
+
 }
 li.folders {
 	list-style: disc url(../../images/folder.gif) outside;
@@ -2612,7 +2625,7 @@ Ensure styling matches that in fl-tabs.*/
 	font-size: 18px;/*keep this in px*/
 	padding-left: .3em;
 	padding-right: .3em;
-	padding-top: .1em;
+	padding-top: .3em;
 	padding-bottom: -.1em;
 	color: white;
 	position: absolute;
@@ -2937,13 +2950,13 @@ ul#subnavlist li a{
 
 #course-level-navigation, #sequence-links-course-navigation{	
 	float: right;
-	margin-top:-3.65em;
+	margin-top:-3.85em;
 	padding-top:1.6em;
 	margin-right:-.2em;
 		
 }
 #course-level-navigation a{
-	 padding:.17em .4em .15em .4em;
+	 padding:.27em .4em .25em .4em;
 }
 /************************************************************************************************/
 /*Adds arrows to Fluid Tabs. Here is a good guide for creating triangles with CSS: 
@@ -2961,7 +2974,7 @@ ul.sequence-links{
     background-color: #354D68;
     	border-radius: .3em .3em .3em .3em;
 	-moz-border-radius: .3em .3em .3em .3em;
-     padding:.25em .2em .25em .2em;
+     padding:.25em .25em .25em .2em;
 }
 
 ul.sequence-links li {
@@ -3079,13 +3092,13 @@ Mark McLaren's port of mobile fss to firefox is committed to infusion:
 https://github.com/fluid-project/infusion/blob/25ad6755ef78347b414d60bd4037a0f197f9d09d/infusion-branch/src/webapp/framework/fss/css/fss-mobile-theme-firefox.css */ 
 
 
-.fl-tabs li:first-child {
-    border-radius: 5px 5px 5px 5px;
+.fl-tabs li {
+    border-radius: 3px 3px 3px 3px;
 }
-.fl-tabs li:last-child {
-    border-radius: 5px 5px 5px 5px;
+ 
+#footer-links .fl-tabs li{
+padding:.3em;
 }
-
 .fl-theme-iphone .fl-tabs li {
     -moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
     background-color: #354D68;
