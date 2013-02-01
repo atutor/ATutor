@@ -10,13 +10,9 @@
 	</tr>
 <?php
 		if (($this->num_days == 0) || ($this->empty)) {
-			echo '<tr>';
-			echo '<td class="row1" colspan="2">'._AT('no_month_data').'</td>';
-			echo '</tr>';
+			echo sprintf('<tr><td class="row1" colspan="2">%s</td></tr>', _AT('no_month_data'));
 			echo '</table>';
-			require(AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
+		} else {
 ?>
 	<tr>
 		<td class="row1" valign="top" align="right"><strong><?php echo _AT('total'); ?>:</strong></td>
@@ -31,12 +27,7 @@
 
 	<tr>
 		<td class="row1" valign="top" align="right"><strong><?php echo _AT('minimum'); ?>:</strong></td>
-		<td class="row1"><?php
-		if ($this->min_total_logins < 99999999) {
-			echo $this->min_total_logins; 
-		} else {
-			echo '0';
-		} ?></td>
+		<td class="row1"><?php echo ($this->min_total_logins < 99999999) ? $this->min_total_logins : '0'; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
@@ -98,7 +89,9 @@
 		</td>
 	</tr>
 	</table>
-<?php endif;?>
+<?php 
+    }
+endif;?>
 <?php if ($this->mobile_device_type != IPAD_DEVICE): ?>
 
 <table style="width: 100%" cellspacing="1" cellpadding="1" border="0" class="bodyline" summary="course statistics" align="center" frame="box" >
@@ -112,13 +105,9 @@
 	</tr>
 <?php
 		if (($this->num_days == 0) || ($this->empty)) {
-			echo '<tr>';
-			echo '<td class="row1" colspan="2">'._AT('no_month_data').'</td>';
-			echo '</tr>';
+			echo sprintf('<tr><td class="row1" colspan="2">%s</td></tr>', _AT('no_month_data'));
 			echo '</table>';
-			require(AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
+		} else {
 ?>
 	<tr>
 		<td class="row1" valign="top" align="right"><strong><?php echo _AT('total'); ?>:</strong></td>
@@ -133,12 +122,7 @@
 
 	<tr>
 		<td class="row1" valign="top" align="right"><strong><?php echo _AT('minimum'); ?>:</strong></td>
-		<td class="row1"><?php
-		if ($this->min_total_logins < 99999999) {
-			echo $this->min_total_logins; 
-		} else {
-			echo '0';
-		} ?></td>
+		<td class="row1"><?php echo ($this->min_total_logins < 99999999) ? $this->min_total_logins : '0'; ?></td>
 	</tr>
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 	<tr>
@@ -176,4 +160,6 @@
 		</td>
 	</tr>
 	</table>
-<?php endif;?>
+<?php 
+    }
+endif;?>
