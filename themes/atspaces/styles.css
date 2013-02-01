@@ -3171,3 +3171,17 @@ div.onRight {
 div.input-form.remedialContent {
 	overflow: auto;
 }
+
+/* Test template styles */
+ul.likert-question, ul.matching-question, ul.multianswer-question, ul.multichoice-question, ul.ordering-question {
+    padding: 0px;
+    margin: 0px; 
+    list-style-type: none;
+}
+li.likert-question, li.matching-question, li.multianswer-question, li.multichoice-question, li.ordering-question {
+    padding: 4px;
+}
+
+li.likert-question {
+    display: inline;
+}
