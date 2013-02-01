@@ -1077,4 +1077,26 @@ function debug($var, $title='') {
 	echo '</pre>';
 }
 
+/**
+ * This function is used to make a DB query the same along the whole codebase
+ * @access  public
+ * @param   Query string in the vsprintf format. Basically the first parameter of vsprintf function
+ * @param   Array of parameters which will be converted and inserted into the query
+ * @param   OPTIONAL Function returns the first element of the return array if set to TRUE. Basically returns the first row if it exists
+ * @return  Returns result of the query execution as an array of rows
+ * @author  Alexey Novak
+ */
+function queryDB($query, $params, $oneRow = FALSE) {
+    global $db;
+    $resultArray = array();
+    
+    $sql = vsprintf($query, $params);
+    $result = mysql_query($sql, $db) or die(mysql_error());
+    while ($row = mysql_fetch_assoc($result)) {
+        $resultArray[] = $row;
+    }
+    unset($result);
+    
+    return ($oneRow && count($resultArray) != 0) ? $resultArray[0] : $resultArray;
+}
 ?>
