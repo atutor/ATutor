@@ -148,6 +148,10 @@ while($row = mysql_fetch_assoc($result)) {
 	$customized = intval($row["customized"]);
 
 	$main_theme_dir = get_main_theme_dir($customized);
+	if($customized == '1'){
+	    global $theme_path;
+	}
+	
 ?>
 	<tbody>
 	<tr class="AT_theme_row <?php if (!$customized) echo 'AT_disable_del'; ?>">
@@ -169,12 +173,25 @@ while($row = mysql_fetch_assoc($result)) {
 		<td valign="top"><?php echo $row['version']; ?></td>
 		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
 		<td valign="top"><?php echo $row['extra_info']; ?></td>
-		<td valign="top"><?php
-			if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
-				<img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-			<?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
-				<img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-			<?php }?>
+		<td valign="top">
+			   <?php if($customized == '1'){?>
+                   <?php if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
+                    <img src="<?php echo $theme_path; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                <?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+                    <img src="<?php echo $theme_path; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                <?php } else if(file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+                    <img src="<?php echo $theme_path; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.png" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                <?php } ?>			   
+               
+			<?php }else{ ?>
+                    <?php if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
+                    <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                <?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+                    <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                <?php } if(file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+                    <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.png" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                <?php } ?>
+			<?php } ?>
 		</td>
 	</tr>
 	</tbody>
