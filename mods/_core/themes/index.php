@@ -140,6 +140,7 @@ print_data_table($result, MOBILE_DEVICE);
 	</td>
 </tr>
 </tfoot>
+<tbody>
 <?php 
 // For each theme:
 // 1. find out where the theme folder is. It could be from the main site or a subsite configuration folder.
@@ -153,7 +154,7 @@ while($row = mysql_fetch_assoc($result)) {
 	}
 	
 ?>
-	<tbody>
+
 	<tr class="AT_theme_row <?php if (!$customized) echo 'AT_disable_del'; ?>">
 		<td valign="top">
 			<input type="radio" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
@@ -174,29 +175,30 @@ while($row = mysql_fetch_assoc($result)) {
 		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
 		<td valign="top"><?php echo $row['extra_info']; ?></td>
 		<td valign="top">
-			   <?php if($customized == '1'){?>
+			   <?php if($customized == '1'){ ?>
                    <?php if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
                     <img src="<?php echo $theme_path; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
                 <?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
                     <img src="<?php echo $theme_path; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-                <?php } else if(file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+                <?php } else if(file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.png')) { ?>
                     <img src="<?php echo $theme_path; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.png" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
                 <?php } ?>			   
                
-			<?php }else{ ?>
+             <?php }else{ ?>
                     <?php if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
-                    <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-                <?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
-                    <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-                <?php } if(file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
-                    <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.png" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-                <?php } ?>
+                        <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.jpg" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                    <?php } else if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.gif')) { ?>
+                        <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.gif" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                    <?php } if(file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.png')) { ?>
+                        <img src="<?php echo AT_BASE_HREF; ?>themes/<?php echo $row['dir_name']; ?>/screenshot.png" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
+                    <?php } ?>
 			<?php } ?>
 		</td>
 	</tr>
-	</tbody>
+
 <?php } ?>
-</table>
+	</tbody>
+	</table>
 </form>
 <?php
 }
