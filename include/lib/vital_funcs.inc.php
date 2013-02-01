@@ -1092,11 +1092,17 @@ function queryDB($query, $params, $oneRow = FALSE) {
     
     $sql = vsprintf($query, $params);
     $result = mysql_query($sql, $db) or die(mysql_error());
+    // If we need only one row then just grab it otherwise get all the results
+    if ($oneRow) {
+        $resultArray[] = mysql_fetch_assoc($result);
+        unset($result);
+        return (count($resultArray) > 0) ? $resultArray[0] : $resultArray;
+    }
+    
     while ($row = mysql_fetch_assoc($result)) {
         $resultArray[] = $row;
     }
     unset($result);
-    
-    return ($oneRow && count($resultArray) != 0) ? $resultArray[0] : $resultArray;
+    return $resultArray;
 }
 ?>
