@@ -200,28 +200,37 @@ if (($course === 0) && $_SESSION['valid_user']) {
 		$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 	}
 	
-	// If instructor with no course, direct to create course screen
+	// If instructor with no course, direct to create course screen unless it is disabled
 	$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
     $result = mysql_query($sql, $db);
     $row = mysql_fetch_assoc($result);
+    
 	if ($row['status'] == 3) {
 		$sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'courses WHERE member_id='.$_SESSION['member_id'];
   		$result = mysql_query($sql, $db);
  		$row = mysql_fetch_assoc($result);
+ 		
+ 		$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name ='_core/services' && status ='2'";
+		$result = mysql_query($sql, $db);
+		if(mysql_num_rows($result)){
+		    //This is a Service site 
+			$service_site = 1;
+		}
   		if ($row['count'] == 0) {
-  		$msg->addFeedback('CREATE_NEW_COURSE');
-  		if($_config['disable_create'] == 1){
-       	 header('Location: mods/_core/services/users/create_course.php');
-       	 exit;
-        }else{
-         header('Location: mods/_core/courses/users/create_course.php');
-         exit;
-        }
 
+            if($service_site && $_config['disable_create'] != 1){
+                $msg->addFeedback('CREATE_NEW_COURSE');
+                header('Location: mods/_core/services/users/create_course.php');
+                exit;
+            }else if($_config['disable_create'] != 1){
+                $msg->addFeedback('CREATE_NEW_COURSE');
+                header('Location: mods/_core/courses/users/create_course.php');
+                exit;
+            }
         }
     }
     /* http://atutor.ca/atutor/mantis/view.php?id=4587
-     * 	for users with no enrolled courses, default to the Browse Bourses screen instead of My Courses. 
+     * 	for users with no enrolled courses, default to the Browse Courses screen instead of My Courses. 
      */
     $sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'course_enrollment WHERE member_id='.$_SESSION['member_id'];
     $result = mysql_query($sql, $db);
