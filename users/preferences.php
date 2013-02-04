@@ -13,8 +13,8 @@
 
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_INCLUDE_PATH.'../mods/_core/themes/lib/themes.inc.php');
+require_once(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_core/themes/lib/themes.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/users/lib/pref_tab_functions.inc.php');
 /* whether or not, any settings are being changed when this page loads. */
 /* ie. is ANY action being performed right now?							*/
@@ -30,18 +30,14 @@ $is_auto_login = checkAutoLoginCookie();
 
 if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	$current_tab = $_POST['current_tab'];
-	if (isset($_POST['submit']))
-	{
+	if (isset($_POST['submit'])) {
 	    //copy posted variables to a temporary array
 		$temp_prefs = assignPostVars();
-    
 		//email notification and auto-login settings are handled
 		//separately from other preferences
 		$mnot = intval($_POST['mnot']);
-		if (isset($_POST['auto'])) $auto_login = $_POST['auto'];
-	}
-	else if (isset($_POST['set_default']))
-	{
+		$auto_login = isset($_POST['auto']) ? $_POST['auto'] : NULL;
+	} else if (isset($_POST['set_default'])) {
 	    $temp_prefs = assignDefaultPrefs();
         $mnot = assignDefaultMnot();
         $auto_login = assignDefaultAutologin();
@@ -54,30 +50,26 @@ if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 
 	//update email notification and auto-login settings separately
 	save_email_notification($mnot);
-	if (isset($auto_login)) {
-		$is_auto_login = setAutoLoginCookie($auto_login);
-	}
+	$is_auto_login = isset($auto_login) ? setAutoLoginCookie($auto_login) : $is_auto_login;
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: preferences.php?current_tab='.$current_tab);
 	exit;
 }
 
+$member_id = $_SESSION['member_id'];
+
 // Re-set selected desktop theme if the request is from a mobile device 
 // because now $_SESSION['prefs']['PREF_THEME'] == $_SESSION['prefs']['PREF_MOBILE_THEME'] instead of the desktop theme
 // The code below re-assign $_SESSION['prefs']['PREF_THEME'] back to what it should be
 if (is_mobile_device()) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$_SESSION['member_id'];
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$row = queryDB('SELECT * FROM %smembers WHERE member_id=%d', array(TABLE_PREFIX, $member_id), TRUE);
 	
 	foreach (unserialize(stripslashes($row['preferences'])) as $pref_name => $value) {
-		if ($pref_name == 'PREF_THEME') {
-			$desktop_theme = $value;
-		}
+		$desktop_theme = ($pref_name == 'PREF_THEME') ? $value : $desktop_theme;
 	}
 } else {
-	$desktop_theme = $_SESSION['prefs']['theme'];
+	$desktop_theme = $_SESSION['prefs']['PREF_THEME'];
 }
 
 if ($_SESSION['first_login']) {
@@ -86,9 +78,7 @@ if ($_SESSION['first_login']) {
 }
 
 unset($_SESSION['first_login']);
-$sql	= "SELECT inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-$result = mysql_query($sql, $db);
-$row_notify = mysql_fetch_assoc($result);
+$row_notify = queryDB('SELECT inbox_notify FROM %smembers WHERE member_id=%d', array(TABLE_PREFIX, $member_id), TRUE);
 
 $languages = $languageManager->getAvailableLanguages();
 
