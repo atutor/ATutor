@@ -23,6 +23,11 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
  * @param   String      Use UTC time, gmdate("Y-m-d\TH:i:s\Z");
  * @param   String      Hashed secret.  Unique per user.   
  */
+ 
+ 
+/////////////////
+// THESE FUNCTIONS DO NOT APPEAR TO BE USED. LEAVE THEM HERE FOR
+// A VERION OR TWO THEN delete
 function at_sign_request($timestamp, $publicKey) {
     global $db;
     if (!isset($_SESSION['login'])) {
@@ -89,6 +94,8 @@ function at_verify_request($signature, $timestamp, $publicKey) {
     } 
     return false;    
 }
+// END OF FUNCTIONS TO DELETE, OR MOVE
+//////////////////;
 
 if (isset($_GET['deny']) && isset($_GET['id'])) {
 	header('Location: admin_deny.php?id='.$_GET['id']);
@@ -102,11 +109,15 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 
 } else if (isset($_GET['approve']) && isset($_GET['id'])) {
     //verify token first.
+    /*
+    /////////////////
+    // CALL TO THE UNUSED FUNCTIONS ABOVE
     if (!at_verify_request($_GET['auth_token'], $_GET['auth_timestamp'], $_GET['auth_publicKey'])) {
         $msg->addError('INVALID_AUTH_REQUEST');
         header('Location: instructor_requests.php');
         exit;
     }
+    */
     
 	$id = intval($_GET['id']);
 
