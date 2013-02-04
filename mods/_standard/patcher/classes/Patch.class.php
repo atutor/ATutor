@@ -388,47 +388,58 @@ class Patch {
 		return true;
 	}
 	
-	/**
-	* Loop thru all the patch files that will be overwitten or altered, 
-	* to find out if they are modified by user. If it's modified, warn user.
-	* @access  private
-	* @return  true  if there are files being modified
-	*          false if no file is modified
-	* @author  Cindy Qi Li
-	*/
-	function hasFilesModified()
-	{
-		$overwrite_modified_files = false;
-		$alter_modified_files = false;
-		$has_not_exist_files = false;
-		
-		// no file action is defined, return nothing is modified (false)
-		if (!is_array($this->patch_array[files])) return false;
-		
-		foreach ($this->patch_array[files] as $row_num => $patch_file)
-		{
-			if ($patch_file["action"]=='alter' || $patch_file["action"]=='overwrite')
-			{
-				if (!file_exists($patch_file['location'] . $patch_file['name']))
-				{
-					$not_exist_files .= $patch_file['location'] . $patch_file['name'] . '<br />';
-					$has_not_exist_files = true;
-				}
-				else if ($this->isFileModified($patch_file['location'], $patch_file['name']))
-				{
-					if ($patch_file['action']=='overwrite')
-					{
-						$overwrite_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br />';
-						$overwrite_modified_files = true;
-					}
-					if ($patch_file['action']=='alter')
-					{
-						$alter_files .= realpath($patch_file['location'] . $patch_file['name']) . '<br />';
-						$alter_modified_files = true;
-					}
-				}
-			}
-		}
+    /**
+    * Loop thru all the patch files that will be overwitten or altered, 
+    * to find out if they are modified by user. If it's modified, warn user.
+    * @access  private
+    * @return  true  if there are files being modified
+    *          false if no file is modified
+    * @author  Cindy Qi Li
+    */
+    function hasFilesModified() {
+        $overwrite_modified_files = $alter_modified_files = $has_not_exist_files = false;
+        $files = $this->patch_array[files];
+        $separator = '<br />';
+        
+        // no file action is defined, return nothing is modified (false)
+        if (!is_array($files)) {
+            return false;
+        }
+        
+        foreach ($files as $row_num => $patch_file) {
+            $fileName = $patch_file['name'];
+            $fileLocation = $patch_file['location'];
+            $file = $fileLocation . $fileName;
+            $action = $patch_file['action'];
+            
+            if ($action == 'alter' || $action == 'overwrite') {
+                if (!file_exists($file)) {
+                    // If the same message exists then skip it
+                    if (strpos($not_exist_files, $file) !== false) {
+                        continue;
+                    }
+                    $not_exist_files .= $file . $separator;
+                    $has_not_exist_files = true;
+                } else if ($this->isFileModified($fileLocation, $fileName)) {
+                    $fileRealPath = realpath($file);
+                    if ($action == 'overwrite') {
+                        // If the same message exists then skip it
+                        if (strpos($overwrite_files, $fileRealPath) !== false) {
+                            continue;
+                        }
+                        $overwrite_files .= $fileRealPath . $separator;
+                        $overwrite_modified_files = true;
+                    } else if ($action == 'alter') {
+                        // If the same message exists then skip it
+                        if (strpos($alter_files, $fileRealPath) !== false) {
+                            continue;
+                        }
+                        $alter_files .= $fileRealPath . $separator;
+                        $alter_modified_files = true;
+                    }
+                }
+            }
+        }
 
 		if ($has_not_exist_files) $this->errors[] = _AT('patch_local_file_not_exist'). $not_exist_files;
 		if ($overwrite_modified_files)    $this->errors[] = _AT('patcher_overwrite_modified_files') . $overwrite_files;
