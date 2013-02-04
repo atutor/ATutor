@@ -28,3 +28,7 @@ ul#subnavlist li {
 	padding:.25em;
 	*padding:.4em;
 }
+.fl-tabs li {
+*margin-top:-.2em;
+*display: inline;
+}
