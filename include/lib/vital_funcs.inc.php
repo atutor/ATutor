@@ -1084,21 +1084,32 @@ function debug($var, $title='') {
  * @param   Array of parameters which will be converted and inserted into the query
  * @param   OPTIONAL Function returns the first element of the return array if set to TRUE. Basically returns the first row if it exists
  * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
- * @author  Alexey Novak
+ * @author  Alexey Novak, Cindy Li
  */
 function queryDB($query, $params, $oneRow = FALSE) {
-    global $db;
+    global $db, $msg;
+    
+    $displayErrorMessage = array('DB_QUERY', date('m/d/Y h:i:s a', time()));
+    
     if (!$query || $query == '') {
-        return $resultArray;
+        error_log(print_r('The query is empty.', TRUE), 0);
+        $msg->addError($displayErrorMessage);
+        return array();
     }
     
     try {
         $sql = vsprintf($query, $params);
         // Query DB and if something goes wrong then log the problem
-        $result = mysql_query($sql, $db) or debug_to_log(mysql_error());
+        $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), TRUE), 0) and $msg->addError($displayErrorMessage));
         // If we need only one row then just grab it otherwise get all the results
         if ($oneRow) {
             $row = mysql_fetch_assoc($result);
+            // Check that only 1 row is returned by the query. If not then throw an error.
+            if (mysql_fetch_assoc($result) === false) {
+                error_log(print_r('Query which should returned only 1 row has returned more rows.', TRUE), 0);
+                $msg->addError($displayErrorMessage);
+                return array();
+            }
             unset($result);
             return ($row) ? $row : array();
         }
@@ -1110,7 +1121,8 @@ function queryDB($query, $params, $oneRow = FALSE) {
         unset($result);
         return $resultArray;
     } catch (Exception $e) {
-        debug_to_log($e);
+        error_log(print_r($e, TRUE), 0);
+        $msg->addError($displayErrorMessage);
     }
 }
 ?>
