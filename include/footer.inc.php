@@ -51,7 +51,7 @@ $savant->assign('side_menu', $stack_files);
 // this js is indep of the theme used:
 ?>
 <script language="javascript" type="text/javascript">
-//<!--
+//<!--z
 var selected;
 function rowselect(obj) {
 	obj.className = 'selected';
@@ -75,14 +75,11 @@ function rowselectbox(obj, checked, handler) {
 //TODO******************BOLOGNA***************REMOVE ME ***********************/
 
 $popup = intval($_GET['popup']);
+$footerName = 'footer';
 if ($framed || $popup) {
-    if(isset($tool_flag) && ($tool_flag))                    //footer for the toolmanager
-        $savant->display('include/tm_footer.tmpl.php');
-    else
-	$savant->display('include/fm_footer.tmpl.php');
-} else {
-	$savant->display('include/footer.tmpl.php');
+    $footerName = (isset($tool_flag) && ($tool_flag)) ? 'tm_footer' : 'fm_footer';
 }
+$savant->display(sprintf('include/%s.tmpl.php', $footerName));
 
 //Harris Timer
   $mtime = microtime(); 
@@ -97,6 +94,7 @@ if (defined('AT_DEVEL') && AT_DEVEL) {
 	debug(TABLE_PREFIX, 'TABLE_PREFIX');
 	debug(DB_NAME, 'DB_NAME');
 	debug(VERSION, 'VERSION');
-	debug($_SESSION);
+	debug($_SESSION, 'SESSION:');
+	debug($_config, 'CONFIGURATION');
 }
 ?>

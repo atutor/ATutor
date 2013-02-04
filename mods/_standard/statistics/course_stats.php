@@ -118,4 +118,5 @@ $savant->assign('days', $days);
 $savant->assign('result', $result);
 $savant->assign('short_name', $short_name);
 $savant->display('instructor/statistics/course_stats.tmpl.php');
-require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+require_once(AT_INCLUDE_PATH.'footer.inc.php'); 
+?>

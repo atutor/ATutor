@@ -43,12 +43,18 @@ global $content_keywords;
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 //require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
 
+$theme_path = "";
+if (is_customized_theme($_SESSION['prefs']['PREF_THEME'])) {
+	$theme_path = AT_print(AT_SITES_DIR . $_SERVER['HTTP_HOST'] . '/', 'url.self');
+}
+
 $_custom_css = AT_print($_custom_css, 'url.css');
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
 $savant->assign('base_path', AT_print($_base_path, 'url.self'));
 $savant->assign('base_tmpl_path', $_SERVER['HTTP_HOST']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
+$savant->assign('theme_path', $theme_path);
 $savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 $savant->assign('just_social', $_config['just_social']);
 $theme_img  = AT_print($_base_path, 'url.base') . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';
@@ -89,7 +95,11 @@ if (isset($_custom_head)) {
 // Set session timeout warning if user is logged in
 if($_SESSION['valid_user']){
 // Setup the timeout warning when a user logs in
-$_at_timeout = ini_get('session.gc_maxlifetime');
+if($_config['session_timeout']){
+	$_at_timeout = ($_config['session_timeout']*60);
+}else{
+	$_at_timeout = '1200';
+}
 $custom_head .= '
 	<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
@@ -102,7 +112,7 @@ $custom_head .= '
 		    keepAliveUrl : "'.AT_print($_base_path, 'url.base').'include/session_keepalive.php",
 		    redirUrl     : "'.AT_print($_base_path, 'url.base').'logout.php",
 		    logoutUrl    : "'.AT_print($_base_path, 'url.base').'logout.php",
-		    warnAfter: '.($_at_timeout*1000).', //session.gc_maxlifetime converted to milliseconds
+		    warnAfter: '.($_at_timeout*1000).', // maxlifetime converted to milliseconds
 		    redirAfter: '.(($_at_timeout*1000)+300000).', // allow 5 more minutes to respond, in milliseconds
 		    title        : "'._AT('session_timeout_title').'",
 		    button_1     : "'._AT('session_timeout_logout_now').'",

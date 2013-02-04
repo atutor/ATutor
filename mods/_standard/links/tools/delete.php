@@ -13,8 +13,10 @@
 // $Id$
 
 define('AT_INCLUDE_PATH', '../../../../include/');
-require(AT_INCLUDE_PATH.'vitals.inc.php');
-require (AT_INCLUDE_PATH.'../mods/_standard/links/lib/links.inc.php');
+require_once(AT_INCLUDE_PATH.'vitals.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_standard/links/lib/links.inc.php');
+
+$linkIndexHeader = sprintf('Location: %smods/_standard/links/tools/index.php', AT_BASE_HREF);
 
 if (!manage_links()) {
 	$msg->addError('ACCESS_DENIED');
@@ -27,7 +29,7 @@ $link_id = intval($lid[0]);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'mods/_standard/links/tools/index.php');
+	header($linkIndexHeader);
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 
@@ -35,25 +37,23 @@ if (isset($_POST['submit_no'])) {
 
 	if (!links_authenticate($row['owner_type'], $row['owner_id'])) {
 		$msg->addError('ACCESS_DENIED');
-		header('Location: '.AT_BASE_HREF.'mods/_standard/links/tools/index.php');
+		header($linkIndexHeader);
 		exit;
 	}
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."links WHERE link_id=$_POST[link_id]";
+	$sql = sprintf('DELETE FROM %slinks WHERE link_id=%d', TABLE_PREFIX, $_POST[link_id]);
 	$result = mysql_query($sql, $db);
-
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.AT_BASE_HREF.'mods/_standard/links/tools/index.php');
+	header($linkIndexHeader);
 	exit;
 }
 
 $_section[0][0] = _AT('delete_link');
 
-require(AT_INCLUDE_PATH.'header.inc.php');
+require_once(AT_INCLUDE_PATH.'header.inc.php');
 
-	$sql = "SELECT LinkName, cat_id FROM ".TABLE_PREFIX."links WHERE link_id=$link_id";
-
-	$result = mysql_query($sql,$db);
+	$sql = sprintf('SELECT LinkName, cat_id FROM %slinks WHERE link_id=%d', TABLE_PREFIX, $link_id);
+	$result = mysql_query($sql, $db);
 	if (mysql_num_rows($result) == 0) {
 		$msg->printErrors('LINK_NOT_FOUND');
 	} else {
@@ -63,12 +63,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$hidden_vars['link_id'] = $link_id;
 		$hidden_vars['cat_id'] = $row['cat_id'];
 		
-		$confirm = array('DELETE_LINK', AT_print($row['LinkName'], 'resource_links.LinkName');
+		$confirm = array('DELETE_LINK', AT_print($row['LinkName'], 'resource_links.LinkName'));
 		$msg->addConfirm($confirm, $hidden_vars);
-		
 		$msg->printConfirm();
 	}
 
-require(AT_INCLUDE_PATH.'footer.inc.php');
-
+require_once(AT_INCLUDE_PATH.'footer.inc.php');
 ?>

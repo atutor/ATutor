@@ -28,6 +28,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['home_url']           = trim($_POST['home_url']);
 	$_POST['default_language']   = trim($_POST['default_language']);
 	$_POST['contact_email']      = trim($_POST['contact_email']);
+	$_POST['session_timeout']   = intval($_POST['session_timeout']);
 	$_POST['max_file_size']      = intval($_POST['max_file_size']);
 	$_POST['max_file_size']      = max(0, $_POST['max_file_size']);
 	$_POST['max_course_size']    = intval($_POST['max_course_size']);
@@ -44,6 +45,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['email_notification'] = intval($_POST['email_notification']);
 	$_POST['sent_msgs_ttl']      = intval($_POST['sent_msgs_ttl']);
 	$_POST['allow_instructor_requests'] = intval($_POST['allow_instructor_requests']);
+	$_POST['disable_create'] 			= intval($_POST['disable_create']);
 	$_POST['auto_approve_instructors']  = intval($_POST['auto_approve_instructors']);
 	$_POST['theme_categories']          = intval($_POST['theme_categories']);
 	$_POST['user_notes']                = intval($_POST['user_notes']);

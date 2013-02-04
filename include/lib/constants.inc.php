@@ -22,6 +22,7 @@ $_config_defaults = array();
 $_config_defaults['contact_email']             = '';
 $_config_defaults['email_notification']        = 1; // enabled
 $_config_defaults['allow_instructor_requests'] = 1; // enabled
+$_config_defaults['disable_create'] 		   = 0; // disabled (Instructors can create courses)
 $_config_defaults['auto_approve_instructors']  = 0; // disabled
 $_config_defaults['max_file_size']             = 10485760;  // 10MB
 $_config_defaults['max_course_size']           = 104857600; // 100 MB
@@ -60,6 +61,7 @@ $_config_defaults['enable_mail_queue']         = 0; // mail queue can only be en
 $_config_defaults['auto_install_languages']    = 0; // auto install languages can only be enabled if cron is running
 $_config_defaults['display_name_format']       = 1; // 0-5, see (array) display_name_formats
 $_config_defaults['time_zone']                 = ''; // empty means disabled or not supported
+$_config_defaults['session_timeout']           = '20'; // timeout after 20 minutes
 $_config_defaults['prof_pic_max_file_size']	   = 819200; // max size of an uploaded profile pic, in bytes. default 800 KB
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent inbox msgs are deleted
 $_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled/unsupported, (non-zero is the actual mysql value)
@@ -292,6 +294,9 @@ define('MOBILE_DEVICE',  'Mobile');
 
 // theme directory
 define('AT_SYSTEM_THEME_DIR', realpath(AT_INCLUDE_PATH . "../themes") . "/");
+
+// subsites
+define('AT_SITES_DIR',  $_base_path. "sites/");
 
 $_rl_types = array ();
 $_rl_types[RL_TYPE_BOOK]	= 'rl_book';

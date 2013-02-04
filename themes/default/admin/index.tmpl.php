@@ -36,10 +36,13 @@
 			<div class="row">
 				<h3><?php echo _AT('instructor_requests'); ?></h3>
 				
-				<?php foreach($this->row_instructor as $key => $value): ?>
+				<?php 
+				if(is_array($this->row_instructor)){
+				foreach($this->row_instructor as $key => $value): ?>
 				
 				<p><?php echo _AT('instructor_requests_text', $value['cnt']); ?></p>
-				<?php endforeach;?>
+				<?php endforeach;
+				}?>
 			</div>
 
 			<div class="row buttons">

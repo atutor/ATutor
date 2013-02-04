@@ -669,6 +669,21 @@ function admin_authenticate($privilege = 0, $check = false) {
 }
 
 /**
+ * Check if the give theme is a subsite customized theme. Return true if it is, otherwise, return false
+ * @access public
+ * @param string $theme_name
+ * @return true or false
+ */
+function is_customized_theme($theme_name) {
+	global $db;
+	$sql = "SELECT customized FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$theme_name."'";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	
+	return !!$row["customized"];
+}
+
+/**
  * Return the main theme path based on the "customized" flag
  * @access  private
  * @param   int customized   whether this is a customized theme
@@ -1062,4 +1077,40 @@ function debug($var, $title='') {
 	echo '</pre>';
 }
 
+/**
+ * This function is used to make a DB query the same along the whole codebase
+ * @access  public
+ * @param   Query string in the vsprintf format. Basically the first parameter of vsprintf function
+ * @param   Array of parameters which will be converted and inserted into the query
+ * @param   OPTIONAL Function returns the first element of the return array if set to TRUE. Basically returns the first row if it exists
+ * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
+ * @author  Alexey Novak
+ */
+function queryDB($query, $params, $oneRow = FALSE) {
+    global $db;
+    if (!$query || $query == '') {
+        return $resultArray;
+    }
+    
+    try {
+        $sql = vsprintf($query, $params);
+        // Query DB and if something goes wrong then log the problem
+        $result = mysql_query($sql, $db) or debug_to_log(mysql_error());
+        // If we need only one row then just grab it otherwise get all the results
+        if ($oneRow) {
+            $row = mysql_fetch_assoc($result);
+            unset($result);
+            return ($row) ? $row : array();
+        }
+        
+        $resultArray = array();
+        while ($row = mysql_fetch_assoc($result)) {
+            $resultArray[] = $row;
+        }
+        unset($result);
+        return $resultArray;
+    } catch (Exception $e) {
+        debug_to_log($e);
+    }
+}
 ?>
