@@ -63,7 +63,7 @@ $member_id = $_SESSION['member_id'];
 // because now $_SESSION['prefs']['PREF_THEME'] == $_SESSION['prefs']['PREF_MOBILE_THEME'] instead of the desktop theme
 // The code below re-assign $_SESSION['prefs']['PREF_THEME'] back to what it should be
 if (is_mobile_device()) {
-	$row = queryDB('SELECT * FROM %smembers WHERE member_id=%d', array(TABLE_PREFIX, $member_id), TRUE);
+	$row = queryDB('SELECT * FROM %smembers WHERE member_id=%d', array(TABLE_PREFIX, $member_id), true);
 	
 	foreach (unserialize(stripslashes($row['preferences'])) as $pref_name => $value) {
 		$desktop_theme = ($pref_name == 'PREF_THEME') ? $value : $desktop_theme;
@@ -78,7 +78,7 @@ if ($_SESSION['first_login']) {
 }
 
 unset($_SESSION['first_login']);
-$row_notify = queryDB('SELECT inbox_notify FROM %smembers WHERE member_id=%d', array(TABLE_PREFIX, $member_id), TRUE);
+$row_notify = queryDB('SELECT inbox_notify FROM %smembers WHERE member_id=%d', array(TABLE_PREFIX, $member_id), true);
 
 $languages = $languageManager->getAvailableLanguages();
 

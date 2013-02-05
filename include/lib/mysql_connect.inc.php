@@ -45,12 +45,20 @@ if (AT_INCLUDE_PATH !== 'NULL') {
  * @access  public
  * @param   Query string in the vsprintf format. Basically the first parameter of vsprintf function
  * @param   Array of parameters which will be converted and inserted into the query
- * @param   OPTIONAL Function returns the first element of the return array if set to TRUE. Basically returns the first row if it exists
+ * @param   Function returns the first element of the return array if set to TRUE. Basically returns the first row if it exists
+ * @param...if True then addslashes will be applied to every parameter passed into the query to prevent SQL injections
  * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
  * @author  Alexey Novak, Cindy Li
  */
-function queryDB($query, $params, $oneRow = FALSE) {
-    global $db, $msg;
+function queryDB($query, $params, $oneRow, $sanitize = true) {
+    global $db, $msg, $addslashes;
+    
+    // Security precaution.
+    if ($sanitize) {
+        foreach($params as $i=>$value) {
+            $params[$i] = $addslashes($value);
+        }
+    }
     
     $displayErrorMessage = array('DB_QUERY', date('m/d/Y h:i:s a', time()));
     
