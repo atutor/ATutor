@@ -35,7 +35,7 @@ define('AT_SQL_QUESTION_LONG', "INSERT INTO ".TABLE_PREFIX."tests_questions VALU
 define('AT_SQL_QUESTION_LIKERT', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (    NULL, %d, %d, 4, '%s', '%s', 
                             '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', 
                             %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, 
-                            '', '', '', '', '', '', '', '', '', '', 0, 0)");
+                            '', '', '', '', '', '', '', '', '', '', 0, 0, DEFAULT)");
 
 //Question for Ordering
 define('AT_SQL_QUESTION_ORDERING', "INSERT INTO ".TABLE_PREFIX."tests_questions VALUES (    NULL, %d, %d, 6, '%s', '%s', 
