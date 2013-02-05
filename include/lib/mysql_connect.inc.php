@@ -53,7 +53,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 function queryDB($query, $params, $oneRow, $sanitize = true) {
     global $db, $msg, $addslashes;
     
-    // Security precaution.
+    // Prevent sql injections through string parameters passed into the query
     if ($sanitize) {
         foreach($params as $i=>$value) {
             $params[$i] = $addslashes($value);
@@ -63,7 +63,7 @@ function queryDB($query, $params, $oneRow, $sanitize = true) {
     $displayErrorMessage = array('DB_QUERY', date('m/d/Y h:i:s a', time()));
     
     if (!$query || $query == '') {
-        error_log(print_r('The query is empty.', TRUE), 0);
+        error_log(print_r('The query is empty.', true), 0);
         $msg->addError($displayErrorMessage);
         return array();
     }
@@ -71,13 +71,13 @@ function queryDB($query, $params, $oneRow, $sanitize = true) {
     try {
         $sql = vsprintf($query, $params);
         // Query DB and if something goes wrong then log the problem
-        $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), TRUE), 0) and $msg->addError($displayErrorMessage));
+        $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
         // If we need only one row then just grab it otherwise get all the results
         if ($oneRow) {
             $row = mysql_fetch_assoc($result);
             // Check that only 1 row is returned by the query. If not then throw an error.
             if (mysql_fetch_assoc($result) !== false) {
-                error_log(print_r('Query which should returned only 1 row has returned more rows.', TRUE), 0);
+                error_log(print_r('Query which should returned only 1 row has returned more rows.', true), 0);
                 $msg->addError($displayErrorMessage);
                 return array();
             }
@@ -92,7 +92,7 @@ function queryDB($query, $params, $oneRow, $sanitize = true) {
         unset($result);
         return $resultArray;
     } catch (Exception $e) {
-        error_log(print_r($e, TRUE), 0);
+        error_log(print_r($e, true), 0);
         $msg->addError($displayErrorMessage);
     }
 }
