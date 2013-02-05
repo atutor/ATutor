@@ -86,8 +86,10 @@ function queryDB($query, $params, $oneRow = false, $sanitize = true) {
         }
         
         $resultArray = array();
-        while ($row = mysql_fetch_assoc($result)) {
-            $resultArray[] = $row;
+        if(!is_bool($result)) {
+            while ($row = mysql_fetch_assoc($result)) {
+                $resultArray[] = $row;
+            }
         }
         unset($result);
         return $resultArray;
