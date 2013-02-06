@@ -66,6 +66,7 @@ function queryDB($query, $params, $oneRow = false, $sanitize = true) {
     
     try {
         $sql = vsprintf($query, $params);
+        error_log(print_r($sql, true), 0);
         // Query DB and if something goes wrong then log the problem
         $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
         

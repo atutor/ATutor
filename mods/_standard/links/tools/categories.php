@@ -25,9 +25,9 @@ if (!manage_links()) {
 if ((isset($_POST['delete']) || isset($_POST['edit'])) && !isset($_POST['cat_id'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_POST['delete'])) {
-	$row = queryDB('SELECT link_id FROM %slinks WHERE cat_id=%d', array(TABLE_PREFIX, $_POST['cat_id']), true);
+	$result = queryDB('SELECT link_id FROM %slinks WHERE cat_id=%d', array(TABLE_PREFIX, $_POST['cat_id']));
 	
-    if (!empty($row)) {
+    if (!empty($result)) {
 		$msg->addError('LINK_CAT_NOT_EMPTY');
 	} else {
 		header('Location: categories_delete.php?cat_id='.$_POST['cat_id']);
