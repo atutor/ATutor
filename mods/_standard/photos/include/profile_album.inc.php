@@ -36,6 +36,11 @@ if ($result){
 	}
 }
 
+// Delete profile picture
+if($_POST['delete'] == '1'){
+    require ('../profile_pictures/save_profile_picture.php');	//handle POST request
+}
+
 //instantiate obj
 $pa = new PhotoAlbum($id);
 $info = $pa->getAlbumInfo();
