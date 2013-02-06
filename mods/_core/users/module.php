@@ -8,11 +8,15 @@ define('AT_ADMIN_PRIV_USERS', $this->getAdminPrivilege());
 if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 
 	$this->_pages[AT_NAV_ADMIN] = array('mods/_core/users/users.php');
+		$this->_pages['mods/_core/users/default_preferences.php']['title_var'] = 'default_preferences';
+		$this->_pages['mods/_core/users/default_preferences.php']['parent']    = 'mods/_core/users/users.php';
+		$this->_pages['mods/_core/users/default_preferences.php']['guide']     = 'admin/?p=default_preferences.php';
+		//$this->_pages['mods/_core/users/users.php']['children'] = array('mods/_core/users/default_preferences.php');
 
 	$this->_pages['mods/_core/users/users.php']['title_var'] = 'users';
 	$this->_pages['mods/_core/users/users.php']['parent']    = AT_NAV_ADMIN;
 	$this->_pages['mods/_core/users/users.php']['guide']     = 'admin/?p=users.php';
-	$this->_pages['mods/_core/users/users.php']['children']  = array('mods/_core/users/create_user.php', 'mods/_core/users/instructor_requests.php', 'mods/_core/users/master_list.php', 'mods/_core/users/admin_email.php');
+	$this->_pages['mods/_core/users/users.php']['children']  = array('mods/_core/users/create_user.php','mods/_core/users/default_preferences.php', 'mods/_core/users/instructor_requests.php', 'mods/_core/users/master_list.php', 'mods/_core/users/admin_email.php');
 
 	if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 		$this->_pages['mods/_core/users/users.php']['children'][]  = 'mods/_core/users/admins/index.php';
@@ -52,10 +56,6 @@ if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) || admin_authenticate(AT_ADMIN
 		$this->_pages['mods/_core/users/create_user.php']['title_var'] = 'create_user';
 		$this->_pages['mods/_core/users/create_user.php']['parent']    = 'mods/_core/users/users.php';
 
-		$this->_pages['mods/_core/users/default_preferences.php']['title_var'] = 'default_preferences';
-		$this->_pages['mods/_core/users/default_preferences.php']['parent']    = 'admin/config_edit.php';
-		$this->_pages['mods/_core/users/default_preferences.php']['guide']     = 'admin/?p=default_preferences.php';
-		$this->_pages['admin/config_edit.php']['children'] = array('mods/_core/users/default_preferences.php');
 
 		$this->_pages['mods/_core/users/password_user.php']['title_var'] = 'password';
 		$this->_pages['mods/_core/users/password_user.php']['parent']    = 'mods/_core/users/users.php';

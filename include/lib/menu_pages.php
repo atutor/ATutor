@@ -197,12 +197,11 @@ $_pages['users/index.php']['parent']    = AT_NAV_START;
 $_pages['users/index.php']['guide']     = 'general/?p=my_courses.php';
 
 if (isset($_SESSION['member_id']) && $_SESSION['member_id'] && (!isset($_SESSION['course_id']) || !$_SESSION['course_id'])) {
-	$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
+	//$_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($_pages['users/index.php']['children']) ? $_pages['users/index.php']['children'] : array());
 }
-	$_pages['users/browse.php']['title_var'] = 'browse_courses';
-	//$_pages['users/browse.php']['parent']    = 'users/index.php';
-	$_pages['users/browse.php']['parent']    = AT_NAV_START;
-	$_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
+$_pages['users/browse.php']['title_var'] = 'browse_courses';
+$_pages['users/browse.php']['parent']    = AT_NAV_START;
+$_pages['users/browse.php']['guide']     = 'general/?p=browse_courses.php';
 
 $_pages['users/private_enroll.php']['title_var'] = 'enroll';
 $_pages['users/private_enroll.php']['parent']    = 'users/index.php';
@@ -215,7 +214,6 @@ $_pages['mods/_standard/profile_pictures/profile_picture.php']['title_var']    =
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 $_pages['users/profile.php']['guide']     = 'general/?p=profile.php';
-//$_pages['users/profile.php']['children']  = array_merge(array('users/password_change.php', 'users/email_change.php','mods/_standard/profile_pictures/profile_picture.php'), (array) $_pages['users/profile.php']['children']);
 $_pages['users/profile.php']['children']  = array_merge(array('users/password_change.php', 'users/email_change.php','mods/_standard/profile_pictures/profile_picture.php'), (array) $_pages['users/profile.php']['children']);
 
 $_pages['users/password_change.php']['title_var'] = 'change_password';

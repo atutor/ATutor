@@ -53,6 +53,8 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 function queryDB($query, $params, $oneRow = false, $sanitize = true) {
     global $db, $msg, $addslashes;
     
+    $oneRowErrorMessage = 'Query which should returned only 1 row has returned more rows.';
+    
     // Prevent sql injections through string parameters passed into the query
     if ($sanitize) {
         foreach($params as $i=>$value) {
@@ -62,22 +64,26 @@ function queryDB($query, $params, $oneRow = false, $sanitize = true) {
     
     $displayErrorMessage = array('DB_QUERY', date('m/d/Y h:i:s a', time()));
     
-    if (!$query || $query == '') {
-        error_log(print_r('The query is empty.', true), 0);
-        $msg->addError($displayErrorMessage);
-        return array();
-    }
-    
     try {
         $sql = vsprintf($query, $params);
         // Query DB and if something goes wrong then log the problem
         $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
+        
+        // If the query was of the type which does not suppose to return rows e.g. UPDATE/SELECT/INSERT
+        if (is_bool($result) || $result === null) {
+            if ($oneRow) {
+                error_log(print_r($oneRowErrorMessage, true), 0);
+                $msg->addError($displayErrorMessage);
+            }
+            return array();
+        }
+        
         // If we need only one row then just grab it otherwise get all the results
         if ($oneRow) {
             $row = mysql_fetch_assoc($result);
-            // Check that only 1 row is returned by the query. If not then throw an error.
-            if (mysql_fetch_assoc($result) !== false) {
-                error_log(print_r('Query which should returned only 1 row has returned more rows.', true), 0);
+            // Check that there are no more than 1 row expected.
+            if (mysql_fetch_assoc($result)) {
+                error_log(print_r($oneRowErrorMessage, true), 0);
                 $msg->addError($displayErrorMessage);
                 return array();
             }
