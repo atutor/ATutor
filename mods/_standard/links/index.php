@@ -77,10 +77,10 @@ if (isset($_GET['asc'])) {
 if ($_GET['search']) {
 	$_GET['search'] = trim($_GET['search']);
 	$page_string .= SEP.'search='.urlencode($_GET['search']);
-	$search = $addslashes($_GET['search']);
+	$search = $_GET['search'];
 	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
 	$search = '%'.$search.'%';
-	$search = "((LinkName LIKE '$search') OR (description LIKE '$search'))";
+	$search = '((LinkName LIKE "$search") OR (description LIKE "$search"))';
 } else {
 	$search = '1';
 }
@@ -98,13 +98,17 @@ if ($_GET['cat_parent_id']) {
 //get links
 $tmp_groups = implode(',', $_SESSION['groups']);
 
+$sql = '';
+$sqlParams = array();
 if (!empty($tmp_groups)) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($tmp_groups) AND owner_type=".LINK_CAT_GROUP.")) AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s)) AND L.Approved=1 AND %s AND %s ORDER BY %s %s';
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, LINK_CAT_GROUP, $_SESSION[course_id], LINK_CAT_COURSE, $tmp_groups, LINK_CAT_GROUP, $search, $cat_sql, $col, $order);
 } else {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE (owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") AND L.Approved=1 AND $search AND $cat_sql ORDER BY $col $order";
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE (owner_id=%d AND owner_type=%s) AND L.Approved=1 AND %s AND %s ORDER BY %s %s';
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $search, $cat_sql, $col, $order);
 }
-$result = mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
+$result = queryDB($sql, $sqlParams);
+$num_results = count($result);
 
 ?>
 <?php if ($num_results > 0 || isset($_GET['filter'])): ?>
@@ -171,10 +175,10 @@ $num_results = mysql_num_rows($result);
 </tr>
 </thead>
 <tbody>
-	<?php if ($row = mysql_fetch_assoc($result)) : ?>
-	<?php
-	do {
-		?>
+	<?php if (!empty($result)) {
+	   foreach ($result as $i => $value) {
+	   $row = $result[$i];
+	   ?>
 		<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;">
 			<td><a href="<?php echo url_rewrite('mods/_standard/links/index.php?view='.$row['link_id']); ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'links.LinkName'); ?></a></td>
 			<td><?php 
@@ -185,13 +189,12 @@ $num_results = mysql_num_rows($result);
 			?></td>
 			<td><?php echo AT_print($row['Description'], 'links.Description'); ?></td>
 		</tr>
-	<?php 
-		} while ($row = mysql_fetch_assoc($result)); ?>
-	<?php else: ?>
-		<tr>
-			<td colspan="3"><?php echo _AT('none_found'); ?></td>
-		</tr>
-	<?php endif; ?>
+	<?php
+    	}
+	} else { 
+    	echo sprintf('<td colspan="3">%s</td>', _AT('none_found'));
+    }
+?>
 </tbody>
 </table>
 
