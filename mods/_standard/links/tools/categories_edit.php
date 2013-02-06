@@ -43,8 +43,6 @@ if (isset($_POST['submit'])) {
 			header('Location: '.AT_BASE_HREF.'mods/_standard/links/tools/categories.php');
 			exit;
 		}
-
-		$cat_name = $addslashes($_POST['cat_name']);
 		
 		//Check length of the post, if it's exceeded 100 as defined in the db. 
 		$cat_name = validate_length($cat_name, 100);
@@ -89,7 +87,7 @@ $current_cat_id = $categories[$cat_id]['cat_parent'];
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="category_name"><?php echo _AT('title'); ?></label><br />
-		<input type="text" id="category_name" name="cat_name" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
+		<input type="text" id="category_name" name="cat_name" value="<?php echo htmlspecialchars($categories[$cat_id]['cat_name']); ?>" />
 	</div>
 
 	<div class="row">

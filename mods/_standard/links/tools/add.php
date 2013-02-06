@@ -66,9 +66,6 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
-		$_POST['title']  = $addslashes($_POST['title']);
-		$_POST['url'] == $addslashes($_POST['url']);
-		$_POST['description']  = $addslashes($_POST['description']);
 
 		//Check length of the post, if it's exceeded 64 as defined in the db. 
 		$_POST['title'] = validate_length($_POST['title'], 64);
@@ -86,10 +83,6 @@ if (isset($_POST['add_link']) && isset($_POST['submit'])) {
 
 		header('Location: '.AT_BASE_HREF.'mods/_standard/links/tools/index.php');
 		exit;
-	} else {
-		$_POST['title']  = stripslashes($_POST['title']);
-		$_POST['url'] == stripslashes($_POST['url']);
-		$_POST['description']  = stripslashes($_POST['description']);
 	}
 }
 
