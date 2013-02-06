@@ -78,10 +78,10 @@ $this->_pages['mods/_standard/links/index.php']['icon']       = 'images/home-lin
 
 
 function links_get_group_url($group_id) {
-	global $db;
-	$sql = "SELECT cat_id FROM ".TABLE_PREFIX."links_categories WHERE owner_id=$group_id and owner_type=".LINK_CAT_GROUP;
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+    // Adding queryDB to what might be a broken SQL query. This query might return multiple rows and only the first one is selected.
+	$result = queryDB("SELECT cat_id FROM %slinks_categories WHERE owner_id=%d and owner_type=%s", array(TABLE_PREFIX, $group_id, LINK_CAT_GROUP));
+	$row = (is_array($result) && count($result) > 0) ? $result[0] : null;
+	if ($row) {
 		return 'mods/_standard/links/index.php?cat_parent_id='.$row['cat_id'].'&search=&filter=Filter';
 	} 
 

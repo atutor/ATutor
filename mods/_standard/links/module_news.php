@@ -16,29 +16,27 @@
  * @return list of news, [timestamp]=>
  */
 function links_news() {
-	global $db, $enrolled_courses, $system_courses;
+	global $enrolled_courses, $system_courses;
 	$news = array();
 
-	if ($enrolled_courses == ''){
+	if ($enrolled_courses == '') {
 		return $news;
 	} 
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C ON C.cat_id = L.cat_id WHERE owner_id IN $enrolled_courses AND L.Approved=1 ORDER BY SubmitDate DESC";
-	$result = mysql_query($sql, $db);
-	if($result){
-		while($row = mysql_fetch_assoc($result)){
-			$news[] = array(
-							'time'=>$row['SubmitDate'], 
-							'object'=>$row, 
-							'alt'=>_AT('links'),
-							'course'=>$system_courses[$row['owner_id']]['title'],
-							'thumb'=>'images/home-links_sm.png', 
-							'link'=>'<a href="bounce.php?course='.$row['owner_id'].SEP.'p='.urlencode('mods/_standard/links/index.php?view='.$row['link_id']).'"'.
-									(strlen($row['LinkName']) > SUBLINK_TEXT_LEN ? ' title="'.$row['LinkName'].'"' : '') .'>'. 
-									validate_length($row['LinkName'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a> <small>');
-		}
+	$result = queryDB('SELECT * FROM %slinks L INNER JOIN %slinks_categories C ON C.cat_id = L.cat_id WHERE owner_id IN %s AND L.Approved=1 ORDER BY SubmitDate DESC',
+	                       array(TABLE_PREFIX, TABLE_PREFIX, $enrolled_courses));
+	foreach ($result as $i => $value) {
+		$row = $result[$i];
+		$news[] = array(
+						'time'=>$row['SubmitDate'], 
+						'object'=>$row, 
+						'alt'=>_AT('links'),
+						'course'=>$system_courses[$row['owner_id']]['title'],
+						'thumb'=>'images/home-links_sm.png', 
+						'link'=>'<a href="bounce.php?course='.$row['owner_id'].SEP.'p='.urlencode('mods/_standard/links/index.php?view='.$row['link_id']).'"'.
+								(strlen($row['LinkName']) > SUBLINK_TEXT_LEN ? ' title="'.$row['LinkName'].'"' : '') .'>'. 
+								validate_length($row['LinkName'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a> <small>');
 	}
 	return $news;
 }
-
 ?>
