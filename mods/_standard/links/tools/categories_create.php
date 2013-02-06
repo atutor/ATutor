@@ -55,8 +55,7 @@ if (isset($_POST['submit'])) {
 			$cat_name = $substr($cat_name, 0, 100);
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (NULL, $owner_type, $owner_id, '$cat_name', $parent_id)";
-		$result = mysql_query($sql, $db);
+		queryDB('INSERT INTO %slinks_categories VALUES (NULL, %s, %d, "%s", %d)', array(TABLE_PREFIX, $owner_type, $owner_id, $cat_name, $parent_id));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		

@@ -25,10 +25,9 @@ if (!manage_links()) {
 if ((isset($_POST['delete']) || isset($_POST['edit'])) && !isset($_POST['cat_id'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 } else if (isset($_POST['delete'])) {
-	//check if links are in the cat
-	$sql	= "SELECT link_id FROM ".TABLE_PREFIX."links WHERE cat_id=$_POST[cat_id]";
-	$result = mysql_query($sql, $db);
-    if ($row = mysql_fetch_assoc($result)) {
+	$row = queryDB('SELECT link_id FROM %slinks WHERE cat_id=%d', array(TABLE_PREFIX, $_POST['cat_id']), true);
+	
+    if (!empty($row)) {
 		$msg->addError('LINK_CAT_NOT_EMPTY');
 	} else {
 		header('Location: categories_delete.php?cat_id='.$_POST['cat_id']);
@@ -73,10 +72,9 @@ if (!empty($categories)) { ?>
 		if (!empty($row['cat_name'])) {
 
 		$parent_cat_name = '';
-		if ($row['cat_parent']) {
-			$sql_cat	= "SELECT name, owner_id, owner_type FROM ".TABLE_PREFIX."links_categories WHERE cat_id=".$row['cat_parent'];
-			$result_cat = mysql_query($sql_cat, $db);
-			$row_cat = mysql_fetch_assoc($result_cat);
+		if ($row['cat_parent']) {		
+			$row_cat = queryDB('SELECT name, owner_id, owner_type FROM %slinks_categories WHERE cat_id=%d', array(TABLE_PREFIX, $row['cat_parent']), true);
+			
 			$parent_cat_name = AT_print($row_cat['name'], 'links_categories.name');
 
 			if (empty($parent_cat_name)) {
