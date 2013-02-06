@@ -24,15 +24,13 @@ if (!manage_links()) {
 if (isset($_GET['view'])) {
 	$_GET['view'] = intval($_GET['view']);
 	//add to the num hits
-	$sql = "SELECT Url, hits FROM ".TABLE_PREFIX."links WHERE link_id=$_GET[view]";
-	$results = mysql_query($sql,$db);
+	$row = queryDB("SELECT Url, hits FROM %slinks WHERE link_id=%d", array(TABLE_PREFIX, $_GET['view']), true);
 
-	if ($row = mysql_fetch_assoc($results)) { 
+	if (!empty($row)) { 
 		if (!authenticate(AT_PRIV_LINKS, AT_PRIV_RETURN)) {
 
 			$row['hits']++;
-			$sql = "UPDATE ".TABLE_PREFIX."links SET hits=$row[hits] WHERE link_id=$_GET[view]";
-			mysql_query($sql,$db);
+			queryDB('UPDATE %slinks SET hits=%d WHERE link_id=%d', array(TABLE_PREFIX, $row['hits'], $_GET['view']));
 		}
 		
 		//http://www.atutor.ca/atutor/mantis/view.php?id=3853
