@@ -25,8 +25,7 @@ function links_news() {
 
 	$result = queryDB('SELECT * FROM %slinks L INNER JOIN %slinks_categories C ON C.cat_id = L.cat_id WHERE owner_id IN %s AND L.Approved=1 ORDER BY SubmitDate DESC',
 	                       array(TABLE_PREFIX, TABLE_PREFIX, $enrolled_courses));
-	foreach ($result as $i => $value) {
-		$row = $result[$i];
+	foreach ($result as $row) {
 		$news[] = array(
 						'time'=>$row['SubmitDate'], 
 						'object'=>$row, 

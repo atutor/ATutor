@@ -127,8 +127,7 @@ function get_link_categories($manage=false, $list=false) {
 	}
 	$result = queryDB($sql, $sqlParams);
 
-	foreach ($result as $i => $value) {
-		$row = $result[$i];
+	foreach ($result as $row) {
 		//if group, get name
 		if (empty($row['name'])) {
 			$row['name'] = get_group_name($row['owner_id']);

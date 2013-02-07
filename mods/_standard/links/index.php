@@ -183,8 +183,7 @@ $num_results = count($result);
 </thead>
 <tbody>
 	<?php if (!empty($result)) {
-	   foreach ($result as $i => $value) {
-	   $row = $result[$i];
+	   foreach ($result as $row) {
 	   ?>
 		<tr onmousedown="document.form['m<?php echo $row['link_id']; ?>'].checked = true;">
 			<td><a href="<?php echo url_rewrite('mods/_standard/links/index.php?view='.$row['link_id']); ?>" target="_new" title="<?php echo AT_print($row['LinkName'], 'links.LinkName'); ?>"><?php echo AT_print($row['LinkName'], 'links.LinkName'); ?></a></td>

@@ -4,8 +4,7 @@ $links_limit = 3;		//Numero massimo dei possibili sottocontenuti visualizzabili 
 $result = queryDB("SELECT * FROM %slinks L INNER JOIN %slinks_categories C ON C.cat_id = L.cat_id WHERE owner_id=%d ORDER BY SubmitDate DESC LIMIT %d",
                     array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $links_limit));
 if (!empty($result)) {
-    foreach ($result as $i => $value) {
-        $row = $result[$i];
+    foreach ($result as $row) {
         $link_id = $row['link_id'];
         $link_name = $row['LinkName'];
         $list[] = '<a href="'.url_rewrite('mods/_standard/links/index.php?view='.$link_id, AT_PRETTY_URL_IS_HEADER).'"'.

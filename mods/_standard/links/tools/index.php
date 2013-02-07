@@ -125,8 +125,7 @@ if (!empty($categories)) {
 	</tr>
 	</tfoot>
 	<tbody>
-<?php foreach($result as $i => $value) {
-        $row = $result[$i];
+<?php foreach($result as $row) {
 		if ($row['owner_type'] == LINK_CAT_GROUP) {
 			$row['name'] = get_group_name($row['owner_id']);
 		}
