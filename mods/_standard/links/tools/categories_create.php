@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 			$cat_name = $substr($cat_name, 0, 100);
 		}
 
-		queryDB('INSERT INTO %slinks_categories VALUES (NULL, %s, %d, "%s", %d)', array(TABLE_PREFIX, $owner_type, $owner_id, $cat_name, $parent_id));
+		queryDB('INSERT INTO %slinks_categories VALUES (DEFAULT, %s, %d, "%s", %d)', array(TABLE_PREFIX, $owner_type, $owner_id, $cat_name, $parent_id));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		

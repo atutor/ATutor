@@ -66,7 +66,7 @@ if (isset($_POST['cancel'])) {
 
 		$approved = 0; //not approved for student submissions
 
-		queryDB('INSERT INTO %slinks VALUES (NULL, %d, "%s", "%s", "%s", %s, "%s", "%s", NOW(), 0)',
+		queryDB('INSERT INTO %slinks VALUES (DEFAULT, %d, "%s", "%s", "%s", %s, "%s", "%s", NOW(), DEFAULT)',
 		              array(TABLE_PREFIX, $_POST['cat'], $_POST['url'], $_POST['title'], $_POST['description'], $approved, $name, $email));
 	
 		$msg->addFeedback('LINK_ADDED');

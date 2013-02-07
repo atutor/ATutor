@@ -1,7 +1,7 @@
 <?php
 // create group
 function links_create_group($group_id) {
-    queryDB('INSERT INTO %slinks_categories VALUES (NULL, %s, %d, "", 0)', array(TABLE_PREFIX, LINK_CAT_GROUP, $group_id));
+    queryDB('INSERT INTO %slinks_categories VALUES (DEFAULT, %s, %d, "", 0)', array(TABLE_PREFIX, LINK_CAT_GROUP, $group_id));
 }
 
 // delete group
