@@ -66,10 +66,16 @@ function queryDB($query, $params, $oneRow = false, $sanitize = true) {
     
     try {
         $sql = vsprintf($query, $params);
+        
+        // The line below must be commented out on production instance of ATutor
+        //error_log(print_r(mysql_error(), true), 0)    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY
+        
         // Query DB and if something goes wrong then log the problem
         $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
         
         // If the query was of the type which does not suppose to return rows e.g. UPDATE/SELECT/INSERT
+        // is_bool is for mysql compatibility
+        // === null is for mysqli compatibility
         if (is_bool($result) || $result === null) {
             if ($oneRow) {
                 error_log(print_r($oneRowErrorMessage, true), 0);
