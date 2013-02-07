@@ -41,8 +41,8 @@ if (isset($_POST['submit_no'])) {
 		exit;
 	}
 
-	$sql = sprintf('DELETE FROM %slinks WHERE link_id=%d', TABLE_PREFIX, $_POST[link_id]);
-	$result = mysql_query($sql, $db);
+	queryDB('DELETE FROM %slinks WHERE link_id=%d', array(TABLE_PREFIX, $_POST[link_id]));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header($linkIndexHeader);
 	exit;
@@ -52,13 +52,11 @@ $_section[0][0] = _AT('delete_link');
 
 require_once(AT_INCLUDE_PATH.'header.inc.php');
 
-	$sql = sprintf('SELECT LinkName, cat_id FROM %slinks WHERE link_id=%d', TABLE_PREFIX, $link_id);
-	$result = mysql_query($sql, $db);
-	if (mysql_num_rows($result) == 0) {
+	$row = queryDB('SELECT LinkName, cat_id FROM %slinks WHERE link_id=%d', array(TABLE_PREFIX, $link_id), true);
+	
+	if (empty($row)) {
 		$msg->printErrors('LINK_NOT_FOUND');
 	} else {
-		$row = mysql_fetch_assoc($result);
-
 		$hidden_vars['delete_link']  = TRUE;
 		$hidden_vars['link_id'] = $link_id;
 		$hidden_vars['cat_id'] = $row['cat_id'];

@@ -60,26 +60,19 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
 
 		$_POST['cat'] = intval($_POST['cat']);
-		$_POST['title']  = $addslashes($_POST['title']);
-		$_POST['url'] == $addslashes($_POST['url']);
-		$_POST['description']  = $addslashes($_POST['description']);
 
 		$name = get_display_name($_SESSION['member_id']);
 		$email = '';
 
 		$approved = 0; //not approved for student submissions
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."links VALUES (NULL, $_POST[cat], '$_POST[url]', '$_POST[title]', '$_POST[description]', $approved, '$name', '$email', NOW(), 0)";
-		mysql_query($sql, $db);
+		queryDB('INSERT INTO %slinks VALUES (DEFAULT, %d, "%s", "%s", "%s", %s, "%s", "%s", NOW(), DEFAULT)',
+		              array(TABLE_PREFIX, $_POST['cat'], $_POST['url'], $_POST['title'], $_POST['description'], $approved, $name, $email));
 	
 		$msg->addFeedback('LINK_ADDED');
 
 		header('Location: '.AT_BASE_HREF.'mods/_standard/links/index.php');
 		exit;
-	} else {
-		$_POST['title']  = stripslashes($_POST['title']);
-		$_POST['url'] == stripslashes($_POST['url']);
-		$_POST['description']  = stripslashes($_POST['description']);
 	}
 }
 $onload = 'document.form.title.focus();';

@@ -53,34 +53,24 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
 
 		$_POST['cat'] = intval($_POST['cat']);
-		$_POST['title']  = $addslashes($_POST['title']);
-		$_POST['url'] == $addslashes($_POST['url']);
-		$_POST['description']  = $addslashes($_POST['description']);
 		//Check length of the post, if it's exceeded 64 as defined in the db. 
 		$_POST['title'] = validate_length($_POST['title'], 64);
 		$_POST['description'] = validate_length($_POST['description'], 250);
-
 //		$name = get_display_name($_SESSION['member_id']);
 		$email = '';
 
 		//check if new cat is auth? -- shouldn't be a prob. since cat dropdown is already filtered
 
-		$sql	= "UPDATE ".TABLE_PREFIX."links SET cat_id=$_POST[cat], Url='$_POST[url]', LinkName='$_POST[title]', Description='$_POST[description]', Approved=$_POST[approved] WHERE link_id=".$link_id;
-		mysql_query($sql, $db);
+		queryDB('UPDATE %slinks SET cat_id=%d, Url="%s", LinkName="%s", Description="%s", Approved=%s WHERE link_id=%d', array(TABLE_PREFIX, $_POST['cat'], $_POST['url'], $_POST['title'], $_POST['description'], $_POST['approved'], $link_id));
 	
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 		header('Location: '.AT_BASE_HREF.'mods/_standard/links/tools/index.php');
 		exit;
-	} else {
-		$_POST['title']  = $stripslashes($_POST['title']);
-		$_POST['url']    = $stripslashes($_POST['url']);
-		$_POST['description'] = $stripslashes($_POST['description']);
 	}
 } else {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links WHERE link_id=".$link_id;
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+	$row = queryDB('SELECT * FROM %slinks WHERE link_id=%d', array(TABLE_PREFIX, $link_id), true);
+	if (!empty($row)) {
 
 		//auth based on the link's cat
 		$cat_row = get_cat_info($row['cat_id']);

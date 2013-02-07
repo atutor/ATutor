@@ -36,50 +36,39 @@ if (isset($_POST['edit']) && isset($_POST['link_id'])) {
 }
 
 $categories = get_link_categories(true);
+$course_id = $_SESSION['course_id'];
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($_GET['col']) {
-	$col = addslashes($_GET['col']);
-} else {
-	$col = 'LinkName';
-}
 
-if ($_GET['order']) {
-	$order = addslashes($_GET['order']);
-} else {
-	$order = 'asc';
-}
-
-if (!isset($_GET['cat_parent_id'])) {
-	$parent_id = 0;	
-} else {
-	$parent_id = intval($_GET['cat_parent_id']);
-}
-
-if ($_SESSION['groups']) {
-	$groups = implode(',', $_SESSION['groups']);
-} else {
-	// not in any groups
-	$groups = 0;
-}
+$col = ($_GET['col']) ? $_GET['col'] : 'LinkName';
+$order = ($_GET['order']) ? $_GET['order'] : 'asc';
+$parent_id = isset($_GET['cat_parent_id']) ? intval($_GET['cat_parent_id']) : 0;
+$groups = ($_SESSION['groups']) ? implode(',', $_SESSION['groups']) : 0;
 
 $auth = manage_links();
 
+$sql = '';
+$sqlParams = array();
 if ($auth == LINK_CAT_AUTH_ALL) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP."))";
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))';
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_GROUP) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP;
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE owner_id IN (%s) AND owner_type=%s';
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_COURSE) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."links L INNER JOIN ".TABLE_PREFIX."links_categories C USING (cat_id) WHERE ((owner_id=$_SESSION[course_id] AND owner_type=".LINK_CAT_COURSE.") OR (owner_id IN ($groups) AND owner_type=".LINK_CAT_GROUP."))";
+	$sql = "SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))";
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } 
 
 if ($parent_id) {
-	$sql .= " AND L.cat_id=$parent_id";
+	$sql .= ' AND L.cat_id=%d';
+	array_push($sqlParams, $parent_id);
 } 
-$sql .= " ORDER BY $col $order";
+$sql .= ' ORDER BY %s %s';
+array_push($sqlParams, $col, $order);
 
-$result = mysql_query($sql, $db);
+$result = queryDB($sql, $sqlParams);
 
 if (!empty($categories)) {
 ?>
@@ -129,14 +118,14 @@ if (!empty($categories)) {
 </thead>
 
 <?php
-	if ($row = mysql_fetch_assoc($result)) {  ?>
+	if (!empty($result)) {  ?>
 	<tfoot>
 	<tr>
 		<td colspan="6"><input type="submit" name="edit" value="<?php echo _AT('edit'); ?>" /> <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /> <input type="submit" name="view" value="<?php echo _AT('view'); ?>" /></td>
 	</tr>
 	</tfoot>
 	<tbody>
-<?php do {
+<?php foreach($result as $row) {
 		if ($row['owner_type'] == LINK_CAT_GROUP) {
 			$row['name'] = get_group_name($row['owner_id']);
 		}
@@ -156,7 +145,7 @@ if (!empty($categories)) {
 			<td align="center"><?php echo $row['hits']; ?></td>
 		</tr>
 <?php 
-	} while ($row = mysql_fetch_assoc($result));					
+	}
 } else {
 ?>
 	<tbody>
@@ -164,7 +153,7 @@ if (!empty($categories)) {
 		<td colspan="6"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php
-}					
+}
 ?>
 
 </tbody>
