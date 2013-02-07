@@ -48,26 +48,26 @@ $groups = ($_SESSION['groups']) ? implode(',', $_SESSION['groups']) : 0;
 $auth = manage_links();
 
 $sql = '';
-$arrayParam = array();
+$sqlParams = array();
 if ($auth == LINK_CAT_AUTH_ALL) {
 	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))';
-	array_push($arrayParam, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_GROUP) {
 	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE owner_id IN (%s) AND owner_type=%s';
-	array_push($arrayParam, TABLE_PREFIX, TABLE_PREFIX, $groups, LINK_CAT_GROUP);
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_COURSE) {
 	$sql = "SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))";
-	array_push($arrayParam, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } 
 
 if ($parent_id) {
 	$sql .= ' AND L.cat_id=%d';
-	array_push($arrayParam, $parent_id);
+	array_push($sqlParams, $parent_id);
 } 
 $sql .= ' ORDER BY %s %s';
-array_push($arrayParam, $col, $order);
+array_push($sqlParams, $col, $order);
 
-$result = queryDB($sql, $arrayParam);
+$result = queryDB($sql, $sqlParams);
 
 if (!empty($categories)) {
 ?>
