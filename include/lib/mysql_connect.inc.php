@@ -67,7 +67,7 @@ function queryDB($query, $params, $oneRow = false, $sanitize = true) {
     try {
         $sql = vsprintf($query, $params);
         
-        // The line below must be commented out on production machine
+        // The line below must be commented out on production instance of ATutor
         //error_log(print_r(mysql_error(), true), 0)    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY
         
         // Query DB and if something goes wrong then log the problem
