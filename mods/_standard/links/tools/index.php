@@ -36,6 +36,7 @@ if (isset($_POST['edit']) && isset($_POST['link_id'])) {
 }
 
 $categories = get_link_categories(true);
+$course_id = $_SESSION['course_id'];
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
@@ -51,13 +52,13 @@ $sql = '';
 $sqlParams = array();
 if ($auth == LINK_CAT_AUTH_ALL) {
 	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))';
-	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_GROUP) {
 	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE owner_id IN (%s) AND owner_type=%s';
 	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_COURSE) {
 	$sql = "SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))";
-	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } 
 
 if ($parent_id) {

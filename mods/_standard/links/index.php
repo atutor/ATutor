@@ -51,8 +51,6 @@ if ($_GET['reset_filter']) {
 	unset($_GET);
 }
 
-$_GET['cat_parent_id'] = intval($_GET['cat_parent_id']);
-
 //get appropriate categories
 $categories = get_link_categories();
 
@@ -73,40 +71,49 @@ if (isset($_GET['asc'])) {
 	$col   = 'LinkName';
 }
 
-//search
-if ($_GET['search']) {
-	$_GET['search'] = trim($_GET['search']);
-	$page_string .= SEP.'search='.urlencode($_GET['search']);
-	$search = $_GET['search'];
-	$search = str_replace(array('%','_'), array('\%', '\_'), $search);
-	$search = '%'.$search.'%';
-	$search = '((LinkName LIKE "$search") OR (description LIKE "$search"))';
-} else {
-	$search = '1';
-}
-
-//view links of a child category
-if ($_GET['cat_parent_id']) {
-    $children = get_child_categories ($_GET['cat_parent_id'], $categories);
-    $cat_sql = "C.cat_id IN ($children $_GET[cat_parent_id])";
-	$parent_id = intval($_GET['cat_parent_id']);
-} else {
-    $cat_sql = '1';   
-    $parent_id = 0;	
-}
-
 //get links
 $tmp_groups = implode(',', $_SESSION['groups']);
+$course_id = $_SESSION['course_id'];
 
 $sql = '';
 $sqlParams = array();
 if (!empty($tmp_groups)) {
-	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s)) AND L.Approved=1 AND %s AND %s ORDER BY %s %s';
-	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, LINK_CAT_GROUP, $_SESSION[course_id], LINK_CAT_COURSE, $tmp_groups, LINK_CAT_GROUP, $search, $cat_sql, $col, $order);
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s)) AND L.Approved=1';
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $tmp_groups, LINK_CAT_GROUP);
 } else {
-	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE (owner_id=%d AND owner_type=%s) AND L.Approved=1 AND %s AND %s ORDER BY %s %s';
-	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], LINK_CAT_COURSE, $search, $cat_sql, $col, $order);
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE (owner_id=%d AND owner_type=%s) AND L.Approved=1';
+	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE);
 }
+
+//view links of a child category
+$cat_parent_id = $_GET['cat_parent_id'];
+if ($cat_parent_id) {
+    $cat_parent_id = intval($cat_parent_id);
+    $children = get_child_categories($cat_parent_id, $categories);
+    
+    $cat_sql = sprintf(' AND C.cat_id IN (%s %s)', $children, $cat_parent_id);
+    $sql .= $cat_sql;
+    
+    $parent_id = $cat_parent_id;
+} else {
+    $parent_id = 0;	
+}
+
+//search
+$search = $_GET['search'];
+if ($search) {
+	$search = trim($search);
+	$page_string .= SEP.'search='.urlencode($search);
+	$search = str_replace(array('%','_'), array('', '\_'), $search);
+	$search = '%%'.$search.'%%';
+	$search_sql = sprintf(' AND ((LinkName LIKE "%s") OR (description LIKE "%s"))', $search, $search);
+	
+	$sql .= $search_sql;
+}
+
+$sql .= ' ORDER BY %s %s';
+array_push($sqlParams, $col, $order);
+
 $result = queryDB($sql, $sqlParams);
 $num_results = count($result);
 
