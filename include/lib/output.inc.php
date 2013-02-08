@@ -265,7 +265,7 @@ function _AT() {
 			/* get $_msgs_new from the DB */
 			//$sql	= 'SELECT text FROM '.TABLE_PREFIX.'language_text WHERE term="' . $args[0] . '" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="'.$_SESSION['lang'].'" ORDER BY variable ASC LIMIT 1';
 
-			$result	= @mysql_query($sql, $db);
+			//$result	= @mysql_query($sql, $db);
 			$row = queryDB('SELECT text FROM %slanguage_text WHERE term="%s" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="%s" ORDER BY variable ASC LIMIT 1', array(TABLE_PREFIX, $args[0], $_SESSION['lang']), true);
 			$i = 1;
 			$msgs = '';
