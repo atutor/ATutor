@@ -76,13 +76,10 @@ if (!empty($_GET['search'])) {
 	$sql_search = '1';
 }
 
-$sql	= "SELECT COUNT(course_id) AS cnt FROM ".TABLE_PREFIX."courses WHERE access $sql_access AND cat_id $sql_category AND $sql_search AND hide=0";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
-$num_results = $row['cnt'];
-
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE access $sql_access AND cat_id $sql_category AND $sql_search AND hide=0 ORDER BY title";
 $courses_result = mysql_query($sql, $db);
+
+$num_results = mysql_num_rows($courses_result);
 
 // add "enroll me" link if the user is not the course owner and is not enrolled
 while ($row = mysql_fetch_assoc($courses_result)) {
