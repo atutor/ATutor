@@ -25,7 +25,6 @@ if (!manage_links()) {
 if (isset($_POST['submit'])) {
 	$cat_parent_id  = intval($_POST['cat_parent_id']);
 	$cat_name       = trim($_POST['cat_name']);
-	$cat_name		= $addslashes($cat_name);
 
 	if ($cat_name == '') {
 		$msg->addError(array('EMPTY_FIELDS', _AT('title')));
@@ -55,8 +54,7 @@ if (isset($_POST['submit'])) {
 			$cat_name = $substr($cat_name, 0, 100);
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."links_categories VALUES (NULL, $owner_type, $owner_id, '$cat_name', $parent_id)";
-		$result = mysql_query($sql, $db);
+		queryDB('INSERT INTO %slinks_categories VALUES (DEFAULT, %s, %d, "%s", %d)', array(TABLE_PREFIX, $owner_type, $owner_id, $cat_name, $parent_id));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		
@@ -85,7 +83,7 @@ $msg->printAll();
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="category_name"><?php echo _AT('title'); ?></label><br />
-		<input type="text" id="category_name" name="cat_name" value="<?php echo stripslashes(htmlspecialchars($categories[$cat_id]['cat_name'])); ?>" />
+		<input type="text" id="category_name" name="cat_name" value="<?php echo htmlspecialchars($categories[$cat_id]['cat_name']); ?>" />
 	</div>
 
 	<div class="row">

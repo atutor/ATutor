@@ -41,11 +41,10 @@ if (isset($_POST['submit_no'])) {
 	}
 
 	//check if there are sub cats within this cat, or links
-	$sql = "SELECT C.cat_id, L.link_id FROM ".TABLE_PREFIX."links_categories C, ".TABLE_PREFIX."links L WHERE C.parent_id=$cat_id OR L.cat_id=$cat_id";
-	$result = mysql_query($sql, $db);
-	if (mysql_num_rows($result) == 0) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."links_categories WHERE owner_id=$owner_id AND owner_type=$owner_type AND cat_id=$cat_id";
-		$result = mysql_query($sql, $db);
+	$result = queryDB('SELECT C.cat_id, L.link_id FROM %slinks_categories C, %slinks L WHERE C.parent_id=%d OR L.cat_id=%d', array(TABLE_PREFIX, TABLE_PREFIX, $cat_id, $cat_id));
+	
+	if (empty($result)) {
+		queryDB("DELETE FROM %slinks_categories WHERE owner_id=%d AND owner_type=%s AND cat_id=%d", array(TABLE_PREFIX, $owner_id, $owner_type, $cat_id));
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addError('LINK_CAT_NOT_EMPTY');
