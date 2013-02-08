@@ -257,19 +257,20 @@ function _AT() {
 		// replaced the preg_match with a test of the substring.
 		$sub_arg = substr($args[0], 0, 7); // 7 is the shortest type of msg (AT_HELP)
 		if (in_array($sub_arg, array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF'))) {
-			global $db;
+			//global $db;
 			global $_base_path, $addslashes;
 
-			$args[0] = $addslashes($args[0]);
+			//$args[0] = $addslashes($args[0]);
 					
 			/* get $_msgs_new from the DB */
-			$sql	= 'SELECT text FROM '.TABLE_PREFIX.'language_text WHERE term="' . $args[0] . '" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="'.$_SESSION['lang'].'" ORDER BY variable ASC LIMIT 1';
+			//$sql	= 'SELECT text FROM '.TABLE_PREFIX.'language_text WHERE term="' . $args[0] . '" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="'.$_SESSION['lang'].'" ORDER BY variable ASC LIMIT 1';
 
 			$result	= @mysql_query($sql, $db);
+			$row = queryDB('SELECT text FROM %slanguage_text WHERE term="%s" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="%s" ORDER BY variable ASC LIMIT 1', array(TABLE_PREFIX, $args[0], $_SESSION['lang']), true);
 			$i = 1;
 			$msgs = '';
 					
-			if ($row = @mysql_fetch_assoc($result)) {
+			if (!empty($row)) {
 				// do not cache key as a digit (no contstant(), use string)
 				$msgs = str_replace('SITE_URL/', $_base_path, $row['text']);
 				if (defined('AT_DEVEL') && AT_DEVEL) {
@@ -277,8 +278,9 @@ function _AT() {
 				}
 			}
 
-			$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$args[0].'", "'.$_rel_url.'")';
-			mysql_query($sql, $db);
+			//$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$args[0].'", "'.$_rel_url.'")';
+			//mysql_query($sql, $db);
+			//queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $args[0], $_rel_url));
 
 			return $msgs;
 		}
@@ -290,13 +292,17 @@ function _AT() {
 		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
 		if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
-			global $db;
+			//global $db;
 
 			/* get $_template from the DB */
 			
-			$sql = "SELECT L.* FROM ".TABLE_PREFIX."language_text L, ".TABLE_PREFIX."language_pages P WHERE L.language_code='{$_SESSION['lang']}' AND L.variable<>'_msgs' AND L.term=P.term AND P.page='$_rel_url' ORDER BY L.variable ASC";
-			$result	= mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
+			//$sql = "SELECT L.* FROM ".TABLE_PREFIX."language_text L, ".TABLE_PREFIX."language_pages P WHERE L.language_code='{$_SESSION['lang']}' AND L.variable<>'_msgs' AND L.term=P.term AND P.page='$_rel_url' ORDER BY L.variable ASC";
+			//$result	= mysql_query($sql, $db);
+			
+			$result = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term=P.term AND P.page="%s" ORDER BY L.variable ASC', array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['lang'], $_rel_url));
+			
+			foreach($result as $row) {
+			//while ($row = mysql_fetch_assoc($result)) {
 				//Do not overwrite the variable that existed in the cache_template already.
 				//The edited terms (_c_template) will always be at the top of the resultset
 				//0003279
@@ -343,11 +349,12 @@ function _AT() {
 	}
 
 	if (empty($outString)) {
-		global $db;
-		$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'language_text L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
+		//global $db;
+		//$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'language_text L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
 
-		$result	= mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+		//$result	= mysql_query($sql, $db);
+		//$row = mysql_fetch_assoc($result);
+		$row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term="%s"', array(TABLE_PREFIX, $_SESSION['lang'], $format), true);
 
 		$_template[$row['term']] = stripslashes($row['text']);
 		$outString = $_template[$row['term']];
@@ -358,8 +365,9 @@ function _AT() {
 		$outString = vsprintf($outString, $args);
 
 		/* update the locations */
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
-		mysql_query($sql, $db);
+		//$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
+		//mysql_query($sql, $db);
+		//queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $format, $_rel_url));
 	}
 
 	return $outString;
