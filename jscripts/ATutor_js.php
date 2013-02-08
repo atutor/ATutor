@@ -30,6 +30,7 @@ ATutor.course = ATutor.course || {};
 (function () {
 
     ATutor.base_href = "<?php echo AT_print(AT_BASE_HREF, 'url.base'); ?>";
+    ATutor.customized_data_dir = "<?php echo AT_print(AT_CUSTOMIZED_DATA_DIR, 'url.base'); ?>";
     ATutor.course.show = "<?php echo _AT('show'); ?>";
     ATutor.course.hide = "<?php echo _AT('hide'); ?>";
     ATutor.course.theme = "<?php echo $_SESSION['prefs']['PREF_THEME']; ?>";

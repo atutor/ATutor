@@ -290,11 +290,25 @@ $main_theme_folder = get_main_theme_dir(is_customized_theme($_SESSION['prefs']['
 $savant->addPath('template', $main_theme_folder . $_SESSION['prefs']['PREF_THEME'] . '/');
 require($main_theme_folder . '../themes/' . $_SESSION['prefs']['PREF_THEME'] . '/theme.cfg.php');
 
-// load in message handler
+// Define the directory where the customized data lives (used by multi sites):
+// Main site: [ATutor-root]
+// Subsites: [ATutor-root]/sites/[Subsite-URL]/
+$theme_path = "";
+if (is_customized_theme($_SESSION['prefs']['PREF_THEME'])) {
+	$theme_path = AT_SITES_DIR . $_SERVER['HTTP_HOST'] . '/';
+}
+
+define('AT_CUSTOMIZED_DATA_DIR', $theme_path);
+
+/**************************************************/
+/* load in message handler                        */
+/**************************************************/
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 $msg = new Message($savant);
 
-// load in content manager
+/**************************************************/
+/* load in content manager                        */
+/**************************************************/
 $contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['p_course']);
 $contentManager->initContent();
 
