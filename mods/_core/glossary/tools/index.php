@@ -73,7 +73,7 @@ if(!empty($gloss_results)) {
 			$sql	= "SELECT word FROM ".TABLE_PREFIX."glossary WHERE word_id=".$row['related_word_id']." AND course_id=".$_SESSION['course_id'];
 			$result = mysql_query($sql, $db);
 			if ($row_related = mysql_fetch_array($result)) {
-				$related_word = $row_related['word'];			
+				$row['related_word'] = $row_related['word'];			
 			}
 		}
 
