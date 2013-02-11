@@ -303,7 +303,7 @@ if (is_customized_theme($_SESSION['prefs']['PREF_THEME'])) {
 	$theme_path = AT_SITES_DIR . $_SERVER['HTTP_HOST'] . '/';
 }
 
-define('AT_CUSTOMIZED_DATA_DIR', $theme_path);
+define('AT_CUSTOMIZED_DATA_DIR', AT_BASE_HREF . $theme_path);
 
 /**************************************************/
 /* load in message handler                        */
