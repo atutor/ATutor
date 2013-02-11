@@ -279,8 +279,8 @@ function _AT() {
     		// NOTE!! This code should be removed from here!
     		// This code generates 1-2 extra sql queries per _AT() call
     		$sqlParams = array(TABLE_PREFIX, $format, $_rel_url);
-    		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams, true);
-    		if(!empty($row)) {
+    		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
+    		if(empty($row)) {
     			queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', $sqlParams);
     		}
 
@@ -324,8 +324,8 @@ function _AT() {
 		$args = $term;
 	}
 	$format = array_shift($args);
-	$outString = isset($_template[$format]) ? vsprintf($_template[$format], $args) : '';
-
+	$template_format = $_template[$format];
+	$outString = isset($template_format) ? vsprintf($template_format, $args) : '';
 
 	if ($outString === false) {
 		return sprintf('[ Error parsing language. Variable: <code>%s</code>. Language: <code>%s</code> ]', $format, $lang);
@@ -340,14 +340,14 @@ function _AT() {
 		if (empty($outString)) {
 			return sprintf('[ %s ]', $format);
 		}
-		$outString = vsprintf($_template[$row_term], $args);
+		$outString = vsprintf($outString, $args);
 
 		/* update the locations */
 		// NOTE!! This code should be removed from here!
 		// This code generates 1-2 extra sql queries per _AT() call
 		$sqlParams = array(TABLE_PREFIX, $format, $_rel_url);
-		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams, true);
-		if(!empty($row)) {
+		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
+		if(empty($row)) {
 			queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', $sqlParams);
 		}
 	}
