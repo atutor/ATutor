@@ -47,17 +47,23 @@ if (!$page) {
 	
 $count = (($page-1) * $results_per_page) + 1;
 $gloss_results = array_slice($gloss_results, ($page-1)*$results_per_page, $results_per_page);
-	
-if($num_pages > 1) {
-	echo _AT('page').': ';
-	for ($i=1; $i<=$num_pages; $i++) {
-		if ($i == $page) {
-			echo '<strong>'.$i.'</strong>';
-		} else {
-			echo ' | <a href="'.$_SERVER['PHP_SELF'].'?p='.$i.'#list">'.$i.'</a>';
-		}
-	}
-}
+
+if($num_pages > 1){
+	?>
+	<div class="paging">
+		<ul>
+		<?php for ($i=1; $i<=$num_pages; $i++): ?>
+			<li>
+				<?php if ($i == $page) : ?>
+					<a class="current" href="<?php echo 'mods/_core/glossary/tools/index.php?p='.$i.'#list'; ?>"><strong><?php echo $i; ?></strong></a>
+				<?php else: ?>
+					<a href="<?php echo 'mods/_core/glossary/tools/index.php?p='.$i.'#list'; ?>"><?php echo $i; ?></a>
+				<?php endif; ?>
+			</li>
+		<?php endfor; ?>
+		</ul>
+	</div>
+	<?php } 
 
 if(!empty($gloss_results)) {
 	foreach ($gloss_results as $row) {	

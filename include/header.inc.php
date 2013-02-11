@@ -43,18 +43,13 @@ global $content_keywords;
 require(AT_INCLUDE_PATH . 'lib/menu_pages.php');
 //require(AT_INCLUDE_PATH."../jscripts/opensocial/all_opensocial.php");
 
-$theme_path = "";
-if (is_customized_theme($_SESSION['prefs']['PREF_THEME'])) {
-	$theme_path = AT_print(AT_SITES_DIR . $_SERVER['HTTP_HOST'] . '/', 'url.self');
-}
-
 $_custom_css = AT_print($_custom_css, 'url.css');
 $savant->assign('lang_code', $_SESSION['lang']);
 $savant->assign('lang_charset', $myLang->getCharacterSet());
 $savant->assign('base_path', AT_print($_base_path, 'url.self'));
 $savant->assign('base_tmpl_path', $_SERVER['HTTP_HOST']);
 $savant->assign('theme', $_SESSION['prefs']['PREF_THEME']);
-$savant->assign('theme_path', $theme_path);
+$savant->assign('theme_path', AT_print(AT_CUSTOMIZED_DATA_DIR, 'url.self'));
 $savant->assign('current_date', AT_date(_AT('announcement_date_format')));
 $savant->assign('just_social', $_config['just_social']);
 $theme_img  = AT_print($_base_path, 'url.base') . 'themes/'. $_SESSION['prefs']['PREF_THEME'] . '/images/';

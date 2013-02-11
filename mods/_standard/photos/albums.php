@@ -145,7 +145,7 @@ if(isset($_POST['upload'])){
 		}
 		//if this is profile picture upload, sets it to the default profile
 		if ($info['type_id']==AT_PA_TYPE_PERSONAL){
-		     header('Location: ../profile_pictures/profile_picture.php?pid='.$added_photo_id.SEP.'aid='.$id);
+		     header('Location: ../photos/set_profile_picture.php?pid='.$added_photo_id.SEP.'aid='.$id);
 		     exit;
         }
 	} //if msg contain error

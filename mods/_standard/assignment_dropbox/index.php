@@ -106,6 +106,13 @@ $files = array();
 foreach ($_POST as $name => $val) {
 	if (substr($name, 0, 5) == 'files') $files = $val;
 }
+
+if(isset($_POST['delete']) && count($files) == 0){
+	$msg->addError('NO_ITEM_SELECTED');
+	header('Location: index.php');
+	exit;
+} else {
+
 if ($has_priv && isset($_POST['delete']) && is_array($files)) {
 	$hidden_vars = array();
 	$hidden_vars['owner_id'] = $_REQUEST['owner_id'];
@@ -148,7 +155,7 @@ else if ($has_priv && isset($_POST['submit_no'])) {
 	header('Location: index.php');
 	exit;
 }
-
+}
 // display
 $groups_list = implode(',',$_SESSION['groups']);
 

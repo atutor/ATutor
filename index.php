@@ -39,6 +39,12 @@ $result = mysql_query($sql,$db);
 $row= mysql_fetch_assoc($result);
 $home_view = $row['home_view'];
 
+// Get the course description to display in the description metadata
+$sql2 = "SELECT description FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
+$result2 = mysql_query($sql2, $db);
+if($row2 = mysql_fetch_assoc($result2)){
+	$content_description =  $row2['description'];
+}
 // Enable drag and drop to reorder displayed modules when the module view mode is 
 // set to "detail view" and user role is instructor
 if ($home_view == 1 && authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))

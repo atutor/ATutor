@@ -117,6 +117,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_COURSE_NOT_RELEASED'
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CREATE_MASTER_USED','The Student ID you have entered already belongs to another user. If you wish to over-write this association with the new account, use the over-write checkbox.','2006-06-12 15:39:43','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CURL_NOT_INSTALLED','The curl library needs to be installed for gadgets to be added.  Please contact your administrator for more information.','2009-06-09 14:44:50','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_CUTOFF_DATE_WRONG','The Late Submissions date appears to be wrong. It must occur after the Due Date, and must be in the future.','2012-07-23 12:10:15','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_DB_QUERY','%s ATutor is experiencing database issues currently at the moment. Please report it to an Administrator','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_DB_NOT_UPDATED','Information could not be added to the database.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_DIR_NOT_DELETED','Cannot open directory to be deleted.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_DIR_NOT_EXIST','Directory <strong>%s</strong> does not exist. Please create it.','2005-09-22 14:08:05','file manager');

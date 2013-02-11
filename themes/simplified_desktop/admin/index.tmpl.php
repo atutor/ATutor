@@ -59,12 +59,12 @@
 			</div>
 	</div>
 	
-		
+	<?php if($this->row_instructor){ ?>	
 	<div class="input-form">
 		<form method="get" action="mods/_core/users/instructor_requests.php">
 			
 			<h3><?php echo _AT('instructor_requests'); ?></h3>
-				
+
 				<?php foreach($this->row_instructor as $key => $value): ?>
 				
 				<p><?php echo _AT('instructor_requests_text', $value['cnt']); ?></p>
@@ -74,9 +74,10 @@
 			<div class="row buttons">
 				<input type="submit" name="submit" value="<?php echo _AT('view'); ?>" />
 			</div>
+
 		</form>
 	</div>
-	
+	<?php } ?>
 	
 	<div class="input-form">
 		<form method="get" action="mods/_standard/patcher/index_admin.php">
