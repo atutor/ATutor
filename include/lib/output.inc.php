@@ -276,12 +276,12 @@ function _AT() {
             }
 
     		/* update the locations */
-    		// NOTE!! This code should be removed from here!
-    		// This code generates 1-2 extra sql queries per _AT() call
-    		$term = substr($term, 0, 30); // NOTE !!! This line is here only because term has length of CHAR(30) in language_pages and CHAR(50) in language_text. THIS SHOULD BE RESOLVED.
-    		$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here only because page column has a limited length of being CHAR(50). THIS SHOULD BE RESOLVED
+    		// NOTE!! This code should be removed from here. Eventually a separate module will be created for populating language_pages
+    		// The code below is dangerous since it generates 1-2 extra sql queries per every _AT() call
+    		//$term = substr($term, 0, 30); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
+    		//$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
     		$sqlParams = array(TABLE_PREFIX, $term, $_rel_url);
-    		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
+    		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams, true);
     		if(empty($row)) {
     			queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', $sqlParams);
     		}
@@ -346,12 +346,12 @@ function _AT() {
 		$outString = vsprintf($outString, $args);
 
 		/* update the locations */
-		// NOTE!! This code should be removed from here!
-		// This code generates 1-2 extra sql queries per _AT() call
-		$format = substr($format, 0, 30); // NOTE !!! This line is here only because term has length of CHAR(30) in language_pages and CHAR(50) in language_text. THIS SHOULD BE RESOLVED.
-		$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here only because page column has a limited length of being CHAR(50). THIS SHOULD BE RESOLVED
+		// NOTE!! This code should be removed from here. Eventually a separate module will be created for populating language_pages
+		// The code below is dangerous since it generates 1-2 extra sql queries per every _AT() call
+		//$term = substr($term, 0, 30); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
+		//$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
 		$sqlParams = array(TABLE_PREFIX, $format, $_rel_url);
-		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
+		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams, true);
 		if(empty($row)) {
 			queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', $sqlParams);
 		}
