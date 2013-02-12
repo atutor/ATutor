@@ -278,7 +278,8 @@ function _AT() {
     		/* update the locations */
     		// NOTE!! This code should be removed from here!
     		// This code generates 1-2 extra sql queries per _AT() call
-    		$sqlParams = array(TABLE_PREFIX, $format, $_rel_url);
+    		$term = substr($term, 0, 30); // NOTE !!! This line is here only because term has length of CHAR(30) in language_pages and CHAR(50) in language_text. THIS SHOULD BE RESOLVED.
+    		$sqlParams = array(TABLE_PREFIX, $term, $_rel_url);
     		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
     		if(empty($row)) {
     			queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', $sqlParams);
@@ -290,6 +291,7 @@ function _AT() {
 	
 	// a template variable
 	// Cache all the token used on the same page with the current language
+	// NOTE!!! term has length of CHAR(30) in language_pages and CHAR(50) in language_text. While it is true the cache logic below is inefficient
 	if (!isset($_template)) {
 		$url_parts = parse_url(AT_BASE_HREF);
 		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
@@ -345,6 +347,7 @@ function _AT() {
 		/* update the locations */
 		// NOTE!! This code should be removed from here!
 		// This code generates 1-2 extra sql queries per _AT() call
+		$format = substr($format, 0, 30); // NOTE !!! This line is here only because term has length of CHAR(30) in language_pages and CHAR(50) in language_text. THIS SHOULD BE RESOLVED.
 		$sqlParams = array(TABLE_PREFIX, $format, $_rel_url);
 		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
 		if(empty($row)) {
