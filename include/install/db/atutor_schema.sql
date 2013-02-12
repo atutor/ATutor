@@ -519,8 +519,8 @@ CREATE TABLE `links` (
 # Table structure for table `language_pages`
 
 CREATE TABLE `language_pages` (
-  `term` varchar(30) NOT NULL default '',
-  `page` varchar(50) NOT NULL default '',
+  `term` varchar(50) NOT NULL default '',
+  `page` varchar(100) NOT NULL default '',
   PRIMARY KEY  (`term`,`page`)
 ) ENGINE = MyISAM;
 
