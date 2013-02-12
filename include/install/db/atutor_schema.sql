@@ -520,7 +520,7 @@ CREATE TABLE `links` (
 
 CREATE TABLE `language_pages` (
   `term` varchar(50) NOT NULL default '',
-  `page` varchar(100) NOT NULL default '',
+  `page` varchar(255) NOT NULL default '',
   PRIMARY KEY  (`term`,`page`)
 ) ENGINE = MyISAM;
 
