@@ -242,7 +242,7 @@ function _AT() {
 	global $_cache_template, $lang_et, $_rel_url;
 	static $_template;
 	
-	$session_resource_timeout = $_config['session_resource_timeout'] || 7200;  // Get session resource timeout or set it to 2 hours if no such configuration exists
+	$cache_life = $_config['cache_life'] || $_config_default['cache_life'];  // Get session resource timeout or set it to 2 hours if no such configuration exists
 	$args = func_get_args();
 	$term = $args[0];
 	$lang = $_SESSION['lang'];
@@ -298,7 +298,7 @@ function _AT() {
 		$url_parts = parse_url(AT_BASE_HREF);
 		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
-		if (!($lang_et = cache($session_resource_timeout, 'lang', $lang.'_'.$name))) {
+		if (!($lang_et = cache($cache_life, 'lang', $lang.'_'.$name))) {
 			/* get $_template from the DB */
 			$rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term=P.term AND P.page="%s" ORDER BY L.variable ASC', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url));
 			
