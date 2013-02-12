@@ -243,9 +243,13 @@ function _AT() {
 	static $_template;
 	
 	$args = func_get_args();
+	$term = $args[0];
+	$lang = $_SESSION['lang'];
 	
 	// a feedback msg
-	if (!is_array($args[0])) {
+	if (!is_array($term)) {
+		$termTypes = array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF');
+		
 		/**
 		 * Added functionality for translating language code String (AT_ERROR|AT_INFOS|AT_WARNING|AT_FEEDBACK|AT_HELP).*
 		 * to its text and returning the result. No caching needed.
@@ -255,60 +259,61 @@ function _AT() {
 		// Check for specific language prefix, extendible as needed
 		// 0002767:  a substring+in_array test should be faster than a preg_match test.
 		// replaced the preg_match with a test of the substring.
-		$sub_arg = substr($args[0], 0, 7); // 7 is the shortest type of msg (AT_HELP)
-		if (in_array($sub_arg, array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF'))) {
-			global $db;
-			global $_base_path, $addslashes;
+		$sub_arg = substr($term, 0, 7); // 7 is the shortest type of msg (AT_HELP)
+		if (in_array($sub_arg, $termTypes)) {
+			global $_base_path;
 
-			$args[0] = $addslashes($args[0]);
-					
-			/* get $_msgs_new from the DB */
-			$sql	= 'SELECT text FROM '.TABLE_PREFIX.'language_text WHERE term="' . $args[0] . '" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="'.$_SESSION['lang'].'" ORDER BY variable ASC LIMIT 1';
-
-			$result	= @mysql_query($sql, $db);
-			$i = 1;
-			$msgs = '';
-					
-			if ($row = @mysql_fetch_assoc($result)) {
-				// do not cache key as a digit (no contstant(), use string)
-				$msgs = str_replace('SITE_URL/', $_base_path, $row['text']);
-				if (defined('AT_DEVEL') && AT_DEVEL) {
-					$msgs .= ' <small><small>('. $args[0] .')</small></small>';
-				}
+			$row = queryDB('SELECT text FROM %slanguage_text WHERE term="%s" AND (variable="_msgs" OR variable="_c_msgs") AND language_code="%s" ORDER BY variable ASC LIMIT 1', array(TABLE_PREFIX, $term, $lang), true);
+			
+			if (empty($row)) {
+    			return '';
 			}
+			
+			// do not cache key as a digit (no contstant(), use string)
+			$msgs = str_replace('SITE_URL/', $_base_path, $row['text']);
+			if (defined('AT_DEVEL') && AT_DEVEL) {
+				$msgs .= sprintf(' <small><small>(%s)</small></small>', $term);
+            }
 
-			$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$args[0].'", "'.$_rel_url.'")';
-			mysql_query($sql, $db);
+    		/* update the locations */
+    		// NOTE!! This code should be removed from here. Eventually a separate module will be created for populating language_pages
+    		// The code below is dangerous since it generates 1-2 extra sql queries per every _AT() call
+    		//$term = substr($term, 0, 30); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
+    		//$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
+    		$sqlParams = array(TABLE_PREFIX, $term, $_rel_url);
+    		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams, true);
+    		if(empty($row)) {
+    			queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', $sqlParams);
+    		}
 
 			return $msgs;
 		}
 	}
 	
 	// a template variable
+	// Cache all the token used on the same page with the current language
+	// NOTE!!! term has length of CHAR(30) in language_pages and CHAR(50) in language_text. While it is true the cache logic below is inefficient
 	if (!isset($_template)) {
 		$url_parts = parse_url(AT_BASE_HREF);
 		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
-		if ( !($lang_et = cache(120, 'lang', $_SESSION['lang'].'_'.$name)) ) {
-			global $db;
-
+		if (!($lang_et = cache(120, 'lang', $lang.'_'.$name))) {
 			/* get $_template from the DB */
+			$result = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term=P.term AND P.page="%s" ORDER BY L.variable ASC', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url));
 			
-			$sql = "SELECT L.* FROM ".TABLE_PREFIX."language_text L, ".TABLE_PREFIX."language_pages P WHERE L.language_code='{$_SESSION['lang']}' AND L.variable<>'_msgs' AND L.term=P.term AND P.page='$_rel_url' ORDER BY L.variable ASC";
-			$result	= mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
+			foreach($result as $row) {
+				$row_term = $row['term'];
 				//Do not overwrite the variable that existed in the cache_template already.
 				//The edited terms (_c_template) will always be at the top of the resultset
 				//0003279
-				if (isset($_cache_template[$row['term']])){
-					continue;
-				}
-
-				// saves us from doing an ORDER BY
-				if ($row['language_code'] == $_SESSION['lang']) {
-					$_cache_template[$row['term']] = stripslashes($row['text']);
-				} else if (!isset($_cache_template[$row['term']])) {
-					$_cache_template[$row['term']] = stripslashes($row['text']);
+				if ($row['language_code'] != $lang) {
+				    continue;
+				} else {
+    				if (!isset($_cache_template[$row_term])) {
+        				$_cache_template[$row_term] = stripslashes($row['text']);
+    				} else {
+        				break;
+    				}
 				}
 			}
 		
@@ -317,49 +322,39 @@ function _AT() {
 		}
 		$_template = $_cache_template;
 	}
-	$num_args = func_num_args();
-	if (is_array($args[0])) {
-		$args = $args[0];
-		$num_args = count($args);
+	
+	if (is_array($term)) {
+		$args = $term;
 	}
-	$format	  = array_shift($args);
-
-	if (isset($_template[$format])) {
-		/*
-		var_dump($_template);
-		var_dump($format);
-		var_dump($args);
-		exit;
-		*/
-		$outString	= vsprintf($_template[$format], $args);
-		$str = ob_get_contents();
-	} else {
-		$outString = '';
-	}
-
+	$format = array_shift($args);
+	$template_format = $_template[$format];
+	$outString = isset($template_format) ? vsprintf($template_format, $args) : '';
 
 	if ($outString === false) {
-		return ('[Error parsing language. Variable: <code>'.$format.'</code>. Language: <code>'.$_SESSION['lang'].'</code> ]');
+		return sprintf('[ Error parsing language. Variable: <code>%s</code>. Language: <code>%s</code> ]', $format, $lang);
 	}
 
 	if (empty($outString)) {
-		global $db;
-		$sql	= 'SELECT L.* FROM '.TABLE_PREFIX.'language_text L WHERE L.language_code="'.$_SESSION['lang'].'" AND L.variable<>"_msgs" AND L.term="'.$format.'"';
-
-		$result	= mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-
-		$_template[$row['term']] = stripslashes($row['text']);
-		$outString = $_template[$row['term']];
+		$row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term="%s"', array(TABLE_PREFIX, $lang, $format), true);
+		$row_term = $row['term'];
+		
+		$_template[$row_term] = stripslashes($row['text']);
+		$outString = $_template[$row_term];
 		if (empty($outString)) {
-			return ('[ '.$format.' ]');
+			return sprintf('[ %s ]', $format);
 		}
-		$outString = $_template[$row['term']];
 		$outString = vsprintf($outString, $args);
 
 		/* update the locations */
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'language_pages (`term`, `page`) VALUES ("'.$format.'", "'.$_rel_url.'")';
-		mysql_query($sql, $db);
+		// NOTE!! This code should be removed from here. Eventually a separate module will be created for populating language_pages
+		// The code below is dangerous since it generates 1-2 extra sql queries per every _AT() call
+		//$term = substr($term, 0, 30); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
+		//$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
+		$sqlParams = array(TABLE_PREFIX, $format, $_rel_url);
+		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams, true);
+		if(empty($row)) {
+			queryDB('INSERT INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', $sqlParams);
+		}
 	}
 
 	return $outString;
