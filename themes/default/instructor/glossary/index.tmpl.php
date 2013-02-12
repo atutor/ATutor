@@ -23,8 +23,8 @@
 			<td valign="top"><label for="m<?php echo $row['word_id']; ?>"><?php echo AT_print($row['word'], 'glossary.word'); ?></label></td>
 			<td style="whitespace:nowrap;"><?php echo AT_print($row['definition'], 'glossary.definition'); ?></td>	
 			<?php if(!empty($row['related_word_id'])):?>	
-			<td valign="top"><?php //debug($this->related_word);
-			//echo AT_print($row[related_word_id], 'glossary.word'); ?></td>
+			<td valign="top"><?php
+			echo AT_print($row['related_word'], 'glossary.word'); ?></td>
 			<?php endif; ?>
 		</tr>
 	

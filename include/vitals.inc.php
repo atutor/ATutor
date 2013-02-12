@@ -23,6 +23,11 @@ define('AT_SITE_PATH', get_site_path());
 define('AT_SUBSITE_THEME_DIR', realpath(AT_SITE_PATH . "themes") . "/");
 define('AT_MULTISITE_CONFIG_FILE', AT_INCLUDE_PATH . 'config_multisite.inc.php');
 
+// Inform IE6 Users They must upgrade
+if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.') !== FALSE){
+    header("Location: ie6.html");
+}
+
 // check if the subsite is enabled
 if (defined('IS_SUBSITE') && IS_SUBSITE) {
 	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
@@ -298,7 +303,7 @@ if (is_customized_theme($_SESSION['prefs']['PREF_THEME'])) {
 	$theme_path = AT_SITES_DIR . $_SERVER['HTTP_HOST'] . '/';
 }
 
-define('AT_CUSTOMIZED_DATA_DIR', $theme_path);
+define('AT_CUSTOMIZED_DATA_DIR', AT_BASE_HREF . $theme_path);
 
 /**************************************************/
 /* load in message handler                        */

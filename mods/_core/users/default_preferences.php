@@ -28,6 +28,11 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 	{
 		/* custom prefs */
 		// atutor settings (tab 0)
+		// capture the current theme before updating prefs_defaults
+		// Then re apply the theme after leaving the page
+		
+		$current_theme = $_SESSION['PREF_THEME'];
+		
 		$pref_defaults['PREF_NUMBERING']      = intval($_POST['numbering']);
 		if (isset($_POST['theme']) && $_POST['theme'] != '') {
 			$pref_defaults['PREF_THEME']          = $addslashes($_POST['theme']);
@@ -163,5 +168,6 @@ $savant->assign('is_auto_login', $auto_login);
 $savant->assign('desktop_theme', $desktop_theme);
 
 $savant->display('users/preferences.tmpl.php');
-
+// Allow the new default theme top display on this page, then reset back to the systems default
+$_SESSION['prefs']['PREF_THEME'] = $current_theme;
 ?>
