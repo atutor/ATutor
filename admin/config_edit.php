@@ -51,6 +51,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['user_notes']                = intval($_POST['user_notes']);
 	$_POST['illegal_extentions']        = str_replace(array('  ', ' '), array(' ','|'), $_POST['illegal_extentions']);
 	$_POST['cache_dir']                 = trim($_POST['cache_dir']);
+	$_POST['cache_life']                = intval($_POST['cache_life']);
 	$_POST['latex_server']				= (trim($_POST['latex_server'])==''?$_config['latex_server']:trim($_POST['latex_server']));
 	$_POST['course_backups']            = intval($_POST['course_backups']);
 	$_POST['course_backups']            = max(0, $_POST['course_backups']);
