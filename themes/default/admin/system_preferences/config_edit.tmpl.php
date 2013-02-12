@@ -268,7 +268,10 @@ if(!$service_installed){
 		<label for="cache"><?php echo _AT('cache_directory'); ?></label><br />
 		<input type="text" name="cache_dir" id="cache" size="40" value="<?php if (!empty($_POST['cache_dir'])) { echo $stripslashes(htmlspecialchars($_POST['cache_dir'])); } else { echo $_config['cache_dir']; } ?>"  />
 	</div>
-
+	<div class="row">
+		<label for="cache_lif"><?php echo _AT('cache_life'); ?></label><br />
+		<input type="text" name="cache_life" id="cache" size="8" maxlength="8" value="<?php if (!empty($_POST['cache_life'])) { echo $stripslashes(htmlspecialchars($_POST['cache_life'])); } else { echo $_config['cache_life']; } ?>"  />
+	</div>
 	<div class="row">
 		<label for="latex_server"><?php echo _AT('latex_server'); ?></label><br />
 		<input type="text" name="latex_server" id="latex_server" size="40" value="<?php if (!empty($_POST['latex_server'])) { echo $stripslashes(htmlspecialchars($_POST['latex_server'])); } else { echo $_config['latex_server']; } ?>"  />
