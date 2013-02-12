@@ -80,7 +80,7 @@ if($_config['disable_create'] != "1"){
 	$this->_pages['mods/_core/courses/users/create_course.php']['title_var'] = 'request_instructor_priv';
 	$this->_pages['mods/_core/courses/users/create_course.php']['parent']    = 'users/index.php';
 	$this->_pages['mods/_core/courses/users/create_course.php']['guide']    = 'instructor/?p=creating_courses.php';
-	$this->_pages['users/inde	x.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($this->_pages['users/index.php']['children']) ? $this->_pages['users/index.php']['children'] : array());
+	$this->_pages['users/index.php']['children']  = array_merge(array('mods/_core/courses/users/create_course.php'), isset($this->_pages['users/index.php']['children']) ? $this->_pages['users/index.php']['children'] : array());
 	
 	}
 }
