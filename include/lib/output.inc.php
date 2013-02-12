@@ -279,6 +279,7 @@ function _AT() {
     		// NOTE!! This code should be removed from here!
     		// This code generates 1-2 extra sql queries per _AT() call
     		$term = substr($term, 0, 30); // NOTE !!! This line is here only because term has length of CHAR(30) in language_pages and CHAR(50) in language_text. THIS SHOULD BE RESOLVED.
+    		$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here only because page column has a limited length of being CHAR(50). THIS SHOULD BE RESOLVED
     		$sqlParams = array(TABLE_PREFIX, $term, $_rel_url);
     		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
     		if(empty($row)) {
@@ -348,6 +349,7 @@ function _AT() {
 		// NOTE!! This code should be removed from here!
 		// This code generates 1-2 extra sql queries per _AT() call
 		$format = substr($format, 0, 30); // NOTE !!! This line is here only because term has length of CHAR(30) in language_pages and CHAR(50) in language_text. THIS SHOULD BE RESOLVED.
+		$_rel_url = substr($_rel_url, 0, 50); // NOTE !!! This line is here only because page column has a limited length of being CHAR(50). THIS SHOULD BE RESOLVED
 		$sqlParams = array(TABLE_PREFIX, $format, $_rel_url);
 		$row = queryDB('SELECT * FROM %slanguage_pages WHERE term="%s" and page="%s"', $sqlParams);
 		if(empty($row)) {
