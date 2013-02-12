@@ -242,6 +242,7 @@ function _AT() {
 	global $_cache_template, $lang_et, $_rel_url;
 	static $_template;
 	
+	$cache_life = $_config['cache_life'] || $_config_default['cache_life'];  // Get session resource timeout or set it to 2 hours if no such configuration exists
 	$args = func_get_args();
 	$term = $args[0];
 	$lang = $_SESSION['lang'];
@@ -297,23 +298,19 @@ function _AT() {
 		$url_parts = parse_url(AT_BASE_HREF);
 		$name = substr($_SERVER['PHP_SELF'], strlen($url_parts['path'])-1);
 
-		if (!($lang_et = cache(120, 'lang', $lang.'_'.$name))) {
+		if (!($lang_et = cache($cache_life, 'lang', $lang.'_'.$name))) {
 			/* get $_template from the DB */
-			$result = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term=P.term AND P.page="%s" ORDER BY L.variable ASC', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url));
+			$rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term=P.term AND P.page="%s" ORDER BY L.variable ASC', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url));
 			
-			foreach($result as $row) {
+			foreach($rows as $row) {
 				$row_term = $row['term'];
 				//Do not overwrite the variable that existed in the cache_template already.
 				//The edited terms (_c_template) will always be at the top of the resultset
 				//0003279
-				if ($row['language_code'] != $lang) {
-				    continue;
+				if (!isset($_cache_template[$row_term])) {
+    				$_cache_template[$row_term] = stripslashes($row['text']);
 				} else {
-    				if (!isset($_cache_template[$row_term])) {
-        				$_cache_template[$row_term] = stripslashes($row['text']);
-    				} else {
-        				break;
-    				}
+    				continue;
 				}
 			}
 		
