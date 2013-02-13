@@ -245,11 +245,13 @@ function _AT() {
     $lang = $_SESSION['lang'];
     
     $args = func_get_args();
-    $term = $args[0];
+    $term_and_args = $args[0];
     
-    if (is_array($term)) {
-        $term = array_shift($args);
+    if (is_array($term_and_args)) {
+        $term = array_shift($term_and_args);
+        $args = $term_and_args;
     } else {
+        $term = $term_and_args;
         unset($args); // term without arguments
     }
     
