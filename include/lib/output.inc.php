@@ -240,6 +240,7 @@ function _AT() {
     global $_cache_template, $lang_et, $_rel_url;
     static $_template;
     
+    $termTypes = array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF');
     $cache_life = $_config['cache_life'] || $_config_default['cache_life'];  // Get session resource timeout or set it to 2 hours if no such configuration exists
     $lang = $_SESSION['lang'];
     
@@ -289,9 +290,14 @@ function _AT() {
         $row_term = $row['term'];
         
         $outString = $_template[$row_term] = stripslashes($row['text']);
-        $outString = str_replace('SITE_URL/', $_base_path, $outString);
-        if (defined('AT_DEVEL') && AT_DEVEL) {
-            $outString .= sprintf(' <small><small>(%s)</small></small>', $term);
+        
+        // specifically for "_msgs" type
+        $term_prefix = substr($term, 0, 7); // 7 is the shortest type of msg (AT_HELP)
+        if (in_array($term_prefix, $termTypes)) {
+            $outString = str_replace('SITE_URL/', $_base_path, $outString);
+            if (defined('AT_DEVEL') && AT_DEVEL) {
+                $outString .= sprintf(' <small><small>(%s)</small></small>', $term);
+            }
         }
 
         $outString = is_array($args) ? vsprintf($outString, $args) : $outString;
@@ -303,7 +309,7 @@ function _AT() {
         //$page = substr($page, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
     
         queryDB('INSERT IGNORE INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $term, $page));
-                
+
         $outString = empty($outString) ? sprintf('[ %s ]', $term) : $outString;
     }
 
