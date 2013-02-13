@@ -264,7 +264,7 @@ function _AT() {
 
         if (!($lang_et = cache($cache_life, 'lang', $lang.'_'.$name))) {
             /* get $_template from the DB */
-            $rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.variable<>"_msgs" AND L.term=P.term AND P.page="%s" ORDER BY L.variable ASC', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url));
+            $rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.term=P.term AND P.page="%s"', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url));
             
             foreach($rows as $row) {
                 $row_term = $row['term'];
