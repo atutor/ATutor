@@ -235,6 +235,9 @@ function apply_timezone($timestamp){
 * @see        $db               in include/vitals.inc.php
 * @see        cache()           in include/phpCache/phpCache.inc.php
 * @see        cache_variable()  in include/phpCache/phpCache.inc.php
+* How to use:
+* 1. _AT([term], array([arguments], ... [argument-N]));
+* 2. _AT(array([term], [argument-1], ... [argument-N]))
 */
 function _AT() {
     global $_cache_template, $lang_et, $_rel_url;
@@ -248,11 +251,13 @@ function _AT() {
     $term_and_args = $args[0];
     
     if (is_array($term_and_args)) {
+        // Handle the case of _AT(array([term], [argument-1], ... [argument-N]))
         $term = array_shift($term_and_args);
         $args = $term_and_args;
     } else {
+        // Handle the case of _AT([term], array([arguments], ... [argument-N]));
         $term = $term_and_args;
-        unset($args); // term without arguments
+        array_shift($args);
     }
     
     // a template variable
