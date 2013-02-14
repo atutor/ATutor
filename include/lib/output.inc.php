@@ -235,24 +235,28 @@ function apply_timezone($timestamp){
 * @see        $db               in include/vitals.inc.php
 * @see        cache()           in include/phpCache/phpCache.inc.php
 * @see        cache_variable()  in include/phpCache/phpCache.inc.php
+* How to use:
+* 1. _AT([term], array([arguments], ... [argument-N]));
+* 2. _AT(array([term], [argument-1], ... [argument-N]))
 */
 function _AT() {
-    global $_cache_template, $lang_et, $_rel_url;
+    global $_cache_template, $lang_et, $_rel_url, $_config_defaults, $_config;
     static $_template;
     
     $termTypes = array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF');
-    $cache_life = $_config['cache_life'] || $_config_default['cache_life'];  // Get session resource timeout or set it to 2 hours if no such configuration exists
+    $cache_life = $_config['cache_life'] ? $_config['cache_life'] : $_config_defaults['cache_life'];  // Get session resource timeout or set it to 2 hours if no such configuration exists
     $lang = $_SESSION['lang'];
-    
     $args = func_get_args();
     $term_and_args = $args[0];
     
     if (is_array($term_and_args)) {
+        // Handle the case of _AT(array([term], [argument-1], ... [argument-N]))
         $term = array_shift($term_and_args);
         $args = $term_and_args;
     } else {
+        // Handle the case of _AT([term], array([arguments], ... [argument-N]));
         $term = $term_and_args;
-        unset($args); // term without arguments
+        array_shift($args);
     }
     
     // a template variable
@@ -288,7 +292,9 @@ function _AT() {
     $outString = isset($template_format) ? (is_array($args) ? vsprintf($template_format, $args) : $template_format) : '';
 
     if (empty($outString)) {
-        $row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s"', array(TABLE_PREFIX, $lang, $term), true);
+        // Note: the query below limits the returned data to one row to deal with the case that one language term has multiple text defined.
+        // Using "_template" always has more priority over "_module". This logic should be fixed once we have support for _module terms.
+        $row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s" ORDER BY variable DESC LIMIT 1', array(TABLE_PREFIX, $lang, $term), true);
         $row_term = $row['term'];
         
         $outString = $_template[$row_term] = stripslashes($row['text']);
@@ -310,7 +316,7 @@ function _AT() {
         //$term = substr($term, 0, 30); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
         //$page = substr($page, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
     
-        queryDB('INSERT IGNORE INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $term, $page));
+        queryDB('INSERT IGNORE INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $term, $_rel_url));
 
         $outString = empty($outString) ? sprintf('[ %s ]', $term) : $outString;
     }
