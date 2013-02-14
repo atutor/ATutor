@@ -259,6 +259,11 @@ function _AT() {
         array_shift($args);
     }
     
+    // Unset $args if none to avoid the vsprintf() error.
+    if (count($args) == 0) {
+        unset($args);
+    }
+    
     // a template variable
     // Cache all the token used on the same page with the current language
     // NOTE!!! term has length of CHAR(30) in language_pages and CHAR(50) in language_text. While it is true the cache logic below is inefficient
