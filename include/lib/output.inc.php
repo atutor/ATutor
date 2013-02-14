@@ -293,7 +293,9 @@ function _AT() {
     $outString = isset($template_format) ? (is_array($args) ? vsprintf($template_format, $args) : $template_format) : '';
 
     if (empty($outString)) {
-        $row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s"', array(TABLE_PREFIX, $lang, $term), true);
+        // Note: the query below limits the returned data to one row to deal with the case that one language term has multiple text defined.
+        // Using "_template" always has more priority over "_module". This logic should be fixed once we have support for _module terms.
+        $row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s" ORDER BY variable DESC LIMIT 1', array(TABLE_PREFIX, $lang, $term), true);
         $row_term = $row['term'];
         
         $outString = $_template[$row_term] = stripslashes($row['text']);
