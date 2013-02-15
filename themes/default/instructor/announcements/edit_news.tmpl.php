@@ -5,7 +5,7 @@
 <input type="submit" name="submit" style="display:none;"/>
 <div class="input-form">
 	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
+		<label for="title"><?php echo _AT('title'); ?></label><br />
 		<input type="text" name="title" id="title" value="<?php echo AT_print($this->row['title'], 'input.text'); ?>" size="40">
 	</div>
 

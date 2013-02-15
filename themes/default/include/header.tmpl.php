@@ -86,7 +86,7 @@ global $system_courses, $_custom_css, $db;
 		<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/safari.css" type="text/css"/>
 	<?php } ?>
 	
-<?php if (isset($this->course_id) && $system_courses[$this->course_id]['rss']): ?>
+<?php if (isset($this->course_id) && isset($system_courses[$this->course_id]['rss'])): ?>
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 2.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-2" />
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 <?php endif; ?>
@@ -105,14 +105,14 @@ global $system_courses, $_custom_css, $db;
     <?php echo $this->rtl_css; ?>
     <style id="pref_style" type="text/css"></style> 
 </head>
-<body onload="<?php echo $this->onload; ?>">
+<body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
 <div class="page_wrapper">
 <div id="header">
 <div class="bypass">
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
 
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php echo htmlentities_utf8($_REQUEST['cid']);  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php if(isset($_REQUEST['cid'])){echo htmlentities_utf8($_REQUEST['cid']);}  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
 </div>	
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
@@ -145,7 +145,7 @@ global $system_courses, $_custom_css, $db;
 			<?php endif; ?>
 			
 			<div id="top-links-text">
-			<?php if ($_SESSION['is_super_admin']): ?>
+			<?php if (isset($_SESSION['is_super_admin'])): ?>
 				<a href="<?php echo $this->base_path; ?>bounce.php?admin"><?php echo _AT('return_to_admin_area'); ?></a> | 
 			<?php endif; ?>
 
@@ -160,7 +160,7 @@ global $system_courses, $_custom_css, $db;
 		<?php if(!$this->just_social): ?>
 			<?php
 				global $_config;
-				if($_SESSION['course_id'] > 0 && isset($_SESSION['is_guest']) && $_SESSION['is_guest'] > 0 && $_config['allow_browse'] == '1'){ ?>
+				if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0 && isset($_SESSION['is_guest']) && $_SESSION['is_guest'] > 0 && $_config['allow_browse'] == '1'){ ?>
 			<a href="<?php echo $this->base_path; ?>browse.php"><?php echo _AT('browse_courses'); ?></a> 
 			<?php } ?>
 			<a href="<?php echo $this->base_path; ?>search.php"><?php echo _AT('search'); ?></a> 
@@ -169,9 +169,6 @@ global $system_courses, $_custom_css, $db;
 		</div>
 	</div>
 
-	<?php // if (!empty($this->icon)) { // if a course icon is available, display it here.  ?>
-		<!--<a href="<?php echo $this->base_path.url_rewrite('index.php'); ?>"><img src="<?php echo $this->icon; ?>" class="headicon" alt="<?php echo  _AT('home'); ?>" /></a>	 -->
-	<?php // } ?>
 
 	<?php
 	// If there is a custom course banner in the file manager called banner.html, display it here
@@ -258,7 +255,7 @@ global $system_courses, $_custom_css, $db;
 			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
       </div>
 		  <?php endif; ?>
-      <?php if ($this->shortcuts): ?>
+      <?php if (isset($this->shortcuts)): ?>
       <div id="shortcuts">
 	      <ul>
 		      <?php foreach ($this->shortcuts as $link): ?>
@@ -270,7 +267,7 @@ global $system_courses, $_custom_css, $db;
       </div>
 
 <div id="contentwrapper" 
-		<?php if ($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] == 0):
+		<?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] == 0):
 			$style.='margin-top:-2em;';
 			echo 'style="'.$style.'"';
 		endif; ?>>

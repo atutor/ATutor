@@ -31,7 +31,7 @@
 			<div class="row">
 				<label for="search"><?php echo _AT('search'); ?> (<?php echo _AT('title').', '._AT('description'); ?>)</label><br />
 
-				<input type="text" name="search" id="search" size="40" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
+				<input type="text" name="search" id="search" size="40" value="<?php if(isset($_GET['search'])){ echo htmlspecialchars($_GET['search']); } ?>" />
 				<br/>
 				<?php echo _AT('search_match'); ?>:
 				<input type="radio" name="include" value="all" id="match_all" <?php echo $this->checked_include_all; ?> /><label for="match_all"><?php echo _AT('search_all_words'); ?></label> 
@@ -57,7 +57,9 @@
 <th><?php echo _AT('access'); ?></th>
 <th><?php echo _AT('shortcuts'); ?></th>
 </tr>
-<?php if (is_array($this->courses_rows)){ ?>
+<?php if (is_array($this->courses_rows)){ 
+        $counter = '';
+?>
 	<?php foreach ($this->courses_rows as $row){ ?>
 	    <?php  $counter++; ?>
 		 <tr class="<?php if ($counter %2) { echo 'odd'; } else { echo 'even'; } ?>">

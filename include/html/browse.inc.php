@@ -21,7 +21,7 @@ while($row = mysql_fetch_array($result)) {
 	$cats[$row['cat_id']] = $row['cat_name'];
 }
 
-if ($_GET['reset_filter']) { unset($_GET); }
+if (isset($_GET['reset_filter'])) { unset($_GET); }
 
 $page_string = '';
 
@@ -128,7 +128,11 @@ $savant->assign('num_results', $num_results);
 $savant->assign('has_categories', $has_categories);
 $savant->assign('categories_select', $categories_select);
 $savant->assign('checked_include_all', $checked_include_all);
-$savant->assign('checked_include_one', $checked_include_one);
+if(isset($checked_include_one)){
+    $savant->assign('checked_include_one', $checked_include_one);
+} else{
+    $savant->assign('checked_include_one', '');
+}
 $savant->assign('courses_rows', $courses_rows);
 
 $savant->display('users/browse.tmpl.php');

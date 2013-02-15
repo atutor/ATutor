@@ -73,8 +73,9 @@ function rowselectbox(obj, checked, handler) {
 <?php
 
 //TODO******************BOLOGNA***************REMOVE ME ***********************/
-
-$popup = intval($_GET['popup']);
+if(isset($_GET['popup'])){
+	$popup = intval($_GET['popup']);
+}
 $footerName = 'footer';
 if ($framed || $popup) {
     $footerName = (isset($tool_flag) && ($tool_flag)) ? 'tm_footer' : 'fm_footer';

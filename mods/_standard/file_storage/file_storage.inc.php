@@ -199,8 +199,8 @@ function fs_get_folder_by_pid($parent_folder_id, $owner_type, $owner_id) {
 				$sql = "SELECT G.group_id AS folder_id, G.title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."file_storage_groups FS USING (group_id) WHERE G.type_id=$row[assign_to] ORDER BY G.title";
 			} else {
 				global $system_courses;
-
-				$sql = "SELECT E.member_id AS folder_id, M.login AS title FROM ".TABLE_PREFIX."course_enrollment E INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.approved='y' AND E.privileges & ".AT_PRIV_GROUPS." = 0 AND E.member_id<>{$system_courses[$_SESSION[course_id]][member_id]} ORDER BY M.login";
+                $this_member = $system_courses[$_SESSION['course_id']]['member_id'];
+				$sql = "SELECT E.member_id AS folder_id, M.login AS title FROM ".TABLE_PREFIX."course_enrollment E INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.approved='y' AND E.privileges & ".AT_PRIV_GROUPS." = 0 AND E.member_id<>{$this_member} ORDER BY M.login";
 			}
 			$result = mysql_query($sql, $db);
 
