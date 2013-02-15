@@ -99,6 +99,9 @@ if($_config['session_timeout']){
 $session_timeout = intVal($_at_timeout) * 1000;
 $session_warning = 300 * 1000;                      // 5 minutes
 
+$session_timeout = 40000;
+$session_warning = 20000;
+
 $custom_head .= '
 	<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
@@ -108,14 +111,13 @@ $custom_head .= '
 	<script type="text/javascript">
 	$(document).ready(function() {
         ATutor.autoLogout.pageNavigate({
-            logoutTime              : '.$session_timeout.',
-            warningBeforeLogoutTime : '.$session_warning.',
+            timeLogout              : '.$session_timeout.',
+            timeWarningBeforeLogout : '.$session_warning.',
             logoutUrl               : "'.AT_print($_base_path, 'url.base').'logout.php",
             title                   : "'._AT('session_timeout_title').'",
-            button_1                : "'._AT('session_timeout_logout_now').'",
-            button_2                : "'._AT('session_timeout_stay_connected').'",
-            message                 : "'._AT('session_will_expire').'",
-            cookieTimeoutName       : "userActivity"
+            textButtonLogout        : "'._AT('session_timeout_logout_now').'",
+            textButtonStayConnected : "'._AT('session_timeout_stay_connected').'",
+            message                 : "'._AT('session_will_expire').'"
         });
 	});
 	
