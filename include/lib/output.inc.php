@@ -301,18 +301,19 @@ function _AT() {
         }
         $_template = $_cache_template;
     }
-    
-    $template_format = $_template[$term];
-    $outString = isset($template_format) ? (isset($args) && is_array($args) ? vsprintf($template_format, $args) : $template_format) : '';
-
+    if(isset($_template[$term])){
+        $term_text = $_template[$term];
+        $outString = isset($term_text) ? (isset($args) && is_array($args) ? vsprintf($term_text, $args) : $term_text) : '';
+    }
     if (empty($outString)) {
         // Note: the query below limits the returned data to one row to deal with the case that one language term has multiple text defined.
         // Using "_template" always has more priority over "_module". This logic should be fixed once we have support for _module terms.
         $row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s" ORDER BY variable DESC LIMIT 1', array(TABLE_PREFIX, $lang, $term), true);
-        $row_term = $row['term'];
+        if(isset($row['term']) && isset($row['text'])){
+            $row_term = $row['term'];
         
-        $outString = $_template[$row_term] = stripslashes($row['text']);
-        
+            $outString = $_template[$row_term] = stripslashes($row['text']);
+        }
         // specifically for "_msgs" type
         $term_prefix = substr($term, 0, 7); // 7 is the shortest type of msg (AT_HELP)
         if (in_array($term_prefix, $termTypes)) {
@@ -322,7 +323,7 @@ function _AT() {
             }
         }
 
-        $outString = is_array($args) ? vsprintf($outString, $args) : $outString;
+        $outString = isset($term_text) ? (isset($args) && is_array($args) ? vsprintf($outString, $args) : $outString) : '';
 
         /* update the locations */
         // NOTE!! This code should be removed from here. Eventually a separate module will be created for populating language_pages

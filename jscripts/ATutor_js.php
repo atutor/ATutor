@@ -40,14 +40,14 @@ ATutor.course = ATutor.course || {};
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
         ATutor.users.preferences.setStyles(
-                     '<?php echo $_SESSION["prefs"]["PREF_BG_COLOUR"]; ?>',
-                     '<?php echo $_SESSION["prefs"]["PREF_FG_COLOUR"]; ?>',
-                     '<?php echo $_SESSION["prefs"]["PREF_HL_COLOUR"]; ?>',
-                     '<?php echo $_SESSION["prefs"]["PREF_FONT_FACE"]; ?>',
-                     '<?php echo $_SESSION["prefs"]["PREF_FONT_TIMES"]; ?>');
+                     '<?php if(isset($_SESSION["prefs"]["PREF_BG_COLOUR"])){echo $_SESSION["prefs"]["PREF_BG_COLOUR"];} ?>',
+                     '<?php if(isset($_SESSION["prefs"]["PREF_FG_COLOUR"])){ echo $_SESSION["prefs"]["PREF_FG_COLOUR"];} ?>',
+                     '<?php if(isset($_SESSION["prefs"]["PREF_HL_COLOUR"])){echo $_SESSION["prefs"]["PREF_HL_COLOUR"];} ?>',
+                     '<?php if(isset($_SESSION["prefs"]["PREF_FONT_FACE"])){echo $_SESSION["prefs"]["PREF_FONT_FACE"];} ?>',
+                     '<?php if(isset($_SESSION["prefs"]["PREF_FONT_TIMES"])){echo $_SESSION["prefs"]["PREF_FONT_TIMES"];} ?>');
 
         ATutor.users.preferences.addPrefWizClickHandler();
-        ATutor.users.preferences.course_id = "<?php echo $_SESSION['course_id']; ?>";                
+        ATutor.users.preferences.course_id = "<?php if(isset($_SESSION['course_id'])){ echo $_SESSION['course_id'];} ?>";                
 <?php 
         if (isset($_SESSION['course_id']) && ($_SESSION['course_id'] > 0)) {
 ?>
