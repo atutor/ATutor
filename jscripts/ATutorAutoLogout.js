@@ -43,14 +43,21 @@ var ATutor = ATutor || {};
         // Calculate time for the warning timer since user passes how many seconds before logout user should see the message popup
         timeWarningBeforeLogout = timeLogout - timeWarningBeforeLogout;
         
-        // Buttons for the sessionTimeout dialog
-        buttonOptions[textButtonLogout] = function() {
+        /**
+        * Function which ends the session and logs out a user
+        * @author    Alexey Novak
+        */
+        var sessionLogout = function () {
+            // Logout user
             window.location = logoutUrl;
         };
+        
+        // Buttons for the sessionTimeout dialog
+        buttonOptions[textButtonLogout] = sessionLogout;
         buttonOptions[textButtonStayConnected] = function() {
             $(this).dialog("close");
             writeCookieTime();
-            startLogoutProcess();
+            startCountdown();
         };
         
         // Create dialog for the page
@@ -80,15 +87,11 @@ var ATutor = ATutor || {};
         * Function which will start timeouts
         * @author    Alexey Novak
         */
-        var startLogoutProcess = function () {
+        var startCountdown = function () {
             var warningCallback = function () {
-                    // open a warning dialog
-                    sessionTimeoutDialog.dialog("open");
-                },
-                logoutCallback = function () {
-                    // Logout user
-                    window.location = logoutUrl;
-                };
+                // open a warning dialog
+                sessionTimeoutDialog.dialog("open");
+            };
             
             // Clear all timers first if they are set
             clearTimeout(warningTimeout);
@@ -101,7 +104,7 @@ var ATutor = ATutor || {};
             
             // Set the timeout for logout
             logoutTimeout = setTimeout(function () {
-                activityCheck(logoutCallback);
+                activityCheck(sessionLogout);
             }, timeLogout);
         };
         
@@ -115,7 +118,7 @@ var ATutor = ATutor || {};
                 // Close the warning dialog and start the session logout process again
                 // NOTE: We do not want to update cookie or JS activity time here.
                 // Checking and seeing that user is active does NOT imply that he/she created an action by doing so.
-                startLogoutProcess();
+                startCountdown();
                 sessionTimeoutDialog.dialog("close");
             } else {
                 callback();
@@ -141,7 +144,7 @@ var ATutor = ATutor || {};
         // Since moving to a page means that user is active then update user activity
         writeCookieTime();
         // And start the logging out process
-        startLogoutProcess();
+        startCountdown();
     };
     
 })();
