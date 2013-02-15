@@ -231,7 +231,7 @@ function apply_timezone($timestamp){
  * @return string, converted string
  */
 function clean_extra_char($input) {
-	return str_replace('%%', '%', $input);
+    return str_replace('%%', '%', $input);
 }
 
 /**
@@ -301,10 +301,12 @@ function _AT() {
         }
         $_template = $_cache_template;
     }
+
     if(isset($_template[$term])){
         $term_text = $_template[$term];
         $outString = isset($term_text) ? (isset($args) && is_array($args) ? vsprintf($term_text, $args) : $term_text) : '';
     }
+
     if (empty($outString)) {
         // Note: the query below limits the returned data to one row to deal with the case that one language term has multiple text defined.
         // Using "_template" always has more priority over "_module". This logic should be fixed once we have support for _module terms.
