@@ -17,35 +17,32 @@ ATutor.autoLogout = ATutor.autoLogout || {};
         options = options || {};
         var logoutTime = options.logoutTime,
             warningBeforeLogoutTime = options.warningBeforeLogoutTime,
-            logoutUrl = options.logoutUrl,
-            message = options.message,
-            title = options.title,
-            cookieTimeoutName = options.cookieTimeoutName,
             button_1 = options.button_1,
             button_2 = options.button_2,
-            autoLogout = ATutor.autoLogout,
             buttonOptions = {};
         
+        // If times are invalid then just stop right there
         if (warningBeforeLogoutTime >= logoutTime) {
             return;
         }
+        // Calculate time for the warning timer since user passes how many seconds before logout user should see the message popup
+        options.warningBeforeLogoutTime = logoutTime - warningBeforeLogoutTime;
         
-        warningBeforeLogoutTime = logoutTime - warningBeforeLogoutTime;
+        // Set starting options
+        ATutor.autoLogout = $.extend(ATutor.autoLogout, options);
         
-        ATutor.autoLogout.warningBeforeLogoutTime = warningBeforeLogoutTime;
-        ATutor.autoLogout.logoutTime = logoutTime;
-        ATutor.autoLogout.logoutUrl = logoutUrl;
-        ATutor.autoLogout.cookieTimeoutName = cookieTimeoutName;
-        
+        // Buttons for the sessionTimeout dialog
         buttonOptions[button_1] = function() {
             window.location = autoLogout.logoutUrl;
         };
         buttonOptions[button_2] = function() {
             $(this).dialog("close");
+            autoLogout.writeCookieTime();
             autoLogout.startLogoutProcess();
         };
         
-        $("body").append("<div title='"+ title +"' id='sessionTimeout-dialog'>"+ message +"</div>");
+        // Create dialog for the page
+        $("body").append("<div title='"+ options.title +"' id='sessionTimeout-dialog'>"+ options.message +"</div>");
         ATutor.autoLogout.sessionTimeoutDialog = $("#sessionTimeout-dialog").dialog({
             autoOpen: false,
             width: 400,
@@ -55,9 +52,25 @@ ATutor.autoLogout = ATutor.autoLogout || {};
             buttons: buttonOptions
         });
         
-        ATutor.autoLogout.startLogoutProcess();
+        var autoLogout = ATutor.autoLogout;
+        
+        // Since moving to a page means that user is active then update user activity
+        autoLogout.writeCookieTime();
+        // And start the logging out process
+        autoLogout.startLogoutProcess();
     };
     
+    // Function which will write the activity time into cookie and will update our JS activity variable
+    ATutor.autoLogout.writeCookieTime = function () {
+        var autoLogout = ATutor.autoLogout,
+            now = new Date();
+        // Update our JS activity variable
+        ATutor.autoLogout.activityTime = now;
+        // Write new timestamp into a cookie
+        $.cookie(autoLogout.cookieTimeoutName, now.toString());
+    };
+    
+    // Function which will start timeouts
     ATutor.autoLogout.startLogoutProcess = function () {
         var autoLogout = ATutor.autoLogout;
         
@@ -65,12 +78,10 @@ ATutor.autoLogout = ATutor.autoLogout || {};
         clearTimeout(autoLogout.warningTimeout);
         clearTimeout(autoLogout.logoutTimeout);
         
-        // Store the time stamp and also write into the cookie
-       autoLogout.updateActiveTime();
-        
         // Set the timeout for warning
         ATutor.autoLogout.warningTimeout = setTimeout(function () {
             autoLogout.logoutUpdate(function () {
+                // open a warning dialog
                 autoLogout.sessionTimeoutDialog.dialog("open");
             });
         }, autoLogout.warningBeforeLogoutTime);
@@ -78,30 +89,36 @@ ATutor.autoLogout = ATutor.autoLogout || {};
         // Set the timeout for logout
         ATutor.autoLogout.logoutTimeout = setTimeout(function () {
             autoLogout.logoutUpdate(function () {
+                // Logout user
                 window.location = autoLogout.logoutUrl;
             });
         }, autoLogout.logoutTime);
     };
     
+    // Function which will check if user is active and either execute a callback or start the session logout process all over again
     ATutor.autoLogout.logoutUpdate = function (callback) {
         var autoLogout = ATutor.autoLogout;
         if (autoLogout.checkIfActive(autoLogout.activityTime)) {
+            // Close the warning dialog and start the session logout process again
+            // NOTE: We do not want to update cookie or JS activity time here.
+            // Checking and seeing that user is active does NOT imply that he/she created an action by doing so.
             autoLogout.startLogoutProcess();
+            autoLogout.sessionTimeoutDialog.dialog("close");
         } else {
             callback();
         }
     };
     
-    ATutor.autoLogout.updateActiveTime = function () {
-        var autoLogout = ATutor.autoLogout,
-            now = new Date();
-        autoLogout.activityTime = now;
-        $.cookie(autoLogout.cookieTimeoutName, now);
-    };
-    
+    // Function which returns true or false depending if user is active by comparing JS activity variable with the cookie one.
+    // If user is active we update our JS activity variable.
     ATutor.autoLogout.checkIfActive = function (timeStamp) {
-        var cookieActiveTimeStamp = new Date($.cookie(ATutor.autoLogout.cookieTimeoutName));
-        return (timeStamp < cookieActiveTimeStamp);
+        var autoLogout = ATutor.autoLogout,
+            cookieActiveTimeStamp = new Date($.cookie(autoLogout.cookieTimeoutName));
+        if (timeStamp < cookieActiveTimeStamp) {
+            ATutor.autoLogout.activityTime = cookieActiveTimeStamp;
+            return true;
+        }
+        return false;
     };
     
 })();

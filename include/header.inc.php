@@ -96,32 +96,20 @@ if($_config['session_timeout']){
 	$_at_timeout = '1200';
 }
 
-$_at_timeout = '10';
+$session_timeout = intVal($_at_timeout) * 1000;
+$session_warning = 300 * 1000;                      // 5 minutes
 
 $custom_head .= '
 	<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.sessionTimeout.1.0.min.js" type="text/javascript"></script>
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js" type="text/javascript"></script>
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		/*$.sessionTimeout({
-		    message      : "'._AT('session_will_expire').'",
-		    keepAliveUrl : "'.AT_print($_base_path, 'url.base').'include/session_keepalive.php",
-		    redirUrl     : "'.AT_print($_base_path, 'url.base').'logout.php",
-		    logoutUrl    : "'.AT_print($_base_path, 'url.base').'logout.php",
-		    warnAfter: '.($_at_timeout*1000).', // maxlifetime converted to milliseconds
-		    redirAfter: '.(($_at_timeout*1000)+300000).', // allow 5 more minutes to respond, in milliseconds
-		    title        : "'._AT('session_timeout_title').'",
-		    button_1     : "'._AT('session_timeout_logout_now').'",
-		    button_2	 : "'._AT('session_timeout_stay_connected').'"
-		});*/
-	
         ATutor.autoLogout.pageNavigate({
-            logoutTime              : 20 * 1000,
-            warningBeforeLogoutTime : 10 * 1000,
+            logoutTime              : '.$session_timeout.',
+            warningBeforeLogoutTime : '.$session_warning.',
             logoutUrl               : "'.AT_print($_base_path, 'url.base').'logout.php",
             title                   : "'._AT('session_timeout_title').'",
             button_1                : "'._AT('session_timeout_logout_now').'",
