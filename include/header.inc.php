@@ -100,6 +100,8 @@ $custom_head .= '
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.sessionTimeout.1.0.min.js" type="text/javascript"></script>
+	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js" type="text/javascript"></script>
+	<script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
 		$.sessionTimeout({
@@ -114,6 +116,13 @@ $custom_head .= '
 		    button_2	 : "'._AT('session_timeout_stay_connected').'"
 		});
 	});
+	
+	ATutor.autoLogout.pageNavigate({
+	   logoutTime: 100 * 1000,
+	   warningBeforeLogoutTime: 20 * 1000,
+	   logoutUrl: "'.AT_print($_base_path, 'url.base').'logout.php"
+	});
+	
 	</script>
   ';
 }
