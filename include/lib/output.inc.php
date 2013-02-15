@@ -226,6 +226,15 @@ function apply_timezone($timestamp){
 }
 
 /**
+ * A fix for _AT() to replace '%%' to '%' in the language text. A better solution is to fix the language table on '%%'.
+ * @param string, $input
+ * @return string, converted string
+ */
+function clean_extra_char($input) {
+	return str_replace('%%', '%', $input);
+}
+
+/**
 * Converts language code to actual language message, caches them according to page url
 * @access    public
 * @param    args                unlimited number of arguments allowed but first arg MUST be name of the language variable/term
@@ -281,7 +290,7 @@ function _AT() {
                 //The edited terms (_c_template) will always be at the top of the resultset
                 //0003279
                 if (!isset($_cache_template[$row_term])) {
-                    $_cache_template[$row_term] = stripslashes($row['text']);
+                    $_cache_template[$row_term] = clean_extra_char(stripslashes($row['text']));
                 } else {
                     continue;
                 }
@@ -323,7 +332,7 @@ function _AT() {
     
         queryDB('INSERT IGNORE INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $term, $_rel_url));
 
-        $outString = empty($outString) ? sprintf('[ %s ]', $term) : $outString;
+        $outString = empty($outString) ? sprintf('[ %s ]', $term) : clean_extra_char($outString);
     }
 
     return $outString;
