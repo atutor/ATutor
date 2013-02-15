@@ -303,7 +303,7 @@ function _AT() {
     }
     
     $template_format = $_template[$term];
-    $outString = isset($template_format) ? (is_array($args) ? vsprintf($template_format, $args) : $template_format) : '';
+    $outString = isset($template_format) ? (isset($args) && is_array($args) ? vsprintf($template_format, $args) : $template_format) : '';
 
     if (empty($outString)) {
         // Note: the query below limits the returned data to one row to deal with the case that one language term has multiple text defined.
