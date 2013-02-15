@@ -53,7 +53,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 function queryDB($query, $params, $oneRow = false, $sanitize = true) {
     global $db, $msg, $addslashes;
     
-    $oneRowErrorMessage = 'Query which should returned only 1 row has returned more rows.';
+    $oneRowErrorMessage = 'Query "%s" which should returned only 1 row has returned more rows.';
     
     // Prevent sql injections through string parameters passed into the query
     if ($sanitize) {
@@ -66,6 +66,7 @@ function queryDB($query, $params, $oneRow = false, $sanitize = true) {
     
     try {
         $sql = vsprintf($query, $params);
+        $oneRowErrorMessage = sprintf($oneRowErrorMessage, $sql);
         
         // The line below must be commented out on production instance of ATutor
         //error_log(print_r($sql, true), 0);    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY

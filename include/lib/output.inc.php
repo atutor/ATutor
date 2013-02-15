@@ -226,6 +226,15 @@ function apply_timezone($timestamp){
 }
 
 /**
+ * A fix for _AT() to replace '%%' to '%' in the language text. A better solution is to fix the language table on '%%'.
+ * @param string, $input
+ * @return string, converted string
+ */
+function clean_extra_char($input) {
+    return str_replace('%%', '%', $input);
+}
+
+/**
 * Converts language code to actual language message, caches them according to page url
 * @access    public
 * @param    args                unlimited number of arguments allowed but first arg MUST be name of the language variable/term
@@ -259,6 +268,11 @@ function _AT() {
         array_shift($args);
     }
     
+    // Unset $args if none to avoid the vsprintf() error.
+    if (count($args) == 0) {
+        unset($args);
+    }
+    
     // a template variable
     // Cache all the token used on the same page with the current language
     // NOTE!!! term has length of CHAR(30) in language_pages and CHAR(50) in language_text. While it is true the cache logic below is inefficient
@@ -276,7 +290,7 @@ function _AT() {
                 //The edited terms (_c_template) will always be at the top of the resultset
                 //0003279
                 if (!isset($_cache_template[$row_term])) {
-                    $_cache_template[$row_term] = stripslashes($row['text']);
+                    $_cache_template[$row_term] = clean_extra_char(stripslashes($row['text']));
                 } else {
                     continue;
                 }
@@ -288,8 +302,8 @@ function _AT() {
         $_template = $_cache_template;
     }
     
-    $template_format = $_template[$term];
-    $outString = isset($template_format) ? (is_array($args) ? vsprintf($template_format, $args) : $template_format) : '';
+    $term_text = $_template[$term];
+    $outString = isset($term_text) ? (isset($args) && is_array($args) ? vsprintf($term_text, $args) : $term_text) : '';
 
     if (empty($outString)) {
         // Note: the query below limits the returned data to one row to deal with the case that one language term has multiple text defined.
@@ -318,7 +332,7 @@ function _AT() {
     
         queryDB('INSERT IGNORE INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $term, $_rel_url));
 
-        $outString = empty($outString) ? sprintf('[ %s ]', $term) : $outString;
+        $outString = empty($outString) ? sprintf('[ %s ]', $term) : clean_extra_char($outString);
     }
 
     return $outString;
