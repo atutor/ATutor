@@ -99,9 +99,6 @@ if($_config['session_timeout']){
 $session_timeout = intVal($_at_timeout) * 1000;
 $session_warning = 300 * 1000;                      // 5 minutes
 
-$session_timeout = 40000;
-$session_warning = 20000;
-
 $custom_head .= '
 	<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
@@ -110,7 +107,7 @@ $custom_head .= '
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-        ATutor.autoLogout.pageNavigate({
+        ATutor.autoLogout({
             timeLogout              : '.$session_timeout.',
             timeWarningBeforeLogout : '.$session_warning.',
             logoutUrl               : "'.AT_print($_base_path, 'url.base').'logout.php",
