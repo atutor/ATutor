@@ -34,7 +34,7 @@ if (isset($_POST['cancel'])) {
 	$_POST['formatting']	= intval($_POST['formatting']);
 
 	if (($_POST['title'] == '') && ($_POST['body_text'] == '')) {
-		$msg->addErros('ANN_BOTH_EMPTY');
+		$msg->addError('ANN_BOTH_EMPTY');
 	}
 
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
