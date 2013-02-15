@@ -95,6 +95,9 @@ if($_config['session_timeout']){
 }else{
 	$_at_timeout = '1200';
 }
+
+$_at_timeout = '10';
+
 $custom_head .= '
 	<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
@@ -104,7 +107,7 @@ $custom_head .= '
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$(document).ready(function() {
-		$.sessionTimeout({
+		/*$.sessionTimeout({
 		    message      : "'._AT('session_will_expire').'",
 		    keepAliveUrl : "'.AT_print($_base_path, 'url.base').'include/session_keepalive.php",
 		    redirUrl     : "'.AT_print($_base_path, 'url.base').'logout.php",
@@ -114,13 +117,18 @@ $custom_head .= '
 		    title        : "'._AT('session_timeout_title').'",
 		    button_1     : "'._AT('session_timeout_logout_now').'",
 		    button_2	 : "'._AT('session_timeout_stay_connected').'"
-		});
-	});
+		});*/
 	
-	ATutor.autoLogout.pageNavigate({
-	   logoutTime: 100 * 1000,
-	   warningBeforeLogoutTime: 20 * 1000,
-	   logoutUrl: "'.AT_print($_base_path, 'url.base').'logout.php"
+        ATutor.autoLogout.pageNavigate({
+            logoutTime              : 20 * 1000,
+            warningBeforeLogoutTime : 10 * 1000,
+            logoutUrl               : "'.AT_print($_base_path, 'url.base').'logout.php",
+            title                   : "'._AT('session_timeout_title').'",
+            button_1                : "'._AT('session_timeout_logout_now').'",
+            button_2                : "'._AT('session_timeout_stay_connected').'",
+            message                 : "'._AT('session_will_expire').'",
+            cookieTimeoutName       : "userActivity"
+        });
 	});
 	
 	</script>
