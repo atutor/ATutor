@@ -88,7 +88,7 @@ if (isset($_custom_head)) {
 }
 
 // Set session timeout warning if user is logged in
-if($_SESSION['valid_user']){
+if(isset($_SESSION['valid_user'])){
 // Setup the timeout warning when a user logs in
 if($_config['session_timeout']){
 	$_at_timeout = ($_config['session_timeout']*60);
@@ -287,12 +287,18 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 	}
 
 	//side menu array
+	// NOT SURE IF THIS IS DOING ANYTHING
+	/*
 	if ($_SESSION['course_id'] > 0) {
 		$side_menu = array();
 		$side_menu = explode('|', $system_courses[$_SESSION['course_id']]['side_menu']);
+		debug($side_menu);
+		debug($_stacks);		
 		$side_menu = array_intersect($side_menu, $_stacks);
+		debug($side_menu);
 		$savant->assign('side_menu', $side_menu);
 	}
+	*/
 }
 
 // array of content tools for shortcuts tool bar.

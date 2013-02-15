@@ -911,7 +911,7 @@ if (condition) {
 			<dd>This directory contains the SQL files necessary to set up or upgrade the ATutor database.</dd>
 
 		<dt><kbd>`install/include/`</kbd></dt>
-			<dd>This directory contains files used during a standalone installation or upgrade, calling on the file in include/install.</dd>
+			<dd>This directory contains files used during a standalone installation or upgrade, calling on the files in include/install.</dd>
 
 		<dt><kbd>`jscripts/`</kbd></dt>
 			<dd>This directory contains all JavaScript files.</dd>
@@ -956,7 +956,7 @@ if (condition) {
 
 <a href="#top" class="top">top</a>
 <h2><a name="localisation"></a>15. Localisation</h2>
-	<p>All language terms and phrases are stored in the ATutor database. See the <a href="#fn-at"><kbd>_AT()</kbd></a> function for details on displaying text. There are three tables that are used for managing languages, their roles are as follows:</p>
+	<p>All language terms and phrases are stored in the ATutor database. See the <a href="#fn-at"><kbd>_AT()</kbd></a> function in <kbd>include/lib/output.inc.php</kbd> for details on displaying text. There are three tables that are used for managing languages, their roles are as follows:</p>
 		<dl>
 			<dt><kbd>`language_pages`</kbd></dt>
 			<dd>This table is used to cross reference language terms with pages. It allows selecting, via a <kbd>JOIN</kbd>, only the terms needed for a particular page. The <kbd>JOIN</kbd> may be slow at first but once the result is cached, subsequent calls are many times faster such that only the language needed for a particular page is restored from cache.</dd>
@@ -983,7 +983,7 @@ if (condition) {
 		<dd>Messages reflecting negative feedback to the user, indicating issues that need resolving or addressing.</dd>
 
 		<dt><kbd>Feedback</kbd></dt>
-		<dd>Messages reflecting positive feedback, aknowledging a users action was successfull.</dd>
+		<dd>Messages reflecting positive feedback, acknowledging a users action was successfull.</dd>
 
 		<dt><kbd>Warning</kbd></dt>
 		<dd>Messages warning the user of a possible action with undesireable effects.</dd>
@@ -999,15 +999,13 @@ if (condition) {
 
 	</dl>
 
-		
-	<p>Please note that using the old method of passing messages is not supported anymore.</p>
 
 	<p>Messages can be passed between pages and can be accessed at any time, without any time restriction other than a session timeout.</p>
 
 	<h3><a name="error-feedback-internals"></a>16.1 Internals</h3>
 		<p>Essentially the internals of the class are divided into two segments, a section responsible for printing graphics via Savant templates and another that manages the storage of Messages.</p>
 	
-		<p>Tracking messages is accomplished by storing message codes and their optional arguments associatively in <kbd>$_SESSION</kbd>. Printing messages is accomplished via Savant and built in templates which can be found in <kbd>`templates/`</kbd>.</p>
+		<p>Tracking messages is accomplished by storing message codes and their optional arguments associatively in <kbd>$_SESSION</kbd>. Printing messages is accomplished via Savant and built in templates which can be found in <kbd>`themes/default/`</kbd>. Message templates can copied into themes other than default/ and modified to change their appearance, though typically changes are made in a secondary theme's styles.css file.</p>
 	
 		<p>The relational tracking structure is organized in the following manner inside <kbd>$_SESSION</kbd> in no particular order.</p>
 			<ul>
@@ -1102,12 +1100,12 @@ if (condition) {
 			</ul>
 
 
-		<p>There are two ways of adding messages: a single code or a code with an array fo arguments. You can mix-and-match, a combination of both is supported even for the same code. Below is description of the formats:</p>
+		<p>There are two ways of adding messages: a single code or a code with an array of arguments. You can mix-and-match, a combination of both is supported even for the same code. Below is description of the formats:</p>
 
         <dl>
 			<dt>Adding single code</dt>
 			<dt><kbd>$msg->addHelp('FILE_EXPORTABLE');</kbd></dt>
-		<dt><strong>>OR</strong></dt>
+		<dt><strong>OR</strong></dt>
 		<dt>Adding array with arguments</dt>
 		<dt><kbd>$f = array('FILE_EXPORTABLE', 'arg', 'arg2', ...);</kbd></dt>
 		<dt><kbd>$msg->addHelp($f);</kbd></dt>
@@ -1136,23 +1134,23 @@ if (condition) {
 
 <p>Snapshot of a portion of <kbd>$_SESSION</kbd> as a result:</p>
 <pre class="code">
-	[feedback] => Array
-                (
-                    [AT_FEEDBACK_FORUM_ADDED] => Array
-                        (
-                            [0] => AT_FEEDBACK_FORUM_ADDED
-                            [1] => ac_access_groups
-                            [2] => about_atutor_help_text
-                        )
-                        
-                    [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
-                        (
-                            [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
-                            [1] => archive.zip
-                        )
+[feedback] => Array
+    (
+        [AT_FEEDBACK_FORUM_ADDED] => Array
+            (
+                [0] => AT_FEEDBACK_FORUM_ADDED
+                [1] => ac_access_groups
+                [2] => about_atutor_help_text
+            )
+            
+        [AT_FEEDBACK_FILE_UPLOADED_ZIP] => Array
+            (
+                [0] => AT_FEEDBACK_FILE_UPLOADED_ZIP
+                [1] => archive.zip
+            )
 
 
-                )
+    )
 	...
 </pre>
 
@@ -1180,12 +1178,12 @@ argument ANY argument that you would pass when adding a Message of that type.
 Essentially, two lines of code are accomplished in one.</p>
 <p>Example:</p>
 <pre class="code">
-	$msg->addError('MAX_ATTEMPTS');
-	$msg->printErrors();
-	
-	can also be accomplished as:
-	
-	$msg->printErrors('MAX_ATTEMPTS');
+$msg->addError('MAX_ATTEMPTS');
+$msg->printErrors();
+
+can also be accomplished as:
+
+$msg->printErrors('MAX_ATTEMPTS');
 </pre>
 
 <h4><a name="Boolean"></a>Printing String inside Feedback style box</h4>
@@ -1344,7 +1342,7 @@ $msg->printAll();
 </pre>
 <a href="#top" class="top">top</a>
 <h2><a name="mbstring-support"></a>16.4 UTF-8 and Multibyte language</h2>
-	<p>As of ATutor 1.6, string parsing is done with multibtyle string functions, either the <kbd>mbstring</kbd> function in PHP itself, or the multibyte string functions in the UTF-8 library included with ATutor. By default ATutor will attempt to use the PHP <kbd>mbstring</kbd> functions, and will fall back on the ATutor library if this fails. In order to support both methods of string processing, a set of custom string parsing functions have been created. The only time the ATutor functions will be used is when the mbstring check during the installation or upgrade process has been disabled. The functions mirror the standard string parsing function in PHP, but with the <kbd>$</kbd> prepended. So, where ever you would normally use a PHP function like <kbd>substr() </kbd>, instead use <kbd>$substr()</kbd>. These functions are located in the vital.inc.php</p>
+	<p>As of ATutor 1.6, string parsing is done with multibtyle string functions, either the <kbd>mbstring</kbd> function in PHP itself, or the multibyte string functions in the UTF-8 library included with ATutor. By default ATutor will attempt to use the PHP <kbd>mbstring</kbd> functions, and will fall back on the ATutor library if this fails. In order to support both methods of string processing, a set of custom string parsing functions have been created. The only time the ATutor functions will be used is when the mbstring check during the installation or upgrade process has been disabled. The functions mirror the standard string parsing function in PHP, but with the <kbd>$</kbd> prepended. So, where ever you would normally use a PHP function like <kbd>substr() </kbd>, instead use <kbd>$substr()</kbd>. These functions are located in the vitals.inc.php file.</p>
 <pre class="code">
  if (extension_loaded('mbstring')){
 	 $strtolower = 'mb_strtolower';
@@ -1422,8 +1420,9 @@ $msg->printAll();
 			<p><kbd>$db</kbd> is the main database handler. Use it to connect to the ATutor database.</p>
 
 		<h4>Location</h4>
-			<p><kbd>`include/vitals.inc.php`</kbd></p>
-
+			<p><kbd>`include/vitals.inc.php`</kbd></p >
+        <h4>NOTE:</h4>
+    	<p>The <kbd>$db</kbd> variable should not be use in versions of ATutor 2.1.1 and beyond, with database queries now being handles by the <a href="#querydb">queryDB()</a> function.</p>
 	<h3><a name="var-addslashes"></a>17.2 $addslashes</h3>
 		<p>See <a href="#fn-addslashes"><kbd>$addslashes()</kbd></a>.</p>
 

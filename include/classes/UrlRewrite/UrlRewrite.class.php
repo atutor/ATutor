@@ -191,12 +191,13 @@ class UrlRewrite  {
 			$end = '';
 		}
 		$front_array = explode('/', $front);
-		if ($front_array[1]=='_standard' || $front_array[1]=='_core' ){
+		if (isset($front_array[1]) && ($front_array[1]=='_standard' || $front_array[1]=='_core' )){
 			//shift the first 2 elements.
 			array_shift($front_array);
 			array_shift($front_array);	
 			$front = implode('/', $front_array);
 		}
+
 		//find out what kind of link this is, pretty url? relative url? or PHP_SELF url?
 		$dir_deep	 = substr_count(AT_INCLUDE_PATH, '..');
 		$url_parts	 = explode('/', $_SERVER['HTTP_HOST'] . $_SERVER['PHP_SELF']);

@@ -512,7 +512,7 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 if ($_SESSION['member_id'] && $_SESSION['enroll']){
 	$my_assignments = array();
 	$sql = "SELECT distinct a.title, a.assignment_id FROM ".TABLE_PREFIX."assignments a, ".TABLE_PREFIX."files f
-	         WHERE a.course_id = ".$_SESSION[course_id]."
+	         WHERE a.course_id = ".$_SESSION['course_id']."
 	           AND a.assignment_id = f.owner_id
 	           AND f.owner_type= ".WORKSPACE_ASSIGNMENT."
 	           AND f.member_id = ".$_SESSION['member_id']."
@@ -552,7 +552,7 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 			<?php if ($_SESSION['member_id'] && $_SESSION['enroll']): ?>
 				<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option>
 			<?php endif; ?>
-			<?php if ($file_storage_groups): ?>
+			<?php if (isset($file_storage_groups)): ?>
 				<optgroup label="<?php echo _AT('groups'); ?>">
 					<?php foreach ($file_storage_groups as $group): ?>
 						<option value="<?php echo WORKSPACE_GROUP; ?>_<?php echo $group['group_id']; ?>" <?php if ($owner_type == WORKSPACE_GROUP && $owner_id == $group['group_id']) { echo 'selected="selected"'; } ?>><?php echo AT_print($group['title'], 'input.text'); ?></option>

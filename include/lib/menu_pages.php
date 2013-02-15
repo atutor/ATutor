@@ -23,7 +23,7 @@ if (isset($_pages[AT_NAV_ADMIN])) {
 }
 
 if($_config['allow_browse'] && $_config['just_social'] != "1") {
-if($_SESSION['valid_user']){
+if(isset($_SESSION['valid_user'])){
     $browse_tab = "users/browse.php";
 }else{
     $browse_tab = "browse.php";
@@ -214,8 +214,9 @@ $_pages['mods/_standard/profile_pictures/profile_picture.php']['title_var']    =
 $_pages['users/profile.php']['title_var']    = 'profile';
 $_pages['users/profile.php']['parent']   = AT_NAV_START;
 $_pages['users/profile.php']['guide']     = 'general/?p=profile.php';
+if(isset($_pages['users/profile.php']['children'])){
 $_pages['users/profile.php']['children']  = array_merge(array('users/password_change.php', 'users/email_change.php','mods/_standard/profile_pictures/profile_picture.php'), (array) $_pages['users/profile.php']['children']);
-
+}
 $_pages['users/password_change.php']['title_var'] = 'change_password';
 $_pages['users/password_change.php']['parent']    = 'users/profile.php';
 //$_pages['users/password_change.php']['guide']    = 'instructor/?p=creating_courses.php';
@@ -350,7 +351,7 @@ function get_main_navigation($current_page) {
 					$table = '';
 				}
 
-                $_top_level_pages[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($page), 'title' => $_page_title, 'img' => AT_print($_base_path, 'url.page').$_pages[$page]['img'], 'tool_file' => $tool_file, 'table' => $table);
+                $_top_level_pages[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($page), 'title' => $_page_title,  'tool_file' => $tool_file, 'table' => $table);
             }
         }
     } else if (isset($parent_page)) {

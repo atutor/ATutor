@@ -289,6 +289,7 @@ define('BLACKBERRY_DEVICE',  'blackberry');
 define('ANDROID_DEVICE',  'android');
 define('UNKNOWN_DEVICE',  'unknown');
 define('IPAD_DEVICE', 'ipad');
+define('PLAYBOOK', 'playbook');
 
 // machine type
 define('DESKTOP_DEVICE',  'Desktop');

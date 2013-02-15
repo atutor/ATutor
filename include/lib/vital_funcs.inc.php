@@ -537,7 +537,9 @@ function url_rewrite($url, $is_rewriting_header=AT_PRETTY_URL_NOT_HEADER, $force
 				$course_id = $url_parser->getCourseDirName($_SESSION['course_id']);
 			} 
 		} else {
+		    if(isset($_SESSION['course_id'])){
 			$course_id = $_SESSION['course_id'];
+			}
 		}
 		$url = $pathinfo[1]->convertToPrettyUrl($course_id, $url);
 	} elseif ($_config['course_dir_name'] > 0) {
@@ -618,13 +620,13 @@ function query_bit( $bitfield, $bit ) {
 * @author  Joel Kronenberg
 */
 function authenticate($privilege, $check = false) {
-	if ($_SESSION['is_admin']) {
+	if (isset($_SESSION['is_admin'])) {
 		return true;
 	}
-
-	$auth = query_bit($_SESSION['privileges'], $privilege);
-	
-	if (!$_SESSION['valid_user'] || !$auth) {
+    if(isset($_SESSION['privileges'])){
+	    $auth = query_bit($_SESSION['privileges'], $privilege);
+	}
+	if (!isset($_SESSION['valid_user']) || !$auth) {
 		if (!$check){
 			global $msg;
 			$msg->addInfo('NO_PERMISSION');
