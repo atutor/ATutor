@@ -19,7 +19,6 @@ require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
-$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 /*
  * customized print_name for connection and its search
