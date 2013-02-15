@@ -75,7 +75,7 @@ function regenerate_session($reload = false)
 
 function check_session()
 {
-	if($_SESSION['OBSOLETE'] && ($_SESSION['EXPIRES'] < time())) {
+	if(isset($_SESSION['OBSOLETE']) && ($_SESSION['EXPIRES'] < time())) {
 		return false;
 	}
 	            
@@ -87,7 +87,7 @@ function check_session()
 		return false;
 	}
 	            
-	if(!$_SESSION['OBSOLETE']) {
+	if(!isset($_SESSION['OBSOLETE'])) {
 		regenerate_session();
 	}
 	return true;

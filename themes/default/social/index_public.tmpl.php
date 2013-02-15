@@ -8,10 +8,14 @@
 	} elseif(isset($_GET['search_friends'])) {
 		$last_search = htmlentities_utf8($_GET['search_friends']);
 	} else {
-		$last_search = html_entity_decode($_POST['search_friends_'.$rand]);
+	    if(isset($_POST['search_friends_'.$rand])){
+		    $last_search = html_entity_decode($_POST['search_friends_'.$rand]);
+		}
 	}
 	//take out double quotes until there is a way to escape XSS from the ajax script.
-	$last_search = preg_replace('/\"/', '', $last_search);
+	if(isset($last_search)){
+	    $last_search = preg_replace('/\"/', '', $last_search);
+	}
 	$search_field = htmlentities_utf8($this->search_field);
 ?>
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$search_field, 1);  ?>
@@ -21,7 +25,7 @@
 		<h3><?php echo _AT('search_for_friends'); ?></h3>
 		<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index_public.php');?>" method="POST" id="search_friends_form">
 			<label for="searchFriends" style="display:none;"><?php echo _AT('search'); ?></label>
-			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php echo $last_search; ?>" onkeyup="showResults(this.value, 'livesearch', '<?php echo AT_SOCIAL_BASENAME; ?>index_public.php')"/>
+			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php if(isset($last_search)){echo $last_search;} ?>" onkeyup="showResults(this.value, 'livesearch', '<?php echo AT_SOCIAL_BASENAME; ?>index_public.php')"/>
 			<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button">
 			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>" />
 			

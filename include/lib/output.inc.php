@@ -249,7 +249,7 @@ function clean_extra_char($input) {
 * 2. _AT(array([term], [argument-1], ... [argument-N]))
 */
 function _AT() {
-    global $_cache_template, $lang_et, $_rel_url, $_config_defaults, $_config;
+    global $_cache_template, $lang_et, $_rel_url, $_config_defaults, $_config, $_base_path;
     static $_template;
     
     $termTypes = array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF');

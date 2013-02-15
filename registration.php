@@ -340,7 +340,7 @@ if (isset($_POST['cancel'])) {
 
 // This is the quick and dirty fix for http://atutor.ca/atutor/mantis/view.php?id=5150.
 // Strongly suggest to refactor it properly into templates and rethink the session unset down below.
-if ($_SESSION['member_id'] && $_SESSION['login']) {
+if (isset($_SESSION['member_id']) && $_SESSION['login']) {
     require_once(AT_INCLUDE_PATH.'header.inc.php');
     $msg->addWarning('CANNOT_REGISTER_LOGGEDIN');
     $msg->printWarnings();

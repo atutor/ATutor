@@ -24,9 +24,9 @@ function encrypt_password()
 }
 </script>
 
-<form method="post" action="<?php if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" name="form">
+<form method="post" action="<?php $getvars = ''; if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" name="form">
 <?php global $languageManager, $_config, $moduleFactory; ?>
-<input name="ml" type="hidden" value="<?php echo $this->ml; ?>" />
+<input name="ml" type="hidden" value="<?php if(isset($this->ml)){ echo $this->ml; } ?>" />
 <input name="password_error" type="hidden" />
 <input type="hidden" name="form_password_hidden" value="" />
 <input type="hidden" name="registration_token" value="<?php echo sha1($_SESSION['token']); ?>" />
@@ -35,7 +35,7 @@ function encrypt_password()
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('required_information'); ?></legend>
 
 <p><span class="required">*</span><?php echo _AT('required_field'); ?></p>
-	<?php if (!$_POST['member_id'] && defined('AT_MASTER_LIST') && AT_MASTER_LIST && !admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
+	<?php if (!isset($_POST['member_id']) && defined('AT_MASTER_LIST') && AT_MASTER_LIST && !admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): ?>
 		<div class="row">
 			<h3><?php echo _AT('account_authorization'); ?></h3>
 		</div>
@@ -64,12 +64,12 @@ function encrypt_password()
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="login"><?php echo _AT('login_name'); ?></label><br />
-		<?php if ($_POST['member_id']) : ?>
+		<?php if (isset($_POST['member_id'])) : ?>
 				<span id="login"><?php echo stripslashes(htmlspecialchars($_POST['login'])); ?></span>
 				<input name="member_id" type="hidden" value="<?php echo intval($_POST['member_id']); ?>" />
-				<input name="login" type="hidden" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" />
+				<input name="login" type="hidden" value="<?php if(isset($_POST['login'])){ echo stripslashes(htmlspecialchars($_POST['login'])); } ?>" />
 		<?php else: ?>
-			<input id="login" name="login" type="text" maxlength="20" size="30" value="<?php echo stripslashes(htmlspecialchars($_POST['login'])); ?>" title="<?php echo _AT('login_name').':'._AT('contain_only'); ?>"/><br />
+			<input id="login" name="login" type="text" maxlength="20" size="30" value="<?php if(isset($_POST['login'])){echo stripslashes(htmlspecialchars($_POST['login']));} ?>" title="<?php echo _AT('login_name').':'._AT('contain_only'); ?>"/><br />
 			<small>&middot; <?php echo _AT('contain_only'); ?><br />
 				   &middot; <?php echo _AT('20_max_chars'); ?></small>
 		<?php endif; ?>
@@ -106,28 +106,28 @@ function encrypt_password()
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email"><?php echo _AT('email_address'); ?></label><br />
-		<input id="email" name="email" type="text" size="30" maxlength="50" value="<?php echo stripslashes(htmlspecialchars($_POST['email'])); ?>" /><br />
-		<input type="checkbox" id="priv" name="private_email" value="1" <?php if ($_POST['private_email'] || !isset($_POST['submit'])) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
+		<input id="email" name="email" type="text" size="30" maxlength="50" value="<?php if(isset($_POST['email'])){ echo stripslashes(htmlspecialchars($_POST['email']));} ?>" /><br />
+		<input type="checkbox" id="priv" name="private_email" value="1" <?php if (isset($_POST['private_email']) || !isset($_POST['submit'])) { echo 'checked="checked"'; } ?> /><label for="priv"><?php echo _AT('keep_email_private');?></label>
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="email2"><?php echo _AT('email_again'); ?></label><br />
-		<input id="email2" name="email2" type="text" size="30" maxlength="60" value="<?php echo stripslashes(htmlspecialchars($_POST['email2'])); ?>" />
+		<input id="email2" name="email2" type="text" size="30" maxlength="60" value="<?php if(isset($_POST['email2'])){  echo stripslashes(htmlspecialchars($_POST['email2']));} ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="first_name"><?php echo _AT('first_name'); ?></label><br />
-		<input id="first_name" name="first_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['first_name'])); ?>" />
+		<input id="first_name" name="first_name" type="text" value="<?php if(isset($_POST['first_name'])){ echo stripslashes(htmlspecialchars($_POST['first_name']));} ?>" />
 	</div>
 
 	<div class="row">
 		<label for="second_name"><?php echo _AT('second_name'); ?></label><br />
-		<input id="second_name" name="second_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['second_name'])); ?>" />
+		<input id="second_name" name="second_name" type="text" value="<?php if(isset($_POST['second_name'])){ echo stripslashes(htmlspecialchars($_POST['second_name'])); } ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="last_name"><?php echo _AT('last_name'); ?></label><br />
-		<input id="last_name" name="last_name" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['last_name'])); ?>" />
+		<input id="last_name" name="last_name" type="text" value="<?php if(isset($_POST['last_name'])){ echo stripslashes(htmlspecialchars($_POST['last_name']));} ?>" />
 	</div>
 	
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)): 
@@ -186,47 +186,47 @@ function encrypt_password()
 
 	<div class="row">
 		<?php echo _AT('date_of_birth'); ?><br />
-		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $_POST['year']; ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $_POST['month']; ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $_POST['day']; ?>" />
+		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php if(isset($_POST['year'])){ echo $_POST['year'];} ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['month'])){echo $_POST['month'];} ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['day'])){ echo $_POST['day'];} ?>" />
 	</div>
 
 	<div class="row">
 		<?php echo _AT('gender'); ?><br />
-		<input type="radio" name="gender" id="m" value="m" <?php if ($_POST['gender'] == 'm') { echo 'checked="checked"'; } ?> /><label for="m"><?php echo _AT('male'); ?></label> <input type="radio" value="f" name="gender" id="f" <?php if ($_POST['gender'] == 'f') { echo 'checked="checked"'; } ?> /><label for="f"><?php echo _AT('female'); ?></label>  <input type="radio" value="n" name="gender" id="ns" <?php if (($_POST['gender'] == 'n') || ($_POST['gender'] == '')) { echo 'checked="checked"'; } ?> /><label for="ns"><?php echo _AT('not_specified'); ?></label>
+		<input type="radio" name="gender" id="m" value="m" <?php if (isset($_POST['gender']) && $_POST['gender'] == 'm') { echo 'checked="checked"'; } ?> /><label for="m"><?php echo _AT('male'); ?></label> <input type="radio" value="f" name="gender" id="f" <?php if (isset($_POST['gender']) && $_POST['gender'] == 'f') { echo 'checked="checked"'; } ?> /><label for="f"><?php echo _AT('female'); ?></label>  <input type="radio" value="n" name="gender" id="ns" <?php if (isset($_POST['gender']) && ($_POST['gender'] == 'n' || $_POST['gender'] == '')) { echo 'checked="checked"'; } ?> /><label for="ns"><?php echo _AT('not_specified'); ?></label>
 	</div>
 
 	<div class="row">
 		<label for="address"><?php echo _AT('street_address'); ?></label><br />
-		<input id="address" name="address" size="40" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['address'])); ?>" />
+		<input id="address" name="address" size="40" type="text" value="<?php if (isset($_POST['address'])){ echo stripslashes(htmlspecialchars($_POST['address']));} ?>" />
 	</div>
 
 	<div class="row">
 		<label for="postal"><?php echo _AT('postal_code'); ?></label><br />
-		<input id="postal" name="postal" size="7" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['postal'])); ?>" />
+		<input id="postal" name="postal" size="7" type="text" value="<?php if (isset($_POST['postal'])){ echo stripslashes(htmlspecialchars($_POST['postal']));} ?>" />
 	</div>
 
 	<div class="row">
 		<label for="city"><?php echo _AT('city'); ?></label><br />
-		<input id="city" name="city" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['city'])); ?>" />
+		<input id="city" name="city" type="text" value="<?php if (isset($_POST['city'])){ echo stripslashes(htmlspecialchars($_POST['city']));} ?>" />
 	</div>
 
 	<div class="row">
 		<label for="province"><?php echo _AT('province'); ?></label><br />
-		<input id="province" name="province" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['province'])); ?>" />
+		<input id="province" name="province" type="text" value="<?php if (isset($_POST['province'])){ echo stripslashes(htmlspecialchars($_POST['province']));} ?>" />
 	</div>
 
 	<div class="row">
 		<label for="country"><?php echo _AT('country'); ?></label><br />
-		<input id="country" name="country" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['country'])); ?>" />
+		<input id="country" name="country" type="text" value="<?php if (isset($_POST['country'])){ echo stripslashes(htmlspecialchars($_POST['country']));} ?>" />
 	</div>
 
 	<div class="row">
 		<label for="phone"><?php echo _AT('phone'); ?></label><br />
-		<input size="11" name="phone" type="text" value="<?php echo stripslashes(htmlspecialchars($_POST['phone'])); ?>" id="phone" />
+		<input size="11" name="phone" type="text" value="<?php if (isset($_POST['phone'])){ echo stripslashes(htmlspecialchars($_POST['phone']));} ?>" id="phone" />
 	</div>
 
 	<div class="row">
 		<label for="website"><?php echo _AT('web_site'); ?></label><br />
-		<input id="website" name="website" size="40" type="text" value="<?php if ($_POST['website'] == '') { echo 'http://'; } else { echo stripslashes(htmlspecialchars($_POST['website'])); } ?>" />
+		<input id="website" name="website" size="40" type="text" value="<?php if (isset($_POST['website']) && $_POST['website'] == '') { echo 'http://'; } else { if (isset($_POST['website'])) { echo stripslashes(htmlspecialchars($_POST['website'])); }} ?>" />
 	</div>
 </fieldset>
 	<div class="row buttons">

@@ -12,7 +12,7 @@
 /****************************************************************/
 // $Id$
 
-define('AT_INCLUDE_PATH', '../../../include/');
+//define('AT_INCLUDE_PATH', '../../../include/');
 require_once(AT_SOCIAL_INCLUDE.'classes/Activity.class.php');
 require_once(AT_SOCIAL_INCLUDE.'classes/Member.class.php');
 
@@ -293,6 +293,9 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 			$match_piece = "= '$piece' ";
 		} else {
 			$match_piece = "LIKE '%$piece%' ";
+		}
+		if(!isset($query )){
+		    $query = '';
 		}
 		$query .= "(first_name $match_piece OR second_name $match_piece OR last_name $match_piece OR login $match_piece ) AND ";
 	}
@@ -579,6 +582,9 @@ function acceptGroupInvitation($group_id){
   * return	the name to be printed.
   */
 function printSocialName($id, $link=true){
+    if(!isset($str)){
+        $str = '';
+    }
 	$str .= AT_print(get_display_name($id), 'members.full_name');
 	if ($link) {
 		return getProfileLink($id, $str);

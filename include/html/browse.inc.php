@@ -86,7 +86,7 @@ $courses_result = mysql_query($sql, $db);
 
 // add "enroll me" link if the user is not the course owner and is not enrolled
 while ($row = mysql_fetch_assoc($courses_result)) {
-	if ($_SESSION['member_id'] > 0) {
+	if (isset($_SESSION['member_id']) &&  $_SESSION['member_id'] > 0) {
 		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=".$row['course_id'];
 		$result = mysql_query($sql, $db);
 		
@@ -119,7 +119,7 @@ if ($categories_select != '<option value="0"></option>') {
 	$has_categories = true;
 }
 
-if ($_SESSION['first_login']) {
+if (isset($_SESSION['first_login'])) {
     $msg->addInfo(array('FIRST_PREFS', $_base_path.'users/pref_wizard/index.php'));
 }
 

@@ -64,30 +64,32 @@ class PrivacyController{
 		global $db;
 
 		//if id = self, always true (cause i should be able to see my own profile)
-		if ($id == $_SESSION['member_id']){
-			return AT_SOCIAL_OWNER_VISIBILITY;
+		if(isset($_SESSION['member_id'])){
+            if ($id == $_SESSION['member_id']){
+                return AT_SOCIAL_OWNER_VISIBILITY;
+            }
+
+            //is friend of friend?
+            if (isFriendOfFriend($id, $_SESSION['member_id'])==true){
+                return AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY;
+            }
+
+            //is in some of the groups together?
+            $social_groups = new SocialGroups();
+            $my_group = $social_groups->getMemberGroups($_SESSION['member_id']);
+            $person_group = $social_groups->getMemberGroups($id);
+            $groups_intersection = array_intersect($my_group, $person_group); //groups intersection
+
+            //If it is not empty or not null, then these 2 people share a group
+            if (!empty($groups_intersection) > 0){
+                return AT_SOCIAL_GROUPS_VISIBILITY;
+            }
+
+            $sql = 'SELECT relationship FROM '.TABLE_PREFIX."social_friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
+            $result = mysql_query($sql, $db);
 		}
-
-		//is friend of friend?
-		if (isFriendOfFriend($id, $_SESSION['member_id'])==true){
-			return AT_SOCIAL_FRIENDS_OF_FRIENDS_VISIBILITY;
-		}
-
-		//is in some of the groups together?
-		$social_groups = new SocialGroups();
-		$my_group = $social_groups->getMemberGroups($_SESSION['member_id']);
-		$person_group = $social_groups->getMemberGroups($id);
-		$groups_intersection = array_intersect($my_group, $person_group); //groups intersection
-
-		//If it is not empty or not null, then these 2 people share a group
-		if (!empty($groups_intersection) > 0){
-			return AT_SOCIAL_GROUPS_VISIBILITY;
-		}
-
-		$sql = 'SELECT relationship FROM '.TABLE_PREFIX."social_friends WHERE (member_id=$id AND friend_id=$_SESSION[member_id]) OR (member_id=$_SESSION[member_id] AND friend_id=$id)";
-		$result = mysql_query($sql, $db);
 //		echo $sql;
-		if ($result){
+		if (isset($result)){
 			list($relationship) = mysql_fetch_row($result);
 		}		
 
@@ -98,6 +100,7 @@ class PrivacyController{
 		}
 
 		return $relationship;
+
 	}
 
 	/**

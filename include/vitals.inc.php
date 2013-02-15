@@ -16,6 +16,9 @@ include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
 define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
+//define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
+
+
 define('AT_DEVEL_TRANSLATE', 1);
 
 // Multisite constants and checks
@@ -235,7 +238,7 @@ $savant = new Savant2();
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
 //if user has requested theme change, make the change here
-if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
+if ((isset($_POST['theme']) || isset($_POST['mobile_theme'])) && isset($_POST['submit'])) {
 	//http://atutor.ca/atutor/mantis/view.php?id=4781
 	//Themes should be in the same folder, disallow '../'
 	$newTheme = str_replace("../", "", $_POST['theme']);
@@ -247,7 +250,7 @@ if (($_POST['theme'] || $_POST['mobile_theme']) && $_POST['submit']) {
 	
 	$_SESSION['prefs']['PREF_THEME'] = $addslashes($_POST['theme']);
 	$_SESSION['prefs']['PREF_MOBILE_THEME'] = $addslashes($_POST['mobile_theme']);
-} else if ($_POST['set_default']) {
+} else if (isset($_POST['set_default'])) {
 	// Once users select to reset theme to the default theme in user perference popup window,
 	// apply the default theme immediate. See users/pref_wizard/index.php for
 	// resetting other prefs.
@@ -314,9 +317,10 @@ $msg = new Message($savant);
 /**************************************************/
 /* load in content manager                        */
 /**************************************************/
+if(isset($_SESSION['course_id'])){
 $contentManager = new ContentManager($db, isset($_SESSION['course_id']) ? $_SESSION['course_id'] : $_GET['p_course']);
 $contentManager->initContent();
-
+}
 /**************************************************/
 require(AT_INCLUDE_PATH.'phpCache/phpCache.inc.php'); // cache library
 require(AT_INCLUDE_PATH.'lib/utf8.php');			//UTF-8 multibyte library
@@ -371,7 +375,7 @@ if (isset($_REQUEST['p_course'])) {
 	$_REQUEST['p_course'] = intval($_REQUEST['p_course']);
 }
 
-if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0 || $_REQUEST['p_course'] > 0) {
+if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0 || isset($_REQUEST['p_course']) && $_REQUEST['p_course'] > 0) {
 	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary 
 	         WHERE course_id='.($_SESSION['course_id']>0 ? $_SESSION['course_id'] : $_REQUEST['p_course']).' 
 	         ORDER BY word';
@@ -492,7 +496,7 @@ if(isset($_COOKIE["flash"])){
 	$_SESSION['flash'] = $_COOKIE["flash"];
 
 	//delete the cookie
-	ATutor.setcookie("flash",'',time()-3600);
+	"ATutor".setcookie("flash",'',time()-3600);
 }
 
 if (!isset($_SESSION["flash"])) {

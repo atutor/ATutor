@@ -93,7 +93,7 @@ $this->_pages[AT_PA_BASENAME.'index.php']['parent'] = AT_SOCIAL_BASENAME.'index.
 $this->_pages[AT_PA_BASENAME.'index.php']['title_var'] = 'pa_photo_gallery';
 $this->_pages[AT_PA_BASENAME.'index.php']['img']       = AT_PA_BASENAME.'images/photo_gallery.png';
 
-if($_SESSION['course_id'] < 1){
+if(isset($_SESSION['course_id']) && $_SESSION['course_id'] < 1){
 	$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'profile_album.php', AT_PA_BASENAME.'create_album.php');
 }else{
 	$this->_pages[AT_PA_BASENAME.'index.php']['children'] = array(AT_PA_BASENAME.'profile_album.php', AT_PA_BASENAME.'course_albums.php', AT_PA_BASENAME.'shared_albums.php', AT_PA_BASENAME.'create_album.php');

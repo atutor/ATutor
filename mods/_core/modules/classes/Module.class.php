@@ -730,7 +730,9 @@ class Module {
 			require($this->_module_path . $this->_directoryName . '/module_news.php');
 			if (function_exists(basename($this->_directoryName).'_news')) {
 				$fnctn = basename($this->_directoryName).'_news';
-				return $fnctn($course_id);
+                /// WHAT DOES $course_id DO?
+                ///return $fnctn($course_id);
+				return $fnctn();
 			}
 		}
 	}

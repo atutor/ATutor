@@ -15,16 +15,19 @@ $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-require(AT_SOCIAL_INCLUDE.'constants.inc.php');
+require_once(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyObject.class.php');
 require(AT_SOCIAL_INCLUDE.'classes/PrivacyControl/PrivacyController.class.php');
 
-$rand_key = $addslashes($_POST['rand_key']);	//should we excape?
-
+if(isset($_POST['rand_key'])){
+    $rand_key = $addslashes($_POST['rand_key']);	//should we excape?
+}
 //paginator settings
-$page = intval($_GET['p']);
-if (!$page) {
+if(isset($_GET['p'])){
+    $page = intval($_GET['p']);
+}
+if (!isset($page)) {
 	$page = 1;
 }	
 $count  = (($page-1) * SOCIAL_FRIEND_SEARCH_MAX) + 1;
@@ -92,14 +95,14 @@ if (isset($_GET['id'])){
 */
 
 //handle search friends request
-if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET['search_friends'])){
+if((isset($rand_key) && $rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET['search_friends'])){
 	if (empty($_POST['search_friends_'.$rand_key]) && !isset($_GET['search_friends'])){
 		$msg->addError('CANNOT_BE_EMPTY');
 		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'index_public.php', AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}
 	//to adapt paginator GET queries
-	if($_GET['search_friends']){
+	if(isset($_GET['search_friends'])){
 		$search_field = $addslashes($_GET['search_friends']);
 	} else {
 		$search_field = $addslashes($_POST['search_friends_'.$rand_key]);	
@@ -117,10 +120,26 @@ if(($rand_key!='' && isset($_POST['search_friends_'.$rand_key])) || isset($_GET[
 
 include(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('page', $page);
-$savant->assign('num_pages', $num_pages);
-$savant->assign('search_field', $search_field);
-$savant->assign('friends', $friends);
-$savant->assign('rand_key', $rand_key);
+if(isset($num_pages)){
+    $savant->assign('num_pages', $num_pages);
+} else {
+    $savant->assign('num_pages', '');
+}
+if(isset($search_field)){
+    $savant->assign('search_field', $search_field);
+} else {
+    $savant->assign('search_field', '');
+}
+if(isset($friends)){
+    $savant->assign('friends', $friends);
+}else{
+    $savant->assign('friends', '');
+}
+if(isset( $rand_key)){
+    $savant->assign('rand_key', $rand_key);
+} else{
+    $savant->assign('rand_key', '');
+}
 $savant->display('social/index_public.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
