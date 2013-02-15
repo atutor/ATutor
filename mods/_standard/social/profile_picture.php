@@ -15,7 +15,6 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 $member_id = $_SESSION['member_id'];
-$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src_x=0, $src_y=0) {
 	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);

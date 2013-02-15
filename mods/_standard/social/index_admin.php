@@ -15,7 +15,6 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_SOCIAL);
-$_custom_css = $_base_path . AT_SOCIAL_BASENAME . 'module.css'; // use a custom stylesheet
 
 if($_POST['save']){
 	$shindig_url = $addslashes($_POST['shindig_url']);
