@@ -231,7 +231,7 @@ function apply_timezone($timestamp){
  * @return string, converted string
  */
 function clean_extra_char($input) {
-	return str_replace('%%', '%', $input);
+    return str_replace('%%', '%', $input);
 }
 
 /**
