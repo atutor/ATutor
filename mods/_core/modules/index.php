@@ -122,7 +122,7 @@ if (isset($_GET['mod_dir'], $_GET['enable'])) {
 	exit;
 }
 
-$_custom_head = '    <script src="'.$_base_path.'mods/_core/modules/js/modules.js"></script>';
+$_custom_head .= '    <script src="'.$_base_path.'mods/_core/modules/js/modules.js"></script>';
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $module_status_bits = $module_type_bits = 0;
