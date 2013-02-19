@@ -1,26 +1,26 @@
-/************************************************************************/
-/* ATutor                                                                */
-/************************************************************************/
-/* Copyright (c) 2002 - 2010                                            */
-/* Inclusive Design Institute                                            */
-/* http://atutor.ca                                                     */
-/*                                                                      */
-/* This program is free software. You can redistribute it and/or        */
-/* modify it under the terms of the GNU General Public License          */
-/* as published by the Free Software Foundation.                        */
-/************************************************************************/
-// $Id: $
+/* 
+ATutor
+Copyright (c) 2002 - 2013
+Inclusive Design Institute
+http://atutor.ca
+
+This program is free software. You can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation.
+*/
+
+/*global jQuery, window, escape, unescape*/
 
 var ATutor = ATutor || {};
 ATutor.users = ATutor.users || {};
 ATutor.users.preferences = ATutor.users.preferences || {};
 
-(function() {
+(function () {
     /**
      * A function to open a popup window
      */
     ATutor.poptastic = function (url) {
-        var newwindow=window.open(url,'popup','height=600,width=600,scrollbars=yes,resizable=yes');
+        var newwindow = window.open(url, 'popup', 'height = 600,width = 600,scrollbars = yes,resizable = yes');
         if (window.focus) {
             newwindow.focus();
         }
@@ -37,8 +37,8 @@ ATutor.users.preferences = ATutor.users.preferences || {};
     };
 
     ATutor.setcookie = function (name, value, duration) {
-        document.cookie = name + "=" + escape(value) + ";path=/;expires=" + getexpirydate(duration);;
-        if( !ATutor.getcookie(name) ){
+        document.cookie = name + "=" + escape(value) + ";path=/;expires=" + getexpirydate(duration);
+        if (!ATutor.getcookie(name)) {
             return false;
         } else {
             return true;
@@ -46,13 +46,13 @@ ATutor.users.preferences = ATutor.users.preferences || {};
     };
 
     ATutor.getcookie = function (cookiename) {
-        var cookiestring = "" + document.cookie;
+        var cookiestring = String(document.cookie);
         var index1 = cookiestring.indexOf(cookiename);
-        if (index1 == -1 || cookiename == "") {
+        if (index1 === -1 || cookiename === "") {
             return "";
         }
-        var index2 = cookiestring.indexOf( ';', index1);
-        if (index2 == -1) {
+        var index2 = cookiestring.indexOf(';', index1);
+        if (index2 === -1) {
             index2 = cookiestring.length;
         }
         return unescape(cookiestring.substring(index1 + cookiename.length + 1, index2));
@@ -103,7 +103,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         'FG_COLOR BG_COLOR' +
         '}' +
         '.contentbox {' +
-        'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY'+
+        'FG_COLOR BG_COLOR FONT_SIZE FONT_FAMILY' +
         '}' +
         '#footer {' +
         'FG_COLOR BG_COLOR' +
@@ -461,10 +461,10 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         '.page_wrapper {' +
         'BORDER FG_COLOR;' +
         '}' +
-         '.input-form {' +
+        '.input-form {' +
         'BORDER FG_COLOR;' +
         '}' +
-         '.group_form {' +
+        '.group_form {' +
         'BORDER FG_COLOR;' +
         '}' +
         '#topnavlist li a{' +
@@ -578,7 +578,9 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         var pref_style = ATutor.users.preferences.user_styles.replace(/FONT_FAMILY/g, font_style).replace(/FONT_SIZE/g, font_size_style).replace(/BG_COLOR/g, bg_color_style).replace(/FG_COLOR/g, fg_color_style).replace(/HL_COLOR/g, hl_color_style).replace(/BORDER/g, bd_color_style);
         
         jQuery('#pref_style').replaceWith(pref_style);
-        if (window.opener) jQuery('#pref_style', window.opener.document).replaceWith(pref_style);
+        if (window.opener) {
+            jQuery('#pref_style', window.opener.document).replaceWith(pref_style);
+        }
     };
     
     /**
@@ -586,7 +588,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
      */
     ATutor.users.preferences.addPrefWizClickHandler = function () {
         var launcherArray = jQuery(".pref_wiz_launcher");    
-        launcherArray.click(function() {
+        launcherArray.click(function () {
             var query_string = "";
             if (ATutor.users.preferences.course_id !== "") {
                 query_string = 'course_id=' + ATutor.users.preferences.course_id;
@@ -594,7 +596,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
             if (query_string !== "") {
                 query_string = "?" + query_string;
             }
-            window.open(ATutor.base_href + 'users/pref_wizard/index.php' + query_string,'prefWizWindow','menubar=0,scrollbars=1,resizable=1,width=640,height=580');
+            window.open(ATutor.base_href + 'users/pref_wizard/index.php' + query_string, 'prefWizWindow','menubar=0,scrollbars=1,resizable=1,width=640,height=580');
             return false;
         });
     };
@@ -605,17 +607,17 @@ ATutor.users.preferences = ATutor.users.preferences || {};
      *         tagToAppendJS - Optional. The tag where you want the js file to be included. For example: head, body
      * Refrence: http://javascript.about.com/library/bladdjs.htm
      */
-    ATutor.addJavascript = function(jsname,tagToAppendJS) {
+    ATutor.addJavascript = function (jsname, tagToAppendJS) {
         // set the default 
         if (tagToAppendJS === undefined) {
             tagToAppendJS = 'head';
         }
         var th = document.getElementsByTagName(tagToAppendJS)[0];
         var s = document.createElement('script');
-        s.setAttribute('type','text/javascript');
-        s.setAttribute('src',jsname);
+        s.setAttribute('type', 'text/javascript');
+        s.setAttribute('src', jsname);
         th.appendChild(s);
-    }
+    };
 
     /**
      * The click event handler for table rows. It does,
@@ -632,8 +634,8 @@ ATutor.users.preferences = ATutor.users.preferences || {};
     ATutor.highlightTableRow = function (e) {
         // Process children radio button and remove "selected" class from other table rows
         // Assuming there's only one child radio button item
-        var radioChild = jQuery(this).find("input[type=radio]")
-        if (radioChild) {
+        var radioChild = jQuery(this).find("input[type=radio]");
+        if (radioChild.length) {
             radioChild.attr("checked", "checked");
 
             // remove "selected" class from all other table rows
@@ -641,13 +643,14 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         }
         
         // Process children checkboxed
-        var checkboxChildren = jQuery(this).find("input[type=checkbox]")
-        if (checkboxChildren) {
-            checkboxChildren.attr("checked", "checked");
+        var checkboxChildren = jQuery(this).find("input[type=checkbox]");
+        
+        if (!jQuery(e.target).is('input:checkbox')) {
+            checkboxChildren.is(':checked') ? checkboxChildren.removeAttr('checked') : checkboxChildren.attr('checked', 'checked');
         }
         
         // add "selected" class to current table row to highlight the selected row
-        jQuery(this).addClass("selected");
+        checkboxChildren.is(':checked') ? jQuery(this).addClass("selected") : jQuery(this).removeClass("selected");
 
         if (e.data && e.data.callback) {
             e.data.callback(this);
@@ -663,7 +666,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
 
   (function() {
     var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    ga.src = ('https:' === document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
     var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
   })();
   */
