@@ -311,6 +311,7 @@ function _AT() {
         // Note: the query below limits the returned data to one row to deal with the case that one language term has multiple text defined.
         // Using "_template" always has more priority over "_module". This logic should be fixed once we have support for _module terms.
         $row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s" ORDER BY variable DESC LIMIT 1', array(TABLE_PREFIX, $lang, $term), true);
+        
         if(isset($row['term']) && isset($row['text'])){
             $row_term = $row['term'];
         
@@ -325,7 +326,7 @@ function _AT() {
             }
         }
 
-        $outString = isset($term_text) ? (isset($args) && is_array($args) ? vsprintf($outString, $args) : $outString) : '';
+        $outString = isset($outString) ? (isset($args) && is_array($args) ? vsprintf($outString, $args) : $outString) : '';
 
         /* update the locations */
         // NOTE!! This code should be removed from here. Eventually a separate module will be created for populating language_pages
