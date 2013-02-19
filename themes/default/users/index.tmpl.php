@@ -84,7 +84,7 @@
 
     <?php if ($row['last_cid']): ?>
 	  <div class="shortcuts" style="float:right;">
-		  <a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo $_base_href;  ?>themes/default/images/resume.png" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" class="img1616"/></a>
+		  <a href="bounce.php?course=<?php echo $row['course_id'].SEP.'p='.urlencode('content.php?cid='.$row['last_cid']); ?>"><img src="<?php echo AT_BASE_HREF;  ?>themes/default/images/resume.png" border="" alt="<?php echo _AT('resume'); ?>" title="<?php echo _AT('resume'); ?>" class="img1616"/></a>
 	  </div>
     <?php endif; ?>
 
@@ -101,12 +101,12 @@
 		
     //display current news
 
-    if($_GET['p'] == 0){
+    if(isset($_GET['p']) && $_GET['p'] == 0){
       $p = 1;
     }else{
       $p = intval($_GET['p']);
     }
-    if($_GET['p'] == "all"){
+    if(isset($_GET['p']) && $_GET['p'] == "all"){
       $perpage = count($this->all_news);
     }else{
       $perpage = 10;
@@ -116,15 +116,19 @@
     $num_pages = ($perpage==0)?0:(ceil($newscount/$perpage));
     $start = ($p-1)*$perpage;
     $end = ($p*$perpage);
-
+	$page = isset($$page) ? $page : '';
+	
     print_paginator($page, $num_pages, '', 1); 
     for($i=$start;$i<=$end; $i++){
 	$count = $i;
 	if (isset($this->all_news)) {
 	    echo '<ul class="current_list">'."\n";
 	      if(isset($this->all_news[$i]['thumb'])){
-		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'" class="img1616"/> ' . $this->all_news[$i]['link'] .' <br />'."\n";
-		    if($this->all_news[$i]['object']['course_id']){
+	      	$alt = isset($this->all_news[$i]['alt']) ? $this->all_news[$i]['alt'] : '';
+			$link =  isset($this->all_news[$i]['link']) ? $this->all_news[$i]['link'] : '';
+			
+		    echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$alt.'" title="'.$alt.'" class="img1616"/> ' .$link.' <br />'."\n";
+		    if(isset($this->all_news[$i]['object']['course_id'])){
 		    echo '<small>(<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>)|'."\n";
 		    }
 		    echo '('.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).')</small><hr style=""/></li>'."\n";

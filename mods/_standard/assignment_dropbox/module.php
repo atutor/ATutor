@@ -41,6 +41,6 @@ $this->_pages['mods/_standard/assignment_dropbox/index.php']['parent']   = 'mods
 
 if(isset($_SESSION['course_id'])){
 $this->_pages['mods/_standard/assignments/index_instructor.php']['children'] = 
-       array_merge(is_array($this->_pages['mods/_standard/assignments/index_instructor.php']['children']) ? $this->_pages['mods/_standard/assignments/index_instructor.php']['children'] : array(), array('mods/_standard/assignment_dropbox/index.php'));
+       array_merge(is_array(isset($this->_pages['mods/_standard/assignments/index_instructor.php']['children'])) ? $this->_pages['mods/_standard/assignments/index_instructor.php']['children'] : array(), array('mods/_standard/assignment_dropbox/index.php'));
 }
 ?>
