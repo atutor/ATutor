@@ -1,6 +1,6 @@
 /* 
 ATutor
-Copyright (c) 2002 - 2010
+Copyright (c) 2002 - 2013
 Inclusive Design Institute
 http://atutor.ca
 
