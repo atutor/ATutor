@@ -395,8 +395,10 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
                 }
 				foreach ($course_imgs as $file) {
 					echo '<option value="' . $file . '" ';
-					if ($file == $this->row['icon']) { 
-						echo 'selected="selected"'; 
+					if(isset($this->row['icon'])){
+                        if ($file == $this->row['icon']) { 
+                            echo 'selected="selected"'; 
+                        }
 					}
 					echo ' >' . $file . '</option>';	
 				}

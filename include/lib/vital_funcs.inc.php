@@ -79,7 +79,7 @@ function check_session()
 		return false;
 	}
 	            
-	if($_SESSION['IPaddress'] != $_SERVER['REMOTE_ADDR']) {
+	if(isset($_SESSION['IPaddress']) != $_SERVER['REMOTE_ADDR']) {
 		return false;
 	}
 	            
