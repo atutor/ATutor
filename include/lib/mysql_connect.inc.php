@@ -50,7 +50,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
  * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
  * @author  Alexey Novak, Cindy Li
  */
-function queryDB($query, $params, $oneRow = false, $sanitize = true) {
+function queryDB($query, $params=array(), $oneRow = false, $sanitize = true) {
     global $db, $msg, $addslashes;
     
     $oneRowErrorMessage = 'Query "%s" which should returned only 1 row has returned more rows.';
