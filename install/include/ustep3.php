@@ -263,11 +263,11 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		{
 			$value2 = $row['value'];
 			$value  = $value.$value2;
+			$sql    = "UPDATE ".$_POST['step1']['tb_prefix']."config SET value = $value WHERE name = 'main_defaults'";
+			mysql_query($sql,$db);
+			$sql    = "DELETE FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'main_defaults_2";
+			mysql_query($sql,$db);
 		}
-		$sql    = "UPDATE ".$_POST['step1']['tb_prefix']."config SET value = $value WHERE name = 'main_defaults'";
-		mysql_query($sql,$db);
-		$sql    = "DELETE FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'main_defaults_2";
-		mysql_query($sql,$db);
 
 		$sql    = "SELECT value FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'home_defaults'";
 		$result = mysql_query($sql,$db);
@@ -279,11 +279,11 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		{
 			$value2 = $row['value'];
 			$value  = $value.$value2;
+			$sql    = "UPDATE ".$_POST['step1']['tb_prefix']."config SET value = $value WHERE name = 'home_defaults'";
+			mysql_query($sql,$db);
+			$sql    = "DELETE FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'home_defaults_2";
+			mysql_query($sql,$db);
 		}
-		$sql    = "UPDATE ".$_POST['step1']['tb_prefix']."config SET value = $value WHERE name = 'home_defaults'";
-		mysql_query($sql,$db);
-		$sql    = "DELETE FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'home_defaults_2";
-		mysql_query($sql,$db);
 	}
 
 	if (!isset($errors)) {
