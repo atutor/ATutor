@@ -97,7 +97,11 @@ if (isset($errors)) {
 			);
 		}
 		@chmod('../include/config.inc.php', 0444);
-
+		if(file_exists('../../'.$_POST['step1']['old_path'] . '/include/config_multisite.inc.php')){
+            if (!copy('../../'.$_POST['step1']['old_path'] . '/include/config_multisite.inc.php', '../include/config_multisite.inc.php')) {
+                $errors[] =  'Failed to copy Multisite configuration file to new site.';
+            }
+        }
 		print_feedback($progress);
 
 		echo '<p align="center"><input type="submit" class="button" value=" Next &raquo; " name="submit" /></p>';
