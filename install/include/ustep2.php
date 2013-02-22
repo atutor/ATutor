@@ -15,7 +15,9 @@ ignore_user_abort(true);
 
 if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
-function update_one_ver($up_file, $tb_prefix) {
+include(AT_INCLUDE_PATH . 'install/upgrade.inc.php');
+
+/*function update_one_ver($up_file, $tb_prefix) {
 	global $progress;
 	$update_file = implode('_',$up_file);
 	
@@ -24,7 +26,7 @@ function update_one_ver($up_file, $tb_prefix) {
 
 	return $up_file[4];
 }
-
+*/
 $_POST['db_login'] = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
 
@@ -76,10 +78,11 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 			$sql = "INSERT INTO `".$_POST['tb_prefix']."languages` VALUES ('en', 'utf-8', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3)";
 			@mysql_query($sql, $db);
 
-
+			run_upgrade_sql(AT_INCLUDE_PATH . 'install/db', $_POST['old_version'], $_POST['tb_prefix']);
 
 			//get list of all update scripts minus sql extension
-			$files = scandir(AT_INCLUDE_PATH . 'install/db'); 
+			/*
+			 $files = scandir(AT_INCLUDE_PATH . 'install/db'); 
 			foreach ($files as $file) {
 				if(count($file = explode('_',$file))==5) {
 					$file[4] = substr($file[4],0,-3);
@@ -94,7 +97,7 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 					update_one_ver($up_file, $_POST['tb_prefix']);
 				}
 			}
-			
+			*/
 			/* reset all the accounts to English */
 			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en', creation_date=creation_date, last_login=last_login";
 			@mysql_query($sql, $db);
