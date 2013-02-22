@@ -1,17 +1,19 @@
 <?php 
+
+
 function print_theme_selectbox($theme_list, $selected_theme, $type) {
 	if (!is_array($theme_list) || count($theme_list) == 0) return ;
+
 ?>
 	<div class="row">
 		<label for="<?php if ($type == DESKTOP_DEVICE) echo "theme"; else echo "mobile_theme"; ?>"><?php if ($type == DESKTOP_DEVICE) echo _AT('desktop_theme'); else echo _AT('mobile_theme'); ?></label><br />
 		<select name="<?php if ($type == DESKTOP_DEVICE) echo "theme"; else echo "mobile_theme"; ?>" id="<?php if ($type == DESKTOP_DEVICE) echo "theme"; else echo "mobile_theme"; ?>"><?php
-			foreach ($theme_list as $theme) {
+
+			foreach ($theme_list as $theme_id=>$theme) {
 				if (!$theme) {
 					continue;
 				}
-
 				$theme_fldr = get_folder($theme);
-
 				if ($theme_fldr == $selected_theme) {
 					echo '<option value="'.$theme_fldr.'" selected="selected">'.$theme.'</option>';
 				} else {
@@ -21,7 +23,7 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 		?>
 		</select>
 	</div>
-<?php }?>
+<?php  } ?>
 
 <legend><strong><?php echo _AT("atutor_settings"); ?></strong> </legend>  
 <div id="feedback" style="width:90%;">
@@ -34,8 +36,9 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 	// which is inherited from users/perferences.php or 
 	// mods/_core/users/default_preferences.php
 	$_themes = get_enabled_themes(DESKTOP_DEVICE);
+	$desktop_theme = $_SESSION['prefs']['PREF_THEME'];
 	print_theme_selectbox($_themes, $desktop_theme, DESKTOP_DEVICE);
-	
+
 	if (isset($_POST['mobile_theme']))
 		$selected_theme = $_REQUEST['mobile_theme'];
 	else
