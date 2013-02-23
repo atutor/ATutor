@@ -1,5 +1,5 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-	<input type="hidden" name="edit_this->forum" value="true" />
+	<input type="hidden" name="edit_forum" value="true" />
 	<input type="hidden" name="forum" value="<?php echo $_REQUEST['forum']; ?>"/>
 
 <div class="input-form">
