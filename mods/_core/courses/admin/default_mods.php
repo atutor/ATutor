@@ -14,6 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/ModuleUtility.class.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (isset($_POST['cancel'])) {
@@ -22,120 +23,9 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-if (isset($_POST['up'])) {
-	$up = key($_POST['up']);
-	$_new_modules  = array();
-	if (isset($_POST['main'])) {
-		foreach ($_POST['main'] as $m) {
-			if ($m == $up) {
-				$last_m = array_pop($_new_modules);
-				$_new_modules[] = $m;
-				$_new_modules[] = $last_m;
-			} else {
-				$_new_modules[] = $m;
-			}
-		}
-
-		$_POST['main'] = $_new_modules;
-	}
-	if (isset($_POST['home'])) {
-		$_new_modules  = array();
-		foreach ($_POST['home'] as $m) {
-			if ($m == $up) {
-				$last_m = array_pop($_new_modules);
-				$_new_modules[] = $m;
-				$_new_modules[] = $last_m;
-			} else {
-				$_new_modules[] = $m;
-			}
-		}
-		$_POST['home'] = $_new_modules;
-	}
-
-	$_POST['submit'] = TRUE;
-} else if (isset($_POST['down'])) {
-	$_new_modules  = array();
-
-	$down = key($_POST['down']);
-
-	if (isset($_POST['main'])) {
-		foreach ($_POST['main'] as $m) {
-			if ($m == $down) {
-				$found = TRUE;
-				continue;
-			}
-			$_new_modules[] = $m;
-			if ($found) {
-				$_new_modules[] = $down;
-				$found = FALSE;
-			}
-		}
-
-		$_POST['main'] = $_new_modules;
-	}
-
-	if (isset($_POST['home'])) {
-		$_new_modules  = array();
-		foreach ($_POST['home'] as $m) {
-			if ($m == $down) {
-				$found = TRUE;
-				continue;
-			}
-			$_new_modules[] = $m;
-			if ($found) {
-				$_new_modules[] = $down;
-				$found = FALSE;
-			}
-		}
-
-		$_POST['home'] = $_new_modules;
-	}
-
-	$_POST['submit'] = TRUE;
-}
-
-if (isset($_POST['submit'])) {
-	if (isset($_POST['main'])) {
-		$_POST['main'] = array_unique($_POST['main']);
-		$_POST['main'] = array_filter($_POST['main']); // remove empties
-		$main_defaults = implode('|', $_POST['main']);
-
-	} else {
-		$main_defaults = '';
-	}
-
-	if (isset($_POST['home'])) {
-		$_POST['home'] = array_unique($_POST['home']);
-		$_POST['home'] = array_filter($_POST['home']); // remove empties
-		$home_defaults = implode('|', $_POST['home']);
-	} else {
-		$home_defaults = '';
-	}
-
-	if (!($_config_defaults['main_defaults'] == $main_defaults)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults')";
-		$result = mysql_query($sql, $db);
-
-	} else if ($_config_defaults['main_defaults'] == $main_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults'";
-	}
-	$result = mysql_query($sql, $db);
-
-
-	if (!($_config_defaults['home_defaults'] == $home_defaults)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults')";
-		$result = mysql_query($sql, $db);
-
-	} else if ($_config_defaults['home_defaults'] == $home_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults'";
-	}
-	$result = mysql_query($sql, $db);
-
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_SERVER['PHP_SELF']);
-	exit;
-}
-
+ModuleUtility::set_default_tools();
+$main_defaults[] = ModuleUtility::get_main_defaults();
+$home_defaults[] = ModuleUtility::get_home_defaults();
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
