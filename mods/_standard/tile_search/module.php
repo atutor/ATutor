@@ -9,6 +9,8 @@ $_student_tool = 'mods/_standard/tile_search/tile.php';
 // Add menu item into "Manage" => "Content" 
 $this->_pages['mods/_core/content/index.php']['children'] = array('mods/_standard/tile_search/index.php');
 
+//modules sub-content
+$this->_list['tile_search'] = array('title_var'=>'tile_search','file'=>'mods/_standard/tile_search/sublinks.php');
 // admin page
 if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages['admin/config_edit.php']['children'] = array('mods/_standard/tile_search/admin/module_setup.php');
