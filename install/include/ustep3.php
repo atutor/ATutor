@@ -12,6 +12,25 @@
 
 if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
+function concat_config_values($config_name) {
+	global $db;
+	$sql    = "SELECT value FROM ".$_POST['step1']['tb_prefix']."config WHERE name = '".$config_name."'";
+	$result = mysql_query($sql,$db);
+	$row    = mysql_fetch_assoc($result);
+	$value = $row['value'];
+	$sql    = "SELECT value FROM ".$_POST['step1']['tb_prefix']."config WHERE name = '".$config_name."_2'";
+	$result = mysql_query($sql,$db);
+	if($row = mysql_fetch_assoc($result))
+	{
+		$value2 = $row['value'];
+		$value  = $value.$value2;
+		$sql    = "UPDATE ".$_POST['step1']['tb_prefix']."config SET value = $value WHERE name = '".$config_name."'";
+		mysql_query($sql,$db);
+		$sql    = "DELETE FROM ".$_POST['step1']['tb_prefix']."config WHERE name = '".$config_name."_2'";
+		mysql_query($sql,$db);
+	}
+}
+
 $_POST['db_login']    = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
 /* Destory session */
@@ -253,37 +272,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 
 	if (version_compare($_POST['step1']['new_version'], '2.1', '>')) {
-		$sql    = "SELECT value FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'main_defaults'";
-		$result = mysql_query($sql,$db);
-		$row    = mysql_fetch_assoc($result);
-		$value = $row['value'];
-		$sql    = "SELECT value FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'main_defaults_2'";
-		$result = mysql_query($sql,$db);
-		if($row = mysql_fetch_assoc($result))
-		{
-			$value2 = $row['value'];
-			$value  = $value.$value2;
-			$sql    = "UPDATE ".$_POST['step1']['tb_prefix']."config SET value = $value WHERE name = 'main_defaults'";
-			mysql_query($sql,$db);
-			$sql    = "DELETE FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'main_defaults_2";
-			mysql_query($sql,$db);
-		}
+		concat_config_values('main_defaults');
 
-		$sql    = "SELECT value FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'home_defaults'";
-		$result = mysql_query($sql,$db);
-		$row    = mysql_fetch_assoc($result);
-		$value = $row['value'];
-		$sql    = "SELECT value FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'home_defaults_2'";
-		$result = mysql_query($sql,$db);
-		if($row = mysql_fetch_assoc($result))
-		{
-			$value2 = $row['value'];
-			$value  = $value.$value2;
-			$sql    = "UPDATE ".$_POST['step1']['tb_prefix']."config SET value = $value WHERE name = 'home_defaults'";
-			mysql_query($sql,$db);
-			$sql    = "DELETE FROM ".$_POST['step1']['tb_prefix']."config WHERE name = 'home_defaults_2";
-			mysql_query($sql,$db);
-		}
+		concat_config_values('home_defaults');
 	}
 
 	if (!isset($errors)) {
