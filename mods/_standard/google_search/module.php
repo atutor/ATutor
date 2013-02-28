@@ -14,7 +14,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 }
 
 //modules sub-content
-$this->_list['google_search'] = array('title_var'=>'polls','file'=>'mods/_standard/google_search/sublinks.php');
+$this->_list['google_search'] = array('title_var'=>'google_search','file'=>'mods/_standard/google_search/sublinks.php');
 
 $this->_pages['mods/_standard/google_search/index.php']['text']      = _AT('google_search_text');
 
