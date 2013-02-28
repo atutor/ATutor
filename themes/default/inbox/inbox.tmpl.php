@@ -1,6 +1,6 @@
 
 <?php 
-	if ($row = mysql_fetch_assoc($this->result_messages)) {
+	if ($row = @mysql_fetch_assoc($this->result_messages)) {
 ?>
 	<ul id="inbox-msg">
 	<li>
