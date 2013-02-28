@@ -280,7 +280,7 @@ function can_show_remedial_content($test_id) {
         return 0;
     }
     
-    if ($row = mysql_fetch_array($result)) {
+    if ($row = @mysql_fetch_array($result)) {
         return intval($row['remedial_content']);
     }
     
