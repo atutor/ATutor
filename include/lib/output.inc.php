@@ -172,6 +172,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
     $num_tokens = count($tokens);
 
     $output = $format;
+    $output = clean_extra_char($output);
     for ($i=0; $i<$num_tokens; $i++) {
         $tokens[$i] = substr($tokens[$i],0,1);
 
