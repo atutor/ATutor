@@ -24,12 +24,10 @@ body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
 	font-size:.8em;
 	margin:0px;
-
-	
 }
 .page_wrapper{
 /*	border:1px solid #aaaaaa;*/
-	width:90%;
+	width:96%;
 	margin-left:auto;
 	margin-right:auto;
 	background-color: #ffffff;
@@ -41,7 +39,6 @@ body {
 	background-position: 0% 0%;
 	background-repeat: repeat-x;
     background-size:auto auto;
-
 }
 p {
 	margin: 0.5em 0em 1em 0em;

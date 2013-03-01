@@ -40,7 +40,7 @@
 //-->
 </script>
 <div  class="headfootbar" style="height:8em;">
-<img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/atspaces_logo49.jpg" alt="ATutorSpaces Logo" style="margin:1.8em; opacity:0.5;"/>
+<a href="https://www.atutorspaces.com"><img src="<?php echo $this->base_path.'themes/'.$this->theme; ?>/images/atspaces_logo49.jpg" alt="ATutorSpaces Logo" style="margin:1.8em; opacity:0.5;" border="0"/></a>
 </div>
 </body>
 </html>
