@@ -14,4 +14,4 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 </form>
 </div>
 
-<?php return array(''); ?>
+<?php return array(); ?>

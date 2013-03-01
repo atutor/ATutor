@@ -35,4 +35,4 @@ global $_config;
 </form>
 </div>
 
-<?php return array(''); ?>
+<?php return array(); ?>
