@@ -85,7 +85,7 @@ if ($_POST['submit']) {
 	}
 }
 
-if ($_SESSION['valid_user']) {
+if ($_SESSION['valid_user'] === true) {
 
 	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
 	$result = mysql_query($sql, $db);

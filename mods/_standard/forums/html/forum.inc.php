@@ -112,7 +112,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		echo '<tr>';
 		echo '<td width="35%">';
 
-		if ($_SESSION['valid_user']) {
+		if ($_SESSION['valid_user'] === true) {
 			if ($row['stamp'] > $last_accessed[$row['post_id']]['last_accessed']) {
 				echo '<i style="color: green; font-weight: bold; font-size: .7em;" title="'._AT('new_thread').'">'._AT('new').'</i> ';
 			}

@@ -96,7 +96,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
  	* in the case of injection
 	*/
 
-	if ($_SESSION['valid_user']) {
+	if ($_SESSION['valid_user'] === true) {
 		$sql2 = "INSERT INTO ".TABLE_PREFIX."forums_accessed VALUES ($pid, $_SESSION[member_id], NOW(), 0)";
 		$result2 = mysql_query($sql2, $db);
 		if (!$result2) {
@@ -196,7 +196,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		$subject = 'Re: '.$subject;
 	}
 	
-	if ($_SESSION['valid_user'] && $_SESSION['enroll'] && !$locked) {
+	if ($_SESSION['valid_user'] === true && $_SESSION['enroll'] && !$locked) {
 		$sql	= "SELECT subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
 		$result = mysql_query($sql, $db);
 		$row = mysql_fetch_assoc($result);
@@ -208,7 +208,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$subscribed = false;
 		}
 	}
-	if ($_SESSION['valid_user'] && !$_SESSION['enroll']) {
+	if ($_SESSION['valid_user'] === true && !$_SESSION['enroll']) {
 		echo '<p><strong>'._AT('enroll_to_post').'</strong></p>';
 	} else if ($locked == 0) {
 		require(AT_INCLUDE_PATH.'../mods/_standard/forums/html/new_thread.inc.php');

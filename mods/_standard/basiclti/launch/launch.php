@@ -55,7 +55,7 @@ $course_id = $atutor_content_row['course_id'];
         $lmsdata["roles"] = 'Instructor';
     }
 
-    if ( $_SESSION['is_admin'] == 1 ) {
+    if ( $_SESSION['is_admin'] === true ) {
         $lmsdata["roles"] = 'Instructor';
     }
 

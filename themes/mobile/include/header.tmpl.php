@@ -193,16 +193,16 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 
 	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
-	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ):?>
+	<?php if($_SESSION['is_admin'] === false 0 && $_SESSION['privileges'] == 0 ):?>
 		<li role="menuitem"><a  href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
 	<?php //if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 1):
-		if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
+		if($_SESSION['is_admin'] === false && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN):?>
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
-	<?php if($_SESSION['is_admin'] == 1): ?>
+	<?php if($_SESSION['is_admin'] === true): ?>
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	
@@ -400,21 +400,21 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 		
 <?php  ?><ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
-	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == 0 ): ?>
+	<?php if($_SESSION['is_admin'] === true && $_SESSION['privileges'] == 0 ): ?>
 
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 		
 	<?php endif; ?>	
 		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
-	<?php if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN): ?>
+	<?php if($_SESSION['is_admin'] === false && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN): ?>
 	
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>admin/index.php"><?php echo _AT("home"); ?></a></li> 
 		
 	<?php endif;?>
 	
 	<!--  CHECK TO SEE IF USER IS AN INSTRUCTOR -->
-	<?php if($_SESSION['is_admin'] == 1): ?>
+	<?php if($_SESSION['is_admin'] === true): ?>
 		<li role="menuitem"><a href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>
 	

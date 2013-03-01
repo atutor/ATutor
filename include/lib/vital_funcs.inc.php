@@ -355,7 +355,7 @@ function assign_session_prefs($prefs, $switch_mobile_theme = 0) {
 function save_prefs( ) {
 	global $db, $addslashes;
 
-	if ($_SESSION['valid_user']) {
+	if ($_SESSION['valid_user'] === true) {
 		$data	= $addslashes(serialize($_SESSION['prefs']));
 		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
 		$result = mysql_query($sql, $db); 
@@ -365,7 +365,7 @@ function save_prefs( ) {
 function save_email_notification($mnot) {
 	global $db;
 	
-	if ($_SESSION['valid_user']) {
+	if ($_SESSION['valid_user'] === true) {
 		$sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify =". $mnot .", creation_date=creation_date, last_login=last_login WHERE member_id =".$_SESSION['member_id'];
 		$result = mysql_query($sql, $db);
 	}
@@ -620,13 +620,13 @@ function query_bit( $bitfield, $bit ) {
 * @author  Joel Kronenberg
 */
 function authenticate($privilege, $check = false) {
-	if (isset($_SESSION['is_admin'])) {
+	if (isset($_SESSION['is_admin']) && $_SESSION['is_admin'] === true) {
 		return true;
 	}
     if(isset($_SESSION['privileges'])){
 	    $auth = query_bit($_SESSION['privileges'], $privilege);
 	}
-	if (!isset($_SESSION['valid_user']) || !$auth) {
+	if (!isset($_SESSION['valid_user']) || $_SESSION['valid_user'] === false || !$auth) {
 		if (!$check){
 			global $msg;
 			$msg->addInfo('NO_PERMISSION');

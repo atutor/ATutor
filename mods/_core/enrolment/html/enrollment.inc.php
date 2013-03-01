@@ -307,10 +307,10 @@ $savant->assign('results_per_page', $results_per_page);
 $savant->assign('num_tabs', $num_tabs);
 $savant->assign('tabs', $tabs);
 $savant->assign('enrollment_result', $enrollment_result);
-if($_SESSION['is_admin'] == 0 && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN) {
+if($_SESSION['is_admin'] === false && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN) {
 	$savant->display('admin/courses/enrollment.tmpl.php');
 }
-if($_SESSION['is_admin'] == 1){
+if($_SESSION['is_admin'] === true){
 	$savant->display('instructor/enrolment/index.tmpl.php');
 }
 

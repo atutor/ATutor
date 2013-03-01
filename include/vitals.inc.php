@@ -209,7 +209,7 @@ if ($myLang === FALSE) {
 	exit;
 }
 $myLang->saveToSession();
-if (isset($_GET['lang']) && $_SESSION['valid_user']) {
+if (isset($_GET['lang']) && $_SESSION['valid_user'] === true) {
 	if ($_SESSION['course_id'] == -1) {
 		$myLang->saveToPreferences($_SESSION['login'], 1);	//1 for admin			
 	} else {
@@ -276,7 +276,7 @@ if ((!is_dir(AT_SYSTEM_THEME_DIR . $_SESSION['prefs']['PREF_THEME']) &&
 
 // use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
 // When more mobile themes come in, this should be changed.
-if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
+if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user'] === true) {
 	//check if the theme is enabled
 	$sql = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
 	$result = mysql_query($sql, $db);
@@ -332,7 +332,7 @@ if (!file_exists(AT_INCLUDE_PATH.'../sha-1factory.js')) {
 	exit;
 }
 
-if (isset($_user_location) && ($_user_location == 'users') && $_SESSION['valid_user'] && ($_SESSION['course_id'] > 0)) {
+if (isset($_user_location) && ($_user_location == 'users') && $_SESSION['valid_user'] === true && ($_SESSION['course_id'] > 0)) {
 	$_SESSION['course_id'] = 0;
 }
 
@@ -424,7 +424,7 @@ if ((!isset($_SESSION['is_admin']) || !$_SESSION['is_admin'])       &&
 
 /****************************************************/
 /* update the user online list						*/
-if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']) {
+if (isset($_SESSION['valid_user']) && $_SESSION['valid_user'] === true) {
 	$new_minute = time()/60;
 	if (!isset($_SESSION['last_updated'])) {
 		$_SESSION['last_updated'] = $new_minute;
@@ -515,7 +515,7 @@ require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 
 $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module.php files
 
-if (isset($_GET['submit_language']) && $_SESSION['valid_user']) {
+if (isset($_GET['submit_language']) && $_SESSION['valid_user'] === true) {
 	if ($_SESSION['course_id'] == -1) {
 		$sql = "UPDATE ".TABLE_PREFIX."admins SET language = '$_SESSION[lang]' WHERE login = '$_SESSION[login]'";
 		$result = mysql_query($sql, $db);

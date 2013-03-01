@@ -245,13 +245,13 @@ function add_update_course($course_data, $isadmin = FALSE) {
 		echo 'DB Error';
 		exit;
 	}
-	$_SESSION['is_admin'] = 1;
+	$_SESSION['is_admin'] = true;
 	$new_course_id = $_SESSION['course_id'] = mysql_insert_id($db);
-	if ($isadmin) {
+	if (isset($isadmin)) {
 		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', mysql_affected_rows($db), $sql);
 	}
 
-	if ($isadmin) {
+	if (isset($isadmin)) {
 		//get current instructor and unenroll from course if different from POST instructor	
 		$old_instructor = $system_courses[$course_data['course']]['member_id'];
 		
@@ -266,7 +266,7 @@ function add_update_course($course_data, $isadmin = FALSE) {
 	//enroll new instructor
 	$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($course_data[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = mysql_query($sql, $db);
-	if ($isadmin) {
+	if (isset($isadmin)) {
 		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', mysql_affected_rows($db), $sql);
 	}
 

@@ -29,7 +29,7 @@ function links_authenticate($owner_type, $owner_id) {
 
 	if ($owner_type == LINK_CAT_GROUP) {
 		//check if member of group
-		if ($_SESSION['valid_user'] && isset($_SESSION['groups'])) {			
+		if ($_SESSION['valid_user'] === true && isset($_SESSION['groups'])) {			
 			$row = queryDB('SELECT * FROM %sgroups_members WHERE group_id=%d AND member_id=%d', array(TABLE_PREFIX, $owner_id, $_SESSION['member_id']), true);
 			if (!empty($row)) {
 				return true;
