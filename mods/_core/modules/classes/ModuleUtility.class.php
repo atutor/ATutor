@@ -138,10 +138,6 @@ class ModuleUtility {
 
 			self::set_config_values('main_defaults', $main_defaults);
 			self::set_config_values('home_defaults', $home_defaults);
-
-			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-			header('Location: '.$_SERVER['PHP_SELF']);
-			exit;
 		}
 	}
 

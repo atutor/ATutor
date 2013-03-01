@@ -27,6 +27,12 @@ ModuleUtility::set_default_tools($_POST['up'], $_POST['down'], $_POST['main'], $
 $main_defaults[] = ModuleUtility::get_main_defaults();
 $home_defaults[] = ModuleUtility::get_home_defaults();
 
+if(isset($_POST['submit'])) {
+	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	header('Location: '.$_SERVER['PHP_SELF']);
+	exit;
+}
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $main_defaults = explode('|', $_config['main_defaults']);
