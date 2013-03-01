@@ -33,7 +33,7 @@ if (sizeof($list_of_friends) > 0){
 }
 */
 //search box
-debug(AT_PRETTY_URL_HEADER);
+
 if(!defined('AT_PRETTY_URL_HEADER')){
    // define('AT_PRETTY_URL_HEADER','');
 }
