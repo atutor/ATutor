@@ -535,7 +535,7 @@ a#editor-link.on {
 table.data {
 	clear:right;
 	border: 1px solid #f0f0f0;
-	width: 80%; 
+	width: 95%; 
 	margin-left: auto; 
 	margin-right: auto;
 	border-spacing: 0px;
@@ -2526,4 +2526,16 @@ div.onRight {
 }
 div.input-form.remedialContent {
 	overflow: auto;
+}
+
+.fs_tools .input-form {
+    float: left;
+    margin-left: 2em;
+    width: 45%;
+}
+div.fs_tools{
+    width:95%;
+    margin-left:auto;
+    margin-right:auto;
+
 }

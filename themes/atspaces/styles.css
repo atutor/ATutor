@@ -3152,10 +3152,15 @@ margin: 0;
  */
 .fs_tools .input-form {
     float: left;
-    margin-left: 1em;
+    margin-left: 2em;
     width: 45%;
 }
+div.fs_tools{
+    width:95%;
+    margin-left:auto;
+    margin-right:auto;
 
+}
 li.multichoice-question{
 list-style-type: none;
 padding:.4em;

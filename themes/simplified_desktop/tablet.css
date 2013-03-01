@@ -3144,6 +3144,8 @@ padding:.5em;
 /* File Storage */
 .fs_tools{
  	width:95%;
+ 	margin-left:auto;
+ 	margin-right:auto;
  	padding-left:2em;
  	clear:right;
  	white-space:nowrap;

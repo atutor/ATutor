@@ -578,9 +578,21 @@ a#editor-link.on {
 
 
 /* for data tables */
+.fs_tools .input-form {
+    float: left;
+    margin-left: 2em;
+    width: 45%;
+    border:1px solid #8CACBB;
+}
+div.fs_tools{
+    width:95%;
+    margin-left:auto;
+    margin-right:auto;
+
+}
 table.data {
 	border: 1px solid #f0f0f0;
-	width: 90%; 
+	width: 95%; 
 	margin-left: auto; 
 	margin-right: auto;
 	border-spacing: 0px;
@@ -2488,3 +2500,4 @@ margin-right:.5em;
  * 
  * 
  */
+ 

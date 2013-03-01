@@ -3018,14 +3018,16 @@ ol.dd-question{
 }
 
 /* File Storage */
-.fs_tools{
- 	width:95%;
- 	padding-left:3em;
+.fs_tools .input-form {
+    float: left;
+    margin-left: 2em;
+    width: 45%;
 }
-.fs_tools .input-form{
-	float:left;
-	width:45%;
-	margin-left:1em;
+div.fs_tools{
+    width:95%;
+    margin-left:auto;
+    margin-right:auto;
+
 }
 a.hideAllRemedialLink {
 	font-size: 0.8em;
