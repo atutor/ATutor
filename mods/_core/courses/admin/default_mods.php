@@ -23,7 +23,7 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-ModuleUtility::set_default_tools();
+ModuleUtility::set_default_tools($_POST['up'], $_POST['down'], $_POST['main'], $_POST['home'], $_POST['submit']);
 $main_defaults[] = ModuleUtility::get_main_defaults();
 $home_defaults[] = ModuleUtility::get_home_defaults();
 
