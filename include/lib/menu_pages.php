@@ -351,7 +351,7 @@ function get_main_navigation($current_page) {
 					$table = '';
 				}
 
-                $_top_level_pages[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($page), 'title' => $_page_title,  'tool_file' => $tool_file, 'table' => $table);
+                $_top_level_pages[] = array('url' => AT_print($_base_path, 'url.page') . url_rewrite($page), 'title' => $_page_title,  'tool_file' => $tool_file, 'table' => $table, 'img' => AT_print($_base_path, 'url.page').$_pages[$page]['img']);
             }
         }
     } else if (isset($parent_page)) {
