@@ -5,7 +5,7 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 $this->_pages['mods/_standard/profile_pictures/profile_picture.php']['title_var'] = 'picture';
 $this->_pages['mods/_standard/profile_pictures/profile_picture.php']['parent']   = 'users/profile.php';
 
-//$this->_pages['users/profile.php']['children']  = array_merge((array) $this->_pages['users/profile.php']['children'],array('mods/_standard/profile_pictures/profile_picture.php'));
+$this->_pages['users/profile.php']['children']  = array_merge((array) $this->_pages['users/profile.php']['children']);
 
 if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE)) {
 	$this->_pages['mods/_standard/profile_pictures/admin/profile_picture.php']['title_var'] = 'picture';
