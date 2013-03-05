@@ -2,15 +2,13 @@
 
 #top-links{
 margin-top:0em;
-float:right;
-clear:both;
 white-space:nowrap;
-width:55%;
+width:50%;
 
 }
 #top-links-jump{
 margin-top:0em;
-float:left;
+
 }
 #top-links-text{
 
@@ -58,6 +56,11 @@ div#guide_box{
 	*margin-top:-1.3em;
 	*margin-right:.2em;
 }
+.browse-result{
+    padding-left:2em;
+    padding-right:2em;
+}
+
 /*
 
 label {
