@@ -193,7 +193,7 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 
 	<ul class="home-guide fl-tabs" id="home-guide" role="menu">
 	<!--  CHECK TO SEE IF USER IS A STUDENT -->
-	<?php if($_SESSION['is_admin'] === false 0 && $_SESSION['privileges'] == 0 ):?>
+	<?php if($_SESSION['is_admin'] === false && $_SESSION['privileges'] == 0 ):?>
 		<li role="menuitem"><a  href="<?php echo $this->base_path; ?>users/index.php"><?php echo _AT("home"); ?></a></li> 
 	<?php endif;?>		
 	<!--  CHECK TO SEE IF USER IS AN ADMINISTRATOR -->
