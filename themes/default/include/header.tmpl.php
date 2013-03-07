@@ -23,6 +23,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * $this->banner_style		-deprecated-
  * $this->cats		 array or course categories
  * $this->theme				the directory name of the current theme
+ * $this->theme_path        the directory name of where "themes" directory resides
  * $this->base_href			the full url to this atutor installation
  * $this->onload			javascript onload() calls
  * $this->img				the absolute path to this theme's images/ directory
@@ -68,22 +69,22 @@ global $system_courses, $_custom_css, $db;
     <?php if(isset($this->content_description) && $this->content_description != ''){ ?>
     <meta name="description" content="<?php echo $this->content_description; ?>" />
     <?php } ?>
-	<meta name="Generator" content="ATutor - Copyright 2010 by http://atutor.ca" />
+	<meta name="Generator" content="ATutor - Copyright 2013 by http://atutor.ca" />
 	<base href="<?php echo $this->content_base_href; ?>" />
-	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $this->base_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
-	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
-	    <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
+	<link rel="shortcut icon" href="<?php echo $this->theme_path; ?>favicon.ico" type="image/x-icon" />
+	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
+	<link rel="stylesheet" href="<?php echo $this->theme_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
+	    <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<!--[if IE]>
-	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
+	  <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/ie_styles.css" type="text/css" />
 	<![endif]-->
 	<!--[if IE 8]>
-	  <link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
+	  <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/ie8_styles.css" type="text/css" />
 	<![endif]-->
 
 	<?php  if ( strpos($_SERVER['HTTP_USER_AGENT'], 'Safari') ){ ?>	
-		<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/safari.css" type="text/css"/>
+		<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/safari.css" type="text/css"/>
 	<?php } ?>
 	
 <?php if (isset($this->course_id) && isset($system_courses[$this->course_id]['rss'])): ?>
