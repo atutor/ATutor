@@ -141,10 +141,6 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 <div id="wrapper">
 <div id="main">
 	<div id="header">
-
-		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">
-		<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>		
-
 		<div id="header-section-title">
 			<!-- <?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 					echo '<div id="site-name">'.stripslashes(SITE_NAME).'</div>'; 
