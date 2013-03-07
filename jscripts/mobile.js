@@ -20,11 +20,13 @@ ATutor.mobile = ATutor.mobile || {};
 (function ($) {
     jQuery(document).ready(function () {
         // any click on the page closes the content menu but the link "content_link" itself
-        $(document).click(function () {
+        $(document).click(function (e) {
             // hide content menu
-            $('#content').slideUp(600);
-            $('#content_link').removeClass('content_link_tablet_highlight triangle-isosceles top right');
-            $('#content_link_phone').removeClass('topnavlist-link-highlight content-closed');
+            if ($('#content').has("#" + e.target.id).length === 0) {
+                $('#content').slideUp(600);
+                $('#content_link').removeClass('content_link_tablet_highlight triangle-isosceles top right');
+                $('#content_link_phone').removeClass('topnavlist-link-highlight content-closed');
+            }
 
             // hide navigation menu
             $('#navigation-column').slideUp(200);
