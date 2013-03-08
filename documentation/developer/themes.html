@@ -186,7 +186,7 @@ These files are generally all that are required to create a new theme:<br /><br 
 `last_updated` (The last date the theme was modified, use "NOW()")
 `extra_info` (A description of the theme etc. )
 `status` (theme's enable status, 0:disabled, 1:enabled, 2:set as default theme)
-`customized` (Set if the theme has been uploaded into a multisite subsite)
+`customized` (Set if the theme has been uploaded into a multisite subsite 0:disabled, 1:enabled )
 </pre>
 <p>Below is an example of the SQL used to create an entry in the themes table for a new theme. You can also use a tool like phpMyAdmin to add a new entry to the "themes" table. Be sure to adjust the "<kbd>AT_</kbd>" prefix if you are using the SQL statement, to match the prefix you are using in your ATutor installation. <strong>Be careful when setting the value for the status field</strong>. If you set the status to "set as default" ( 2 ) and your theme is broken, you may find you can no longer access ATutor.</p>
 
