@@ -806,7 +806,8 @@ class OrderingQuestion extends AbstractTestQuestion {
                                     $answer_new[6], 
                                     $answer_new[7], 
                                     $answer_new[8], 
-                                    $answer_new[9]);
+                                    $answer_new[9],
+                                    'DEFAULT');
 
             $sql = vsprintf(AT_SQL_QUESTION_ORDERING, $sql_params);
 
@@ -888,7 +889,8 @@ class TruefalseQuestion extends AbstracttestQuestion {
                                     $_SESSION['course_id'],
                                     $question['feedback'], 
                                     $question['question'], 
-                                    $question['answer']);
+                                    $question['answer'],
+                                    'DEFAULT');
 
             $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);
             $result    = mysql_query($sql, $db);
@@ -1089,7 +1091,8 @@ class LongQuestion extends AbstracttestQuestion {
                                     $_SESSION['course_id'],
                                     $question['feedback'], 
                                     $question['question'], 
-                                    $question['property']);
+                                    $question['property'],
+                                    'DEFAULT');
 
             $sql = vsprintf(AT_SQL_QUESTION_LONG, $sql_params);
 
@@ -1287,7 +1290,8 @@ class MatchingQuestion extends AbstracttestQuestion {
                                     $question['choice'][6], 
                                     $question['choice'][7], 
                                     $question['choice'][8], 
-                                    $question['choice'][9]);
+                                    $question['choice'][9],
+                                    'DEFAULT');
 
             $sql = vsprintf(AT_SQL_QUESTION_MATCHINGDD, $sql_params);
 
@@ -1438,9 +1442,18 @@ class MultichoiceQuestion extends AbstracttestQuestion {
                                     $answers[6], 
                                     $answers[7], 
                                     $answers[8], 
-                                    $answers[9]);
-
+                                    $answers[9],
+                                    'DEFAULT');
+// 
+// debug($sql_params);
+// debug(AT_SQL_QUESTION_MULTI);
+// debug($question);
+// debug(vsprintf(AT_SQL_QUESTION_MULTI, $sql_params));
+// exit;
+// 
             $sql = vsprintf(AT_SQL_QUESTION_MULTI, $sql_params);
+//debug($sql);
+//exit;
             $result    = mysql_query($sql, $db);
             if ($result==true){
                 return mysql_insert_id();
@@ -1572,7 +1585,8 @@ class MultianswerQuestion extends MultichoiceQuestion {
                                         $question['answer'][6], 
                                         $question['answer'][7], 
                                         $question['answer'][8], 
-                                        $question['answer'][9]);
+                                        $question['answer'][9],
+                                        'DEFAULT');
 
                 $sql = vsprintf(AT_SQL_QUESTION_MULTIANSWER, $sql_params);
 
