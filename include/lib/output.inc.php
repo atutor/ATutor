@@ -654,7 +654,7 @@ function fix_quotes($text){
  *          Otherwise, return the original send-in parameter.
  */
 function convert_youtube_playURL_to_watchURL($youtube_playURL) {
-    return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/v\/(.*)/",
+    return preg_replace("/(https?:\/\/[a-z0-9\.]*)?youtube.com\/v\/(.*)/",
                         "\\1youtube.com/watch?v=\\2", $youtube_playURL);
 }
 
@@ -668,7 +668,7 @@ function convert_youtube_playURL_to_watchURL($youtube_playURL) {
  *          Otherwise, return the original send-in parameter.
  */
 function convert_youtube_watchURL_to_playURL($youtube_watchURL) {
-    return preg_replace("/(http:\/\/[a-z0-9\.]*)?youtube.com\/watch\?v=(.*)/",
+    return preg_replace("/(https?:\/\/[a-z0-9\.]*)?youtube.com\/watch\?v=(.*)/",
                         "\\1youtube.com/v/\\2", $youtube_watchURL);
 }
 
@@ -699,9 +699,18 @@ function embed_media($text) {
             '  src="http://gdata.youtube.com/feeds/mobile/videos/##MEDIA2##?alt=json-in-script&amp;callback=ATutor.course.showYouTubeOnBlackberry&amp;format=6" [^]'."\n".
             '  type="text/javascript">'."\n".
             '</script>';
+        preg_match_all("#\[media[0-9a-z\|]*\]https://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
+        $media_replace[] = '<script type="text/javascript" src="'.$_base_path.'jscripts/ATutorYouTubeOnBlackberry.js"></script>'."\n".
+            '<p id="blackberry_##MEDIA2##">'."\n".
+            '<script'."\n".
+            '  src="https://gdata.youtube.com/feeds/mobile/videos/##MEDIA2##?alt=json-in-script&amp;callback=ATutor.course.showYouTubeOnBlackberry&amp;format=6" [^]'."\n".
+            '  type="text/javascript">'."\n".
+            '</script>';
     } else {
         preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
         $media_replace[] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
+        preg_match_all("#\[media[0-9a-z\|]*\]https://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
+        $media_replace[] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="https://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="https://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
     }
     
     // .mpg
