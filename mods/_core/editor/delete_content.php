@@ -15,6 +15,13 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+if (isset($_GET['redirect_to'])) {
+    $_SESSION['redirect_to'] = intval($_GET['redirect_to']);
+} else {
+    if (!isset($_POST['submit_yes']) && !isset($_POST['submit_no'])) {
+        $_SESSION['redirect_to'] = 0;
+    }
+}
 if (isset($_POST['submit_yes'])) {
 
 	$_POST['cid'] = intval($_POST['cid']);
@@ -25,12 +32,14 @@ if (isset($_POST['submit_yes'])) {
 	unset($_SESSION['from_cid']);
 		
 	$msg->addFeedback('CONTENT_DELETED');
-	header('Location: '.AT_BASE_HREF.'mods/_standard/sitemap/sitemap.php');
-	exit;
 } else if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'mods/_standard/sitemap/sitemap.php');
-	exit;
+}
+if (isset($_POST['submit_yes']) || isset($_POST['submit_no'])) {
+    $location = ($_SESSION['redirect_to'] == 1) ? 'mods/_standard/sitemap/sitemap.php' : 'mods/_core/content/index.php';
+    header('Location: '.AT_BASE_HREF.$location);
+    unset($_SESSION['redirect_to']);
+    exit;
 }
 
 $_GET['cid'] = intval($_REQUEST['cid']);
