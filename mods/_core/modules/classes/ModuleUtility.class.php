@@ -29,13 +29,11 @@ class ModuleUtility {
 	}
 
 	public static function set_config_values($config_name, $name) {
-		global $db;
-		if (!($_config_defaults[$config_name] == $name)) {
-			$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('".$config_name."', '$name')";
+        if (!($_config_defaults[$config_name] == $name)) {
+            $result = queryDB("REPLACE INTO %sconfig VALUES('%s', '%s')", array(TABLE_PREFIX, $config_name, $name));
 		} else if ($_config_defaults[$config_name] == $name) {
-			$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='".$config_name."'";
+            $result = queryDB("DELETE FROM %sconfig WHERE name='%s'", array(TABLE_PREFIX, $config_name));
 		}
-		$result = mysql_query($sql, $db);
 	}
 	/**
 	*
