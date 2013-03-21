@@ -19,20 +19,24 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[member_id]";
 @mysql_query($sql, $db);
 
-unset($_SESSION['login']);
-unset($_SESSION['valid_user']);
-unset($_SESSION['member_id']);
-unset($_SESSION['is_admin']);
-unset($_SESSION['course_id']);
-unset($_SESSION['prefs']);
-unset($_SESSION['dd_question_ids']);
-unset($_SESSION['flash']);
-unset($_SESSION['userAgent']);
-unset($_SESSION['IPaddress']);
-unset($_SESSION['OBSOLETE']);
-unset($_SESSION['EXPIRES']);
-unset($_SESSION['token']);
-
+// Unset these Session keys at the time of logout.
+$unset_session = array('login',
+                       'valid_user',
+                       'member_id',
+                       'is_admin',
+                       'course_id',
+                       'prefs',
+                       'dd_question_ids',
+                       'flash',
+                       'userAgent',
+                       'IPaddress',
+                       'OBSOLETE',
+                       'EXPIRES',
+                       'redirect_to',
+                       'token');
+foreach ($unset_session as $session_name) {
+    unset($_SESSION[$session_name]);
+}
 $msg->addFeedback('LOGOUT');
 header('Location: login.php');
 exit;
