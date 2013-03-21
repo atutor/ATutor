@@ -523,15 +523,16 @@ if (!$db) {
  * the entire step 9.
  * @param $_post the post parameter
  */
-function print_post_for_step9($_POST){
-	echo '<input type="hidden" name="db_login" value="'.urlencode($_POST['db_login']).'" />';
-	echo '<input type="hidden" name="db_password" value="'.urlencode($_POST['db_password']).'" />';
-	echo '<input type="hidden" name="db_host" value="'.$_POST['db_host'].'" />';
-	echo '<input type="hidden" name="db_name" value="'.$_POST['db_name'].'" />';
-	echo '<input type="hidden" name="db_port" value="'.$_POST['db_port'].'" />';
-	echo '<input type="hidden" name="tb_prefix" value="'.$_POST['tb_prefix'].'" />';
-	echo '<input type="hidden" name="old_version" value="'.$_POST['old_version'].'" />';
-	echo '<input type="hidden" name="new_version" value="'.$_POST['new_version'].'" />';
+//$post_steps = $post_steps;
+function print_post_for_step9($post_steps){
+	echo '<input type="hidden" name="db_login" value="'.urlencode($post_steps['db_login']).'" />';
+	echo '<input type="hidden" name="db_password" value="'.urlencode($post_steps['db_password']).'" />';
+	echo '<input type="hidden" name="db_host" value="'.$post_steps['db_host'].'" />';
+	echo '<input type="hidden" name="db_name" value="'.$post_steps['db_name'].'" />';
+	echo '<input type="hidden" name="db_port" value="'.$post_steps['db_port'].'" />';
+	echo '<input type="hidden" name="tb_prefix" value="'.$post_steps['tb_prefix'].'" />';
+	echo '<input type="hidden" name="old_version" value="'.$post_steps['old_version'].'" />';
+	echo '<input type="hidden" name="new_version" value="'.$post_steps['new_version'].'" />';
 }
 
 
