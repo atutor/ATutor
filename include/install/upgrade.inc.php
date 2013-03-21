@@ -44,6 +44,5 @@ function run_upgrade_sql($upgrade_sql_dir, $current_version, $tb_prefix=TABLE_PR
 			$sqlUtility->queryFromFile($upgrade_sql_dir . $update_file.'sql', $tb_prefix, $in_plain_msg);
 		}
 	}
-	debug($progress);
 }
 ?>

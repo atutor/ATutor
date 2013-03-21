@@ -1563,7 +1563,7 @@ div.forum-post-ctrl a { text-decoration: none; }
 div.forum-post-ctrl span { color: black; background-color: #fefdc2; padding: 3px; }
 div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED;font-size:small;}
 div.forum-post-content div.body p { margin-bottom:1em; }
-div.forum-paginator{border:1px #DED29E solid; padding:.3em; width:95%;margin:auto;background-color:#F7F3ED;}
+div.forum-paginator{border:1px #DED29E solid; padding:.3em; width:95%;margin:auto;background-color:#F4F0CB;}
 span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2em;}
 
 
