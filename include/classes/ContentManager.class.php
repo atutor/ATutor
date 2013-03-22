@@ -883,6 +883,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 		global $cid, $_my_uri, $_base_path, $rtl, $substr, $strlen;
 		static $temp_path;
 
+		$redirect_to = ($from == 'sitemap') ? '1' : '0';
 		if (!isset($temp_path)) {
 			if ($cid) {
 				$temp_path	= $this->getContentPath($cid);
@@ -971,7 +972,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 					
 					// instructors have privilege to delete content
 					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_device()) {
-						$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
+					    $link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'&redirect_to='.$redirect_to.'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
 					}
 				} 
 				else 
@@ -1005,7 +1006,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
-							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon"  /></a>';
+						    $link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'&redirect_to='.$redirect_to.'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
 						}
 					}
 					else
@@ -1039,7 +1040,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
-							$link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
+						    $link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].'&redirect_to='.$redirect_to.'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
 						}
 					}
 					
