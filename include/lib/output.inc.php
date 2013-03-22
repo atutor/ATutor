@@ -318,14 +318,7 @@ function _AT() {
         
             $outString = $_template[$row_term] = stripslashes($row['text']);
         }
-        // specifically for "_msgs" type
-        $term_prefix = substr($term, 0, 7); // 7 is the shortest type of msg (AT_HELP)
-        if (in_array($term_prefix, $termTypes)) {
-            $outString = str_replace('SITE_URL/', $_base_path, $outString);
-            if (defined('AT_DEVEL') && AT_DEVEL) {
-                $outString .= sprintf(' <small><small>(%s)</small></small>', $term);
-            }
-        }
+
 
         $outString = isset($outString) ? (isset($args) && is_array($args) ? vsprintf($outString, $args) : $outString) : '';
 
@@ -336,10 +329,17 @@ function _AT() {
         //$page = substr($page, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
     
         queryDB('INSERT IGNORE INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $term, $_rel_url));
-
         $outString = empty($outString) ? sprintf('[ %s ]', $term) : clean_extra_char($outString);
     }
 
+    // specifically for "_msgs" type
+    $term_prefix = substr($term, 0, 7); // 7 is the shortest type of msg (AT_HELP)
+    if (in_array($term_prefix, $termTypes)) {
+        $outString = str_replace('SITE_URL/', $_base_path, $outString);
+        if (defined('AT_DEVEL') && AT_DEVEL) {
+            $outString .= sprintf(' <small><small>(%s)</small></small>', $term);
+        }
+    }
     return $outString;
     
 }
