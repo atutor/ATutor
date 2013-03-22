@@ -22,7 +22,7 @@ $cid = intval($_POST['cid']);
 if ($cid == 0) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$missing_fields[] = _AT('content_id');
-	$msg->printErrors(array('EMPTY_FIELDS', $missing_fields));
+	$msg->printErrors(array('SAVE_BEFORE_PROCEED', $missing_fields));
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
