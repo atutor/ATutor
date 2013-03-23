@@ -27,4 +27,7 @@ $_pages['mods/_standard/tracker/tools/index.php']['guide']     = 'instructor/?p=
 
 	$_pages['mods/_standard/tracker/tools/reset.php']['title_var']  = 'reset';
 	$_pages['mods/_standard/tracker/tools/reset.php']['parent'] = 'mods/_standard/tracker/tools/index.php';
+	
+	$_pages['mods/_standard/tracker/tools/export.php']['title_var']  = 'export';
+	$_pages['mods/_standard/tracker/tools/export.php']['parent'] = 'mods/_standard/tracker/tools/index.php';
 ?>
