@@ -28,6 +28,50 @@ class ModuleUtility {
 		// constructor
 	}
 
+    public static function up_set($post, $up) {
+        $_new_modules  = array();
+        foreach ($post as $m) {
+            if ($m == $up) {
+                $last_m = array_pop($_new_modules);
+                $_new_modules[] = $m;
+                $_new_modules[] = $last_m;
+            } else {
+                $_new_modules[] = $m;
+            }
+        }
+        $post = $_new_modules;
+        return $post;
+    }
+
+
+    public static function down_set($post, $down) {
+        $_new_modules  = array();
+        foreach ($post as $m) {
+            if ($m == $down) {
+                    $found = TRUE;
+                    continue;
+                }
+            $_new_modules[] = $m;
+            if ($found) {
+                $_new_modules[] = $down;
+                $found = FALSE;
+            }
+        }
+        $post = $_new_modules;
+        return $post;
+    }
+
+    public static function submit_set($post, $defaults) {
+        if (isset($post)) {
+            $post = array_unique($post);
+            $post = array_filter($post); // remove empties
+            $defaults = implode('|', $post);
+        } else {
+            $defaults = '';
+        }
+        return $defaults;
+    }
+
 	public static function set_config_values($config_name, $name) {
         if (!($_config_defaults[$config_name] == $name)) {
             $result = queryDB("REPLACE INTO %sconfig VALUES('%s', '%s')", array(TABLE_PREFIX, $config_name, $name));
@@ -46,93 +90,26 @@ class ModuleUtility {
 		global $msg;
 		if (isset($post_up)) {
 			$up = key($post_up);
-			$_new_modules  = array();
-			if (isset($post_main)) {
-				foreach ($post_main as $m) {
-					if ($m == $up) {
-						$last_m = array_pop($_new_modules);
-						$_new_modules[] = $m;
-						$_new_modules[] = $last_m;
-					} else {
-					$_new_modules[] = $m;
-					}
-				}
-
-				$post_main = $_new_modules;
-			}
-			if (isset($post_home)) {
-				$_new_modules  = array();
-				foreach ($post_home as $m) {
-					if ($m == $up) {
-						$last_m = array_pop($_new_modules);
-						$_new_modules[] = $m;
-						$_new_modules[] = $last_m;
-					} else {
-						$_new_modules[] = $m;
-					}
-				}
-				$post_home = $_new_modules;
-			}
-
+            if(isset($post_home)) {
+                $post_home = self::up_set($post_home, $up);
+            }
+            if(isset($post_main)) {
+                $post_main = self::up_set($post_main, $up);
+            }
 			$post_submit = TRUE;
 		} else if (isset($post_down)) {
-			$_new_modules  = array();
-
-			$down = key($post_down);
-
-			if (isset($post_main)) {
-				foreach ($post_main as $m) {
-					if ($m == $down) {
-						$found = TRUE;
-						continue;
-					}
-					$_new_modules[] = $m;
-					if ($found) {
-						$_new_modules[] = $down;
-						$found = FALSE;
-					}
-				}
-
-				$post_main = $_new_modules;
-			}
-
-			if (isset($post_home)) {
-				$_new_modules  = array();
-				foreach ($post_home as $m) {
-					if ($m == $down) {
-						$found = TRUE;
-						continue;
-					}
-					$_new_modules[] = $m;
-					if ($found) {
-						$_new_modules[] = $down;
-						$found = FALSE;
-					}
-				}
-
-				$post_home = $_new_modules;
-			}
-
+            $down = key($post_down);
+            if(isset($post_home)) {
+                $post_home = self::down_set($post_home, $down);
+            }
+            if(isset($post_main)) {
+                $post_main = self::down_set($post_main, $down);
+            }
 			$post_submit = TRUE;
 		}
 		if (isset($post_submit)) {
-			if (isset($post_main)) {
-				$post_main = array_unique($post_main);
-				$post_main = array_filter($post_main); // remove empties
-				$main_defaults = implode('|', $post_main);
-
-			} else {
-				$main_defaults = '';
-			}
-
-
-			if (isset($post_home)) {
-				$post_home = array_unique($post_home);
-				$post_home = array_filter($post_home); // remove empties
-				$home_defaults = implode('|', $post_home);
-			} else {
-				$home_defaults = '';
-			}
+            $main_defaults = self::submit_set($post_main, $main_defaults);
+            $home_defaults = self::submit_set($post_home, $home_defaults);
 
 			self::set_config_values('main_defaults', $main_defaults);
 			self::set_config_values('home_defaults', $home_defaults);
