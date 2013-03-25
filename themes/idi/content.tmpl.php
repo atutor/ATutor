@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
+<?php if ($this->alt_infos): ?>
 <div id="alternatives_shortcuts">
 <?php 
 	foreach ($this->alt_infos as $alt_info){
@@ -19,6 +20,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
 	} 
 ?>
 </div>
+<?php endif; ?>
 
 <?php if ($this->shortcuts): ?>
 <fieldset id="shortcuts"><legend><?php echo _AT('shortcuts'); ?></legend>
