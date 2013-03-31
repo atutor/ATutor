@@ -17,7 +17,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 // images for the toolbar can be customized by adding images of the same name to a theme's images directory
 ?>
 
-<?php if ($this->alt_infos): ?>
+<?php if (isset($this->alt_infos)): ?>
 <div id="alternatives_shortcuts">
 <?php 
 	foreach ($this->alt_infos as $alt_info){

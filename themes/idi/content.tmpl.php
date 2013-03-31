@@ -11,7 +11,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; } ?>
-<?php if ($this->alt_infos): ?>
+<?php if (isset($this->alt_infos)): ?>
 <div id="alternatives_shortcuts">
 <?php 
 	foreach ($this->alt_infos as $alt_info){
