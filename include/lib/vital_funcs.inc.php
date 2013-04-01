@@ -850,18 +850,19 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src
 	}
 
 	if ($src_x > 0 || $src_y > 0){
-		imagecopyresized($thumbnail_img, $source, 0, 0, $src_x, $src_y, $dest_w, $dest_h, $src_w, $src_h);
+		$result = imagecopyresized($thumbnail_img, $source, 0, 0, $src_x, $src_y, $dest_w, $dest_h, $src_w, $src_h);
 	} else {
-		imagecopyresampled($thumbnail_img, $source, $src_x, $src_y, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
+		$result = imagecopyresampled($thumbnail_img, $source, $src_x, $src_y, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
 	}
 
 	if ($type == 'gif') {
-		imagegif($thumbnail_img, $dest);
+		$result &= imagegif($thumbnail_img, $dest);
 	} else if ($type == 'jpg') {
-		imagejpeg($thumbnail_img, $dest, 75);
+		$result &= imagejpeg($thumbnail_img, $dest, 75);
 	} else {
-		imagepng($thumbnail_img, $dest, 7);
+		$result &= imagepng($thumbnail_img, $dest, 7);
 	}
+    return $result;
 }
 
 /**
