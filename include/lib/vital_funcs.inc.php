@@ -838,6 +838,20 @@ function profile_image_delete($id) {
 	}
 }
 
+/**
+ * To resize course_icon images
+ * @param   uploaded image source path
+ * @param   uploaded image path to be saved as
+ * @param   uploaded image's height
+ * @param   uploaded image width
+ * @param   save file with this height
+ * @param   save file with this width
+ * @param   file extension type
+ * @param   x-coordinate of source image
+ * @param   y-coordinate of source image
+ * @return  true if successful, false otherwise
+ */
+
 function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src_x=0, $src_y=0) {
 	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
 
