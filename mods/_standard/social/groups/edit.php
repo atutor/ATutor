@@ -39,27 +39,6 @@ if ($group->getUser() != $_SESSION['member_id']){
 //TODO
 //validate the group_admin is indeed a group member
 
-function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
-	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
-
-	if ($type == 'gif') {
-		$source = imagecreatefromgif($src);
-	} else if ($type == 'jpg') {
-		$source = imagecreatefromjpeg($src);
-	} else {
-		$source = imagecreatefrompng($src);
-	}
-	
-	imagecopyresampled($thumbnail_img, $source, 0, 0, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
-
-	if ($type == 'gif') {
-		imagegif($thumbnail_img, $dest);
-	} else if ($type == 'jpg') {
-		imagejpeg($thumbnail_img, $dest, 75);
-	} else {
-		imagepng($thumbnail_img, $dest, 7);
-	}
-}
 
 // check if GD is installed
 if (!extension_loaded('gd')) {

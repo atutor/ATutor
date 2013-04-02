@@ -839,6 +839,47 @@ function profile_image_delete($id) {
 }
 
 /**
+ * To resize course_icon images
+ * @param   uploaded image source path
+ * @param   uploaded image path to be saved as
+ * @param   uploaded image's height
+ * @param   uploaded image width
+ * @param   save file with this height
+ * @param   save file with this width
+ * @param   file extension type
+ * @param   x-coordinate of source image
+ * @param   y-coordinate of source image
+ * @return  true if successful, false otherwise
+ */
+
+function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src_x=0, $src_y=0) {
+	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
+
+	if ($type == 'gif') {
+		$source = imagecreatefromgif($src);
+	} else if ($type == 'jpg') {
+		$source = imagecreatefromjpeg($src);
+	} else {
+		$source = imagecreatefrompng($src);
+	}
+
+	if ($src_x > 0 || $src_y > 0){
+		$result = imagecopyresized($thumbnail_img, $source, 0, 0, $src_x, $src_y, $dest_w, $dest_h, $src_w, $src_h);
+	} else {
+		$result = imagecopyresampled($thumbnail_img, $source, $src_x, $src_y, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
+	}
+
+	if ($type == 'gif') {
+		$result &= imagegif($thumbnail_img, $dest);
+	} else if ($type == 'jpg') {
+		$result &= imagejpeg($thumbnail_img, $dest, 75);
+	} else {
+		$result &= imagepng($thumbnail_img, $dest, 7);
+	}
+    return $result;
+}
+
+/**
  * get_group_concat
  * returns a list of $field values from $table using $where_clause, separated by $separator.
  * uses mysql's GROUP_CONCAT() if available and if within the limit (default is 1024), otherwise

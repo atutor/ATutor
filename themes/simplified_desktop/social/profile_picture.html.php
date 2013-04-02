@@ -12,32 +12,7 @@
 /************************************************************************/
 // $Id: profile_picture.html.php 9418 2010-03-03 16:39:24Z greg $
 if (!defined('AT_INCLUDE_PATH')) { exit; }
-
-function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src_x=0, $src_y=0) {
-	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
-
-	if ($type == 'gif') {
-		$source = imagecreatefromgif($src);
-	} else if ($type == 'jpg') {
-		$source = imagecreatefromjpeg($src);
-	} else {
-		$source = imagecreatefrompng($src);
-	}
-	
-	if ($src_x > 0 || $src_y > 0){
-		imagecopyresized($thumbnail_img, $source, 0, 0, $src_x, $src_y, $dest_w, $dest_h, $src_w, $src_h);
-	} else {
-		imagecopyresampled($thumbnail_img, $source, $src_x, $src_y, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
-	}
-
-	if ($type == 'gif') {
-		imagegif($thumbnail_img, $dest);
-	} else if ($type == 'jpg') {
-		imagejpeg($thumbnail_img, $dest, 75);
-	} else {
-		imagepng($thumbnail_img, $dest, 7);
-	}
-}
+require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 // check if GD is installed
 if (!extension_loaded('gd')) {
