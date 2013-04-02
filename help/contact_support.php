@@ -16,7 +16,8 @@ $_user_location	= 'public';
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+require(AT_INCLUDE_PATH."securimage/securimage.php");
+    $img = new Securimage();
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
@@ -49,6 +50,12 @@ if (isset($_POST['submit'])) {
 	$_POST['subject'] = trim($_POST['subject']);
 	$_POST['body']	  = trim($_POST['body']);
 
+
+    $valid = $img->check($_POST['secret']);
+    if (!$valid)
+        $msg->addError('SECRET_ERROR');
+
+	
 	if ($_POST['from'] == '') {
 		$missing_fields[] = _AT('from_name');
 	}
@@ -119,7 +126,18 @@ $msg->printErrors();
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
 		<textarea cols="55" rows="15" id="body_text" name="body"><?php echo htmlspecialchars($stripslashes($_POST['body'])); ?></textarea>
 	</div>
+	<div class="row">
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><br/>
+		<label for="secret">
+		<img src="include/securimage/securimage_show.php?sid=<?php echo md5(uniqid(time())); ?>" id="simage" align="left" /></label>
+		<a href="include/securimage/securimage_play.php" title="<?php echo _AT('audible_captcha'); ?>"><img src="include/securimage/images/audio_icon.gif" alt="<?php echo _AT('audible_captcha'); ?>" onclick="this.blur()" align="top" border="0"></a><br>
+		<a href="#" title="<?php echo _AT('refresh_image'); ?>" onclick="document.getElementById('simage').src = 'include/securimage/securimage_show.php?sid=' + Math.random(); return false"><img src="include/securimage/images/refresh.gif" alt="<?php echo _AT('refresh_image'); ?>" onclick="this.blur()" align="bottom" border="0"></a>
 
+		<br />
+		<p><br /><?php echo _AT('image_validation_text'); ?><br />
+		<input id="secret" name="secret" type="text" size="6" maxlength="6" value="" />
+		<br />
+	</div>
 	<div class="row buttons">
 		<input type="submit" name="submit" value="<?php echo _AT('send'); ?>" accesskey="s" /> 
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
