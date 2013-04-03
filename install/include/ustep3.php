@@ -13,15 +13,14 @@
 if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
 function concat_config_values($config_name) {
-    $row = queryDB('SELECT value FROM %sconfig WHERE name = "%s"', array($_POST['step1']['tb_prefix'], $config_name));
+    $row = queryDB('SELECT value FROM %sconfig WHERE name = "%s"', array($_POST['step1']['tb_prefix'], $config_name), TRUE);
     $value = $row['value'];
-    $row = queryDB('SELECT value FROM %sconfig WHERE name = "%s_2"', array($_POST['step1']['tb_prefix'], $config_name));
-    if(!empty($row))
-    {
+    $row = queryDB('SELECT value FROM %sconfig WHERE name = "%s_2"', array($_POST['step1']['tb_prefix'], $config_name), TRUE);
+    if (!empty($row)) {
         $value2 = $row['value'];
         $value  = $value.$value2;
-        $result = queryDB('UPDATE %sconfig SET value = %s WHERE name = "%s"', array($_POST['step1']['tb_prefix'], $value, $config_name));
-        $result = queryDB('DELETE FROM %sconfig WHERE name = "%s_2"', array($_POST['step1']['tb_prefix'], $config_name));
+        queryDB('UPDATE %sconfig SET value = %s WHERE name = "%s"', array($_POST['step1']['tb_prefix'], $value, $config_name), TRUE);
+        queryDB('DELETE FROM %sconfig WHERE name = "%s_2"', array($_POST['step1']['tb_prefix'], $config_name), TRUE);
     }
 }
 
@@ -68,7 +67,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		}
 
 		if (!isset($errors)) {
-            $result = queryDB("INSERT INTO %sadmins VALUES ('%s, '%s', '', '%s', 'en', 1, NOW())", array($_POST['step1']['tb_prefix'], $_POST[admin_username], $_POST[admin_password], $_POST[admin_email]));
+            queryDB("INSERT INTO %sadmins VALUES ('%s', '%s', '', '%s', 'en', 1, NOW())", array($_POST['step1']['tb_prefix'], $_POST['admin_username'], $_POST['admin_password'], $_POST['admin_email']));
 
 			unset($_POST['admin_username']);
 			unset($_POST['admin_password']);
@@ -77,70 +76,70 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 	if (version_compare($_POST['step1']['old_version'], '1.5.2', '<')) {
 		// update config table
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('contact_email', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['contact_email'])));
+        queryDB("REPLACE INTO %sconfig VALUES ('contact_email', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['contact_email'])));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('email_notification', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['email_notification'] ? 1 : 0)));
+        queryDB("REPLACE INTO %sconfig VALUES ('email_notification', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['email_notification'] ? 1 : 0)));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('allow_instructor_requests', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['allow_instructor_requests'] ? 1 : 0)));
+        queryDB("REPLACE INTO %sconfig VALUES ('allow_instructor_requests', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['allow_instructor_requests'] ? 1 : 0)));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('auto_approve_instructors', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['auto_approve'] ? 1 : 0)));
+        queryDB("REPLACE INTO %sconfig VALUES ('auto_approve_instructors', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['auto_approve'] ? 1 : 0)));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('max_file_size', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['max_file_size']));
+        queryDB("REPLACE INTO %sconfig VALUES ('max_file_size', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['max_file_size']));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('max_course_size', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['max_course_size']));
+        queryDB("REPLACE INTO %sconfig VALUES ('max_course_size', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['max_course_size']));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('max_course_float', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['max_course_float']));
+        queryDB("REPLACE INTO %sconfig VALUES ('max_course_float', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['max_course_float']));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('illegal_extentions', '%s')", array($_POST['step1']['tb_prefix'], str_replace(',','|',urldecode($_POST['step1']['ill_ext']))));
+        queryDB("REPLACE INTO %sconfig VALUES ('illegal_extentions', '%s')", array($_POST['step1']['tb_prefix'], str_replace(',','|',urldecode($_POST['step1']['ill_ext']))));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('site_name', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['site_name'])));
+        queryDB("REPLACE INTO %sconfig VALUES ('site_name', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['site_name'])));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('home_url', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['home_url'])));
+        queryDB("REPLACE INTO %sconfig VALUES ('home_url', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['home_url'])));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('default_language', 'en')", array($_POST['step1']['tb_prefix']))
+        queryDB("REPLACE INTO %sconfig VALUES ('default_language', 'en')", array($_POST['step1']['tb_prefix']))
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('cache_dir', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['cache_dir'])));
+        queryDB("REPLACE INTO %sconfig VALUES ('cache_dir', '%s')", array($_POST['step1']['tb_prefix'], urldecode($_POST['step1']['cache_dir'])));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('enable_category_themes', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['theme_categories'] ? 1 : 0)));
+        queryDB("REPLACE INTO %sconfig VALUES ('enable_category_themes', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['theme_categories'] ? 1 : 0)));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('course_backups', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['course_backups']));
+        queryDB("REPLACE INTO %sconfig VALUES ('course_backups', '%d')", array($_POST['step1']['tb_prefix'], (int) $_POST['step1']['course_backups']));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('email_confirmation', '%d'", array($_POST['step1']['tb_prefix'], ($_POST['step1']['email_confirmation'] ? 1 : 0)));
+        queryDB("REPLACE INTO %sconfig VALUES ('email_confirmation', '%d'", array($_POST['step1']['tb_prefix'], ($_POST['step1']['email_confirmation'] ? 1 : 0)));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('master_list', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['master_list'] ? 1 : 0)));
+        queryDB("REPLACE INTO %sconfig VALUES ('master_list', '%d')", array($_POST['step1']['tb_prefix'], ($_POST['step1']['master_list'] ? 1 : 0)));
 
-        $result = queryDB("REPLACE INTO %sconfig VALUES ('enable_handbook_notes', '%d'", array($_POST['step1']['tb_prefix'], ($_POST['step1']['enable_handbook_notes'] ? 1 : 0)));
+        queryDB("REPLACE INTO %sconfig VALUES ('enable_handbook_notes', '%d'", array($_POST['step1']['tb_prefix'], ($_POST['step1']['enable_handbook_notes'] ? 1 : 0)));
 
 		// check for bits 8192 and 4096 and remove them if they're set.
-        $result = queryDB("UPDATE %scourse_enrollment SET `privileges` = `privileges` - 8192 WHERE `privileges` & 8192", array($_POST['step1']['tb_prefix']));
+        queryDB("UPDATE %scourse_enrollment SET `privileges` = `privileges` - 8192 WHERE `privileges` & 8192", array($_POST['step1']['tb_prefix']));
 
-        $result = queryDB("UPDATE %scourse_enrollment SET `privileges` = `privileges` - 4096 WHERE `privileges` & 4096", array($_POST['step1']['tb_prefix']));
+        queryDB("UPDATE %scourse_enrollment SET `privileges` = `privileges` - 4096 WHERE `privileges` & 4096", array($_POST['step1']['tb_prefix']));
 
 	}
 
 	if (version_compare($_POST['step1']['old_version'], '1.5.3', '<')) {
-        $result = queryDB("DELETE FROM %sgroups", array($_POST['step1']['tb_prefix']));
-        $result = queryDB("DELETE FROM %sgroups_members", array($_POST['step1']['tb_prefix']));
-        $result = queryDB("DELETE FROM %stests_groups", array($_POST['step1']['tb_prefix']));
+        queryDB("DELETE FROM %sgroups", array($_POST['step1']['tb_prefix']));
+        queryDB("DELETE FROM %sgroups_members", array($_POST['step1']['tb_prefix']));
+        queryDB("DELETE FROM %stests_groups", array($_POST['step1']['tb_prefix']));
 	}
 	if (version_compare($_POST['step1']['old_version'], '1.5.3.3', '<')) {
 		// set display_name_format to "login"
-        $result = queryDB("INSERT INTO %sconfig VALUES ('display_name_format', '0')", array($_POST['step1']['tb_prefix']));
+        queryDB("INSERT INTO %sconfig VALUES ('display_name_format', '0')", array($_POST['step1']['tb_prefix']));
 	}
 
 	if (version_compare($_POST['step1']['old_version'], '1.5.4', '<')) {
 		/* find all the multiple choice multiple answer questions and convert them to 
 		 * Multiple Answer which is number 7.
 		 */
-        $result = queryDB("UPDATE %stests_questions SET type=7 WHERE type=1 AND answer_0 + answer_1 + answer_2 + answer_3 + answer_4 + answer_5 + answer_6 + answer_7 + answer_8 + answer_9 > 1", array($_POST['step1']['tb_prefix']));
+        queryDB("UPDATE %stests_questions SET type=7 WHERE type=1 AND answer_0 + answer_1 + answer_2 + answer_3 + answer_4 + answer_5 + answer_6 + answer_7 + answer_8 + answer_9 > 1", array($_POST['step1']['tb_prefix']));
 
-        $row = queryDB("SELECT MAX(admin_privilege) AS max FROM %smodules", array($_POST['step1']['tb_prefix']));
+        $row = queryDB("SELECT MAX(admin_privilege) AS max FROM %smodules", array($_POST['step1']['tb_prefix']), TRUE);
 		$priv = $row['max'] * 2;
 
-        $result = queryDB("UPDATE %smodules SET `admin_privilege`=%d WHERE `dir_name`='_core/enrolment'", array($_POST['step1']['tb_prefix'], $priv));
+        queryDB("UPDATE %smodules SET `admin_privilege`=%d WHERE `dir_name`='_core/enrolment'", array($_POST['step1']['tb_prefix'], $priv));
 	}
 	if (version_compare($_POST['step1']['old_version'], '1.5.5', '<')) {
-        $result = queryDB("UPDATE %stests_results SET status=1, date_taken=date_taken, end_time=date_taken", array($_POST['step1']['tb_prefix']));
+        queryDB("UPDATE %stests_results SET status=1, date_taken=date_taken, end_time=date_taken", array($_POST['step1']['tb_prefix']));
 	}
 	if (version_compare($_POST['step1']['old_version'], '1.6.4', '<')) {
 		/* convert all content nodes to the IMS standard. (adds null nodes for all top pages) */
@@ -160,7 +159,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			}
 
 			if ($row['ordering'] != $ordering) {
-                $result = queryDB("UPDATE %scontent SET ordering=%d WHERE content_id=%d", array($_POST['step1']['tb_prefix'], $ordering, $row[content_id]));
+                queryDB("UPDATE %scontent SET ordering=%d WHERE content_id=%d", array($_POST['step1']['tb_prefix'], $ordering, $row[content_id]));
 			}
 
 			 echo "\n";
@@ -206,23 +205,23 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
 	/* fixed the typo of "fuild" theme that was introduced in 1.6.1 : */
 	if (version_compare($_POST['step1']['new_version'], '1.6.0', '>')) {
-        $result = queryDB("UPDATE %sthemes
-                   SET title='Fluid', dir_name='fluid'
-		         WHERE dir_name='fuild'", array($_POST['step1']['tb_prefix']));
+        queryDB("UPDATE %sthemes
+                 SET title='Fluid', dir_name='fluid'
+                 WHERE dir_name='fuild'", array($_POST['step1']['tb_prefix']));
 
-        $result = queryDB('UPDATE %sconfig
-		           SET value=replace(value, \':"fuild";\', \':"fluid";\')
-		         WHERE name=\'pref_defaults\'', array($_POST['step1']['tb_prefix']));
+        queryDB('UPDATE %sconfig
+                 SET value=replace(value, \':"fuild";\', \':"fluid";\')
+                 WHERE name=\'pref_defaults\'', array($_POST['step1']['tb_prefix']));
 
-		$result = queryDB('UPDATE %smembers
-		           SET preferences=replace(preferences, \':"fuild";\', \':"fluid";\')', array($_POST['step1']['tb_prefix']));
+        queryDB('UPDATE %smembers
+                 SET preferences=replace(preferences, \':"fuild";\', \':"fluid";\')', array($_POST['step1']['tb_prefix']));
 	}
 
 	/* Saved the atutor installation path into "config" table after 2.0.2 */
 	if (version_compare($_POST['step1']['new_version'], '2.0.2', '>')) {
 		// Calculate the ATutor installation path and save into database for the usage of
 		// session associated path @ include/vitals.inc.php
-        $result = queryDB("INSERT INTO %sconfig VALUES ('session_path', '%s')", array($_POST['step1']['tb_prefix'], get_atutor_installation_path(AT_UPGRADE_INCLUDE_PATH)))
+        queryDB("INSERT INTO %sconfig VALUES ('session_path', '%s')", array($_POST['step1']['tb_prefix'], get_atutor_installation_path(AT_UPGRADE_INCLUDE_PATH)))
 	}
 
 	if (version_compare($_POST['step1']['new_version'], '2.1', '>')) {
