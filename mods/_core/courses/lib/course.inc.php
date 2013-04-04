@@ -12,38 +12,6 @@
 // $Id$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-/**
- * To resize course_icon images
- * @param	uploaded image source path 
- * @param	uploaded image path to be saved as
- * @param	uploaded image's height
- * @param	uploaded image width
- * @param	save file with this height
- * @param	save file with this width
- * @param	file extension type
- * @return	true if successful, false otherwise
- */
-function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type) {
-	$thumbnail_img = imagecreatetruecolor($dest_w, $dest_h);
-	if ($type == 'gif') {
-		$source = imagecreatefromgif($src);
-	} else if ($type == 'jpg') {
-		$source = imagecreatefromjpeg($src);
-	} else {
-		$source = imagecreatefrompng($src);
-	}
-	
-	$result = imagecopyresampled($thumbnail_img, $source, 0, 0, 0, 0, $dest_w, $dest_h, $src_w, $src_h);
-
-	if ($type == 'gif') {
-		$result &= imagegif($thumbnail_img, $dest);
-	} else if ($type == 'jpg') {
-		$result &= imagejpeg($thumbnail_img, $dest, 75);
-	} else {
-		$result &= imagepng($thumbnail_img, $dest, 7);
-	}
-	return $result;
-}
 
 function add_update_course($course_data, $isadmin = FALSE) {
 	require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
