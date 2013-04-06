@@ -101,7 +101,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
         queryDB('REPLACE INTO %sconfig VALUES ("home_url", "%s")', array($tb_prefix, urldecode($step1['home_url'])));
 
-        queryDB('REPLACE INTO %sconfig VALUES ("default_language", "en")', array($tb_prefix))
+        queryDB('REPLACE INTO %sconfig VALUES ("default_language", "en")', array($tb_prefix));
 
         queryDB('REPLACE INTO %sconfig VALUES ("cache_dir", "%s")', array($tb_prefix, urldecode($step1['cache_dir'])));
 
@@ -123,9 +123,10 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 
 	if (version_compare($old_version, '1.5.3', '<')) {
-        queryDB('DELETE FROM %sgroups', array($tb_prefix));
-        queryDB('DELETE FROM %sgroups_members', array($tb_prefix));
-        queryDB('DELETE FROM %stests_groups', array($tb_prefix));
+        $table_name = array("groups","groups_members","tests_groups");
+        foreach($table_name as $tb_name) {
+            queryDB('DELETE FROM %s%s', array($tb_prefix, $tb_name));
+        }
 	}
 	if (version_compare($old_version, '1.5.3.3', '<')) {
 		// set display_name_format to "login"
@@ -226,7 +227,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	if (version_compare($new_version, '2.0.2', '>')) {
 		// Calculate the ATutor installation path and save into database for the usage of
 		// session associated path @ include/vitals.inc.php
-        queryDB('INSERT INTO %sconfig VALUES ("session_path", "%s")', array($tb_prefix, get_atutor_installation_path(AT_UPGRADE_INCLUDE_PATH)))
+        queryDB('INSERT INTO %sconfig VALUES ("session_path", "%s")', array($tb_prefix, get_atutor_installation_path(AT_UPGRADE_INCLUDE_PATH)));
 	}
 
 	if (version_compare($new_version, '2.1', '>')) {
