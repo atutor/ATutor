@@ -14,6 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/ModuleUtility.class.php');
 admin_authenticate(AT_ADMIN_PRIV_MODULES);
 
 if (isset($_POST['cancel'])) {
@@ -22,140 +23,15 @@ if (isset($_POST['cancel'])) {
 	exit;
 }
 
-if (isset($_POST['up'])) {
-	$up = key($_POST['up']);
-	$_new_modules  = array();
-	if (isset($_POST['main'])) {
-		foreach ($_POST['main'] as $m) {
-			if ($m == $up) {
-				$last_m = array_pop($_new_modules);
-				$_new_modules[] = $m;
-				$_new_modules[] = $last_m;
-			} else {
-				$_new_modules[] = $m;
-			}
-		}
+ModuleUtility::set_default_tools($_POST['up'], $_POST['down'], $_POST['main'], $_POST['home'], $_POST['submit']);
+$main_defaults[] = ModuleUtility::get_main_defaults();
+$home_defaults[] = ModuleUtility::get_home_defaults();
 
-		$_POST['main'] = $_new_modules;
-	}
-	if (isset($_POST['home'])) {
-		$_new_modules  = array();
-		foreach ($_POST['home'] as $m) {
-			if ($m == $up) {
-				$last_m = array_pop($_new_modules);
-				$_new_modules[] = $m;
-				$_new_modules[] = $last_m;
-			} else {
-				$_new_modules[] = $m;
-			}
-		}
-		$_POST['home'] = $_new_modules;
-	}
-
-	$_POST['submit'] = TRUE;
-} else if (isset($_POST['down'])) {
-	$_new_modules  = array();
-
-	$down = key($_POST['down']);
-
-	if (isset($_POST['main'])) {
-		foreach ($_POST['main'] as $m) {
-			if ($m == $down) {
-				$found = TRUE;
-				continue;
-			}
-			$_new_modules[] = $m;
-			if ($found) {
-				$_new_modules[] = $down;
-				$found = FALSE;
-			}
-		}
-
-		$_POST['main'] = $_new_modules;
-	}
-
-	if (isset($_POST['home'])) {
-		$_new_modules  = array();
-		foreach ($_POST['home'] as $m) {
-			if ($m == $down) {
-				$found = TRUE;
-				continue;
-			}
-			$_new_modules[] = $m;
-			if ($found) {
-				$_new_modules[] = $down;
-				$found = FALSE;
-			}
-		}
-
-		$_POST['home'] = $_new_modules;
-	}
-
-	$_POST['submit'] = TRUE;
-}
-
-if (isset($_POST['submit'])) {
-	if (isset($_POST['main'])) {
-		$_POST['main'] = array_unique($_POST['main']);
-		$_POST['main'] = array_filter($_POST['main']); // remove empties
-		$main_defaults = implode('|', $_POST['main']);
-
-	} else {
-		$main_defaults = '';
-	}
-
-	if (isset($_POST['home'])) {
-		$_POST['home'] = array_unique($_POST['home']);
-		$_POST['home'] = array_filter($_POST['home']); // remove empties
-		$home_defaults = implode('|', $_POST['home']);
-	} else {
-		$home_defaults = '';
-	}
-
-	if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) < 256)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults')";
-		$result = mysql_query($sql, $db);
-
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults_2'";
-	} else if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) > 255)) {
-		// we don't have to worry about chopping in the middle since they'll be combined anyway
-		$main_defaults_1 = substr($main_defaults, 0, 255);
-		$main_defaults_2 = substr($main_defaults, 255);
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults_1')";
-		$result = mysql_query($sql, $db);
-
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults_2', '$main_defaults_2')";
-	} else if ($_config_defaults['main_defaults'] == $main_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults' OR name='name_defaults_2'";
-	}
-	$result = mysql_query($sql, $db);
-
-
-	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) < 256)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults')";
-		$result = mysql_query($sql, $db);
-
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults_2'";
-
-	} else 	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) > 255)) {
-		// we don't have to worry about chopping in the middle since they'll be combined anyway
-		$home_defaults_1 = substr($home_defaults, 0, 255);
-		$home_defaults_2 = substr($home_defaults, 255);
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults_1')";
-		$result = mysql_query($sql, $db);
-
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults_2', '$home_defaults_2')";
-
-	} else if ($_config_defaults['home_defaults'] == $home_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults' OR name='home_defaults_2'";
-	}
-	$result = mysql_query($sql, $db);
-
+if(isset($_POST['submit'])) {
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
-
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 

@@ -12,17 +12,34 @@
 
 if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; }
 
+function concat_config_values($config_name, $tb_prefix) {
+    $queryParams = array($tb_prefix, $config_name);
+    $row = queryDB('SELECT value FROM %sconfig WHERE name = "%s"', $queryParams, TRUE);
+    $value = $row['value'];
+    $row = queryDB('SELECT value FROM %sconfig WHERE name = "%s_2"', $queryParams, TRUE);
+    if (!empty($row)) {
+        $value2 = $row['value'];
+        $value  = $value.$value2;
+        queryDB('UPDATE %sconfig SET value = %s WHERE name = "%s"', array($tb_prefix, $value, $config_name), TRUE);
+        queryDB('DELETE FROM %sconfig WHERE name = "%s_2"', $queryParams, TRUE);
+    }
+}
+
 $_POST['db_login']    = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
+$step1 = $_POST['step1'];
+$old_version = $step1['old_version'];
+$new_version = $step1['new_version'];
+$tb_prefix = $step1['tb_prefix'];
 /* Destory session */
 session_unset();
 $_SESSION= array();
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
-	$db = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
-	@mysql_select_db($_POST['step1']['db_name'], $db);
+	$db = @mysql_connect($step1['db_host'] . ':' . $step1['db_port'], $step1['db_login'], urldecode($step1['db_password']));
+	@mysql_select_db($step1['db_name'], $db);
 
-	if (version_compare($_POST['step1']['old_version'], '1.5', '<')) {
+	if (version_compare($old_version, '1.5', '<')) {
 		$_POST['admin_username'] = trim($_POST['admin_username']);
 		$_POST['admin_password'] = trim($_POST['admin_password']);
 		$_POST['admin_email']    = trim($_POST['admin_email']);
@@ -55,118 +72,88 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 		}
 
 		if (!isset($errors)) {
-			$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."admins VALUES ('$_POST[admin_username]', '$_POST[admin_password]', '', '$_POST[admin_email]', 'en', 1, NOW())";
-			$result= mysql_query($sql, $db);
+            queryDB('INSERT INTO %sadmins VALUES ("%s", "%s", "", "%s", "en", 1, NOW())', array($tb_prefix, $_POST['admin_username'], $_POST['admin_password'], $_POST['admin_email']));
 
 			unset($_POST['admin_username']);
 			unset($_POST['admin_password']);
 			unset($_POST['admin_email']);
 		}
 	}
-	if (version_compare($_POST['step1']['old_version'], '1.5.2', '<')) {
+	if (version_compare($old_version, '1.5.2', '<')) {
 		// update config table
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('contact_email', '".urldecode($_POST['step1']['contact_email'])."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("contact_email", "%s")', array($tb_prefix, urldecode($step1['contact_email'])));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('email_notification', '".($_POST['step1']['email_notification'] ? 1 : 0)."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("email_notification", "%d")', array($tb_prefix, ($step1['email_notification'] ? 1 : 0)));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('allow_instructor_requests', '".($_POST['step1']['allow_instructor_requests'] ? 1 : 0)."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("allow_instructor_requests", "%d")', array($tb_prefix, ($step1['allow_instructor_requests'] ? 1 : 0)));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('auto_approve_instructors', '".($_POST['step1']['auto_approve'] ? 1 : 0)."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("auto_approve_instructors", "%d")', array($tb_prefix, ($step1['auto_approve'] ? 1 : 0)));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('max_file_size', '".(int) $_POST['step1']['max_file_size']."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("max_file_size", "%d")', array($tb_prefix, (int) $step1['max_file_size']));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('max_course_size', '".(int) $_POST['step1']['max_course_size']."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("max_course_size", "%d")', array($tb_prefix, (int) $step1['max_course_size']));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('max_course_float', '".(int) $_POST['step1']['max_course_float']."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("max_course_float", "%d")', array($tb_prefix, (int) $step1['max_course_float']));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('illegal_extentions', '".str_replace(',','|',urldecode($_POST['step1']['ill_ext']))."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("illegal_extentions", "%s")', array($tb_prefix, str_replace(',','|',urldecode($step1['ill_ext']))));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('site_name', '".urldecode($_POST['step1']['site_name'])."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("site_name", "%s")', array($tb_prefix, urldecode($step1['site_name'])));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('home_url', '".urldecode($_POST['step1']['home_url'])."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("home_url", "%s")', array($tb_prefix, urldecode($step1['home_url'])));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('default_language', 'en')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("default_language", "en")', array($tb_prefix));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('cache_dir', '".urldecode($_POST['step1']['cache_dir'])."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("cache_dir", "%s")', array($tb_prefix, urldecode($step1['cache_dir'])));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('enable_category_themes', '".($_POST['step1']['theme_categories'] ? 1 : 0)."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("enable_category_themes", "%d")', array($tb_prefix, ($step1['theme_categories'] ? 1 : 0)));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('course_backups', '". (int) $_POST['step1']['course_backups']."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("course_backups", "%d")', array($tb_prefix, (int) $step1['course_backups']));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('email_confirmation', '".($_POST['step1']['email_confirmation'] ? 1 : 0)."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("email_confirmation", "%d")', array($tb_prefix, ($step1['email_confirmation'] ? 1 : 0)));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('master_list', '".($_POST['step1']['master_list'] ? 1 : 0)."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("master_list", "%d")', array($tb_prefix, ($step1['master_list'] ? 1 : 0)));
 
-		$sql = "REPLACE INTO ".$_POST['step1']['tb_prefix']."config VALUES ('enable_handbook_notes', '".($_POST['step1']['enable_handbook_notes'] ? 1 : 0)."')";
-		mysql_query($sql, $db);
+        queryDB('REPLACE INTO %sconfig VALUES ("enable_handbook_notes", "%d")', array($tb_prefix, ($step1['enable_handbook_notes'] ? 1 : 0)));
 
 		// check for bits 8192 and 4096 and remove them if they're set.
-		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."course_enrollment SET `privileges` = `privileges` - 8192 WHERE `privileges` & 8192";
-		mysql_query($sql, $db);
+        queryDB('UPDATE %scourse_enrollment SET `privileges` = `privileges` - 8192 WHERE `privileges` & 8192', array($tb_prefix));
 
-		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."course_enrollment SET `privileges` = `privileges` - 4096 WHERE `privileges` & 4096";
-		mysql_query($sql, $db);
+        queryDB('UPDATE %scourse_enrollment SET `privileges` = `privileges` - 4096 WHERE `privileges` & 4096', array($tb_prefix));
+
 	}
 
-	if (version_compare($_POST['step1']['old_version'], '1.5.3', '<')) {
-		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."groups";
-		mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."groups_members";
-		mysql_query($sql, $db);
-
-		$sql = "DELETE FROM ".$_POST['step1']['tb_prefix']."tests_groups";
-		mysql_query($sql, $db);
+	if (version_compare($old_version, '1.5.3', '<')) {
+        $table_name = array("groups","groups_members","tests_groups");
+        foreach($table_name as $tb_name) {
+            queryDB('DELETE FROM %s%s', array($tb_prefix, $tb_name));
+        }
 	}
-	if (version_compare($_POST['step1']['old_version'], '1.5.3.3', '<')) {
+	if (version_compare($old_version, '1.5.3.3', '<')) {
 		// set display_name_format to "login"
-		$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."config VALUES ('display_name_format', '0')";
-		mysql_query($sql, $db);
+        queryDB('INSERT INTO %sconfig VALUES ("display_name_format", "0")', array($tb_prefix));
 	}
 
-	if (version_compare($_POST['step1']['old_version'], '1.5.4', '<')) {
+	if (version_compare($old_version, '1.5.4', '<')) {
 		/* find all the multiple choice multiple answer questions and convert them to 
 		 * Multiple Answer which is number 7.
 		 */
-		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."tests_questions SET type=7 WHERE type=1 AND answer_0 + answer_1 + answer_2 + answer_3 + answer_4 + answer_5 + answer_6 + answer_7 + answer_8 + answer_9 > 1";
-		mysql_query($sql, $db);
+        queryDB('UPDATE %stests_questions SET type=7 WHERE type=1 AND answer_0 + answer_1 + answer_2 + answer_3 + answer_4 + answer_5 + answer_6 + answer_7 + answer_8 + answer_9 > 1', array($tb_prefix));
 
-		$sql = "SELECT MAX(admin_privilege) AS max FROM ".$_POST['step1']['tb_prefix']."modules";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+        $row = queryDB('SELECT MAX(admin_privilege) AS max FROM %smodules', array($tb_prefix), TRUE);
 		$priv = $row['max'] * 2;
 
-		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."modules SET `admin_privilege`=$priv WHERE `dir_name`='_core/enrolment'";
-		mysql_query($sql, $db);
+        queryDB('UPDATE %smodules SET `admin_privilege`=%d WHERE `dir_name`="_core/enrolment"', array($tb_prefix, $priv));
 	}
-	if (version_compare($_POST['step1']['old_version'], '1.5.5', '<')) {
-		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."tests_results SET status=1, date_taken=date_taken, end_time=date_taken";
-		mysql_query($sql, $db);
+	if (version_compare($old_version, '1.5.5', '<')) {
+        queryDB('UPDATE %stests_results SET status=1, date_taken=date_taken, end_time=date_taken', array($tb_prefix));
 	}
-	if (version_compare($_POST['step1']['old_version'], '1.6.4', '<')) {
+	if (version_compare($old_version, '1.6.4', '<')) {
 		/* convert all content nodes to the IMS standard. (adds null nodes for all top pages) */
 		include('ustep_content_conversion.php');
 
 		// fix all the wrong ordering
-		$sql    = "SELECT content_id, content_parent_id, ordering, course_id FROM ".$_POST['step1']['tb_prefix']."content ORDER BY course_id, content_parent_id, ordering";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+        $result = queryDB('SELECT content_id, content_parent_id, ordering, course_id FROM %scontent ORDER BY course_id, content_parent_id, ordering', array($tb_prefix));
+        foreach ($result as $row) {
 			if ($current_course_id != $row['course_id']) {
 				$current_course_id = $row['course_id'];
 				unset($current_parent_id);
@@ -176,28 +163,24 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 				$current_parent_id = $row['content_parent_id'];
 				$ordering = 1;
 			}
-		
+
 			if ($row['ordering'] != $ordering) {
-				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."content SET ordering=$ordering WHERE content_id=$row[content_id]";
-				mysql_query($sql, $db);
+                queryDB('UPDATE %scontent SET ordering=%d WHERE content_id=%d', array($tb_prefix, $ordering, $row[content_id]));
 			}
-		
+
 			 echo "\n";
 		
 			$ordering++;
 		}
 		
 		/* Convert db to a tree */
-		$sql = 'SELECT distinct course_id FROM '.$_POST['step1']['tb_prefix'].'content';
-		$result_course = mysql_query($sql, $db);
-		while ($row_course = mysql_fetch_assoc($result_course)){
-			
-			$sql = 'SELECT * FROM '.$_POST['step1']['tb_prefix'].'content WHERE course_id='.$row_course['course_id'];
-			$result = mysql_query($sql, $db);
+        $result_course = queryDB('SELECT distinct course_id FROM %scontent', array($tb_prefix));
+        foreach ($result_course as $row_course) {
+            $result = queryDB('SELECT * FROM %scontent WHERE course_id=%d', array($tb_prefix, $row_course['course_id']));
 			$content_array = array(); 
-	
-			while ($row = mysql_fetch_assoc($result)){
-				$content_array[$row['content_parent_id']][$row['ordering']] = $row['content_id'];
+
+            foreach ($result as $row){
+                $content_array[$row['content_parent_id']][$row['ordering']] = $row['content_id'];
 			}
 
 			$tree = buildTree($content_array[0], $content_array);
@@ -205,9 +188,8 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 			/* Restructure the tree */
 			$tree = rebuild($tree);
 
-			
 			/* Update the Db based on this new tree */
-			reconstruct($tree, '', 0, $_POST['step1']['tb_prefix']);
+			reconstruct($tree, '', 0, $tb_prefix);
 		}
 	}
 
@@ -215,8 +197,8 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	/* for each module in the modules table check if that module still exists in the mod directory. */
 	/* if that module does not exist then check the old directory and prompt to have it copied */
 	/* or delete it from the modules table. or maybe disable it instead? */
-	if (version_compare($_POST['step1']['old_version'], '1.5.1', '>')) {
-		define('TABLE_PREFIX', $_POST['step1']['tb_prefix']);
+	if (version_compare($old_version, '1.5.1', '>')) {
+		define('TABLE_PREFIX', $tb_prefix);
 		require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 		$moduleFactory = new ModuleFactory(FALSE);
 		$module_list =& $moduleFactory->getModules(AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED);
@@ -228,28 +210,30 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	}
 
 	/* fixed the typo of "fuild" theme that was introduced in 1.6.1 : */
-	if (version_compare($_POST['step1']['new_version'], '1.6.0', '>')) {
-		$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes 
-		           SET title='Fluid', dir_name='fluid'
-		         WHERE dir_name='fuild'";
-		mysql_query($sql, $db);
-		
-		$sql = 'UPDATE '.$_POST['step1']['tb_prefix'].'config 
-		           SET value=replace(value, \':"fuild";\', \':"fluid";\') 
-		         WHERE name=\'pref_defaults\'';
-		mysql_query($sql, $db);
+	if (version_compare($new_version, '1.6.0', '>')) {
+        queryDB('UPDATE %sthemes
+                 SET title="Fluid", dir_name="fluid"
+                 WHERE dir_name="fuild"', array($tb_prefix));
 
-		$sql = 'UPDATE '.$_POST['step1']['tb_prefix'].'members 
-		           SET preferences=replace(preferences, \':"fuild";\', \':"fluid";\')';
-		mysql_query($sql, $db);
+        queryDB('UPDATE %sconfig
+                 SET value=replace(value, \':"fuild";\', \':"fluid";\')
+                 WHERE name=\'pref_defaults\'', array($tb_prefix));
+
+        queryDB('UPDATE %smembers
+                 SET preferences=replace(preferences, \':"fuild";\', \':"fluid";\')', array($tb_prefix));
 	}
 
 	/* Saved the atutor installation path into "config" table after 2.0.2 */
-	if (version_compare($_POST['step1']['new_version'], '2.0.2', '>')) {
+	if (version_compare($new_version, '2.0.2', '>')) {
 		// Calculate the ATutor installation path and save into database for the usage of
 		// session associated path @ include/vitals.inc.php
-		$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."config VALUES ('session_path', '".get_atutor_installation_path(AT_UPGRADE_INCLUDE_PATH)."')";
-		mysql_query($sql ,$db);
+        queryDB('INSERT INTO %sconfig VALUES ("session_path", "%s")', array($tb_prefix, get_atutor_installation_path(AT_UPGRADE_INCLUDE_PATH)));
+	}
+
+	if (version_compare($new_version, '2.1', '>')) {
+		concat_config_values('main_defaults', $tb_prefix);
+
+		concat_config_values('home_defaults', $tb_prefix);
 	}
 
 	if (!isset($errors)) {
