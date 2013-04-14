@@ -90,7 +90,12 @@ function checkPhoto($file){
 	if ($extension == 'jpeg') {
 		$extension = 'jpg';
 	}
-	if (!in_array($extension, $supported_images)) {
+    if ($extension == '') {
+        $temp = 'You did not select a file. Please select one because empty';
+        $msg->addError(array('FILE_ILLEGAL',$temp));
+        return 'empty';
+    }
+	else if (!in_array($extension, $supported_images)) {
 		$msg->addError(array('FILE_ILLEGAL', $extension));
 		return false;
 	} else if ($image_attributes[2] > IMAGETYPE_PNG) {
