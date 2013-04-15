@@ -83,17 +83,21 @@ function checkPhoto($file){
 	// check if this is a supported file type
 	$filename   = $stripslashes($file['name']);
 	$path_parts = pathinfo($filename);
-	$extension  = strtolower($path_parts['extension']);
+	
+	//to check the real extension , mime_content_type is required.Easily determine real file extension.
+	$extension  = mime_content_type($file['tmp_name']);
+	$extension = str_replace("image/", "", $extension);
+	$file['name'] = $path_parts['basename'].".".$extension;
 	$image_attributes = getimagesize($file['tmp_name']);
-
+	
 	//check Extension
 	if ($extension == 'jpeg') {
 		$extension = 'jpg';
 	}
-    if ($extension == ''){
+        if ($extension == ''){
         $temp = "You did not select a file. Please select one because empty";
         $msg->addError(array('FILE_ILLEGAL', $temp));
-        return 'empty';
+        return 'null';
 	} else if (!in_array($extension, $supported_images)) {
 		$msg->addError(array('FILE_ILLEGAL', $extension));
 		return false;
