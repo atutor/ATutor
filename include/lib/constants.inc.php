@@ -352,6 +352,8 @@ $_field_formatting['faqs.topic']                 = AT_FORMAT_NONE | AT_FORMAT_QU
 $_field_formatting['faqs.question']              = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 $_field_formatting['faqs.answer']                = AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 
+$_field_formatting['files_comments.comment'] = AT_FORMAT_ALL & ~AT_FORMAT_HTML;
+
 $_field_formatting['forums.title']				= AT_FORMAT_NONE | AT_FORMAT_QUOTES;
 $_field_formatting['forums.description']		= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
 

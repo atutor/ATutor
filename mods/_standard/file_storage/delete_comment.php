@@ -57,7 +57,13 @@ $hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id, 'file
 $sql = "SELECT comment FROM ".TABLE_PREFIX."files_comments WHERE comment_id = $id";
 $result = mysql_query($sql, $db);
 $row = mysql_fetch_assoc($result);
-$comment_to_print = "<li>".$row['comment']."</li>";
+if ($row) {
+    $comment_to_print = "<li>".AT_print($row['comment'], 'files_comments.comment')."</li>";
+} else {
+    $msg->addError('COMMENT_NOT_FOUND');
+    header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
+    exit;
+}
 $msg->addConfirm(array('DELETE',$comment_to_print), $hidden_vars);
 $msg->printConfirm();
 
