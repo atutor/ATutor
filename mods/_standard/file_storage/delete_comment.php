@@ -60,7 +60,7 @@ $row = mysql_fetch_assoc($result);
 if ($row) {
     $comment_to_print = "<li>".AT_print($row['comment'], 'files_comments.comment')."</li>";
 } else {
-    $msg->addError('COMMENT_NOT_FOUND');
+    $msg->addError('PAGE_NOT_FOUND');
     header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
     exit;
 }
