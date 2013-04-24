@@ -1,0 +1,102 @@
+<?php
+/************************************************************************/
+/* ATutor																*/
+/************************************************************************/
+/* Copyright (c) 2002-2010                                              */
+/* Inclusive Design Institute                                           */
+/* http://atutor.ca                                                     */
+/* This program is free software. You can redistribute it and/or        */
+/* modify it under the terms of the GNU General Public License          */
+/* as published by the Free Software Foundation.                        */
+/************************************************************************/
+
+if (!defined('AT_INCLUDE_PATH')) { exit; }
+
+global $moduleFactory, $_pages, $_top_level_pages;
+$record_limit = 3;	// Number of sublinks to display for this module on course home page -> detail view
+
+$group_list = implode(',', $_SESSION['groups']);
+$sql = "SELECT group_id, title, description, modules FROM %sgroups WHERE group_id IN (%s) ORDER BY title limit %d";
+$sqlParams = array(TABLE_PREFIX, $group_list, $record_limit);
+$result = queryDB($sql, $sqlParams);
+
+?>
+<script>
+    function construct_group_dialog(title, id)
+    {
+        $("body").append("<div title = '"+title+" -> Latest Additions' id = '"+id+"'></div>");
+    }
+    
+    function construct_module_ol(group_id, module)
+    {
+        $("#"+group_id).append('<h4 class = "page-title">'+module+'</h4>');
+    }
+    
+    function popup_open(group_id)
+    {
+        $("#group_"+group_id).dialog("open");
+    }
+    
+    $(document).ready(function()
+    {
+        <?php
+        foreach($result as $row)
+        {
+        ?>
+            $("#group_<?php echo $row['group_id'];?>").dialog({
+                autoOpen: false,
+                width: 400,
+                modal: true
+            });
+        <?php 
+        }
+        ?>
+    });
+
+</script>
+
+<?php
+
+if (!$_SESSION['groups']) {
+	return 0;
+}
+
+include ('group_functions.inc.php');
+if (count($result) > 0) {
+	foreach($result as $row) {
+                $add = 0;
+                $modules = explode('|', $row['modules']);
+                
+		$str = '<a href="#" onclick="popup_open(\''.$row[group_id].'\'); return false;">'.
+		          validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
+                asort($modules);
+                
+                if ($modules) {
+                    echo "<script>construct_group_dialog('".AT_print($row['title'], 'groups.title')."','group_".$row['group_id']."');</script>";
+                    $str.= '<ul class="child-top-tool">';
+                    foreach ($modules as $module_name) {
+                        $fn = basename($module_name) . '_get_group_url';
+                        $module = $moduleFactory->getModule($module_name);
+                        
+                        if ($module->isEnabled() && function_exists($fn)) {
+                                $add += get_latest_additions($module, $row['group_id']);
+				$str.= '<li class="child-tool"><a href="'.$_base_path. url_rewrite($fn($row['group_id'])) .'" >'
+                                        ._AT($_pages[$module->getGroupTool()]['title_var']).'</a></li>';
+			}
+                    }
+                    $str.= '</ul>';
+                    if(!$add) {
+                        echo "<script>$('#group_".$row[group_id]."').append('No new additions!');</script>";
+                    }
+                }
+                $list[] = $str;
+	}
+	return $list;
+	
+} else {
+	return 0;
+}
+
+//url_rewrite('mods/_core/groups/groups.php', AT_PRETTY_URL_IS_HEADER).'"'.
+		          //(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') 
+?>

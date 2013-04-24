@@ -4,6 +4,9 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 
 define('AT_PRIV_GROUPS', $this->getPrivilege());
 
+//modules sub-content
+$this->_list['groups'] = array('title_var'=>'groups','file'=>'mods/_core/groups/sublinks.php');
+
 $_student_tool = 'mods/_core/groups/groups.php';
 
 $this->_pages['mods/_core/groups/index.php']['title_var'] = 'groups';
