@@ -54,9 +54,8 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id, 'file_id' => $_GET['file_id']);
-$sql = "SELECT comment FROM ".TABLE_PREFIX."files_comments WHERE comment_id = $id";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql_query = "SELECT comment FROM %sfiles_comments WHERE comment_id = %d";
+$row = queryDB($sql_query, array(TABLE_PREFIX, $id), true, true);
 if ($row) {
     $comment_to_print = "<li>".AT_print($row['comment'], 'files_comments.comment')."</li>";
 } else {
