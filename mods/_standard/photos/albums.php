@@ -70,11 +70,7 @@ if(isset($_POST['upload'])){
 	$_FILES['photo'] = checkPhoto($_FILES['photo']);
 	if ($_FILES['photo']===false || (!$action_permission && $info['type_id']!=AT_PA_TYPE_COURSE_ALBUM)){
 		//owner and course members can upload pictures.  Not edit though. 
-		echo json_encode(array(
-						'aid'=>$id,
-						'pid'=>-1,
-						'msg'=>htmlentities($msg->printErrors()),
-						'error'=>true));
+		header('Location: ../'.$_SESSION['redirect_to']['profile_pic']);
 		exit;
 	}
 
