@@ -54,7 +54,6 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id, 'file_id' => $_GET['file_id']);
-
 $row = queryDB("SELECT comment FROM %sfiles_comments WHERE comment_id = %d", array(TABLE_PREFIX, $id), true);
 if ($row) {
     $comment_to_print = "<li>".AT_print($row['comment'], 'files_comments.comment')."</li>";
