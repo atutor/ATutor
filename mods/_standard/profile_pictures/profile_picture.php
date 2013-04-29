@@ -17,6 +17,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 $_user_location	= 'users';
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+$_SESSION['redirect_to']['profile_pic'] = 'profile_pictures/profile_picture.php'; // redirect back here after upload
 if (in_array('mods/_standard/photos/index.php', $_modules)){
 	require(AT_PA_INCLUDE.'profile_album.inc.php');
 } else {
