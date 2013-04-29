@@ -112,7 +112,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	</fieldset>
 
 	<fieldset class="group_form" style="width:45%;float:left;clear:right;height:18em;min-width:18em;"><legend class="group_form"><?php echo _AT('import_question'); ?></legend>
-		<form method="post" action="<?php echo 'mods/_standard/tests/question_import.php'; ?>" enctype="multipart/form-data" >	<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
+		<form method="post" action="<?php echo $_base_href. 'mods/_standard/tests/question_import.php'; ?>" enctype="multipart/form-data" >	<label for="to_file"><?php echo _AT('upload_question'); ?></label><br />
 			<input type="file" name="file" id="to_file" />
 			<div class="row buttons">
 			<input type="submit" name="submit_import" value="<?php echo _AT('import'); ?>" />
