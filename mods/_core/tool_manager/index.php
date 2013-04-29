@@ -16,22 +16,25 @@ if ((isset($_REQUEST['popup']) && $_REQUEST['popup']) &&
     $framed = FALSE;
 }
 
-$_REQUEST['cid'] = intval($_REQUEST['cid']);	//uses request 'cause after 'saved', the cid will become $_GET.
+$_REQUEST['cid'] = intval($_REQUEST['cid']);    //uses request 'cause after 'saved', the cid will become $_GET.
 
 $cid = intval($_REQUEST['cid']);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$_REQUEST['tool_file'] = str_replace('..', '', $_REQUEST['tool_file']);
+$main_links = get_main_navigation($current_page);  // get_main_navigation() is defined in menu_pages.php which is included in header.inc.php
 
+foreach ($main_links as $main) {
+    if ($main['title'] == $_REQUEST['tool_for'] && $main['tool_file'] != '') {
+        $tool_file = AT_INCLUDE_PATH . '../' . $main['tool_file'];
+        break;
+    }
+}
 
-//$tool_file= AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];	// viene prelevato il path del file necessario per prelevare le informazioni relative ai sottocontenuti
+if ($tool_file) {
+    $tool_list = require($tool_file);
+}
 
-$_REQUEST['tool_file'] = str_replace('..', '', $_REQUEST['tool_file']);
-$tool_file= AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];	// viene prelevato il path del file necessario per prelevare le informazioni relative ai sottocontenuti
-
-
-$tool_list = require($tool_file);                            //si richiede la lista ei contenuti per lo strumento. i contenuti trovati potranno essere inseriti all'interno del materiale didattico come collegamento.
 ?>
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('tools_manager'); ?></legend>
@@ -52,7 +55,7 @@ if(isset($tool_list)) {?>
         </thead>
         <tbody>
             <?php foreach($tool_list as $tool) {
-		            $i = $i+1;
+                    $i = $i+1;
                     $result = mysql_query($sql, $db);
                     while($row = mysql_fetch_assoc($result)){
                         if($tool['id'] == $row['forum_id']){
@@ -71,7 +74,7 @@ if(isset($tool_list)) {?>
                 <td valign="top"><label for="<?php echo $i; ?>"><?php echo $tool['title']; ?></label></td>
             </tr>
                 <?php }
-		$i=0;?>
+        $i=0;?>
         </tbody>
     </table>
     <br /><br /><br />

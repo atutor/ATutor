@@ -225,7 +225,7 @@ ATutor.mods.editor = ATutor.mods.editor || {};
 
     //click function to launch tool window
     var launchTool = function () {
-        window.open(ATutor.base_href + 'mods/_core/tool_manager/index.php?framed=1&popup=1&tool_file=' + ATutor.mods.editor.tool_file + '&cid=' + ATutor.mods.editor.content_id, 'newWin2', 'menubar=0,scrollbars=1,resizable=1,width=600,height=400');
+        window.open(ATutor.base_href + 'mods/_core/tool_manager/index.php?framed=1&popup=1&tool_for=' + ATutor.mods.editor.tool_for + '&cid=' + ATutor.mods.editor.content_id, 'newWin2', 'menubar=0,scrollbars=1,resizable=1,width=600,height=400');
         return false;
     };
 

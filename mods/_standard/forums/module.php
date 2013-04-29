@@ -15,7 +15,7 @@ $this->_stacks['posts'] = array('title_var'=>'posts','file'=>AT_INCLUDE_PATH.'..
 $this->_list['forums'] = array('title_var'=>'forums','file'=>'mods/_standard/forums/sublinks.php');
 
 //tool manager
-$this->_tool['forums'] = array('title_var'=>'forums','file'=>'mods/_core/tool_manager/forums_tool.php','table'=>'content_forums_assoc');
+$this->_tool['forums'] = array('title_var'=>'forums','file'=>'mods/_core/tool_manager/forums_tool.php');
 
 //instructor pages
 $this->_pages['mods/_standard/forums/index.php']['title_var'] = 'forums';
@@ -23,14 +23,14 @@ $this->_pages['mods/_standard/forums/index.php']['parent']    = 'tools/index.php
 $this->_pages['mods/_standard/forums/index.php']['guide']     = 'instructor/?p=forums.php';
 $this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_standard/forums/add_forum.php');
 
-	$this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
-	$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/index.php';
+$this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
+$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/index.php';
 
-	$this->_pages['mods/_standard/forums/delete_forum.php']['title_var']  = 'delete_forum';
-	$this->_pages['mods/_standard/forums/delete_forum.php']['parent'] = 'mods/_standard/forums/forums/index.php';
+$this->_pages['mods/_standard/forums/delete_forum.php']['title_var']  = 'delete_forum';
+$this->_pages['mods/_standard/forums/delete_forum.php']['parent'] = 'mods/_standard/forums/forums/index.php';
 
-	$this->_pages['mods/_standard/forums/edit_forum.php']['title_var']  = 'edit_forum';
-	$this->_pages['mods/_standard/forums/edit_forum.php']['parent'] = 'mods/_standard/forums/index.php';
+$this->_pages['mods/_standard/forums/edit_forum.php']['title_var']  = 'edit_forum';
+$this->_pages['mods/_standard/forums/edit_forum.php']['parent'] = 'mods/_standard/forums/index.php';
 
 //student pages
 $this->_pages['mods/_standard/forums/forum/list.php']['title_var']  = 'forums';

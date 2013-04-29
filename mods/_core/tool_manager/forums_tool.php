@@ -1,9 +1,8 @@
 <?php
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
+
 global $db;
-
-
 
 if(isset($_POST['save'])) {
     if(isset($associated_forum))
@@ -35,7 +34,8 @@ if(isset($_POST['save'])) {
     <script type="text/javascript">
         javascript:window.close();
     </script>
-<?php }
+<?php
+}
 
 $sql = "SELECT f.* FROM ".TABLE_PREFIX."forums f INNER JOIN ".TABLE_PREFIX."forums_courses fc USING (forum_id) WHERE fc.course_id = $_SESSION[course_id]";
 $result = mysql_query($sql, $db);

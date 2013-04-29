@@ -282,7 +282,7 @@ class Module {
 			//tool manager (content editing)
 			if(isset($this->_tool)) {
 				$_tool = array_merge((array)$_tool, $this->_tool);
-                        }
+			}
 
 			//student tools
 			if (isset($_student_tool)) {
@@ -294,7 +294,7 @@ class Module {
 			if (isset($_group_tool)) {
 				$this->_group_tool =& $_group_tool;
 			}
-		}					
+		}
 	}
 
 	// private

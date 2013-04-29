@@ -355,8 +355,8 @@ function get_main_navigation($current_page) {
             }
         }
     } else if (isset($parent_page)) {
-            return get_main_navigation($parent_page);
-        }
+        return get_main_navigation($parent_page);
+    }
 
     return $_top_level_pages;
 }
