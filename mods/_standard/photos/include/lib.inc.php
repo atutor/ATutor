@@ -49,6 +49,11 @@ function getAlbumFilePath($id, $timestamp){
 function checkPhoto($file){
 	global $stripslashes;
 	global $msg, $_config;
+	//check if user has uploaded any file or not
+	if (empty($file['name'])) {
+        $msg->addError('FILE_NOT_SELECTED');
+        return false;
+	}
 	$msg = new AjaxMessage();
 
 	// check if GD is installed
