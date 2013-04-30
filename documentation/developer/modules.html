@@ -283,18 +283,45 @@ $this->_pages['mods/example_maker/index_instructor.php']['parent']   = 'tools/in
 $this->_pages['mods/example_maker/index.php']['title_var'] = 'example_maker';
 $this->_pages['mods/example_maker/index.php']['img']       = 'mods/example_maker/example_maker.jpg';
 
-
-/* public pages */
+/*******
+ * public pages
+ */
 $this->_pages[AT_NAV_PUBLIC] = array('mods/example_maker/index_public.php');
 $this->_pages['mods/example_maker/index_public.php']['title_var'] = 'example_maker';
 $this->_pages['mods/example_maker/index_public.php']['parent'] = 'login.php';
 $this->_pages['login.php']['children'] = array('mods/example_maker/index_public.php');
 
-/* my start page pages */
+/*******
+ * my start page pages
+ */
 $this->_pages[AT_NAV_START]  = array('mods/example_maker/index_mystart.php');
 $this->_pages['mods/example_maker/index_mystart.php']['title_var'] = 'example_maker';
 $this->_pages['mods/example_maker/index_mystart.php']['parent'] = 'users/index.php';
 $this->_pages['users/index.php']['children'] = array('mods/example_maker/index_mystart.php');
+
+/*******
+ * Add a new tool into the tools icon bar on the content editor page
+ * Only need to use one of the two methods listed below to add a tool.
+ */
+
+// The execution of the php code specified in 'file' field returns an array of the rows that are
+// desired to be displayed in the popup window mods/_core/tool_manager/index.php
+// @see mods/_core/tool_manager/index.php
+// @see mods/_core/tool_manager/forums_tool.php
+$this->_tool['example_maker'] = array('title_var'=>'example_maker','file'=>'mods/example_maker/action.php');
+
+// ** possible alternative: **
+// Provides more flexibility in terms of controlling the action at clicking on the tool icon.
+// Rather than always poping up mods/_core/tool_manager/index.php defined in $this->_tool, 
+// "js" field defines the listener for the click event on the new tool icon.
+//$this->_content_tools[] = array("id"=>"example_maker",
+//                                "class"=>"fl-col clickable",
+//                                "src"=>AT_BASE_HREF."mods/example_maker/images/example_maker.png",
+//                                "title"=>_AT('example_maker'),
+//                                "alt"=>_AT('example_maker'),
+//                                "text"=>_AT('example_maker_text'),
+//                                "js"=>AT_BASE_HREF."mods/example_maker/example_maker.js");
+
 ?>
 </pre>
 <a name="module.sql"></a>
