@@ -419,56 +419,56 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 		} else {
 			$msg->addError('UNABLE_CONNECT_DB');
 		}
-	}  else {
+		return false;
+	}
 
-		$tb_prefix = $addslashes($tb_prefix);
-		$db_name = $addslashes($db_name);
-		
-		// check mysql version number
-		$sql = "SELECT VERSION() AS version";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		$row['version'] = str_replace (array('-community-nt', '-max', '-standard'), '', strtolower($row['version']));
-		if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
-			if ($in_plain_msg) {
-				$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.1.10 or later.';
-			} else {
-				$msg->addError(array('LOW_MYSQL_VERSION', $row['version']));
-			}
+	$tb_prefix = $addslashes($tb_prefix);
+	$db_name = $addslashes($db_name);
+	
+	// check mysql version number
+	$sql = "SELECT VERSION() AS version";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+	$row['version'] = str_replace (array('-community-nt', '-max', '-standard'), '', strtolower($row['version']));
+	if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
+		if ($in_plain_msg) {
+			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.1.10 or later.';
+		} else {
+			$msg->addError(array('LOW_MYSQL_VERSION', $row['version']));
 		}
+	}
 
-		if (!mysql_select_db($db_name, $db)) {
-			$sql = "CREATE DATABASE `$db_name` CHARACTER SET utf8 COLLATE utf8_general_ci";
-			$result = mysql_query($sql, $db);
-			if (!$result) {
-				if ($in_plain_msg) {
-					$errors[] = 'Unable to select or create database <b>'.$db_name.'</b>.';
-				} else {
-					$msg->addError(array('UNABLE_SELECT_DB', $db_name));
-				}
+	if (!mysql_select_db($db_name, $db)) {
+		$sql = "CREATE DATABASE `$db_name` CHARACTER SET utf8 COLLATE utf8_general_ci";
+		$result = mysql_query($sql, $db);
+		if (!$result) {
+			if ($in_plain_msg) {
+				$errors[] = 'Unable to select or create database <b>'.$db_name.'</b>.';
 			} else {
-				if ($in_plain_msg) {
-					$progress[] = 'Database <b>'.$db_name.'</b> created successfully.';
-				} else {
-					$msg->addFeedback(array('DB_CREATED', $db_name));
-				}
-				mysql_select_db($db_name, $db);
+				$msg->addError(array('UNABLE_SELECT_DB', $db_name));
 			}
 		} else {
-			/* Check if the database that existed is in UTF-8, if not, ask for retry */
-			$sql = "SHOW CREATE DATABASE `$db_name`";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
-			
-			if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
-				$sql2 = 'ALTER DATABASE `'.$db_name.'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
-				$result2 = mysql_query($sql2);
-				if (!$result2){
-					if ($in_plain_msg) {
-						$errors[] = 'Database <b>'.$db_name.'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: <br /> ALTER DATABASE `'.$db_name.'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  <br />To use ALTER DATABASE, you need the ALTER privilege on the database.  You can also check the MySQL manual <a href="http://dev.mysql.com/doc/refman/4.1/en/alter-database.html" target="mysql_window">here</a>.';
-					} else {
-						$msg->addFeedback(array('DB_NOT_UTF8', $db_name));
-					}
+			if ($in_plain_msg) {
+				$progress[] = 'Database <b>'.$db_name.'</b> created successfully.';
+			} else {
+				$msg->addFeedback(array('DB_CREATED', $db_name));
+			}
+			mysql_select_db($db_name, $db);
+		}
+	} else {
+		/* Check if the database that existed is in UTF-8, if not, ask for retry */
+		$sql = "SHOW CREATE DATABASE `$db_name`";
+		$result = mysql_query($sql, $db);
+		$row = mysql_fetch_assoc($result);
+		
+		if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
+			$sql2 = 'ALTER DATABASE `'.$db_name.'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
+			$result2 = mysql_query($sql2);
+			if (!$result2){
+				if ($in_plain_msg) {
+					$errors[] = 'Database <b>'.$db_name.'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: <br /> ALTER DATABASE `'.$db_name.'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  <br />To use ALTER DATABASE, you need the ALTER privilege on the database.  You can also check the MySQL manual <a href="http://dev.mysql.com/doc/refman/4.1/en/alter-database.html" target="mysql_window">here</a>.';
+				} else {
+					$msg->addFeedback(array('DB_NOT_UTF8', $db_name));
 				}
 			}
 		}
