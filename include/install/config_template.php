@@ -15,7 +15,7 @@
 /**
  * Create the include/config.inc.php based on the config template
  * @param self-explanatory
- * @param true or false. If the file is written successfully, return true, otherwise, return false.
+ * @return bool true or false. If the file is written successfully, return true, otherwise, return false.
  */
 function write_config_file($filename, $db_login, $db_pwd, $db_host, $db_port, $db_name, $tb_prefix,
          $comments, $content_dir, $smtp, $get_file) {
