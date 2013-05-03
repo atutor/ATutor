@@ -28,6 +28,6 @@ and reset the permissions on the config.inc.php file to read only.</p>
 
 <form method="get" action="../login.php">
 	<div align="center">
-		<input type="submit" name="submit" value="&raquo; Log-in!" class="button" />
+		<input type="submit" name="submit" value="&raquo; Log in!" class="button" />
 	</div>
 </form>

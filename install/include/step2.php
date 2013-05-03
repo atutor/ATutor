@@ -75,7 +75,7 @@ if (isset($errors)) {
 	</tr>
 	<tr>
 		<td class="row1"><span class="required" title="Required Field">*</span><b><label for="username">Database Username:</label></b><br />
-			The username to the database server.</td>
+			A username with administrative privileges on the database server.</td>
 		<td class="row1"><input type="text" name="db_login" id="username" value="<?php echo stripslashes(htmlspecialchars($_POST['db_login'])); ?>" class="formfield" /></td>
 	</tr>
 	<tr>
