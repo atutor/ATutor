@@ -19,7 +19,17 @@ require(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php');
 $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
-if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
+
+$comment = queryDB("SELECT * FROM %sfiles_comments WHERE comment_id = %d", array(TABLE_PREFIX, $_REQUEST['id']), true);
+if ($comment) {
+    $comment_to_print = "<li>".AT_print($comment['comment'], 'files_comments.comment')."</li>";
+} else {
+    $msg->addError('PAGE_NOT_FOUND');
+    header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
+    exit;
+}
+
+if ( (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) && ( ! $comment['member_id'] == $_SESSION['member_id'] )) { 
 	$msg->addError('ACCESS_DENIED');
 	header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
@@ -39,7 +49,7 @@ if (isset($_POST['submit_no'])) {
 	$_POST['file_id'] = abs($_POST['file_id']);
 	$_POST['id'] = abs($_POST['id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$_POST[file_id] AND comment_id=$_POST[id] AND member_id=$_SESSION[member_id]";
+	$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$_POST[file_id] AND comment_id=$_POST[id]";
 	$result = mysql_query($sql, $db);
 	if (mysql_affected_rows($db) == 1) {
 		$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments-1, date=date WHERE owner_type=$owner_type AND owner_id=$owner_id AND file_id=$_POST[file_id]";
@@ -54,14 +64,6 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id, 'file_id' => $_GET['file_id']);
-$row = queryDB("SELECT comment FROM %sfiles_comments WHERE comment_id = %d", array(TABLE_PREFIX, $id), true);
-if ($row) {
-    $comment_to_print = "<li>".AT_print($row['comment'], 'files_comments.comment')."</li>";
-} else {
-    $msg->addError('PAGE_NOT_FOUND');
-    header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
-    exit;
-}
 $msg->addConfirm(array('DELETE',$comment_to_print), $hidden_vars);
 $msg->printConfirm();
 
