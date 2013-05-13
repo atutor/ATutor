@@ -58,6 +58,4 @@ if (count($rows) > 0) {
     return 0;
 }
 
-//url_rewrite('mods/_core/groups/groups.php', AT_PRETTY_URL_IS_HEADER).'"'.
-		          //(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') 
 ?>
