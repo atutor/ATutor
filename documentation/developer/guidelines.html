@@ -93,7 +93,7 @@ pre.code {
 		<ul>
 			<li>4.1 <a href="#github_setup">Setting up a Git Development Environment</a></li>
 			<li>4.2 <a href="#github_maintaining">Creating anfd Maintaining a Git Fork</a></li>
-			<li>4.3 <a href="#svn-install">Installing from GitHub</a></li>
+			<li>4.3 <a href="#git-install">Installing from GitHub</a></li>
 		</ul>
 	</li>
     <li>5. <a href="#communication">Communication</a></li>
@@ -332,7 +332,7 @@ register_argc_argv   = Off</pre>
 	<kbd>git branch master</kbd> (move into a branch other than the one to be deleted)<br />
 	<kbd>git branch -D new_feature</kbd> (delete the branch from your local repository)<br />
 	<kbd>git push origin :new_feature</kbd> (remove the branch from GitHub)</p>
-<h3><a name="svn-install"></a>4.3 Installing from GitHub</h3>
+<h3><a name="git-install"></a>4.3 Installing from GitHub</h3>
 	<p>Installing the development code cloned from GitHub requires one extra step in addition to the standard installation described in the <a href="http://atutor.ca/atutor/docs/installation.php#fresh">Installation Instructions</a>. Once the source code has been cloned, change to the ATutor/docs/include directory and create an empty configuration file by issuing the command <kbd>touch config.inc.php</kbd>, then run the installer as described in the instructions.</p>
 	
 	
@@ -1951,9 +1951,6 @@ SEP is ;
 <h2><a name="example"></a>23. Sample Script</h2>
 <p>The following is sample code that shows the general flow of an ATutor script. The example shows how you may use some of the variables and functions available to you. Some scripts may not need all the variables and functions used below.</p>
 <pre class="code" id="code">&lt;?php
-// 0. insert the SVN keywords
-// <a href="#svn-keywords">$Id</a>: guidelines.html 1275 2004-07-28 16:02:49Z joel $
-
 // 1. define relative path to `include` directory:
 define('<a href="#const-include_path">AT_INCLUDE_PATH</a>', '../<a href="#directories-include">include/</a>');
 
