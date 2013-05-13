@@ -56,9 +56,9 @@ function get_additions($sql, $sqlParams, $module, $module_name, $group_id)
             
                 case _AT('file_storage'): 
                 if($row['description'] !=""){
-		$filetext = $row['description'];
+										$filetext = $row['description'];
                 } else {
-		$filetext = $row['file_name'];
+										$filetext = $row['file_name'];
                 }
                 $str.= '<a href="'.$_base_path.url_rewrite('mods/_standard/file_storage/index.php?download=1'.SEP.'files[]='. $row['file_id']).'"'.(strlen($filetext) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($filetext, 'input.text').'"' : '') .'>'.AT_print(validate_length($filetext, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'input.text') .'</a><br/>';
                 break;
