@@ -25,9 +25,9 @@ if (!$_SESSION['groups']) {
 }
 ?>
 
-<script src="<?php echo $_base_path;?>mods/_core/groups/functions.js"></script>
+<script src="<?php echo $_base_path;?>mods/_core/groups/js/groups.js"></script>
 <?php
-include ('group_functions.inc.php');
+include ('lib/group_functions.inc.php');
 if (count($rows) > 0) {
     foreach($rows as $row) {
         $add = 0;
