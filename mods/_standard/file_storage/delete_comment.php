@@ -29,7 +29,10 @@ if ($comment) {
     exit;
 }
 
-if ( (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) && ( ! $comment['member_id'] == $_SESSION['member_id'] )) { 
+//Since $owner_id is a GET variable, this query is to check that the owner_id is provided correctly
+$file = queryDB("SELECT file_id FROM %sfiles WHERE file_id = %d and owner_id = %d", array(TABLE_PREFIX, $comment['file_id'], $owner_id), true);
+
+if (!($comment['member_id'] == $_SESSION['member_id'] || $owner_id == $_SESSION['member_id']) || !$file) {
 	$msg->addError('ACCESS_DENIED');
 	header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
@@ -49,8 +52,7 @@ if (isset($_POST['submit_no'])) {
 	$_POST['file_id'] = abs($_POST['file_id']);
 	$_POST['id'] = abs($_POST['id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$_POST[file_id] AND comment_id=$_POST[id]";
-	$result = mysql_query($sql, $db);
+    $sql = queryDB("DELETE FROM %sfiles_comments WHERE file_id= %d AND comment_id = %d", array(TABLE_PREFIX, $_REQUEST['file_id'], $_REQUEST['id']));
 	if (mysql_affected_rows($db) == 1) {
 		$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments-1, date=date WHERE owner_type=$owner_type AND owner_id=$owner_id AND file_id=$_POST[file_id]";
 		$result = mysql_query($sql, $db);
