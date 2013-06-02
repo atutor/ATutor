@@ -53,10 +53,9 @@ if (isset($_POST['submit_no'])) {
 	$_POST['id'] = abs($_POST['id']);
 
     $sql = queryDB("DELETE FROM %sfiles_comments WHERE file_id= %d AND comment_id = %d", array(TABLE_PREFIX, $_REQUEST['file_id'], $_REQUEST['id']));
-	if (mysql_affected_rows($db) == 1) {
-		$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments-1, date=date WHERE owner_type=$owner_type AND owner_id=$owner_id AND file_id=$_POST[file_id]";
-		$result = mysql_query($sql, $db);
-	}
+    if (mysql_affected_rows($db) == 1) {
+        $update_comments = queryDB("UPDATE %sfiles SET num_comments=num_comments-1, date=date WHERE owner_type = %d AND owner_id = %d AND file_id = %d", array(TABLE_PREFIX, $owner_type, $owner_id, $_REQUEST['file_id']));
+    }
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.url_rewrite('mods/_standard/file_storage/comments.php'.$owner_arg_prefix.'id='.$_POST['file_id'], AT_PRETTY_URL_IS_HEADER));
