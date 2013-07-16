@@ -14,12 +14,12 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 //define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
 
-define('AT_DEVEL_TRANSLATE', 1);
+define('AT_DEVEL_TRANSLATE', 0);
 
 // Multisite constants and checks
 define('AT_SITE_PATH', get_site_path());
@@ -36,9 +36,7 @@ if (defined('IS_SUBSITE') && IS_SUBSITE) {
 	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
 	mysql_select_db(DB_NAME_MULTISITE, $db_multisite);
 	$site_url = $_SERVER['HTTP_HOST'];
-	$sql = "SELECT * FROM " . TABLE_PREFIX_MULTISITE . "subsites where site_url = '" . $addslashes($site_url) . "'";
-	$result = mysql_query($sql, $db_multisite);
-	$row = mysql_fetch_assoc($result);
+	$row = queryDB('SELECT * from %ssubsites where site_url = %s', array(TABLE_PREFIX_MULTISITE, $siteurl), true);
 	if (!$row['enabled']) {
 		echo $site_url . ' has been disabled!';
 		exit;
@@ -86,9 +84,9 @@ if (!defined('AT_REDIRECT_LOADED')){
 }
 
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
-$sql    = "SELECT * FROM ".TABLE_PREFIX."config";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) { 
+
+$rows = queryDB("SELECT * FROM %sconfig", array(TABLE_PREFIX));
+foreach ($rows as $row) {
 	$_config[$row['name']] = $row['value'];
 }
 
@@ -277,11 +275,8 @@ if ((!is_dir(AT_SYSTEM_THEME_DIR . $_SESSION['prefs']['PREF_THEME']) &&
 // use "mobile" theme for mobile devices. For now, there's only one mobile theme and it's hardcoded.
 // When more mobile themes come in, this should be changed.
 if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) && $_SESSION['valid_user'] === true) {
-	//check if the theme is enabled
-	$sql = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$_SESSION['prefs']['PREF_THEME']."'";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-	
+	//check if the theme is enabled	
+	$row = queryDB("SELECT status FROM %sthemes WHERE dir_name='%s'", array(TABLE_PREFIX, $_SESSION['prefs']['PREF_THEME']), true);
 	if ($row['status'] == 0) {
 		// get user defined default theme if the preference theme is disabled
 		$default_theme = get_default_theme();
@@ -360,13 +355,13 @@ if ((isset($_SESSION['course_id']) && isset($_pretty_url_course_id) && $_SESSION
 $system_courses = array();
 
 // temporary set to a low number
-$sql = 'SELECT * FROM '.TABLE_PREFIX.'courses ORDER BY title';
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+$rows = queryDB('SELECT * FROM %scourses ORDER BY title', array(TABLE_PREFIX));
+foreach($rows as $row){
 	$course = $row['course_id'];
 	unset($row['course_id']);
 	$system_courses[$course] = $row;
 }
+
 /*																	*/
 /********************************************************************/
 // p_course is set when pretty url is on and guests access a public course. @see bounce.php
@@ -376,19 +371,18 @@ if (isset($_REQUEST['p_course'])) {
 }
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0 || isset($_REQUEST['p_course']) && $_REQUEST['p_course'] > 0) {
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'glossary 
-	         WHERE course_id='.($_SESSION['course_id']>0 ? $_SESSION['course_id'] : $_REQUEST['p_course']).' 
-	         ORDER BY word';
-	$result = mysql_query($sql, $db);
+	$this_course_id = ($_SESSION['course_id']>0 ? $_SESSION['course_id'] : $_REQUEST['p_course']);
+	$rows_g = queryDB('SELECT * FROM %sglossary WHERE course_id=%d ORDER BY word', array(TABLE_PREFIX, $this_course_id));
 	$glossary = array();
 	$glossary_ids = array();
-	while ($row_g = mysql_fetch_assoc($result)) {		
+	
+	foreach($rows_g as $row_g){
 		$row_g['word'] = htmlspecialchars($row_g['word'], ENT_QUOTES, 'UTF-8');
 		$glossary[$row_g['word']] = str_replace("'", "\'",$row_g['definition']);
 		$glossary_ids[$row_g['word_id']] = $row_g['word'];
-
-		/* a kludge to get the related id's for when editing content */
-		/* it's ugly, but beats putting this query AGAIN on the edit_content.php page */
+		
+		// a kludge to get the related id's for when editing content 
+		// it's ugly, but beats putting this query AGAIN on the edit_content.php page 
 		if (isset($get_related_glossary)) {
 			$glossary_ids_related[$row_g['word']] = $row_g['related_word_id'];
 		}
@@ -408,16 +402,14 @@ if ((!isset($_SESSION['is_admin']) || !$_SESSION['is_admin'])       &&
 	{
 		$diff = time() - $_SESSION['cid_time'];
 		if ($diff > 0) {
-			$sql = "UPDATE ".TABLE_PREFIX."member_track SET counter=counter+1, duration=duration+$diff, last_accessed=NOW() WHERE member_id=$_SESSION[member_id] AND content_id=$_SESSION[s_cid]";
-
-			$result = mysql_query($sql, $db);
-
-			if (mysql_affected_rows($db) == 0) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."member_track VALUES ($_SESSION[member_id], $_SESSION[course_id], $_SESSION[s_cid], 1, $diff, NOW())";
-				$result = mysql_query($sql, $db);
+			$is_tracked = queryDB('SELECT * FROM %smember_track WHERE member_id=%d AND content_id=%d',array(TABLE_PREFIX, $_SESSION['member_id'],$_SESSION['s_cid'] ));
+			if(count($is_tracked) != 0){
+				$sql = "UPDATE %smember_track SET counter=counter+1, duration=duration+$diff, last_accessed=NOW() WHERE member_id=%d AND content_id=%d";
+				$rows = queryDB($sql,array(TABLE_PREFIX, $_SESSION['member_id'],$_SESSION['s_cid'] ));
+			} else{
+				$result = queryDB("INSERT INTO %smember_track VALUES (%d, %d, %d, 1, %d, NOW())", array(TABLE_PREFIX, $_SESSION['member_id'], $_SESSION['course_id'],$_SESSION['s_cid'], $diff ));
 			}
 		}
-
 		$_SESSION['cid_time'] = 0;
 }
 
@@ -517,11 +509,11 @@ $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module
 
 if (isset($_GET['submit_language']) && $_SESSION['valid_user'] === true) {
 	if ($_SESSION['course_id'] == -1) {
-		$sql = "UPDATE ".TABLE_PREFIX."admins SET language = '$_SESSION[lang]' WHERE login = '$_SESSION[login]'";
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %sadmins SET language = %s WHERE login = %s";
+		$row = queryDB($sql,array(TABLE_PREFIX, $_SESSION['lang'], $_SESSION['login']));
 	} else {
-		$sql = "UPDATE ".TABLE_PREFIX."members SET language = '$_SESSION[lang]', creation_date=creation_date, last_login=last_login WHERE member_id = $_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %smembers SET language = %s, creation_date=creation_date, last_login=last_login WHERE member_id = %d";
+		$row = queryDB($sql,array(TABLE_PREFIX, $_SESSION['lang'], $_SESSION['member_id']));
 	}
 }
 
