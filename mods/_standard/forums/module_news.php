@@ -24,7 +24,7 @@ function forums_news() {
 		return $news;
 	} 
 
-	$sql = 'SELECT E.approved, E.last_cid, C.* FROM '.TABLE_PREFIX.'course_enrollment E, '.TABLE_PREFIX.'courses C WHERE C.courses in '. $enrolled_courses . ' AND E.member_id=1 AND E.course_id=C.course_id ORDER BY C.title';
+	$sql = 'SELECT E.approved, E.last_cid, C.* FROM '.TABLE_PREFIX.'course_enrollment E, '.TABLE_PREFIX.'courses C WHERE C.course_id in '. $enrolled_courses . ' AND E.member_id=1 AND E.course_id=C.course_id ORDER BY C.title';
 	$result = mysql_query($sql, $db);
 	if ($result) {
 		while($row = mysql_fetch_assoc($result)){

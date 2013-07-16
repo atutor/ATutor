@@ -83,15 +83,17 @@ if (isset($_POST['submit'])) {
     $result    = mysql_query($sql, $db);
     while ($row = mysql_fetch_assoc($result)) {
         $row_question_id = $row['question_id'];
-        $answer_question_id = $_POST['answers'][$row_question_id];
-        if (isset($answer_question_id)) {
+        if (isset($_POST['answers'][$row_question_id])) {
             $obj = TestQuestions::getQuestion($row['type']);
             $score = $obj->mark($row);
-
+            // Note that $_POST['answers'][$row_question_id] is manipulated by $obj->mark
+            // to concatenate multiple answers, so must use the $_POST value after the mark function.
+            $answer_question_id = $_POST['answers'][$row_question_id];
+            
             if (!isset($post_gid)) {
-                $sql = sprintf('UPDATE %stests_answers SET answer=%d, score="%s" WHERE result_id=%d AND question_id=%d', TABLE_PREFIX, $answer_question_id, $score, $result_id, $row_question_id);
+                $sql = sprintf('UPDATE %stests_answers SET answer="%s", score="%s" WHERE result_id=%d AND question_id=%d', TABLE_PREFIX, $answer_question_id, $score, $result_id, $row_question_id);
             } else {
-                $sql = sprintf('INSERT INTO %stests_answers VALUES (%d, %d, 0, %d, "%s", "")', TABLE_PREFIX, $result_id, $row_question_id, $answer_question_id, $score);
+                $sql = sprintf('INSERT INTO %stests_answers (result_id, question_id, member_id, answer, score, notes) VALUES (%d, %d, 0, "%s", "%s", "")', TABLE_PREFIX, $result_id, $row_question_id, $answer_question_id, $score);
             }
             mysql_query($sql, $db);
 
