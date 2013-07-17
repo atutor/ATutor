@@ -13,6 +13,13 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
+/* test for mysqli presence */
+/*
+if(function_exists('mysqli_connect')){
+	define('MYSQLI_ENABLED',	1);
+} 
+*/
+
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
    if (!ini_get('register_globals')) { return; }
@@ -30,9 +37,16 @@ function unregister_GLOBALS() {
 }
 
 //functions for properly escaping input strings
+
 function my_add_null_slashes( $string ) {
-    return mysql_real_escape_string(stripslashes($string));
+    if(defined('MYSQLI_ENABLED')){
+        return mysqli_real_escape_string(stripslashes($string));
+    }else{
+        return mysql_real_escape_string(stripslashes($string));
+    }
+
 }
+
 function my_null_slashes($string) {
     return $string;
 }
@@ -41,7 +55,11 @@ if ( get_magic_quotes_gpc() == 1 ) {
     $addslashes   = 'my_add_null_slashes';
     $stripslashes = 'stripslashes';
 } else {
-    $addslashes   = 'mysql_real_escape_string';
+    if(defined('MYSQLI_ENABLED')){
+        $addslashes   = 'mysqli_real_escape_string';
+    }else{
+        $addslashes   = 'mysql_real_escape_string';
+    }
     $stripslashes = 'my_null_slashes';
 }
 
@@ -229,10 +247,15 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 
 		return $content;
 	}
-
-	function mysql_real_escape_string($input) {
-		return mysql_escape_string($input);
-	}
+    if(defined('MYSQLI_ENABLED')){
+        function mysqli_real_escape_string($input) {
+            return mysqli_escape_string($input);
+        }
+    }else{
+        function mysql_real_escape_string($input) {
+            return mysql_escape_string($input);
+        }
+    }
 }
 
 
@@ -240,18 +263,20 @@ function add_user_online() {
 	if (!isset($_SESSION['member_id']) || !($_SESSION['member_id'] > 0)) {
 		return;
 	}
-	global $db, $addslashes;
+	global $addslashes;
 
 	$expiry = time() + 900; // 15min
-	$sql = 'REPLACE INTO '.TABLE_PREFIX.'users_online VALUES ('.$_SESSION['member_id'].', '.$_SESSION['course_id'].', "'.$addslashes(get_display_name($_SESSION['member_id'])).'", '.$expiry.')';
-	$result = mysql_query($sql, $db);
-
+	
+	$sql = "REPLACE INTO %susers_online VALUES (%d, %d, '%s', %d)";
+	$user_name = get_display_name($_SESSION['member_id']);
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $_SESSION['course_id'], $user_name, $expiry));
+	
 	/* garbage collect and optimize the table every so often */
 	mt_srand((double) microtime() * 1000000);
 	$rand = mt_rand(1, 20);
 	if ($rand == 1) {
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'users_online WHERE expiry<'.time();
-		$result = @mysql_query($sql, $db);
+		$sql = 'DELETE FROM %susers_online WHERE expiry<'.time();
+		$result = queryDB($sql, array(TABLE_PREFIX));
 	}
 }
 
@@ -263,32 +288,29 @@ function add_user_online() {
  * @author  Joel Kronenberg
  */
 function get_login($id){
-	global $db, $_config_defaults;
+	global  $_config_defaults;
 
 	if (is_array($id)) {
 		$id		= implode(',',$id);
-		$sql	= 'SELECT login, member_id FROM '.TABLE_PREFIX.'members WHERE member_id IN ('.$id.') ORDER BY login';
-
 		$rows = array();
-		$result	= mysql_query($sql, $db);
-		while( $row	= mysql_fetch_assoc($result)) {
-			$rows[$row['member_id']] = $row['login'];
+		$sql	= "SELECT login, member_id FROM %smembers WHERE member_id IN (%s) ORDER BY login";
+		$result = queryDB($sql, array(TABLE_PREFIX, $id));
+		
+		foreach($result as $row){
+		    $rows[$row['member_id']] = $row['login'];
 		}
+
 		return $rows;
 	} else {
 		$id		= intval($id);
-		$sql	= 'SELECT login FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
-
-		$result	= mysql_query($sql, $db);
-		$row	= mysql_fetch_assoc($result);
-
+		$sql	= 'SELECT login FROM %smembers WHERE member_id=%d';
+		$row    = queryDB('',array(TABLE_PREFIX, $id));
 		return $row['login'];
 	}
-
 }
 
 function get_display_name($id) {
-	static $db, $_config, $display_name_formats;
+	static $_config, $display_name_formats;
 	if (!$id) {
 		return $_SESSION['login'];
 	}
@@ -297,39 +319,33 @@ function get_display_name($id) {
 		global $db, $_config, $display_name_formats;
 	}
 
-	if (substr($id, 0, 2) == 'g_' || substr($id, 0, 2) == 'G_')
-	{
-		$sql	= "SELECT name FROM ".TABLE_PREFIX."guests WHERE guest_id='".$id."'";
-		$result	= mysql_query($sql, $db);
-		$row	= mysql_fetch_assoc($result);
-
+	if (substr($id, 0, 2) == 'g_' || substr($id, 0, 2) == 'G_'){
+		$sql = "SELECT name FROM %sguests WHERE guest_id='%d'";
+        $row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
 		return _AT($display_name_formats[$_config['display_name_format']], '', $row['name'], '', '');
-	}
-	else
-	{
-		$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
-		$result	= mysql_query($sql, $db);
-		$row	= mysql_fetch_assoc($result);
-
+	}else{
+		$sql    = "SELECT login, first_name, second_name, last_name FROM %smembers WHERE member_id='%d'";
+        $row    = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
 		return _AT($display_name_formats[$_config['display_name_format']], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']);
 	}
 }
 
 function get_forum_name($fid){
-	global $db;
 
 	$fid = intval($fid);
 
-	$sql	= 'SELECT title FROM '.TABLE_PREFIX.'forums WHERE forum_id='.$fid;
-	$result	= mysql_query($sql, $db);
-	if (($row = mysql_fetch_assoc($result)) && $row['title']) {
-		return $row['title'];		
+	$sql	= 'SELECT title FROM %sforums WHERE forum_id=%d';
+	$row	= queryDB($sql, array(TABLE_PREFIX, $fid), TRUE);
+
+	if(isset($row['title']) && $row['title'] != ''){
+	   return $row['title'];
 	}
 
-	$sql = "SELECT group_id FROM ".TABLE_PREFIX."forums_groups WHERE forum_id=$fid";
-	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		return get_group_title($row['group_id']);
+	$sql = "SELECT group_id FROM %sforums_groups WHERE forum_id=%d";
+	$row	= queryDB($sql, array(TABLE_PREFIX, $fid), TRUE);	
+
+	if(isset($row['group_id'])){
+	    return get_group_title($row['group_id']);
 	}
 
 	return FALSE;
@@ -353,21 +369,22 @@ function assign_session_prefs($prefs, $switch_mobile_theme = 0) {
 }
 
 function save_prefs( ) {
-	global $db, $addslashes;
+	global $addslashes;
 
 	if ($_SESSION['valid_user'] === true) {
 		$data	= $addslashes(serialize($_SESSION['prefs']));
-		$sql	= 'UPDATE '.TABLE_PREFIX.'members SET preferences="'.$data.'", creation_date=creation_date, last_login=last_login WHERE member_id='.$_SESSION['member_id'];
-		$result = mysql_query($sql, $db); 
+
+		$sql = 'UPDATE %smembers SET preferences="%s", creation_date=creation_date, last_login=last_login WHERE member_id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $data, $_SESSION['member_id']));
 	}
 }
 
 function save_email_notification($mnot) {
-	global $db;
 	
 	if ($_SESSION['valid_user'] === true) {
-		$sql = "UPDATE ".TABLE_PREFIX."members SET inbox_notify =". $mnot .", creation_date=creation_date, last_login=last_login WHERE member_id =".$_SESSION['member_id'];
-		$result = mysql_query($sql, $db);
+		
+		$sql = "UPDATE %smembers SET inbox_notify = %d, creation_date=creation_date, last_login=last_login WHERE member_id = %d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $mnot, $_SESSION['member_id']));
 	}
 }
 
@@ -383,7 +400,6 @@ function save_last_cid($cid) {
 	if ($_SESSION['enroll'] == AT_ENROLL_NO) {
 		return;
 	}
-	global $db;
 
 	$_SESSION['s_cid'] = intval($_GET['cid']);
 
@@ -395,9 +411,11 @@ function save_last_cid($cid) {
 		{
 			$_SESSION['cid_time'] = time();
 	}
-
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=$cid WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id]";
-	mysql_query($sql, $db);
+	
+	$sql = "UPDATE %scourse_enrollment SET last_cid=%d WHERE course_id=%d AND member_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $cid, $_SESSION['course_id'],$_SESSION['member_id']));
+	
+	 
 }
 
 /**
@@ -416,13 +434,12 @@ function get_instructor_status() {
 		return $is_instructor;
 	}
 
-	global $db;
-
 	$is_instructor = false;
-
-	$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-	$result = mysql_query($sql, $db);
-	if (!($row = @mysql_fetch_assoc($result))) {
+	
+	$sql = 'SELECT status FROM %smembers WHERE member_id=%d';
+	$row = queryDB($sql, array(TABLE_PREFIX,$_SESSION['member_id']), TRUE);
+	
+	if(!isset($row['status']) || $row['status'] == '' ){
 		$is_instructor = FALSE;
 		return FALSE;
 	}
@@ -677,10 +694,9 @@ function admin_authenticate($privilege = 0, $check = false) {
  * @return true or false
  */
 function is_customized_theme($theme_name) {
-	global $db;
-	$sql = "SELECT customized FROM ".TABLE_PREFIX."themes WHERE dir_name = '".$theme_name."'";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	
+	$sql = "SELECT customized FROM %sthemes WHERE dir_name = '%s'";
+	$row = queryDB($sql, array(TABLE_PREFIX, $theme_name), TRUE);
 	
 	return !!$row["customized"];
 }
@@ -708,17 +724,16 @@ function get_main_theme_dir($customized) {
  * @return: string - the directory name of the user-defined default theme
  */
 function get_default_theme() {
-	global $db;
 
 	if (is_mobile_device()) {
 		$default_status = 3;
 	} else {
 		$default_status = 2;
 	}
-	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE status=".$default_status;
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
 
+	$sql = "SELECT dir_name FROM %sthemes WHERE status=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $default_status), TRUE);
+	
 	return $row['dir_name'];
 }
 
@@ -731,10 +746,11 @@ function get_system_default_theme() {
 }
 
 function is_mobile_theme($theme) {
-	global $db;
-	$sql	= "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE type='".MOBILE_DEVICE."'";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	$sql	= "SELECT dir_name FROM %sthemes WHERE type='%s'";
+	$rows = queryDB($sql, array(TABLE_PREFIX, MOBILE_DEVICE));	
+	
+	foreach ($rows as $row) {
 		if ($row['dir_name'] == $theme && 
 		    (is_dir(AT_SYSTEM_THEME_DIR . $theme) ||
 		     is_dir(AT_SUBSITE_THEME_DIR . $theme))) {
@@ -754,21 +770,22 @@ function is_mobile_theme($theme) {
 * @author  Shozub Qureshi
 */
 function write_to_log($operation_type, $table_name, $num_affected, $details) {
-	global $db, $addslashes;
+	global  $addslashes;
 
 	if ($num_affected > 0) {
-		$details = $addslashes(stripslashes($details));
-		$sql    = "INSERT INTO ".TABLE_PREFIX."admin_log VALUES ('$_SESSION[login]', NULL, $operation_type, '$table_name', $num_affected, '$details')";
-		$result = mysql_query($sql, $db);
+		$details = $addslashes(stripslashes($details));		
+        $sql    = "INSERT INTO %sadmin_log VALUES ('%s', NULL, '%d', '%s', %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['login'], $operation_type, $table_name, $num_affected, $details));			
 	}
 }
 
 function get_group_title($group_id) {
-	global $db;
-	$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=$group_id";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
-		return $row['title'];
+
+	$sql = "SELECT title FROM %sgroups WHERE group_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $group_id), TRUE);
+	
+	if(isset($row['title']) && $row['title'] != ''){
+	    return $row['title'];
 	}
 	return FALSE;
 }
@@ -887,39 +904,44 @@ function resize_image($src, $dest, $src_h, $src_w, $dest_h, $dest_w, $type, $src
  * returns the list (as a string) or (int) 0, if none found.
  */
 function get_group_concat($table, $field, $where_clause = 1, $separator = ',') {
-	global $_config, $db;
+	global $_config;
+	
 	if (!isset($_config['mysql_group_concat_max_len'])) {
+
 		$sql = "SELECT  @@global.group_concat_max_len AS max";
-		$result = mysql_query($sql, $db);
-		if ($result && ($row = mysql_fetch_assoc($result))) {
+	    $row = queryDB($sql, '', TRUE); 
+
+		if (isset($row) && $row != '') {
 			$_config['mysql_group_concat_max_len'] = $row['max'];
 		} else {
 			$_config['mysql_group_concat_max_len'] = 0;
-		}
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('mysql_group_concat_max_len', '{$_config['mysql_group_concat_max_len']}')";
-		mysql_query($sql, $db);
+		}		
+		
+		$sql = "REPLACE INTO %sconfig VALUES ('mysql_group_concat_max_len', '{$_config['mysql_group_concat_max_len']}')";
+		queryDB($sql, array(TABLE_PREFIX));
 	}
 	if ($_config['mysql_group_concat_max_len'] > 0) {
-		$sql = "SELECT GROUP_CONCAT($field SEPARATOR '$separator') AS list FROM ".TABLE_PREFIX."$table WHERE $where_clause";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
-			if (!$row['list']) {
-				return 0; // empty
-			} else if ($row['list'] && strlen($row['list']) < $_config['mysql_group_concat_max_len']) {
-				return $row['list'];
-			} // else: list is truncated, do it the old way
-		} else {
-			// doesn't actually get here.
-			return 0; // empty
+	
+		$sql = "SELECT GROUP_CONCAT(%s SEPARATOR '%s') AS list FROM %s%s WHERE %s";
+		$rows = queryDB($sql, array($field,$separator, TABLE_PREFIX, $table, $where_clause));
+		
+		foreach($rows as $row){
+            if (!$row['list']) {
+                    return 0; // empty
+            } else if ($row['list'] && strlen($row['list']) < $_config['mysql_group_concat_max_len']) {
+                    return $row['list'];
+            } // else: list is truncated, do it the old way
 		}
 	} // else:
 
 	$list = '';
-	$sql = "SELECT $field AS id FROM ".TABLE_PREFIX."$table WHERE $where_clause";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		$list .= $row['id'] . ',';
+	$sql = "SELECT %s AS id FROM %s%s WHERE %s";
+	$rows = queryDB($sql, array($field, TABLE_PREFIX, $table, $where_clause));
+	
+	foreach($rows as $row){
+	    $list .= $row['id'] . ',';
 	}
+
 	if ($list) {
 		return substr($list, 0, -1); }
 	return 0;
