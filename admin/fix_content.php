@@ -23,11 +23,9 @@ echo '<div style="padding-left: 30px;"><pre>';
 
 echo "cpID\torder\t cID";
 
-$sql    = "SELECT content_id, content_parent_id, ordering, course_id FROM ".TABLE_PREFIX."content ORDER BY course_id, content_parent_id, ordering";
-$result = mysql_query($sql, $db);
-
-
-while ($row = mysql_fetch_assoc($result)) {
+$sql    = "SELECT content_id, content_parent_id, ordering, course_id FROM %scontent ORDER BY course_id, content_parent_id, ordering";
+$rows = queryDB($sql, array(TABLE_PREFIX));
+foreach($rows as $row){
 	if ($current_course_id != $row['course_id']) {
 		echo "\n\n-- course id $row[course_id]\n\n";
 		$current_course_id = $row['course_id'];
