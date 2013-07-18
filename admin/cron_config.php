@@ -5,8 +5,10 @@ admin_authenticate(AT_ADMIN_PRIV_ADMIN);
 
 if (!isset($_config['cron_key']) || !$_config['cron_key']) {
 	$_config['cron_key'] = strtoupper(substr(str_replace(array('l','o','0','i'), array(), md5(time())), 0, 6));
-	$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('cron_key', '{$_config['cron_key']}')";
-	mysql_query($sql, $db);
+	
+	$sql = "REPLACE INTO %sconfig VALUES ('cron_key', '%s')";
+	queryDB($sql, array(TABLE_PREFIX, $_config['cron_key']));
+	
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
