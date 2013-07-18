@@ -118,7 +118,7 @@
 				<dd><?php echo PHP_VERSION; ?></dd>
 
 				<dt><?php echo _AT('mysql_version'); ?>:</dt>
-				<dd><?php echo $mysql_version; ?></dd>
+				<dd><?php echo $this->mysql_version; ?></dd>
 
 				<dt><?php echo _AT('os'); ?>:</dt>
 				<dd><?php echo @php_uname('s') . ' ' . @php_uname('r'); ?></dd>
