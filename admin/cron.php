@@ -9,8 +9,8 @@ if (!isset($_config['cron_key']) || empty($_config['cron_key']) || ($_config['cr
 	exit;
 }
 
-$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('last_cron', '".time()."')";
-mysql_query($sql, $db);
+$sql = "REPLACE INTO %sconfig VALUES ('last_cron', '".time()."')";
+queryDB($sql, array(TABLE_PREFIX));
 
 $module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, AT_MODULE_TYPE_CORE + AT_MODULE_TYPE_STANDARD + AT_MODULE_TYPE_EXTRA);
 $keys = array_keys($module_list);
