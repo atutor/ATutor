@@ -50,7 +50,7 @@ if (AT_INCLUDE_PATH !== 'NULL') {
  * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
  * @author  Alexey Novak, Cindy Li
  */
-function queryDB($query, $params=array(), $oneRow = false, $sanitize = true) {
+function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows") {
     global $db, $msg, $addslashes;
     
     $oneRowErrorMessage = 'Query "%s" which should returned only 1 row has returned more rows.';
@@ -73,12 +73,12 @@ function queryDB($query, $params=array(), $oneRow = false, $sanitize = true) {
         
         // Query DB and if something goes wrong then log the problem
         if(defined('MSQLI_ENABLED')){
-               $result = mysqli_query($sql, $db) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage));
- 
+               $result = mysqli_query($sql, $db) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage)); 
+               
         }else{
                $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
- 
         }
+
         //$result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
         
         // If the query was of the type which does not suppose to return rows e.g. UPDATE/SELECT/INSERT
@@ -89,7 +89,11 @@ function queryDB($query, $params=array(), $oneRow = false, $sanitize = true) {
                 error_log(print_r($oneRowErrorMessage, true), 0);
                 $msg->addError($displayErrorMessage);
             }
-            return array();
+            if(isset($callback_func)){
+                return $callback_func($db);                
+            }else{
+                return array();
+            }
         }
         
         // If we need only one row then just grab it otherwise get all the results
@@ -115,5 +119,9 @@ function queryDB($query, $params=array(), $oneRow = false, $sanitize = true) {
         error_log(print_r($e, true), 0);
         $msg->addError($displayErrorMessage);
     }
+}
+
+function $query_callback(){
+
 }
 ?>
