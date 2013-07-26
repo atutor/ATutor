@@ -111,13 +111,14 @@ if (isset($_POST['cancel'])) {
 		foreach ($_config as $name => $value) {
 			// the isset() is needed to avoid overridding settings that don't get set here (ie. modules)
 			if (isset($_POST[$name]) && ($stripslashes($_POST[$name]) != $value) && ($stripslashes($_POST[$name]) != $_config_defaults[$name])) {
-				$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('$name', '$_POST[$name]')";
-				mysql_query($sql, $db);
-				write_to_log(AT_ADMIN_LOG_REPLACE, 'config', mysql_affected_rows($db), $sql);
+				$sql = 'REPLACE INTO %sconfig VALUES ("%s", "%s")';
+				$num_rows = queryDB($sql, array(TABLE_PREFIX, $name, $_POST[$name]));
+				write_to_log(AT_ADMIN_LOG_REPLACE, 'config', $num_rows, $sqlout);
+
 			} else if (isset($_POST[$name]) && ($stripslashes($_POST[$name]) == $_config_defaults[$name])) {
-				$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='$name'";
-				mysql_query($sql, $db);
-				write_to_log(AT_ADMIN_LOG_DELETE, 'config', mysql_affected_rows($db), $sql);
+				$sql = "DELETE FROM %sconfig WHERE name='%s'";
+				$num_rows = queryDB($sql, array(TABLE_PREFIX, $name));
+				write_to_log(AT_ADMIN_LOG_DELETE, 'config', $num_rows, $sqlout);
 			}
 		}
 

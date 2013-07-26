@@ -28,24 +28,29 @@ if (isset($_POST['social_submit'])) {
 	$_POST['just_social']          = intval($_POST['just_social']);
 
 	if ($_POST['just_social'] == 1) {
+		$sql = "REPLACE INTO %sconfig VALUES ('just_social', '%d')";
+		$num_rows = queryDB($sql, array(TABLE_PREFIX, $_POST['just_social']));
+
+		// hack to replace queryDB vars with values
 		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('just_social', '$_POST[just_social]')";
-		mysql_query($sql, $db);
-		write_to_log(AT_ADMIN_LOG_REPLACE, 'config', mysql_affected_rows($db), $sql);
+        write_to_log(AT_ADMIN_LOG_REPLACE, 'config', $num_rows, $sql);
 		$msg->addFeedback('ATUTOR_SOCIAL_ONLY');
 		
 	} else if ($_POST['just_social'] == 0) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='just_social'";
-		mysql_query($sql, $db);
-		write_to_log(AT_ADMIN_LOG_DELETE, 'config', mysql_affected_rows($db), $sql);
+		$sql = "DELETE FROM %sconfig WHERE name='just_social'";
+		$num_rows = queryDB($sql, array(TABLE_PREFIX));
+		// hack to replace queryDB vars with values for log
+		//$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='just_social'";
+		
+		write_to_log(AT_ADMIN_LOG_DELETE, 'config', $num_rows, $sqlout);
 		$msg->addFeedback('ATUTOR_SOCIAL_LMS');
 		
 	}
 	$_config['just_social'] = $_POST['just_social'];
 }
 
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql = "SELECT COUNT(*) AS cnt FROM %scourses";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 $num_courses = $row['cnt'];
 
 /////////
@@ -64,9 +69,9 @@ if ($_config['check_version']) {
 	}
 }
 if ($_config['allow_instructor_requests'] && admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)){
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."instructor_approvals";
-			$result = mysql_query($sql, $db);
-			$row    = mysql_fetch_assoc($result);
+		    $sql	= "SELECT COUNT(*) AS cnt FROM %sinstructor_approvals";		
+			$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
+
 			$instructor_row[] = $row;
 			$savant->assign('row_instructor', $instructor_row);
 }
@@ -81,7 +86,6 @@ if ($file)
 {
 	// get patch list
 	$patch_folder = "http://" . $update_server . '/patch/' . str_replace('.', '_', VERSION) . '/';
-
 	$patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
 	
 	if ($patch_list_xml) 
@@ -94,15 +98,13 @@ if ($file)
 		if (count($patch_list_array)) {
 			foreach ($patch_list_array as $row_num => $patch) {
 				$patch_ids .= '\'' . $patch['atutor_patch_id'] . '\', ';
+				//$patch_ids .= $patch['atutor_patch_id'] .',';
 			}
-				
-			$sql = "select count(distinct atutor_patch_id) cnt_installed_patches from ".TABLE_PREFIX."patches " .
-			       "where atutor_patch_id in (" . substr($patch_ids, 0, -2) .")".
-			       " and status like '%Installed'";
-		
-			$result = mysql_query($sql, $db) or die(mysql_error());
-			$row = mysql_fetch_assoc($result);
-			
+
+			$this_pids = substr($patch_ids, 0, -2);
+			$sql = "select count(distinct atutor_patch_id) cnt_installed_patches from %spatches where atutor_patch_id in (%s) and status like '%%Installed'";
+			$row = queryDB($sql, array(TABLE_PREFIX, $this_pids), TRUE, FALSE);
+
 			$cnt = count($patch_list_array) - $row['cnt_installed_patches'];
 			$savant->assign('cnt', $cnt);
 
@@ -119,59 +121,47 @@ if ($file)
 if (!isset($_config['db_size']) || ($_config['db_size_ttl'] < time())) {
 	$_config['db_size'] = 0;
 	$sql = 'SHOW TABLE STATUS';
-	$result = mysql_query($sql, $db);
-	while($row = mysql_fetch_assoc($result)) {
-		$_config['db_size'] += $row['Data_length']+$row['Index_length'];
+	$rows = queryDB($sql);
 	
+	foreach($rows as $row){
+	    $_config['db_size'] += $row['Data_length']+$row['Index_length'];
 	}
 
-	$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('db_size', '{$_config['db_size']}')";
-	mysql_query($sql, $db);
+    $sql = "REPLACE INTO %sconfig VALUES ('db_size', '%s')";
+    queryDB($sql, array(TABLE_PREFIX,$_config['db_size']));
 
 	// get disk usage if we're on *nix
 	if (DIRECTORY_SEPARATOR == '/') {
 		$du = @shell_exec('du -sk '.escapeshellcmd(AT_CONTENT_DIR));
 		if ($du) {
 			$_config['du_size'] = (int) $du;
-			$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('du_size', '{$_config['du_size']}')";
-			mysql_query($sql, $db);
-			
+			$sql = "REPLACE INTO %sconfig VALUES ('du_size', '%d')";
+			queryDB($sql, array(TABLE_PREFIX, $_config['du_size']));
 		}
 	}
-
 	$ttl = time() + 24 * 60 * 60; // every 1 day.
-	$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('db_size_ttl', '$ttl')";
-	mysql_query($sql, $db);
-	
+	$sql = "REPLACE INTO %sconfig VALUES ('db_size_ttl', '%d')";
+	queryDB($sql, array(TABLE_PREFIX, $ttl));
 }
-/*
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
-$num_courses = $row['cnt'];
-if($num_courses == 0 ){
-$msg->addFeedback('ADMIN_NO_COURSES');
-}
-*/
+
 $savant->assign('num_courses', $num_courses);
 
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql = "SELECT COUNT(*) AS cnt FROM %smembers";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 $num_users = $row['cnt'];
+
 $savant->assign('num_users', $num_users);
 
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."admins";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql = "SELECT COUNT(*) AS cnt FROM %sadmins";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 $num_users += $row['cnt'];
 
+// THIS NEEDS TO BE DB INDEPENDENT
+$sql = "SELECT VERSION() as version";
+$row = queryDB($sql, array(), TRUE);
+$db_version = $row['version'];
 
-$sql = "SELECT VERSION()";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
-$mysql_version = $row[0];
-
+$savant->assign('db_version', $db_version);
 $savant->assign('path_length', $path_length);
 $savant->assign('pages', $_pages);
 $savant->assign('db_size', $_config['db_size']);

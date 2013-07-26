@@ -10,7 +10,6 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
-
 if (AT_INCLUDE_PATH !== 'NULL') {
 	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);	
 
@@ -51,25 +50,42 @@ if (AT_INCLUDE_PATH !== 'NULL') {
  * @author  Alexey Novak, Cindy Li
  */
 function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows") {
-    global $db, $msg, $addslashes;
-    
-    $oneRowErrorMessage = 'Query "%s" which should returned only 1 row has returned more rows.';
-    
+
+    $sql = create_sql($query, $params, $sanitize);
+    return execute_sql($sql, $oneRow, $callback_func);
+
+}
+
+function sqlout($sql){
+    //output the sql with variable values inserted
+    global $sqlout;
+    $sqlout = $sql;
+}
+
+function create_sql($query, $params=array(), $sanitize = true){
+    global $addslashes;
+
     // Prevent sql injections through string parameters passed into the query
     if ($sanitize) {
         foreach($params as $i=>$value) {
             $params[$i] = $addslashes($value);
         }
     }
+    $sql = vsprintf($query, $params);
+    return $sql;
+}
+function execute_sql($sql, $oneRow, $callback_func){
+    global $db, $msg;
     
+    $oneRowErrorMessage = 'Query "%s" which should returned only 1 row has returned more rows.';
     $displayErrorMessage = array('DB_QUERY', date('m/d/Y h:i:s a', time()));
     
     try {
-        $sql = vsprintf($query, $params);
+        sqlout($sql);
         $oneRowErrorMessage = sprintf($oneRowErrorMessage, $sql);
         
         // The line below must be commented out on production instance of ATutor
-        //error_log(print_r($sql, true), 0);    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY
+       //error_log(print_r($sql, true), 0);    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY
         
         // Query DB and if something goes wrong then log the problem
         if(defined('MSQLI_ENABLED')){
@@ -121,7 +137,7 @@ function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $ca
     }
 }
 
-function $query_callback(){
-
+function at_affected_rows($db){
+    return mysql_affected_rows($db);
 }
 ?>

@@ -52,9 +52,9 @@ if (isset($_POST['submit'])) {
 
 
     $valid = $img->check($_POST['secret']);
-    if (!$valid)
+    if (!$valid){
         $msg->addError('SECRET_ERROR');
-
+    }
 	
 	if ($_POST['from'] == '') {
 		$missing_fields[] = _AT('from_name');

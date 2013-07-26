@@ -18,10 +18,10 @@ function apply_category_theme($category_id) {
 
 		if ($category_id) {
 			// apply the theme for this category:
-			$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$category_id";
-			$result = mysql_query($sql, $db);
-			if (($cat_row = mysql_fetch_assoc($result)) && $cat_row['theme']) {
-				$_SESSION['prefs']['PREF_THEME'] = $cat_row['theme'];
+		    $sql	= "SELECT theme FROM %scourse_cats WHERE cat_id=%d";
+			$row = queryDB($sql, array(TABLE_PREFIX, $category_id), TRUE);
+			if($row['theme'] !=''){
+				$_SESSION['prefs']['PREF_THEME'] = $row['theme'];
 			} else {			
 				$_SESSION['prefs']['PREF_THEME'] = get_default_theme();
 			}
@@ -38,22 +38,27 @@ function count_login( ) {
 	if (!$module->isEnabled()) {
 		return;
 	}
-	if ($_SESSION['is_guest']) {
-	    $sql   = "INSERT INTO ".TABLE_PREFIX."course_stats VALUES ($_SESSION[course_id], NOW(), 1, 0)";
-	} else {
-	   $sql    = "INSERT INTO ".TABLE_PREFIX."course_stats VALUES ($_SESSION[course_id], NOW(), 0, 1)";
-	}
 
-    $result = @mysql_query($sql, $db);
+    $sql = "SELECT * from %scourse_stats WHERE course_id = %d AND login_date = CURDATE()";
+    $row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
+    
+    if(!$row['course_id']){
+        if ($_SESSION['is_guest']) {
+            $sql   = "INSERT INTO %scourse_stats VALUES (%d, NOW(), 1, 0)";
+        } else {
+            $sql    = "INSERT INTO %scourse_stats VALUES (%d, NOW(), 0, 1)";
+        }
 
-    if (!$result) {
+        $result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+    }else{
 		/* that entry already exists, then update it. */
 		if ($_SESSION['is_guest']) {
-			$sql   = "UPDATE ".TABLE_PREFIX."course_stats SET guests=guests+1 WHERE course_id=$_SESSION[course_id] AND login_date=CURDATE()";
+			$sql   = "UPDATE %scourse_stats SET guests=guests+1 WHERE course_id=%d AND login_date=CURDATE()";
+			unset($msg);
 		} else {
-			$sql   = "UPDATE ".TABLE_PREFIX."course_stats SET members=members+1 WHERE course_id=$_SESSION[course_id] AND login_date=CURDATE()";
+			$sql   = "UPDATE %scourse_stats SET members=members+1 WHERE course_id=%d AND login_date=CURDATE()";
 		}
-		$result = @mysql_query($sql, $db);
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 	}
 }
 
@@ -63,12 +68,14 @@ function get_groups($course_id) {
 	$groups = array();
 
 	if (authenticate(AT_PRIV_GROUPS, true)) {
-		$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$course_id";
+		$sql = "SELECT G.group_id FROM %sgroups G INNER JOIN %sgroups_types T USING (type_id) WHERE T.course_id=%d";
+		$rows = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id));
 	} else {
-		$sql = "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN (".TABLE_PREFIX."groups_types T, ".TABLE_PREFIX."groups_members M) ON (G.type_id=T.type_id AND  G.group_id=M.group_id) WHERE T.course_id=$course_id AND M.member_id=$_SESSION[member_id]";
+		$sql = "SELECT G.group_id FROM %sgroups G INNER JOIN (%sgroups_types T, %sgroups_members M) ON (G.type_id=T.type_id AND  G.group_id=M.group_id) WHERE T.course_id=%d AND M.member_id=%d";
+		$rows = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX,TABLE_PREFIX, $course_id, $_SESSION['member_id']));
 	}
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	foreach($rows as $row){
 		$groups[$row['group_id']] = $row['group_id'];
 	}
 
@@ -84,12 +91,15 @@ if($_config['just_social'] == 1){
 	exit;
 }
 $set_to_public = false;
+
 if ($_SERVER['PHP_SELF'] == $_base_path."acl.php") {
 	//search through the auth table and find password that matches get password
 	$key = $addslashes(key($_GET));
-	$sql = "SELECT * FROM ".TABLE_PREFIX."course_access WHERE password='$key' AND (expiry_date > NOW() OR expiry_date+0 = 0) AND enabled=1";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+
+	$sql = "SELECT * FROM %scourse_access WHERE password='%s' AND (expiry_date > NOW() OR expiry_date+0 = 0) AND enabled=1";
+	$row = queryDB($sql, array(TABLE_PREFIX, $key), TRUE);
+
+	if ($row['password'] != '') {
 		$set_to_public = true;
 		$_REQUEST['course'] = $row['course_id'];
 		$_SESSION['member_id'] = 0;
@@ -100,13 +110,15 @@ if ($_SERVER['PHP_SELF'] == $_base_path."acl.php") {
 
 
 if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
-	$sql = "SELECT login, `privileges`, language FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[is_super_admin]' AND `privileges`>0";
-	$result = mysql_query($sql, $db);
 
-	if ($row = mysql_fetch_assoc($result)) {
-		$sql = "UPDATE ".TABLE_PREFIX."admins SET last_login=NOW() WHERE login='$_SESSION[is_super_admin]'";
-		mysql_query($sql, $db);
+    $sql = "SELECT login, `privileges`, language FROM %sadmins WHERE login='%s' AND `privileges`>0";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['is_super_admin']), TRUE);
 
+    // update admin login when returning from viewing courses
+	if($row['login']){
+		$sql = "UPDATE %sadmins SET last_login=NOW() WHERE login='%s'";
+		$num_rows = queryDB($sql, array(TABLE_PREFIX, $_SESSION['is_super_admin']));
+		
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
 		$_SESSION['course_id']  = -1;
@@ -117,7 +129,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 		unset($_SESSION['member_id']);
 		unset($_SESSION['is_super_admin']);
 
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', $num_rows, $sql);
 
 		$msg->addFeedback('LOGIN_SUCCESS');
 
@@ -201,24 +213,25 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	}
 	
 	// If instructor with no course, direct to create course screen unless it is disabled
-	$sql = 'SELECT status FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-    $result = mysql_query($sql, $db);
-    $row = mysql_fetch_assoc($result);
     
+    $sql = 'SELECT status FROM %smembers WHERE member_id=%d';
+    $row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+
 	if ($row['status'] == 3) {
-		$sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'courses WHERE member_id='.$_SESSION['member_id'];
-  		$result = mysql_query($sql, $db);
- 		$row = mysql_fetch_assoc($result);
  		
- 		$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name ='_core/services' && status ='2'";
-		$result = mysql_query($sql, $db);
-		if(mysql_num_rows($result)){
+ 		$sql = 'SELECT COUNT(*) AS count FROM %scourses WHERE member_id=%d';
+  		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+        $this_count = $row['count'];
+		 		
+		$sql = "SELECT * FROM %smodules WHERE dir_name ='_core/services' && status ='2'";
+		$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
+		
+		if($row['dir_name']){
 		    //This is a Service site 
 			$service_site = 1;
 		}
-  		if ($row['count'] == 0) {
-
-            if($service_site && $_config['disable_create'] != 1){
+  		if ($this_count == 0) {
+            if(isset($service_site) && $_config['disable_create'] != 1){
                 $msg->addFeedback('CREATE_NEW_COURSE');
                 header('Location: mods/_core/services/users/create_course.php');
                 exit;
@@ -232,9 +245,8 @@ if (($course === 0) && $_SESSION['valid_user']) {
     /* http://atutor.ca/atutor/mantis/view.php?id=4587
      * 	for users with no enrolled courses, default to the Browse Courses screen instead of My Courses. 
      */
-    $sql = 'SELECT COUNT(*) AS count FROM '.TABLE_PREFIX.'course_enrollment WHERE member_id='.$_SESSION['member_id'];
-    $result = mysql_query($sql, $db);
-    $row = mysql_fetch_assoc($result);
+    $sql = 'SELECT COUNT(*) AS count FROM %scourse_enrollment WHERE member_id=%d';
+    $row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
     if ($row['count'] == 0) {
         header('Location: users/browse.php');
         exit;
@@ -255,10 +267,13 @@ if (($course === 0) && $_SESSION['valid_user']) {
 	header('Location: users/index.php');
 	exit; 
 }
+/*
+Check the release and end dates on a course, redirect to login or MyStart if not released, or expired.
+*/
+$sql	= "SELECT member_id, content_packaging, cat_id, access, title, UNIX_TIMESTAMP(release_date) AS u_release_date, UNIX_TIMESTAMP(end_date) AS u_end_date FROM %scourses WHERE course_id=%d";
+$row = queryDB($sql,array(TABLE_PREFIX, $course), TRUE);
 
-$sql	= "SELECT member_id, content_packaging, cat_id, access, title, UNIX_TIMESTAMP(release_date) AS u_release_date, UNIX_TIMESTAMP(end_date) AS u_end_date FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-$result = mysql_query($sql,$db);
-if (!$row = mysql_fetch_assoc($result)) {
+if (!$row['member_id']) {
 	$msg->addError('ITEM_NOT_FOUND');
 	if ($_SESSION['member_id']) {
 		header('Location: '.AT_BASE_HREF.'users/index.php');
@@ -335,10 +350,11 @@ switch ($row['access']){
 
 		/* title wont be needed. comes from the cache. */
 		$_SESSION['course_title'] = $row['title'];
-
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-		$result = mysql_query($sql, $db);
-		if ($row2 = mysql_fetch_assoc($result)) {
+		
+		$sql	= "SELECT * FROM %scourse_enrollment WHERE member_id=%d AND course_id=%d";
+		$row2 = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course), TRUE);		
+		
+		if ($row2['member_id']) {
 			/* we have requested or are enrolled in this course */
 			$_SESSION['enroll'] = AT_ENROLL_YES;
 			$_SESSION['s_cid']  = $row2['last_cid'];
@@ -394,10 +410,11 @@ switch ($row['access']){
 			/* add member login to counter: */
 			count_login();
 		}
-
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-		$result = mysql_query($sql, $db);
-		if ($row2 = mysql_fetch_assoc($result)) {
+		
+		$sql	= "SELECT * FROM %scourse_enrollment WHERE member_id=%d AND course_id=%d";
+		$row2 = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course), TRUE);
+			
+		if ($row2['member_id']) {
 			/* we have requested or are enrolled in this course */
 			$_SESSION['enroll'] = AT_ENROLL_YES;
 			$_SESSION['s_cid']  = $row2['last_cid'];
@@ -451,9 +468,8 @@ switch ($row['access']){
 			$_SESSION['course_title'] = $row['title'];
 			$_SESSION['enroll']	  = AT_ENROLL_YES;
 
-			$sql	= "SELECT last_cid FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-			$result = mysql_query($sql, $db);
-			$row2 = mysql_fetch_assoc($result);
+			$sql	= "SELECT last_cid FROM %scourse_enrollment WHERE member_id=%d AND course_id=%d";
+			$row2 = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course), TRUE);
 
 			$_SESSION['s_cid']  = $row2['last_cid'];
 
@@ -478,10 +494,11 @@ switch ($row['access']){
 		}
 
 		/* check if we're enrolled */
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-		$result = mysql_query($sql, $db);
+		
+		$sql	= "SELECT * FROM %scourse_enrollment WHERE member_id=%d AND course_id=%d";
+		$row2 = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course), TRUE);
 
-		if (!$row2 = mysql_fetch_assoc($result)) {
+		if (!$row2['member_id']) {
 			/* we have not requested enrollment in this course */
 			$_SESSION['course_id'] = 0;
 			header('Location: users/private_enroll.php?course='.intval($course));
