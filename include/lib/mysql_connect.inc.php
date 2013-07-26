@@ -38,6 +38,31 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 		mysql_query("SET NAMES 'utf8'", $db); 
 	}	
 }
+//functions for properly escaping input strings
+function my_add_null_slashes( $string ) {
+    if(defined('MYSQLI_ENABLED')){
+        return mysqli_real_escape_string(stripslashes($string));
+    }else{
+        return mysql_real_escape_string(stripslashes($string));
+    }
+
+}
+
+function my_null_slashes($string) {
+    return $string;
+}
+
+if ( get_magic_quotes_gpc() == 1 ) {
+    $addslashes   = 'my_add_null_slashes';
+    $stripslashes = 'stripslashes';
+} else {
+    if(defined('MYSQLI_ENABLED')){
+        $addslashes   = 'mysqli_real_escape_string';
+    }else{
+        $addslashes   = 'mysql_real_escape_string';
+    }
+    $stripslashes = 'my_null_slashes';
+}
 
 /**
  * This function is used to make a DB query the same along the whole codebase
@@ -140,4 +165,6 @@ function execute_sql($sql, $oneRow, $callback_func){
 function at_affected_rows($db){
     return mysql_affected_rows($db);
 }
+
+
 ?>
