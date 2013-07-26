@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
-
+//http://localhost/atutorgit/confirm.php?id=18&m=3a4f4d38ba 
 $_user_location = 'public';
 
 define('AT_INCLUDE_PATH', 'include/');
@@ -26,16 +26,16 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 	$id = intval($_GET['id']);
 	$m  = $_GET['m'];
 	$e  = $addslashes($_GET['e']);
-
-	$sql    = "SELECT creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+ 
+    $sql    = "SELECT creation_date FROM %smembers WHERE member_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+	
+	if ($row['creation_date'] != '') {
 		$code = substr(md5($e . $row['creation_date'] . $id), 0, 10);
 
 		if ($code == $m) {
-			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$e', last_login=NOW(), creation_date=creation_date WHERE member_id=$id";
-			$result = mysql_query($sql, $db);
-
+			$sql = "UPDATE %smembers SET email='%s', last_login=NOW(), creation_date=creation_date WHERE member_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $e, $id));
 			$msg->addFeedback('CONFIRM_GOOD');
 
 			header('Location: '.$_base_href.'users/index.php');
@@ -50,19 +50,20 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 } else if (isset($_GET['id'], $_GET['m'])) {
 	$id = intval($_GET['id']);
 	$m  = $_GET['m'];
+	
+	$sql    = "SELECT email, creation_date FROM %smembers WHERE member_id=%d AND status=".AT_STATUS_UNCONFIRMED;
+	$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);	
 
-	$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id AND status=".AT_STATUS_UNCONFIRMED;
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+	if ($row['creation_date'] != '') {
 		$code = substr(md5($row['email'] . $row['creation_date'] . $id), 0, 10);
 
 		if ($code == $m) {
 			if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date, last_login=NOW() WHERE member_id=$id";
+				$sql = "UPDATE %smembers SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date, last_login=NOW() WHERE member_id=%d";				
 			} else {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_STUDENT.", creation_date=creation_date, last_login=NOW() WHERE member_id=$id";
+					$sql = "UPDATE %smembers SET status=".AT_STATUS_STUDENT.", creation_date=creation_date, last_login=NOW() WHERE member_id=%d";
 			}
-			$result = mysql_query($sql, $db);
+			$result = queryDB($sql, array(TABLE_PREFIX, $id));
 
 			if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 			{
@@ -103,11 +104,9 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 } else if (isset($_POST['submit'])) {
 	$_POST['email'] = $addslashes($_POST['email']);
 
-	$sql    = "SELECT member_id, email, creation_date, status FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]'";
-	$result = mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_assoc($result)) {
-
+	$sql    = "SELECT member_id, email, creation_date, status FROM %smembers WHERE email='%s'";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_POST['email']), TRUE);
+	if ($row['creation_date'] != '') {
 		if ($row['status'] == AT_STATUS_UNCONFIRMED) {
 			$code = substr(md5($row['email'] . $row['creation_date']. $row['member_id']), 0, 10);
 			
@@ -141,9 +140,10 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 if (isset($_REQUEST['auto_login']))
 {
 	
-	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM ".TABLE_PREFIX."members M WHERE M.member_id=".$_REQUEST["member_id"];
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) 
+	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM %smembers M WHERE M.member_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_REQUEST["member_id"]), TRUE);
+	
+	if ($row['member_id'] != '') 
 	{
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= $_REQUEST["member_id"];
