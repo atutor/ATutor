@@ -20,8 +20,12 @@ if (isset($_GET['pid'])) $pid = intval($_GET['pid']);
 
 if ($cid > 0)
 {
-	$result = $contentManager->getContentPage($cid);
-	$content_row = mysql_fetch_assoc($result);
+	$content_array = $contentManager->getContentPage($cid);
+	// This is a hack, getContentPage() only outputs a multi-array, 
+	// needed to display content pages. A single row is needed here.
+    foreach($content_array as $content_sub){
+        $content_row = $content_sub;
+    }
 }
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
