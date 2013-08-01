@@ -65,11 +65,13 @@ class ContentManager
 		if (!($this->course_id > 0)) {
 			return;
 		}
+
 		$sql = "SELECT content_id, content_parent_id, ordering, title, UNIX_TIMESTAMP(release_date) AS u_release_date, content_type 
-		          FROM ".TABLE_PREFIX."content 
-		         WHERE course_id=$this->course_id 
+		          FROM %scontent 
+		         WHERE course_id=%d 
 		         ORDER BY content_parent_id, ordering";
-		$result = mysql_query($sql, $this->db);
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->course_id));		
+		
 
 		/* x could be the ordering or even the content_id	*/
 		/* don't really need the ordering anyway.			*/
@@ -82,7 +84,7 @@ class ContentManager
 		$max_depth = array();
 		$_menu_info = array();
 
-		while ($row = mysql_fetch_assoc($result)) {
+		foreach($result as $row){
 			$num_sections++;
 			$_menu[$row['content_parent_id']][] = array('content_id'=> $row['content_id'],
 														'ordering'	=> $row['ordering'], 
@@ -101,11 +103,12 @@ class ContentManager
 			 * @author harris
 			 */
 			$test_rs = $this->getContentTestsAssoc($row['content_id']);
-			while ($test_row = mysql_fetch_assoc($test_rs)){
-				$_menu[$row['content_id']][] = array(	'test_id'	=> $test_row['test_id'],
+			foreach($test_rs as $test_row){
+		        $_menu[$row['content_id']][] = array(	'test_id'	=> $test_row['test_id'],
 														'title'		=> htmlspecialchars($test_row['title']),
 														'content_type' => CONTENT_TYPE_CONTENT);
 			}
+
 			/* End of add test content asscioations */
 
 			if ($row['content_parent_id'] == 0) {
@@ -244,14 +247,17 @@ class ContentManager
 		}
 
 		// shift the new neighbouring content down
-		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering+1 
-		         WHERE ordering>=$ordering 
-		           AND content_parent_id=$content_parent_id 
-		           AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
+
+		$sql = "UPDATE %scontent SET ordering=ordering+1 
+		         WHERE ordering>=%d 
+		           AND content_parent_id=%d 
+		           AND course_id=%d";
+		$result = queryDB($sql,array(TABLE_PREFIX,$ordering,$content_parent_id, $_SESSION['course_id']  ));
+			
+		
 
 		/* main topics all have minor_num = 0 */
-		$sql = "INSERT INTO ".TABLE_PREFIX."content
+		$sql = "INSERT INTO %scontent
 		               (course_id,
 		                content_parent_id,
 		                ordering,
@@ -285,14 +291,13 @@ class ContentManager
 						$allow_test_export,
 						$content_type)";
 
-		$err = mysql_query($sql, $this->db);
-
+        $err = queryDB($sql, array(TABLE_PREFIX));
+        
 		/* insert the related content */
 		$sql = "SELECT LAST_INSERT_ID() AS insert_id";
-		$result = mysql_query($sql, $this->db);
-		$row = mysql_fetch_assoc($result);
+		$row = queryDB($sql, array(), TRUE);
+		
 		$cid = $row['insert_id'];
-
 		$sql = '';
 		if (is_array($related)) {
 			foreach ($related as $x => $related_content_id) {
@@ -308,8 +313,8 @@ class ContentManager
 			}
 
 			if ($sql != '') {
-				$sql	= 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES '.$sql;
-				$result	= mysql_query($sql, $this->db);
+				$sql	= 'INSERT INTO %srelated_content VALUES '.$sql;
+				$result	= queryDB($sql, array(TABLE_PREFIX));
 			}
 		}
 
@@ -324,17 +329,20 @@ class ContentManager
 		}
 
 		/* update the title, text of the newly moved (or not) content */
-		$sql	= "UPDATE ".TABLE_PREFIX."content 
+		$sql	= "UPDATE %scontent 
 		              SET title='$title', head='$head', use_customized_head=$use_customized_head, 
 		                  text='$text', keywords='$keywords', formatting=$formatting, 
 		                  revision=revision+1, last_modified=NOW(), release_date='$release_date', 
 		                  test_message='$test_message', allow_test_export=$allow_test_export, 
                           content_type=$content_type
 		            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
 
+        $result = queryDB($sql, array(TABLE_PREFIX));
+        
 		/* update the related content */
-		$result	= mysql_query("DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id", $this->db);
+		$sql = "DELETE FROM %srelated_content WHERE content_id=%d OR related_content_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX,$content_id, $content_id));
+		
 		$sql = '';
 		if (is_array($related)) {
 			foreach ($related as $x => $related_content_id) {
@@ -351,11 +359,12 @@ class ContentManager
 
 			if ($sql != '') {
 				/* delete the old related content */
-				$result	= mysql_query("DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id", $this->db);
+				$sql1 = "DELETE FROM %srelated_content WHERE content_id=%d OR related_content_id=%d";
+				$result	= queryDB($sql1, array(TABLE_PREFIX, $content_id, $content_id));
 
 				/* insert the new, and the old related content again */
-				$sql	= 'INSERT INTO '.TABLE_PREFIX.'related_content VALUES '.$sql;
-				$result	= mysql_query($sql, $this->db);
+				$sql	= 'INSERT INTO %srelated_content VALUES '.$sql;
+				$result	= queryDB($sql, array(TABLE_PREFIX));			
 			}
 		}
 	}
@@ -368,17 +377,19 @@ class ContentManager
 		}
 
 		/* first get the content to make sure it exists	*/
-		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-		if (!($row = mysql_fetch_assoc($result)) ) {
+
+		$sql	= "SELECT ordering, content_parent_id FROM %scontent WHERE content_id=%d AND course_id=%d";
+		$row	= queryDB($sql, array(TABLE_PREFIX, $content_id, $_SESSION[course_id]), TRUE);
+		
+		if (!$row ) {
 			return FALSE;
 		}
 		$old_ordering		= $row['ordering'];
 		$old_content_parent_id	= $row['content_parent_id'];
+
+		$sql	= "SELECT max(ordering) max_ordering FROM %scontent WHERE content_parent_id=%d AND course_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $old_content_parent_id, $_SESSION['course_id'] ), TRUE);	
 		
-		$sql	= "SELECT max(ordering) max_ordering FROM ".TABLE_PREFIX."content WHERE content_parent_id=$old_content_parent_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-		$row = mysql_fetch_assoc($result);
 		$max_ordering = $row['max_ordering'];
 		
 		if ($content_id == $new_content_parent_id) {
@@ -407,27 +418,25 @@ class ContentManager
 		
 		if (($old_content_parent_id != $new_content_parent_id) || ($old_ordering != $new_content_ordering)) {
 			// remove the gap left by the moved content
-			$sql = "UPDATE ".TABLE_PREFIX."content 
+			$sql = "UPDATE %scontent 
 			           SET ordering=ordering-1 
-			         WHERE ordering>$old_ordering 
-			           AND content_parent_id=$old_content_parent_id 
-			           AND content_id<>$content_id 
-			           AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
-
+			         WHERE ordering>%d 
+			           AND content_parent_id=%d 
+			           AND content_id<>%d
+			           AND course_id=%d";
+            $result = queryDB($sql, array(TABLE_PREFIX, $old_ordering, $old_content_parent_id, $content_id, $_SESSION['course_id']));
 			// shift the new neighbouring content down
-			$sql = "UPDATE ".TABLE_PREFIX."content 
+			$sql = "UPDATE %scontent 
 			           SET ordering=ordering+1 
-			         WHERE ordering>=$new_content_ordering 
-			           AND content_parent_id=$new_content_parent_id 
-			           AND content_id<>$content_id 
-			           AND course_id=$_SESSION[course_id]";
-			$result = mysql_query($sql, $this->db);
-
-			$sql	= "UPDATE ".TABLE_PREFIX."content 
-			              SET content_parent_id=$new_content_parent_id, ordering=$new_content_ordering 
-			            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-			$result	= mysql_query($sql, $this->db);
+			         WHERE ordering>=%d 
+			           AND content_parent_id=%d  
+			           AND content_id<>%d  
+			           AND course_id=%d ";
+            $result = queryDB($sql, array(TABLE_PREFIX,$new_content_ordering,$new_content_parent_id,$content_id, $_SESSION['course_id']));
+			$sql	= "UPDATE %scontent 
+			              SET content_parent_id=%d, ordering=%d
+			            WHERE content_id=%d AND course_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $new_content_parent_id,$new_content_ordering,$content_id,$_SESSION['course_id']));
 		}
 	}
 	
@@ -437,11 +446,13 @@ class ContentManager
 		}
 
 		/* check if exists */
-		$sql	= "SELECT ordering, content_parent_id FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $this->db);
-		if (!($row = @mysql_fetch_assoc($result)) ) {
+		$sql	= "SELECT ordering, content_parent_id FROM %scontent WHERE content_id=%d AND course_id=%d";
+		$row	= queryDB($sql, array(TABLE_PREFIX, $content_id, $_SESSION['course_id']), TRUE);
+
+		if (!$row ) {
 			return false;
-		}
+		}		
+
 		$ordering			= $row['ordering'];
 		$content_parent_id	= $row['content_parent_id'];
 
@@ -456,38 +467,40 @@ class ContentManager
 		}
 
 		/* delete this content page					*/
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
+		$sql	= "DELETE FROM %scontent WHERE content_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id,$_SESSION['course_id']));
 
 		/* delete this content from member tracking page	*/
-		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
-
-		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
-
+		$sql	= "DELETE FROM %smember_track WHERE content_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id,$_SESSION['course_id']));
+		
+		$sql	= "DELETE FROM %srelated_content WHERE content_id=%d OR related_content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id, $content_id));
+		
+		
 		/* delete the content tests association */
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
-
+		$sql	= "DELETE FROM %scontent_tests_assoc WHERE content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id));
+		
 		/* delete the content forum association */
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
-
+		$sql	= "DELETE FROM %scontent_forums_assoc WHERE content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id));
+		
 		/* Delete all AccessForAll contents */
 		require_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 		$a4a = new A4a($content_id);
 		$a4a->deleteA4a();
 
 		/* re-order the rest of the content */
-		$sql = "UPDATE ".TABLE_PREFIX."content SET ordering=ordering-1 WHERE ordering>=$ordering AND content_parent_id=$content_parent_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
+		$sql = "UPDATE %scontent SET ordering=ordering-1 WHERE ordering>=%d AND content_parent_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $ordering, $content_parent_id, $_SESSION['course_id']));
+		
 		/* end moving block */
 
 		/* remove the "resume" to this page, b/c it was deleted */
-		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET last_cid=0 WHERE course_id=$_SESSION[course_id] AND last_cid=$content_id";
-		$result = mysql_query($sql, $this->db);
-
+		$sql = "UPDATE %scourse_enrollment SET last_cid=0 WHERE course_id=%d AND last_cid=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $content_id));
+		
 		return true;
 	}
 
@@ -505,25 +518,25 @@ class ContentManager
 		}
 
 		/* delete this content page					*/
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $this->db);
-
+		$sql	= "DELETE FROM %scontent WHERE content_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id, $_SESSION['course_id']));
+		
 		/* delete this content from member tracking page	*/
-		$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
-
-		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
-
+		$sql	= "DELETE FROM %smember_track WHERE content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id));
+		
+		$sql	= "DELETE FROM %srelated_content WHERE content_id=%d OR related_content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id, $content_id));
+		
 		/* delete the content tests association */
-		$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
+		$sql	= "DELETE FROM %scontent_tests_assoc WHERE content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id));
 	}
 
-	function getContentPage($content_id) {
-		$sql	= "SELECT *, DATE_FORMAT(release_date, '%Y-%m-%d %H:%i:00') AS release_date, release_date+0 AS r_date, NOW()+0 AS n_date FROM ".TABLE_PREFIX."content 
-		            WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
+	function getContentPage($content_id) {	
+		$sql	= "SELECT *, DATE_FORMAT(release_date, '%%Y-%%m-%%d %%H:%%i:00') AS release_date, release_date+0 AS r_date, NOW()+0 AS n_date FROM %scontent 
+		            WHERE content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id));
 
 		return $result;
 	}
@@ -539,13 +552,14 @@ class ContentManager
 		$related_content = array();
 
 		if ($all) {
-			$sql = "SELECT * FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id OR related_content_id=$content_id";
+			$sql = "SELECT * FROM %srelated_content WHERE content_id=%d OR related_content_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $content_id, $content_id));
 		} else {
-			$sql = "SELECT * FROM ".TABLE_PREFIX."related_content WHERE content_id=$content_id";
+			$sql = "SELECT * FROM %srelated_content WHERE content_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $content_id));
 		}
-		$result = mysql_query($sql, $this->db);
 
-		while ($row = mysql_fetch_assoc($result)) {
+        foreach($result as $row){
 			if ($row['related_content_id'] != $content_id) {
 				$related_content[] = $row['related_content_id'];
 			} else {
@@ -564,15 +578,19 @@ class ContentManager
 	 * @author	Harris
 	 */
 	function & getContentTestsAssoc($content_id){
-		$sql	= "SELECT ct.test_id, t.title FROM (SELECT * FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$content_id) AS ct LEFT JOIN ".TABLE_PREFIX."tests t ON ct.test_id=t.test_id";
-		$result = mysql_query($sql, $this->db);
+
+		$sql	= "SELECT ct.test_id, t.title FROM (SELECT * FROM %scontent_tests_assoc WHERE content_id=%d) AS ct LEFT JOIN %stests t ON ct.test_id=t.test_id";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id, TABLE_PREFIX));
+
 		return $result;
 	}
 
         /*TODO***************BOLOGNA***************REMOVE ME**********/
-        function & getContentForumsAssoc($content_id){
-		$sql	= "SELECT cf.forum_id, f.title FROM (SELECT * FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content_id) AS cf LEFT JOIN ".TABLE_PREFIX."forums f ON cf.forum_id=f.forum_id";
-		$result = mysql_query($sql, $this->db);
+    function & getContentForumsAssoc($content_id){
+
+		$sql	= "SELECT cf.forum_id, f.title FROM (SELECT * FROM %scontent_forums_assoc WHERE content_id=%d) AS cf LEFT JOIN %sforums f ON cf.forum_id=f.forum_id";
+		$result = queryDB($sql, array(TABLE_PREFIX, $content_id, TABLE_PREFIX));	
+		
 		return $result;
 	}
 
@@ -731,13 +749,14 @@ class ContentManager
 		echo "\n".'ATutor.course.contentMenu.initContentMenu = function() {'."\n";
 		
 		$sql = "SELECT content_id
-		          FROM ".TABLE_PREFIX."content 
-		         WHERE course_id=$this->course_id
+		          FROM %scontent 
+		         WHERE course_id=%d
 		           AND content_type = ".CONTENT_TYPE_FOLDER;
-		$result = mysql_query($sql, $this->db);
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->course_id));
 
 		// collapse all root content folders
-		while ($row = mysql_fetch_assoc($result)) {
+
+		foreach($result as $row){
 			echo 'if (ATutor.getcookie("c'.$_SESSION['course_id'].'_'.$row['content_id'].'") == "1") {'."\n".
 			     '	ATutor.course.contentMenu.expandContentFolder('.$row['content_id'].');'."\n".
 			     '} else {'."\n".
@@ -756,19 +775,18 @@ class ContentManager
 		} else { // expand the first folder at user's first visit
 			// find the first content folder
 			$sql = "SELECT content_id 
-			          FROM ".TABLE_PREFIX."content c1 
-			         WHERE course_id=".$this->course_id."
+			          FROM %scontent c1 
+			         WHERE course_id=%d
 			           AND content_parent_id=0 
 			           AND content_type=".CONTENT_TYPE_FOLDER."
-			           AND exists (SELECT * FROM ".TABLE_PREFIX."content c2 
+			           AND exists (SELECT * FROM %scontent c2 
 			                        WHERE c2.content_parent_id = c1.content_id) 
 			         ORDER BY ordering 
 			         LIMIT 1";
-			$result = mysql_query($sql, $this->db);
-			
+			$row = queryDB($sql, array(TABLE_PREFIX, $this->course_id, TABLE_PREFIX), TRUE);
 			// print out javascript to expand the first content folder
-			if (mysql_num_rows($result)) {
-				$row = mysql_fetch_assoc($result);
+
+			if ($row){
 				echo '	ATutor.course.contentMenu.expandContentFolder('.$row['content_id'].');'."\n";
 			}
 		}
@@ -1400,13 +1418,14 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 		include_once(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 		
 		$sql = "SELECT *, UNIX_TIMESTAMP(t.start_date) AS start_date, UNIX_TIMESTAMP(t.end_date) AS end_date 
-		          FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."content_prerequisites cp
-		         WHERE cp.content_id=".$cid."
+		          FROM %stests t, %scontent_prerequisites cp
+		         WHERE cp.content_id=%d
 		           AND cp.type = '".CONTENT_PRE_TEST."'
 		           AND cp.item_id=t.test_id";
-		$result= mysql_query($sql, $db);
+
+		$result= queryDB($sql,array(TABLE_PREFIX,TABLE_PREFIX,$cid));
 		
-		while ($row = mysql_fetch_assoc($result))
+		foreach($result as $row)
 		{
 			// check to make sure we can access this test
 			if (!$row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS)) {
@@ -1422,19 +1441,21 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 				$msg->addInfo(array('PRETEST_EXPIRED',$row['title']));
 				return -1;
 			}
-			
+
 			$sql = "SELECT tr.result_id, count(*) num_of_questions, sum(ta.score) score, sum(tqa.weight) total_weight
-			          FROM ".TABLE_PREFIX."tests_results tr, ".TABLE_PREFIX."tests_answers ta, ".TABLE_PREFIX."tests_questions_assoc tqa 
-			         WHERE tr.test_id = ".$row['test_id']."
-			           AND tr.member_id = ".$_SESSION['member_id']."
+			          FROM %stests_results tr, %stests_answers ta, %stests_questions_assoc tqa 
+			         WHERE tr.test_id = %d
+			           AND tr.member_id = %d
 			           AND tr.result_id = ta.result_id
 			           AND tr.test_id = tqa.test_id
 			           AND ta.question_id = tqa.question_id
 			         GROUP BY tr.result_id";
-			$result_score = mysql_query($sql, $db);
+			
+			$result_score = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $row['test_id'], $_SESSION['member_id']));
 			
 			$num_of_attempts = 0;
-			while ($row_score = mysql_fetch_assoc($result_score))
+			
+			foreach($result_score as $row_score)
 			{
 				// skip the test when:
 				// 1. no pass score is defined. this is a survey.
@@ -1468,9 +1489,11 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 		if (isset($_SESSION['is_admin']) || (isset($_REQUEST['m']) && isset($_REQUEST['c']))) {
 			return true;
 		}
-		$sql = "SELECT allow_test_export FROM ".TABLE_PREFIX."content WHERE content_id=$content_id";
-		$result = mysql_query($sql, $this->db);
-		if ($row = mysql_fetch_assoc($result)){
+
+		$sql = "SELECT allow_test_export FROM %scontent WHERE content_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $content_id), TRUE);
+				
+		if ($row){
 			if ($row['allow_test_export'] == 1){
 				return true;
 			}
