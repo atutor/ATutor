@@ -133,14 +133,14 @@ if($current_tab == 0) {
 
 if ($cid) {
     $result = $contentManager->getContentPage($cid);
-
-    if (!($content_row = @mysql_fetch_assoc($result))) {
-        require(AT_INCLUDE_PATH.'header.inc.php');
-        $msg->printErrors('PAGE_NOT_FOUND');
-        require (AT_INCLUDE_PATH.'footer.inc.php');
-        exit;
+    foreach($result as $content_row){
+        if (!$content_row) {
+            require(AT_INCLUDE_PATH.'header.inc.php');
+            $msg->printErrors('PAGE_NOT_FOUND');
+            require (AT_INCLUDE_PATH.'footer.inc.php');
+            exit;
+        }
     }
-
     $path    = $contentManager->getContentPath($cid);
     $content_test = $contentManager->getContentTestsAssoc($cid);
 
@@ -214,7 +214,7 @@ if ($current_tab == 0){
                                           "position"=>++$current_tool_pos);
     
                 if(isset($main['tool_file'])) {
-                    echo '<!-- TODO LAW note problem here with one tool_file variable for multiple tools -->'."\n";
+                  //  echo '<!-- TODO LAW note problem here with one tool_file variable for multiple tools -->'."\n";
                     echo '  <script type="text/javascript" language="javascript">'."\n";
                     echo '  //<!--'."\n";
                     echo '  ATutor.mods.editor.tool_for = "' . urlencode($main['title']) . '";'."\n";
@@ -378,18 +378,16 @@ $pid = intval($_REQUEST['pid']);
 
     // adapted content
     $sql = "SELECT pr.primary_resource_id, prt.type_id
-              FROM ".TABLE_PREFIX."primary_resources pr, ".
-                     TABLE_PREFIX."primary_resources_types prt
-             WHERE pr.content_id = ".$cid."
-               AND pr.language_code = '".$_SESSION['lang']."'
+              FROM %sprimary_resources pr, %sprimary_resources_types prt
+             WHERE pr.content_id = %d
+               AND pr.language_code = '%s'
                AND pr.primary_resource_id = prt.primary_resource_id";
-    $all_types_result = mysql_query($sql, $db);
-    
+    $all_types_result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $cid, $_SESSION['lang'])); 
     $i = 0;
-    while ($type = mysql_fetch_assoc($all_types_result)) {
+    foreach($all_types_result as $type){
         $row_alternatives['alt_'.$type['primary_resource_id'].'_'.$type['type_id']] = 1;
     }
-    
+
     if ($current_tab != 3 && isset($_POST['use_post_for_alt']))
     {
         echo '<input type="hidden" name="use_post_for_alt" value="1" />';
@@ -414,8 +412,9 @@ $pid = intval($_REQUEST['pid']);
         {
             $i = 0;
             if ($content_test){
-                while ($content_test_row = mysql_fetch_assoc($content_test)){
-                    echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
+            
+                foreach($content_test as $content_test_row){
+                     echo '<input type="hidden" name="tid['.$i++.']" value="'.$content_test_row['test_id'].'" />';
                 }
             }
         }
@@ -429,20 +428,26 @@ $pid = intval($_REQUEST['pid']);
         else
         {
             $i = 0;
-            $sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$cid AND type='".CONTENT_PRE_TEST."'";
-            $pretests_result = mysql_query($sql, $db);
-            while ($pretest_row = mysql_fetch_assoc($pretests_result)) {
-                    echo '<input type="hidden" name="pre_tid['.$i++.']" value="'.$pretest_row['item_id'].'" />';
+
+            $sql = "SELECT * FROM %scontent_prerequisites WHERE content_id=%d AND type='%s'";
+            $pretests_result = queryDB($sql, array(TABLE_PREFIX, $cid, CONTENT_PRE_TEST));
+            
+            foreach($pretests_result as $pretest_row){
+                echo '<input type="hidden" name="pre_tid['.$i++.']" value="'.$pretest_row['item_id'].'" />';
             }
         }
     } 
     if (!isset($_POST['allow_test_export']) && $current_tab != 4) {
         //export flag handling.
-        $sql = "SELECT `allow_test_export` FROM ".TABLE_PREFIX."content WHERE content_id=$_REQUEST[cid]";
-        $result2 = mysql_query($sql, $db);
+        // THIS CONDITION DOES NOT APPEAR TO BE IN USE, allow_test_export ALWAYS = 0
+        
+        $sql = "SELECT `allow_test_export` FROM %scontent WHERE content_id=%d";
+        $result2 = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['cid']));
+        
         if ($result2){
-            $c_row = mysql_fetch_assoc($result2);
+            $c_row = $result2;
         }
+
         if (intval($c_row['allow_test_export'])==1){
             echo '<input type="hidden" name="allow_test_export" value="1" />';
         } else {
