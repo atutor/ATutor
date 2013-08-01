@@ -24,20 +24,21 @@ if ($cid == 0) {
 /* show the content page */
 $result = $contentManager->getContentPage($cid);
 
-if (!($content_row = mysql_fetch_assoc($result))) {
-	$_pages['content.php']['title_var'] = 'missing_content';
-	$_pages['content.php']['parent']    = 'index.php';
-	$_pages['content.php']['ignore']	= true;
+foreach($result as $content_row){
+    if (!$content_row) {
+        $_pages['content.php']['title_var'] = 'missing_content';
+        $_pages['content.php']['parent']    = 'index.php';
+        $_pages['content.php']['ignore']	= true;
 
+        require(AT_INCLUDE_PATH.'header.inc.php');
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+        $msg->addError('PAGE_NOT_FOUND');
+        $msg->printAll();
 
-	$msg->addError('PAGE_NOT_FOUND');
-	$msg->printAll();
-
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
-} /* else: */
+        require (AT_INCLUDE_PATH.'footer.inc.php');
+        exit;
+    } 
+}/* else: */
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$course_base_href = 'get.php/';
@@ -125,16 +126,17 @@ $first_page = current($path);
 /* the content test extension page */
 $content_test_ids = array();	//the html
 $content_test_rs = $contentManager->getContentTestsAssoc($cid);
-while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
-	$content_test_ids[] = $content_test_row;
+
+foreach($content_test_rs as $content_test_row){
+    $content_test_ids[] = $content_test_row;
 }
 
 /*TODO***************BOLOGNA***************REMOVE ME**********/
 /* the content forums extension page*/
 $content_forum_ids = array();	//the html
 $content_forum_rs = $contentManager->getContentForumsAssoc($cid);
-while ($content_forum_row = mysql_fetch_assoc($content_forum_rs)){
-	$content_forum_ids[] = $content_forum_row;
+foreach($content_forum_rs as $content_forum_row){
+    $content_forum_ids[] = $content_forum_row;
 }
 
 // use any styles that were part of the imported document, except on the mobile theme. 
