@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2010                                      */
+/* Copyright (c) 2002-2013                                      */
 /* Inclusive Design Institute                                   */
 /* http://atutor.ca                                             */
 /*                                                              */
@@ -28,9 +28,12 @@ require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 
 //mimic config variables, vitals.inc.php 135-140
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
-$sql    = "SELECT * FROM ".TABLE_PREFIX."config";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) { 
+//$sql    = "SELECT * FROM ".TABLE_PREFIX."config";
+//$result = mysql_query($sql, $db);
+$sql    = "SELECT * FROM %sconfig";
+$config_rows = queryDB($sql, array(TABLE_PREFIX));
+//while ($row = mysql_fetch_assoc($result)) { 
+foreach($config_rows as $row){
 	$_config[$row['name']] = $row['value'];
 }
 
