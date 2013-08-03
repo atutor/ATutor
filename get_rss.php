@@ -69,11 +69,12 @@ if ($system_courses[$course]['rss'] && (($version == 1) || ($version == 2))) {
 	$image->link  = AT_BASE_HREF;
 	$rss->image   = $image;
 
-	$sql = "SELECT A.*, M.login from ".TABLE_PREFIX."news A, ".TABLE_PREFIX."members M WHERE A.course_id = ".$course." AND A.member_id=M.member_id ORDER BY A.date DESC LIMIT 5";
+	$sql = "SELECT A.*, M.login from %snews A, %smembers M WHERE A.course_id = %d AND A.member_id=M.member_id ORDER BY A.date DESC LIMIT 5";
 
-	$res = mysql_query($sql, $db);
+	$res = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course));
 
-	while ($data = mysql_fetch_assoc($res)) {
+
+	foreach($res as $data){
 		$item = new FeedItem();
 		
 		$item->title          = $data['title'];
