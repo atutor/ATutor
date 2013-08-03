@@ -16,8 +16,8 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$sql = "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$_SESSION[member_id]";
-@mysql_query($sql, $db);
+$sql = "DELETE FROM %susers_online WHERE member_id=%d";
+queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 
 // Unset these Session keys at the time of logout.
 $unset_session = array('login',

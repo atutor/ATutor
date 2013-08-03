@@ -169,15 +169,18 @@ if (isset($this_login, $this_password)) {
         $rows = queryDB("SELECT login, `privileges`, language FROM %sadmins WHERE login='%s' AND SHA1(CONCAT(password, '%s'))='%s' AND `privileges`>0", array(TABLE_PREFIX, $this_login, $_SESSION[token], $this_password));
         
         if ($row = $rows[0]) {
-            queryDB("UPDATE %sadmins SET last_login=NOW() WHERE login='%s'", array(TABLE_PREFIX, $this_login));
-            
+            $sql = "UPDATE %sadmins SET last_login=NOW() WHERE login='%s'";
+            $num_login = queryDB($sql, array(TABLE_PREFIX, $this_login));
+
             $_SESSION['login']        = $row['login'];
             $_SESSION['valid_user'] = true;
             $_SESSION['course_id']  = -1;
             $_SESSION['privileges'] = intval($row['privileges']);
             $_SESSION['lang'] = $row['language'];
 
-            write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
+            $sql = "UPDATE ".TABLE_PREFIX."admins SET last_login=NOW() WHERE login='$this_login'";
+            write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', $num_login, $sql);
+
             //clear login attempt on successful login
             queryDB("DELETE FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login));
             
