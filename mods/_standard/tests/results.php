@@ -134,7 +134,7 @@ while ($row = mysql_fetch_assoc($result)) {
 	$full_name = AT_print(get_display_name($row['member_id']), 'members.full_name');
 	$row['full_name'] = $full_name ? $full_name : $guest_text;
 	$row['login']     = $row['login']     ? $row['login']     : $guest_text;
-	$rows[$row['result_id']] = $row;
+	$rowt[$row['result_id']] = $row;
 }
 
 if ($col == "full_name") usort($rows, "sortByFullName");
@@ -229,8 +229,11 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 </tr>
 </tfoot>
 <tbody>
-<?php if ($rows): ?>
-	<?php foreach ($rows as $row): ?>
+
+<?php
+debug($rows);
+ if ($rowt): ?>
+	<?php foreach ($rowt as $row): ?>
 		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = !document.form['r<?php echo $row['result_id']; ?>'].checked; togglerowhighlight(this, 'r<?php echo $row['result_id']; ?>');" id="rr<?php echo $row['result_id']; ?>">
 			<td><input type="checkbox" name="id[]" value="<?php echo $row['result_id']; ?>" id="r<?php echo $row['result_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td><?php echo $row['login']; ?></td>
