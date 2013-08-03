@@ -34,15 +34,14 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 }
 
 //query reading the type of home viewable. 0: icon view   1: detail view
-$sql = "SELECT home_view FROM ".TABLE_PREFIX."courses WHERE course_id = $course_id";
-$result = mysql_query($sql,$db);
-$row= mysql_fetch_assoc($result);
+$sql = "SELECT home_view FROM %scourses WHERE course_id = %d";
+$row = queryDB($sql,array(TABLE_PREFIX, $course_id), TRUE);
 $home_view = $row['home_view'];
 
 // Get the course description to display in the description metadata
-$sql2 = "SELECT description FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
-$result2 = mysql_query($sql2, $db);
-if($row2 = mysql_fetch_assoc($result2)){
+$sql2 = "SELECT description FROM %scourses WHERE course_id=%d";
+$row2 = queryDB($sql2, array(TABLE_PREFIX, $course_id), TRUE);
+if($row2['description'] != ''){
 	$content_description =  $row2['description'];
 }
 // Enable drag and drop to reorder displayed modules when the module view mode is 
@@ -118,11 +117,13 @@ if (!$module->isEnabled()) {
 	$result = FALSE;
 	$news = array();
 } else {
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."news WHERE course_id=$course_id";
-	$result = mysql_query($sql, $db);
-}
 
-if ($result && ($row = mysql_fetch_assoc($result))) {
+	$sql	= "SELECT COUNT(*) AS cnt FROM %snews WHERE course_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
+}
+//debug($row);
+if ($row['cnt'] > 0) {
+
 	$num_results = $row['cnt'];
 	$results_per_page = NUM_ANNOUNCEMENTS;
 	$num_pages = ceil($num_results / $results_per_page);
@@ -131,14 +132,15 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 
 	$offset = ($page-1)*$results_per_page;
 
-	$sql = "SELECT N.*, DATE_FORMAT(N.date, '%Y-%m-%d %H:%i:%s') AS date, first_name, last_name 
-	          FROM ".TABLE_PREFIX."news N, ".TABLE_PREFIX."members M 
-	         WHERE N.course_id=$course_id 
+	$sql = "SELECT N.*, DATE_FORMAT(N.date, '%%Y-%%m-%%d %%H:%%i:%%s') AS date, first_name, last_name 
+	          FROM %snews N, %smembers M 
+	         WHERE N.course_id=%d 
 	           AND N.member_id = M.member_id
-	         ORDER BY date DESC LIMIT $offset, $results_per_page";
-	
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	         ORDER BY date DESC LIMIT %d, %d";
+
+	$news_rows = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $offset,$results_per_page ));
+
+	foreach($news_rows as $row){
 		/* this can't be cached because it called _AT */
 
 		$news[$row['news_id']] = array(
@@ -152,9 +154,10 @@ if ($result && ($row = mysql_fetch_assoc($result))) {
 	}
 }
 
-$sql = "SELECT banner FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) {
+$sql = "SELECT banner FROM %scourses WHERE course_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
+
+if ($row['banner'] != '') {
 	$savant->assign('banner', AT_print($row['banner'], 'courses.banner'));
 } else {
 	$savant->assign('banner', '');
