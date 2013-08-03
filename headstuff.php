@@ -17,7 +17,7 @@ header ('content-type: text/css');
 echo('@import url(exestyles.css);');
 exit;
 
-
+/*
 if (isset ($_GET['cid'])){
 	$cid = intval ($_GET['cid']);
 
@@ -119,4 +119,5 @@ function get_styles ($headText, $path) {
 	}
 	return $styleText;
 }
+*/
 ?>
