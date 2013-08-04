@@ -26,14 +26,13 @@ if (!$_SESSION['valid_user']) {
 $_GET['id'] = intval($_GET['id']);
 $_SESSION['last_visited_page'] = $_base_href.'profile.php?id='.$_GET['id'];
 
-$sql	= 'SELECT member_id, login, website, first_name, second_name, last_name, email, private_email, phone FROM '.TABLE_PREFIX.'members WHERE member_id='.$_GET['id'];
-$result = mysql_query($sql,$db);
-if ($profile_row = mysql_fetch_assoc($result)) {
-	
+$sql	= 'SELECT member_id, login, website, first_name, second_name, last_name, email, private_email, phone FROM %smembers WHERE member_id=%d';
+$profile_row = queryDB($sql, array(TABLE_PREFIX, $_GET['id']), TRUE);
+
+if (isset($profile_row['member_id']) && $profile_row['member_id'] != '') {
 	//get privs
-	$sql	= 'SELECT `privileges`, approved FROM '.TABLE_PREFIX.'course_enrollment WHERE member_id='.$_GET['id'];
-	$result = mysql_query($sql,$db);
-	$row_en = mysql_fetch_assoc($result);
+	$sql	= 'SELECT `privileges`, approved FROM %scourse_enrollment WHERE member_id=%d';
+	$row_en = queryDB($sql,array(TABLE_PREFIX, $_GET['id']), TRUE);
 
 	if ($system_courses[$_SESSION['course_id']]['member_id'] == $_GET['id']) {
 		$status = _AT('instructor');
