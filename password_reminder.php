@@ -25,9 +25,11 @@ if (isset($_POST['cancel'])) {
 
 	//get database info to create & email change-password-link
 	$_POST['form_email'] = $addslashes($_POST['form_email']);
-	$sql	= "SELECT member_id, login, first_name, password, email FROM ".TABLE_PREFIX."members WHERE email='$_POST[form_email]'";
-	$result = mysql_query($sql,$db);
-	if ($row = mysql_fetch_assoc($result)) {
+
+	$sql	= "SELECT member_id, login, first_name, password, email FROM %smembers WHERE email='%s'";
+	$row = queryDB($sql,array(TABLE_PREFIX, $_POST['form_email']), TRUE);
+	
+	if (isset($row['member_id']) && $row['member_id'] != '') {
 		
 		//date link was generated (# days since epoch)
 		$gen = intval(((time()/60)/60)/24);
@@ -83,9 +85,10 @@ if (isset($_POST['cancel'])) {
 	/* check if already visited (possibley add a "last login" field to members table)... if password was changed, won't work anyway. do later. */
 
 	//check for valid hash
-	$sql	= "SELECT password, email FROM ".TABLE_PREFIX."members WHERE member_id=".intval($_REQUEST['id']);
-	$result = mysql_query($sql,$db);
-	if ($row = mysql_fetch_assoc($result)) {
+	$sql	= "SELECT password, email FROM %smembers WHERE member_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['id']), TRUE);	
+	
+	if (isset($row['email']) && $row['email'] != '') {
 		$email = $row['email'];
 
 		$hash = sha1($_REQUEST['id'] + $_REQUEST['g'] + $row['password']);
@@ -127,16 +130,17 @@ if (isset($_POST['cancel'])) {
 			//save data
 			$password   = $addslashes($_POST['form_password_hidden']);
 
-			$sql	= "UPDATE ".TABLE_PREFIX."members SET password='".$password."', last_login=last_login, creation_date=creation_date WHERE member_id=".intval($_REQUEST['id']);
-			$result = mysql_query($sql,$db);
+			$sql	= "UPDATE %smembers SET password='%s', last_login=last_login, creation_date=creation_date WHERE member_id=%d";
+			$result = queryDB($sql,array(TABLE_PREFIX, $password, $_REQUEST['id']));
 
 			//reset login attempts
-			if ($result){
-				$sql = "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id=".intval($_REQUEST['id']);
-				$result = mysql_query($sql, $db);
-				$row = mysql_fetch_array($result);
-				$sql = "DELETE FROM ".TABLE_PREFIX."member_login_attempt WHERE login='$row[login]'";
-				mysql_query($sql, $db);
+			if (isset($result)){
+
+			    $sql = "SELECT login FROM %smembers WHERE member_id=%d";
+				$row = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['id']), TRUE);
+
+			    $sql = "DELETE FROM %smember_login_attempt WHERE login='%s'";
+				queryDB($sql, array(TABLE_PREFIX, $row['login']));
 			}
 
 			//send confirmation email
