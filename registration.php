@@ -67,12 +67,17 @@ if (isset($_POST['cancel'])) {
 		if (!(preg_match("/^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$/i", $_POST['login']))) {
 			$msg->addError('LOGIN_CHARS');
 		} else {
-			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$chk_login'",$db);
-			if (mysql_num_rows($result) != 0) {
+			$sql = "SELECT * FROM %smembers WHERE login='%s'";
+			$rows_logins = queryDB($sql, array(TABLE_PREFIX, $chk_login));
+			$num_rows_logins = count($rows_logins);
+			
+			if ($num_rows_logins != 0) {
 				$msg->addError('LOGIN_EXISTS');
 			} else {
-				$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$chk_login'",$db);
-				if (mysql_num_rows($result) != 0) {
+			    $sql = "SELECT * FROM %sadmins WHERE login='%s'";
+                $rows_admins = queryDB($sql, array(TABLE_PREFIX, $chk_login));
+                $num_rows_admins = count($rows_admins);
+				if ($num_rows_admins != 0) {
 					$msg->addError('LOGIN_EXISTS');
 				}
 			}
@@ -100,8 +105,11 @@ if (isset($_POST['cancel'])) {
 	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
-	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$chk_email'",$db);
-	if (mysql_num_rows($result) != 0) {
+	$sql = "SELECT * FROM %smembers WHERE email='%s'";
+    $rows_email = queryDB($sql,array(TABLE_PREFIX, $chk_email));
+    $num_rows_email = count($rows_email);
+    
+	if ($num_rows_email != 0) {
 		$msg->addError('EMAIL_EXISTS');
 	} else if ($_POST['email'] != $_POST['email2']) {
 		$msg->addError('EMAIL_MISMATCH');
@@ -114,23 +122,6 @@ if (isset($_POST['cancel'])) {
 	if (!$_POST['last_name']) { 
 		$missing_fields[] = _AT('last_name');
 	}
-
-	// check if first+last is unique
-	/**
-	 * http://www.atutor.ca/atutor/mantis/view.php?id=3727
-	 * Taking out the first and last name uniqueness check
-	if ($_POST['first_name'] && $_POST['last_name']) {
-		$first_name_sql  = $addslashes($_POST['first_name']);
-		$last_name_sql   = $addslashes($_POST['last_name']);
-		$second_name_sql = $addslashes($_POST['second_name']);
-
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE first_name='$first_name_sql' AND second_name='$second_name_sql' AND last_name='$last_name_sql' LIMIT 1";
-		$result = mysql_query($sql, $db);
-		if (mysql_fetch_assoc($result)) {
-			$msg->addError('FIRST_LAST_NAME_UNIQUE');
-		}
-	}
-	 */
 
 	$_POST['login'] = strtolower($_POST['login']);
 
@@ -161,13 +152,14 @@ if (isset($_POST['cancel'])) {
 		$student_id  = $addslashes($_POST['student_id']);
 		$student_pin = md5($_POST['student_pin']);
 
-		$sql    = "SELECT member_id FROM ".TABLE_PREFIX."master_list WHERE public_field='$student_id' AND hash_field='$student_pin'";
-		$result = mysql_query($sql, $db);
-		if (!($row = mysql_fetch_assoc($result)) || $row['member_id']) {
+        $sql    = "SELECT member_id FROM %smaster_list WHERE public_field='%s' AND hash_field='%s'";
+		$row_master_list = queryDB($sql, array(TABLE_PREFIX, $student_id, $student_pin), TRUE);
+
+		if (!isset($row_master_list['member_id']) || $row_master_list['member_id'] != 0) {
 			// the row wasn't found, or it was found but already used
 			$msg->addError('REGISTER_MASTER_USED');
 		} else {
-			$master_list_sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=LAST_INSERT_ID() WHERE public_field='$student_id' AND hash_field='$student_pin'";
+			$master_list_sql = "UPDATE %smaster_list SET member_id=LAST_INSERT_ID() WHERE public_field='%s' AND hash_field='%s'";
 		}
 	}
 
@@ -216,7 +208,7 @@ if (isset($_POST['cancel'])) {
 		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 		/* insert into the db */
-		$sql = "INSERT INTO ".TABLE_PREFIX."members 
+		$sql = "INSERT INTO %smembers 
 		              (login,
 		               password,
 		               email,
@@ -262,8 +254,10 @@ if (isset($_POST['cancel'])) {
 		               $_POST[private_email], 
 		               '0000-00-00 00:00:00')";
 
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		$m_id	= mysql_insert_id($db);
+
+		$result = queryDB($sql, array(TABLE_PREFIX)) or die(at_db_error());
+		$m_id	= at_insert_id($db);
+
 		if (!$result) {
 			require(AT_INCLUDE_PATH.'header.inc.php');
 			$msg->addError('DB_NOT_UPDATED');
@@ -273,13 +267,13 @@ if (isset($_POST['cancel'])) {
 		}
 
 		if (isset($master_list_sql)) {
-			mysql_query($master_list_sql, $db);
+			queryDB($master_list_sql, array(TABLE_PREFIX,$student_id, $student_pin));
 		}
 
 		//reset login attempts
 			if ($result){
-				$sql = "DELETE FROM ".TABLE_PREFIX."member_login_attempt WHERE login='$_POST[login]'";
-				mysql_query($sql, $db);
+				$sql = "DELETE FROM %smember_login_attempt WHERE login='%s'";
+				queryDB($sql, array(TABLE_PREFIX, $_POST['login']));
 			}
 
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
@@ -312,11 +306,10 @@ if (isset($_POST['cancel'])) {
 			require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
 			
 			// update last_login
-			$sql = "UPDATE ".TABLE_PREFIX."members 
+			$sql = "UPDATE %smembers 
 			           SET last_login=now(), creation_date=creation_date 
-			         WHERE member_id=".$member_id;
-			mysql_query($sql, $db);
-			
+			         WHERE member_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $member_id));			
 			// auto login
 			$_SESSION['valid_user'] = true;
 			$_SESSION['member_id']	= $m_id;
