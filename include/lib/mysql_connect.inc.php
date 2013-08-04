@@ -145,6 +145,7 @@ function execute_sql($sql, $oneRow, $callback_func){
                 error_log(print_r($oneRowErrorMessage, true), 0);
                 $msg->addError($displayErrorMessage);
                 return array();
+                return at_affected_rows($db);
             }
             unset($result);
             return ($row) ? $row : array();
@@ -165,6 +166,12 @@ function execute_sql($sql, $oneRow, $callback_func){
 function at_affected_rows($db){
     return mysql_affected_rows($db);
 }
+ 
+function at_insert_id($db){
+    return mysql_insert_id($db);
+}
 
-
+function at_db_error(){
+    return mysql_error();
+}
 ?>
