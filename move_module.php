@@ -54,14 +54,14 @@ if ($_POST['remove'] <> '')
 		$remove_module = $pathinfo[1]->getPath(). $pathinfo[1]->getFileName();
 	}
 
-	if ($from == 'course_index')
-		$sql = "SELECT home_links links FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-	else if ($from == 'student_tools')
-		$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id=$_SESSION[course_id]";
+	if ($from == 'course_index'){
+		$sql = "SELECT home_links links FROM %scourses WHERE course_id=%d";
+	}else if ($from == 'student_tools'){
+		$sql = "SELECT links FROM %sfha_student_tools WHERE course_id=%d";
+    }
 
-	$result = mysql_query($sql, $db);
-	$row= mysql_fetch_assoc($result);
-
+	$row= queryDB($sql, array(TABLE_PREFIX,$_SESSION['course_id']), TRUE);
+	
 	if (substr($row['links'], 0, strlen($remove_module)) == $remove_module)
 		$final_home_links = substr($row['links'], strlen($remove_module)+1);
 	else
@@ -70,9 +70,9 @@ if ($_POST['remove'] <> '')
 
 // save the module display order into db
 if ($from == 'course_index')
-	$sql = "UPDATE ".TABLE_PREFIX."courses SET home_links='$final_home_links' WHERE course_id=$_SESSION[course_id]";
+	$sql = "UPDATE %scourses SET home_links='%s' WHERE course_id=%d";
 else if ($from == 'student_tools')
-	$sql    = "UPDATE ".TABLE_PREFIX."fha_student_tools SET links='$final_home_links' WHERE course_id=$_SESSION[course_id]";
+	$sql    = "UPDATE %sfha_student_tools SET links='%s' WHERE course_id=%d";
 
-$result = mysql_query($sql, $db);
+$result = queryDB($sql, array(TABLE_PREFIX, $final_home_links, $_SESSION['course_id']));
 ?>
