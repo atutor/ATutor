@@ -25,11 +25,12 @@ if(isset($_GET['swid'])){							//si controlla se è stato settato swid tramite $
 	$swid = !$_GET['swid'];							//viene negato il valore di "swid" in modo da passare alla visualizzazione complementare aggiornando in seguito il DB.
 	
 	if (stristr($_SERVER['HTTP_REFERER'], '/student_tools/index.php'))
-		$sql    = "UPDATE ".TABLE_PREFIX."fha_student_tools SET home_view='$swid' WHERE course_id=$_SESSION[course_id]";
+		$sql    = "UPDATE %sfha_student_tools SET home_view='%d' WHERE course_id=%d";
 	else
-		$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_view='$swid' WHERE course_id=$_SESSION[course_id]";
-	
-	$result = mysql_query($sql, $db);
+		$sql    = "UPDATE %scourses SET home_view='%d' WHERE course_id=%d";
+		
+
+    $result = queryDB($sql, array(TABLE_PREFIX,$swid, $_SESSION['course_id']));
 	header('Location:'.$_SERVER['HTTP_REFERER']);	//redirect alla home del corso per la visualizzazione immediata delle modifiche apportate.
 }
 ?>
