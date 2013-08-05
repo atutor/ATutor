@@ -167,11 +167,28 @@ function at_affected_rows($db){
     return mysql_affected_rows($db);
 }
  
-function at_insert_id($db){
+function at_insert_id(){
+    global $db;
     return mysql_insert_id($db);
 }
 
 function at_db_error(){
     return mysql_error();
 }
+
+/////////
+/// USED in classes/CSVExport.class.php
+function at_field_type($result, $i){
+    return mysql_field_type($result, $i);
+//mysqli_fetch_field_direct() [type]
+}
+function at_num_fields($result){
+    return mysql_num_fields($result);
+    //return mysqli_field_count()
+}
+function at_free_result($result){
+    return mysql_free_result($result);
+    //return mysqli_free_result($result);
+}
+////
 ?>
