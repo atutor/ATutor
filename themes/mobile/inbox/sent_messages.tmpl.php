@@ -1,25 +1,24 @@
-
 <?php 
-	if ($row = @mysql_fetch_assoc($this->result_messages)) {
+	if (isset($this->row_messages) && $this->row_messages != '') {
 ?>
 	<ul id="inbox-msg">
 	<li>
 		<div class="forum-post-author">
-			<a href="profile.php?id=<?php echo $row['to_member_id']; ?>" class="title"><?php echo get_display_name($row['to_member_id']); ?></a><br />
-			<?php print_profile_img($row['to_member_id']); ?>
+			<a href="profile.php?id=<?php echo $this->row_messages['to_member_id']; ?>" class="title"><?php echo get_display_name($this->row_messages['to_member_id']); ?></a><br />
+			<?php print_profile_img($this->row_messages['to_member_id']); ?>
 		</div>
 
 		<div class="forum-post-content">
-			<h3><?php echo AT_print($row['subject'], 'messages.subject'); ?></h3>
+			<h3><?php echo AT_print($this->row_messages['subject'], 'messages.subject'); ?></h3>
 			<div>
 				<div class="forum-post-ctrl">
 					<a href="inbox/send_message.php?forward=<?php echo $_GET['view']; ?>"><?php echo _AT('forward'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
 				</div>
-				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $row['date_sent'], AT_DATE_MYSQL_DATETIME); ?></p>
+				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $this->row_messages['date_sent'], AT_DATE_MYSQL_DATETIME); ?></p>
 			</div>
 
 			<div class="body">
-				<p><?php echo AT_print($row['body'], 'messages.body'); ?></p>
+				<p><?php echo AT_print($this->row_messages['body'], 'messages.body'); ?></p>
 			</div>
 			<div style="clear: both; font-size:0.1em"></div>
 		</div>
@@ -49,8 +48,8 @@
 </tr>
 </tfoot>
 <tbody>
-<?php if ($row = mysql_fetch_assoc($this->result)): ?>
-	<?php do { ?>
+<?php if (isset($this->row_sent)): ?>
+		<?php foreach($this->row_sent as $row) { ?>
 		<?php if ($row['message_id'] == $_GET['view']): ?>
 			<tr class="selected">
 		<?php else: ?>
@@ -82,7 +81,7 @@
 		echo AT_date(_AT('forum_date_format'),  $row['date_sent'], AT_DATE_MYSQL_DATETIME);
 		echo '</td>';
 		echo '</tr>';
-	} while ($row = mysql_fetch_assoc($this->result)); ?>
+	}  ?>
 <?php else: ?>
 	<tr>
 		<td colspan="4"><?php echo _AT('none_found'); ?></td>

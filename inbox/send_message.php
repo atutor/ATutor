@@ -53,18 +53,25 @@ if (isset($_POST['cancel'])) {
 		$_POST['message'] = $addslashes($_POST['message']);
 		$_POST['to'] = intval($_POST['to']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
-		$result = mysql_query($sql,$db);
-
+		//$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
+		//$result = mysql_query($sql,$db);
+		$sql = "INSERT INTO %smessages VALUES (NULL, %d, %d, %d, NOW(), 1, 0, '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_SESSION['member_id'], $_POST['to'], $_POST['subject'], $_POST['message']));
+	
 		// sent message box:
-		$sql = "INSERT INTO ".TABLE_PREFIX."messages_sent VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), '$_POST[subject]', '$_POST[message]')";
-		$result = mysql_query($sql,$db);
-
+		//$sql = "INSERT INTO ".TABLE_PREFIX."messages_sent VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), '$_POST[subject]', '$_POST[message]')";
+		//$result = mysql_query($sql,$db);
+		$sql = "INSERT INTO %smessages_sent VALUES (NULL, %d, %d, %d, NOW(), '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_SESSION['member_id'], $_POST['to'], $_POST['subject'], $_POST['message']));
+	
 		//send email notification if recipient has message notification enabled
-		$sql_notify = "SELECT first_name, last_name, email, inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[to]";
-		$result_notify = mysql_query($sql_notify, $db);
-		$row_notify = mysql_fetch_assoc($result_notify);
-
+		//$sql_notify = "SELECT first_name, last_name, email, inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[to]";
+		//$result_notify = mysql_query($sql_notify, $db);
+		//$row_notify = mysql_fetch_assoc($result_notify);
+		
+		$sql_notify = "SELECT first_name, last_name, email, inbox_notify FROM %smembers WHERE member_id=%d";
+        $row_notify = queryDB($sql_notify, array(TABLE_PREFIX, $_POST['to']), TRUE);
+        
 		if ($row_notify['inbox_notify'] == 1) {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
@@ -84,9 +91,13 @@ if (isset($_POST['cancel'])) {
 		}
 
 		if ($_POST['submit_delete']) {
-			$result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE message_id=$_POST[replied] AND to_member_id=$_SESSION[member_id]",$db);
+			//$result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE message_id=$_POST[replied] AND to_member_id=$_SESSION[member_id]",$db);
+		    $sql = "DELETE FROM %smessages WHERE message_id=%d AND to_member_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['replied'], $_SESSION['member_id']));
 		} else if ($_POST['replied'] != '') {
-			$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET replied=1, date_sent=date_sent WHERE message_id=$_POST[replied]",$db);
+			//$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET replied=1, date_sent=date_sent WHERE message_id=$_POST[replied]",$db);
+            $sql = "UPDATE %smessages SET replied=1, date_sent=date_sent WHERE message_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['replied']));
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -100,10 +111,13 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 }
-
+/*
 $sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND (approved='y' OR approved='a')";
 $result = mysql_query($sql, $db);
 $row	= mysql_fetch_array($result);
+*/
+$sql	= "SELECT COUNT(*) AS cnt FROM %scourse_enrollment WHERE member_id=%d AND (approved='y' OR approved='a')";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 
 if ($row['cnt'] == 0) {
 	require(AT_INCLUDE_PATH.'header.inc.php');

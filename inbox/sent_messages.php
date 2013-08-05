@@ -27,8 +27,10 @@ $_GET['view'] = intval($_GET['view']);
 
 if ($_GET['delete']) {
 	$_GET['delete'] = intval($_GET['delete']);
+    $sql = "DELETE FROM %smessages_sent WHERE from_member_id=%d AND message_id=%d";
+    $result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $_GET['delete']));
 
-	if($result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id=$_GET[delete]",$db)){
+	if($result){
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	}
 
@@ -37,9 +39,9 @@ if ($_GET['delete']) {
 } else if (isset($_POST['submit_yes'], $_POST['ids'])) {
 	$ids = $addslashes($_POST['ids']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
-	mysql_query($sql, $db);
-
+	$sql = "DELETE FROM %smessages_sent WHERE from_member_id=%d AND message_id IN (%s)";
+	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $ids));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 	header('Location: '.$_SERVER['PHP_SELF']);
@@ -54,12 +56,11 @@ if ($_GET['delete']) {
 	$_POST['id'] = implode(',', $_POST['id']);
 	$ids = $addslashes($_POST['id']);
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."messages SELECT 0, course_id, from_member_id, {$_SESSION['member_id']}, date_sent, 0, 0, subject, body FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
-	mysql_query($sql, $db);
-
-	$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND message_id IN ($ids)";
-	mysql_query($sql, $db);
-
+	$sql = "INSERT INTO %smessages SELECT 0, course_id, from_member_id, {%d}, date_sent, 0, 0, subject, body FROM %smessages_sent WHERE from_member_id=%d AND message_id IN (%s)";
+	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], TABLE_PREFIX, $_SESSION['member_id'], $ids ));
+	
+	$sql = "DELETE FROM %smessages_sent WHERE from_member_id=%d AND message_id IN (%s)";
+	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $ids));
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 	header('Location: '.$_SERVER['PHP_SELF']);
@@ -72,10 +73,11 @@ if ($_GET['delete']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-if (isset($_GET['view']) && $_GET['view']) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."messages_sent WHERE message_id=$_GET[view] AND from_member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
+if (isset($_GET['view']) && $_GET['view'] != '') {
 
+	$sql	= "SELECT * FROM %smessages_sent WHERE message_id=%d AND from_member_id=%d";
+	$row_messages = queryDB($sql, array(TABLE_PREFIX, $_GET['view'], $_SESSION['member_id']), TRUE);
+	
 } else if (isset($_POST['delete'], $_POST['id'])) {
 	$hidden_vars['ids'] = implode(',', $_POST['id']);
 
@@ -86,9 +88,9 @@ if (isset($_GET['view']) && $_GET['view']) {
 $msg->printInfos(array('INBOX_SENT_MSGS_TTL', $_config['sent_msgs_ttl']));
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
-$result = mysql_query($sql,$db);
+$row_sent = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 
-$savant->assign('result', $result);
-$savant->assign('result_messages', $result_messages);
+$savant->assign('row_sent', $row_sent);
+$savant->assign('row_messages', $row_messages);
 $savant->display('inbox/sent_messages.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
