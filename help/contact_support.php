@@ -28,9 +28,9 @@ $onload = 'document.form.from.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if ($_SESSION['member_id']) {
-	$sql	= "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
+	$sql	= "SELECT first_name, last_name, email FROM %smembers WHERE member_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX,$_SESSION['member_id']), TRUE);
+	if (isset($row['first_name']) && $row['first_name'] != '') {
 		$student_name = AT_print($row['last_name'], 'members.last_name');
 		$student_name .= (AT_print($row['first_name'], 'members.first_name') ? ', '.AT_print($row['first_name'], 'members.first_name') : '');
 
