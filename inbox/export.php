@@ -2,7 +2,7 @@
 /****************************************************************/
 /* ATutor														*/
 /****************************************************************/
-/* Copyright (c) 2002-2010                                      */
+/* Copyright (c) 2002-2013                                      */
 /* Inclusive Design Institute                                   */
 /* http://atutor.ca												*/
 /*                                                              */
@@ -28,9 +28,11 @@ if (!$_SESSION['valid_user']) {
 
 	// inbox messages
 	if ($_POST['messages'] == 1 || $_POST['messages'] == 2) {
-		$sql = "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+
+		$sql = "SELECT * FROM %smessages WHERE to_member_id=%d ORDER BY date_sent";
+		$rows_inbox = queryDB($sql,array(TABLE_PREFIX, $_SESSION['member_id']));
+		
+		foreach($rows_inbox as $row){
 			$msg  = _AT('from')   .': ' . get_display_name($row['from_member_id']) . "\r\n";
 			$msg .= _AT('to')     .': ' . $my_display_name . "\r\n";
 			$msg .= _AT('subject').': ' . $row['subject'] . "\r\n";
@@ -44,9 +46,11 @@ if (!$_SESSION['valid_user']) {
 
 	// sent messages
 	if ($_POST['messages'] == 1 || $_POST['messages'] == 3) {
-		$sql = "SELECT * FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] ORDER BY date_sent";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+
+		$sql = "SELECT * FROM %smessages_sent WHERE from_member_id=%d ORDER BY date_sent";
+		$rows_sent = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+		
+		foreach($rows_sent as $row){
 			$msg  = _AT('from')   .': ' . $my_display_name  . "\r\n";
 			$msg .= _AT('to')     .': ' . get_display_name($row['from_member_id']). "\r\n";
 			$msg .= _AT('subject').': ' . $row['subject'] . "\r\n";
