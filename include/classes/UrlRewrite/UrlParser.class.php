@@ -81,9 +81,9 @@ class UrlParser {
 		//check if this is a course slug or course id.
 		if (preg_match('/^[\d]+$/', $matches[1])==0){
 			//it's a course slug, log into the course.
-			$sql = "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE course_dir_name='$matches[1]'";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+
+			$sql = "SELECT course_id FROM %scourses WHERE course_dir_name='%s'";
+			$row = queryDB($sql, array(TABLE_PREFIX, $matches['1']), TRUE);
 			if ($row['course_id']!=''){
 				$course_id = $row['course_id'];
 			} else {
@@ -125,9 +125,12 @@ class UrlParser {
 		global $db; 
 		$course_id = intval($course_id);
 
-		$sql	= "SELECT course_dir_name FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+		//$sql	= "SELECT course_dir_name FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
+		//$result = mysql_query($sql, $db);
+		//$row = mysql_fetch_assoc($result);
+		
+		$sql	= "SELECT course_dir_name FROM %scourses WHERE course_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
 		if ($row['course_dir_name']!=''){
 			$course_id = $row['course_dir_name'];
 		} 
