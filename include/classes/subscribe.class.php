@@ -29,6 +29,10 @@ class subscription {
 	public function is_subscribed($entity_type, $member_id, $entity_id) {
 		
 		// Get appropriate sql parameters and write sql query
+		
+		////
+		// 5299 how to covert this to queryDB()
+		///
 		$ent_param = $this->entity_switch($entity_type);
 		$sql = ($ent_param) ? "SELECT COUNT(*) FROM $ent_param[sub_table] WHERE member_id = '$member_id' AND $ent_param[sub_id] = '$entity_id'" : false;
 				
