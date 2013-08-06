@@ -258,13 +258,11 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 	/* used for the courses drop down */
 	global $system_courses;
 	if ($_SESSION['valid_user']) {
-		//$sql	= "SELECT E.course_id FROM ".TABLE_PREFIX."course_enrollment E WHERE E.member_id=$_SESSION[member_id] AND E.approved<>'n'";
-		//$result = @mysql_query($sql, $db);
+
 		$sql	= "SELECT E.course_id FROM %scourse_enrollment E WHERE E.member_id=%d AND E.approved<>'n'";
 		$rows_courses = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 
 		$nav_courses = array(); /* the list of courses we're enrolled in or own */
-		//while ($row = @mysql_fetch_assoc($result)) {
 		foreach($rows_courses as $row){
 			//Truncate course title if it's > 45.
 			$system_courses[$row['course_id']]['title'] = htmlentities($system_courses[$row['course_id']]['title'], ENT_QUOTES, 'UTF-8');
