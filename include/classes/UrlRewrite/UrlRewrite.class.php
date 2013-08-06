@@ -248,9 +248,12 @@ class UrlRewrite  {
 		//Turn querystring to pretty URL
 		if ($pretty_url==''){
 			//Get the original course id back
-			$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE course_dir_name='$course_id'";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+			///////
+            /// Unsure how to test this change to queryDB()
+            //////
+			$sql	= "SELECT course_id FROM %scourses WHERE course_dir_name='%d'";
+			$row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
+
 			$course_orig = $course_id;
 
 			if ($row['course_id']!=''){
