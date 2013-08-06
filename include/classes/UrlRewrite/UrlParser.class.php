@@ -125,10 +125,6 @@ class UrlParser {
 		global $db; 
 		$course_id = intval($course_id);
 
-		//$sql	= "SELECT course_dir_name FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
-		//$result = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($result);
-		
 		$sql	= "SELECT course_dir_name FROM %scourses WHERE course_id=%d";
 		$row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
 		if ($row['course_dir_name']!=''){
