@@ -101,8 +101,16 @@ class ATutorMailer extends PHPMailer {
 	*/
 	function QueueMail($to_email, $to_name, $from_email, $from_name, $subject, $body) {
 		global $db;
-		$sql = "INSERT INTO ".TABLE_PREFIX."mail_queue VALUES (NULL, '$to_email', '$to_name', '$from_email', '$from_name', '".addslashes($this->CharSet)."', '$subject', '$body')";
-		return mysql_query($sql, $db);
+		/////
+		// $sql = "INSERT INTO ".TABLE_PREFIX."mail_queue VALUES (NULL, '$to_email', '$to_name', '$from_email', '$from_name', '".addslashes($this->CharSet)."', '$subject', '$body')";
+		// return mysql_query($sql, $db);
+		//
+		/////////////////
+		//// UNTESTED, TEST WITH MAIL ENABLED SERVER
+		$sql = "INSERT INTO %smail_queue VALUES (NULL, '%s', '%s', '%s', '%s', '".addslashes($this->CharSet)."', '%s', '%s')";
+		return queryDB($sql, array(TABLE_PREFIX,$to_email, $to_name, $from_email, $from_name, $subject, $body));
+
+		
 	}
 
 	/**
@@ -116,9 +124,18 @@ class ATutorMailer extends PHPMailer {
 		global $db;
 
 		$mail_ids = '';
-		$sql = "SELECT * FROM ".TABLE_PREFIX."mail_queue";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+		///////
+		//$sql = "SELECT * FROM ".TABLE_PREFIX."mail_queue";
+		//$result = mysql_query($sql, $db);
+		//
+		/////////////////
+		//// UNTESTED, TEST WITH MAIL ENABLED SERVER		
+		$sql = "SELECT * FROM %smail_queue";
+		$rows_queue = queryDB($sql, array(TABLE_PREFIX));
+		foreach($rows_queue as $row){
+		//////
+		//while ($row = mysql_fetch_assoc($result)) {
+		//////
 			$this->ClearAllRecipients();
 
 			$this->AddAddress($row['to_email'], $row['to_name']);
@@ -134,8 +151,13 @@ class ATutorMailer extends PHPMailer {
 		}
 		if ($mail_ids) {
 			$mail_ids = substr($mail_ids, 0, -1); // remove the last comma
-			$sql = "DELETE FROM ".TABLE_PREFIX."mail_queue WHERE mail_id IN ($mail_ids)";
-			mysql_query($sql, $db);
+		/////
+		//	$sql = "DELETE FROM ".TABLE_PREFIX."mail_queue WHERE mail_id IN ($mail_ids)";
+		//	mysql_query($sql, $db);
+		/////////////////
+		//// UNTESTED, TEST WITH MAIL ENABLED SERVER
+		$sql = "DELETE FROM %smail_queue WHERE mail_id IN (%s)";
+		queryDB($sql, array(TABLE_PREFIX, $mail_ids));
 		}
 	}
 
