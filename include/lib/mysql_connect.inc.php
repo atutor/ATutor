@@ -177,7 +177,7 @@ function at_db_error(){
 }
 
 /////////
-/// USED in classes/CSVExport.class.php
+/// USED in classes/CSVExport.class.php & CSVImport.class.php
 function at_field_type($result, $i){
     return mysql_field_type($result, $i);
 //mysqli_fetch_field_direct() [type]
