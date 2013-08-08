@@ -67,17 +67,20 @@ if ( get_magic_quotes_gpc() == 1 ) {
 /**
  * This function is used to make a DB query the same along the whole codebase
  * @access  public
- * @param   Query string in the vsprintf format. Basically the first parameter of vsprintf function
- * @param   Array of parameters which will be converted and inserted into the query
- * @param   Function returns the first element of the return array if set to TRUE. Basically returns the first row if it exists
- * @param...if True then addslashes will be applied to every parameter passed into the query to prevent SQL injections
+ * @param   $query = Query string in the vsprintf format. Basically the first parameter of vsprintf function
+ * @param   $params = Array of parameters which will be converted and inserted into the query
+ * @param   $oneRow = Function returns the first element of the return array if set to TRUE. Basically returns the first row if it exists
+ * @param   $sanitize = if True then addslashes will be applied to every parameter passed into the query to prevent SQL injections
+ * @param   $callback_func = call back another db function, default mysql_affected_rows
+ * @param   $array_type = Type of array, MYSQL_ASSOC (default), MYSQL_NUM, MYSQL_BOTH, etc.
+ * @param   $alt_db = 
  * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
- * @author  Alexey Novak, Cindy Li
+ * @author  Alexey Novak, Cindy Li, Greg Gay
  */
-function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows") {
+function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows", $array_type = MYSQL_ASSOC) {
 
     $sql = create_sql($query, $params, $sanitize);
-    return execute_sql($sql, $oneRow, $callback_func);
+    return execute_sql($sql, $oneRow, $callback_func, $array_type);
 
 }
 
@@ -99,7 +102,7 @@ function create_sql($query, $params=array(), $sanitize = true){
     $sql = vsprintf($query, $params);
     return $sql;
 }
-function execute_sql($sql, $oneRow, $callback_func){
+function execute_sql($sql, $oneRow, $callback_func, $array_type){
     global $db, $msg;
     
     $oneRowErrorMessage = 'Query "%s" which should returned only 1 row has returned more rows.';
@@ -139,9 +142,9 @@ function execute_sql($sql, $oneRow, $callback_func){
         
         // If we need only one row then just grab it otherwise get all the results
         if ($oneRow) {
-            $row = mysql_fetch_assoc($result);
+            $row = mysql_fetch_array($result, $array_type);
             // Check that there are no more than 1 row expected.
-            if (mysql_fetch_assoc($result)) {
+            if (mysql_fetch_array($result, $array_type)) {
                 error_log(print_r($oneRowErrorMessage, true), 0);
                 $msg->addError($displayErrorMessage);
                 return array();
@@ -152,7 +155,7 @@ function execute_sql($sql, $oneRow, $callback_func){
         }
         
         $resultArray = array();
-        while ($row = mysql_fetch_assoc($result)) {
+        while ($row = mysql_fetch_array($result, $array_type)) {
             $resultArray[] = $row;
         }
         unset($result);
