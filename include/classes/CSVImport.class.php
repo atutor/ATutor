@@ -25,20 +25,22 @@ class CSVImport {
 
 		$field = false;
 
-		$sql = "SELECT * FROM ".TABLE_PREFIX.$table_name .' WHERE 0';
-		$result = mysql_query($sql, $db);
-		$num_fields = mysql_num_fields($result);
+		$sql = "SELECT * FROM %s%s WHERE 0";
+		$result = queryDBresult($sql, array(TABLE_PREFIX, $table_name));
+		$num_fields = at_num_fields($result);
+
 		for ($i= 0; $i<$num_fields; $i++) {
-			$flags = explode(' ', mysql_field_flags($result, $i));
+			$flags = explode(' ', at_field_flags($result, $i));
 			if (in_array('primary_key', $flags)) {
 				if ($field == false) {
-					$field = mysql_field_name($result, $i);
+					$field = at_field_name($result, $i);
 				} else {
 					// there is more than one primary_key
 					return NULL;
 				}
 			}
 		}
+
 		return $field;
 	}
 
@@ -51,15 +53,18 @@ class CSVImport {
 
 		$field_types = array();
 
-		$sql = "SELECT * FROM ".TABLE_PREFIX.$table_name .' WHERE 0';
-		$result = @mysql_query($sql, $db);
+		$sql = "SELECT * FROM %s%s WHERE 0";
+		$result = queryDBresult($sql, array(TABLE_PREFIX, $table_name));
 		if (!$result) {
 			return array();
 		}
-		$num_fields = mysql_num_fields($result);
+
+		$num_fields = at_num_fields($result);
 
 		for ($i=0; $i< $num_fields; $i++) {
-			$field_types[] = mysql_field_type($result, $i);
+
+			$field_types[] = at_field_type($result, $i);
+
 		}
 
 		return $field_types;
@@ -80,8 +85,9 @@ class CSVImport {
 		$fn_name = $tableName.'_convert';
 
 		// lock the tables
-		$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $tableName. ', ' . TABLE_PREFIX . 'courses WRITE';
-		$result   = mysql_query($lock_sql, $db);
+
+		$lock_sql = 'LOCK TABLES %s%s WRITE, %scourses WRITE';
+		$result   = queryDB($lock_sql, array(TABLE_PREFIX,$tableName,TABLE_PREFIX));
 
 		// get the field types
 		$field_types = $this->detectFieldTypes($tableName);
@@ -91,18 +97,22 @@ class CSVImport {
 
 		// get the name of the primary field
 		$primary_key_field_name = $this->getPrimaryFieldName($tableName);
+
 		// read the rows into an array
 		$fp = @fopen($path . $tableName . '.csv', 'rb');
+
 		$i = 0;
 
 		// get the name of the primary ID field and the next index
 		$next_id = 0;
 		if ($primary_key_field_name) {
 			// get the next primary ID
-			$sql     = 'SELECT MAX(' . $primary_key_field_name . ') AS next_id FROM ' . TABLE_PREFIX . $tableName;
-			$result  = mysql_query($sql, $db);
-			$next_id = mysql_fetch_assoc($result);
+
+			$sql     = 'SELECT MAX(%s) AS next_id FROM %s%s';
+			$next_id  = queryDB($sql, array($primary_key_field_name, TABLE_PREFIX, $tableName), TRUE);
+			
 			$next_id = $next_id['next_id']+1;
+
 		}
 
 		$rows = array();
@@ -139,7 +149,7 @@ class CSVImport {
 			$sql = substr($sql, 0, -1);
 			$sql .= ')';
 
-			$result = mysql_query($sql, $db);
+			$result = queryDB($sql, array());
 			$i++;
 			$next_id++;
 		}
@@ -149,7 +159,7 @@ class CSVImport {
 
 		// unlock the tables
 		$lock_sql = 'UNLOCK TABLES';
-		$result   = mysql_query($lock_sql, $db);
+		$result   = queryDB($lock_sql, array());
 	}
 
 }

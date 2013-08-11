@@ -27,7 +27,7 @@ class CSVExport {
 
 		$content = '';
 
-        $result = queryDBresult($sql);
+        $result = queryDBresult($sql, array());
         $rows_csv = queryDB($sql,array(),'','','', MYSQL_NUM);
         
 		$field_types = $this->detectFieldTypes($result);
