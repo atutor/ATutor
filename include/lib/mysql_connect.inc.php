@@ -73,7 +73,6 @@ if ( get_magic_quotes_gpc() == 1 ) {
  * @param   $sanitize = if True then addslashes will be applied to every parameter passed into the query to prevent SQL injections
  * @param   $callback_func = call back another db function, default mysql_affected_rows
  * @param   $array_type = Type of array, MYSQL_ASSOC (default), MYSQL_NUM, MYSQL_BOTH, etc.
- * @param   $alt_db = 
  * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
  * @author  Alexey Novak, Cindy Li, Greg Gay
  */
@@ -147,7 +146,7 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
             if (mysql_fetch_array($result, $array_type)) {
                 error_log(print_r($oneRowErrorMessage, true), 0);
                 $msg->addError($displayErrorMessage);
-                return array();
+                //return array();
                 return at_affected_rows($db);
             }
             unset($result);
@@ -165,7 +164,17 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
         $msg->addError($displayErrorMessage);
     }
 }
-
+function queryDBresult($sql){
+        global $db;
+        if(defined('MSQLI_ENABLED')){
+               $result = mysqli_query($sql, $db) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage)); 
+               
+        }else{
+               $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
+        }
+       
+    return $result;
+}
 function at_affected_rows($db){
     return mysql_affected_rows($db);
 }
