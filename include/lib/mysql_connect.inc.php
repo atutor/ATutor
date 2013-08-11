@@ -164,8 +164,10 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
         $msg->addError($displayErrorMessage);
     }
 }
-function queryDBresult($sql){
+function queryDBresult($sql, $params = array(), $sanitize = true){
         global $db;
+        $sql = create_sql($sql, $params, $sanitize);
+
         if(defined('MSQLI_ENABLED')){
                $result = mysqli_query($sql, $db) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage)); 
                
@@ -202,5 +204,14 @@ function at_free_result($result){
     return mysql_free_result($result);
     //return mysqli_free_result($result);
 }
+function at_field_flags($result, $i){
+        return mysql_field_flags($result, $i);
+//return mysqli_fetch_field_direct() [flags]
+}
+function at_field_name($result, $i){
+    return mysql_field_name($result, $i);
+    //return mysqli_fetch_field_direct() [name] or [orgname]
+}
+
 ////
 ?>
