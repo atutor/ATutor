@@ -27,15 +27,16 @@ class CSVExport {
 
 		$content = '';
 
-		$result = mysql_query($sql, $db);
-
+        $result = queryDBresult($sql);
+        $rows_csv = queryDB($sql,array(),'','','', MYSQL_NUM);
+        
 		$field_types = $this->detectFieldTypes($result);
 		if (!$field_types) {
 			return FALSE;
 		}
 		$num_fields = count($field_types);
 
-		while ($row = mysql_fetch_row($result)) {
+        foreach($rows_csv as $row){
 			for ($i=0; $i < $num_fields; $i++) {
 				if ($types[$i] == 'int' || $types[$i] == 'real') {
 					$content .= $row[$i] . ',';
@@ -46,9 +47,7 @@ class CSVExport {
 			$content = substr($content, 0, -1);
 			$content .= "\n";
 		}
-		
-		@mysql_free_result($result);
-
+		at_free_result($result);
 		return $content;
 	}
 
@@ -57,15 +56,16 @@ class CSVExport {
 	// possible field types are int, string, datetime, or blob...
 	function detectFieldTypes(&$result) {
 		$field_types = array();
-		$num_fields = @mysql_num_fields($result);
+	    $num_fields = at_num_fields($result);
 
 		if (!$num_fields) {
 			return array();
 		}
 
 		for ($i=0; $i< $num_fields; $i++) {
-			$field_types[] = mysql_field_type($result, $i);
+			$field_types[] = at_field_type($result, $i);
 		}
+
 		return $field_types;
 	}
 
