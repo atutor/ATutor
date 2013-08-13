@@ -19,40 +19,38 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 {
 
 	$associate_string = $_REQUEST["en_id"];
-	
-	$sql_courses = "SELECT aec.course_id
-	                  FROM " . TABLE_PREFIX."auto_enroll a, " . 
-	                           TABLE_PREFIX."auto_enroll_courses aec 
-	                 where a.associate_string='".$associate_string ."'
-	                   and a.auto_enroll_id = aec.auto_enroll_id";
 
-	$result_courses = mysql_query($sql_courses, $db) or die(mysql_error());
-	
-	if (mysql_num_rows($result_courses) > 0)  $_SESSION['enroll'] = AT_ENROLL_YES;
-	
-	while ($row_courses = mysql_fetch_assoc($result_courses))
-	{
-		$course = $row_courses["course_id"];
+	$sql_courses = "SELECT aec.course_id
+	                  FROM %sauto_enroll a, 
+	                  %sauto_enroll_courses aec 
+	                  where a.associate_string='%s'
+	                  and a.auto_enroll_id = aec.auto_enroll_id";
+
+	$rows_courses = queryDB($sql_courses, array(TABLE_PREFIX, TABLE_PREFIX, $associate_string));
 		
-		$sql	= "SELECT access, member_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
-		$course_info = mysql_fetch_assoc($result);
+	if (count($rows_courses) > 0)  $_SESSION['enroll'] = AT_ENROLL_YES;
+	
+	foreach($rows_courses as $row_courses){
+		$course = $row_courses["course_id"];
+		$sql	= "SELECT access, member_id FROM %scourses WHERE course_id=%d";
+		$course_info = queryDB($sql, array(TABLE_PREFIX, $course), TRUE);	
 		
 		if ($course_info['access'] == 'private') 
 		{
-			$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($member_id, $course, 'n', 0, '"._AT('student')."', 0)";
-			$result = mysql_query($sql, $db);
-	
+
+			$sql	= "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'n', 0, '"._AT('student')."', 0)";
+			$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $course));
+			
 			// send the email - if needed
 			if ($system_courses[$course]['notify'] == 1) {
 				$mail_list = array();	//initialize an array to store all the pending emails
 	
 				//Get the list of students with enrollment privilege
 				$module =& $moduleFactory->getModule('_core/enrolment');
-				$sql	= "SELECT email, first_name, last_name, `privileges` FROM ".TABLE_PREFIX."members m INNER JOIN ".TABLE_PREFIX."course_enrollment ce ON m.member_id=ce.member_id WHERE ce.privileges > 0 AND ce.course_id=$course";
-				$result = mysql_query($sql, $db);
-				while ($row	= mysql_fetch_assoc($result))
-				{
+				$sql	= "SELECT email, first_name, last_name, `privileges` FROM %smembers m INNER JOIN %scourse_enrollment ce ON m.member_id=ce.member_id WHERE ce.privileges > 0 AND ce.course_id=%d";
+				$rows_enrolled = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course));	
+				
+				foreach($rows_enrolled as $row){
 					if (query_bit($row['privileges'], $module->getPrivilege()))
 					{
 						unset($row['privileges']);	//we don't need the privilege to flow around
@@ -62,9 +60,9 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 				
 				//Get instructor information
 				$ins_id = $system_courses[$course]['member_id'];
-				$sql	= "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$ins_id";
-				$result = mysql_query($sql, $db);
-				$row	= mysql_fetch_assoc($result);
+				$sql	= "SELECT email, first_name, last_name FROM %smembers WHERE member_id=%d";
+				$row	= queryDB($sql, array(TABLE_PREFIX,$ins_id), TRUE);
+			
 				$mail_list[] = $row;
 	
 				//Send email notification to both assistants with privileges & Instructor
@@ -82,7 +80,7 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 						$mail->AddAddress($to_email);
 						$mail->Subject = _AT('enrol_message3');
 						$mail->Body    = $tmp_message;
-	
+
 						if (!$mail->Send()) 
 						{
 						   $msg->addError('SENDING_ERROR');
@@ -92,8 +90,9 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 				}
 			}
 		} else {
-			$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($member_id, $course, 'y', 0, '"._AT('student')."', 0)";
-			$result = mysql_query($sql, $db);
+
+			$sql	= "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '"._AT('student')."', 0)";
+			$result = queryDB($sql, array(TABLE_PREFIX,$member_id, $course));
 		}
 	}
 	
