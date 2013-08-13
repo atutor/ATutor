@@ -190,7 +190,6 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LAST_LANGUAGE','Cann
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LINK_CAT_EMPTY','Cannot add a link because there are no categories.','2005-03-09 13:05:25','adding link but no cats');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LINK_CAT_NOT_EMPTY','Link category cannot be deleted because it contains sub-categories and/or links.','2005-02-22 15:22:44','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_CHARS','Your Login Name must only contain letters, numbers, periods, or underscores (_\'s).','2006-07-11 10:40:57','error msg');
-INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_ENROL','You must be logged in to enroll in a course.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_EXISTS','That login already exists, please choose another.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOGIN_TO_POST','You must be logged in to post.','2003-05-16 13:42:17','error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_ERROR_LOG_NOT_RESET','The error log could not be reset.','2005-03-10 15:54:03','error logging');
@@ -438,6 +437,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_GLOSSARY_REMAINS','N
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_INBOX_SENT_MSGS_TTL','Sent messages are automatically deleted every %s days.','2007-02-20 14:19:34','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_INVALID_URL','Localhost is not a valid URL','2004-08-18 12:03:14','Used when AChecker reading URL');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_INVALID_USER','You must <a href=\"login.php?course=%s\">login</a> to use this section.','2004-04-15 13:52:32','');
+INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_LOGIN_ENROL','You must be logged in to enroll in a course.','2003-05-16 13:42:17','info msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_LOGIN_TO_POST','You must be logged in to post.','2004-11-05 10:29:51','info msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_MASTER_LIST_DISABLED','The master list has been disabled.  To enable this functionality go to <a href=\"admin/config_edit.php\">System Preferences</a>.','2005-05-10 15:16:13','');
 INSERT INTO `language_text` VALUES ('en', '_msgs','AT_INFOS_MAX_ATTEMPTS','This test is not currently available at this time.  If you have already completed this test. Please visit <a href=\"mods/_standard/tests/my_tests.php\">Tests & Surveys</a> to see your results.','2010-10-05 12:23:45','');
