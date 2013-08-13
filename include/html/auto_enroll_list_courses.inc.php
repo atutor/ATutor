@@ -19,27 +19,26 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 	
 	$cats	= array();
 	$cats[0] = _AT('cats_uncategorized');
+		
+	$sql = "SELECT cat_id, cat_name FROM %scourse_cats";
+	$rows_cats = queryDB($sql, array(TABLE_PREFIX));
 	
-	$sql = "SELECT cat_id, cat_name FROM ".TABLE_PREFIX."course_cats";
-	$result = mysql_query($sql,$db);
-	while($row = mysql_fetch_array($result)) {
+	foreach($rows_cats as $row){
 		$cats[$row['cat_id']] = $row['cat_name'];
 	}
-	
+
 	$sql_courses = "SELECT aec.auto_enroll_courses_id auto_enroll_courses_id, 
 	                       aec.course_id,
 	                       c.cat_id,
 	                       c.title title
-	                  FROM " . TABLE_PREFIX."auto_enroll a, " . 
-	                           TABLE_PREFIX."auto_enroll_courses aec, " . 
-	                           TABLE_PREFIX ."courses c
-	                 where a.associate_string='".$associate_string ."'
+	                  FROM %sauto_enroll a, %sauto_enroll_courses aec, %scourses c
+	                 where a.associate_string='%s'
 	                   and a.auto_enroll_id = aec.auto_enroll_id
 	                   and aec.course_id = c.course_id";
 
-	$result_courses = mysql_query($sql_courses, $db) or die(mysql_error());
-	
-	if (mysql_num_rows($result_courses) > 0)
+	$rows_courses = queryDB($sql_courses, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $associate_string));
+
+	if (count($rows_courses) > 0)
 	{
 ?>
 
@@ -59,14 +58,14 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 
 		<tbody>
 <?php
-	if ($row_courses = mysql_fetch_assoc($result_courses)): 
-		do {
+	if(isset($rows_courses)):
+	    foreach($rows_courses as $row_courses){
 		?>
 			<tr>
 				<td><label for="m<?php echo $row_courses['auto_enroll_courses_id']; ?>"><?php echo $row_courses['title']; ?></label></td>
 				<td><?php echo $cats[$row_courses['cat_id']]; ?></td>
 			</tr>
-		<?php } while ($row_courses = mysql_fetch_assoc($result_courses)); ?>
+		<?php } ?>
 	<?php else: ?>
 			<tr>
 				<td colspan="3"><?php echo _AT('none_found'); ?></td>
