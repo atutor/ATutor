@@ -24,17 +24,18 @@ if (isset($_SESSION['course_id'])) $_course_id = $_SESSION['course_id'];
 
 ob_start(); 
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."users_online WHERE course_id=$_course_id AND expiry>".time()." ORDER BY login";
-$result	= mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) {
+$sql	= "SELECT * FROM %susers_online WHERE course_id=%d AND expiry>".time()." ORDER BY login";
+$rows_uo	= queryDB($sql, array(TABLE_PREFIX, $_course_id));
+
+if(is_array($rows_uo) && count($rows_uo) > 0){
 	echo '<ul style="padding: 0px; list-style: none;">';
-	do {
+	foreach($rows_uo as $row){
 		$type = 'class="user"';
 		if ($system_courses[$_course_id]['member_id'] == $row['member_id']) {
 			$type = 'class="user instructor" title="'._AT('instructor').'"';
 		}
 		echo '<li style="padding: 3px 0px;"><a href="'.$_base_path.'profile.php?id='.$row['member_id'].'" '.$type.'>'.AT_print($row['login'], 'members.login').'</a></li>';
-	} while ($row = mysql_fetch_assoc($result));
+        }
 	echo '</ul>';
 } else {
 	echo '<strong>'._AT('none_found').'</strong><br />';
