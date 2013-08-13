@@ -1065,10 +1065,11 @@ function getTranslatedCodeStr($codes) {
             $parent = Language::getParentCode($_SESSION['lang']);
 
             /* get $_msgs_new from the DB */
-            $sql    = 'SELECT * FROM '.TABLE_PREFIX.'language_text WHERE variable="_msgs" AND (language_code="'.$_SESSION['lang'].'" OR language_code="'.$parent.'")';
-            $result    = @mysql_query($sql, $db);
+            $sql    = 'SELECT * FROM %slanguage_text WHERE variable="_msgs" AND (language_code="%s" OR language_code="%s")';
+            $rows_lang    = queryDB($sql, array(TABLE_PREFIX, $_SESSION['lang'], $parent));         
+            
             $i = 1;
-            while ($row = @mysql_fetch_assoc($result)) {
+            foreach($rows_lang as $row){
                 // do not cache key as a digit (no contstant(), use string)
                 $_cache_msgs_new[$row['term']] = str_replace('SITE_URL/', $_base_path, $row['text']);
                 if (AT_DEVEL) {
@@ -1099,9 +1100,9 @@ function getTranslatedCodeStr($codes) {
             /* the language for this msg is missing: */
         
             $sql    = 'SELECT * FROM '.TABLE_PREFIX.'language_text WHERE variable="_msgs"';
-            $result    = @mysql_query($sql, $db);
+            $rows_msgs    = queryDB($sql, array(TABLE_PREFIX));
             $i = 1;
-            while ($row = @mysql_fetch_assoc($result)) {
+            foreach($rows_msgs as $row){
                 if (($row['term']) === $codes) {
                     $message = '['.$row['term'].']';
                     break;
@@ -1230,9 +1231,10 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
     }
     $sql .= " ORDER BY pr.primary_resource_id, prt.type_id";
     
-    $result = mysql_query($sql, $db);
 
-    if (mysql_num_rows($result) == 0) {
+    $rows_content = queryDB($sql, array());
+
+      if(count($rows_content) == 0){
         if (!$info_only) {
             return $content;
         } else {
@@ -1241,7 +1243,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
     }
     
     $primary_resource_names = array();
-    while ($row = mysql_fetch_assoc($result)) {
+    foreach($rows_content as $row){
         // if the primary resource is defined with multiple resource type,
         // the primary resource would be replaced/appended multiple times.
         // This is what we want at applying alternatives by default, but
