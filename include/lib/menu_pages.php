@@ -303,9 +303,9 @@ function get_num_new_messages() {
     if (isset($num_messages)) {
         return $num_messages;
     }
-    $sql    = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] AND new=1";
-    $result = mysql_query($sql, $db);
-    $row    = mysql_fetch_assoc($result);
+
+    $sql    = "SELECT COUNT(*) AS cnt FROM %smessages WHERE to_member_id=%d AND new=1";
+    $row    = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
     $num_messages = $row['cnt'];
 
     return $num_messages;
