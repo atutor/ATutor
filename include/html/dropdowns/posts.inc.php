@@ -10,6 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id: posts.inc.php 4812 2005-06-07 19:52:15Z joel $
+exit; // THIS FILE APPEARS TO BE NO LONGER USED
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $db;
@@ -28,11 +29,11 @@ if (isset($_SESSION['course_id'])) $_course_id = $_SESSION['course_id'];
 
 $forum_list = get_group_concat('forums_courses', 'forum_id', "course_id={$_course_id}");
 if ($forum_list != 0) {
-	$sql = "SELECT subject, post_id, forum_id, member_id FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id IN ($forum_list) ORDER BY last_comment DESC LIMIT $post_limit";
-	$result = mysql_query($sql, $db);
-
-	if (mysql_num_rows($result) > 0) {
-		while ($row = mysql_fetch_assoc($result)) {
+	$sql = "SELECT subject, post_id, forum_id, member_id FROM %sforums_threadss WHERE parent_id=0 AND forum_id IN (%s) ORDER BY last_comment DESC LIMIT %d";
+	$rows_posts = queryDB($sql, array(TABLE_PREFIX, $forum_list, $post_limit));
+	
+	if (count($rows_posts) > 0) {
+	    foreach($rows_posts as $row)
 			echo '&#176; <a href="' . $_base_path.url_rewrite('forum/view.php?fid=' . $row['forum_id'] . htmlentities(SEP) . 'pid=' . $row['post_id']) . '" title="' . $row['subject'] . ': ' . htmlspecialchars(get_display_name($row['member_id'])) . '">' . AT_print(validate_length($row['subject'], 20, VALIDATE_LENGTH_FOR_DISPLAY), 'forums_threads.subject') . '</a><br />';
 		}
 	} else {
