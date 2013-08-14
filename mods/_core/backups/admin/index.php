@@ -76,12 +76,14 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if (isset($_REQUEST['course']) && $_REQUEST['course']) {
 		$course = intval($_REQUEST['course']);
-		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE course_id=$course ORDER BY title";
+		$sql	= "SELECT course_id, title FROM %scourses WHERE course_id=%d ORDER BY title";
+		$rows_courses = queryDB($sql, array(TABLE_PREFIX, $course));
 	} else {
-		$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+		$sql	= "SELECT course_id, title FROM %scourses ORDER BY title";
+		$rows_courses = queryDB($sql, array(TABLE_PREFIX));
 	}
-	$result = mysql_query($sql, $db);
-	while ($course = mysql_fetch_assoc($result)) {
+
+	foreach($rows_courses as $course){
 
 		$Backup->setCourseID($course['course_id']);
 		$list = $Backup->getAvailableList();
