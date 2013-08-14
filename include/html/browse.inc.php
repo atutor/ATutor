@@ -15,9 +15,10 @@ require(AT_INCLUDE_PATH.'../mods/_core/cats_categories/lib/admin_categories.inc.
 $cats	= array();
 $cats[0] = _AT('cats_uncategorized');
 
-$sql = "SELECT cat_id, cat_name FROM ".TABLE_PREFIX."course_cats";
-$result = mysql_query($sql,$db);
-while($row = mysql_fetch_array($result)) {
+$sql = "SELECT cat_id, cat_name FROM %scourse_cats";
+$rows_cats = queryDB($sql, array(TABLE_PREFIX));
+
+foreach($rows_cats as $row){
 	$cats[$row['cat_id']] = $row['cat_name'];
 }
 
@@ -76,30 +77,29 @@ if (!empty($_GET['search'])) {
 	$sql_search = '1';
 }
 
-$sql	= "SELECT COUNT(course_id) AS cnt FROM ".TABLE_PREFIX."courses WHERE access $sql_access AND cat_id $sql_category AND $sql_search AND hide=0";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql	= "SELECT COUNT(course_id) AS cnt FROM %scourses WHERE access %s AND cat_id %s AND %s AND hide=0";
+$row = queryDB($sql, array(TABLE_PREFIX, $sql_access, $sql_category, $sql_search), TRUE);
+
 $num_results = $row['cnt'];
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE access $sql_access AND cat_id $sql_category AND $sql_search AND hide=0 ORDER BY title";
-$courses_result = mysql_query($sql, $db);
+$sql	= "SELECT * FROM %scourses WHERE access %s AND cat_id %s AND %s AND hide=0 ORDER BY title";
+$rows_courses = queryDB($sql, array(TABLE_PREFIX, $sql_access, $sql_category, $sql_search));
 
 // add "enroll me" link if the user is not the course owner and is not enrolled
-while ($row = mysql_fetch_assoc($courses_result)) {
+foreach($rows_courses as $row ){
 	if (isset($_SESSION['member_id']) &&  $_SESSION['member_id'] > 0) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=".$row['course_id'];
-		$result = mysql_query($sql, $db);
-		
+		$sql	= "SELECT * FROM %scourse_enrollment WHERE member_id=%d AND course_id=%d";
+		$rows_enrollment = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $row['course_id']));
 		if ($row['access'] == 'private') {
 			$enroll_link = '<a href="'.$_base_path.'users/private_enroll.php?course='.$row['course_id'].'">'. _AT('enroll_me').'</a>';
 		} else {
 			$enroll_link = '<a href="'.$_base_path.'enroll.php?course='.$row['course_id'].'">'. _AT('enroll_me').'</a>';
 		}
 		
-		if (mysql_num_rows($result) == 0 && $_SESSION['member_id'] <> $row['member_id']) {
+		if (count($rows_enrollment) == 0 && $_SESSION['member_id'] <> $row['member_id']) {
 			$row['enroll_link'] = $enroll_link;
 		} else if ($row['access'] == 'private') {
-			$enrollment_row = mysql_fetch_assoc($result);
+			$enrollment_row = $rows_enrollment;
 			if ($enrollment_row['approved'] == 'n') $row['enroll_link'] = $enroll_link;
 		}
 	}
