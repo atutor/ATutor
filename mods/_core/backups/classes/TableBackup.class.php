@@ -260,9 +260,7 @@ class AbstractTable {
 			foreach ($this->rows as $row) {
 				
 				$sql = $this->generateSQL($row); 
-				mysql_query($sql, $db);
-				//debug($sql);
-				//debug(mysql_error($this->db));
+				queryDB($sql);
 			}
 		}
 		if (!isset($this->skipLock)) {
@@ -298,10 +296,10 @@ class AbstractTable {
 	// -- private methods below:
 	function getNextID() {
 		global $db;
-
-		$sql      = 'SELECT MAX(' . $this->primaryIDField . ') AS next_id FROM ' . TABLE_PREFIX . $this->tableName;
-		$result   = mysql_query($sql, $db);
-		$next_index = mysql_fetch_assoc($result);
+	
+	    $sql      = 'SELECT MAX(%s) AS next_id FROM %s%s';
+		$next_index   = queryDB($sql, array($this->primaryIDField, TABLE_PREFIX, $this->tableName), TRUE);
+		
 		return ($next_index['next_id'] + 1);
 	}
 
@@ -315,22 +313,12 @@ class AbstractTable {
 	function resolveBkpOwner($id) {
 		global $db;
 
-		$sql = 'SELECT member_id FROM ' . TABLE_PREFIX . 'courses WHERE course_id = '. $id;
+	    $sql = 'SELECT member_id FROM %scourses WHERE course_id = %d ';
+        $row = queryDB($sql, array(TABLE_PREFIX, %id));
 
-		$result = mysql_query($sql, $db);
-		
-		if (!$result) {
-			echo 'Fatal SQL error occured in TableBackup:resolveBkpOwner: ' . mysql_error() . 
-								' ' . mysql_error($db) . 
-								' Check that the course your are restoring to exists.';
-			return;
-		}
-		
-		$row = mysql_fetch_assoc($result);
-		
 		if (!$row) {
-			echo 'Fatal SQL error occured in TableBackup:resolveBkpOwner: ' . mysql_error() . 
-								' ' . mysql_error($db) . 
+			echo 'Fatal SQL error occured in TableBackup:resolveBkpOwner: ' . at_db_error() . 
+								' ' . at_db_error($db) . 
 								' Check that the course your are restoring to exists.';
 			return;
 		}
@@ -411,15 +399,16 @@ class AbstractTable {
 	* @See unlockTable()
 	*/
 	function lockTable() {
-		global $db;
+		//global $db;
 		$lock_sql;
 			
-		if ($_SESSION['member_id'])
-			$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ' WRITE';
-		else // admin context
-			$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $this->tableName. ', ' . TABLE_PREFIX . 'courses WRITE';
-			
-		$result   = mysql_query($lock_sql, $db);
+		if ($_SESSION['member_id']){
+			$lock_sql = 'LOCK TABLES %s%s WRITE';
+			$result   = queryDB($lock_sql, array(TABLE_PREFIX, $this->tableName));
+		}else{ // admin context
+			$lock_sql = 'LOCK TABLES %s%s WRITE, %scourses WRITE';
+		    $result   = queryDB($lock_sql, array(TABLE_PREFIX, $this->tableName, TABLE_PREFIX));			
+		}
 	}
 
 	/**
@@ -431,9 +420,9 @@ class AbstractTable {
 	* @See lockTable()
 	*/
 	function unlockTable() {
-		global $db;
+		
 		$lock_sql = 'UNLOCK TABLES';
-		$result   = mysql_query($lock_sql, $db);
+		$result   = queryDB($lock_sql, array());	
 	}
 
 	/**
@@ -990,10 +979,8 @@ class ContentTable extends AbstractTable {
 	*/
 	function ContentTable($version, $db, $course_id, $import_dir, &$old_id_to_new_id) {
 		// special case for `content` -- we need the max ordering
-
-		$sql	    = 'SELECT MAX(ordering) AS ordering FROM '.TABLE_PREFIX.'content WHERE content_parent_id=0 AND course_id='.$course_id;
-		$result     = mysql_query($sql, $db);
-		$ordering   = mysql_fetch_assoc($result);
+		$sql	    = 'SELECT MAX(ordering) AS ordering FROM %scontent WHERE content_parent_id=0 AND course_id=%d';
+		$ordering     = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
 		$this->ordering = $ordering['ordering'] +1;
 
 		parent::AbstractTable($version, $db, $course_id, $import_dir, $old_id_to_new_id);

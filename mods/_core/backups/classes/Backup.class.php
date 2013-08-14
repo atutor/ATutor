@@ -198,8 +198,8 @@ class Backup {
 	// private
 	// adds a backup to the database
 	function add($row) {
-		$sql = "INSERT INTO ".TABLE_PREFIX."backups VALUES (NULL, $this->course_id, NOW(), '$row[description]', '$row[file_size]', '$row[system_file_name]', '$row[file_name]', '$row[contents]')";
-		mysql_query($sql, $this->db);
+		$sql = "INSERT INTO %sbackups VALUES (NULL, %d, NOW(), '%s', '%s', '%s', '%s', '%s')";
+		queryDB($sql, array(TABLE_PREFIX, $this->course_id, $row['description'],$row['file_size'], $row['system_file_name'], $row['file_name'], $row['contents']));
 	}
 
 	// public
@@ -210,10 +210,9 @@ class Backup {
 			return $this->num_backups;
 		}
 
-		$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."backups WHERE course_id=$this->course_id";
-		$result = mysql_query($sql, $this->db);
-		$row	= mysql_fetch_assoc($result);
-
+		$sql	= "SELECT COUNT(*) AS cnt FROM %sbackups WHERE course_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $this->course_id), TRUE);
+		
 		$this->num_backups = $row['cnt'];
 		return $row['cnt'];
 	}
@@ -223,9 +222,10 @@ class Backup {
 	function getAvailableList() {
 		$backup_list = array();
 
-		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE course_id=$this->course_id ORDER BY date DESC";
-		$result = mysql_query($sql, $this->db);
-		while ($row = mysql_fetch_assoc($result)) {
+		$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM %sbackups WHERE course_id=%d ORDER BY date DESC";
+		$rows_backups = queryDB($sql, array(TABLE_PREFIX,$this->course_id));
+		
+		foreach($rows_backups as $row){
 			$backup_list[$row['backup_id']] = $row;
 			$backup_list[$row['backup_id']]['contents'] = unserialize($row['contents']);
 		}
@@ -279,8 +279,8 @@ class Backup {
 		@unlink(AT_BACKUP_DIR . $this->course_id . DIRECTORY_SEPARATOR . $my_backup['system_file_name']. '.zip');
 
 		// delete the row in the table:
-		$sql	= "DELETE FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
-		$result = mysql_query($sql, $this->db);
+		$sql	= "DELETE FROM %sbackups WHERE backup_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $backup_id, $this->course_id));
 	}
 
 	// public
@@ -292,9 +292,8 @@ class Backup {
 		$description	= $addslashes($description);
 
 		// update description in the table:
-		$sql	= "UPDATE ".TABLE_PREFIX."backups SET description='$description', date=date WHERE backup_id=$backup_id AND course_id=$this->course_id";
-		$result = mysql_query($sql, $this->db);
-
+		$sql	= "UPDATE %sbackups SET description='%s', date=date WHERE backup_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $description, $backup_id, $this->course_id));
 	}
 
 	// public
@@ -304,13 +303,12 @@ class Backup {
 		$course_id	= abs($course_id);
 
 		if ($course_id) {
-			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$course_id";
+			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM %sbackups WHERE backup_id=%d AND course_id=%d";
+		    $row = queryDB($sql, array(TABLE_PREFIX, $backup_id, $course_id), TRUE);
 		} else {
-			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM ".TABLE_PREFIX."backups WHERE backup_id=$backup_id AND course_id=$this->course_id";
+			$sql	= "SELECT *, UNIX_TIMESTAMP(date) AS date_timestamp FROM %sbackups WHERE backup_id=%d AND course_id=%d";
+		    $row = queryDB($sql, array(TABLE_PREFIX, $backup_id, $this->course_id), TRUE);		
 		}
-
-		$result = mysql_query($sql, $this->db);
-		$row = mysql_fetch_assoc($result);
 
 		if ($row) {
 			$row['contents'] = unserialize($row['contents']);
@@ -415,11 +413,10 @@ class Backup {
 				{
 					//hack for http://www.atutor.ca/atutor/mantis/view.php?id=3839
 					$row[0] = preg_replace('/\\\\r\\\\n/', "\r\n", $row[0]);
-
-					$sql = "UPDATE ".TABLE_PREFIX."courses 
-					           SET banner = '". mysql_real_escape_string($row[0]). "' 
-					         WHERE course_id = ".$this->course_id;
-					$result = mysql_query($sql,$db) or die(mysql_error());
+					$sql = "UPDATE %scourses 
+					           SET banner = '%s' 
+					         WHERE course_id = %d";
+					$result = queryDB($sql, array(TABLE_PREFIX, my_add_null_slashes($row['0']), $this->course_id));
 				}
 			}
 			
@@ -433,9 +430,8 @@ class Backup {
 	// private
 	// no longer used
 	function restore_files() {
-		$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$this->course_id";
-		$result = mysql_query($sql, $this->db);
-		$row	= mysql_fetch_assoc($result);
+		$sql	= "SELECT max_quota FROM %scourses WHERE course_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $this->course_id), TRUE);
 
 		if ($row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 			global $MaxCourseSize, $MaxCourseFloat;
