@@ -6,9 +6,8 @@ function backups_delete($course) {
 	$path = AT_BACKUP_DIR . $course . '/';
 	clr_dir($path);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."backups WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-
+	$sql	= "DELETE FROM %sbackups WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $course));
 }
 
 ?>
