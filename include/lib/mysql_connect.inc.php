@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2008 by Harris Wong								*/
+/* Copyright (c) 2002-2013              								*/
 /* Inclusive Design Institute                                           */
 /* http://atutor.ca                                                     */
 /* This program is free software. You can redistribute it and/or        */
