@@ -35,11 +35,10 @@ else if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$delete_backup = intval($_REQUEST['backup_id']);
-	$sql = "SELECT * from ".TABLE_PREFIX."backups WHERE backup_id = '$delete_backup'";
-	$result = mysql_query($sql, $db);
+	$sql = "SELECT * from %sbackups WHERE backup_id = '%s'";
+	$rows_backups = queryDB($sql, array(TABLE_PREFIX, $delete_backup));
 
-
-while ($row = mysql_fetch_assoc($result)){
+foreach($rows_backups as $row){
 	$title = $row['file_name'];
 }
 	$index['backup_id'] = $_GET['backup_id'];
