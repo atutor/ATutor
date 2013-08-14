@@ -28,7 +28,9 @@ $checked_display_as_pages		= '';
 $checked_display_as_summaries	= '';
 
 /* some error checking can go here: */
-global $msg, $addslashes;
+global $msg, $addslashes, $system_courses, $languageManager;
+
+
 if (isset($_GET['search'])) {
 
 	$_GET['words'] = stripslashes($addslashes($_GET['words']));
@@ -145,6 +147,7 @@ if (isset($_GET['search']) && !$_GET['words']) {
 <?php
 
 /* search results go down here: */
+
 if (isset($_GET['search']) && isset($_GET['words'])) {
 	$search_results   = array(); // the content search results
 	$search_totals    = array(); // total score per course
@@ -206,14 +209,16 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 	$num_pages = ceil($num_found / $results_per_page);
 			
 	$page = isset($_GET['p']) ? intval($_GET['p']) : 0;
+
 	if (!$page) {
 		$page = 1;
 	}
 			
 	$count = (($page-1) * $results_per_page) + 1;
 
-	$pages_text = '<div class="paging">';
+	$pages_text .= '<div class="paging">';
 	$pages_text .= '<ul>';
+	
 	for ($i=1; $i<=$num_pages; $i++) {
 		$pages_text .= '<li>';
 		if ($i == $page) {
@@ -234,12 +239,11 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 		$search_results = array_slice($search_results, ($page-1)*$results_per_page, $results_per_page);
 
 		echo '<div class="results">';
-		print_search_pages($search_results);
+		print_search_pages($search_results, $count);
 		echo '</div>'."\n";
 	} else {
 		arsort($search_totals);
 		reset($search_totals);
-
 		$skipped        = 0; // number that have been skipped
 		$printed_so_far = 0; // number printed on this page
 
@@ -296,6 +300,7 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 					$printed_so_far += $total_here;
 				}
 			}
+
 			echo '<h5 class="search-results"> '._AT('results_from', '<a href="bounce.php?course='.$tmp_course_id.'">'.$highlight_system_courses[$tmp_course_id]['title'] .'</a>').' - '._AT('pages_found', $total_here) . '</h5>';
 
 
@@ -319,6 +324,8 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 					echo _AT('private');
 					break;
 			}
+
+			
 			$language =& $languageManager->getLanguage($highlight_system_courses[$tmp_course_id]['primary_language']);
 
 			echo '. <strong>'._AT('primary_language').':</strong> ' . $language->getTranslatedName();
@@ -329,10 +336,9 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 
 			if ($_GET['display_as'] != 'summaries') {
 				echo '<div class="results">';
-				print_search_pages($search_results[$tmp_course_id]);
+				print_search_pages($search_results[$tmp_course_id], $count);
 				echo '</div>';
 			}			
-		
 		}
 	}
 

@@ -80,7 +80,7 @@ function get_content_search_result($words, $predicate, $course_id, &$total_score
 			$words_sql .= $predicate;
 		}
 		$words[$i] = $addslashes($words[$i]);
-		$words_sql .= ' (C.title LIKE "%'.$words[$i].'%" OR C.text LIKE "%'.$words[$i].'%" OR C.keywords LIKE "%'.$words[$i].'%")';
+		$words_sql .= ' (C.title LIKE "%%'.$words[$i].'%%" OR C.text LIKE "%%'.$words[$i].'%%" OR C.keywords LIKE "%%'.$words[$i].'%%")';
 
 		/* search through the course title and description keeping track of its total */
 		$course_score += 15 * substr_count($strtolower($highlight_system_courses[$course_id]['title']),       $lower_words[$i]);
@@ -96,8 +96,8 @@ function get_content_search_result($words, $predicate, $course_id, &$total_score
 	$sql =  'SELECT C.last_modified, C.course_id, C.content_id, C.title, C.text, C.keywords FROM '.TABLE_PREFIX.'content AS C WHERE C.course_id='.$course_id;
 	$sql .= ' AND ('.$words_sql.') LIMIT 200';
 
-	$result = mysql_query($sql, $db);
-	while($row = mysql_fetch_assoc($result)) {
+	$rows_content = queryDB($sql, array(), false, false);
+	foreach($rows_content as $row){
 		$score = 0;
 
 		$row['title'] = strip_tags($row['title']);
@@ -163,7 +163,7 @@ function get_forums_search_result($words, $predicate, $course_id, &$total_score,
 			$words_sql .= $predicate;
 		}
 		$words[$i] = $addslashes($words[$i]);
-		$words_sql .= ' (course_group_forums.title LIKE "%'.$words[$i].'%" OR T.subject LIKE "%'.$words[$i].'%" OR T.body LIKE "%'.$words[$i].'%")';
+		$words_sql .= ' (course_group_forums.title LIKE "%%'.$words[$i].'%%" OR T.subject LIKE "%%'.$words[$i].'%%" OR T.body LIKE "%%'.$words[$i].'%%")';
 
 		/* search through the course title and description keeping track of its total */
 		$course_score += 15 * substr_count($strtolower($highlight_system_courses[$course_id]['title']),       $lower_words[$i]);
@@ -200,10 +200,10 @@ function get_forums_search_result($words, $predicate, $course_id, &$total_score,
 	$sql .=	'USING (forum_id) ';
 	$sql .= 'WHERE ' . $words_sql;
 
-	$result = mysql_query($sql, $db);
-	while($row = mysql_fetch_assoc($result)) {
-		$score = 0;
+    $rows_forums = queryDB($sql, array(), false, false);
 
+	foreach($rows_forums as $row){
+		$score = 0;
 		$row['forum_title'] = strip_tags($row['forum_title']);
 		$row['subject']  = strip_tags($row['subject']);
 		$row['body']  = strip_tags($row['body']);
@@ -247,10 +247,11 @@ function get_my_courses($member_id) {
 	global $db;
 
 	$list = array();
-
-	$sql = "SELECT course_id FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$member_id AND (approved='y' OR approved='a')";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	
+	$sql = "SELECT course_id FROM %scourse_enrollment WHERE member_id=%d AND (approved='y' OR approved='a')";
+	$rows_mycourses = queryDB($sql, array(TABLE_PREFIX, $member_id));
+	
+	foreach($rows_mycourses as $row){
 		$list[] = $row['course_id']; // list contains all the Course IDs
 	}
 
@@ -280,17 +281,22 @@ function get_all_courses($member_id) {
 
 	if ($_SESSION['valid_user']) {
 		$my_courses = implode(',', get_my_courses($member_id));
-		$sql = "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE hide=1 AND course_id IN (0, $my_courses)";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+
+		$sql = "SELECT course_id FROM %scourses WHERE hide=1 AND course_id IN (0, %s)";
+		$rows_allcourses = queryDB($sql, array(TABLE_PREFIX, $my_courses));	
+		
+		foreach($rows_allcourses as $row){
 			$list[] = $row['course_id'];
 		}
 	}
 	return $list;
 }
 
-function print_search_pages($result) {
-	global $count;
+function print_search_pages($result, $count) {
+
+    if($count == 0){
+        $count++;
+    } 
 
 	foreach ($result as $items) {
 		uasort($result, 'score_cmp');
@@ -337,8 +343,9 @@ function print_search_pages($result) {
 		echo ']</small>';
 
 		echo '</small></p>'."\n";
-		$count++;
+		 $count++;
 	}
+	   
 }
 
 ?>
