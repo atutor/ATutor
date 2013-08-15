@@ -90,9 +90,11 @@ function get_categories() {
 
 	/* get all the categories: */
 	/* $categories[category_id] = array(cat_name, cat_parent, num_courses, [array(children)]) */
-	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_parent, cat_name";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	$sql = "SELECT * FROM %scourse_cats ORDER BY cat_parent, cat_name";
+	$rows_cats = queryDB($sql, array(TABLE_PREFIX));
+	
+	foreach($rows_cats as $row){
 		$categories[$row['cat_id']]['cat_name']    = $row['cat_name'];
 		$categories[$row['cat_id']]['cat_parent']  = $row['cat_parent'];
 		$categories[$row['cat_id']]['num_courses'] = 0;
@@ -109,14 +111,21 @@ function get_categories() {
 
 /* assigns the 'num_courses' field in the $categories array */
 /* returns the number of uncategorized courses */
+
+/* APPEARS TO BE UNUSED
 function assign_categories_course_count(&$categories) {
 	global $db;
 
 	$num_uncategorized = 0;
 
-	$sql = "SELECT cat_id, COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses GROUP BY cat_id";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	//$sql = "SELECT cat_id, COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses GROUP BY cat_id";
+	//$result = mysql_query($sql, $db);
+	
+	$sql = "SELECT cat_id, COUNT(*) AS cnt FROM %scourses GROUP BY cat_id";
+	$rows_cats = queryDB($sql, array(TABLE_PREFIX), true);
+	
+	foreach($rows_cats, as $rows){
+	//while ($row = mysql_fetch_assoc($result)) {
 		if ($row['cat_id'] == 0) {
 			$num_uncategorized = $row['cnt'];
 		} else {
@@ -126,6 +135,7 @@ function assign_categories_course_count(&$categories) {
 
 	return $num_uncategorized;
 }
+*/
 
 /* applies $theme to all the sub-categories recursively. */
 /* returns an array of all the subcategories */

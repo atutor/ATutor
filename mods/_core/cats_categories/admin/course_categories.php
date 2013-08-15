@@ -28,15 +28,15 @@ if (isset($_POST['delete'], $_POST['cat_id'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
-$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
-$result = mysql_query($sql, $db);
+
+$sql = "SELECT * FROM %scourse_cats ORDER BY cat_name";
+$rows_cats = queryDB($sql, array(TABLE_PREFIX));
 
 $categories = array();
-while ($row = mysql_fetch_assoc($result)) { 
+foreach($rows_cats as $row){
 	if ($row['cat_parent']) {
-		$sql_cat = "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$row['cat_parent'];
-		$result_cat = mysql_query($sql_cat, $db);
-		$row_cat = mysql_fetch_assoc($result_cat);
+		$sql_cat = "SELECT cat_name FROM %scourse_cats WHERE cat_id=%d";
+		$row_cat= queryDB($sql_cat, array(TABLE_PREFIX, $row['cat_parent']), TRUE);
 		$row['parent_cat_name'] = $row_cat['cat_name'];
 	} else {
 		$row['parent_cat_name'] = '';

@@ -34,21 +34,25 @@ if (isset($_POST['submit'])) {
 	$cat_name = validate_length($cat_name, 100);
 
 	if ($_POST['theme_parent']) {
-		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
+
+		$sql	= "SELECT theme FROM %scourse_cats WHERE cat_id=%d";
+		$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_parent_id));
+		
+		if(count($rows_cats) > 0){
 			$cat_theme = $row['theme'];
 		}
 	}
 
 	if (!$msg->containsErrors()) {
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."course_cats VALUES (NULL, '$cat_name', $cat_parent_id, '$cat_theme')";
-		$result = mysql_query($sql, $db);
-		$cat_id = mysql_insert_id($db);
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		
-		write_to_log(AT_ADMIN_LOG_INSERT, 'course_cats', mysql_affected_rows($db), $sql);
+		$sql = "INSERT INTO %scourse_cats VALUES (NULL, '%s', %d, '%s')";
+		$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_name, $cat_parent_id, $cat_theme));
+
+		$cat_id = at_insert_id($db);
+
+		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+
+		write_to_log(AT_ADMIN_LOG_INSERT, 'course_cats', count($rows_cats), $sqlout);
 
 		header('Location: course_categories.php');
 		exit;
