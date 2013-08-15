@@ -16,16 +16,18 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
 global $contentManager;
-
+debug($_GET);
+//exit;
 if (isset($_GET['edit'], $_GET['ctid'])) {
 	$cid = intval($_GET['ctid']);
-	$result = $contentManager->getContentPage($cid);
-	$row = mysql_fetch_assoc($result);
-	
-	if ($row['content_type'] == CONTENT_TYPE_CONTENT || $row['content_type'] == CONTENT_TYPE_WEBLINK) {
-		header('Location: '.AT_BASE_HREF.'mods/_core/editor/edit_content.php?cid='.$cid);
-	} else if ($row['content_type'] == CONTENT_TYPE_FOLDER) {
-		header('Location: '.AT_BASE_HREF.'mods/_core/editor/edit_content_folder.php?cid='.$cid);
+	$row_contents = $contentManager->getContentPage($cid);
+
+    foreach($row_contents as $row){
+        if ($row['content_type'] == CONTENT_TYPE_CONTENT || $row['content_type'] == CONTENT_TYPE_WEBLINK) {
+            header('Location: '.AT_BASE_HREF.'mods/_core/editor/edit_content.php?cid='.$cid);
+        } else if ($row['content_type'] == CONTENT_TYPE_FOLDER) {
+            header('Location: '.AT_BASE_HREF.'mods/_core/editor/edit_content_folder.php?cid='.$cid);
+        }
 	}
 	exit;
 } else if (isset($_GET['delete'], $_GET['ctid'])) {
@@ -33,13 +35,15 @@ if (isset($_GET['edit'], $_GET['ctid'])) {
 	exit;
 } else if (isset($_GET['view'], $_GET['ctid'])) {
 	$cid = intval($_GET['ctid']);
-	$result = $contentManager->getContentPage($cid);
-	$row = mysql_fetch_assoc($result);
-
-    if ($row['content_type'] == CONTENT_TYPE_CONTENT || $row['content_type'] == CONTENT_TYPE_WEBLINK) {
-		header('Location: '.AT_BASE_HREF.'content.php?cid='.intval($_GET['ctid']));
-    } else if ($row['content_type'] == CONTENT_TYPE_FOLDER) {
-		header('Location: '.AT_BASE_HREF.'mods/_core/editor/edit_content_folder.php?cid='.$cid);
+	$rows_content = $contentManager->getContentPage($cid);
+    
+    // There's only one row, but queryDB() outputs a 2 dimensional array of rows so use foreach()
+    foreach($rows_content as $row){
+        if ($row['content_type'] == CONTENT_TYPE_CONTENT || $row['content_type'] == CONTENT_TYPE_WEBLINK) {
+            header('Location: '.AT_BASE_HREF.'content.php?cid='.intval($_GET['ctid']));
+        } else if ($row['content_type'] == CONTENT_TYPE_FOLDER) {
+            header('Location: '.AT_BASE_HREF.'mods/_core/editor/edit_content_folder.php?cid='.$cid);
+        }
     }
 	exit;
 } else if (isset($_GET['usage'], $_GET['ctid'])) {
