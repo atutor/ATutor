@@ -28,11 +28,12 @@ if (isset($_POST['submit'])) {
 
 	if ($_POST['theme_parent']) {
 		// get the theme of the parent category.
+		
+		$sql	= "SELECT theme FROM %scourse_cats WHERE cat_id=%d";
+		$row_cats = queryDB($sql, array(TABLE_PREFIX, $cat_parent_id), TRUE);
 
-		$sql	= "SELECT theme FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_parent_id";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
-			$cat_theme = $row['theme'];
+		if (count($row_cats) > 0) {
+					$cat_theme = $row['theme'];
 		}
 	}
 	if ($cat_name == '') {
@@ -47,17 +48,16 @@ if (isset($_POST['submit'])) {
 			$children = implode(',', $children);
 
 			if ($children) {
-				$sql = "UPDATE ".TABLE_PREFIX."course_cats SET theme='$cat_theme' WHERE cat_id IN ($children)";
-				$result = mysql_query($sql, $db);
-
-				write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db), $sql);
+				$sql = "UPDATE %scourse_cats SET theme='%s' WHERE cat_id IN (%s)";
+				$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_theme, $children));
+				
+				write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', count($rows_cats), $sqlout);
 			}
 		}
 
-		$sql = "UPDATE ".TABLE_PREFIX."course_cats SET cat_parent=$cat_parent_id, cat_name='$cat_name', theme='$cat_theme' WHERE cat_id=$cat_id";
-		$result = mysql_query($sql, $db);
-
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', mysql_affected_rows($db), $sql);
+		$sql = "UPDATE %scourse_cats SET cat_parent=%d, cat_name='%s', theme='%s' WHERE cat_id=%d";
+		$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_parent_id, $cat_name, $cat_theme, $cat_id));
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', count($rows_cats), $sqlout);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
