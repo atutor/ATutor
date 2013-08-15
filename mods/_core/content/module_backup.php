@@ -62,9 +62,10 @@ function content_convert($row, $course_id, $table_id_map, $version) {
 	static $order;
 	if (!isset($order)) {
 		global $db;
-		$sql	 = 'SELECT MAX(ordering) AS ordering FROM '.TABLE_PREFIX.'content WHERE content_parent_id=0 AND course_id='.$course_id;
-		$result  = mysql_query($sql, $db);
-		$tmp_row = mysql_fetch_assoc($result);
+
+		$sql	 = 'SELECT MAX(ordering) AS ordering FROM %scontent WHERE content_parent_id=0 AND course_id=%d';
+		$tmp_row  = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
+
 		$order   = $tmp_row['ordering'] + 1;
 	}
 
