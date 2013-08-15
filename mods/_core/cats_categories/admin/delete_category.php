@@ -25,15 +25,14 @@ if (isset($_POST['submit_no'])) {
 	$cat_id	= intval($_POST['cat_id']);
 
 	if (!is_array($categories[$cat_id]['children'])) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$cat_id";
-		$result = mysql_query($sql, $db);
 
-		write_to_log(AT_ADMIN_LOG_DELETE, 'course_cats', mysql_affected_rows($db), $sql);
+		$sql = "DELETE FROM %scourse_cats WHERE cat_id=%d";
+		$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_id));
+		write_to_log(AT_ADMIN_LOG_DELETE, 'course_cats', count($rows_cats), $sqlout);
 
-		$sql = "UPDATE ".TABLE_PREFIX."courses SET cat_id=0 WHERE cat_id=$cat_id";
-		$result = mysql_query($sql, $db);
-
-		write_to_log(AT_ADMIN_LOG_DELETE, 'courses', mysql_affected_rows($db), $sql);
+		$sql = "UPDATE %scourses SET cat_id=0 WHERE cat_id=%d";
+		$rows_courses = queryDB($sql, array(TABLE_PREFIX, $cat_id));		
+		write_to_log(AT_ADMIN_LOG_DELETE, 'courses', count($rows_courses), $sqlout);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: course_categories.php');
@@ -45,13 +44,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$_GET['cat_id'] = intval($_GET['cat_id']); 
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats WHERE cat_id=$_GET[cat_id]";
-	$result = mysql_query($sql,$db);
+	$sql = "SELECT * FROM %scourse_cats WHERE cat_id=%d";
+	$row_cats = queryDB($sql,array(TABLE_PREFIX, $_GET['cat_id']), TRUE);
 
-	if (mysql_num_rows($result) == 0) {
+    if (count($row_cats) == 0) {
 		$msg->printErrors('ITEM_NOT_FOUND');
 	} else {
-		$row = mysql_fetch_assoc($result);
+		$row = $row_cats;
 		
 		$hidden_vars['cat_name']= $row['cat_name'];
 		$hidden_vars['cat_id']	= $row['cat_id'];
