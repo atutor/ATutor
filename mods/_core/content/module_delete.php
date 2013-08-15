@@ -3,32 +3,30 @@
 function content_delete($course) {
 	require(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
 
-	global $db;
-
 	// related_content + content:
-	$sql	= "SELECT content_id FROM ".TABLE_PREFIX."content WHERE course_id=$course";
-
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_array($result)) {
-		$sql	= "DELETE FROM ".TABLE_PREFIX."related_content WHERE content_id=$row[0]";
-		$result2 = mysql_query($sql, $db);
-
-		$sql3	 = "DELETE FROM ".TABLE_PREFIX."member_track WHERE content_id=$row[0]";
-		$result3 = mysql_query($sql3, $db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE content_id=$row[0]";
-		$result4 = mysql_query($sql, $db);
-
+	$sql	= "SELECT content_id FROM %scontent WHERE course_id=%d";
+	$rows_content = queryDB($sql, array(TABLE_PREFIX, $course));
+	
+	foreach($rows_content as $row){
+		$sql	= "DELETE FROM %srelated_content WHERE content_id=%d";
+		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['0']));
+		
+		$sql3	 = "DELETE FROM %smember_track WHERE content_id=%d";
+		$result3 = queryDB($sql3, array(TABLE_PREFIX, $row['0']));	
+		
+		$sql = "DELETE FROM %scontent_tests_assoc WHERE content_id=%d";
+		$result4 = queryDB($sql, array(TABLE_PREFIX, $row['0']));
+		
 		// Delete all AccessForAll contents 
 		$a4a = new A4a($row[0]);
 		$a4a->deleteA4a();
 	}
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."content WHERE course_id=$course";
-	$result = mysql_query($sql,$db);
-
-	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."content";
-	$result = @mysql_query($sql, $db);
+	$sql = "DELETE FROM %scontent WHERE course_id=%d";
+	$result = queryDB($sql,array(TABLE_PREFIX, $course));
+	
+	$sql = "OPTIMIZE TABLE %scontent";
+	$result = queryDB($sql, array(TABLE_PREFIX));
 
 }
 
