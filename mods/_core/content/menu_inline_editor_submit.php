@@ -24,9 +24,9 @@ if (trim($_POST['field']) <> "" && trim($_POST['value']) <> "")
 	
 	if ($content_id > 0)
 	{
-		$sql	= "UPDATE ".TABLE_PREFIX."content SET title='".$addslashes($_POST['value'])."' WHERE content_id=$content_id";
-		$result = mysql_query($sql, $db);
-		$row	= mysql_fetch_array($result);
+		
+		$sql	= "UPDATE %scontent SET title='%s' WHERE content_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_POST['value'], $content_id));
 	}
 }
 ?>
