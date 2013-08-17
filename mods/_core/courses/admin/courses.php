@@ -75,9 +75,8 @@ if ($_GET['search']) {
 }
 
 // get number of courses on the system
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."courses C WHERE 1 AND $access AND $search";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql	= "SELECT COUNT(*) AS cnt FROM %scourses C WHERE 1 AND $access AND $search";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 $num_results = $row['cnt'];
 
 $results_per_page = 100;
@@ -91,26 +90,26 @@ $offset = ($page-1)*$results_per_page;
 
 ${'highlight_'.$col} = ' style="background-color: #fff;"';
 
-$sql    = "SELECT COUNT(*) AS cnt, approved, course_id FROM ".TABLE_PREFIX."course_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id, approved";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+$sql    = "SELECT COUNT(*) AS cnt, approved, course_id FROM %scourse_enrollment WHERE approved='y' OR approved='a' GROUP BY course_id, approved";
+$rows_enrollment = queryDB($sql, array(TABLE_PREFIX));
+
+foreach($rows_enrollment as $row){
 	if ($row['approved'] == 'y') {
 		$row['cnt']--; // remove the instructor
 	}
 	$enrolled[$row['course_id']][$row['approved']] = $row['cnt'];
 }
 
-$sql	= "SELECT C.*, M.login, T.cat_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."courses C USING (member_id) LEFT JOIN ".TABLE_PREFIX."course_cats T USING (cat_id) WHERE 1 AND $access AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
-$result = mysql_query($sql, $db);
-
-$num_rows = mysql_num_rows($result);
+$sql	= "SELECT C.*, M.login, T.cat_name FROM %smembers M INNER JOIN %scourses C USING (member_id) LEFT JOIN %scourse_cats T USING (cat_id) WHERE 1 AND $access AND $search ORDER BY $col $order LIMIT $offset, $results_per_page";
+$rows_course_list = queryDB($sql, array(TABLE_PREFIX,TABLE_PREFIX,TABLE_PREFIX));
+$num_rows = count($rows_course_list);
 
 $savant->assign('results_per_page', $results_per_page);
 $savant->assign('page', $page);
 $savant->assign('page_string', $page_string);
 $savant->assign('enrolled', $enrolled);
 $savant->assign('num_rows', $num_rows);
-$savant->assign('result', $result);
+$savant->assign('rows_course_list', $rows_course_list);
 $savant->assign('orders', $orders);
 $savant->assign('order', $order);
 $savant->assign('num_results', $num_results);
