@@ -15,7 +15,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/cats_categories/lib/admin_categories.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
-//require_once(AT_INCLUDE_PATH.'lib/course_icon.inc.php');
 
 $_GET['show_courses'] = $addslashes(intval($_GET['show_courses']));
 $_GET['current_cat'] = $addslashes(intval($_GET['current_cat']));
@@ -120,9 +119,11 @@ if (isset($_POST['form_course'])) {
 	}
 
 } else if ($course) {
-	$sql	= "SELECT *, DATE_FORMAT(release_date, '%Y-%m-%d %H:%i:00') AS release_date, DATE_FORMAT(end_date, '%Y-%m-%d %H:%i:00') AS end_date  FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-	if (!($row	= mysql_fetch_assoc($result))) {
+
+	$sql	= "SELECT *, DATE_FORMAT(release_date, '%%Y-%%m-%%d %%H:%%i:00') AS release_date, DATE_FORMAT(end_date, '%%Y-%%m-%%d %%H:%%i:00') AS end_date  FROM %scourses WHERE course_id=%d";
+	$rows_courses = queryDB($sql, array(TABLE_PREFIX, $course));
+	
+	if (count($rows_courses) < 1) {
 		echo _AT('no_course_found');
 		return;
 	}
@@ -145,15 +146,18 @@ if (isset($_POST['form_course'])) {
 
 	// retrieve backups
 	if ($_SESSION['privileges'] == 1) { // admin
-		$sql = "SELECT course_id, title from ".TABLE_PREFIX."courses";
+
+		$sql = "SELECT course_id, title from %scourses";
+		$rows_courses = queryDB($sql, array(TABLE_PREFIX));			
 	} else { // instructor
-		$sql = "SELECT course_id, title from ".TABLE_PREFIX."courses WHERE member_id = '$_SESSION[member_id]'";
+
+		$sql = "SELECT course_id, title from %scourses WHERE member_id = '%d'";
+	    $rows_courses = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));				
 	}
-	$course_result = mysql_query($sql, $db);
-	
+
 	$backup_list = array();
 	
-	while ($course_row = mysql_fetch_assoc($course_result)) {
+	foreach($rows_courses as $course_row){
 		$Backup = new Backup($db, $course_row['course_id']);
 		$Backup->setCourseID($course_row['course_id']);
 		$list = $Backup->getAvailableList();

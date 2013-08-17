@@ -40,25 +40,34 @@ $course = intval($_REQUEST['course']);
 $isadmin   = TRUE;
 
 if ($isadmin){
-	$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
-	$result = mysql_query($sql, $db);
-	//$savant->assign('result', $result);
+
+	$sql = "SELECT member_id, login FROM %smembers WHERE status=".AT_STATUS_INSTRUCTOR;
+	$rows_instructors = queryDB($sql, array(TABLE_PREFIX));
+	
 }
+/********
+/// THIS CONDITION DOES NOT APPEAR TO BE IN USE
 if (!$course){
+
 	$Backup = new Backup($db);
 
 			if ($isadmin) {
-				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+				//$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+				$sql	= "SELECT course_id, title FROM %scourses ORDER BY title";				
+				$result2 = queryDB($sql, array(TABLE_PREFIX));
 			} else {
-				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";
+				//$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";
+				$sql	= "SELECT course_id, title FROM ".TABLE_PREFIX."courses WHERE member_id=$_SESSION[member_id] ORDER BY title";				
+				$result2 = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 			}
 
-			$result2 = mysql_query($sql, $db);
+			//$result2 = mysql_query($sql, $db);
 }
+*******/
 
 $savant->assign('isadmin', $isadmin);
 $savant->assign('course', $course);
-$savant->assign('result', $result);
+$savant->assign('rows_instructors', $rows_instructors);
 require(AT_INCLUDE_PATH.'../mods/_core/courses/html/course_properties.inc.php');
 
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
