@@ -50,7 +50,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$msg->printErrors('ITEM_NOT_FOUND');
 	} else {
 	    $row = $rows_auto_enroll;
-		//$row = mysql_fetch_assoc($result);
 		
 		$hidden_vars['name']= $row['name'];
 		$hidden_vars['auto_enroll_id']	= $row['auto_enroll_id'];
