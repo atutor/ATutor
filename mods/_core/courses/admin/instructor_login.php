@@ -21,9 +21,10 @@ if (isset($_POST['submit_yes'])) {
 
 	$admin_login = $_SESSION['login'];
 
-	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."courses C WHERE C.course_id=".$_POST['course']." and C.member_id=M.member_id";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM %smembers M, %scourses C WHERE C.course_id=%d and C.member_id=M.member_id";
+	$row_member = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_POST['course']), TRUE,  FALSE);
+
+	if(count($row_member) > 0){
 		$_SESSION['course_id']  = 0;
 		$_SESSION['login']		= $row['login'];
 		$_SESSION['valid_user'] = true;
@@ -50,9 +51,8 @@ if (isset($_POST['submit_yes'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."courses WHERE course_id=".$_REQUEST['course'];
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_array($result);
+	$sql = "SELECT * FROM %scourses WHERE course_id=%d";
+	$row = queryDB($sql,array(TABLE_PREFIX, $_REQUEST['course']), TRUE);
 
 	$hidden_vars['course'] = $_GET['course'];
 
