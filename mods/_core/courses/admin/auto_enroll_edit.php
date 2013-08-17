@@ -39,11 +39,8 @@ else $auto_enroll_id = 0;
 if (isset($_POST['save']) || isset($_POST['add'])) 
 {
 	/* insert or update a category */
-//	$cat_parent_id  = intval($_POST['cat_parent_id']);
 	$name       = trim($_POST['name']);
-
 	$name  = $addslashes($name);
-
 	$name = validate_length($name, 50);
 
 	if (isset($_POST['add']) && !$_POST['add_ids'])
@@ -53,40 +50,41 @@ if (isset($_POST['save']) || isset($_POST['add']))
 	{
 		if ($auto_enroll_id == 0)
 		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."auto_enroll(associate_string, name) 
-			        VALUES ('". get_random_string(6, 10) ."', '". $name ."')";
-			$result = mysql_query($sql, $db) or die(mysql_error());
-			$auto_enroll_id = mysql_insert_id($db);
-			write_to_log(AT_ADMIN_LOG_INSERT, 'auto_enroll', mysql_affected_rows($db), $sql);
+
+			$sql = "INSERT INTO %sauto_enroll(associate_string, name)  VALUES ('%s', '%s')";
+			$rows_inserted = queryDB($sql, array(TABLE_PREFIX, get_random_string(6, 10), $name));
+	
+			$auto_enroll_id = at_insert_id();		
+	
+			write_to_log(AT_ADMIN_LOG_INSERT, 'auto_enroll', $rows_inserted, $sqlout);
 		}
 		else
 		{
-			$sql = "UPDATE ".TABLE_PREFIX."auto_enroll
-			           SET name = '". $name ."'
-			         WHERE auto_enroll_id = ".$auto_enroll_id;
-			
-			$result = mysql_query($sql, $db);
 
-			write_to_log(AT_ADMIN_LOG_UPDATE, 'auto_enroll', mysql_affected_rows($db), $sql);
+			$sql = "UPDATE %sauto_enroll SET name = '%s' WHERE auto_enroll_id = %d";
+			$rows_updated = queryDB($sql, array(TABLE_PREFIX, $name, $auto_enroll_id));
+			
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'auto_enroll', $rows_updated, $sqlout);
 		}
 		
 		if (isset($_POST['add'])) 
 		{
 			foreach ($_POST['add_ids'] as $elem) 
 			{
-				$sql = "SELECT count(*) cnt FROM ".TABLE_PREFIX."auto_enroll_courses
-				         WHERE auto_enroll_id = ".$auto_enroll_id ."
-				           AND course_id = ". $elem;
-				$result = mysql_query($sql, $db) or die(mysql_error());
-				$row = mysql_fetch_assoc($result);
-				
+                // unable to determine the purpose of this query
+                // which always returns $row['cnt'] == 0, during queryDB() testing.
+				$sql = "SELECT count(*) cnt FROM %sauto_enroll_courses
+				         WHERE auto_enroll_id = %d
+				           AND course_id = %d";
+				$row = queryDB($sql, array(TABLE_PREFIX, $auto_enroll_id, $elem), TRUE);	
+						
 				if ($row["cnt"] == 0)
 				{
-					$sql = "INSERT INTO ".TABLE_PREFIX."auto_enroll_courses (auto_enroll_id, course_id)
-					        VALUES (" . $auto_enroll_id .", " . $elem . ")";
-					$result = mysql_query($sql, $db) or die(mysql_error());
-			
-					write_to_log(AT_ADMIN_LOG_INSERT, 'auto_enroll_courses', mysql_affected_rows($db), $sql);
+	
+					$sql = "INSERT INTO %sauto_enroll_courses (auto_enroll_id, course_id) VALUES (%d, %d)";
+					$rows_inserted = queryDB($sql, array(TABLE_PREFIX, $auto_enroll_id,  $elem ));
+								
+					write_to_log(AT_ADMIN_LOG_INSERT, 'auto_enroll_courses', $rows_inserted, $sqlout);
 				}
 			}
 		}
@@ -109,15 +107,14 @@ else if (isset($_POST['delete']))
 	{
 		foreach ($_POST['delete_ids'] as $elem) 
 		{
-			$sql = "DELETE FROM ".TABLE_PREFIX."auto_enroll_courses
-			        WHERE auto_enroll_courses_id = " . $elem;
-//			print $sql."<br>";
-			$result = mysql_query($sql, $db) or die(mysql_error());
+
+			$sql = "DELETE FROM %sauto_enroll_courses WHERE auto_enroll_courses_id = %d";
+			$rows_deleted = queryDB($sql, array(TABLE_PREFIX, $elem));
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		
-		write_to_log(AT_ADMIN_LOG_DELETE, 'auto_enroll_courses', mysql_affected_rows($db), $sql);
+		write_to_log(AT_ADMIN_LOG_DELETE, 'auto_enroll_courses', $rows_deleted, $sqlout);
 	}
 }
 else if (isset($_POST['cancel'])) 
@@ -134,11 +131,10 @@ $msg->printAll();
 // existing auto enrollment
 if ($auto_enroll_id > 0)
 {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."auto_enroll
-	         WHERE auto_enroll_id = " . $auto_enroll_id;
+	$sql = "SELECT * FROM %sauto_enroll
+	         WHERE auto_enroll_id = %d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $auto_enroll_id), TRUE);
 
-	$result = mysql_query($sql, $db) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
 }
 ?>
 
@@ -157,9 +153,10 @@ $existing_courses = array();
 $cats	= array();
 $cats[0] = _AT('cats_uncategorized');
 
-$sql = "SELECT cat_id, cat_name FROM ".TABLE_PREFIX."course_cats";
-$result = mysql_query($sql,$db);
-while($row = mysql_fetch_array($result)) {
+$sql = "SELECT cat_id, cat_name FROM %scourse_cats";
+$rows_cats = queryDB($sql, array(TABLE_PREFIX));
+
+foreach($rows_cats as $row){
 	$cats[$row['cat_id']] = $row['cat_name'];
 }
 
@@ -193,24 +190,24 @@ while($row = mysql_fetch_array($result)) {
 
 		<tbody>
 <?php
-$num_of_rows = 0;
+$num_rows_courses = 0;
 
 if ($auto_enroll_id > 0)
 {
+
 	$sql_courses = "SELECT auto_enroll_courses.auto_enroll_courses_id auto_enroll_courses_id, 
 	                       auto_enroll_courses.course_id,
 	                       courses.cat_id,
 	                       courses.title title
-	                  FROM " . TABLE_PREFIX."auto_enroll_courses auto_enroll_courses, " . TABLE_PREFIX ."courses courses 
-	                 where auto_enroll_courses.auto_enroll_id=".$auto_enroll_id .
-	               "   and auto_enroll_courses.course_id = courses.course_id";
+	                  FROM %sauto_enroll_courses auto_enroll_courses, %scourses courses 
+	                 where auto_enroll_courses.auto_enroll_id=%d
+	                 and auto_enroll_courses.course_id = courses.course_id";
 
-	$result_courses = mysql_query($sql_courses, $db) or die(mysql_error());
+	$rows_courses = queryDB($sql_courses, array(TABLE_PREFIX, TABLE_PREFIX, $auto_enroll_id));
+	$num_rows_courses = count($rows_courses);
 	
-	$num_of_rows = mysql_num_rows($result_courses);
-	
-	if ($row_courses = mysql_fetch_assoc($result_courses))
-	do {
+	if ($num_rows_courses > 0)
+	foreach($rows_courses as $row_courses){
 		$existing_courses[] = $row_courses["course_id"];
 	?>
 			<tr onmousedown="document.form['m<?php echo $row_courses['auto_enroll_courses_id']; ?>'].checked = !document.form['m<?php echo $row_courses['auto_enroll_courses_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row_courses['auto_enroll_courses_id']; ?>');" id="rm<?php echo $row_courses['auto_enroll_courses_id']; ?>">
@@ -218,11 +215,11 @@ if ($auto_enroll_id > 0)
 				<td id="tm<?php echo $row_courses['auto_enroll_courses_id']; ?>"><?php echo $row_courses['title']; ?></td>
 				<td><?php echo $cats[$row_courses['cat_id']]; ?></td>
 			</tr>
-	<?php } while ($row_courses = mysql_fetch_assoc($result_courses)); ?>
+	<?php } ?>
 <?php 
 }
 
-if ($num_of_rows == 0 || !isset($auto_enroll_id))
+if ($num_rows_courses == 0 || !isset($auto_enroll_id))
 { 
 ?>
 			<tr>
