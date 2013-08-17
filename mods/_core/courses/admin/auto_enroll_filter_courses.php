@@ -71,15 +71,17 @@ if (!empty($_POST['search'])) {
 }
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."courses WHERE access $sql_access AND cat_id $sql_category AND $sql_search AND hide=0 ORDER BY title";
-$courses_result = mysql_query($sql, $db);
+$rows_courses_cats = queryDB($sql, array(TABLE_PREFIX));
 
 // calculate number of results found
-$num_results = mysql_num_rows($courses_result);
+$num_results = count($rows_courses_cats);
 
-while ($row = mysql_fetch_assoc($courses_result)) 
+foreach($rows_courses_cats  as $row){
 	if (in_array($row['course_id'], $existing_courses)) $num_results--;
-
-if ($num_results > 0) mysql_data_seek($courses_result, 0);
+}
+// THIS LINE COMMENTED WHEN queryDB() WAS ADDED
+// NOT SURE OF ITS PURPOSE
+//if ($num_results > 0) mysql_data_seek($courses_result, 0);
 
 // get the categories <select>, if there are any.
 // we need ob_start/ob_clean, because select_categories() outputs directly.
@@ -160,16 +162,14 @@ if ($categories_select != '<option value="0"></option>') {
 
 		<tbody>
 <?php
-if ($num_results == 0)
-{
+if ($num_results == 0){
 ?>
 		<tr>
 			<td colspan="3"><?php echo _AT('none_found'); ?></td>
 		</tr>
 <?php 
-}
-else if ($row = mysql_fetch_assoc($courses_result)) 
-	do {
+} else if (count($rows_courses_cats) > 0) {
+    foreach($rows_courses_cats as $row){
 		if (!in_array($row['course_id'], $existing_courses))
 		{
 	?>
@@ -180,7 +180,8 @@ else if ($row = mysql_fetch_assoc($courses_result))
 		</tr>
 	<?php 
 		}
-	} while ($row = mysql_fetch_assoc($courses_result)); 
+	}
+}
 ?>
 		</tbody>
 	</table>
