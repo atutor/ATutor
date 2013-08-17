@@ -24,7 +24,6 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['form_course'])) {
 	$errors = add_update_course($_POST, TRUE);
-//debug($_POST);
 	if ($errors !== FALSE) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.AT_BASE_HREF.'mods/_core/courses/admin/courses.php');
@@ -38,10 +37,10 @@ $msg->printAll();
 
 $course = 0;
 $isadmin   = TRUE;
-$sql = "SELECT member_id, login FROM ".TABLE_PREFIX."members WHERE status=".AT_STATUS_INSTRUCTOR;
-$result = mysql_query($sql, $db);
+$sql = "SELECT member_id, login FROM %smembers WHERE status=".AT_STATUS_INSTRUCTOR;
+$rows_instructors = queryDB($sql, array(TABLE_PREFIX));
 
-$savant->assign('result', $result);
+$savant->assign('rows_instructors', $rows_instructors);
 $savant->assign('course', $course);
 $savant->assign('isadmin', $isadmin);
 

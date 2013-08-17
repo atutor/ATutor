@@ -1,4 +1,3 @@
-
 <?php 
 global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 
@@ -22,15 +21,15 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 			<?php 
 			
 			
-			if ($instructor_row = mysql_fetch_assoc($this->result)) {
+			if(count($this->rows_instructors) >0){
 				echo '<select name="instructor" id="inst">';
-				do {
+				foreach($this->rows_instructors as $instructor_row){
 					if ($instructor_row['member_id'] == $this->row['member_id']) {
 						echo '<option value="'.$instructor_row['member_id'].'" selected="selected">'.$instructor_row['login'].'</option>';
 					} else {
 						echo '<option value="'.$instructor_row['member_id'].'">'.$instructor_row['login'].'</option>';
 					}
-				} while($instructor_row = mysql_fetch_assoc($this->result));
+				} 
 				echo '</select>';
 			} else {
 				echo '<span id="inst">'._AT('none_found').'</span>';

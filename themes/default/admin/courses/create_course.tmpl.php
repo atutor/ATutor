@@ -1,5 +1,7 @@
-
-<?php global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
+<?php 
+// THIS TEMPLATE IS NO LONGER IN USE
+exit;
+global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form" enctype="multipart/form-data">
@@ -18,16 +20,16 @@
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="inst"><?php echo  _AT('instructor'); ?></label><br />
 			<?php 
-		
-			if ($instructor_row = mysql_fetch_assoc($this->result)) {
+			debug($this->rows_instructors);
+		    if(count($this->rows_instructors) > 0){
 				echo '<select name="instructor" id="inst">';
-				do {
+			    foreach($this->rows_instructors as $instructor_row){
 					if ($instructor_row['member_id'] == $this->row['member_id']) {
 						echo '<option value="'.$instructor_row['member_id'].'" selected="selected">'.$instructor_row['login'].'</option>';
 					} else {
 						echo '<option value="'.$instructor_row['member_id'].'">'.$instructor_row['login'].'</option>';
 					}
-				} while($instructor_row = mysql_fetch_assoc($this->result));
+				}
 				echo '</select>';
 			} else {
 				echo '<span id="inst">'._AT('none_found').'</span>';
