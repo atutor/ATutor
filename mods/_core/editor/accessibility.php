@@ -26,15 +26,16 @@ if ($cid == 0) {
 	exit;
 }
 
-$result = $contentManager->getContentPage($cid);
+$rows_content = $contentManager->getContentPage($cid);
 
-if (!($content_row = @mysql_fetch_assoc($result))) {
-	require(AT_INCLUDE_PATH.'header.inc.php');
-	$msg->printErrors('PAGE_NOT_FOUND');
-	require (AT_INCLUDE_PATH.'footer.inc.php');
-	exit;
+foreach($rows_content as $content_row){
+    if(!isset($content_row['content_id'])){
+        require(AT_INCLUDE_PATH.'header.inc.php');
+        $msg->printErrors('PAGE_NOT_FOUND');
+        require (AT_INCLUDE_PATH.'footer.inc.php');
+        exit;
+    }
 }
-
 $course_base_href = '';
 $content_base_href = '';
 
