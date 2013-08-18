@@ -21,10 +21,10 @@ global $strlen, $substr, $strtolower;
 ob_start(); 
 $result = false;
 if (isset($_GET['cid'])) {
-	$result = $contentManager->getContentPage($_GET['cid']);
+	$rows_content = $contentManager->getContentPage($_GET['cid']);
 }
-    if(count($result) > 0){
-        foreach($result as $row){
+    if(count($rows_content) > 0){
+        foreach($rows_content as $row){
 
         $matches = find_terms($row['text']);
         $matches = $matches[0];
