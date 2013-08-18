@@ -121,9 +121,9 @@ if (isset($_POST['form_course'])) {
 } else if ($course) {
 
 	$sql	= "SELECT *, DATE_FORMAT(release_date, '%%Y-%%m-%%d %%H:%%i:00') AS release_date, DATE_FORMAT(end_date, '%%Y-%%m-%%d %%H:%%i:00') AS end_date  FROM %scourses WHERE course_id=%d";
-	$rows_courses = queryDB($sql, array(TABLE_PREFIX, $course));
+	$row = queryDB($sql, array(TABLE_PREFIX, $course), TRUE);
 	
-	if (count($rows_courses) < 1) {
+	if (count($row) < 1) {
 		echo _AT('no_course_found');
 		return;
 	}
