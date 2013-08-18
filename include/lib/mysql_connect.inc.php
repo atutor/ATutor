@@ -79,7 +79,6 @@ if ( get_magic_quotes_gpc() == 1 ) {
 function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows", $array_type = MYSQL_ASSOC) {
 
     $sql = create_sql($query, $params, $sanitize);
-            sqlout($sql);
     return execute_sql($sql, $oneRow, $callback_func, $array_type);
 
 }
