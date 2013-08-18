@@ -16,8 +16,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
 global $contentManager;
-debug($_GET);
-//exit;
+
 if (isset($_GET['edit'], $_GET['ctid'])) {
 	$cid = intval($_GET['ctid']);
 	$row_contents = $contentManager->getContentPage($cid);
