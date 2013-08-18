@@ -13,8 +13,8 @@ global $_config, $db;
 // for admin
 if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 		//$sql = "SELECT * from ".TABLE_PREFIX."modules WHERE dir_name = '_core/services' && status ='2'";
-		$sql = "SELECT * from ".TABLE_PREFIX."modules WHERE dir_name = '_core/services' && status ='2'";
-		$result = queryDB(TABLE_PREFIX);
+		$sql = "SELECT * from %smodules WHERE dir_name = '_core/services' && status ='2'";
+		$result = queryDB($sql, array(TABLE_PREFIX), TRUE);
 		if(count($result) > 0){
 		    $service_installed = count($result);
 		}
