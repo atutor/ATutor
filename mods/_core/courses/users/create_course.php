@@ -23,9 +23,11 @@ if (get_instructor_status() === FALSE) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
 
 	if (defined('ALLOW_INSTRUCTOR_REQUESTS') && ALLOW_INSTRUCTOR_REQUESTS) {
-		$sql	= "SELECT member_id FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
-		if (!($row = mysql_fetch_array($result))) : ?>
+	
+		$sql	= "SELECT member_id FROM %sinstructor_approvals WHERE member_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+
+		if(count($row) < 1):?>
 			<form action="mods/_core/courses/users/request_instructor.php" method="post">
 			<input type="hidden" name="form_request_instructor" value="true" />
 			<div class="input-form">
