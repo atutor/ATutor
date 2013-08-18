@@ -64,9 +64,10 @@ if (is_array($children) && (count($children)>0) ) {
 	$msg->addConfirm('GLOSSARY_REMAINS', $hidden_vars);
 }
 	
-$sql = "SELECT * from ".TABLE_PREFIX."content WHERE content_id = '$hidden_vars[cid]'";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)){
+$sql = "SELECT * from %scontent WHERE content_id = '%s'";
+$rows_content = queryDB($sql, array(TABLE_PREFIX, $hidden_vars['cid']));
+
+foreach($rows_content as $row){
 	$title = $row['title'];
 }
 
