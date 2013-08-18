@@ -29,24 +29,25 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['form_request_instructor'])) {
 	 if (defined('AUTO_APPROVE_INSTRUCTORS') && AUTO_APPROVE_INSTRUCTORS) {
-		$sql	= "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_INSTRUCTOR.", creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
 
+		$sql	= "UPDATE %smembers SET status=%d, creation_date=creation_date, last_login=last_login WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, AT_STATUS_INSTRUCTOR, $_SESSION['member_id']));
 		$msg->addFeedback('ACCOUNT_APPROVED');
 
 	} else {
 
 		$_POST['description'] = $addslashes($_POST['description']);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."instructor_approvals VALUES ($_SESSION[member_id], NOW(), '$_POST[description]')";
-		$result = mysql_query($sql, $db);
+		$sql	= "INSERT INTO %sinstructor_approvals VALUES (%d, NOW(), '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'],$_POST['description']));		
+		
 		/* email notification send to admin upon instructor request */
 
 		if (EMAIL_NOTIFY && ($_config['contact_email'] != '')) {
-
-			$sql	= "SELECT login, email FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-			$result = mysql_query($sql, $db);				
-			if ($row = mysql_fetch_assoc($result)) {
+    
+			$sql	= "SELECT login, email FROM %smembers WHERE member_id=%d";
+			$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);			
+			if(count($row) > 0){
 				$email = $row['email'];
 			}
 			$tmp_message = _AT('req_message_instructor', get_display_name($_SESSION['member_id']), $_POST['description'], AT_BASE_HREF);
@@ -76,16 +77,22 @@ if (isset($_POST['cancel'])) {
 	exit;
 } 
 
-$title = _AT('request_instructor_account');
-require(AT_INCLUDE_PATH.'header.inc.php');
 
+exit;
+/*************** THIS BLOCK DOES NOT APPEAR TO BE IN USE ******
+$title = _AT('request_instructor_account');
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+debug($row);
 if ($msg->containsErrors()) { $msg->printErrors(); }
 
 if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status'] != AT_STATUS_INSTRUCTOR) ) {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	if (!($row = mysql_fetch_array($result))) {
+
+	$sql	= "SELECT * FROM %sinstructor_approvals WHERE member_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+    if(count($row) < 1){    
 		$msg->printInfos('REQUEST_ACCOUNT');
+		$msg->printInfos();
 ?>
 		<br /><form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post">
 		<p align="center">
@@ -98,10 +105,10 @@ if (ALLOW_INSTRUCTOR_REQUESTS && ($row['status'] != AT_STATUS_INSTRUCTOR) ) {
 <?php
 	} else {
 		/* already waiting for approval */
-		$msg->printInfos('APPROVAL_PENDING');
+/*		$msg->printInfos('APPROVAL_PENDING');
 	}
 } 
 
 	require(AT_INCLUDE_PATH.'footer.inc.php');
-
+*/
 ?>
