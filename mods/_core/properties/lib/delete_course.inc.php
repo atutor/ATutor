@@ -25,9 +25,10 @@ function delete_course($course, $material) {
 		$delete_groups = TRUE;
 		// get a list of groups in an array to send to module::delete()
 		// get groups
-		$sql	= "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$course";
-		$result = mysql_query($sql, $db);
-		while ($group_row = mysql_fetch_assoc($result)) {
+		$sql	= "SELECT G.group_id FROM %sgroups G INNER JOIN %sgroups_types T USING (type_id) WHERE T.course_id=%d";
+		$group_rows = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course));
+		
+        foreach($group_rows as $group_row){
 			$groups[] = $group_row['group_id'];
 		}
 	}
@@ -63,8 +64,10 @@ function delete_course($course, $material) {
 
 	if ($material === TRUE) {
 		// delete actual course
-		$sql = "DELETE FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-		$result = mysql_query($sql, $db);
+		$sql = "DELETE FROM %scourses WHERE course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $course));
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_DELETE, 'courses', $result, $sqlout);
 	}
 }
 ?>

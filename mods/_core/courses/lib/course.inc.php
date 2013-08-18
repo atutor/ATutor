@@ -66,9 +66,10 @@ function add_update_course($course_data, $isadmin = FALSE) {
 		}
 
 		//check if the course_dir_name is already being used
-		$sql = 'SELECT COUNT(course_id) as cnt FROM '.TABLE_PREFIX."courses WHERE course_id!=$course_data[course] AND course_dir_name='$course_data[course_dir_name]'";
-		$result = mysql_query($sql);
-		$num_of_dir = mysql_fetch_assoc($result);
+		
+		$sql = "SELECT COUNT(course_id) as cnt FROM %scourses WHERE course_id!=%d AND course_dir_name='%s'";
+		$num_of_dir = queryDB($sql, array(TABLE_PREFIX, $course_data['course'], $course_data['course_dir_name']), TRUE);
+		
 		if (intval($num_of_dir['cnt']) > 0){
 			$msg->addError('COURSE_DIR_NAME_IN_USE');
 		}		
@@ -204,19 +205,61 @@ function add_update_course($course_data, $isadmin = FALSE) {
 	} else {
 		$menu_defaults = ',home_links=\''.$system_courses[$course_data['course']]['home_links'].'\', main_links=\''.$system_courses[$course_data['course']]['main_links'].'\', side_menu=\''.$system_courses[$course_data['course']]['side_menu'].'\'';
 	}
+	
+    $sql	= "REPLACE INTO %scourses 
+                SET 
+                course_id=%d, 
+                member_id='%s', 
+                access='%s', 
+                title='%s', 
+                description='%s', 
+                course_dir_name='%s', 
+                cat_id=%d, 
+                content_packaging='%s', 
+                notify=%d, 
+                hide=%d, 
+                $course_quotas
+                primary_language='%s',
+                created_date='%s',
+                rss=%d,
+                copyright='%s',
+                icon='%s',
+                banner='%s',
+                release_date='%s', 
+                end_date='%s' 
+                $menu_defaults";
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$course_data[course], member_id='$course_data[instructor]', access='$course_data[access]', title='$course_data[title]', description='$course_data[description]', course_dir_name='$course_data[course_dir_name]', cat_id='$course_data[category_parent]', content_packaging='$course_data[content_packaging]', notify=$course_data[notify], hide=$course_data[hide], $course_quotas primary_language='$course_data[pri_lang]', created_date='$course_data[created_date]', rss=$course_data[rss], copyright='$course_data[copyright]', icon='$course_data[icon]', banner='$course_data[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
+	$result = queryDB($sql, array(TABLE_PREFIX, 
+	            $course_data['course'], 
+	            $course_data['instructor'], 
+	            $course_data['access'], 
+	            $course_data['title'], 
+	            $course_data['description'], 
+	            $course_data['course_dir_name'], 
+	            $course_data['category_parent'],
+	            $course_data['content_packaging'],
+	            $course_data['notify'],
+	            $course_data['hide'],
+	            $course_data['pri_lang'],
+	            $course_data['created_date'],
+	            $course_data['rss'],
+	            $course_data['copyright'],
+	            $course_data['icon'],
+	            $course_data['banner'],
+	            $release_date,
+	            $end_date));
+          
 
-	$result = mysql_query($sql, $db);
 	if (!$result) {
-		echo mysql_error($db);
+		echo at_db_error();
 		echo 'DB Error';
 		exit;
 	}
 	$_SESSION['is_admin'] = true;
-	$new_course_id = $_SESSION['course_id'] = mysql_insert_id($db);
+	$new_course_id = $_SESSION['course_id'] = at_insert_id();
 	if (isset($isadmin)) {
-		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', mysql_affected_rows($db), $sql);
+	    global $sqlout;	  
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', $result, $sqlout);
 	}
 
 	if (isset($isadmin)) {
@@ -225,17 +268,21 @@ function add_update_course($course_data, $isadmin = FALSE) {
 		
 		if ($old_instructor != $course_data['instructor']) {
 			//remove old from course enrollment
-			$sql = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=".$course_data['course']." AND member_id=".$old_instructor;
-			$result = mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
+			$sql = "DELETE FROM %scourse_enrollment WHERE course_id=%d AND member_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $course_data['course'], $old_instructor));
+			
+			global $sqlout;		
+			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', $result, $sqlout);
 		} 
 	}
 
 	//enroll new instructor
-	$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($course_data[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
-	$result = mysql_query($sql, $db);
+	$sql = "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '"._AT('instructor')."', 0)";
+	$result = queryDB($sql, array(TABLE_PREFIX, $course_data['instructor'], $new_course_id));
+	
 	if (isset($isadmin)) {
-		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', mysql_affected_rows($db), $sql);
+	    global $sqlout;
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', $result, $sqlout);
 	}
 
 	// create the course content directory
@@ -260,30 +307,13 @@ function add_update_course($course_data, $isadmin = FALSE) {
 
 		$announcement = _AT('default_announcement');
 		
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (NULL, $new_course_id, $instructor, NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
-		$result = mysql_query($sql,$db);
+		$sql	= "INSERT INTO %snews VALUES (NULL, %d, %d, NOW(), 1, '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $new_course_id, $instructor, _AT('welcome_to_atutor'), $announcement));		
 		
 		if ($isadmin) {
-			write_to_log(AT_ADMIN_LOG_INSERT, 'news', mysql_affected_rows($db), $sql);
+		    global $sqlout;
+			write_to_log(AT_ADMIN_LOG_INSERT, 'news', $result, $sqlout);
 		}
-
-		/**
-		 * removed - #3098
-		// create forum for Welcome Course
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
-		$result = mysql_query($sql,$db);
-
-		if ($isadmin) {
-			write_to_log(AT_ADMIN_LOG_INSERT, 'forums', mysql_affected_rows($db), $sql);
-		}
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(), $new_course_id)";
-		$result = mysql_query($sql,$db);
-
-		if ($isadmin) {
-			write_to_log(AT_ADMIN_LOG_INSERT, 'forums_courses', mysql_affected_rows($db), $sql);
-		}
-		***/
 
 	} else if (!$course_data['course'] && (count($initial_content_info) == 2)){
 
@@ -292,7 +322,7 @@ function add_update_course($course_data, $isadmin = FALSE) {
 	}
  
  	// custom icon, have to be after directory is created
-//	$_FILES['customicon'] = $course_data['customicon'];	//copy to $_FILES.
+
 	if($_FILES['customicon']['tmp_name'] != ''){
         $course_data['comments'] = trim($course_data['comments']);
 
@@ -374,8 +404,7 @@ function add_update_course($course_data, $isadmin = FALSE) {
             $msg->addError('FILE_NOT_SAVED');
             
         }
-        //header('Location: index.php'.$owner_arg_prefix.'folder='.$parent_folder_id);
-        //exit;
+
     }
     //----------------------------------------
 
