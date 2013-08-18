@@ -12,9 +12,11 @@ global $_config, $db;
 
 // for admin
 if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
+		//$sql = "SELECT * from ".TABLE_PREFIX."modules WHERE dir_name = '_core/services' && status ='2'";
 		$sql = "SELECT * from ".TABLE_PREFIX."modules WHERE dir_name = '_core/services' && status ='2'";
-		if($result = @mysql_query($sql, $db)){
-		    $service_installed = mysql_num_rows($result);
+		$result = queryDB(TABLE_PREFIX);
+		if(count($result) > 0){
+		    $service_installed = count($result);
 		}
 
 		$this->_pages[AT_NAV_ADMIN] = array('mods/_core/courses/admin/courses.php');
