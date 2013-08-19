@@ -108,8 +108,13 @@ function populate_a4a($cid, $content, $formatting){
 	if (!isset($content_base_href)) {
 		$result = $contentManager->getContentPage($cid);
 		// return if the cid is not found
-		if (!($content_row = @mysql_fetch_assoc($result))) return;
-		$content_base_href = $content_row["content_path"].'/';
+		foreach($result as $content_row){
+            if(count($content_row) < 1){
+                return;
+            }else{
+                $content_base_href = $content_row["content_path"].'/';
+            }
+		}
 	}
 
 	$body = format_content($content, $formatting,array());
@@ -262,15 +267,17 @@ function save_changes($redir, $current_tab) {
 			if (($key !== false) && (($glossary[$old_w] != $d) || isset($_POST['related_term'][$old_w])) ) {
 				$w = addslashes($w);
 				$related_id = intval($_POST['related_term'][$old_w]);
-				$sql = "UPDATE ".TABLE_PREFIX."glossary SET definition='$d', related_word_id=$related_id WHERE word_id=$key AND course_id=$_SESSION[course_id]";
-				$result = mysql_query($sql, $db);
+
+				$sql = "UPDATE %sglossary SET definition='%s', related_word_id=%d WHERE word_id=%d AND course_id=%d";
+				$result = queryDB($sql, array(TABLE_PREFIX, $d, $related_id, $key, $_SESSION['course_id']));
 				$glossary[$old_w] = $d;
+				
 			} else if ($key === false && ($d != '')) {
 				$w = addslashes($w);
 				$related_id = intval($_POST['related_term'][$old_w]);
-				$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$w', '$d', $related_id)";
 
-				$result = mysql_query($sql, $db);
+				$sql = "INSERT INTO %sglossary VALUES (NULL, %d, '%s', '%s', %d)";
+				$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $w, $d, $related_id));
 				$glossary[$old_w] = $d;
 			}
 		}
@@ -286,97 +293,103 @@ function save_changes($redir, $current_tab) {
 	if (isset($_POST['use_post_for_alt']))
 	{
 		// 1. delete old primary content type
-		$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
+		$sql = "DELETE FROM %sprimary_resources_types
 		         WHERE primary_resource_id in 
 		               (SELECT DISTINCT primary_resource_id 
-		                  FROM ".TABLE_PREFIX."primary_resources
-		                 WHERE content_id=".$cid."
-		                   AND language_code='".$_SESSION['lang']."')";
-		$result = mysql_query($sql, $db);
-		
+		                  FROM %sprimary_resources
+		                 WHERE content_id=%d
+		                   AND language_code='%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $cid, $_SESSION['lang']));
+				
 		// 2. insert the new primary content type
 		$sql = "SELECT pr.primary_resource_id, rt.type_id
-		          FROM ".TABLE_PREFIX."primary_resources pr, ".
-		                 TABLE_PREFIX."resource_types rt
-		         WHERE pr.content_id = ".$cid."
-		           AND pr.language_code = '".$_SESSION['lang']."'";
-		$all_types_result = mysql_query($sql, $db);
+		          FROM %sprimary_resources pr, 
+		                 %sresource_types rt
+		         WHERE pr.content_id = %d
+		           AND pr.language_code = '%s'";
+		$all_types_result = queryDB($sql, array(TABLE_PREFIX,TABLE_PREFIX, $cid, $_SESSION['lang']));
 		
-		while ($type = mysql_fetch_assoc($all_types_result)) {
+		foreach($all_types_result as $type){
 			if (isset($_POST['alt_'.$type['primary_resource_id'].'_'.$type['type_id']]))
 			{
-				$sql = "INSERT INTO ".TABLE_PREFIX."primary_resources_types (primary_resource_id, type_id)
-				        VALUES (".$type['primary_resource_id'].", ".$type['type_id'].")";
-				$result = mysql_query($sql, $db);
+
+				$sql = "INSERT INTO %sprimary_resources_types (primary_resource_id, type_id)
+				        VALUES (%d, %d)";
+				$result = queryDB($sql, array(TABLE_PREFIX, $type['primary_resource_id'], $type['type_id']));
+
 			}
 		}
 	}
 	
 	//Add test to this content - @harris
-	$sql = 'SELECT * FROM '.TABLE_PREFIX."content_tests_assoc WHERE content_id=$_POST[cid]";
-	$result = mysql_query($sql, $db);
+	$sql = "SELECT * FROM %scontent_tests_assoc WHERE content_id=%d";
+	$rows_content_tests = queryDB($sql, array(TABLE_PREFIX, $_POST['cid']));
 	$db_test_array = array();
-	while ($row = mysql_fetch_assoc($result)) {
+	
+	foreach($rows_content_tests as $row){
 		$db_test_array[] = $row['test_id'];
 	}
 
 	if (is_array($_POST['tid']) && sizeof($_POST['tid']) > 0){
 		$toBeDeleted = array_diff($db_test_array, $_POST['tid']);
 		$toBeAdded = array_diff($_POST['tid'], $db_test_array);
+		
 		//Delete entries
 		if (!empty($toBeDeleted)){
 			$tids = implode(",", $toBeDeleted);
-			$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid] AND test_id IN ($tids)";
-			$result = mysql_query($sql, $db);
+
+			$sql = "DELETE FROM %scontent_tests_assoc WHERE content_id=%d AND test_id IN (%s)";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['cid'], $tids));
 		}
 	
 		//Add entries
 		if (!empty($toBeAdded)){
 			foreach ($toBeAdded as $i => $tid){
 				$tid = intval($tid);
-				$sql = 'INSERT INTO '. TABLE_PREFIX . "content_tests_assoc SET content_id=$_POST[cid], test_id=$tid";
-				$result = mysql_query($sql, $db);
-				if ($result===false){
-					$msg->addError('MYSQL_FAILED');
-				}
+
+				$sql = "INSERT INTO %scontent_tests_assoc SET content_id=%d, test_id=%d";
+				$result = queryDB($sql, array(TABLE_PREFIX, $_POST['cid'], $tid));
 			}
 		}
 	} else {
-		//All tests has been removed.
-		$sql = 'DELETE FROM '. TABLE_PREFIX . "content_tests_assoc WHERE content_id=$_POST[cid]";
-		$result = mysql_query($sql, $db);
+	
+		$sql = "DELETE FROM %scontent_tests_assoc WHERE content_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['cid']));
 	}
 	//End Add test
 
 	// add pre-tests
-	$sql = "DELETE FROM ". TABLE_PREFIX . "content_prerequisites 
-	         WHERE content_id=".$_POST[cid]." AND type='".CONTENT_PRE_TEST."'";
-	$result = mysql_query($sql, $db);
-	
+	$sql = "DELETE FROM %scontent_prerequisites WHERE content_id=%d AND type='%s'";
+	$result = queryDB($sql, array(TABLE_PREFIX,$_POST['cid'], CONTENT_PRE_TEST));
+		
 	if (is_array($_POST['pre_tid']) && sizeof($_POST['pre_tid']) > 0)
 	{
 		foreach ($_POST['pre_tid'] as $i => $tid){
 			$tid = intval($tid);
-			$sql = "INSERT INTO ". TABLE_PREFIX . "content_prerequisites 
-			           SET content_id=".$_POST[cid].", type='".CONTENT_PRE_TEST."', item_id=$tid";
-			$result = mysql_query($sql, $db);
-			
-			if ($result===false) $msg->addError('MYSQL_FAILED');
+
+			$sql = "INSERT INTO %scontent_prerequisites SET content_id=%d, type='%s', item_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['cid'], CONTENT_PRE_TEST, $tid));		
+
 		}
 	}
 
-        //TODO*******************BOLOGNA****************REMOVE ME**************/
          if(isset($_SESSION['associated_forum']) && !$msg->containsErrors()){
             if($_SESSION['associated_forum']=='none'){
-                $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
-                mysql_query($sql,$db);
+            
+                $sql = "DELETE FROM %scontent_forums_assoc WHERE content_id=%d";
+                queryDB($sql,array(TABLE_PREFIX, $_POST['cid']));
+                
             } else {
-                $sql = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$_POST[cid]'";
-                mysql_query($sql,$db);
+
+                $sql = "DELETE FROM %scontent_forums_assoc WHERE content_id=%d";
+                queryDB($sql, array(TABLE_PREFIX, $_POST['cid']));
+                
                 $associated_forum = $_SESSION['associated_forum'];
+                
                 for($i=0; $i<count($associated_forum); $i++){
-                    $sql="INSERT INTO ".TABLE_PREFIX."content_forums_assoc SET content_id='$_POST[cid]',forum_id='$associated_forum[$i]'";
-                    mysql_query($sql,$db);
+
+                    $sql="INSERT INTO %scontent_forums_assoc SET content_id=%d,forum_id=%d";
+                    queryDB($sql, array(TABLE_PREFIX, $_POST['cid'], $associated_forum[$i]));
                 }
             }
             unset($_SESSION['associated_forum']);
@@ -624,30 +637,6 @@ function write_temp_file() {
 	$file_name = $_POST['cid'].'.html';
 
 	if ($handle = fopen(AT_CONTENT_DIR . $file_name, 'wb+')) {
-//		$temp_content = '<h2>'.AT_print(stripslashes($_POST['title']), 'content.title').'</h2>';
-//
-//		if ($_POST['body_text'] != '') {
-//			$temp_content .= format_content(stripslashes($_POST['body_text']), $_POST['formatting'], $_POST['glossary_defs']);
-//		}
-//		$temp_title = $_POST['title'];
-//
-//		$html_template = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-//			"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-//		<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-//		<head>
-//			<base href="{BASE_HREF}" />
-//			<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-//			<title>{TITLE}</title>
-//			<meta name="Generator" content="ATutor accessibility checker file - can be deleted">
-//		</head>
-//		<body>
-//		{CONTENT}
-//		</body>
-//		</html>';
-//
-//		$page_html = str_replace(	array('{BASE_HREF}', '{TITLE}', '{CONTENT}'),
-//									array($content_base, $temp_title, $temp_content),
-//									$html_template);
 		
 		if (!@fwrite($handle, stripslashes($_POST['body_text']))) {
 			$msg->addError('FILE_NOT_SAVED');       
