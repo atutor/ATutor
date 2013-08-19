@@ -18,19 +18,23 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 /* Get the list of associated tests with this content on page load */
 
 $_REQUEST['cid'] = intval($_REQUEST['cid']);	//uses request 'cause after 'saved', the cid will become $_GET.
-$sql = 'SELECT * FROM '.TABLE_PREFIX."content_tests_assoc WHERE content_id=$_REQUEST[cid]";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+$sql = "SELECT * FROM %scontent_tests_assoc WHERE content_id=%d";
+$rows_test_assoc = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['cid']));
+
+foreach($rows_test_assoc as $row){
 	$_POST['tid'][] = $row['test_id'];
 }
 
+
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
+
 $sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue 
-             FROM ".TABLE_PREFIX."tests 
-            WHERE course_id=$_SESSION[course_id] 
+             FROM %stests 
+            WHERE course_id=%d 
             ORDER BY start_date DESC";
-$result	= mysql_query($sql, $db);
-$num_tests = mysql_num_rows($result);
+$rows_tests	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+$num_tests = count($rows_tests);
 
 //If there are no tests, don't display anything except a message
 if ($num_tests == 0){
@@ -40,8 +44,7 @@ if ($num_tests == 0){
 }
 
 $i = 0;
-while($row = mysql_fetch_assoc($result))
-{
+foreach($rows_tests as $row){
 	$results[$i]['test_id'] = $row['test_id'];
 	$results[$i]['title'] = $row['title'];
 	
@@ -67,28 +70,33 @@ while($row = mysql_fetch_assoc($result))
 		$results[$i]['result_release'] = _AT('release_never');
 		
 	//get # marked submissions
-	$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id'];
-	$result_sub	= mysql_query($sql_sub, $db);
-	$row_sub = mysql_fetch_assoc($result_sub);
+	$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM %stests_results WHERE status=1 AND test_id=%d";
+	$row_sub	= queryDB($sql_sub, array(TABLE_PREFIX, $row['test_id']), TRUE);	
+	
 	$results[$i]['submissions'] = $row_sub['sub_cnt'].' '._AT('submissions').', ';
 
 	//get # submissions
-	$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id']." AND final_score=''";
-	$result_sub	= mysql_query($sql_sub, $db);
-	$row_sub = mysql_fetch_assoc($result_sub);
+	$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM %stests_results WHERE status=1 AND test_id=%d AND final_score=''";
+	$row_sub	= queryDB($sql_sub, array(TABLE_PREFIX, $row['test_id']), TRUE);
+
 	$results[$i]['submissions'] .= $row_sub['marked_cnt'].' '._AT('unmarked');
 
 	//get assigned groups
-	$sql_sub = "SELECT G.title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."tests_groups T USING (group_id) WHERE T.test_id=".$row['test_id'];
-	$result_sub	= mysql_query($sql_sub, $db);
-	if (mysql_num_rows($result_sub) == 0) {
+	$sql_sub = "SELECT G.title FROM %sgroups G INNER JOIN %stests_groups T USING (group_id) WHERE T.test_id=%d";
+	$rows_group_tests = queryDB($sql_sub, array(TABLE_PREFIX, TABLE_PREFIX, $row['test_id']));
+	
+    if(count($rows_group_tests) == 0){
 		$results[$i]['assign_to'] = _AT('everyone');
 	} else {
-		$row_sub = mysql_fetch_assoc($result_sub);
 		$results[$i]['assign_to'] = $row_sub['title'];
-		do {
-			$results[$i]['assign_to'] .= ', '.$row_sub['title'];
-		} while ($row_sub = mysql_fetch_assoc($result_sub));
+		foreach($rows_group_tests as $row_sub){
+		    if($g == 0){
+		        $results[$i]['assign_to'] .= $row_sub['title'];
+		    }else{
+		    	$results[$i]['assign_to'] .= ', '.$row_sub['title'];
+		    }
+		    $g++;
+		}
 	}
 	
 	if ($row['passscore'] == 0 && $row['passpercent'] == 0)
@@ -145,9 +153,11 @@ tests a part of a CP or CP is actually possible
 
 <?php 
 // display pre-tests
-$sql = 'SELECT * FROM '.TABLE_PREFIX."content_prerequisites WHERE content_id=$_REQUEST[cid] AND type='".CONTENT_PRE_TEST."'";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+$sql = "SELECT * FROM %scontent_prerequisites WHERE content_id=%d AND type='%s'";
+$rows_prereqs = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['cid'], CONTENT_PRE_TEST));
+
+foreach($rows_prereqs as $row){
 	$_POST['pre_tid'][] = $row['item_id'];
 }
 
