@@ -13,7 +13,7 @@
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
+require_once(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
 

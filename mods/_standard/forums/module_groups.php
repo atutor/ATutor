@@ -16,7 +16,7 @@ function forums_create_group($group_id) {
 function forums_delete_group($group_id) {
 	global $db;
 
-	require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
+	require_once(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 	
 	$sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_groups WHERE group_id=$group_id";
 	$result = mysql_query($sql, $db);
