@@ -60,10 +60,14 @@ class A4a {
 		global $db;
 
 		$pri_resources = array(); // cid=>[resource, language code]
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$this->cid.' ORDER BY primary_resource_id';
-		$result = mysql_query($sql, $db);
-		if (mysql_numrows($result) > 0){
-			while ($row = mysql_fetch_assoc($result)){
+		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'primary_resources WHERE content_id='.$this->cid.' ORDER BY primary_resource_id';
+		//$result = mysql_query($sql, $db);
+		$sql = 'SELECT * FROM %sprimary_resources WHERE content_id=%d ORDER BY primary_resource_id';
+		$rows_primary_resouces = queryDB($sql, array(TABLE_PREFIX, $this->cid));
+		//if (mysql_numrows($result) > 0){
+		if (count($rows_primary_resouces) > 0){
+			foreach($rows_primary_resouces as $row){
+			//while ($row = mysql_fetch_assoc($result)){
 				$pri_resources[$row['primary_resource_id']]['resource'] = $row['resource'];
 				if ($row['language_code'] != ''){
 					$pri_resources[$row['primary_resource_id']]['language_code'] = $row['language_code'];
