@@ -17,9 +17,11 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT);
 
 if (!isset($_REQUEST['course_id'])) {
-	$sql = "SELECT course_id FROM ".TABLE_PREFIX."courses ORDER BY title LIMIT 1";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+
+	$sql = "SELECT course_id FROM %scourses ORDER BY title LIMIT 1";
+	$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
+	
+	if(count($row) > 0){
 		$course_id = intval($row['course_id']);
 	} else {
 		require(AT_INCLUDE_PATH.'header.inc.php');		
@@ -33,7 +35,6 @@ if (!isset($_REQUEST['course_id'])) {
 
 
 if (isset($system_courses[$course_id]['member_id'])) {
-
 	require(AT_INCLUDE_PATH.'../mods/_core/enrolment/html/enrollment.inc.php');
 }
 exit;

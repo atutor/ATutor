@@ -93,7 +93,6 @@ require(AT_INCLUDE_PATH.'../mods/_core/enrolment/html/enroll_tab_functions.inc.p
 $tabs = get_tabs();	
 
 
-//debug( $num_tabs);
 $num_tabs = count($tabs);
 
 for ($i=0; $i < $num_tabs; $i++) {
@@ -204,8 +203,8 @@ foreach ($tab_sql_counts as $tab => $sql) {
 	if ($tab == 3 && $system_courses[$course_id]['access'] != 'private') {
 		$tab_counts[$tab] = 0;
 	} else {
-		$result = mysql_query($sql);
-		$row    = mysql_fetch_assoc($result);
+
+		$row = queryDB($sql, array(), TRUE);
 		$tab_counts[$tab] = $row['cnt'];
 	}
 }
@@ -233,7 +232,6 @@ if ($current_tab == 0) {
 				ORDER BY $col $order";
 	} else {
 		// not sure what this is about
-//		$sql_cnt = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members WHERE 0";
 		$sql = "SELECT login FROM ".TABLE_PREFIX."members WHERE 0";
 	}
 } else if ($current_tab == 2) {
@@ -244,8 +242,6 @@ if ($current_tab == 0) {
 				ORDER BY $col $order";
 } else { // current_tab == 4
 
-//	$sql_cnt=  "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members M WHERE M.status>1 AND M.member_id NOT IN ($course_enrollment) AND $search";
-	
 	$sql	=  "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email FROM ".TABLE_PREFIX."members M WHERE M.member_id NOT IN ($course_enrollment) AND M.status>1 AND $search ORDER BY $col $order";
 }
 
@@ -260,8 +256,9 @@ $count  = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
 $sql .= " LIMIT $offset, $results_per_page";
 
-$enrollment_result = mysql_query($sql, $db);
+$rows_enrollment_result = queryDB($sql, array());
 $page_string_w_tab = $page_string . SEP . 'tab='.$current_tab;
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
@@ -289,11 +286,12 @@ function togglerowhighlight(obj, boxid) {
 </script>
 <?php 
 
+$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+$rows_courses = queryDB($sql, array(TABLE_PREFIX));
+
+$savant->assign('rows_courses', $rows_courses);
 $savant->assign('current_tab', $current_tab);
 $savant->assign('course_id', $course_id);
-$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
-$result = mysql_query($sql, $db);
-$savant->assign('result', $result);
 $savant->assign('checked_match_all', $checked_match_all);
 $savant->assign('checked_match_one', $checked_match_one);
 $savant->assign('page', $page);
@@ -306,11 +304,9 @@ $savant->assign('cols', $cols);
 $savant->assign('results_per_page', $results_per_page);
 $savant->assign('num_tabs', $num_tabs);
 $savant->assign('tabs', $tabs);
-$savant->assign('enrollment_result', $enrollment_result);
-if($_SESSION['is_admin'] === false && $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN) {
-	$savant->display('admin/courses/enrollment.tmpl.php');
-}
-if($_SESSION['is_admin'] === true){
+$savant->assign('enrollment_result', $rows_enrollment_result);
+
+if($_SESSION['is_admin'] === true || $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN){
 	$savant->display('instructor/enrolment/index.tmpl.php');
 }
 

@@ -9,8 +9,7 @@
 				<label for="course"><?php echo _AT('course'); ?></label><br/>
 				<select name="course_id" id="course">
 				<?php
-				
-				while ($courses_row = mysql_fetch_assoc($this->result)) {
+				foreach($this->rows_courses as $courses_row){ 
 					if ($courses_row['course_id'] == $this->course_id) {
 						echo '<option value="'.$courses_row['course_id'].'" selected="selected">'.validate_length($courses_row['title'], 45,VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
 					} else {
@@ -120,7 +119,9 @@
 </tfoot>
 <tbody>
 <?php if ($this->tab_counts[$this->current_tab]): ?>
-	<?php while ($row = mysql_fetch_assoc($this->enrollment_result)): ?>
+	<?php 	
+	    foreach($this->enrollment_result as $row){
+     ?>
 		<tr onmousedown="document.selectform['m<?php echo $row['member_id']; ?>'].checked = !document.selectform['m<?php echo $row['member_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row['member_id']; ?>');" id="rm<?php echo $row['member_id']; ?>">
 			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>
 			<td><?php echo AT_print($row['login'], 'members.login'); ?></td>
@@ -129,7 +130,7 @@
 			<td><?php echo AT_print($row['last_name'], 'members.name'); ?></td>
 		<!-- REMOVED FOR MOBILE	<td><?php // echo AT_print($row['email'], 'members.email'); ?></td>-->
 		</tr>
-	<?php endwhile; ?>
+	<?php } ?>
 <?php else: ?>
 	<tr>
 		<td colspan="6"><?php echo _AT('none_found'); ?></td>
