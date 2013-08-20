@@ -67,7 +67,6 @@ class A4a {
 		//if (mysql_numrows($result) > 0){
 		if (count($rows_primary_resouces) > 0){
 			foreach($rows_primary_resouces as $row){
-			//while ($row = mysql_fetch_assoc($result)){
 				$pri_resources[$row['primary_resource_id']]['resource'] = $row['resource'];
 				if ($row['language_code'] != ''){
 					$pri_resources[$row['primary_resource_id']]['language_code'] = $row['language_code'];
