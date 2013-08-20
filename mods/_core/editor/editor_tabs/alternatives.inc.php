@@ -42,13 +42,13 @@ function get_display_filename($filename)
 
 /**
  * Display alternative table cell
- * @param $secondary_result   mysql result of all secondary alternatives
+ * @param $rows_secondary_resources   db 2d array of all secondary alternatives
  *        $alternative type   the resource type of the alternative to display. Must be one of the values in resource_types.type_id
  *        $content_id         used to pass into file_manager/index.php
  *        $ps                 used to pass into file_manager/index.php
  * @return html of the table cell "<td>...</td>"
  */ 
-function display_alternative_cell($secondary_result, $alternative_type, $content_id, $pid, $td_header_id)
+function display_alternative_cell($rows_secondary_resources, $alternative_type, $content_id, $pid, $td_header_id)
 {
 	global $content_row;
 	
@@ -56,11 +56,9 @@ function display_alternative_cell($secondary_result, $alternative_type, $content
 	
 	echo '    <td headers="'.$td_header_id.'">'."\n";
 	
-	if (mysql_num_rows($secondary_result) > 0)
-	{
-		mysql_data_seek($secondary_result, 0);  // move the mysql result cursor back to the first row
-		while ($secondary_resource = mysql_fetch_assoc($secondary_result))
-		{
+	if (count($rows_secondary_resources) > 0){
+
+	    foreach($rows_secondary_resources as $secondary_resource){
 			if ($secondary_resource['type_id'] == $alternative_type)
 			{
 				echo '    <div id="'.$pid.'_'.$alternative_type.'">'."\n";
@@ -99,7 +97,7 @@ if ($_POST['formatting'] <> 1)
 	
 	$a4a = new A4a($cid);
 	$primary_resources = $a4a->getPrimaryResources();
-	
+
 	if (count($primary_resources)==0)
 	{
 		$msg->addFeedback('NO_RESOURCES');
@@ -109,9 +107,10 @@ if ($_POST['formatting'] <> 1)
 	{
 		$is_post_indicator_set = false;
 		// get all resource types
-		$sql = "SELECT * FROM ".TABLE_PREFIX."resource_types";
-		$resource_types_result = mysql_query($sql, $db);
-		
+
+		$sql = "SELECT * FROM %sresource_types";
+		$rows_resource_types = queryDB($sql, array(TABLE_PREFIX));
+
 		echo '<table class="data" rules="all">'."\n";
 		echo '  <thead>'."\n";
 		echo '  <tr>'."\n";
@@ -132,18 +131,17 @@ if ($_POST['formatting'] <> 1)
 		foreach($primary_resources as $primary_resource_id => $primary_resource_row)
 		{
 			$primary_resource = $primary_resource_row['resource'];
-			
-			$sql = "SELECT prt.type_id, rt.type
-			          FROM ".TABLE_PREFIX."primary_resources pr, ".
-			                 TABLE_PREFIX."primary_resources_types prt, ".
-			                 TABLE_PREFIX."resource_types rt
-			         WHERE pr.content_id = ".$cid."
-			           AND pr.language_code = '".$_SESSION['lang']."'
-			           AND pr.primary_resource_id='".$primary_resource_id."'
-			           AND pr.primary_resource_id = prt.primary_resource_id
-			           AND prt.type_id = rt.type_id";
-			$primary_type_result = mysql_query($sql, $db);
-			
+
+            // get list of primary resource types
+            $sql = "SELECT prt.type_id, rt.type
+                  FROM %sprimary_resources pr, %sprimary_resources_types prt, %sresource_types rt
+                 WHERE pr.content_id = %d
+                   AND pr.language_code = '%s'
+                   AND pr.primary_resource_id='%s'
+                   AND pr.primary_resource_id = prt.primary_resource_id
+                   AND prt.type_id = rt.type_id";
+            $rows_primary_type = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $cid, $_SESSION['lang'], $primary_resource_id ));	
+            
 			if (!$is_post_indicator_set)
 			{
 				echo '  <input type="hidden" name="use_post_for_alt" value="1" />'."\n";
@@ -152,16 +150,14 @@ if ($_POST['formatting'] <> 1)
 			
 			// get secondary resources for the current primary resource
 			$sql = "SELECT pr.primary_resource_id, sr.secondary_resource, srt.type_id
-			          FROM ".TABLE_PREFIX."primary_resources pr, ".
-			                 TABLE_PREFIX."secondary_resources sr, ".
-			                 TABLE_PREFIX."secondary_resources_types srt
-			         WHERE pr.content_id = ".$cid."
-			           AND pr.language_code = '".$_SESSION['lang']."'
-			           AND pr.primary_resource_id='".$primary_resource_id."'
+			          FROM %sprimary_resources pr, %ssecondary_resources sr, %ssecondary_resources_types srt
+			         WHERE pr.content_id = %d
+			           AND pr.language_code = '%s'
+			           AND pr.primary_resource_id='%s'
 			           AND pr.primary_resource_id = sr.primary_resource_id
 			           AND sr.secondary_resource_id = srt.secondary_resource_id";
-			$secondary_result = mysql_query($sql, $db);
-			
+			$rows_secondary_resources = queryDB($sql, array(TABLE_PREFIX,TABLE_PREFIX,TABLE_PREFIX, $cid, $_SESSION['lang'], $primary_resource_id));			
+
 			echo '  <tr>'."\n";
 	
 			// table cell "original resource"
@@ -172,9 +168,7 @@ if ($_POST['formatting'] <> 1)
 			// table cell "original resource type"
 			echo '    <td headers="header2">'."\n";
 			
-			mysql_data_seek($resource_types_result, 0);  // move the mysql result cursor back to the first row
-			while ($resource_type = mysql_fetch_assoc($resource_types_result))
-			{
+			foreach($rows_resource_types as $resource_type){
 				if ($resource_type['type'] == 'sign_language')
 					continue;
 				else 
@@ -187,13 +181,14 @@ if ($_POST['formatting'] <> 1)
 						}
 					}
 					else {
-						if (mysql_num_rows($primary_type_result)> 0) mysql_data_seek($primary_type_result, 0);
-						while ($primary_resource_type = mysql_fetch_assoc($primary_type_result)) {
-							if ($primary_resource_type['type_id'] == $resource_type['type_id']){
-								echo 'checked="checked"';
-								break;
-							}
-						}
+						if (count($rows_primary_type)> 0){
+                            foreach($rows_primary_type as $primary_resource_type){
+                                if ($primary_resource_type['type_id'] == $resource_type['type_id']){
+                                    echo 'checked="checked"';
+                                    break;
+                                }
+                            }
+                        }
 					}
 					echo '/>'."\n";
 					echo '<label for="alt_'.$primary_resource_id.'_'.$resource_type['type_id'].'">'. _AT($resource_type['type']).'</label><br/>'."\n";	
@@ -202,16 +197,16 @@ if ($_POST['formatting'] <> 1)
 			echo '    </td>'."\n";
 			
 			// table cell "text alternative"
-			display_alternative_cell($secondary_result, 3, $cid, $primary_resource_id, "header3");
-			
+			display_alternative_cell($rows_secondary_resources, 3, $cid, $primary_resource_id, "header3");
+						
 			// table cell "audio"
-			display_alternative_cell($secondary_result, 1, $cid, $primary_resource_id, "header4");
+			display_alternative_cell($rows_secondary_resources, 1, $cid, $primary_resource_id, "header4");
 			
 			// table cell "visual"
-			display_alternative_cell($secondary_result, 4, $cid, $primary_resource_id, "header5");
+			display_alternative_cell($rows_secondary_resources, 4, $cid, $primary_resource_id, "header5");
 			
 			// table cell "sign language"
-			display_alternative_cell($secondary_result, 2, $cid, $primary_resource_id, "header6");
+			display_alternative_cell($rows_secondary_resources, 2, $cid, $primary_resource_id, "header6");
 			
 			echo '  </tr>'."\n";
 		}
