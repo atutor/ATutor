@@ -42,10 +42,9 @@ if(isset($_POST['export'])) {
 		} 
 
 		$sql = "SELECT m.first_name, m.last_name, m.email 
-				FROM ".TABLE_PREFIX."course_enrollment cm JOIN ".TABLE_PREFIX."members m ON cm.member_id = m.member_id JOIN ".TABLE_PREFIX."courses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = $_SESSION[course_id] " . $condition . "ORDER BY m.last_name";
-
-		$result =  mysql_query($sql,$db);
-		while ($row = mysql_fetch_assoc($result)){
+				FROM %scourse_enrollment cm JOIN %smembers m ON cm.member_id = m.member_id JOIN %scourses c ON (cm.course_id = c.course_id AND cm.member_id <> c.member_id)	WHERE cm.course_id = %d " . $condition . "ORDER BY m.last_name";
+		$rows_enrollment =  queryDB($sql,array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id']));
+		foreach($rows_enrollment as $row){	
 			$this_row .= quote_csv($row['first_name']).",";
 			$this_row .= quote_csv($row['last_name']).",";
 			$this_row .= quote_csv($row['email'])."\n";
