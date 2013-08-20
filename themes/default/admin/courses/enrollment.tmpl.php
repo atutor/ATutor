@@ -1,4 +1,7 @@
+<?php
 
+echo "this file no longer used";
+ exit; ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="tab" value="<?php echo $this->current_tab; ?>"/>
@@ -10,8 +13,8 @@
 				<label for="course"><?php echo _AT('course'); ?></label><br/>
 				<select name="course_id" id="course">
 				<?php
-				
-				while ($courses_row = mysql_fetch_assoc($this->result)) {
+				foreach($this->rows_courses as $courses_row){ 
+				//while ($courses_row = mysql_fetch_assoc($this->result)) {
 					if ($courses_row['course_id'] == $this->course_id) {
 						echo '<option value="'.$courses_row['course_id'].'" selected="selected">'.validate_length($courses_row['title'], 45,VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
 					} else {
