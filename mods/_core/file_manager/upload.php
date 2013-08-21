@@ -30,9 +30,9 @@ $alter = $_REQUEST['alter'];
 //echo $alter;
 					
 /* get this courses MaxQuota and MaxFileSize: */
-$sql	= "SELECT max_quota, max_file_size FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
+$sql	= "SELECT max_quota, max_file_size FROM %scourses WHERE course_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
+
 $my_MaxCourseSize	= $row['max_quota'];
 $my_MaxFileSize	= $row['max_file_size'];
 
