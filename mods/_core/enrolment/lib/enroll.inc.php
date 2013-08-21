@@ -78,7 +78,7 @@ function checkUserInfo($record) {
 	if(count($rows_members) > 0 && !$record['exists']){
 		$record['err_uname'] = _AT('import_err_username_exists');
 	} else {
-		$rows_admins = queryDB("SELECT * FROM %sadmins WHERE login='$record[uname]'", array(TABLE_PREFIX), TRUE);
+		$rows_admins = queryDB("SELECT * FROM %sadmins WHERE login='%s'", array(TABLE_PREFIX, $record['uname']), TRUE);
 		if (count($rows_admins) != 0) {
 			$record['err_uname'] = _AT('import_err_username_exists');
 		}
@@ -161,9 +161,9 @@ function add_users($user_list, $enroll, $course) {
 				if ($result == 1) {
                     $m_id = at_insert_id();
 					$student['exists'] = _AT('import_err_email_exists');
-
-			        $sql = "INSERT INTO %scourse_enrollment (member_id, course_id, approved, last_cid) VALUES (%d, %d, '%s', 0)";
-                    $result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll));
+                    $role = "Student";
+			        $sql = "INSERT INTO %scourse_enrollment (member_id, course_id, approved, last_cid, role) VALUES (%d, %d, '%s', 0, '%s')";
+                    $result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll, $role));
                     if($result > 0){
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 
@@ -207,7 +207,8 @@ function add_users($user_list, $enroll, $course) {
 
 				$sql = "SELECT member_id FROM %smembers WHERE email='%s'";
 				$rows_members = queryDB($sql, array(TABLE_PREFIX, $student['email']), TRUE);
-                
+                $role = "Student";
+
                 if(count($rows_members) >0){
 				    $row = $rows_members;
 					$m_id = $row['member_id'];

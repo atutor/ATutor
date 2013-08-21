@@ -2,12 +2,11 @@
 
 function enrolment_delete($course) {
 	global $db;
+	$sql	= "DELETE FROM %scourse_enrollment WHERE course_id=$d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $course));
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-
-	$sql	= "DELETE FROM ".TABLE_PREFIX."auto_enroll_courses WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
+	$sql	= "DELETE FROM %sauto_enroll_courses WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $course));
 }
 
 ?>

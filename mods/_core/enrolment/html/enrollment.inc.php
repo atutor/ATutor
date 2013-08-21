@@ -89,25 +89,6 @@ if (isset($_GET['group']) && ($_GET['group'] != '')) {
 	$filter['group'] = intval($_GET['group']);
 } 
 
-require(AT_INCLUDE_PATH.'../mods/_core/enrolment/html/enroll_tab_functions.inc.php');
-$tabs = get_tabs();	
-
-
-$num_tabs = count($tabs);
-
-for ($i=0; $i < $num_tabs; $i++) {
-	if (isset($_POST['button_'.$i]) && ($_POST['button_'.$i] != -1)) { 
-		$current_tab = $i;
-		$_POST['current_tab'] = $i;
-		break;
-	}
-}
-
-//get present tab if specified
-if ($_GET['current_tab']) {
-	$current_tab = $_GET['current_tab'];
-	$_POST['current_tab'] = $_GET['current_tab'];
-}
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 $cols   = array('login' => 1, 'first_name' => 1, 'second_name' => 1, 'last_name' => 1, 'email' => 1);
@@ -286,7 +267,7 @@ function togglerowhighlight(obj, boxid) {
 </script>
 <?php 
 
-$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
+$sql = "SELECT course_id, title FROM %scourses ORDER BY title";
 $rows_courses = queryDB($sql, array(TABLE_PREFIX));
 
 $savant->assign('rows_courses', $rows_courses);
