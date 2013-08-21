@@ -37,16 +37,15 @@ function checkUserInfo($record) {
 	} else {
 		$record['email'] = $addslashes($record['email']);
 
-		$sql="SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$record[email]'";
-		$result = mysql_query($sql,$db);
-		if (mysql_num_rows($result) != 0) {
-			$row = mysql_fetch_assoc($result);
+		$sql="SELECT * FROM %smembers WHERE email LIKE '%s'";
+		$rows_members = queryDB($sql,array(TABLE_PREFIX, $record['email']), TRUE);
+		if(count($rows_members) > 0){
 			$record['exists'] = _AT('import_err_email_exists');
-			$record['fname']  = $row['first_name']; 
-			$record['lname']  = $row['last_name'];
-			$record['email']  = $row['email'];
-			$record['uname']  = $row['login'];
-			$record['status'] = $row['status'];
+			$record['fname']  = $rows_members['first_name']; 
+			$record['lname']  = $rows_members['last_name'];
+			$record['email']  = $rows_members['email'];
+			$record['uname']  = $rows_members['login'];
+			$record['status'] = $rows_members['status'];
 		} else {
 			// it's good, add it to the list
 			$email_list[$record['email']] = true;
@@ -74,23 +73,25 @@ function checkUserInfo($record) {
 	$record['fname'] = $addslashes($record['fname']);
 	$record['lname'] = $addslashes($record['lname']);
 
-	$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE login='$record[uname]'";
-	$result = mysql_query($sql,$db);
-	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
+	$sql = "SELECT member_id FROM %smembers WHERE login='%s'";
+	$rows_members = queryDB($sql,array(TABLE_PREFIX, $record['uname']),TRUE);
+	if(count($rows_members) > 0 && !$record['exists']){
 		$record['err_uname'] = _AT('import_err_username_exists');
 	} else {
-		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$record[uname]'",$db);
-		if (mysql_num_rows($result) != 0) {
+		$rows_admins = queryDB("SELECT * FROM %sadmins WHERE login='$record[uname]'", array(TABLE_PREFIX), TRUE);
+		if (count($rows_admins) != 0) {
 			$record['err_uname'] = _AT('import_err_username_exists');
 		}
 	}	
 
-	$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE first_name='$record[fname]' AND last_name='$record[lname]' LIMIT 1";
-	$result = mysql_query($sql,$db);
-	if ((mysql_num_rows($result) != 0) && !$record['exists']) {
+    // This prevent CVS import course list when a person with the same name exists.
+    /*******	
+	$sql = "SELECT member_id FROM %smembers WHERE first_name='%s' AND last_name='%s' LIMIT 1";
+	$rows_members = queryDB($sql, array(TABLE_PREFIX, $record['fname'], $record['lname']), TRUE);
+	if(count($rows_members) != 0 && !$record['exists']){
 		$record['err_uname'] = _AT('import_err_full_name_exists');
 	}
-
+    ******/
 	/* removed record? */
 	if ($record['remove']) {
 		//unset errors 
@@ -121,7 +122,6 @@ function add_users($user_list, $enroll, $course) {
 		$status = AT_STATUS_STUDENT;
 	}
 
-
 	foreach ($user_list as $student) {
 		if (!$student['remove'])  {
 				$student['uname'] = $addslashes($student['uname']);
@@ -130,7 +130,7 @@ function add_users($user_list, $enroll, $course) {
 				$student['lname'] = $addslashes($student['lname']);
 
 			if (!$student['exists']) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."members 
+				$sql = "INSERT INTO %smembers 
 				              (login,
 				               password,
 				               email,
@@ -157,22 +157,21 @@ function add_users($user_list, $enroll, $course) {
 				               $_config[pref_inbox_notify], 
 				               1)";
 
-				$result = mysql_query($sql, $db);
-				if (mysql_affected_rows($db) == 1) {
-					$m_id = mysql_insert_id($db);
-
+				$result = queryDB($sql,array(TABLE_PREFIX));
+				if ($result == 1) {
+                    $m_id = at_insert_id();
 					$student['exists'] = _AT('import_err_email_exists');
 
-					$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid) VALUES ($m_id, $course, '$enroll', 0)";
-
-					if ($result = mysql_query($sql,$db)) {
+			        $sql = "INSERT INTO %scourse_enrollment (member_id, course_id, approved, last_cid) VALUES (%d, %d, '%s', 0)";
+                    $result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll));
+                    if($result > 0){
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 
 						if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 
-							$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$m_id";
-							$result = mysql_query($sql, $db);
-							$row    = mysql_fetch_assoc($result);
+							$sql    = "SELECT email, creation_date FROM %smembers WHERE member_id=%d";
+							$row    = queryDB($sql, array(TABLE_PREFIX, $m_id), TRUE);
+
 							$code   = substr(md5($row['email'] . $row['creation_date'] . $m_id), 0, 10);
 
 							// send email here.
@@ -205,19 +204,23 @@ function add_users($user_list, $enroll, $course) {
 					//$msg->addError('LIST_IMPORT_FAILED');	
 				}
 			} else if (! $student['err_disabled']) {
-				$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE email='$student[email]'";
-				$result = mysql_query($sql, $db);
-				if ($row = mysql_fetch_assoc($result)) {
-				
+
+				$sql = "SELECT member_id FROM %smembers WHERE email='%s'";
+				$rows_members = queryDB($sql, array(TABLE_PREFIX, $student['email']), TRUE);
+                
+                if(count($rows_members) >0){
+				    $row = $rows_members;
 					$m_id = $row['member_id'];
 
-					$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ($m_id, $course, '$enroll', 0, '$role')";
-
-					if($result = mysql_query($sql,$db)) {
+					$sql = "INSERT INTO %scourse_enrollment (member_id, course_id, approved, last_cid, role) VALUES (%d, %d, '%s', 0, '%s')";
+                    $result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll, $role));
+                    if($result > 0){
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					} else {
-						$sql = "REPLACE INTO ".TABLE_PREFIX."course_enrollment (member_id, course_id, approved, last_cid, role) VALUES ($m_id, $course, '$enroll', 0, '$role')";
-						$result = mysql_query($sql,$db);
+
+						$sql = "REPLACE INTO %scourse_enrollment (member_id, course_id, approved, last_cid, role) VALUES (%d, %s, '%s', 0, '%s')";
+						$result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll, $role));
+
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					}
 				$subject = $_config['site_name'].': '._AT('email_confirmation_subject');
@@ -233,11 +236,7 @@ function add_users($user_list, $enroll, $course) {
 
 				unset($mail);
 
-
 				}
-
-
-
 
 			} else if ($student['err_disabled']) {
 				$not_enrolled_list .= '<li>' . $student['uname'] . '</li>';
