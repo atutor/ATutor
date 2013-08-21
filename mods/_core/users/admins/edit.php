@@ -21,10 +21,7 @@ if ($_GET['login'] == $_SESSION['login']) {
 	header('Location: index.php');
 	exit;
 }
-if(isset($_GET['login'])){
-    $_POST['login'] = $addslashes($_GET['login']);
-    
-}
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
@@ -40,13 +37,19 @@ if (isset($_POST['cancel'])) {
 	}
 	//check if admin email already exists.
 	if($_POST['email'] != $_POST['hide_email']){
-        $result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE email LIKE '$_POST[email]'",$db);
-        if (mysql_num_rows($result) != 0) {
+
+        $sql = "SELECT * FROM %sadmins WHERE email LIKE '%s'";
+        $rows_admin_email = queryDB($sql,array(TABLE_PREFIX, $_POST['email']), TRUE);
+        
+        if(count(rows_admin_email) != 0){
             $valid = 'no';
             $msg->addError('EMAIL_EXISTS');
         }
-         $result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
-        if (mysql_num_rows($result) != 0) {
+
+         $sql = "SELECT * FROM %smembers WHERE email LIKE '%s'";
+         $rows_members_email = queryDB($sql, array(TABLE_PREFIX, $_POST['email']), TRUE);
+         
+         if(count($rows_members_email) != 0){
             $valid = 'no';
             $msg->addError('EMAIL_EXISTS');
         }
@@ -61,7 +64,7 @@ if (isset($_POST['cancel'])) {
 			$priv += intval($value);
 		}
 	}
-	//$_POST['privs'] = $priv;
+	$_POST['privs'] = $priv;
 
 	if ($missing_fields) {
 		$missing_fields = implode(', ', $missing_fields);
@@ -73,12 +76,11 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', privileges=$priv, last_login=last_login WHERE login='$_POST[login]'";
-		$result = mysql_query($sql, $db);
+		$sql    = "UPDATE %sadmins SET real_name='%s', email='%s', privileges=%d, last_login=last_login WHERE login='%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['real_name'], $_POST['email'], $priv, $_POST['login']));
 
-		//$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', privileges=$priv WHERE login='$_POST[login]'";
-
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
+        global $sqlout;
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', $result, $sqlout);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
@@ -93,21 +95,21 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['login'] = $addslashes($_REQUEST['login']);
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_GET[login]'";
-$result = mysql_query($sql, $db);
+$sql = "SELECT * FROM %sadmins WHERE login='%s'";
+$row_admin = queryDB($sql, array(TABLE_PREFIX, $_GET['login']), TRUE);
 
-if (!($row = mysql_fetch_assoc($result))) {
+if(count($row_admin) == 0){
 	$msg->addError('USER_NOT_FOUND');
 	$msg->printErrors();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 if (!isset($_POST['submit'])) {
-	$_POST = $row;
-	if (query_bit($row['privileges'], AT_ADMIN_PRIV_ADMIN)) {
+	$_POST = $row_admin;
+	if (query_bit($row_admin['privileges'], AT_ADMIN_PRIV_ADMIN)) {
 		$_POST['priv_admin'] = 1;
 	}
-	$_POST['privs'] = intval($row['privileges']);
+	$_POST['privs'] = intval($row_admin['privileges']);
 }
 
 
