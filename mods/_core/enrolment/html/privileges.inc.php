@@ -32,8 +32,9 @@ if (isset($_POST['cancel'])) {
 		change_privs(intval($mid[$i]), $privs[$i]);
 		$i++;
 	}
-
-	$msg->addFeedback('PRIVS_CHANGED');
+    if(!$msg->containsErrors()){
+	    $msg->addFeedback('PRIVS_CHANGED');
+	}
 	header('Location: index.php?tab=1'.SEP.'course_id='.$course_id);
 	exit;
 }
@@ -58,10 +59,10 @@ for ($k = 0; $k < $j; $k++) {
 	$mem_id = intval($_GET['mid'.$k]);
 
 	//NO!!! extra check to ensure that user doesnt send in instructor for change privs
-	$sql = "SELECT CE.privileges, M.login FROM ".TABLE_PREFIX."course_enrollment CE INNER JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE M.member_id=$mem_id AND CE.course_id=$course_id AND CE.approved='y'";
 
-	$result = mysql_query($sql, $db);
-	$student_row = mysql_fetch_assoc($result);
+	$sql = "SELECT CE.privileges, M.login FROM %scourse_enrollment CE INNER JOIN %smembers M USING (member_id) WHERE M.member_id=%d AND CE.course_id=%d AND CE.approved='y'";
+	$student_row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $mem_id, $course_id), TRUE);
+;
 ?>
 	<div class="row">
 		<h3><?php echo $student_row['login']; ?></h3>
@@ -123,7 +124,7 @@ for ($k = 0; $k < $j; $k++) {
 * @author  Joel Kronenberg
 */
 function change_privs ($member, $privs) {
-	global $db, $course_id;
+	global $db, $course_id, $msg;
 
 	//calculate privileges
 	$privilege = 0;
@@ -140,19 +141,17 @@ function change_privs ($member, $privs) {
 	if (query_bit($privilege, AT_PRIV_GROUPS)) {
 		$group_list = implode(',', $_SESSION['groups']);
 		if ($group_list) {
-			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($group_list) AND member_id=$member";
-			$result = mysql_query($sql,$db);
+
+			$sql = "DELETE FROM %sgroups_members WHERE group_id IN (%s) AND member_id=%d";
+			$result = queryDB($sql,array(TABLE_PREFIX, $group_list, $member));
 		}
 	}
 
-	$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET `privileges`=$privilege WHERE member_id=$member AND course_id=$course_id AND `approved`='y'";
-	$result = mysql_query($sql,$db);
-
-
+	$sql = "UPDATE %scourse_enrollment SET privileges=%d WHERE member_id=%d AND course_id=%d AND `approved`='y'";
+	$result = queryDB($sql, array(TABLE_PREFIX, $privilege, $member, $course_id));
 	//print error or confirm change
-	if (!$result) {
-		$msg->printErrors('DB_NOT_UPDATED');
-		exit;
+	if ($result == 0) {
+		$msg->addError('DB_NOT_UPDATED');
 	}
 }
 
