@@ -277,9 +277,9 @@ function add_update_course($course_data, $isadmin = FALSE) {
 	}
 
 	//enroll new instructor
-	$sql = "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '"._AT('instructor')."', 0)";
+	$sql = "REPLACE INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '"._AT('instructor')."', 0)";
 	$result = queryDB($sql, array(TABLE_PREFIX, $course_data['instructor'], $new_course_id));
-	
+
 	if (isset($isadmin)) {
 	    global $sqlout;
 		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', $result, $sqlout);
