@@ -22,7 +22,8 @@ if ($_GET['login'] == $_SESSION['login']) {
 	exit;
 }
 if(isset($_GET['login'])){
-$_POST['login'] = $addslashes($_GET['login']);
+    $_POST['login'] = $addslashes($_GET['login']);
+    
 }
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -37,12 +38,19 @@ if (isset($_POST['cancel'])) {
 	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
-	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
-	if (mysql_num_rows($result) != 0) {
-		$valid = 'no';
-		$msg->addError('EMAIL_EXISTS');
-	}
-
+	//check if admin email already exists.
+	if($_POST['email'] != $_POST['hide_email']){
+        $result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE email LIKE '$_POST[email]'",$db);
+        if (mysql_num_rows($result) != 0) {
+            $valid = 'no';
+            $msg->addError('EMAIL_EXISTS');
+        }
+         $result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
+        if (mysql_num_rows($result) != 0) {
+            $valid = 'no';
+            $msg->addError('EMAIL_EXISTS');
+        }
+    }
 	$priv = 0;
 
 	if (isset($_POST['priv_admin'])) {
@@ -121,6 +129,10 @@ function checkAdmin() {
 </script>
 
 <?php 
+if(!isset($_POST['hide_email'])){
+    $_POST['hide_email'] = $_POST['email'];
+}
+$savant->assign('hide_email', $_POST['hide_email']);
 $savant->assign('login', $_POST['login']);
 $savant->assign('keys', $keys);
 $savant->assign('module_list', $module_list);

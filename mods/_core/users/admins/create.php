@@ -68,7 +68,11 @@ if (isset($_POST['cancel'])) {
 		$valid = 'no';
 		$msg->addError('EMAIL_EXISTS');
 	}
-
+	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE email LIKE '$_POST[email]'",$db);
+	if (mysql_num_rows($result) != 0) {
+		$valid = 'no';
+		$msg->addError('EMAIL_EXISTS');
+	}
 	$priv = 0;
 	if (isset($_POST['priv_admin'])) {
 		// overrides all above.

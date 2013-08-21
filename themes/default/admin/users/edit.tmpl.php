@@ -1,5 +1,6 @@
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <input type="hidden" name="login" value="<?php echo  $this->login; ?>" />
+<input type="hidden" name="hide_email" value="<?php echo  $this->hide_email; ?>" />
 <div class="input-form">
 	<div class="row">
 		<h3><?php echo $this->login; ?></h3>
