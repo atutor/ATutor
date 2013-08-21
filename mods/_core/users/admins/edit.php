@@ -21,7 +21,9 @@ if ($_GET['login'] == $_SESSION['login']) {
 	header('Location: index.php');
 	exit;
 }
-
+if(isset($_GET['login'])){
+$_POST['login'] = $addslashes($_GET['login']);
+}
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
@@ -51,7 +53,7 @@ if (isset($_POST['cancel'])) {
 			$priv += intval($value);
 		}
 	}
-	$_POST['privs'] = $priv;
+	//$_POST['privs'] = $priv;
 
 	if ($missing_fields) {
 		$missing_fields = implode(', ', $missing_fields);
@@ -63,10 +65,10 @@ if (isset($_POST['cancel'])) {
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv, last_login=last_login WHERE login='$_POST[login]'";
+		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', privileges=$priv, last_login=last_login WHERE login='$_POST[login]'";
 		$result = mysql_query($sql, $db);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', `privileges`=$priv WHERE login='$_POST[login]'";
+		//$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', privileges=$priv WHERE login='$_POST[login]'";
 
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
 
@@ -85,6 +87,7 @@ $_GET['login'] = $addslashes($_REQUEST['login']);
 
 $sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_GET[login]'";
 $result = mysql_query($sql, $db);
+
 if (!($row = mysql_fetch_assoc($result))) {
 	$msg->addError('USER_NOT_FOUND');
 	$msg->printErrors();
@@ -118,6 +121,7 @@ function checkAdmin() {
 </script>
 
 <?php 
+$savant->assign('login', $_POST['login']);
 $savant->assign('keys', $keys);
 $savant->assign('module_list', $module_list);
 $savant->display('admin/users/edit.tmpl.php');
