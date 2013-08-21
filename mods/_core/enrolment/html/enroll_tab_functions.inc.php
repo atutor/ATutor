@@ -10,6 +10,11 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
+
+//
+
+echo "FILE NO LONGER IN USE";
+exit;
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 $db;
@@ -20,16 +25,18 @@ $db;
 * @return  string				The tabs for the enroll_admin page
 * @author  Shozub Qureshi
 */
+/******* NO LONGER IN USE *******
 function get_tabs() {
 	//these are the _AT(x) variable names and their include file
-	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
-	$tabs[0] = array('enrolled',   'enroll_admin.php', 'e');
-	$tabs[1] = array('unenrolled', 'enroll_admin.php', 'u');
+	//tabs[tab_id] = array(tab_name, file_name,                accesskey)
+	//$tabs[0] = array('enrolled',   'enroll_admin.php', 'e');
+	//$tabs[1] = array('unenrolled', 'enroll_admin.php', 'u');
 	//$tabs[2] = array('assistants', 'enroll_admin.php', 'a');
-	$tabs[2] = array('alumni',	   'enroll_admin.php', 'a');
+	//$tabs[2] = array('alumni',	   'enroll_admin.php', 'a');
 
 	return $tabs;
 }
+***********/
 
 /**
 * Generates the html for the enrollment tables
@@ -41,6 +48,7 @@ function get_tabs() {
 * @author  Shozub Qureshi
 * @author  Joel Kronenberg
 */
+/******* NO LONGER IN USE ***********
 function generate_table($condition, $col, $order, $unenr, $filter) {
 	global $db;
 
@@ -48,9 +56,13 @@ function generate_table($condition, $col, $order, $unenr, $filter) {
 		$condition .= ' AND CE.privileges<>0';
 	}
 	if ($filter['group'] > 0) {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$filter['group'];
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+		//$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$filter['group'];
+		//$result = mysql_query($sql, $db);
+		$sql = "SELECT member_id FROM %sgroups_members WHERE group_id=%d";
+		$rows_group_members = queryDB($sql, array(TABLE_PREFIX, $filter['group']));
+		
+		foreach($rows_group_members as $row){
+		//while ($row = mysql_fetch_assoc($result)) {
 			$members_list .= ',' . $row['member_id'];
 		}
 		$condition .= ' AND CE.member_id IN (0'.$members_list.')';
@@ -60,17 +72,19 @@ function generate_table($condition, $col, $order, $unenr, $filter) {
 	}
 
 	//output list of enrolled students
+
 	$sql	=  "SELECT CE.member_id, CE.role, M.login, M.first_name, M.last_name, M.email, M.status 
-				FROM ".TABLE_PREFIX."course_enrollment CE, ".TABLE_PREFIX."members M 
-				WHERE CE.course_id=$_SESSION[course_id] AND CE.member_id=M.member_id AND ($condition) 
+				FROM %scourse_enrollment CE, %smembers M 
+				WHERE CE.course_id=%d AND CE.member_id=M.member_id AND ($condition) 
 				ORDER BY $col $order";
-	$result	= mysql_query($sql, $db);
+    $rows_enrolled_members	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id']));
 	echo '<tbody>';
 	//if table is empty display message
-	if (mysql_num_rows($result) == 0) {
+	if(count($rows_enrolled_members) == 0){
 		echo '<tr><td colspan="6">'._AT('none_found').'</td></tr>';
 	} else {
-		while ($row  = mysql_fetch_assoc($result)) {
+
+	    foreach($rows_enrolled_memberss as $row){
 			echo '<tr onmousedown="document.selectform[\'m' . $row['member_id'] . '\'].checked = !document.selectform[\'m' . $row['member_id'] . '\'].checked;">';
 			echo '<td>';
 
@@ -106,6 +120,7 @@ function generate_table($condition, $col, $order, $unenr, $filter) {
 	}
 	echo '</tbody>';
 }
+********************/
 
 /**
 * Generates the html for the SORTED enrollment tables
@@ -113,6 +128,7 @@ function generate_table($condition, $col, $order, $unenr, $filter) {
 * @param   int $curr_tab	the current tab (enrolled, unenrolled or alumni)
 * @author  Shozub Qureshi
 */
+/*********** NO LONGER IN USE **********
 function display_columns ($curr_tab) {
 	global $orders;
 	global $order;
@@ -128,5 +144,6 @@ function display_columns ($curr_tab) {
 	<th scope="col"><a href="mods/_core/enrolment/index.php?<?php echo $orders[$order]; ?>=role<?php echo SEP;?>current_tab=<?php echo $curr_tab; ?>"><?php echo _AT('role').'/'._AT('status'); ?></a></th>
 <?php	
 }
+**************/
 
 ?>

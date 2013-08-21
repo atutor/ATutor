@@ -11,6 +11,9 @@
 /************************************************************************/
 // $Id$
 
+echo "FILE NO LONGER IN USE";
+exit;
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /**
@@ -151,13 +154,13 @@ function unenroll ($list) {
 function enroll ($list) {
 	global $db, $msg, $_config, $course_id, $owner;
 	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
-
+    
 	$num_list = count($list);
 	$members = '(member_id='.$list[0].')';
 	for ($i=0; $i < $num_list; $i++)	{
 		$id = intval($list[$i]);
 		$members .= ' OR (member_id='.$id.')';
-		$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($id, $course_id, 'y', 0, '', 0)";
+		$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($id, $course_id, 'y', 0, 'Student', 0)";
 		$result = mysql_query($sql, $db);
 		if (mysql_affected_rows($db) != 1) {
 			$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE course_id=$course_id AND member_id=$id";
