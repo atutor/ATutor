@@ -30,11 +30,11 @@ if (isset($_POST['edit'], $_POST['word_id'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 //get terms
-$sql	= "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
-$result= mysql_query($sql, $db);
+$sql	= "SELECT * FROM %sglossary WHERE course_id=%d ORDER BY word";			
+$rows_terms= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 
 $gloss_results = array();
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_terms as $row){
 	$gloss_results[] = $row;
 }
 $num_results = count($gloss_results);
@@ -70,9 +70,9 @@ if(!empty($gloss_results)) {
 		//get related term name
 		$related_word = '';
 		if ($row['related_word_id']) {
-			$sql	= "SELECT word FROM ".TABLE_PREFIX."glossary WHERE word_id=".$row['related_word_id']." AND course_id=".$_SESSION['course_id'];
-			$result = mysql_query($sql, $db);
-			if ($row_related = mysql_fetch_array($result)) {
+			$sql	= "SELECT word FROM %sglossary WHERE word_id=%d AND course_id=%d";
+			$row_related = queryDB($sql, array(TABLE_PREFIX, $row['related_word_id'], $_SESSION['course_id']), TRUE);
+			if(count($row_related) != 0){
 				$row['related_word'] = $row_related['word'];			
 			}
 		}
