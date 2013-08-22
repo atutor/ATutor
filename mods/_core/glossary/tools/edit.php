@@ -52,10 +52,9 @@ if ($_POST['submit']) {
 		$_POST['definition']  = $addslashes($_POST['definition']);
 		$_POST['gid'] = intval($_POST['gid']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."glossary SET word='$_POST[word]', definition='$_POST[definition]', related_word_id=$_POST[related_term] WHERE word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
+		$sql = "UPDATE %sglossary SET word='%s', definition='%s', related_word_id=%d WHERE word_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['word'], $_POST['definition'], $_POST['related_term'], $_POST['gid'], $_SESSION['course_id']));
 		
-		$result = mysql_query($sql, $db);
-
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		Header('Location: index.php');
 		exit;
@@ -80,9 +79,11 @@ if ($gid == 0) {
 
 $msg->printErrors();
 
-$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."glossary WHERE word_id=$gid", $db);
+$sql = "SELECT * FROM %sglossary WHERE word_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $gid), TRUE);
 
-if (!( $row = @mysql_fetch_array($result)) ) {
+if(count($rows) == 0){
+
 	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -113,13 +114,15 @@ if ($_POST['submit']) {
 	<div class="row">
 		<?php echo _AT('glossary_related');  ?><br />
 	<?php
-		$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word_id<>$gid ORDER BY word";
 
-		$result = mysql_query($sql, $db);
-		if ($row_g = mysql_fetch_array($result)) {
+		$sql = "SELECT * FROM %sglossary WHERE course_id=%d AND word_id<>%d ORDER BY word";
+		$rows_g = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], $gid));
+
+		if(count($rows_g) != 0){
 			echo '<select name="related_term">';
 			echo '<option value="0"></option>';
-			do {
+			foreach($rows_g as $row_g){
+
 				if ($row_g['word_id'] == $row['word_id']) {
 					continue;
 				}
@@ -131,7 +134,7 @@ if ($_POST['submit']) {
 				}
 			
 				echo '>'.htmlentities_utf8($row_g['word']).'</option>';
-			} while ($row_g = mysql_fetch_array($result));
+			} 
 			
 			echo '</select>';
 		
