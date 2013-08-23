@@ -15,6 +15,8 @@
  * Get the latest updates of this module
  * @return list of news, [timestamp]=>
  */
+//GLOSSARY ITEMS ARE NOT DISPLAYED IN THINGS CURRENT
+exit;
 function glossary_news() {
 	global $db;
 	$news = array();
