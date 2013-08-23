@@ -16,11 +16,11 @@ global $db;
 
 $record_limit = 3;	// Number of sublinks to display for this module on course home page -> detail view
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id = $_SESSION[course_id] LIMIT $record_limit";
-$result = mysql_query($sql, $db);
+$sql = "SELECT * FROM %sglossary WHERE course_id = %d LIMIT %d";
+$rows_g = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], $record_limit));
 
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
+if(count($rows_g)){
+    foreach($rows_g as $row){
 		$list[] = '<a href="'.url_rewrite('mods/_core/glossary/index.php?w='.urlencode($row['word']).'#term', AT_PRETTY_URL_IS_HEADER).'"'.
 		          (strlen($row['word']) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($row['word'], 'glossary.word').'"' : '') .'>'. 
 		          AT_print(validate_length($row['word'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'glossary.word') .'</a>'; 
