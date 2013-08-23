@@ -1,3 +1,7 @@
+<?php
+// THIS FILE IS NOT USED IN THE MOBILE THEME
+exit;
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="num_terms" value="<?php echo $this->num_terms; ?>" />
 <?php
@@ -37,13 +41,14 @@ for ($i=0;$i<$this->num_terms;$i++) {
 	<div class="row">
 	<?php echo _AT('glossary_related');  ?><br />
 	<?php
-			
-			if ($row_g = mysql_fetch_assoc($this->result_glossary)) {
+		    if(count($this->rows_g) != 0 ){
+			//if ($row_g = mysql_fetch_assoc($this->result_glossary)) {
 				echo '<select name="related_term['.$i.']">';
 				echo '<option value="0"></option>';
-				do {
-					echo '<option value="'.$row_g['word_id'].'">'.$row_g['word'].'</option>';
-				} while ($row_g = mysql_fetch_assoc($this->result_glossary));
+			    foreach($this->rows_g as $row_g){
+				//do {
+					//echo '<option value="'.$row_g['word_id'].'">'.$row_g['word'].'</option>';
+				} //while ($row_g = mysql_fetch_assoc($this->result_glossary));
 				echo '</select>';
 			} else {
 				echo _AT('none_available');

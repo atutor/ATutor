@@ -37,13 +37,13 @@ for ($i=0;$i<$this->num_terms;$i++) {
 	<div class="row">
 	<?php echo _AT('glossary_related');  ?><br />
 	<?php
-			
-			if ($row_g = mysql_fetch_assoc($this->result_glossary)) {
+
+			if(count($this->rows_g) != 0 ){
 				echo '<select name="related_term['.$i.']">';
 				echo '<option value="0"></option>';
-				do {
+				foreach($this->rows_g as $row_g){
 					echo '<option value="'.$row_g['word_id'].'">'.$row_g['word'].'</option>';
-				} while ($row_g = mysql_fetch_assoc($this->result_glossary));
+				} 
 				echo '</select>';
 			} else {
 				echo _AT('none_available');
