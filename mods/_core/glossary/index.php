@@ -16,26 +16,27 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT word_id, related_word_id FROM ".TABLE_PREFIX."glossary WHERE related_word_id>0 AND course_id=$_SESSION[course_id] ORDER BY related_word_id";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_array($result)) {
+$sql	= "SELECT word_id, related_word_id FROM %sglossary WHERE related_word_id>0 AND course_id=%d ORDER BY related_word_id";
+$rows_related = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
+foreach($rows_related as $row){
 	$glossary_related[$row['related_word_id']][] = $row['word_id'];			
 }
 
 $_GET['w'] = isset($_GET['w']) ? stripslashes($_GET['w']) : '';
 
 if ($_GET['w']) {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] AND word='".addslashes(urldecode($_GET['w']))."'";		
+	$sql = "SELECT * FROM %sglossary WHERE course_id=%d AND word='%s'";		
+	$rows_g= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], urldecode($_GET['w'])));
 } else {
-	$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";			
+	$sql = "SELECT * FROM %sglossary WHERE course_id=%d ORDER BY word";		
+	$rows_g= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));	
 }
 
-$result= mysql_query($sql, $db);
-
-if(mysql_num_rows($result) > 0){		
+if(count($rows_g) > 0){	
 
 	$gloss_results = array();
-	while ($row = mysql_fetch_assoc($result)) {
+	foreach($rows_g as $row){
 		$gloss_results[] = $row;
 	}
 	$num_results = count($gloss_results);
