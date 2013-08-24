@@ -49,23 +49,25 @@ if (isset($_POST['cancel'])) {
 		$_POST['description'] = $addslashes($_POST['description']);
 
 		if ($_POST['new_type']) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups_types VALUES (NULL, $_SESSION[course_id], '$_POST[new_type]')";
-			$result = mysql_query($sql, $db);
-			$type_id = mysql_insert_id($db);
+
+			$sql = "INSERT INTO %sgroups_types VALUES (NULL, %d, '%s')";
+			$result_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['new_type']));
+			$type_id = at_insert_id();
 		} else {
-			$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] AND type_id=$_POST[type]";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
+
+			$sql = "SELECT type_id FROM %sgroups_types WHERE course_id=%d AND type_id=%d";
+			$rows_groups_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['type']));
+			
+			if(count($rows_groups_types) > 0){
 				$type_id = $row['type_id'];
 			} else {
 				$type_id = FALSE;
 			}
 		}
 		if ($type_id) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups VALUES (NULL, $type_id, '$_POST[prefix]', '$_POST[description]', '$modules')";
-			$result = mysql_query($sql, $db);
-
-			$group_id = mysql_insert_id($db);
+			$sql = "INSERT INTO %sgroups VALUES (NULL, %d, '%s', '%s', '%s')";
+			$result = queryDB($sql, array(TABLE_PREFIX, $type_id, $_POST['prefix'], $_POST['description'], $modules ));
+			$group_id = at_insert_id($db);
 
 			$_SESSION['groups'][$group_id] = $group_id;
 			// call module init scripts:
@@ -91,9 +93,9 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $types = array();
-$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+$sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY title";
+$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+foreach($rows_group_types as $row){
 	$types[$row['type_id']] = htmlentities_utf8($row['title']);
 }
 
