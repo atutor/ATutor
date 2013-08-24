@@ -72,14 +72,10 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		//$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES $terms_sql";
-		//$result = mysql_query($sql, $db);
-		//debug($terms_sql);
+
 		$sql = "INSERT INTO %sglossary VALUES $terms_sql";
 		$result = queryDB($sql, array(TABLE_PREFIX), false, false);
-		//global $sqlout;
-	//debug($sqlout);	
-	//exit;
+
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index.php');
 		exit;
@@ -92,13 +88,12 @@ $onload = 'document.form.title0.focus();';
 unset($word);
 
 $num_terms = 1;
-//$sql = "SELECT * FROM ".TABLE_PREFIX."glossary WHERE course_id=$_SESSION[course_id] ORDER BY word";
-//$result_glossary = mysql_query($sql, $db);
+
 $sql = "SELECT * FROM %sglossary WHERE course_id=%d ORDER BY word";
 $rows_g = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-//$savant->assign('result_glossary', $result_glossary);
+
 $savant->assign('rows_g', $rows_g);
 $savant->assign('num_terms', $num_terms);
 $savant->display('instructor/glossary/add.tmpl.php');
