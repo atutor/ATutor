@@ -29,9 +29,11 @@ if (isset($_POST['submit_no'])) {
 	$id = intval($_POST['id']);
 	$type_id = intval($_POST['type_id']);
 
-	$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups_types WHERE type_id=$type_id AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+	$sql = "SELECT type_id FROM %sgroups_types WHERE type_id=%s AND course_id=%d";
+	$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $type_id, $_SESSION[course_id]));
+
+
+	if(count($rows_group_types) > 0){
 		$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED | AT_MODULE_STATUS_DISABLED);
 		$keys = array_keys($module_list);
 		foreach ($keys as $module_name) {	
@@ -39,18 +41,18 @@ if (isset($_POST['submit_no'])) {
 			$module->deleteGroup($id);
 		}
 
-		$sql = "DELETE FROM ".TABLE_PREFIX."groups WHERE group_id=$id AND type_id=$type_id";
-		$result = mysql_query($sql, $db);
 
-		if (mysql_affected_rows($db)) {
+		$sql = "DELETE FROM %sgroups WHERE group_id=%d AND type_id=%d";
+		$result_groups = queryDB($sql, array(TABLE_PREFIX, $id, $type_id));
+
+		if($result_groups > 0){
 			//remove all listings in groups_members table
-			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$id";
-			$result = mysql_query($sql, $db);
-
+			$sql = "DELETE FROM %sgroups_members WHERE group_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $id));
+			
 			// should be handled by each module:
-			//remove all listings in tests_groups table
 			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE group_id=$id";
-			$result = mysql_query($sql, $db);
+			$result = queryDB($sql, array(TABLE_PREFIX, $id));
 		}
 	}
 
@@ -63,17 +65,21 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['id'] = intval($_GET['id']);
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."groups WHERE group_id=$_GET[id]";
-$result = mysql_query($sql,$db);
-if (!($row = mysql_fetch_assoc($result))) {
+$sql = "SELECT * FROM %sgroups WHERE group_id=%d";
+$row_groups = queryDB($sql,array(TABLE_PREFIX, $_GET['id']), TRUE);
+
+if(count($row_groups) == 0){
+
 	$msg->printErrors('GROUP_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
-$sql = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[type_id] AND course_id=$_SESSION[course_id]";
-$result = mysql_query($sql,$db);
-if (!($type_row = mysql_fetch_assoc($result))) {
+$sql = "SELECT title FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+$rows_group_types = queryDB($sql,array(TABLE_PREFIX, $row_groups['type_id'], $_SESSION['course_id']), TRUE);
+
+
+if(count($rows_group_types) == 0){
 	$msg->printErrors('GROUP_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -81,7 +87,7 @@ if (!($type_row = mysql_fetch_assoc($result))) {
 
 unset($hidden_vars);
 $hidden_vars['id'] = $_GET['id'];
-$hidden_vars['type_id'] = $row['type_id'];
+$hidden_vars['type_id'] = $row_groups['type_id'];
 
 $msg->addConfirm(array('DELETE_GROUP',AT_print($row['title'], 'groups.title')), $hidden_vars);
 $msg->printConfirm();
