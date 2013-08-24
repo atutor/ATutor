@@ -26,12 +26,12 @@ if ($_POST['submit_yes']) {
 
 	$_POST['gid'] = intval($_POST['gid']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."glossary WHERE word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %sglossary WHERE word_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['gid'], $_SESSION['course_id']));
 
-	$sql = "UPDATE ".TABLE_PREFIX."glossary SET related_word_id=0 WHERE related_word_id=$_POST[gid] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-
+	$sql = "UPDATE %sglossary SET related_word_id=0 WHERE related_word_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['gid'], $_SESSION['course_id']));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php');
 	exit;
@@ -55,9 +55,10 @@ if ($_GET['gid'] == 0) {
 $hidden_vars['word'] = $_GET['t'];
 $hidden_vars['gid']  = $_GET['gid'];
 
-$sql = "SELECT * from ".TABLE_PREFIX."glossary WHERE word_id = '$hidden_vars[gid]'";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)){
+$sql = "SELECT * from %sglossary WHERE word_id = %d";
+$rows_g = queryDB($sql, array(TABLE_PREFIX, $hidden_vars['gid']));
+
+foreach($rows_g as $row){
 	$title = $row['word'];
 }
 		
