@@ -27,6 +27,7 @@ if (isset($_GET['edit'], $_GET['id'])) {
 	}
 } else if (isset($_GET['delete'], $_GET['id'])) {
 	$parts = explode('_', $_GET['id'], 2);
+
 	if (isset($parts[1]) && $parts[1]) {
 		header('Location: delete_group.php?id='.$parts[1]);
 		exit;
@@ -51,8 +52,9 @@ if (isset($_GET['edit'], $_GET['id'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
-$result = mysql_query($sql, $db);
+$sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY title";
+$rows_group_type = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
 ?>
 <div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
@@ -68,13 +70,14 @@ $result = mysql_query($sql, $db);
 </tr>
 </tfoot>
 <tbody>
-<?php if ($row = mysql_fetch_assoc($result)): ?>
-	<?php do { ?>
+<?php 
 
-		<?php 
-			$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
-			$group_result = mysql_query($sql, $db);
-			$num_groups = mysql_num_rows($group_result);
+if(count($rows_group_type) > 0){
+	foreach($rows_group_type as $row){
+
+			$sql = "SELECT group_id, title FROM %sgroups WHERE type_id=%d ORDER BY title";
+			$rows_groups = queryDB($sql, array(TABLE_PREFIX, $row['type_id']));
+			$num_groups = count($rows_groups);
 		?>
 		<tr onmousedown="document.form['g<?php echo $row['type_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id']; ?>">
 			<th>
@@ -82,29 +85,30 @@ $result = mysql_query($sql, $db);
 				<label for="g<?php echo $row['type_id']; ?>"><?php echo AT_print($row['title'], 'groups.title'); ?></label> (<?php echo $num_groups.' '._AT('groups'); ?>)
 			</th>
 		</tr>
-		<?php if ($num_groups) : ?>
-			<?php while ($group_row = mysql_fetch_assoc($group_result)): ?>
-				<?php
-					$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."groups_members WHERE group_id=$group_row[group_id]";
-					$group_cnt_result = mysql_query($sql, $db);
-					$group_cnt = mysql_fetch_assoc($group_cnt_result);
+		<?php 
+		if($num_groups > 0){
+			foreach($rows_groups as $group_row){
+					$sql = "SELECT COUNT(*) AS cnt FROM %sgroups_members WHERE group_id=%d";
+					$group_cnt = queryDB($sql, array(TABLE_PREFIX, $group_row['group_id']), TRUE);
 				?>
 				<tr onmousedown="document.form['g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>">
 					<td class="indent"><input type="radio" id="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" name="id" value="<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>" /> <label for="g<?php echo $row['type_id'].'_'.$group_row['group_id']; ?>"><?php echo AT_print($group_row['title'], 'groups.title'); ?></label> (<?php echo $group_cnt['cnt'].' '._AT('members'); ?>)</td>
 				</tr>
-			<?php endwhile; ?>
-		<?php else: ?>
+			<?php }  ?>
+		<?php } else { ?>
 			<tr>
 				<td class="indent"><strong><?php echo _AT('none_found'); ?></strong></td>
 			</tr>
-		<?php endif; ?>
+		<?php } //endif; 
+		?>
 
-	<?php } while ($row = mysql_fetch_assoc($result)); ?>
-<?php else: ?>
+	<?php } 
+	    ?>
+<?php }else{ ?>
 	<tr>
 		<td><strong><?php echo _AT('none_found'); ?></strong></td>
 	</tr>
-<?php endif; ?>
+<?php } ?>
 </tbody>
 </table>
 </fieldset>
