@@ -43,18 +43,20 @@ if (isset($_POST['cancel'])) {
 
 	$course_owner = $system_courses[$_SESSION['course_id']]['member_id'];
 	if (isset($_POST['fill'])) {
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`&".AT_PRIV_GROUPS."=0 AND member_id<>$course_owner";
-		$result = mysql_query($sql, $db);
-		$total_students = mysql_num_rows($result);
+
+		$sql = "SELECT member_id FROM %scourse_enrollment WHERE course_id=%d AND approved='y' AND `privileges`&%d=0 AND member_id<>%d";
+		$rows_students = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], AT_PRIV_GROUPS, $course_owner));
+
+		$total_students = count($rows_students);
 		$students = array();
-		while ($row = mysql_fetch_assoc($result)) {
+		foreach($rows_students as $row){
 			$students[] = $row['member_id'];
 		}
 		shuffle($students);
 	} else {
-		$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`&".AT_PRIV_GROUPS."=0 AND member_id<>$course_owner";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+
+		$sql = "SELECT COUNT(*) AS cnt FROM %scourse_enrollment WHERE course_id=%d AND approved='y' AND `privileges`&%d=0 AND member_id<>%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], AT_PRIV_GROUPS, $course_owner), TRUE);
 
 		$total_students = $row['cnt']; // 4 students in the course
 	}
@@ -102,18 +104,18 @@ if (isset($_POST['cancel'])) {
 		$_POST['prefix']      = $addslashes($_POST['prefix']);
 		$_POST['description'] = $addslashes($_POST['description']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."groups_types VALUES (NULL, $_SESSION[course_id], '$_POST[type_title]')";
-		$result = mysql_query($sql, $db);
-		$group_type_id = mysql_insert_id($db);
-
+		$sql = "INSERT INTO %sgroups_types VALUES (NULL, %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['type_title'] ));
+		$group_type_id = at_insert_id();
+		
 		$start_index = 0;
 
 		for($i=0; $i<$num_groups; $i++) {
 			$group_title = $_POST['prefix'] . ' ' . ($i + 1);
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups VALUES (NULL, $group_type_id, '$group_title', '$_POST[description]', '$modules')";
-			$result = mysql_query($sql, $db);
-
-			$group_id = mysql_insert_id($db);
+			$sql = "INSERT INTO %sgroups VALUES (NULL, %d, '%s', '%s', '%s')";
+			$result = queryDB($sql, array(TABLE_PREFIX, $group_type_id, $group_title, $_POST['description'], $modules));
+			
+			$group_id = at_insert_id();
 			$_SESSION['groups'][$group_id] = $group_id;
 
 			// call module init scripts:
@@ -127,14 +129,14 @@ if (isset($_POST['cancel'])) {
 			if (isset($_POST['fill'])) {
 				// put students in this group
 				for ($j = $start_index; $j < min(($start_index + $num_students_per_group), $total_students); $j++) {
-					$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES ($group_id, $students[$j])";
-					mysql_query($sql, $db);
+					$sql = "INSERT INTO %sgroups_members VALUES (%d, %d)";
+					queryDB($sql, array(TABLE_PREFIX, $group_id, $students[$j]));					
 				}
 
 				$start_index = $j;
 				if ($remainder) {
-					$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES ($group_id, $students[$start_index])";
-					mysql_query($sql, $db);
+					$sql = "INSERT INTO %sgroups_members VALUES (%d, %d)";
+					queryDB($sql, array(TABLE_PREFIX, $group_id, $students[$start_index]));
 					$start_index++;
 					$remainder--;
 				}
@@ -153,9 +155,9 @@ if (isset($_POST['cancel'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$_SESSION[course_id] AND approved='y' AND `privileges`&".AT_PRIV_GROUPS."=0";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+
+$sql = "SELECT COUNT(*) AS cnt FROM %scourse_enrollment WHERE course_id=%d AND approved='y' AND `privileges`&%d=0";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id],AT_PRIV_GROUPS),TRUE);
 ?>
 
 
