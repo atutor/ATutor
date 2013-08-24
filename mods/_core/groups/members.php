@@ -18,9 +18,11 @@ authenticate(AT_PRIV_GROUPS);
 /* Get type ID */
 $id = intval($_REQUEST['id']);
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."groups_types WHERE type_id=$id AND course_id=$_SESSION[course_id]";
-$result = mysql_query($sql,$db);
-if (!($type_row = mysql_fetch_assoc($result))) {
+
+$sql = "SELECT * FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $id, $_SESSION['course_id']));
+
+if(count($rows_group_types) == 0){
 	require (AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('GROUP_TYPE_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
@@ -28,9 +30,10 @@ if (!($type_row = mysql_fetch_assoc($result))) {
 }
 
 $tmp_groups = array();
-$sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$id ORDER BY title";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+$sql = "SELECT group_id, title FROM %sgroups WHERE type_id=%d ORDER BY title";
+$rows_groups = queryDB($sql, array(TABLE_PREFIX, $id));
+foreach($rows_groups as $row){
 	$tmp_groups[$row['group_id']] = htmlentities_utf8($row['title']);
 }
 $groups_keys = array_keys($tmp_groups);
@@ -41,9 +44,10 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-	$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($groups_keys)";
-	mysql_query($sql, $db);
 
+	$sql = "DELETE FROM %sgroups_members WHERE group_id IN (%s)";
+	queryDB($sql, array(TABLE_PREFIX, $groups_keys));
+	
 	$sql = '';
 	foreach ($_POST['groups'] as $mid => $gid) {
 		$mid = abs($mid);
@@ -54,8 +58,8 @@ if (isset($_POST['cancel'])) {
 	}
 	if ($sql) {
 		$sql = substr($sql, 0, -1);
-		$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES $sql";
-		mysql_query($sql, $db);
+		$sql = "INSERT INTO %sgroups_members VALUES $sql";
+		queryDB($sql, array(TABLE_PREFIX));
 	}
 
 	$msg->addFeedback('GROUP_MEMBERS_SAVED');
@@ -65,9 +69,11 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['assign'])) {
 
 	$groups_counts = array();
-	$sql = "SELECT group_id, COUNT(*) AS cnt FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($groups_keys) GROUP BY group_id ORDER BY cnt ASC";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	$sql = "SELECT group_id, COUNT(*) AS cnt FROM %sgroups_members WHERE group_id IN (%s) GROUP BY group_id ORDER BY cnt ASC";
+	$rows_group_members = queryDB($sql, array(TABLE_PREFIX, $groups_keys));
+	
+	foreach($rows_group_members as $row){
 		$groups_counts[$row['group_id']] = $row['cnt'];
 	}
 	$total_assigned = array_sum($groups_counts);
@@ -124,8 +130,8 @@ if (isset($_POST['cancel'])) {
 		}
 		if ($sql) {
 			$sql = substr($sql, 0, -1);
-			$sql = "INSERT INTO ".TABLE_PREFIX."groups_members VALUES " . $sql;
-			mysql_query($sql, $db);
+			$sql = "INSERT INTO %sgroups_members VALUES " . $sql;
+		    queryDB($sql, array(TABLE_PREFIX));
 		}
 	}
 
@@ -147,9 +153,11 @@ if (isset($_GET['gid'])) {
 }
 
 $groups_members = array();
-$sql = "SELECT member_id, group_id FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($groups_keys) ORDER BY member_id";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+$sql = "SELECT member_id, group_id FROM %sgroups_members WHERE group_id IN (%s) ORDER BY member_id";
+$rows_group_members = queryDB($sql,array(TABLE_PREFIX, $groups_keys));
+
+foreach($rows_group_members as $row){
 	$groups_members[$row['member_id']] = $row['group_id'];
 }
 $groups_members_keys = array_keys($groups_members);
@@ -157,8 +165,8 @@ $groups_members_keys = implode($groups_members_keys, ',');
 
 $owner = $system_courses[$_SESSION['course_id']]['member_id'];
 
-$sql = "SELECT M.member_id, M.login, M.first_name, M.last_name FROM ".TABLE_PREFIX."members M INNER JOIN ".TABLE_PREFIX."course_enrollment E USING (member_id) WHERE E.course_id=$_SESSION[course_id] AND E.privileges&".AT_PRIV_GROUPS."=0 AND E.approved='y' AND E.member_id<>$owner ORDER BY M.login";
-$result = mysql_query($sql, $db);
+$sql = "SELECT M.member_id, M.login, M.first_name, M.last_name FROM %smembers M INNER JOIN %scourse_enrollment E USING (member_id) WHERE E.course_id=%d AND E.privileges&%d=0 AND E.approved='y' AND E.member_id<>%d ORDER BY M.login";
+$rows_group_members = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], AT_PRIV_GROUPS, $owner));
 
 $count = 0;
 ?>
@@ -183,7 +191,9 @@ $count = 0;
 	</tr>
 </tfoot>
 <tbody>
-	<?php while ($row = mysql_fetch_assoc($result)): ?>
+	<?php 
+	foreach($rows_group_members as $row){
+	?>
 		<tr <?php if ($_GET['gid'] && $_GET['gid'] == $groups_members[$row['member_id']]) { echo 'class="group-selected"';} ?> id="r<?php echo ++$count; ?>">
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['login']; ?></label></td>
 			<td><label for="m<?php echo $row['member_id']; ?>"><?php echo $row['first_name']; ?></label></td>
@@ -197,7 +207,8 @@ $count = 0;
 				</select>
 			</td>
 		</tr>
-	<?php endwhile; ?>
+	<?php } //endwhile; 
+	?>
 </tbody>
 </table>
 </form>
