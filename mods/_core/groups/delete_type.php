@@ -26,22 +26,26 @@ if (isset($_POST['submit_no'])) {
 else if (isset($_POST['submit_yes'])) {
 	$type_id = abs($_POST['id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."groups_types WHERE type_id=$type_id AND course_id=$_SESSION[course_id]";
-	mysql_query($sql, $db);
-	if (mysql_affected_rows($db) == 1) {
-		$sql = "SELECT group_id FROM ".TABLE_PREFIX."groups WHERE type_id=$type_id";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
-			$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$row[group_id]";
-			mysql_query($sql, $db);
+	$sql = "DELETE FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $type_id, $_SESSION['course_id'])); 
 
+	if ($result == 1) {
+	
+		$sql = "SELECT group_id FROM %sgroups WHERE type_id=%d";
+		$rows_groups = queryDB($sql, array(TABLE_PREFIX, $type_id));
+		
+		foreach($rows_groups as $row){
+			$sql = "DELETE FROM %sgroups_members WHERE group_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
+			
 			// should be handled by each module:
 			//remove all listings in tests_groups table
-			$sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE group_id=$row[group_id]";
-			mysql_query($sql, $db);
+			$sql = "DELETE FROM %stests_groups WHERE group_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
 		}
-		$sql = "DELETE FROM ".TABLE_PREFIX."groups WHERE type_id=$type_id";
-		$result = mysql_query($sql, $db);
+
+		$sql = "DELETE FROM %sgroups WHERE type_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $type_id));
 	}
 
 	$msg->addFeedback('GROUP_TYPE_DELETED');
@@ -53,9 +57,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['id'] = intval($_GET['id']);
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."groups_types WHERE type_id=$_GET[id] AND course_id=$_SESSION[course_id]";
-$result = mysql_query($sql,$db);
-if (!($row = mysql_fetch_assoc($result))) {
+$sql = "SELECT * FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+$row_group_types = queryDB($sql, array(TABLE_PREFIX, $_GET['id'], $_SESSION['course_id']), TRUE);
+
+if(count($row_group_types) == 0){
 	$msg->printErrors('GROUP_TYPE_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -64,7 +69,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 unset($hidden_vars);
 $hidden_vars['id'] = $_GET['id'];
 
-$msg->addConfirm(array('DELETE_GROUP_TYPE',$row['title']), $hidden_vars);
+$msg->addConfirm(array('DELETE_GROUP_TYPE',$row_group_types['title']), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
