@@ -39,12 +39,14 @@ if (isset($_POST['cancel'])) {
 		$id = intval($_POST['id']);
 		$type_id = intval($_POST['type_id']);
 
-		$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups_types WHERE type_id=$type_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
-			$sql = "UPDATE ".TABLE_PREFIX."groups SET title='$_POST[title]', description='$_POST[description]', modules='$modules' WHERE group_id=$id AND type_id=$type_id";
-			$result = mysql_query($sql, $db);
+		$sql = "SELECT type_id FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+		$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $type_id, $_SESSION['course_id']));
+		
+		if(count($rows_group_types) > 0){
 
+			$sql = "UPDATE %sgroups SET title='%s', description='%s', modules='%s' WHERE group_id=%d AND type_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['title'], $_POST['description'], $modules, $id, $type_id));
+			
 			// delete the modules that were un-checked
 			$old_modules = explode('|', $_POST['old_modules']);
 			$modules = explode('|', $modules);
@@ -75,16 +77,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$_GET['id'] = intval($_GET['id']);
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."groups WHERE group_id=$_GET[id]";
-	$result = mysql_query($sql,$db);
-	if (!($row = mysql_fetch_assoc($result))) {
+	$sql = "SELECT * FROM %sgroups WHERE group_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_GET['id']), TRUE);	
+	
+	if(count($row) == 0){
 		$msg->printErrors('GROUP_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-	$sql = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[type_id] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql,$db);
-	if (!($type_row = mysql_fetch_assoc($result))) {
+
+	$sql = "SELECT title FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+	$type_row = queryDB($sql, array(TABLE_PREFIX, $row['type_id'], $_SESSION['course_id']), TRUE);
+
+	if(count($type_row) == 0){
 		$msg->printErrors('GROUP_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
