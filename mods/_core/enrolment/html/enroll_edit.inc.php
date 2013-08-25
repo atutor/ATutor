@@ -11,9 +11,6 @@
 /************************************************************************/
 // $Id$
 
-//echo "FILE NO LONGER IN USE";
-//exit;
-
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /**
@@ -24,16 +21,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * @author  Shozub Qureshi
 */
 function get_usernames ($member_ids) {
-	global $db;
-
-	//$sql    = "SELECT login FROM ".TABLE_PREFIX."members WHERE `member_id` IN ($member_ids)";
-
-	//$result = mysql_query($sql, $db);
 	$sql    = "SELECT login FROM %smembers WHERE `member_id` IN (%s)";
 	$rows_logins = queryDB($sql, array(TABLE_PREFIX, $member_ids));
 	
 	foreach($rows_logins as $row){
-	//while ($row = mysql_fetch_assoc($result)) {
 		$str .= '<li>' . $row['login'] . '</li>';
 	}
 	return $str;
@@ -47,15 +38,10 @@ function get_usernames ($member_ids) {
 * @author  Shozub Qureshi
 */
 function check_roles ($member_ids) {
-	global $db;
-
-	//$sql    = "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE `member_id` IN ($member_ids)";
-	//$result = mysql_query($sql, $db);
 	$sql    = "SELECT * FROM %scourse_enrollment WHERE `member_id` IN (%s)";
 	$rows_roles = queryDB($sql, array(TABLE_PREFIX, $member_ids));
 	
 	foreach($rows_roles as $row){
-	//while ($row = mysql_fetch_assoc($result)) {
 		if ($row['role'] != 'Student' || $row['privileges'] != 0) {
 			return 1;
 		}
@@ -72,24 +58,15 @@ function check_roles ($member_ids) {
 * @author  Greg Gay  added Unsubscribe when unenrolling
 */
 function unenroll ($list) {
-	global $db, $system_courses, $course_id;
+	global $system_courses, $course_id;
 	$members = implode(',', $list);
 
-	if ($members) {
+	if (isset($members)) {
 		$members = addslashes($members);
 
-		//$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=$course_id AND member_id IN ($members)";
-		//$result = mysql_query($sql, $db);
 		$sql    = "DELETE FROM %scourse_enrollment WHERE course_id=%d AND member_id IN (%s)";
 		$result = queryDB($sql, array(TABLE_PREFIX, $course_id, $members));
 
-/*
-		$sql    = "DELETE FROM ".TABLE_PREFIX."groups_members 
-		            WHERE member_id IN ($members) 
-		              AND group_id IN (SELECT group_id from ".TABLE_PREFIX."groups G, ".TABLE_PREFIX."groups_types GT
-		                                WHERE G.type_id = GT.type_id AND GT.course_id = ".$course_id.")";
-		$result = mysql_query($sql, $db);
-*/
 		$sql    = "DELETE FROM %sgroups_members 
 		            WHERE member_id IN (%s) 
 		              AND group_id IN (SELECT group_id from %sgroups G, %sgroups_types GT
@@ -104,15 +81,12 @@ function unenroll ($list) {
 		}
 		
 		// get a list for forums in this course
-		//$sql = "SELECT forum_id from ".TABLE_PREFIX."forums_courses WHERE course_id = '$this_course_id'";
-		//$result = mysql_query($sql, $db);
+
 		$sql = "SELECT forum_id from %sforums_courses WHERE course_id = %d";
 		$rows_forums = queryDB($sql, array(TABLE_PREFIX, $this_course_id));
 
 		if(count($rows_forums) > 0){
-            //if($result && mysql_num_rows($result)>0){
                 foreach($rows_forums as $row){
-                //while($row = mysql_fetch_assoc($result)){
                     $this_course_forums[] = $row['forum_id'];
                 }
                 $this_forum_list = implode(',', $this_course_forums);
@@ -120,25 +94,15 @@ function unenroll ($list) {
                 // delete from forum_subscription any member in $members (being unenrolled)
                 // with posts to forums in this course. 
                 foreach ($this_course_forums as $this_course_forum){
-                    //$sql1 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = '$this_course_forum' AND member_id IN ($members)";
-                    //$result_unsub = mysql_query($sql1, $db);
                     $sql1 = "DELETE FROM %sforums_subscriptions WHERE forum_id = %d AND member_id IN (%s)";
                     $result_unsub = queryDB($sql1, array(TABLE_PREFIX, $this_course_forum, $members));
                 }
-            //}
 
             // get a list of posts for forums in the current course
-            //$sql = "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id IN ($this_forum_list)";
-            //$result = mysql_query($sql, $db);
-        
             $sql = "SELECT post_id FROM %sforums_threads WHERE forum_id IN (%s)";
             $rows_posts = queryDB($sql, array(TABLE_PREFIX, $this_forum_list));
-            global $sqlout;
- 
             if(count($rows_posts) > 0){
-            //if($result && mysql_num_rows($result)>0){
                 foreach($rows_posts as $row){
-                //while($row = mysql_fetch_assoc($result)){
                     $this_course_posts[] = $row['post_id'];
                 }
                 $this_post_list = implode(',', $this_course_posts);
@@ -146,10 +110,6 @@ function unenroll ($list) {
                 // delete from forums_accessed any post with member_id in $members being unenrolled, 
                 // and post_id in 
                 foreach($this_course_posts as $this_course_post){
-
-                    //$sql2	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id = '$this_course_post' AND member_id IN ($members)";
-                    //$result_unsub2 = mysql_query($sql2, $db);
-
                     $sql2	= "DELETE FROM %sforums_accessed WHERE post_id = %d AND member_id IN (%s)";
                     $result_unsub2 = queryDB($sql2, array(TABLE_PREFIX, $this_course_post, $members));
                 }
@@ -165,7 +125,7 @@ function unenroll ($list) {
 * @author  Shozub Qureshi
 */
 function enroll ($list) {
-	global $db, $msg, $_config, $course_id, $owner;
+	global $msg, $_config, $course_id, $owner;
 	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
     
 	$num_list = count($list);
@@ -173,25 +133,15 @@ function enroll ($list) {
 	for ($i=0; $i < $num_list; $i++)	{
 		$id = intval($list[$i]);
 		$members .= ' OR (member_id='.$id.')';
-		//$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($id, $course_id, 'y', 0, 'Student', 0)";
-		//$result = mysql_query($sql, $db);
 		$sql = "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, 'Student', 0)";
 		$result_enrolled = queryDB($sql, array(TABLE_PREFIX, $id, $course_id));
 		if($result_enrolled != 1){
-		//if (mysql_affected_rows($db) != 1) {
-			//$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE course_id=$course_id AND member_id=$id";
-			//$result = mysql_query($sql, $db);
-
 			$sql = "UPDATE %scourse_enrollment SET approved='y' WHERE course_id=%d AND member_id=%d";
 			$result = queryDB($sql, array(TABLE_PREFIX, $course_id, $id));
 		}
 	}
 
 	//get First_name, Last_name of course Instructor
-	//$sql_from    = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id = $owner";
-	//$result_from = mysql_query($sql_from, $db);
-	//$row_from    = mysql_fetch_assoc($result_from);
-
 	$sql_from    = "SELECT first_name, last_name, email FROM %smembers WHERE member_id = %d";
 	$row_from = queryDB($sql_from, array(TABLE_PREFIX, $owner), TRUE);
 
@@ -199,12 +149,9 @@ function enroll ($list) {
 	$email_from = $row_from['email'];
 
 	//get email addresses of users:
-	//$sql_to    = "SELECT email FROM ".TABLE_PREFIX."members WHERE ($members)";
-	//$result_to = mysql_query($sql_to, $db);
 	$sql_to    = "SELECT email FROM %smembers WHERE (%s)";
 	$rows_to = queryDB($sql_to, array(TABLE_PREFIX, $members));
 	foreach($rows_to as $row_to){
-	//while ($row_to = mysql_fetch_assoc($result_to)) {
 		// send email here.
 		$login_link = AT_BASE_HREF . 'login.php?course=' . $course_id;
 		$subject = SITE_NAME.': '._AT('enrol_message_subject');
@@ -228,35 +175,35 @@ function enroll ($list) {
 
 
 function group ($list, $gid) {
-	global $db,$msg;
+	global $msg;
 
-	$sql = "REPLACE INTO ".TABLE_PREFIX."groups_members VALUES ";
+	$sql = "REPLACE INTO %sgroups_members VALUES ";
 	$gid=intval($gid);
 	for ($i=0; $i < count($list); $i++)	{
 		$student_id = intval($list[$i]);
 		$sql .= "($gid, $student_id),";
 	}
 	$sql = substr($sql, 0, -1);
-	//mysql_query($sql, $db);
-	queryDB($sql, array());
-
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	$result = queryDB($sql, array(TABLE_PREFIX));
+    if($result > 0){
+	    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	}
 	header('Location: index.php');
 	exit;
 }
 
 function group_remove ($ids, $gid) {
-	global $db,$msg;
+	global $msg;
 	$gid=intval($gid);
 
 	$ids=implode(',', $ids);
 
 	if ($ids) {
-		//$sql = "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$gid AND member_id IN ($ids)";
-		//mysql_query($sql, $db);
 		$sql = "DELETE FROM %sgroups_members WHERE group_id=%d AND member_id IN (%s)";
-		queryDB($sql, array(TABLE_PREFIX, $gid, $ids));
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		$result = queryDB($sql, array(TABLE_PREFIX, $gid, $ids));
+		if($result > 0){
+		    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		}
 	}
 
 	header('Location: index.php');
@@ -270,14 +217,11 @@ function group_remove ($ids, $gid) {
 * @author  Heidi Hazelton
 */
 function alumni ($list) {
-	global $db, $course_id;
+	global $course_id;
 	$members = '(member_id='.$list[0].')';
 	for ($i=1; $i < count($list); $i++)	{
 		$members .= ' OR (member_id='.$list[$i].')';
 	}
-	
-	//$sql    = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved = 'a' WHERE course_id=$course_id AND ($members)";
-	//$result = mysql_query($sql, $db);
 	
 	$sql    = "UPDATE %scourse_enrollment SET approved = 'a' WHERE course_id=%d AND (%s)";
 	$result = queryDB($sql, array(TABLE_PREFIX, $course_id, $members));
@@ -371,18 +315,12 @@ if ($_GET['func'] == 'remove') {
 	$confirm = array('ALUMNI',   $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'group') {
-	//$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$hidden_vars['gid'];
-	//$result = mysql_query($sql, $db);
-	//$row = mysql_fetch_assoc($result);
 	$sql = "SELECT title FROM %sgroups WHERE group_id=%d";
 	$row = queryDB($sql, array(TABLE_PREFIX, $hidden_vars['gid']), TRUE);
-	
+
 	$confirm = array('STUDENT_GROUP', $row['title'], $str);
 	$msg->addConfirm($confirm, $hidden_vars);
 } else if ($_GET['func'] == 'group_remove') {
-	//$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=".$hidden_vars['gid'];
-	//$result = mysql_query($sql, $db);
-	//$row = mysql_fetch_assoc($result);
 	$sql = "SELECT title FROM %sgroups WHERE group_id=%d";
 	$rowt = queryDB($sql, array(TABLE_PREFIX, $hidden_vars['gid']), TRUE);
 
