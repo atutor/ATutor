@@ -23,12 +23,12 @@ if (!$_SESSION['groups']) {
 	exit;
 }
 $group_list = implode(',', $_SESSION['groups']);
-$sql = "SELECT group_id, title, modules FROM ".TABLE_PREFIX."groups WHERE group_id IN ($group_list) ORDER BY title";
-$result = mysql_query($sql, $db);
+
+$sql = "SELECT group_id, title, modules FROM %sgroups WHERE group_id IN (%s) ORDER BY title";
+$rows_groups = queryDB($sql, array(TABLE_PREFIX, $group_list));
 
 echo '<ol id="tools">';
-
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_groups as $row){
 	echo '<li class="top-tool">'.AT_print($row['title'], 'groups.title') . ' ';
 
 	$modules = explode('|', $row['modules']);
