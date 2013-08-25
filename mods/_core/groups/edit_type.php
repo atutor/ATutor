@@ -32,11 +32,12 @@ if (isset($_POST['cancel'])) {
 
 		$type_id = intval($_POST['type_id']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."groups_types SET title='$_POST[title]' WHERE course_id=$_SESSION[course_id] AND type_id=$type_id";
-		$result = mysql_query($sql, $db);
-
-		$msg->addFeedback('GROUP_TYPE_EDITED_SUCCESSFULLY');
-
+		$sql = "UPDATE %sgroups_types SET title='%s' WHERE course_id=%d AND type_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['title'], $_SESSION['course_id'], $type_id));
+		
+		if($result > 0){
+		    $msg->addFeedback('GROUP_TYPE_EDITED_SUCCESSFULLY');
+        } 
 		header('Location: index.php');
 		exit;
 	}
@@ -47,9 +48,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$_GET['id'] = intval($_GET['id']);
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."groups_types WHERE type_id=$_GET[id] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql,$db);
-	if (!($row = mysql_fetch_assoc($result))) {
+	$sql = "SELECT * FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+	$row = queryDB($sql,array(TABLE_PREFIX, $_GET['id'], $_SESSION['course_id']), TRUE);
+	
+	if(count($row) == 0){
 		$msg->printErrors('GROUP_TYPE_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
