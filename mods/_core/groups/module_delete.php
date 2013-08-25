@@ -11,17 +11,16 @@ function groups_delete($course) {
 		$sql	= "DELETE FROM %sgroups_members WHERE group_id=%d";
 		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
 		
+		// -- remove assoc between tests and groups:
 		$sql	= "DELETE FROM %stests_groups WHERE group_id=%d";
 		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
 		
-		$sql	= "DELETE FROM %dgroups WHERE group_id=%d";
+		$sql	= "DELETE FROM %sgroups WHERE group_id=%d";
 		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
 	}
 
 	$sql	= "DELETE FROM %sgroups_types WHERE course_id=%d";
 	$result = queryDB($sql, array(TABLE_PREFIX, $course));
-	// -- remove assoc between tests and groups:
-
 }
 
 ?>
