@@ -53,17 +53,19 @@ if (isset($_POST['cancel'])) {
 			$sql = "INSERT INTO %sgroups_types VALUES (NULL, %d, '%s')";
 			$result_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['new_type']));
 			$type_id = at_insert_id();
+			
 		} else {
 
 			$sql = "SELECT type_id FROM %sgroups_types WHERE course_id=%d AND type_id=%d";
-			$rows_groups_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['type']));
-			
-			if(count($rows_groups_types) > 0){
-				$type_id = $row['type_id'];
+			$rows_groups_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['type']), TRUE);
+
+			if(count($rows_groups_types) > 0 ){
+				$type_id = $rows_groups_types['type_id'];
 			} else {
 				$type_id = FALSE;
 			}
 		}
+
 		if ($type_id) {
 			$sql = "INSERT INTO %sgroups VALUES (NULL, %d, '%s', '%s', '%s')";
 			$result = queryDB($sql, array(TABLE_PREFIX, $type_id, $_POST['prefix'], $_POST['description'], $modules ));
@@ -95,6 +97,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $types = array();
 $sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY title";
 $rows_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
 foreach($rows_group_types as $row){
 	$types[$row['type_id']] = htmlentities_utf8($row['title']);
 }
