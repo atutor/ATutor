@@ -89,7 +89,7 @@ unset($hidden_vars);
 $hidden_vars['id'] = $_GET['id'];
 $hidden_vars['type_id'] = $row_groups['type_id'];
 
-$msg->addConfirm(array('DELETE_GROUP',AT_print($row['title'], 'groups.title')), $hidden_vars);
+$msg->addConfirm(array('DELETE_GROUP',AT_print($row_groups['title'], 'groups.title')), $hidden_vars);
 $msg->printConfirm();
 
 require(AT_INCLUDE_PATH.'footer.inc.php');
