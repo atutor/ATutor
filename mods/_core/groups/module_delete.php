@@ -3,22 +3,23 @@
 function groups_delete($course) {
 	global $db;
 
-	$sql	= "SELECT G.group_id FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$course";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
-		$sql	= "DELETE FROM ".TABLE_PREFIX."groups_members WHERE group_id=$row[group_id]";
-		$result2 = mysql_query($sql, $db);
-
-		$sql	= "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE group_id=$row[group_id]";
-		$result2 = mysql_query($sql, $db);
-
-		$sql	= "DELETE FROM ".TABLE_PREFIX."groups WHERE group_id=$row[group_id]";
-		$result2 = mysql_query($sql, $db);
+	$sql	= "SELECT G.group_id FROM %sgroups G INNER JOIN %sgroups_types T USING (type_id) WHERE T.course_id=%d";
+	$rows_groups = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course));
+	
+	foreach($rows_groups as $row){
+	
+		$sql	= "DELETE FROM %sgroups_members WHERE group_id=%d";
+		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
+		
+		$sql	= "DELETE FROM %stests_groups WHERE group_id=%d";
+		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
+		
+		$sql	= "DELETE FROM %dgroups WHERE group_id=%d";
+		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['group_id']));
 	}
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."groups_types WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-
+	$sql	= "DELETE FROM %sgroups_types WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $course));
 	// -- remove assoc between tests and groups:
 
 }
