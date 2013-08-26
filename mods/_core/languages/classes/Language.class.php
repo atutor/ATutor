@@ -136,11 +136,12 @@ class Language {
 		global $db;
 		if ($id) {
 			if ($is_admin === 0) {
-				$sql = "UPDATE ".TABLE_PREFIX."members SET language='".$this->code."', creation_date=creation_date, last_login=last_login WHERE member_id=$id";
+				$sql = "UPDATE %smembers SET language='%s', creation_date=creation_date, last_login=last_login WHERE member_id=%d";
+				queryDB($sql, array(TABLE_PREFIX, $this->code, $id));
 			} elseif ($is_admin === 1) {
-				$sql = "UPDATE ".TABLE_PREFIX."admins SET language='".$this->code."', last_login=last_login WHERE login='$id'";
+				$sql = "UPDATE %sadmins SET language='%s', last_login=last_login WHERE login='%s'";
+				queryDB($sql, array(TABLE_PREFIX, $this->code, $id));
 			}
-			mysql_query($sql,$db);
 		}
 	}
 
@@ -178,10 +179,8 @@ class Language {
 	
 	// public
 	function getTerm($term) {
-		$sql = "SELECT *, UNIX_TIMESTAMP(L.revised_date) AS revised_date_unix FROM ".TABLE_PREFIX."language_text L WHERE L.language_code='".$this->getCode()."' AND L.variable='_template' AND L.term='$term'";
-
-		$result = mysql_query($sql, $this->db);
-		$row = mysql_fetch_assoc($result);
+		$sql = "SELECT *, UNIX_TIMESTAMP(L.revised_date) AS revised_date_unix FROM %slanguage_text L WHERE L.language_code='%s' AND L.variable='_template' AND L.term='%s'";
+		$row = queryDB($sql, array(TABLE_PREFIX, $this->getCode(), $term), TRUE);
 		return $row;
 	}
 
