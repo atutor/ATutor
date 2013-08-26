@@ -62,11 +62,7 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 		if (trim($error) == '') $error = _AT('tile_no_response');
 		else {
 			// delete this access token since it cannot import into Transformable
-			/* $sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens
-			         WHERE token = '".$access_token_key."'
-			           AND token_type='access'";
-			$result = mysql_query($sql, $db);
-			*/
+
 			$sql = "DELETE FROM %soauth_client_tokens
 			         WHERE token = '%s'
 			           AND token_type='access'";
@@ -221,10 +217,9 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 	//$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM %scontent WHERE course_id=%d ORDER BY content_parent_id, ordering";
 }
-    //$result = mysql_query($sql, $db);
+
     $rows_content = queryDB($sql, array(TABLE_PREFIX, $course_id));
     
-//while ($row = mysql_fetch_assoc($result)) {
 foreach($rows_content as $row){
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
 		$content[$row['content_parent_id']][] = $row;
@@ -256,8 +251,6 @@ if ($cid) {
 $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'), 
 							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
 							  $ims_template_xml['header']);
-//debug($imsmanifest_xml);
-//exit;
 
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
@@ -365,13 +358,10 @@ $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURS
 									$ims_template_xml['final']);
 
 /* generate the vcard for the instructor/author */
-//$sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
-//$result = mysql_query($sql, $db);
 $sql = "SELECT first_name, last_name, email, website, login, phone FROM %smembers WHERE member_id=%s";
 $row_members = queryDB($sql, array(TABLE_PREFIX, $instructor_id), TRUE);
 $vcard = new vCard();
 if(count($row_members) > 0){
-//if ($row = mysql_fetch_assoc($result)) {
 	$vcard->setName($row_members['last_name'], $row_members['first_name'], $row_members['login']);
 	$vcard->setEmail($row_members['email']);
 	$vcard->setNote('Originated from an ATutor at '.AT_BASE_HREF.'. See ATutor.ca for additional information.');
