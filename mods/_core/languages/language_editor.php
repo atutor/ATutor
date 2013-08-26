@@ -91,9 +91,10 @@ if (isset($_GET['custom'])) {
 	$variable = $_variables[$_GET['type']];
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='$_SESSION[lang]' AND `variable`='$variable' $sql_search ORDER BY text";
-$result = mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
+$sql = "SELECT * FROM %slanguage_text WHERE language_code='%s' AND variable='%s' $sql_search ORDER BY text";
+$rows_text = queryDB($sql, array(TABLE_PREFIX, $_SESSION['lang'], $variable));
+$num_results = count($rows_text);
+
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -132,13 +133,13 @@ $num_results = mysql_num_rows($result);
 		<?php if ($num_results): ?>
 			<select size="<?php echo min(max($num_results,2), 25); ?>" name="terms" id="terms" onchange="javascript:showtext(this);">
 				<?php
-					while ($row = mysql_fetch_assoc($result)): 
+				    foreach($rows_text as $row){
 						if ($strlen($row['text']) > 30) {
 							$row['text'] = $substr($row['text'], 0, 28) . '...';
 						}
 					?>
 						<option value="<?php echo $row['term']; ?>"><?php echo htmlspecialchars($row['text']); ?></option>
-					<?php endwhile; ?>
+					<?php } ?>
 			</select>
 		<?php else: ?>
 			<p><?php echo _AT('none_found'); ?></p>
