@@ -103,9 +103,9 @@ class LanguageEditor extends Language {
 				$row['code'] .= AT_LANGUAGE_LOCALE_SEP . strtolower($row['locale']);
 			}
 
-			$sql	= "INSERT INTO ".TABLE_PREFIX."languages VALUES ('$row[code]', '$row[charset]', '$row[direction]', '$row[reg_exp]', '$row[native_name]', '$row[english_name]', 3)";
+			$sql	= "INSERT INTO %slanguages VALUES ('%s', '%s', '%s', '%s', '%s', '%s', 3)";
 
-			if (mysql_query($sql, $db)) {
+			if (queryDB($sql, array(TABLE_PREFIX, $row['code'], $row['charset'], $row['direction'], $row['reg_exp'], $row['native_name'], $row['english_name'])) != 0) {
 				return TRUE;
 			} else {
 				return FALSE;
@@ -166,20 +166,22 @@ class LanguageEditor extends Language {
 			}
 
 			if ($row['old_code'] == $row['code']) {
-				$sql	= "UPDATE ".TABLE_PREFIX."languages SET char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' $status_sql WHERE language_code='$row[code]'";
-				mysql_query($sql, $db);
 
+				$sql	= "UPDATE %slanguages SET char_set='%s', direction='%s', reg_exp='%s', native_name='%s', english_name='%s' $status_sql WHERE language_code='%s'";
+				queryDB($sql, array(TABLE_PREFIX,$row['charset'], $row['direction'], $row['reg_exp'], $row['native_name'], $row['english_name'], $row['code']));
 				return TRUE;
+				
 			} else if ($new_exists) {
 				$this->msg->addError('LANG_EXISTS');
 				return FALSE;
 			} else {
-				$sql	= "UPDATE ".TABLE_PREFIX."languages SET language_code='$row[code]', char_set='$row[charset]', direction='$row[direction]', reg_exp='$row[reg_exp]', native_name='$row[native_name]', english_name='$row[english_name]' $status_sql WHERE language_code='$row[old_code]'";
-				mysql_query($sql, $db);
 
-				$sql = "UPDATE ".TABLE_PREFIX."language_text SET language_code='$row[code]' WHERE language_code='$row[old_code]'";
-				mysql_query($sql, $db);
+				$sql	= "UPDATE %slanguages SET language_code='%s', char_set='%s', direction='%s', reg_exp='%s', native_name='%s', english_name='%s' $status_sql WHERE language_code='%s'";
+				queryDB($sql, array(TABLE_PREFIX,$row['code'], $row['charset'], $row['direction'], $row['reg_exp'], $row['native_name'], $row['english_name'], $row['old_code']));
 
+				$sql = "UPDATE %slanguage_text SET language_code='%s' WHERE language_code='%s'";
+				queryDB($sql, array(TABLE_PREFIX,$row['code'], $row['old_code']));
+				
 				return TRUE;
 			}
 
@@ -188,18 +190,18 @@ class LanguageEditor extends Language {
     }
 
     function deleteLanguage() {
-		$sql = "DELETE FROM ".TABLE_PREFIX."languages WHERE language_code='$this->code'";
-		mysql_query($sql, $this->db);
-
-		$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE language_code='$this->code'";
-		mysql_query($sql, $this->db);
-
-		$sql = "UPDATE ".TABLE_PREFIX."members SET language='".DEFAULT_LANGUAGE."', creation_date=creation_date, last_login=last_login WHERE language='$this->code'";
-		mysql_query($sql, $this->db);
-
-		$sql = "UPDATE ".TABLE_PREFIX."courses SET primary_language='".DEFAULT_LANGUAGE."' WHERE primary_language='$this->code'";
-		mysql_query($sql, $this->db);
-
+		$sql = "DELETE FROM %slanguages WHERE language_code='%s'";
+		queryDB($sql, array(TABLE_PREFIX, $this->code));
+		
+		$sql = "DELETE FROM %slanguage_text WHERE language_code='%s'";
+		queryDB($sql, array(TABLE_PREFIX, $this->code));
+		
+		$sql = "UPDATE %smembers SET language='%s', creation_date=creation_date, last_login=last_login WHERE language='%s'";
+		queryDB($sql, array(TABLE_PREFIX, DEFAULT_LANGUAGE, $this->code));
+		
+		$sql = "UPDATE %scourses SET primary_language='%s' WHERE primary_language='%s'";
+		queryDB($sql, array(TABLE_PREFIX, DEFAULT_LANGUAGE, $this->code));
+		
 		cache_purge('system_langs', 'system_langs');
 	}
 
@@ -213,15 +215,6 @@ class LanguageEditor extends Language {
 		$code     = $addslashes($this->getCode());
 
 		$sql	= "UPDATE ".TABLE_PREFIX."language_text SET text='$text', revised_date=NOW() WHERE language_code='$code' AND variable='$variable' AND term='$term'";
-
-		/*
-		if (mysql_query($sql, $this->db)) {
-			return TRUE;
-		} else {
-			debug(mysql_error($this->db));
-			return FALSE;
-		}
-		*/
 	}
 
 	// public
@@ -300,7 +293,8 @@ class LanguageEditor extends Language {
 		foreach($terms as $term => $garbage) {
 			$to_term   = $this->getTerm($term);
 			$from_term = $fromLanguage->getTerm($term);
-
+debug($to_term);
+exit;
 			$is_new = false;
 			if ($to_term === false) {
 				$is_new = true;
@@ -354,8 +348,8 @@ class LanguageEditor extends Language {
 			$term = $addslashes($term);
 		
 			if (($text != '') && ($text != $_POST['old'][$term])) {
-				$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ('".$this->getCode()."', '_template', '$term', '$text', NOW(), '')";
-				mysql_query($sql, $this->db);
+				$sql = "REPLACE INTO %slanguage_text VALUES ('%s', '_template', '%s', '%s', NOW(), '')";
+				queryDB($sql, array(TABLE_PREFIX, $this->getCode(), $term, $text));
 			}
 		}
 	}
@@ -398,18 +392,19 @@ class LanguageEditor extends Language {
 
 		$sql_dump .= "INSERT INTO `language_text` VALUES ";
 
-		$sql    = "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='$this->code' ORDER BY variable, term";
-		$result = mysql_query($sql, $this->db);
-		if ($row = mysql_fetch_assoc($result)) {
-			do {
+		$sql    = "SELECT * FROM %slanguage_text WHERE language_code='%s' ORDER BY variable, term";
+		$rows_text = queryDB($sql, array(TABLE_PREFIX, $this->code));
+		if(count($rows_text) > 0){
+			foreach($rows_text as $row){
 				$row['text']    = str_replace($search, $replace, $row['text']);
 				$row['context'] = str_replace($search, $replace, $row['context']);
 
 				$sql_dump .= "('$this->code', '$row[variable]', '$row[term]', '$row[text]', '$row[revised_date]', '$row[context]'),\r\n";
-			} while ($row = mysql_fetch_assoc($result));
+			}
 		} else {
 			$this->msg->addError('LANG_EMPTY');
 		}
+		
 		$sql_dump = substr($sql_dump, 0, -3) . ";";
 
 		$readme = 'This is an ATutor language pack. Use the administrator Language section to import this language pack or manually import the contents of the SQL file into your [table_prefix]language_text table, where `table_prefix` should be replaced with your correct ATutor table prefix as defined in ./include/config.inc.php . Additional Language Packs can be found on http://atutor.ca .';
