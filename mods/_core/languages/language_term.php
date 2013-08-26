@@ -22,9 +22,10 @@ if (isset($_POST['submit'])) {
 	$_POST['text'] = $addslashes($_POST['text']);
 
 	$_POST['variable'] = '_c' . $_POST['variable'];
-
-	$sql = "REPLACE INTO ".TABLE_PREFIX."language_text VALUES ('$_SESSION[lang]', '{$_POST['variable']}', '{$_POST['term']}', '{$_POST['text']}', NOW(), '')";
-	mysql_query($sql, $db);
+	
+	$sql = "REPLACE INTO %slanguage_text VALUES ('%s', '%s', '%s', '%s', NOW(), '')";
+	queryDB($sql, array(TABLE_PREFIX, $_SESSION['lang'], $_POST['variable'], $_POST['term'], $_POST['text']));
+	
 	header('Location: '.$_SERVER['PHP_SELF'].'?term='.$_POST['term']);
 	exit;
 } else if (isset($_POST['delete'])) {
@@ -34,8 +35,10 @@ if (isset($_POST['submit'])) {
 
 	$_POST['variable'] = '_c' . $_POST['variable'];
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."language_text WHERE language_code='$_SESSION[lang]' AND `variable`='{$_POST['variable']}' AND term='{$_POST['term']}' LIMIT 1";
-	mysql_query($sql, $db);
+	$sql = "DELETE FROM %slanguage_text WHERE language_code='%s' AND `variable`='{%s}' AND term='{%s}' LIMIT 1";
+	queryDB($sql, array(TABLE_PREFIX, $_SESSION['lang'], $_POST['variable'], $_POST['term']));
+	
+	
 	header('Location: '.$_SERVER['PHP_SELF'].'?term='.$_POST['term']);
 	exit;
 }
@@ -43,10 +46,12 @@ if (isset($_POST['submit'])) {
 require(AT_INCLUDE_PATH.'html/frameset/header.inc.php');
 if (isset($_GET['term'])) {
 	$_GET['term'] = $addslashes($_GET['term']);
-	$sql = "SELECT * FROM ".TABLE_PREFIX."language_text WHERE language_code='$_SESSION[lang]' AND term='$_GET[term]' ORDER BY `variable` DESC";
-	$result = mysql_query($sql, $db);
-	$original_row = mysql_fetch_assoc($result);
-	$custom_row = mysql_fetch_assoc($result);
+	$sql = "SELECT * FROM %slanguage_text WHERE language_code='%s' AND term='%s' ORDER BY `variable` DESC";
+	$original_rows = queryDB($sql, array(TABLE_PREFIX, $_SESSION['lang'], $_GET['term']));
+    foreach($original_rows as $row){
+        $original_row = $row;
+        $custom_row = $original_row;
+	}
 }
 ?>
 
@@ -74,12 +79,12 @@ if (isset($_GET['term'])) {
 		<div class="row">
 			<?php 
 				$sql	= "SELECT * FROM ".TABLE_PREFIX."language_pages WHERE `term`='$_GET[term]' ORDER BY page LIMIT 11";
-				$result	= mysql_query($sql, $db);
-				if (mysql_num_rows($result) > 10) {
+				$rows_pages	= queryDB($sql, array(TABLE_PREFIX, $_GET[term]));
+				if(count($rows_pages) > 10){
 					echo '<strong>'._AT('global_more_than_10_pages').'</strong>';
 				} else {
 					echo '<ul style="padding: 0px; margin: 0px; list-style: none">';
-					while ($page_row = mysql_fetch_assoc($result)) {
+					foreach($rows_pages as $page_row){
 						echo '<li>'.$page_row['page'] . '</li>';
 					}
 					echo '</ul>';
