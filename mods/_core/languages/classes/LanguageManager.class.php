@@ -65,11 +65,9 @@ class LanguageManager {
 	* Initializes availableLanguages and numLanguages.
 	*/
 	function LanguageManager() {
-		global $db;
-
-		$sql	= 'SELECT * FROM '.TABLE_PREFIX.'languages ORDER BY native_name';
-		$result = mysql_query($sql, $db);
-		while($row = mysql_fetch_assoc($result)) {
+		$sql	= "SELECT * FROM %slanguages ORDER BY native_name";
+		$rows_langs = queryDB($sql, array(TABLE_PREFIX));
+		foreach($rows_langs as $row){
 			if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE) {
 				$row['status'] = AT_LANG_STATUS_PUBLISHED; // b/c the print drop down checks for it.				
 			}
