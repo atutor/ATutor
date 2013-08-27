@@ -62,10 +62,10 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 		if (trim($error) == '') $error = _AT('tile_no_response');
 		else {
 			// delete this access token since it cannot import into Transformable
-			$sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens
-			         WHERE token = '".$access_token_key."'
+			$sql = "DELETE FROM %soauth_client_tokens
+			         WHERE token = '%s'
 			           AND token_type='access'";
-			$result = mysql_query($sql, $db);
+			$result = queryDB($sql, array(TABLE_PREFIX, $access_token_key));
 		}
 		$msg->addError(array('TILE_IMPORT_FAIL', $error));
 	}
@@ -148,13 +148,15 @@ $parser->set_object($handler);
 $parser->set_element_handler('openHandler','closeHandler');
 
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
+	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM %scontent WHERE course_id=%d ORDER BY content_parent_id, ordering";
+    $rows_content = queryDB($sql, array(TABLE_PREFIX, $course_id));
 } else {
-	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
+	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM %scontent WHERE course_id=%d ORDER BY content_parent_id, ordering";
+    $rows_contentt = queryDB($sql,array(TABLE_PREFIX, $course_id));
 }
 $cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+foreach($rows_content as $row){
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
 		$content[$row['content_parent_id']][] = $row;
 		if ($cid == $row['content_id']) {
@@ -241,10 +243,12 @@ $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}', '{GLOSSARY}',	'{RESOUR
 									$ims_template_xml['final']);
 
 /* generate the vcard for the instructor/author */
-$sql = "SELECT first_name, last_name, email, website, login, phone FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
-$result = mysql_query($sql, $db);
+$sql = "SELECT first_name, last_name, email, website, login, phone FROM %smembers WHERE member_id=%d";
+$row_member = queryDB($sql, array(TABLE_PREFIX, $instructor_id), TRUE);
+
 $vcard = new vCard();
-if ($row = mysql_fetch_assoc($result)) {
+
+if(count($row_member) > 0){
 	$vcard->setName($row['last_name'], $row['first_name'], $row['login']);
 	$vcard->setEmail($row['email']);
 	$vcard->setNote('Originated from an ATutor at '.AT_BASE_HREF.'. See ATutor.ca for additional information.');
