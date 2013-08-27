@@ -102,9 +102,10 @@ function print_organizations($parent_id,
 
 			/** Test dependency **/
 			$test_dependency = '';	//Template for test
-			$sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)){
+			$sql = "SELECT * FROM %scontent_tests_assoc WHERE content_id=%d";
+			$rows_assocs = queryDB($sql, array(TABLE_PREFIX, $content['content_id']));
+			
+			foreach($rows_assocs as $row){
 				//add test dependency ontop to forums dependency
 				$test_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
 			}
@@ -165,7 +166,7 @@ function print_organizations($parent_id,
 				$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
 				$test_ids = array();		//reset test ids
 				//$my_files = array();		//reset myfiles.
-				while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
+				foreach($content_test_rs as $content_test_row){
 					//export
 					$test_ids[] = $content_test_row['test_id'];
 					//the 'added_files' is for adding into the manifest file in this zip
