@@ -59,9 +59,8 @@ $atutor_test = '<a href="'.$_base_path.'" title="Open ATutor in a new window" ta
 $_SESSION['status'] = 2;
 $_USER_ADMIN = $_SESSION['status'];
 
-$sql = "SELECT english_name, char_set FROM ".TABLE_PREFIX."languages WHERE language_code = '$_SESSION[language]'";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql = "SELECT english_name, char_set FROM %slanguages WHERE language_code = '%s'";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['language']), TRUE);
 
 ?>
 <ol>
