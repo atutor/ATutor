@@ -809,9 +809,11 @@ if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path,
 error_reporting(AT_ERROR_REPORTING);
 
 /* get the course's max_quota */
-$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$q_row	= mysql_fetch_assoc($result);
+//$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
+//$result = mysql_query($sql, $db);
+//$q_row	= mysql_fetch_assoc($result);
+$sql	= "SELECT max_quota FROM %scourses WHERE course_id=%d";
+$q_row	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
 
 if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 
@@ -931,8 +933,10 @@ if (file_exists($import_path . $glossary_path . 'glossary.xml')){
 	$contains_glossary_terms = true;
 	foreach ($imported_glossary as $term => $defn) {
 		if (!$glossary[$term]) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$term', '$defn', 0)";
-			mysql_query($sql, $db);	
+			//$sql = "INSERT INTO ".TABLE_PREFIX."glossary VALUES (NULL, $_SESSION[course_id], '$term', '$defn', 0)";
+			//mysql_query($sql, $db);	
+			$sql = "INSERT INTO %sglossary VALUES (NULL, %d, '%s', '%s', 0)";
+			queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $term, $defn));
 		}
 	}
 }
@@ -983,9 +987,13 @@ if ($xml_base_path) {
 }
 
 /* get the top level content ordering offset */
-$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_assoc($result);
+//$sql	= "SELECT MAX(ordering) AS ordering FROM ".TABLE_PREFIX."content WHERE course_id=$_SESSION[course_id] AND content_parent_id=$cid";
+//$result = mysql_query($sql, $db);
+//$row	= mysql_fetch_assoc($result);
+
+$sql	= "SELECT MAX(ordering) AS ordering FROM %scontent WHERE course_id=%d AND content_parent_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $cid), TRUE);
+
 $order_offset = intval($row['ordering']); /* it's nice to have a real number to deal with */
 $lti_offset = array();	//since we don't need lti tools, the ordering needs to be subtracted
 //reorder the items stack
@@ -1258,7 +1266,7 @@ foreach ($items as $item_id => $content_info)
 	if ($content_formatting!=CONTENT_TYPE_WEBLINK){
 		$content_folder_type = (!isset($content_info['type'])?CONTENT_TYPE_FOLDER:CONTENT_TYPE_CONTENT);
 	}
-
+/*
 	$sql= 'INSERT INTO '.TABLE_PREFIX.'content'
 	      . '(course_id, 
 	          content_parent_id, 
@@ -1291,14 +1299,53 @@ foreach ($items as $item_id => $content_info)
 			     .'"'.$content.'",'
 				 .'"'.$content_info['test_message'].'",'
 				 .$content_folder_type.')';
+				
+				$result = mysql_query($sql, $db) or die(mysql_error());
+				*/
 
-	$result = mysql_query($sql, $db) or die(mysql_error());
 
+		$sql= 'INSERT INTO %scontent'
+	      . '(course_id, 
+	          content_parent_id, 
+	          ordering,
+	          last_modified, 
+	          revision, 
+	          formatting, 
+	          release_date,
+	          head,
+	          use_customized_head,
+	          keywords, 
+	          content_path, 
+	          title, 
+	          text,
+			  test_message,
+			  content_type) 
+	       VALUES 
+			     ('.$_SESSION['course_id'].','															
+			     .intval($content_parent_id).','		
+			     .($content_info['ordering'] + $my_offset - $lti_offset[$content_info['parent_content_id']] + 1).','
+			     .'"'.$last_modified.'",													
+			      0,'
+			     .$content_formatting.' ,
+			      NOW(),"'
+			     . $head .'",
+			     1,
+			      "",'
+			     .'"'.$content_info['new_path'].'",'
+			     .'"'.$content_info['title'].'",'
+			     .'"'.$content.'",'
+				 .'"'.$content_info['test_message'].'",'
+				 .$content_folder_type.')';
+    $result = queryDB($sql, array(TABLE_PREFIX));
+    
 	/* get the content id and update $items */
-	$items[$item_id]['real_content_id'] = mysql_insert_id($db);
+	//$items[$item_id]['real_content_id'] = mysql_insert_id($db);
+    $items[$item_id]['real_content_id'] = at_insert_id($db);
 
 	/* get the tests associated with this content */
+
 	if (!empty($items[$item_id]['tests']) || strpos($items[$item_id]['type'], 'imsqti_xmlv1p2/imscc_xmlv1p0') !== false){
+
 		$qti_import = new QTIImport($import_path);
 		if (isset($items[$item_id]['tests'])){
 			$loop_var = $items[$item_id]['tests'];
@@ -1332,17 +1379,32 @@ foreach ($items as $item_id => $content_info)
 					$weight = 0;
 				}
 				$new_order = $order + 1;
-				$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
+			/*
+			$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
 						"(test_id, question_id, weight, ordering, required) " .
 						"VALUES ($tid, $qid, $weight, $new_order, 0)";
 				$result = mysql_query($sql, $db);
+				*/
+				
+				$sql = "INSERT INTO %stests_questions_assoc" . 
+						"(test_id, question_id, weight, ordering, required) " .
+						"VALUES (%d, %d, %d, %d, 0)";
+				$result = queryDB($sql, array(TABLE_PREFIX, $tid, $qid, $weight, $new_order));
+				
 			}
 
 			//associate content and test
+			/*
 			$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
 					'(content_id, test_id) ' .
 					'VALUES (' . $items[$item_id]['real_content_id'] . ", $tid)";
 			$result = mysql_query($sql, $db);
+			*/
+		
+			$sql =	'INSERT INTO ' . TABLE_PREFIX . 'content_tests_assoc' . 
+					'(content_id, test_id) ' .
+					'VALUES (' . $items[$item_id]['real_content_id'] . ", %d)";
+			$result = queryDB($sql, array(TABLE_PREFIX, $items[$item_id]['real_content_id'], $tid));			
 		
 //			if (!$msg->containsErrors()) {
 //				$msg->addFeedback('IMPORT_SUCCEEDED');
