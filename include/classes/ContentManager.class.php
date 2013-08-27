@@ -580,9 +580,10 @@ class ContentManager
 	function & getContentTestsAssoc($content_id){
 
 		$sql	= "SELECT ct.test_id, t.title FROM (SELECT * FROM %scontent_tests_assoc WHERE content_id=%d) AS ct LEFT JOIN %stests t ON ct.test_id=t.test_id";
-		$result = queryDB($sql, array(TABLE_PREFIX, $content_id, TABLE_PREFIX));
+		$rows_test_assocs = queryDB($sql, array(TABLE_PREFIX, $content_id, TABLE_PREFIX));
 
-		return $result;
+		//return $result;
+		return $rows_test_assocs;
 	}
 
         /*TODO***************BOLOGNA***************REMOVE ME**********/
