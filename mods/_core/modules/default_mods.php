@@ -113,43 +113,53 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) < 256)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults')";
-		$result = mysql_query($sql, $db);
 
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults_2'";
+		$sql    = "REPLACE INTO %sconfig VALUES('main_defaults', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $main_defaults));
+		
+		$sql    = "DELETE FROM %sconfig WHERE name='main_defaults_2'";
+		$result = queryDB($sql, array(TABLE_PREFIX));
+		
 	} else if (!($_config_defaults['main_defaults'] == $main_defaults) && (strlen($main_defaults) > 255)) {
 		// we don't have to worry about chopping in the middle since they'll be combined anyway
 		$main_defaults_1 = substr($main_defaults, 0, 255);
 		$main_defaults_2 = substr($main_defaults, 255);
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults', '$main_defaults_1')";
-		$result = mysql_query($sql, $db);
+		$sql    = "REPLACE INTO %sconfig VALUES('main_defaults', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $main_defaults_1));
 
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('main_defaults_2', '$main_defaults_2')";
+		$sql    = "REPLACE INTO %sconfig VALUES('main_defaults_2', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $main_defaults_2));
+		
 	} else if ($_config_defaults['main_defaults'] == $main_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='main_defaults' OR name='name_defaults_2'";
+
+		$sql    = "DELETE FROM %sconfig WHERE name='main_defaults' OR name='name_defaults_2'";
+		$result = queryDB($sql, array(TABLE_PREFIX));
 	}
-	$result = mysql_query($sql, $db);
 
 
 	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) < 256)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults')";
-		$result = mysql_query($sql, $db);
 
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults_2'";
+		$sql    = "REPLACE INTO %sconfig VALUES('home_defaults', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $home_defaults));
+
+		$sql    = "DELETE FROM %sconfig WHERE name='home_defaults_2'";
+		$result = queryDB($sql, array(TABLE_PREFIX));
 
 	} else 	if (!($_config_defaults['home_defaults'] == $home_defaults) && (strlen($home_defaults) > 255)) {
 		// we don't have to worry about chopping in the middle since they'll be combined anyway
 		$home_defaults_1 = substr($home_defaults, 0, 255);
 		$home_defaults_2 = substr($home_defaults, 255);
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults', '$home_defaults_1')";
-		$result = mysql_query($sql, $db);
 
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('home_defaults_2', '$home_defaults_2')";
+		$sql    = "REPLACE INTO %sconfig VALUES('home_defaults', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX,$home_defaults_1));
+	
+	    $sql    = "REPLACE INTO %sconfig VALUES('home_defaults_2', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $home_defaults_2));
 
 	} else if ($_config_defaults['home_defaults'] == $home_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='home_defaults' OR name='home_defaults_2'";
+		$sql    = "DELETE FROM %sconfig WHERE name='home_defaults' OR name='home_defaults_2'";
+		$result = queryDB($sql, array(TABLE_PREFIX));
 	}
-	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_SERVER['PHP_SELF']);
