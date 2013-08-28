@@ -10,7 +10,9 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$ $
-
+echo "THIS FILE NO LONGRER IN USE";
+exit;
+/*
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -43,12 +45,17 @@ if (isset($_POST['submit'])) {
 	$side_menu = substr($side_menu, 0, -1);
 
 	if (!($_config_defaults['side_defaults'] == $side_menu) && (strlen($side_menu) < 256)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('side_defaults', '$side_menu')";
+		//$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('side_defaults', '$side_menu')";
+		$sql    = "REPLACE INTO %sconfig VALUES('side_defaults', '%s')";		
+		//$result = queryDB($sql, array(TABLE_PREFIX, $side_menu));
+		
 	} else if ($_config_defaults['side_defaults'] == $side_menu) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='side_defaults'";
+		//$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='side_defaults'";
+		$sql    = "DELETE FROM %sconfig WHERE name='side_defaults'";
+		$result = queryDB($sql, array(TABLE_PREFIX));
 	}
 
-	$result = mysql_query($sql, $db);
+	//$result = mysql_query($sql, $db);
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location:'. $_SERVER[PHP_SELF]);
 	exit;
@@ -96,4 +103,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </div>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); 
+*/
+?>

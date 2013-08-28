@@ -11,7 +11,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
-
+echo "THIS FILE IS NO LONGER IN USE";
+exit;
+/*
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_MODULES);
@@ -263,4 +265,5 @@ endforeach; ?>
 </table>
 </form>
 
-<?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require(AT_INCLUDE_PATH.'footer.inc.php'); */ 
+?>
