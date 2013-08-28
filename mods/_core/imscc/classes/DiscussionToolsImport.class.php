@@ -42,7 +42,6 @@ class DiscussionToolsImport {
 	 * @return	added forum's id
 	 */
 	function createForum($title, $text){
-		global $db;
 		//create POST array
 		$temp['title'] = $title;
 		$temp['body'] = $text;
@@ -50,10 +49,9 @@ class DiscussionToolsImport {
 
 		add_forum($temp);	//check forums.inc.php
 
-		$sql = 'SELECT MAX(forum_id) FROM '.TABLE_PREFIX.'forums';
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_row($result);
-		return $row[0];
+		$sql = 'SELECT MAX(forum_id) as m FROM '.TABLE_PREFIX.'forums';
+		$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
+		return $row['m'];
 	}	
 
 
@@ -62,10 +60,9 @@ class DiscussionToolsImport {
 	 * @param	int		content id
 	 * @return	
 	 */
-	function associateForum($cid, $fid){
-		global $db;
-		$sql = 'INSERT INTO '.TABLE_PREFIX."content_forums_assoc (content_id, forum_id) VALUES ($cid, $fid)";
-		mysql_query($sql, $db);
+	function associateForum($cid, $fid){;
+	    $sql = "INSERT INTO %scontent_forums_assoc (content_id, forum_id) VALUES (%d, %d)";
+		queryDB($sql, array(TABLE_PREFIX, $cid, $fid));
 	}
 
 	/**
