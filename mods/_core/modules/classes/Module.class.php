@@ -45,15 +45,14 @@ class ModuleFactory {
 	var $_modules = NULL; // array of module refs
 
 	function ModuleFactory($auto_load = FALSE) {
-		global $db;
-
 		$this->_modules = array();
 
 		if ($auto_load == TRUE) {
 			// initialise enabled modules
-			$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM ". TABLE_PREFIX . "modules WHERE status=".AT_MODULE_STATUS_ENABLED;
-			$result = mysql_query($sql, $db);
-			while($row = mysql_fetch_assoc($result)) {
+			$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM %smodules WHERE status=%d";
+			$rows_modules = queryDB($sql, array(TABLE_PREFIX, AT_MODULE_STATUS_ENABLED));	
+				
+			foreach($rows_modules as $row){	
 				$module = new Module($row);
 				$this->_modules[$row['dir_name']] = $module;
 				$module->load();
@@ -67,7 +66,6 @@ class ModuleFactory {
 	// sort  := true | false (by name only)
 	// the results of this method are not cached. call sparingly.
 	function getModules($status, $type = 0, $sort = FALSE) {
-		global $db;
 
 		$modules     = array();
 		$all_modules = array();
@@ -76,10 +74,10 @@ class ModuleFactory {
 			$type = AT_MODULE_TYPE_CORE | AT_MODULE_TYPE_STANDARD | AT_MODULE_TYPE_EXTRA;
 		}
 
-		$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM ". TABLE_PREFIX . "modules";
-		$result = mysql_query($sql, $db);
+		$sql	= "SELECT dir_name, privilege, admin_privilege, status, cron_interval, cron_last_run FROM %smodules";
+		$rows_modules = queryDB($sql, array(TABLE_PREFIX));		
 		
-		while($row = mysql_fetch_assoc($result)) {
+		foreach($rows_modules as $row){
 			if (!isset($this->_modules[$row['dir_name']])) {
 				$module = new Module($row);
 			} else {
@@ -126,10 +124,10 @@ class ModuleFactory {
 	// public.
 	function & getModule($module_dir) {
 		if (!isset($this->_modules[$module_dir])) {
-			global $db;
-			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM ". TABLE_PREFIX . "modules WHERE dir_name='$module_dir'";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
+			$sql	= "SELECT dir_name, privilege, admin_privilege, status FROM %smodules WHERE dir_name='%s'";
+			$row = queryDB($sql, array(TABLE_PREFIX, $module_dir), TRUE);
+			
+			if(count($row) != 0){	
 				$module = new Module($row);
 			} else {
 				$module = new Module($module_dir);
@@ -534,10 +532,9 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function enable() {
-		global $db;
-
-		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_ENABLED.' WHERE dir_name="'.$this->_directoryName.'"';
-		$result = mysql_query($sql, $db);
+		
+		$sql = "UPDATE %smodules SET status=%d WHERE dir_name='%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, AT_MODULE_STATUS_ENABLED, $this->_directoryName));
 	}
 
 	/**
@@ -547,11 +544,10 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function setIsMissing($force = false) {
-		global $db;
 		// if the directory doesn't exist then set the status to MISSING
 		if ($force || !is_dir($this->_module_path . $this->_directoryName)) {
-			$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_MISSING.' WHERE dir_name="'.$this->_directoryName.'"';
-			$result = mysql_query($sql, $db);
+			$sql = 'UPDATE %smodules SET status=%d WHERE dir_name="%s"';
+			$result = queryDB($sql, array(TABLE_PREFIX, AT_MODULE_STATUS_MISSING, $this->_directoryName));
 		}
 	}
 
@@ -561,22 +557,21 @@ class Module {
 	* @author  Joel Kronenberg
 	*/
 	function disable() {
-		global $db;
 
 		// remove any privileges admins, students
 		if ($this->_privilege > 1) {
-			$sql = 'UPDATE '. TABLE_PREFIX . 'course_enrollment SET `privileges`=`privileges`-'.$this->_privilege.' WHERE `privileges` > 1 AND (`privileges` & '.$this->_privilege.')<>0';
-			$result = mysql_query($sql, $db);
+			$sql = 'UPDATE %scourse_enrollment SET `privileges`=`privileges`-%d WHERE `privileges` > 1 AND (`privileges` & %d)<>0';
+			$result = queryDB($sql, array(TABLE_PREFIX, $this->_privilege, $this->_privilege));			
 		}
 
 		if ($this->_admin_privilege > 1) {
-			$sql = 'UPDATE '. TABLE_PREFIX . 'admins SET `privileges`=`privileges`-'.$this->_admin_privilege.' WHERE `privileges` > 1 AND (`privileges` & '.$this->_admin_privilege.')<>0';
-			$result = mysql_query($sql, $db);
+			$sql = 'UPDATE %sadmins SET `privileges`=`privileges`-%d WHERE `privileges` > 1 AND (`privileges` & %d)<>0';
+			$result = queryDB($sql, array(TABLE_PREFIX, $this->_admin_privilege, $this->_admin_privilege));			
 		}
 
-		$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
-		$result = mysql_query($sql, $db);
-
+		$sql = 'UPDATE %smodules SET status=%d WHERE dir_name="%s"';
+		$result = queryDB($sql, array(TABLE_PREFIX, AT_MODULE_STATUS_DISABLED, $this->_directoryName));
+		
 		if (function_exists(basename($this->_directoryName).'_disable')) {
 			$fn_name = basename($this->_directoryName).'_disable';
 			$fn_name();
@@ -597,11 +592,8 @@ class Module {
 		}
 
 		if (!$msg->containsErrors()) {
-			global $db;
-
-			$sql = "SELECT MAX(`privilege`) AS `privilege`, MAX(admin_privilege) AS admin_privilege FROM ".TABLE_PREFIX."modules";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+			$sql = "SELECT MAX(`privilege`) AS `privilege`, MAX(admin_privilege) AS admin_privilege FROM %smodules";
+			$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 
 			if (($_course_privilege === TRUE) || ((string) $_course_privilege == 'new')) {
 				$priv = $row['privilege'] * 2;
@@ -623,12 +615,13 @@ class Module {
 				$_cron_interval = 0;
 			}
 
-			$sql = 'INSERT INTO '. TABLE_PREFIX . 'modules VALUES ("'.$this->_directoryName.'", '.AT_MODULE_STATUS_DISABLED.', '.$priv.', '.$admin_priv.', '.$_cron_interval.', 0)';
-			mysql_query($sql, $db);
-			if (mysql_affected_rows($db) != 1) {
+			$sql = 'INSERT INTO %smodules VALUES ("%s", %d, %d, %d, %d, 0)';
+			$result = queryDB($sql, array(TABLE_PREFIX, $this->_directoryName, AT_MODULE_STATUS_DISABLED, $priv, $admin_priv, $_cron_interval));			
+		
+		    if($result != 1){
 				// in case this module has to be re-installed (because it was Missing)
-				$sql = 'UPDATE '. TABLE_PREFIX . 'modules SET status='.AT_MODULE_STATUS_DISABLED.' WHERE dir_name="'.$this->_directoryName.'"';
-				mysql_query($sql, $db);
+				$sql = 'UPDATE %smodules SET status=%d WHERE dir_name="%s"';
+				queryDB($sql, array(TABLE_PREFIX, AT_MODULE_STATUS_DISABLED, $this->_directoryName));				
 			}
 		}
 	}
@@ -656,18 +649,14 @@ class Module {
 		
 		if (!$msg->containsErrors()) 
 		{
-			global $db;
-
-			$sql = "DELETE FROM ". TABLE_PREFIX . "modules WHERE dir_name = '".$this->_directoryName."'";
-			mysql_query($sql, $db);
+			$sql = "DELETE FROM %smodules WHERE dir_name = '%s'";
+			queryDB($sql, array(TABLE_PREFIX, $this->_directoryName));
 		}
 
 		if ($msg->containsErrors()) 
 		{
-			global $db;
-
-			$sql = "UPDATE ". TABLE_PREFIX . "modules SET status=".AT_MODULE_STATUS_PARTIALLY_UNINSTALLED." WHERE dir_name='".$this->_directoryName."'";
-			mysql_query($sql, $db);
+			$sql = "UPDATE %smodules SET status=%d WHERE dir_name='%s'";
+			queryDB($sql, array(TABLE_PREFIX, AT_MODULE_STATUS_PARTIALLY_UNINSTALLED, $this->_directoryName));			
 		}
 	}
 
@@ -695,11 +684,8 @@ class Module {
 
 	// i'm private! update the last time the cron was run
 	function updateCronLastRun() {
-		global $db;
-
-		$sql = "UPDATE ".TABLE_PREFIX."modules SET cron_last_run=".time()." WHERE dir_name='$this->_directoryName'";
-		mysql_query($sql, $db);
-
+		$sql = "UPDATE %smodules SET cron_last_run=".time()." WHERE dir_name='%s'";
+		queryDB($sql, array(TABLE_PREFIX, $this->_directoryName));
 	}
 
 	/**
@@ -709,13 +695,14 @@ class Module {
 	 * @date	Feb 25, 2010
 	 */
 	function getNews(){
-		global $msg, $enrolled_courses, $db;
+		global $msg, $enrolled_courses;
 
 		if (!isset($enrolled_courses)){
-			$sql = 'SELECT E.approved, E.last_cid, C.* FROM '.TABLE_PREFIX.'course_enrollment E, '.TABLE_PREFIX.'courses C WHERE E.member_id='.$_SESSION['member_id'].' AND E.course_id=C.course_id ORDER BY C.title';
-			$result = mysql_query($sql, $db);
-			if ($result) {
-				while($row = mysql_fetch_assoc($result)){
+			$sql = "SELECT E.approved, E.last_cid, C.* FROM %scourse_enrollment E, %scourses C WHERE E.member_id=%d AND E.course_id=C.course_id ORDER BY C.title";
+			$rows_enrolled = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id']));
+
+			if(count($rows_enrolled) != 0){
+			    foreach($rows_enrolled as $row){
 					$enrolled_courses = $enrolled_courses . $row['course_id'] . ', ';
 				}
 				$enrolled_courses = substr($enrolled_courses, 0, -2); 
@@ -736,7 +723,25 @@ class Module {
 			}
 		}
 	}
-	
+
+    /**
+     * Function which allows the dates to be accessed 
+     * @access public
+     * @author Anurup Raveendran
+     * @date Jul 8, 2011
+     */
+   function extend_date($member_id, $course_id){
+        if (file_exists(AT_SYSTEM_MODULE_PATH . $this->_directoryName . '/module_extend_date.php')) {
+            require_once(AT_SYSTEM_MODULE_PATH . $this->_directoryName . '/module_extend_date.php');
+
+            if (function_exists(basename($this->_directoryName).'_extend_date')) {
+                $fnctn = basename($this->_directoryName).'_extend_date';
+                return $fnctn($member_id, $course_id);
+            }        
+        }
+    }
+
+
 	/**
 	 * Get the output that this module wants to add onto content page. 
 	 * @access	public
@@ -757,16 +762,14 @@ class Module {
 	}
 	
 	private function convertContent164($course_id) {
-		global $db;
 		
 		/* convert all content nodes to the IMS standard. (adds null nodes for all top pages) */
 		/* 1. Convert db to a tree */
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'content where course_id='.$course_id;
+		$sql = 'SELECT * FROM %scontent where course_id=%d';
+		$rows_content = queryDB($sql, array(TABLE_PREFIX, $course_id));
 		
-		$result = mysql_query($sql, $db);
 		$content_array = array(); 
-
-		while ($row = mysql_fetch_assoc($result)){
+        foreach($rows_content as $row){
 			$content_array[$row['content_parent_id']][$row['ordering']] = $row['content_id'];
 		}
 		$tree = $this->buildTree($content_array[0], $content_array);
@@ -848,16 +851,13 @@ class Module {
 	 * @return	null (nothing to return, it updates the db only)
 	 */
 	private function reconstruct($tree, $order, $content_parent_id, $table_prefix){
-		global $db;
 	
 		//a content page.
 		if (!is_array($tree)){
-			$sql = 'UPDATE '.$table_prefix."content SET ordering=$order, content_parent_id=$content_parent_id WHERE content_id=$tree";
-			if (!mysql_query($sql, $db)){
-				//throw error
-				echo mysql_error();
-			}
-			return;
+			$sql = "UPDATE %scontent SET ordering=%d, content_parent_id=%d WHERE content_id=%d";
+			$result= queryDB($sql, array($table_prefix, $order, $content_parent_id, $tree));
+
+			return $result;
 		}
 		foreach ($tree as $k=>$v){
 	        if (preg_match('/order\_([\d]+)/', $k, $match)==1){
@@ -865,10 +865,10 @@ class Module {
 				$this->reconstruct($v, $match[1], $content_parent_id, $table_prefix);	//inherit the previous layer id
 			} else {
 				//content folder layer
-				$sql = 'SELECT * FROM '.$table_prefix."content WHERE content_id=$k";
-				$result = mysql_query($sql, $db);
-				$old_content_row = mysql_fetch_assoc($result);
-				$sql = 'INSERT INTO '.$table_prefix.'content (course_id, content_parent_id, ordering, last_modified, revision, formatting, release_date, keywords, content_path, title, use_customized_head, allow_test_export, content_type) VALUES ('
+				$sql = "SELECT * FROM %scontent WHERE content_id=%d";
+				$old_content_row = queryDB($sql, array($table_prefix, $k), TRUE);				
+				
+				$sql = 'INSERT INTO %scontent (course_id, content_parent_id, ordering, last_modified, revision, formatting, release_date, keywords, content_path, title, use_customized_head, allow_test_export, content_type) VALUES ('
 					.$old_content_row['course_id'] . ', '
 					.$content_parent_id . ', '
 					.$order . ', '
@@ -882,13 +882,13 @@ class Module {
 					.$old_content_row['use_customized_head'] . ', '
 					.$old_content_row['allow_test_export'] . ', '
 					. '1)';
-				
-				if (mysql_query($sql, $db)){
-					$folder_id = mysql_insert_id();
+				$result = queryDB($sql, array($table_prefix));
+				if($result > 0){
+					$folder_id = at_insert_id();					
 					$this->reconstruct($v, '', $folder_id, $table_prefix);
 				} else {
 					//throw error
-					echo mysql_error();
+					echo at_db_error();
 				}
 			}
 		}
