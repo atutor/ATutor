@@ -129,16 +129,16 @@ function print_organizations($parent_id,
 
                     /* TODO *************BOLOGNA*************REMOVE ME*********/
                     //recupero i forum associati al contenuto corrente
-                    $sql = "SELECT cf.forum_id, f.title, f.description FROM (SELECT * FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id=$content[content_id]) AS cf LEFT JOIN ".TABLE_PREFIX."forums f ON cf.forum_id=f.forum_id";
-                    $result_cf = mysql_query($sql,$db);
-                    $cf_count = mysql_num_rows($result_cf);
-   
+                    $sql = "SELECT cf.forum_id, f.title, f.description FROM (SELECT * FROM %scontent_forums_assoc WHERE content_id=%d) AS cf LEFT JOIN %sforums f ON cf.forum_id=f.forum_id";
+                    $rows_cf = queryDB($sql, array(TABLE_PREFIX, $content['content_id'], TABLE_PREFIX));
+                    $cf_count = count($rows_cf);
+                    
                     //per ogni forum ottenuto controllo se è già stato caricato nell'array
                     //necessario mantenerlo distinto poichè NON si prevedono funzioni sul
                     //controllo dei nomi nell'inserimento di file nell'archivio.
                     $find=false;
                     $forums_dependency='';  //template for associate Discussion Topic to the current content into the manifest
-                    while($current_forum = mysql_fetch_assoc($result_cf)) {
+                    foreach($rows_cf as $current_forum){
                         for($j=0;$j<$f_count;$j++) {
                             if($forum_list[$j]['id'] == $current_forum['forum_id'])
                                 $find= true;
@@ -151,15 +151,18 @@ function print_organizations($parent_id,
                             $find=false;
                             $f_count++;
                         }
-			$forums_dependency .= $prefix.$space.'<dependency identifierref="Forum'.$current_forum['forum_id'].'_R" />';
+			$forums_dependency .= $prefix.$space.'
+			            <dependency identifierref="Forum'.$current_forum['forum_id'].'_R" />'."\n";
                     }
 
 			 /** Test dependency **/
-			 $sql = 'SELECT * FROM '.TABLE_PREFIX.'content_tests_assoc WHERE content_id='.$content['content_id'];
-			 $result = mysql_query($sql, $db);
-			 while ($row = mysql_fetch_assoc($result)){
+			 $sql = "SELECT * FROM %scontent_tests_assoc WHERE content_id=%d";
+			 $rows_test_assocs = queryDB($sql, array(TABLE_PREFIX, $content['content_id']));			 
+
+			 foreach($rows_test_assocs as $row){
 				//add test dependency on top of forum dependency
-				$forums_dependency .= $prefix.$space.'<dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />';
+				$forums_dependency .= $prefix.$space.'
+                        <dependency identifierref="MANIFEST01_RESOURCE_QTI'.$row['test_id'].'" />'."\n";
 			 }
 
 
@@ -220,7 +223,7 @@ function print_organizations($parent_id,
 				$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
 				$test_ids = array();		//reset test ids
 				//$my_files = array();		//reset myfiles.
-				while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
+				foreach($content_test_rs as $content_test_row){
 					//export
 					$test_ids[] = $content_test_row['test_id'];
 					//the 'added_files' is for adding into the manifest file in this zip
@@ -234,11 +237,6 @@ function print_organizations($parent_id,
 					$resources .= str_replace(	array('{TEST_ID}', '{PATH}', '{FILES}'),
 												array($content_test_row['test_id'], 'tests_'.$content_test_row['test_id'].'.xml', $added_files_xml),
 												$ims_template_xml['resource_test']); 
-/*	Taken out since we are gonna use dependency instead
-					$test_xml_items .= str_replace(	array('{TEST_ID}'),
-												array($content_test_row['test_id']),
-												$ims_template_xml['test']); 
-*/
 					foreach($test_files as $filename=>$realfilepath){
 						$zipfile->add_file(@file_get_contents($realfilepath), 'resources/'.$filename, filemtime($realfilepath));
 					}
@@ -254,7 +252,6 @@ function print_organizations($parent_id,
             }
 			if ($use_a4a == true){
 				$a4aExport = new A4aExport($content['content_id']);
-//				$a4aExport->setRelativePath('resources/'.$content['content_path']);
 				$secondary_files = $a4aExport->getAllSecondaryFiles();
 				$a4a_xml_array = $a4aExport->exportA4a();
 				$my_files = array_merge($my_files, $a4aExport->getAllSecondaryFiles());
@@ -267,9 +264,6 @@ function print_organizations($parent_id,
 			foreach ($my_files as $file) {
 				/* filter out full urls */
 				$url_parts = @parse_url($file);				
-//				if (isset($url_parts['scheme'])) {
-//					continue;
-//				}
 
 				/* file should be relative to content. let's double check */
 				if ((substr($file, 0, 1) == '/')) {
@@ -278,8 +272,8 @@ function print_organizations($parent_id,
 
 				if (substr($file, 0, 7) != 'http://' && substr($file, 0, 8) != 'https://') {
 					$file_path = realpath(AT_CONTENT_DIR . $course_id . '/' . $content['content_path'] . $file);
-					/* check if the path contains AT_CONTENT_DIR in it, if not, skip it, it's trying to scan through 
-					 * the file system */
+					// check if the path contains AT_CONTENT_DIR in it, if not, skip it, it's trying to scan through 
+					// the file system 
 					if (strpos($file_path, AT_CONTENT_DIR)!==0){
 						continue; //skip
 					}
@@ -458,7 +452,6 @@ function print_organizations($parent_id,
 			}
 
 			echo $prefix.$link;
-//			echo $title;
 			echo "\n";
 
 			$string .= $html_link."\n";
