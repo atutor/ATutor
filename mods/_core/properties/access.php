@@ -17,19 +17,23 @@ authenticate(AT_PRIV_ADMIN);
 
 if (isset($_POST['regenerate'])) {
 	$password = strtoupper(substr(md5(rand()), 3, 8));
-
-	$sql = "UPDATE ".TABLE_PREFIX."course_access SET `password`='$password' WHERE course_id=".$_SESSION['course_id'];
-	$result = mysql_query($sql, $db);
-	if (!mysql_affected_rows($db)) {
+	$sql = "UPDATE %scourse_access SET `password`='%s' WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $password, $_SESSION['course_id']));
+	if($result == 0){
 		// conflict. try again
 		$password = strtoupper(substr(md5(rand()), 2, 7));
-		$sql = "UPDATE ".TABLE_PREFIX."course_access SET `password`='$password' WHERE course_id=".$_SESSION['course_id'];
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %scourse_access SET `password`='%s' WHERE course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $password, $_SESSION['course_id']));
 	}
-
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: '.$_SERVER['PHP_SELF']);
-	exit;
+    if($result > 0){
+        $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+        header('Location: '.$_SERVER['PHP_SELF']);
+        exit;
+	} else {
+		$msg->addError('DB_NOT_UPDATED');
+	    header('Location: '.$_SERVER['PHP_SELF']);
+	    exit;
+	}
 } else if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.$_SERVER['PHP_SELF']);
@@ -62,10 +66,14 @@ if (isset($_POST['regenerate'])) {
 		$expiry_date = 0;
 	}
 
-	$sql = "UPDATE ".TABLE_PREFIX."course_access SET `expiry_date`='$expiry_date', enabled=$auth WHERE course_id=".$_SESSION['course_id'];
-	$result = mysql_query($sql, $db);
+	$sql = "UPDATE %scourse_access SET `expiry_date`='%s', enabled=%d WHERE course_id=%d";
+	$result = queryDB($sql,  array(TABLE_PREFIX, $expiry_date, $auth, $_SESSION['course_id']));
 	
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	if($result > 0){	
+	    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	} else {
+	    $msg->addError('DB_NOT_UPDATED');
+	}
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 }
@@ -81,10 +89,10 @@ if ($system_courses[$_SESSION['course_id']]['access'] == 'public') {
 	exit;
 }
 
-$sql = "SELECT password, expiry_date+0 AS expiry_date, enabled FROM ".TABLE_PREFIX."course_access WHERE course_id=".$_SESSION['course_id'];
-$result = mysql_query($sql, $db);
+$sql = "SELECT password, expiry_date+0 AS expiry_date, enabled FROM %scourse_access WHERE course_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
 
-if ($row = mysql_fetch_assoc($result)) {		
+if(count($row) > 0){		
 	$enabled = $row['enabled'];
 	$password = $row['password'];
 	$expiry = $row['expiry_date'];
@@ -92,8 +100,8 @@ if ($row = mysql_fetch_assoc($result)) {
 	$enabled = 0;
 	$password = strtoupper(substr(md5(rand()), 3, 8));
 	$expiry = 0;
-	$sql = "INSERT INTO ".TABLE_PREFIX."course_access VALUES ('$password', {$_SESSION['course_id']},'0000-00-00 00:00:00', 0)";
-	$result = mysql_query($sql, $db);
+	$sql = "INSERT INTO %scourse_access VALUES ('%s', %d,'0000-00-00 00:00:00', 0)";
+	$result = queryDB($sql, array(TABLE_PREFIX, $password, $_SESSION['course_id']));
 }
 $url = AT_BASE_HREF.'acl.php?'.$password;
 
