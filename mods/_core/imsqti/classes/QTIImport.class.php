@@ -339,9 +339,8 @@ class QTIImport {
 									$test_obj['display']);
 
 			$sql = vsprintf(AT_SQL_TEST, $sql_params);
-			$result = mysql_query($sql, $db);
-			$tid = mysql_insert_id($db);
-		//debug($qti_import->weights, 'weights');			
+			$result = queryDB($sql, array());
+			$tid = at_insert_id();			
 		}
 		return $tid;
 	}
