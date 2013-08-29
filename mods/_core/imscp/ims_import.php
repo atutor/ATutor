@@ -173,7 +173,6 @@ function rscandir($base='', &$data=array()) {
  
     if (is_dir($base.$value)) : /* if this is a directory */
 //	  don't save the directory name
-//	  $data[] = $base.$value.'/'; /* add it to the $data array */
       $data = rscandir($base.$value.'/', $data); /* then make a recursive call with the
       current $value as the $base supplying the $data array to carry into the recursion */
      
@@ -336,7 +335,7 @@ function removeCommonPath($items){
 	//TODO: See question_import.php 287-289.
 	$qids = $qti_import->importQuestions($test_attributes);
 	$test_title = $qti_import->title;
-error_log("$qids =".$qids);
+
 	return $qids;
  }
 
@@ -348,23 +347,6 @@ error_log("$qids =".$qids);
 		global $element_path, $import_path, $skip_ims_validation;
 		global $xml_base_path, $test_message, $content_type;
 		global $current_identifier, $msg, $ns, $ns_cp;
-
-		//check if the xml is valid
-/*
-		if(isset($attrs['xsi:schemaLocation']) && $name == 'manifest'){
-			//run the loop and check it thru the ns.inc.php
-		} elseif ($name == 'manifest' && !isset($attrs['xsi:schemaLocation'])) {
-			//$msg->addError('MANIFEST_NOT_WELLFORM: NO NAMESPACE');
-			$msg->addError('IMPORT_CARTRIDGE_FAILED');
-		} else {
-			//error
-		}
-		//error if the tag names are wrong
-		if (preg_match('/^xsi\:/', $name) >= 1){
-			//$msg->addError('MANIFEST_NOT_WELLFORM');
-			$msg->addError('IMPORT_CARTRIDGE_FAILED');
-		}
-*/
 
 		//validate namespaces
 		if(!$skip_ims_validation && isset($attrs['xsi:schemaLocation']) && $name=='manifest'){
@@ -477,7 +459,6 @@ error_log("$qids =".$qids);
 			$path[] = $attrs['identifierref'];
 		} else if (($name == 'item') && ($attrs['identifier'])) {
 			$path[] = $attrs['identifier'];
-//		} else if (($name == 'resource') && is_array($items[$attrs['identifier']]))  {
 		} else if (($name == 'resource')) {
 			$current_identifier = $attrs['identifier'];
 			$items[$current_identifier]['type'] = $attrs['type'];
@@ -493,20 +474,12 @@ error_log("$qids =".$qids);
 				{
 					$temp_path = pathinfo($attrs['href']);
 					$temp_path = explode('/', $temp_path['dirname']);
-//					if (empty($package_base_path)) {
-						$package_base_path = $temp_path;
-//					} 
-//					else {
-//						$package_base_path = array_intersect($package_base_path, $temp_path);
-//					}
+					$package_base_path = $temp_path;
 					$items[$attrs['identifier']]['new_path'] = implode('/', $temp_path);
 				}
 			}
 
-			//if test custom message has not been saved
-//			if (!isset($items[$current_identifier]['test_message'])){
-//				$items[$current_identifier]['test_message'] = $test_message;
-//			}
+
 		} else if ($name=='dependency' && $attrs['identifierref']!='') {
 			//if there is a dependency, attach it to the item array['file']
 			$items[$current_identifier]['dependency'][] = $attrs['identifierref'];
@@ -819,16 +792,8 @@ $order = array(); /* keeps track of the ordering for each content page */
 $path  = array();  /* the hierarchy path taken in the menu to get to the current item in the manifest */
 $dependency_files = array(); /* the file path for the dependency files */
 
-/*
-$items[content_id/resource_id] = array(
-									'title'
-									'real_content_id' // calculated after being inserted
-									'parent_content_id'
-									'href'
-									'ordering'
-									);
-*/
 $ims_manifest_xml = @file_get_contents($import_path.'imsmanifest.xml');
+
 //scan for manifest xml if it's not on the top level.
 if ($ims_manifest_xml === false){
 	$data = rscandir($import_path);
@@ -1004,14 +969,6 @@ foreach ($items as $item_id => $content_info)
 	$head = '';
 	if (is_array($content_info['dependency']) && !empty($content_info['dependency'])){
 		foreach($content_info['dependency'] as $dependency_ref){
-			//handle styles	
-			/** handled by get_html_head in vitals.inc.php
-			if (preg_match('/(.*)\.css$/', $items[$dependency_ref]['href'])){
-				//calculate where this is based on our current base_href. 
-				//assuming the dependency folders are siblings of the item
-				$head = '<link rel="stylesheet" type="text/css" href="../'.$items[$dependency_ref]['href'].'" />';
-			}
-			*/
 			//check if this is a discussion tool dependency
 			if ($items[$dependency_ref]['type']=='imsdt_xmlv1p0'){
 				$items[$item_id]['forum'][$dependency_ref] = $items[$dependency_ref]['href'];
@@ -1022,22 +979,6 @@ foreach ($items as $item_id => $content_info)
 			}
 		}
 	}
-
-	//check file array, see if there are css. 
-	//edited nov 26, harris
-	//removed cuz i added link to the html_tags
-	/*
-	if (is_array($content_info['file']) && !empty($content_info['file'])){
-		foreach($content_info['file'] as $dependency_ref){
-			//handle styles	
-			if (preg_match('/(.*)\.css$/', $dependency_ref)){
-				//calculate where this is based on our current base_href. 
-				//assuming the dependency folders are siblings of the item
-				$head = '<link rel="stylesheet" type="text/css" href="'.$dependency_ref.'" />';
-			}
-		}
-	}
-	*/
 
 	// remote href
 	if (preg_match('/^http.*:\/\//', trim($content_info['href'])) )
@@ -1063,13 +1004,12 @@ foreach ($items as $item_id => $content_info)
 			$ext = '';
 			$last_modified = date('Y-m-d H:i:s');
 		} else {
-			//$file_info = @stat(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+
 			$file_info = @stat($import_path.$content_info['href']);
 			if ($file_info === false) {
 				continue;
 			}
-		
-			//$path_parts = pathinfo(AT_CONTENT_DIR . 'import/'.$_SESSION['course_id'].'/'.$content_info['href']);
+
 			$path_parts = pathinfo($import_path.$content_info['href']);
 			$ext = strtolower($path_parts['extension']);
 
@@ -1089,23 +1029,7 @@ foreach ($items as $item_id => $content_info)
             /* Using default size of 550 x 400 */
 
 			$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="550" height="400" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="'. $content_info['href'] . '" /><param name="autoplay" value="true" /><param name="controller" value="true" /><embed src="' . $content_info['href'] .'" width="550" height="400" controller="true" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>';
-
-		/* Oct 19, 2009
-		 * commenting this whole chunk out.  It's part of my test import codes, not sure why it's here, 
-		 * and I don't think it should be here.  Remove this whole comment after further testing and confirmation.
-		 * @harris
-		 *
-			//Mimic the array for now.
-			$test_attributes['resource']['href'] = $test_xml_file;
-			$test_attributes['resource']['type'] = isset($items[$item_id]['type'])?'imsqti_xmlv1p2':'imsqti_xmlv1p1';
-			$test_attributes['resource']['file'] = $items[$item_id]['file'];
-//			$test_attributes['resource']['file'] = array($test_xml_file);
-
-			//Get the XML file out and start importing them into our database.
-			//TODO: See question_import.php 287-289.
-			$qids = $qti_import->importQuestions($test_attributes);
-		
-		 */
+			
 		} else if ($ext == 'mp3') {
 			$content = '<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="200" height="15" codebase="http://www.apple.com/qtactivex/qtplugin.cab"><param name="src" value="'. $content_info['href'] . '" /><param name="autoplay" value="false" /><embed src="' . $content_info['href'] .'" width="200" height="15" autoplay="false" pluginspage="http://www.apple.com/quicktime/download/"></embed></object>';
 		} else if (in_array($ext, array('wav', 'au'))) {
@@ -1324,7 +1248,9 @@ foreach ($items as $item_id => $content_info)
 	}
 
 	/* get the a4a related xml */
+
 	if (isset($items[$item_id]['a4a_import_enabled']) && isset($items[$item_id]['a4a']) && !empty($items[$item_id]['a4a'])) {
+
 		$a4a_import = new A4aImport($items[$item_id]['real_content_id']);
 		$a4a_import->setRelativePath($items[$item_id]['new_path']);
 		$a4a_import->importA4a($items[$item_id]['a4a']);
