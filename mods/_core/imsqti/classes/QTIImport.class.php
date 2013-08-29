@@ -99,9 +99,6 @@ class QTIImport {
 				//set test title
 				$this->title = $xml->title;
 
-//if ($attrs[href] =='56B1BEDC-A820-7AA8-A21D-F32017189445/56B1BEDC-A820-7AA8-A21D-F32017189445.xml'){
-//	debug($xml, 'attributes');
-//}
 				//import file, should we use file href? or jsut this href?
 				//Aug 25, use both, so then it can check for respondus media as well.
 				foreach($attrs['file'] as $file_id => $file_name){
@@ -160,9 +157,8 @@ class QTIImport {
 						}
 					}
 
-		//			unset($qti_import);
 					$this->constructParams($test_obj);
-//debug($xml->getQuestionType($loopcounter), 'lp_'.$loopcounter);
+
 					//Create questions
 					$this->getQuestionType($xml->getQuestionType($loopcounter));
 
@@ -189,7 +185,7 @@ class QTIImport {
 				$this->copyMedia($attrs['file'], $xml_items);
 			}
 		}
-//debug($qids, 'qids');
+
 		return $qids;
 	}
 
@@ -231,31 +227,11 @@ class QTIImport {
 			if ($this->title != '') {
 				$test_obj['title'] = $this->title;
 			} else {
-//				$test_obj['title'] = 'random title';
-				
 				//set marks to 0 if no title? 
 				$this->weights = array();
 			}
 		}
 
-		/*
-		if ($test_obj['random'] && !$test_obj['num_questions']) {
-			$missing_fields[] = _AT('num_questions_per_test');
-		}
-
-		if ($test_obj['pass_score']==1 && !$test_obj['passpercent']) {
-			$missing_fields[] = _AT('percentage_score');
-		}
-
-		if ($test_obj['pass_score']==2 && !$test_obj['passscore']) {
-			$missing_fields[] = _AT('points_score');
-		}
-
-		if ($missing_fields) {
-			$missing_fields = implode(', ', $missing_fields);
-			$msg->addError(array('EMPTY_FIELDS', $missing_fields));
-		}
-		*/
 
 		$day_start	= intval(date('j'));
 		$month_start= intval(date('n'));
