@@ -1,11 +1,9 @@
 <?php
 
 function properties_delete($course) {
-	global $db;
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."course_access WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-
+	$sql	= "DELETE FROM %scourse_access WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $course));
 }
 
 ?>
