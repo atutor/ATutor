@@ -66,9 +66,9 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 		}
 
 		//check if the course_dir_name is already being used
-		$sql = 'SELECT COUNT(course_id) as cnt FROM '.TABLE_PREFIX."courses WHERE course_id!=$course_prop[course] AND course_dir_name='$course_prop[course_dir_name]'";
-		$result = mysql_query($sql);
-		$num_of_dir = mysql_fetch_assoc($result);
+		$sql = "SELECT COUNT(course_id) as cnt FROM %scourses WHERE course_id!=%d AND course_dir_name='%s'";
+		$num_of_dir = queryDB($sql, array(TABLE_PREFIX, $course_prop['course'], $course_prop['course_dir_name']), TRUE);
+		
 		if (intval($num_of_dir['cnt']) > 0){
 			$msg->addError('COURSE_DIR_NAME_IN_USE');
 		}		
@@ -205,18 +205,39 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 		$menu_defaults = ',home_links=\''.$system_courses[$course_prop['course']]['home_links'].'\', main_links=\''.$system_courses[$course_prop['course']]['main_links'].'\', side_menu=\''.$system_courses[$course_prop['course']]['side_menu'].'\'';
 	}
 
-	$sql	= "REPLACE INTO ".TABLE_PREFIX."courses SET course_id=$course_prop[course], member_id='$course_prop[instructor]', access='$course_prop[access]', title='$course_prop[title]', description='$course_prop[description]', course_dir_name='$course_prop[course_dir_name]', cat_id='$course_prop[category_parent]', content_packaging='$course_prop[content_packaging]', notify=$course_prop[notify], hide=$course_prop[hide], $course_quotas primary_language='$course_prop[pri_lang]', created_date='$course_prop[created_date]', rss=$course_prop[rss], copyright='$course_prop[copyright]', icon='$course_prop[icon]', banner='$course_prop[banner]', release_date='$release_date', end_date='$end_date' $menu_defaults";
 
-	$result = mysql_query($sql, $db);
-	if (!$result) {
-		echo mysql_error($db);
-		echo 'DB Error';
-		exit;
-	}
+	$sql	= "REPLACE INTO %scourses 
+	            SET 
+	            course_id=$course_prop[course], 
+	            member_id='$course_prop[instructor]', 
+	            access='$course_prop[access]', 
+	            title='$course_prop[title]', 
+	            description='$course_prop[description]', 
+	            course_dir_name='$course_prop[course_dir_name]', 
+	            cat_id='$course_prop[category_parent]', 
+	            content_packaging='$course_prop[content_packaging]', 
+	            notify=$course_prop[notify], 
+	            hide=$course_prop[hide], 
+	            $course_quotas 
+	            primary_language='$course_prop[pri_lang]', 
+	            created_date='$course_prop[created_date]', 
+	            rss=$course_prop[rss], 
+	            copyright='$course_prop[copyright]', 
+	            icon='$course_prop[icon]', 
+	            banner='$course_prop[banner]', 
+	            release_date='$release_date', 
+	            end_date='$end_date' $menu_defaults";
+
+	$result = queryDB($sql, array(TABLE_PREFIX));
+	
 	$_SESSION['is_admin'] = true;
-	$new_course_id = $_SESSION['course_id'] = mysql_insert_id($db);
+	$new_course_id = $_SESSION['course_id'] = at_insert_id();
+	
 	if (isset($isadmin)) {
-		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', mysql_affected_rows($db), $sql);
+
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'courses', $result, $sqlout);
+
 	}
 
 	if (isset($isadmin)) {
@@ -225,17 +246,23 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 		
 		if ($old_instructor != $course_prop['instructor']) {
 			//remove old from course enrollment
-			$sql = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE course_id=".$course_prop['course']." AND member_id=".$old_instructor;
-			$result = mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
+
+			$sql = "DELETE FROM %scourse_enrollment WHERE course_id=%d AND member_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $course_prop['course'], $old_instructor));
+
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', $result, $sqlout);
 		} 
 	}
 
 	//enroll new instructor
-	$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($course_prop[instructor], $new_course_id, 'y', 0, '"._AT('instructor')."', 0)";
-	$result = mysql_query($sql, $db);
 	if ($isadmin) {
-		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', mysql_affected_rows($db), $sql);
+	    $sql = "REPLACE INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '"._AT('instructor')."', 0)";
+	    $result = queryDB($sql, array(TABLE_PREFIX, $course_prop[instructor], $new_course_id));
+	}
+	if ($isadmin) {
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_REPLACE, 'course_enrollment', $result, $sqlout);
 	}
 
 	// create the course content directory
@@ -259,31 +286,14 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 											'', '', 1, date('Y-m-d H:00:00'));
 
 		$announcement = _AT('default_announcement');
+
+		$sql	= "INSERT INTO %snews VALUES (NULL, %d, %d, NOW(), 1, '"._AT('welcome_to_atutor')."', '%s')";
+		$result = queryDB($sql,array(TABLE_PREFIX, $new_course_id, $instructor, $announcement));
 		
-		$sql	= "INSERT INTO ".TABLE_PREFIX."news VALUES (NULL, $new_course_id, $instructor, NOW(), 1, '"._AT('welcome_to_atutor')."', '$announcement')";
-		$result = mysql_query($sql,$db);
-		
 		if ($isadmin) {
-			write_to_log(AT_ADMIN_LOG_INSERT, 'news', mysql_affected_rows($db), $sql);
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_INSERT, 'news', $result, $sqlout);
 		}
-
-		/**
-		 * removed - #3098
-		// create forum for Welcome Course
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL, '"._AT('forum_general_discussion')."', '', 0, 0, NOW())";
-		$result = mysql_query($sql,$db);
-
-		if ($isadmin) {
-			write_to_log(AT_ADMIN_LOG_INSERT, 'forums', mysql_affected_rows($db), $sql);
-		}
-
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(), $new_course_id)";
-		$result = mysql_query($sql,$db);
-
-		if ($isadmin) {
-			write_to_log(AT_ADMIN_LOG_INSERT, 'forums_courses', mysql_affected_rows($db), $sql);
-		}
-		***/
 
 	} else if (!$course_prop['course'] && (count($initial_content_info) == 2)){
 
@@ -292,7 +302,6 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 	}
  
  	// custom icon, have to be after directory is created
-//	$_FILES['customicon'] = $course_prop['customicon'];	//copy to $_FILES.
 	if($_FILES['customicon']['tmp_name'] != ''){
         $course_prop['comments'] = trim($course_prop['comments']);
 
