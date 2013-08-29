@@ -38,9 +38,6 @@ if (isset($_GET['export'], $_GET['theme_dir'])) {
 	}
 	$_config['pref_defaults'] = serialize($_config['pref_defaults']);
 
-	//$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_defaults','{$_config['pref_defaults']}')";
-	//$result = mysql_query($sql, $db);
-	
 	$sql    = "REPLACE INTO %sconfig VALUES ('pref_defaults','%s')";
 	$result = queryDB($sql, array(TABLE_PREFIX, $_config['pref_defaults']));
 	
@@ -104,16 +101,12 @@ if (!is_writeable(AT_SUBSITE_THEME_DIR)): ?>
 	<br />
 <?php endif; 
 
-//$sql    = "SELECT * FROM " . TABLE_PREFIX . "themes WHERE type='".DESKTOP_DEVICE."' ORDER BY title ASC";
-//$result = mysql_query($sql, $db);
 $sql    = "SELECT * FROM %sthemes WHERE type='%s' ORDER BY title ASC";
 $rows_desktop = queryDB($sql, array(TABLE_PREFIX, DESKTOP_DEVICE));
-//debug($rows_desktop);
+
 print_data_table($rows_desktop , DESKTOP_DEVICE);
 
 echo '<br /><br />';
-//$sql    = "SELECT * FROM " . TABLE_PREFIX . "themes WHERE type='".MOBILE_DEVICE."' ORDER BY title ASC";
-//$result = mysql_query($sql, $db);
 $sql    = "SELECT * FROM %sthemes WHERE type='%s' ORDER BY title ASC";
 $rows_mobile = queryDB($sql, array(TABLE_PREFIX, MOBILE_DEVICE));
 
@@ -121,9 +114,7 @@ print_data_table($rows_mobile, MOBILE_DEVICE);
 ?>
 
 <?php function print_data_table($rows_themes, $type) {
-debug($rows_themes);
-if(count($rows_themes) > 0) return;
-	//if (@mysql_num_rows($result) == 0) return;
+    if(count($rows_themes) == 0) return;
 ?>
 <h3><?php if ($type == DESKTOP_DEVICE) echo _AT('themes_for_desktop'); else echo _AT('themes_for_mobile');?></h3><br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form_<?php echo $type; ?>">
@@ -158,7 +149,6 @@ if(count($rows_themes) > 0) return;
 // 1. find out where the theme folder is. It could be from the main site or a subsite configuration folder.
 // 2. Disallow the deletion of the system themes if the request is from a subsite. This is achieved by using css class "AT_disable_del"
 foreach($rows_themes as $row){
-//while($row = mysql_fetch_assoc($result)) {
 	$customized = intval($row["customized"]);
 
 	$main_theme_dir = get_main_theme_dir($customized);
