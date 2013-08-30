@@ -83,11 +83,12 @@ class A4aExport extends A4a {
 		global $db;
 		$secondary_files = array();
 
-		$sql = "SELECT DISTINCT secondary_resource FROM ".TABLE_PREFIX."primary_resources a LEFT JOIN ".TABLE_PREFIX."secondary_resources s
-				ON a.primary_resource_id = s.primary_resource_id WHERE content_id=".$this->cid;
-		$result = mysql_query ($sql);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		$sql = "SELECT DISTINCT secondary_resource FROM %sprimary_resources a LEFT JOIN %ssecondary_resources s
+				ON a.primary_resource_id = s.primary_resource_id WHERE content_id=%d";
+		$rows_secondary = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $this->cid));
+		
+		if (count($rows_secondary) > 0){
+		    foreach($rows_secondary as $row){
 				if (!empty($row['secondary_resource'])){
 					$secondary_files[] = $row['secondary_resource'];
 				}
