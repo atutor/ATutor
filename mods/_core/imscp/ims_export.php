@@ -210,11 +210,9 @@ $parser->set_element_handler('openHandler','closeHandler');
 /////////
 //WHATS THE PURPOSE OF THIS CONDITION? BOTH THE SAME
 if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
-	//$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM %scontent WHERE course_id=%d ORDER BY content_parent_id, ordering";
 
 } else {
-	//$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM ".TABLE_PREFIX."content WHERE course_id=$course_id ORDER BY content_parent_id, ordering";
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM %scontent WHERE course_id=%d ORDER BY content_parent_id, ordering";
 }
 
@@ -251,6 +249,8 @@ if ($cid) {
 $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'), 
 							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
 							  $ims_template_xml['header']);
+//debug($imsmanifest_xml);
+//exit;
 
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
