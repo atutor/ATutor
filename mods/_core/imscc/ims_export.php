@@ -42,9 +42,9 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	}
 	
 	$tile_import_url = AT_TILE_IMPORT_URL. '?oauth_token='.$access_token_key.'&url='.urlencode($export_url);
-	
+
 	$oauth_server_response = @file_get_contents($tile_import_url);
-	
+
 	// handle OAUTH import response
 	foreach (explode('&', $oauth_server_response) as $rtn)
 	{
@@ -152,7 +152,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
     $rows_content = queryDB($sql, array(TABLE_PREFIX, $course_id));
 } else {
 	$sql = "SELECT *, UNIX_TIMESTAMP(last_modified) AS u_ts FROM %scontent WHERE course_id=%d ORDER BY content_parent_id, ordering";
-    $rows_contentt = queryDB($sql,array(TABLE_PREFIX, $course_id));
+    $rows_content = queryDB($sql,array(TABLE_PREFIX, $course_id));
 }
 $cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
 
@@ -185,8 +185,6 @@ if ($cid) {
 $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'), 
 							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
 							  $ims_template_xml['header']);
-//debug($imsmanifest_xml);
-//exit;
 
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
