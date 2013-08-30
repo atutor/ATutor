@@ -156,6 +156,7 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 }
 $cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
 
+// THIS IS WHERE EXPORT TO ACONTENT FAILS 5136 
 foreach($rows_content as $row){
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
 		$content[$row['content_parent_id']][] = $row;
