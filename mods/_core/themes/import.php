@@ -154,15 +154,7 @@ function import_theme() {
 
 	//Check if XML file exists (if it doesnt send error and clear directory)
 	if ($theme_xml == false) {
-		/** Next version 1.4.4, require themes.xml
-		$msg->addError('MISSING_THEMEXML');
-		
-		// clean up
-		clr_dir($import_path);
-		
-		header('Location: index.php');
-		exit;
-		*/
+
 		$version = '1.4.x';
 		$extra_info = 'unspecified';
 	} else {
@@ -185,11 +177,11 @@ function import_theme() {
 	}
 
 	//save information in database
-	$sql = "INSERT INTO ".TABLE_PREFIX."themes (title, version, dir_name, type, last_updated, extra_info, status, customized) ".
-	       "VALUES ('$title', '$version', '$fldrname', '$type', '$last_updated', '$extra_info', '$status', 1)";
-	$result = mysql_query($sql, $db);	
-	
-	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);
+	$sql = "INSERT INTO %sthemes (title, version, dir_name, type, last_updated, extra_info, status, customized) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d, 1)";
+	       
+	$result = queryDB($sql, array(TABLE_PREFIX, $title, $version, $fldrname, $type, $last_updated, $extra_info, $status));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', $result, $sqlout);
 
 	if (!$result) {
 		$msg->addError('IMPORT_FAILED');
