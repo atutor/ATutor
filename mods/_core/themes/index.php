@@ -155,10 +155,9 @@ foreach($rows_themes as $row){
 	if($customized == '1'){
 	    global $theme_path;
 	}
-	
 ?>
 
-	<tr class="AT_theme_row <?php if (!$customized) echo 'AT_disable_del'; ?>">
+	<tr class="AT_theme_row <?php if (!$customized && defined('IS_SUBSITE') && IS_SUBSITE) echo 'AT_disable_del'; ?>">
 		<td valign="top">
 			<input type="radio" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
