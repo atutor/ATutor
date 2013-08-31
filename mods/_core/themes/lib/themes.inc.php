@@ -21,12 +21,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * @author  Shozub Qureshi
 */
 function get_folder ($theme_name) {
-	global $db;
 
-	$sql    = "SELECT dir_name FROM ".TABLE_PREFIX."themes WHERE title = '$theme_name'";
-	$result = mysql_query($sql, $db);
-	$row    = mysql_fetch_assoc($result);
-
+	$sql    = "SELECT dir_name FROM %sthemes WHERE title = '%s'";
+	$row = queryDB($sql,array(TABLE_PREFIX, $theme_name), TRUE);
 	return $row['dir_name'];
 }
 
@@ -38,12 +35,9 @@ function get_folder ($theme_name) {
 * @author  Shozub Qureshi
 */
 function get_themes_info($theme_dir) {
-	global $db;
-	//Go to db
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-	$result = mysql_query($sql, $db);
-	
-	$info = mysql_fetch_assoc($result);
+
+	$sql    = "SELECT * FROM %sthemes WHERE dir_name = '%s'";
+	$info = queryDB($sql, array(TABLE_PREFIX, $theme_dir), TRUE);
 
 	return $info;
 }
@@ -56,11 +50,9 @@ function get_themes_info($theme_dir) {
 * @author  heidi hazelton
 */
 function get_theme_name ($theme_dir) {
-	global $db;
 
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-	$result = mysql_query($sql, $db);
-	$row    = mysql_fetch_assoc($result);
+	$sql    = "SELECT title FROM %sthemes WHERE dir_name = '%s'";
+	$row = queryDB($sql,array(TABLE_PREFIX, $theme_dir), TRUE);
 
 	return $row['title'];
 }
@@ -71,20 +63,17 @@ function get_theme_name ($theme_dir) {
 * @return  array				the version of the theme
 * @author  Shozub Qureshi
 */
-function get_enabled_themes ($type = "all") {
-	global $db;
-	
+function get_enabled_themes ($type = "all") {	
 	if ($type == MOBILE_DEVICE) {
 		$where_clause = " AND type='".MOBILE_DEVICE."' ";
 	} else if ($type == DESKTOP_DEVICE) {
 		$where_clause = " AND type='".DESKTOP_DEVICE."' ";
 	}
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE (status = '1' OR status = '2' OR status = '3') ".$where_clause." ORDER BY title";
-	$result = mysql_query($sql, $db);
-	
+	$sql    = "SELECT title FROM %sthemes WHERE (status = '1' OR status = '2' OR status = '3') ".$where_clause." ORDER BY title";
+	$rows_themes = queryDB($sql, array(TABLE_PREFIX));
 	//Get all theme names into array
 	$i = 0;
-	while ($row = mysql_fetch_array($result)) {
+	foreach($rows_themes as $row){
 		$themes[$i] = $row['title'];
 		$i++;
 	}
@@ -99,12 +88,10 @@ function get_enabled_themes ($type = "all") {
 * @author  Shozub Qureshi
 */
 function num_enabled_themes () {
-	global $db;
 	//Go to db
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE status = '1' OR status = '2'";
-	$result = mysql_query($sql, $db);
-		
-	return mysql_num_rows($result);
+	$sql    = "SELECT title FROM %sthemes WHERE status = '1' OR status = '2'";
+	$result = queryDB($sql, array(TABLE_PREFIX));	
+	return count($result);
 }
 
 /**
@@ -114,14 +101,12 @@ function num_enabled_themes () {
 * @author  Shozub Qureshi
 */
 function get_disabled_themes () {
-	global $db;
 	//Go to db
-	$sql    = "SELECT title FROM ".TABLE_PREFIX."themes WHERE status = '0'";
-	$result = mysql_query($sql, $db);
-	
+	$sql    = "SELECT title FROM %sthemes WHERE status = '0'";
+	$rows_themes = queryDB($sql, array(TABLE_PREFIX));	
 	//Get all theme names into array
 	$i = 0;
-	while ($row = mysql_fetch_array($result)) {
+	foreach($rows_themes as $row){
 		$themes[$i] = $row['title'];
 		$i++;
 	}
@@ -136,24 +121,22 @@ function get_disabled_themes () {
 * @author  Shozub Qureshi
 */
 function get_all_themes () {
-	global $db;
 	
 	// The ordering is as follow. The default theme followed by ASC ordering of rest of themes
 	
 	// Assert, one of them must be a default
-	$result = mysql_query('SELECT title FROM ' . TABLE_PREFIX . 'themes WHERE status = 2', $db);
-	$row = mysql_fetch_assoc($result);
+	$row = queryDB('SELECT title FROM %sthemes WHERE status = 2', array(TABLE_PREFIX), TRUE);
+
 	$first_one = $row['title'];
 	
 	$themes[$i] = $first_one;
 	
 	// Go to db
-	$sql    = "SELECT title FROM " . TABLE_PREFIX . "themes WHERE title != '$first_one' ORDER BY title ASC";
-	$result = mysql_query($sql, $db);
-	
+	$sql    = "SELECT title FROM %sthemes WHERE title != '%s' ORDER BY title ASC";
+	$rows_titles = queryDB($sql, array(TABLE_PREFIX, $first_one));	
 	// Get all theme names into array
 	$i = 1;
-	while ($row = mysql_fetch_assoc($result)) {
+	foreach($rows_titles as $row){
 		$themes[$i] = $row['title'];
 		$i++;
 	}
@@ -162,22 +145,24 @@ function get_all_themes () {
 }
 
 function enable_theme ($theme_dir) {
-	global $msg, $db;
+	global $msg;
 
 	if ($_SESSION['prefs']['PREF_THEME'] != $theme_dir) {
-		$sql = "UPDATE ".TABLE_PREFIX."themes SET status = '1' WHERE dir_name = '$theme_dir'";
-		$result = mysql_query($sql, $db);
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
+		$sql = "UPDATE %sthemes SET status = '1' WHERE dir_name = '%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $theme_dir));
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', $result, $sqlout);
+
 	} 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 }
 
 function disable_theme ($theme_dir) {
-	global $msg, $db;
+	global $msg;
 
-	$sql    = "SELECT status FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-	$result = mysql_query ($sql, $db);
-	$row    = mysql_fetch_array($result);
+	$sql    = "SELECT status FROM %sthemes WHERE dir_name = '%s'";
+	$row    = queryDB($sql, array(TABLE_PREFIX, $theme_dir), TRUE);
+
 	$status = intval($row['status']);
 
 	//If default theme, then it cannot be disabled
@@ -185,18 +170,18 @@ function disable_theme ($theme_dir) {
 		$msg->addError('THEME_NOT_DISABLED');
 		return;
 	} else {
-		$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = '0' WHERE dir_name = '$theme_dir'";
-		$result = mysql_query($sql, $db);
-
+		$sql    = "UPDATE %sthemes SET status = '0' WHERE dir_name = '%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $theme_dir));
+		
 		$feedback = array('THEME_DISABLED', $theme_dir);
 		$msg->addFeedback($feedback);
-
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', $result, $sqlout);
 	}
 }
 
 function set_theme_as_default ($theme_dir, $type) {
-	global $msg, $db;
+	global $msg;
 	
 	//unset current default theme
 	if ($type == MOBILE_DEVICE) {
@@ -204,35 +189,36 @@ function set_theme_as_default ($theme_dir, $type) {
 	} else {
 		$default_status = 2;
 	}
-	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = 1 WHERE status = ".$default_status;
-	$result = mysql_query($sql, $db);
-	
-	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
+	$sql    = "UPDATE %sthemes SET status = 1 WHERE status = %d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $default_status));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', $result, $sqlout);
 
 	//set to default
-	$sql    = "UPDATE ".TABLE_PREFIX."themes SET status = ".$default_status." WHERE dir_name = '$theme_dir'";
-	$result = mysql_query($sql, $db);
-
+	$sql    = "UPDATE %sthemes SET status = %d WHERE dir_name = '%s'";
+	$result = queryDB($sql, array(TABLE_PREFIX, $default_status, $theme_dir));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	$feedback = array('THEME_DEFAULT', $theme_dir);
 	$msg->addFeedback($feedback);
 
-	//only over-ride the current theme iff it's not mobile themes.
+	//only over-ride the current theme if it's not mobile themes.
 	if($type != MOBILE_DEVICE){
 		$_SESSION['prefs']['PREF_THEME'] = $theme_dir;
 	}
-	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', mysql_affected_rows($db), $sql);
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_UPDATE, 'themes', $result, $sqlout);
 }
 
 function delete_theme ($theme_dir) {
-	global $msg, $db;
+	global $msg;
 
 	$theme_dir = addslashes($theme_dir);
 	
 	//check status
-	$sql    = "SELECT status, customized FROM ".TABLE_PREFIX."themes WHERE dir_name='".$theme_dir."'";
-	$result = mysql_query ($sql, $db);
-	$row    = mysql_fetch_assoc($result);
+	$sql    = "SELECT status, customized FROM %sthemes WHERE dir_name='%s'";
+	$result = queryDB($sql, array(TABLE_PREFIX, $theme_dir), TRUE);
+
 	$status = intval($row['status']);
 	$customized = intval($row['customized']);
 	
@@ -240,7 +226,7 @@ function delete_theme ($theme_dir) {
 	// 1. a system default 
 	// 2. current default theme
 	// 3. a system level theme
-	if (($theme_dir == 'default') || ($status == 2) || !$customized) {
+	if (($theme_dir == 'default') || ($status == 2) || !$customized && defined('IS_SUBSITE') && IS_SUBSITE) {
 		$msg->addError('THEME_NOT_DELETED');
 		return FALSE;
 	} else {	//disable, clear directory and delete theme from db
@@ -255,11 +241,10 @@ function delete_theme ($theme_dir) {
 		//chmod($dir, 0777);
 		@clr_dir($dir);
 
-		$sql1    = "DELETE FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-		$result1 = mysql_query ($sql1, $db);
-
-		write_to_log(AT_ADMIN_LOG_DELETE, 'themes', mysql_affected_rows($db), $sql);
-
+		$sql1    = "DELETE FROM %sthemes WHERE dir_name = '%s'";
+		$result1 = queryDB($sql1, array(TABLE_PREFIX, $theme_dir));
+		global $sqlout;
+        write_to_log(AT_ADMIN_LOG_DELETE, 'themes', $result1, $sqlout);
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		return TRUE;
 	}
@@ -270,13 +255,11 @@ function export_theme($theme_dir) {
 	require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 	require('theme_template.inc.php');									/* for theme XML templates */ 
 	
-	global $db;
 	
 	//identify current theme and then searches db for relavent info
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."themes WHERE dir_name = '$theme_dir'";
-	$result = mysql_query($sql, $db);
-	$row    = mysql_fetch_assoc($result);
-
+	$sql    = "SELECT * FROM %sthemes WHERE dir_name = '%s'";
+	$row = queryDB($sql, array(TABLE_PREFIX, $theme_dir), TRUE);
+	
 	$dir          = $row['dir_name'] . '/';
 	$title        = $row['title'];
 	$version      = $row['version'];
