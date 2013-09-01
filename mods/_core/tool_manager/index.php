@@ -43,7 +43,7 @@ if ($tool_file) {
 <br/><br/><br/>
 <?php echo $msg->printFeedbacks();
 
-$sql = "SELECT forum_id FROM ".TABLE_PREFIX."content_forums_assoc WHERE content_id='$cid'";
+$sql = "SELECT forum_id FROM %scontent_forums_assoc WHERE content_id='%d'";
 if(isset($tool_list)) {?>
 <form name="datagrid" action="<?php AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];?>" method="POST">
     <table class="data" summary="" style="width: 90%" rules="cols">
@@ -56,8 +56,8 @@ if(isset($tool_list)) {?>
         <tbody>
             <?php foreach($tool_list as $tool) {
                     $i = $i+1;
-                    $result = mysql_query($sql, $db);
-                    while($row = mysql_fetch_assoc($result)){
+                    $rows_forums = queryDB($sql, array(TABLE_PREFIX, $cid));
+                   foreach($rows_forums as $row){
                         if($tool['id'] == $row['forum_id']){
                             $checked='checked';
                             break;
