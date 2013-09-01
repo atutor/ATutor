@@ -144,7 +144,8 @@
 	</tr>
 	</tfoot>
 	<tbody>
-		<?php while($row = mysql_fetch_assoc($this->result)): ?>
+		<?php 
+		foreach($this->rows_members as $row){ ?>
 			<tr onmousedown="document.form['m<?php echo $row['member_id']; ?>'].checked = !document.form['m<?php echo $row['member_id']; ?>'].checked; togglerowhighlight(this, 'm<?php echo $row['member_id']; ?>');" id="rm<?php echo $row['member_id']; ?>">
 				<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 				<td><?php echo $row['login']; ?></td>
@@ -169,7 +170,7 @@
 				</td>
 				<td><?php echo AT_date($startend_date_longs_format, $row['creation_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 			</tr>
-		<?php endwhile; ?>
+		<?php } ?>
 	</tbody>
 <?php else: ?>
 	<tr>

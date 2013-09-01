@@ -156,15 +156,15 @@ if ($_GET['searchid']) {
 }
 
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-	$sql	= "SELECT COUNT(M.member_id) AS cnt FROM ".TABLE_PREFIX."members M LEFT JOIN (SELECT * FROM ".TABLE_PREFIX."master_list WHERE member_id <> 0) L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days";
+	$sql	= "SELECT COUNT(M.member_id) AS cnt FROM %smembers M LEFT JOIN (SELECT * FROM %smaster_list WHERE member_id <> 0) L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days";
+    $row_count = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX), TRUE);
 } else {
 	$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."members M WHERE status $status AND $search AND $last_login_days";
+	$row_count = queryDB($sql, array(TABLE_PREFIX), TRUE);
 }
 
-$result = mysql_query($sql, $db);
-if ($result){
-	$row = mysql_fetch_assoc($result);
-	$num_results = $row['cnt'];
+if($row_count > 0){
+	$num_results = $row_count['cnt'];
 } else {
 	$num_results = 0;
 }
@@ -184,16 +184,18 @@ if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
 }
 
 if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, M.creation_date, L.public_field FROM ".TABLE_PREFIX."members M LEFT JOIN (SELECT * FROM ".TABLE_PREFIX."master_list WHERE member_id <> 0) L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, M.creation_date, L.public_field FROM %smembers M LEFT JOIN (SELECT * FROM %smaster_list WHERE member_id <> 0) L USING (member_id) WHERE M.status $status AND $search AND $searchid AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
+    $rows_members = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX));
 } else {
-	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, M.creation_date FROM ".TABLE_PREFIX."members M WHERE M.status $status AND $search AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
+	$sql	= "SELECT M.member_id, M.login, M.first_name, M.second_name, M.last_name, M.email, M.status, M.last_login+0 AS last_login, M.creation_date FROM %smembers M WHERE M.status $status AND $search AND $last_login_days ORDER BY $col $order LIMIT $offset, $results_per_page";
+    $rows_members = queryDB($sql, array(TABLE_PREFIX));
 }
 
-$result = mysql_query($sql, $db);
 
 if ( isset($_GET['apply_all']) && $_GET['change_status'] >= -1) {
 	$ids = '';
-	while ($row = mysql_fetch_assoc($result)) {
+
+	foreach($rows_members as $row){
 		$ids .= $row['member_id'].','; 
 	}
 	$ids = substr($ids,0,-1);
@@ -234,7 +236,7 @@ function togglerowhighlight(obj, boxid) {
 </script>
 <?php 
 
-$savant->assign('result', $result);
+$savant->assign('rows_members', $rows_members);
 $savant->assign('results_per_page', $results_per_page);
 $savant->assign('page', $page);
 $savant->assign('orders', $orders);
