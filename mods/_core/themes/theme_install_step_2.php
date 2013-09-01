@@ -63,11 +63,11 @@ if (isset($_GET["theme"]))
 	if ($version != VERSION) $status = '0';
 	
 	//save information in database
-	$sql = "INSERT INTO ".TABLE_PREFIX."themes (title, version, dir_name, type, last_updated, extra_info, status, customized) ".
-				"VALUES ('$title', '$version', '$theme', '$type', '$last_updated', '$extra_info', '$status', 1)";
-	$result = mysql_query($sql, $db);
-	
-	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', mysql_affected_rows($db), $sql);
+
+	$sql = "INSERT INTO %sthemes (title, version, dir_name, type, last_updated, extra_info, status, customized) VALUES ('%s', '%s', '%s', '%s', '%s', '%s', %d, 1)";
+	$result = queryDB($sql, array(TABLE_PREFIX, $title, $version, $theme, $type, $last_updated, $extra_info, $status));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_INSERT, 'themes', $result, $sqlout);
 }
 
 if (!$result) // error occurs
