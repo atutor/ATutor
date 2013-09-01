@@ -20,8 +20,8 @@
 </tfoot>
 <tbody>
 <?php
-	if ($row = mysql_fetch_assoc($this->result)) {
-		do {
+    if(count($this->rows_approvals) > 0){
+		foreach($this->rows_approvals as $row){
 			echo '<tr onkeydown ="document.form[\'i'.$row['member_id'].'\'].checked = true;rowselect(this);" onmousedown="document.form[\'i'.$row['member_id'].'\'].checked = true;rowselect(this);" id="r_'.$row['member_id'].'">';
 			echo '<td><input type="radio" name="id" value="'.$row['member_id'].'" id="i'.$row['member_id'].'" /></td>';
 			echo '<td><label for="i'.$row['member_id'].'">'.AT_print($row['login'], 'members.login').'</label></td>';
@@ -32,7 +32,7 @@
 			echo '<td>'.AT_print($row['notes'], 'instructor_approvals.notes').'</td>';
 
 			echo '</tr>';
-		} while ($row = mysql_fetch_assoc($this->result));
+		} 
 	} else {
 		echo '<tr><td colspan="6">'._AT('none_found').'</td></tr>';
 	}
