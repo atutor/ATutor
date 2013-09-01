@@ -37,11 +37,12 @@ if(isset($_POST['save'])) {
 <?php
 }
 
-$sql = "SELECT f.* FROM ".TABLE_PREFIX."forums f INNER JOIN ".TABLE_PREFIX."forums_courses fc USING (forum_id) WHERE fc.course_id = $_SESSION[course_id]";
-$result = mysql_query($sql, $db);
 
-if(mysql_num_rows($result) != 0) {
-    while ($row = mysql_fetch_assoc($result)) {
+$sql = "SELECT f.* FROM %sforums f INNER JOIN %sforums_courses fc USING (forum_id) WHERE fc.course_id = %d";
+$rows_forums = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id']));
+
+if(count($rows_forums) != 0){
+    foreach($rows_forums as $row){
         $path =  "mods/_standard/forums/forum/index.php?fid=".$row['forum_id']; 					// memorizzo i dati necessari per comporre i link di ogni elemento
         $content_list[] = array('id'=>$row['forum_id'], 'title' => $row['title'], 'path' => $path, 'image' => AT_BASE_HREF.'images/home-forums_sm.png');
     }
