@@ -42,8 +42,9 @@ if (isset($_POST['submit'])) {
 
 	//check if student id (public field) is already being used
 	if (!$_POST['overwrite'] && !empty($_POST['student_id'])) {
-		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."master_list WHERE public_field='$_POST[student_id]' && member_id<>0",$db);
-		if (mysql_num_rows($result) != 0) {
+        $sql = "SELECT * FROM %smaster_list WHERE public_field='%s' && member_id<>0";
+		$rows_master = queryDB($sql, array(TABLE_PREFIX, $_POST['student_id']));
+		if(count($rows_master) != 0){
 			$msg->addError('CREATE_MASTER_USED');
 		}
 	}
@@ -56,13 +57,19 @@ if (isset($_POST['submit'])) {
 		if (!(preg_match("/^[a-zA-Z0-9_.-]([a-zA-Z0-9_.-])*$/i", $_POST['login']))) {
 			$msg->addError('LOGIN_CHARS');
 		} else {
-			$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE login='$_POST[login]'",$db);
-			if (mysql_num_rows($result) != 0) {
+
+			$sql = "SELECT * FROM %smembers WHERE login='%s'";
+			$rows_members = queryDB($sql, array(TABLE_PREFIX, $_POST['login']));
+
+			if(count($rows_members) > 0){
 				$valid = 'no';
 				$msg->addError('LOGIN_EXISTS');
 			}  else {
-				$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_POST[login]'",$db);
-				if (mysql_num_rows($result) != 0) {
+
+				$sql = "SELECT * FROM %sadmins WHERE login='%s'";
+				$rows_admins = queryDB($sql, array(TABLE_PREFIX, $_POST['login']));
+				
+				if(count($rows_admins) > 0){
 					$msg->addError('LOGIN_EXISTS');
 				}
 			}
@@ -93,8 +100,10 @@ if (isset($_POST['submit'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
 
-	$result = mysql_query("SELECT member_id FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
-	if (mysql_num_rows($result) != 0) {
+	$sql = "SELECT member_id FROM %smembers WHERE email LIKE '%s'";
+	$rows_email = queryDB($sql, array(TABLE_PREFIX, $_POST['email']));
+	
+	if(count($rows_email) != 0){
 		$msg->addError('EMAIL_EXISTS');
 	}
 
@@ -156,12 +165,35 @@ if (isset($_POST['submit'])) {
 		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 		/* insert into the db. (the last 0 for status) */
-		$sql = "INSERT INTO ".TABLE_PREFIX."members VALUES (NULL,'$_POST[login]','$_POST[password]','$_POST[email]','$_POST[website]','$_POST[first_name]', '$_POST[second_name]', '$_POST[last_name]', '$dob', '$_POST[gender]', '$_POST[address]','$_POST[postal]','$_POST[city]','$_POST[province]','$_POST[country]', '$_POST[phone]',$_POST[status], '$_config[pref_defaults]', '$now','$_config[default_language]', $_config[pref_inbox_notify], $_POST[private_email], '0000-00-00 00:00:00')";
+		$sql = "INSERT INTO %smembers 
+		    VALUES (NULL,
+		        '$_POST[login]',
+		        '$_POST[password]',
+		        '$_POST[email]',
+		        '$_POST[website]',
+		        '$_POST[first_name]', 
+		        '$_POST[second_name]', 
+		        '$_POST[last_name]', 
+		        '$dob', 
+		        '$_POST[gender]', 
+		        '$_POST[address]',
+		        '$_POST[postal]',
+		        '$_POST[city]',
+		        '$_POST[province]',
+		        '$_POST[country]', 
+		        '$_POST[phone]',
+		        $_POST[status], 
+		        '$_config[pref_defaults]', 
+		        '$now',
+		        '$_config[default_language]', 
+		        $_config[pref_inbox_notify], 
+		        $_POST[private_email], 
+		        '0000-00-00 00:00:00')";
 
-		$result = mysql_query($sql, $db);
-
-		$m_id	= mysql_insert_id($db);
-		if (!$result) {
+		$result = queryDB($sql, array(TABLE_PREFIX));
+		$m_id	= at_insert_id();
+		
+		if ($result == 0) {
 			require(AT_INCLUDE_PATH.'header.inc.php');
 			$msg->addError('DB_NOT_UPDATED');
 			$msg->printAll();
@@ -172,12 +204,13 @@ if (isset($_POST['submit'])) {
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 			$student_id  = $addslashes($_POST['student_id']);
 			$student_pin = md5($addslashes($_POST['student_pin']));
-			if ($student_id) {
-				$sql = "UPDATE ".TABLE_PREFIX."master_list SET member_id=$m_id WHERE public_field='$student_id'";
-				mysql_query($sql, $db);
-				if (mysql_affected_rows($db) == 0) {
-					$sql = "REPLACE INTO ".TABLE_PREFIX."master_list VALUES ('$student_id', '$student_pin', $m_id)";
-					mysql_query($sql, $db);
+			if ($student_id != '') {			
+				$sql = "UPDATE %smaster_list SET member_id=%d WHERE public_field='%s'";
+				$result = queryDB($sql, array(TABLE_PREFIX, $m_id, $student_id));
+				
+				if($result > 0){
+					$sql = "REPLACE INTO %smaster_list VALUES ('%s', '%s', %d)";
+					$result = queryDB($sql, array(TABLE_PREFIX, $student_id, $student_pin, $m_id));
 				}
 			}
 		}
