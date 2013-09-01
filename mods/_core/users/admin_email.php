@@ -45,22 +45,22 @@ if ($_POST['cancel']) {
 	if (!$msg->containsErrors()) {
 		if ($_POST['to'] == 1) {
 			// choose all instructors
-			$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR;
+			$sql	= "SELECT * FROM %smembers WHERE status = ".AT_STATUS_INSTRUCTOR;
 		} else if ($_POST['to'] == 2) {
 			// choose all students
-			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_STUDENT;
+			$sql 	= "SELECT * FROM %smembers WHERE status = ".AT_STATUS_STUDENT;
 		} else {
 			// choose all members
-			$sql 	= "SELECT * FROM ".TABLE_PREFIX."members WHERE status = ".AT_STATUS_INSTRUCTOR." OR status = ".AT_STATUS_STUDENT;
+			$sql 	= "SELECT * FROM %smembers WHERE status = ".AT_STATUS_INSTRUCTOR." OR status = ".AT_STATUS_STUDENT;
 		}
 		
-		$result = mysql_query($sql,$db);
+        $rows_members = queryDB($sql, array(TABLE_PREFIX));
 
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 		$mail = new ATutorMailer;
-
-		while ($row = mysql_fetch_assoc($result)) {
+            
+        foreach($rows_members as $row){
 			$mail->AddBCC($row['email']);
 		}
 
@@ -90,9 +90,9 @@ $onload = 'document.form.subject.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."members ORDER BY login";
-$result = mysql_query($sql,$db);
-$row	= mysql_fetch_array($result);
+$sql	= "SELECT COUNT(*) AS cnt FROM %smembers ORDER BY login";
+$row = queryDB($sql,array(TABLE_PREFIX), TRUE);
+
 if ($row['cnt'] == 0) {
 	$msg->printErrors('NO_MEMBERS');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
