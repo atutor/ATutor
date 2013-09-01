@@ -17,9 +17,10 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 //check valid requester id
 $request_id = intval($_REQUEST['id']);
-$sql	= "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id=".$request_id;
-$result	= mysql_query($sql, $db);
-if (!($row = mysql_fetch_array($result))) {
+$sql	= "SELECT * FROM %smembers WHERE member_id=%d";
+$row_member	= queryDB($sql, array(TABLE_PREFIX, $request_id));
+
+if(count($row_member) == 0){
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	echo _AT('no_user_found');
 	require(AT_INCLUDE_PATH.'footer.inc.php'); 
@@ -36,17 +37,19 @@ $msg_options = array (_AT('leave_blank'),
 $other_option = count($msg_options)-1;
 
 if (isset($_POST['submit'])) {
-	$sql = 'DELETE FROM '.TABLE_PREFIX.'instructor_approvals WHERE member_id='.$request_id;
-	$result = mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db), $sql);
+	$sql = 'DELETE FROM %sinstructor_approvals WHERE member_id=%d';
+	$result = queryDB($sql, array(TABLE_PREFIX, $request_id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', $result, $sqlout);
 
 	$msg->addFeedback('PROFILE_UPDATED_ADMIN');
 
 	/* notify the users that they have been denied: */
-	$sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=".$_POST['id'];
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_array($result)) {
-		$to_email = $row['email'];
+	$sql   = "SELECT email, first_name, last_name FROM %smembers WHERE member_id=%d";
+	$row_member = queryDB($sql, array(TABLE_PREFIX, $_POST['id']), TRUE);
+	
+	if(count($row_member) > 0){
+		$to_email = $row_member['email'];
 
 		$message = _AT('instructor_request_deny', AT_BASE_HREF)." \n";
 		if ($_POST['msg_option'] == $other_option) {
@@ -86,19 +89,18 @@ if (isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$sql   = "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=".$request_id;
-$result = mysql_query($sql, $db);
-
-if ($row = mysql_fetch_array($result)) {
+$sql   = "SELECT email, first_name, last_name FROM %smembers WHERE member_id=%d";
+$row_member = queryDB($sql, array(TABLE_PREFIX, $request_id), TRUE);
+if(count($row_member) > 0){
 	$username = '';
-	if ($row['first_name']!="") {
-		$username .= $row['first_name'].' ';
+	if ($row_member['first_name']!="") {
+		$username .= $row_member['first_name'].' ';
 	}
 
-	if ($row['last_name']!="") {
-		$username .= $row['last_name'].' ';
+	if ($row_member['last_name']!="") {
+		$username .= $row_member['last_name'].' ';
 	}
-	$username .= $row['email'];
+	$username .= $row_member['email'];
 } else {
 	require(AT_INCLUDE_PATH.'header.inc.php'); 
 	echo _AT('no_user_found');
