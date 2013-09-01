@@ -23,99 +23,119 @@ function delete_user($id) {
 	global $db, $msg;
 
 	//make sure not instructor of a course
-	$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
-	$result = mysql_query($sql, $db);
-	if (($row = mysql_fetch_assoc($result))) {
+
+	$sql	= "SELECT course_id FROM %scourses WHERE member_id=%d";
+	$row_instructor = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+	
+	// WHAT'S THE PURPOSE OF THIS CONDITION?
+	if(count($row_instructor) > 0){
 		/*$msg->addError('NODELETE_USER');
 		header('Location: '.AT_BASE_HREF.'users.php');
 		exit;*/
 		return;
 	}
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %scourse_enrollment WHERE member_id=%d";
+	$result  = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'forums_accessed', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %sforums_accessed WHERE member_id=%d";
+	$result  = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'forums_accessed', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'forums_subscriptions', mysql_affected_rows($db), $sql);
-
+	$sql	= "DELETE FROM %sforums_subscriptions WHERE member_id=%d";
+	$result  = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'forums_subscriptions', $result, $sqlout);
 
 	/****/
 	/* delete forum threads block: */
 		/* delete the thread replies: */
-		$sql	= "SELECT COUNT(*) AS cnt, parent_id, forum_id FROM ".TABLE_PREFIX."forums_threads WHERE member_id=$id AND parent_id<>0 GROUP BY parent_id";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+		$sql	= "SELECT COUNT(*) AS cnt, parent_id, forum_id FROM %sforums_threads WHERE member_id=%d AND parent_id<>0 GROUP BY parent_id";
+		$rows_threads = queryDB($sql, array(TABLE_PREFIX, $id));
+		foreach($rows_threads as $row){
 			/* update the forum posts counter */
-			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts - $row[cnt], last_post=last_post WHERE forum_id=$row[forum_id]";
-			mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', mysql_affected_rows($db), $sql);
-			
+			$sql = "UPDATE %sforums SET num_posts=num_posts - %d, last_post=last_post WHERE forum_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $row['cnt'], $row['forum_id']));
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', $result, $sqlout);
+						
 			/* update the topics reply counter */
-			$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments-$row[cnt], last_comment=last_comment, date=date WHERE post_id=$row[parent_id]";
-			mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums_threads', mysql_affected_rows($db), $sql);
+			$sql = "UPDATE %sforums_threads SET num_comments=num_comments-%d, last_comment=last_comment, date=date WHERE post_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $row['cnt'], $row['parent_id']));
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums_threads', $result, $sqlout);
+
 		}
 
 		/* delete threads this member started: */
-		$sql	= "SELECT post_id, forum_id, num_comments FROM ".TABLE_PREFIX."forums_threads WHERE member_id=$id AND parent_id=0";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+		$sql	= "SELECT post_id, forum_id, num_comments FROM %sforums_threads WHERE member_id=%d AND parent_id=0";
+		$rows_posts = queryDB($sql, array(TABLE_PREFIX, $id));
+		
+		foreach($rows_posts as $row){
 			/* update the forum posts and topics counters */
 			$num_posts = $row['num_comments'] + 1;
-			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics-1, num_posts=num_posts - $num_posts, last_post=last_post WHERE forum_id=$row[forum_id]";
-			mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', mysql_affected_rows($db), $sql);
+			$sql = "UPDATE %sforums SET num_topics=num_topics-1, num_posts=num_posts - %d, last_post=last_post WHERE forum_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $num_posts, $row['forum_id']));
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', $result, $sqlout);
 
 			/* delete the replies */
-			$sql = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$row[post_id]";
-			mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_DELETE, 'forums_threads', mysql_affected_rows($db), $sql);
+			$sql = "DELETE FROM %sforums_threads WHERE parent_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $row['post_id']));
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_DELETE, 'forums_threads', $result, $sqlout);
 		}
 		/* delete the actual threads */
-		$sql	= "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE member_id=$id";
-		mysql_query($sql, $db);
-		write_to_log(AT_ADMIN_LOG_DELETE, 'forums_threads', mysql_affected_rows($db), $sql);
+		$sql	= "DELETE FROM %sforums_threads WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $id));
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_DELETE, 'forums_threads', $result, $sqlout);
 
 	/* end delete forum threads block. */
 	/****/
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."instructor_approvals WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %sinstructor_approvals WHERE member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'instructor_approvals', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."messages WHERE from_member_id=$id OR to_member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'messages', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %smessages WHERE from_member_id=%d OR to_member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'messages', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."polls_members WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'polls_members', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %spolls_members WHERE member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'polls_members', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'tests_answers', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %stests_answers WHERE member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'tests_answers', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE member_id='$id'";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'tests_results', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %stests_results WHERE member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'tests_results', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."users_online WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'users_online', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %susers_online WHERE member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'users_online', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'members', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %smembers WHERE member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'members', $result, $sqlout);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."member_track WHERE member_id=$id";
-	mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'member_track', mysql_affected_rows($db), $sql);
+	$sql	= "DELETE FROM %smember_track WHERE member_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'member_track', $result, $sqlout);
 	
 	// delete personal files from file storage
 	fs_delete_workspace(WORKSPACE_PERSONAL, $id);
