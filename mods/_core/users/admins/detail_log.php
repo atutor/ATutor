@@ -34,9 +34,8 @@ if (isset($_GET['login']) && $_GET['login']) {
 	$login_where = ' WHERE login=\''.$_GET['login'].'\'';
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."admin_log $login_where ORDER BY `time` DESC LIMIT $offset,1";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql = "SELECT * FROM %sadmin_log $login_where ORDER BY `time` DESC LIMIT $offset,1";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 
 $operations[AT_ADMIN_LOG_UPDATE] = _AT('update_to');
 $operations[AT_ADMIN_LOG_DELETE] = _AT('delete_from');
