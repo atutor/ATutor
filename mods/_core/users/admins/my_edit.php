@@ -29,8 +29,10 @@ if (isset($_POST['cancel'])) {
 	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
-	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]'",$db);
-	if (mysql_num_rows($result) != 0) {
+
+	$sql = "SELECT * FROM %smembers WHERE email LIKE '%s'";
+	$row_email = queryDB($sql,array(TABLE_PREFIX, $_POST['email']), TRUE);
+	if(count($row_email) > 0){
 		$valid = 'no';
 		$msg->addError('EMAIL_EXISTS');
 	}
@@ -41,14 +43,14 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-//		$_POST['password']  = $addslashes($_POST['password']);
 		$_POST['real_name'] = $addslashes($_POST['real_name']);
 		$_POST['email']     = $addslashes($_POST['email']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET real_name='$_POST[real_name]', email='$_POST[email]', last_login=last_login WHERE login='$_SESSION[login]'";
-		$result = mysql_query($sql, $db);
+		$sql    = "UPDATE %sadmins SET real_name='%s', email='%s', last_login=last_login WHERE login='%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['real_name'], $_POST['email'], $_SESSION['login']));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+
 		header('Location: '.AT_BASE_HREF.'admin/index.php');
 		exit;
 	}
@@ -58,9 +60,10 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$sql = "SELECT real_name, email FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[login]'";
-$result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+$sql = "SELECT real_name, email FROM %sadmins WHERE login='%s'";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['login']), TRUE);
+
+if(count($row) == 0){
 	$msg->addError('USER_NOT_FOUND');
 	$msg->printErrors();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
