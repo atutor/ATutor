@@ -18,8 +18,10 @@ admin_authenticate(AT_ADMIN_PRIV_USERS);
 
 if (isset($_POST['cancel'])) {
 	if (isset($_POST['ml']) && $_REQUEST['ml']) {
+	    $msg->addFeedback('CANCELLED');
 		header('Location: '.AT_BASE_HREF.'mods/_core/users/master_list.php');
 	} else {
+		$msg->addFeedback('CANCELLED');
 		header('Location: '.AT_BASE_HREF.'mods/_core/users/users.php');
 	}
 	exit;
@@ -48,8 +50,11 @@ if (isset($_POST['submit'])) {
 
 	//check if student id (public field) is already being used
 	if (!$_POST['overwrite'] && !empty($_POST['student_id'])) {
-		$result = mysql_query("SELECT public_field FROM ".TABLE_PREFIX."master_list WHERE public_field='$_POST[student_id]' AND member_id<>0 AND member_id<>$id",$db);
-		if (mysql_num_rows($result) != 0) {
+	
+	    $sql = "SELECT public_field FROM %smaster_list WHERE public_field='%s' AND member_id<>0 AND member_id<>%d";
+        $row_master = queryDB($sql, array(TABLE_PREFIX, $_POST['student_id'], $id), TRUE);
+
+		if(count($row_master) > 0){
 			$msg->addError('CREATE_MASTER_USED');
 		}
 	}
@@ -60,9 +65,11 @@ if (isset($_POST['submit'])) {
 	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 		$msg->addError('EMAIL_INVALID');
 	}
-	$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email LIKE '$_POST[email]' AND member_id <> $id",$db);
-
-	if (mysql_num_rows($result) != 0) {
+	
+    $sql = "SELECT * FROM %smembers WHERE email LIKE '%s' AND member_id <> %d";
+    $row_members = queryDB($sql, array(TABLE_PREFIX, $_POST['email'], $id), TRUE);
+    
+    if(count($row_members) > 0){
 		$valid = 'no';
 		$msg->addError('EMAIL_EXISTS');
 	}
@@ -78,23 +85,6 @@ if (isset($_POST['submit'])) {
 	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
 	$_POST['second_name'] = str_replace('<', '', $_POST['second_name']);
 	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
-
-	// check if first+last is unique
-	/*
-	 * http://www.atutor.ca/atutor/mantis/view.php?id=3760
-	if ($_POST['first_name'] && $_POST['last_name']) {
-		$first_name_sql  = $addslashes($_POST['first_name']);
-		$last_name_sql   = $addslashes($_POST['last_name']);
-		$second_name_sql = $addslashes($_POST['second_name']);
-
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE first_name='$first_name_sql' AND second_name='$second_name_sql' AND last_name='$last_name_sql' AND member_id<>$id LIMIT 1";
-		$result = mysql_query($sql, $db);
-		if (mysql_fetch_assoc($result)) {
-			$msg->addError('FIRST_LAST_NAME_UNIQUE');
-		}
-	}
-	*/
-
 	
 	//check date of birth
 	$mo = intval($_POST['month']);
@@ -142,34 +132,27 @@ if (isset($_POST['submit'])) {
 		}
 
 		/* insert into the db. (the last 0 for status) */
-		$sql = "UPDATE ".TABLE_PREFIX."members SET	email      = '$_POST[email]',
-													website    = '$_POST[website]',
-													first_name = '$_POST[first_name]',
-													second_name= '$_POST[second_name]',
-													last_name  = '$_POST[last_name]', 
-													dob      = '$dob',
-													gender   = '$_POST[gender]', 
-													address  = '$_POST[address]',
-													postal   = '$_POST[postal]',
-													city     = '$_POST[city]',
-													province = '$_POST[province]',
-													country  = '$_POST[country]', 
-													phone    = '$_POST[phone]',
-													status   = $_POST[status],
-													language = '$_SESSION[lang]', 
-													private_email = $_POST[private_email],
-													creation_date=creation_date,
-													last_login=last_login
-				WHERE member_id = $id";
-		$result = mysql_query($sql, $db);
-		if (!$result) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$msg->addError('DB_NOT_UPDATED');
-			$msg->printAll();
-			require(AT_INCLUDE_PATH.'footer.inc.php');
-			exit;
-		}
 
+        $sql = "UPDATE %smembers SET	email   = '$_POST[email]',
+                                        website    = '$_POST[website]',
+                                        first_name = '$_POST[first_name]',
+                                        second_name= '$_POST[second_name]',
+                                        last_name  = '$_POST[last_name]', 
+                                        dob      = '$dob',
+                                        gender   = '$_POST[gender]', 
+                                        address  = '$_POST[address]',
+                                        postal   = '$_POST[postal]',
+                                        city     = '$_POST[city]',
+                                        province = '$_POST[province]',
+                                        country  = '$_POST[country]', 
+                                        phone    = '$_POST[phone]',
+                                        status   = $_POST[status],
+                                        language = '$_SESSION[lang]', 
+                                        private_email = $_POST[private_email],
+                                        creation_date=creation_date,
+                                        last_login=last_login 
+                                        WHERE member_id = $id";
+		$result = queryDB($sql, array(TABLE_PREFIX));
 
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 			$_POST['student_id'] = $addslashes($_POST['student_id']);
@@ -177,23 +160,25 @@ if (isset($_POST['submit'])) {
 
 			//if changed, delete old stud id
 			if (!empty($_POST['old_student_id']) && $_POST['old_student_id'] != $_POST['student_id']) {
-				$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE public_field=".$_POST['old_student_id']." AND member_id=$id";
-				$result = mysql_query($sql, $db);
+			
+				$sql = "DELETE FROM %smaster_list WHERE public_field='%s' AND member_id=%d";
+				$result = queryDB($sql, array(TABLE_PREFIX, $_POST['old_student_id'], $id));
 			}
 			//if new is set
 			if (!empty($_POST['student_id']) && $_POST['old_student_id'] != $_POST['student_id']) {
-				$sql = "REPLACE INTO ".TABLE_PREFIX."master_list VALUES ('$_POST[student_id]', '', $id)";
-				$result = mysql_query($sql, $db);
+
+				$sql = "REPLACE INTO %smaster_list VALUES ('%s', '', %d)";
+				$result = queryDB($sql, array(TABLE_PREFIX, $_POST['student_id'], $id));
+
 			}
 		}
 
 
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION && ($_POST['status'] == AT_STATUS_UNCONFIRMED) && ($_POST['old_status'] != AT_STATUS_UNCONFIRMED)) {
 
-			$sql    = "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-			$result = mysql_query($sql, $db);
-			$row    = mysql_fetch_assoc($result);
-
+			$sql    = "SELECT email, creation_date FROM %smembers WHERE member_id=%d";
+			$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+			
 			$code = substr(md5($row['email'] . $row['creation_date']. $id), 0, 10);
 			$confirmation_link = AT_BASE_HREF . 'confirm.php?id='.$id.SEP.'m='.$code;
 
@@ -222,9 +207,10 @@ if (isset($_POST['submit'])) {
 $id = intval($_REQUEST['id']);
 
 if (empty($_POST)) {
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = $id";
-	$result = mysql_query($sql, $db);
-	if (!($row = mysql_fetch_assoc($result))) {
+	$sql    = "SELECT * FROM %smembers WHERE member_id = %d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+
+	if(count($row) < 1){
 		require(AT_INCLUDE_PATH.'header.inc.php'); 	
 		$msg->addError('USER_NOT_FOUND');	
 		$msg->printAll();
@@ -238,9 +224,9 @@ if (empty($_POST)) {
 	$_POST['old_status'] = $_POST['status'];
 
 	if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-		$sql    = "SELECT public_field FROM ".TABLE_PREFIX."master_list WHERE member_id=$id";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
+		$sql    = "SELECT public_field FROM %smaster_list WHERE member_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+		if(count($row) > 0){
 			$_POST['old_student_id'] = $row['public_field'];
 			$_POST['student_id'] = $row['public_field'];
 		}
