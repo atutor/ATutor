@@ -25,10 +25,10 @@ if (isset($_POST['submit_no'])) {
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['login'] = $addslashes($_POST['login']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."admins WHERE login='$_POST[login]'";
-	$result = mysql_query($sql, $db);
-
-	write_to_log(AT_ADMIN_LOG_DELETE, 'admins', mysql_affected_rows($db), $sql);
+	$sql = "DELETE FROM %sadmins WHERE login='%s'";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['login']));
+    global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'admins', $result, $sqlout);
 
 	$msg->addFeedback('ADMIN_DELETED');
 	header('Location: index.php');
@@ -45,13 +45,14 @@ if (!strcasecmp($_GET['login'], $_SESSION['login'])) {
 	exit;
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."admins WHERE login='$_GET[login]'";
-$result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+$sql = "SELECT * FROM %sadmins WHERE login='%s'";
+$row_admins = queryDB($sql, array(TABLE_PREFIX, $_GET['login']), TRUE);
+
+if(count($row_admins) == 0){
 	echo _AT('no_user_found');
 } else {
 	$hidden_vars['login'] = $_GET['login'];
-	$confirm = array('DELETE_ADMIN', $row['login']);
+	$confirm = array('DELETE_ADMIN', $row_admins['login']);
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 }
