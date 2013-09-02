@@ -55,9 +55,9 @@ if (isset($_GET['asc'])) {
 
 	$offset = ($page-1)*$results_per_page;
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."admins ORDER BY $col $order";
-	$result = mysql_query($sql, $db);
+	$sql	= "SELECT * FROM %sadmins ORDER BY $col $order";
+	$rows_admins = queryDB($sql, array(TABLE_PREFIX));
 
-$savant->assign('result', $result);
+$savant->assign('rows_admins', $rows_admins);
 $savant->display('admin/users/index.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

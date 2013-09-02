@@ -43,12 +43,12 @@
 </tr>
 </tfoot>
 <tbody>
-<?php if (mysql_num_rows($this->result) == 0) { ?>
+<?php if(count($this->rows_admins) == 0){ ?>
 	<tr>
 		<td colspan="6"><?php echo _AT('no_admins_found'); ?></td>
 	</tr>
 <?php } else {
-		while ($row = mysql_fetch_assoc($this->result)): ?>
+		foreach($this->rows_admins as $row){  ?>
 			<tr onkeydown="document.form['m<?php echo $row['login']; ?>'].checked = true;rowselect(this);" onmousedown="document.form['m<?php echo $row['login']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['login']; ?>">
 				<td><input type="radio" name="login" value="<?php echo $row['login']; ?>" id="m<?php echo $row['login']; ?>" /></td>
 				<td><label for="m<?php echo $row['login']; ?>"><?php echo $row['login'];      ?></label></td>
@@ -71,7 +71,7 @@
 					}
 				 ?> </td>
 			</tr>
-	 	<?php endwhile; ?>
+	 	<?php } ?>
 	<?php } ?>
 </tbody>
 </table>
