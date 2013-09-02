@@ -92,20 +92,21 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 		$mnot = $_config_defaults['pref_inbox_notify'];
 		$auto_login = $_config_defaults['pref_is_auto_login'];
 	}
-
+    //WHY IS THIS CONDITION HERE
 	if (!($_config_defaults['pref_defaults'] == $pref_defaults)) {
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_defaults','$pref_defaults')";
+		$sql    = "REPLACE INTO %sconfig VALUES ('pref_defaults','%s')";
 	} else if ($_config_defaults['pref_defaults'] == $pref_defaults) {
-		$sql    = "DELETE FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
+		$sql    = "REPLACE INTO %sconfig VALUES ('pref_defaults','%s')";
 	}
-	$result = mysql_query($sql, $db);
 
-	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_inbox_notify','".$mnot."')";
-	$result = mysql_query($sql, $db);
+    $result = queryDB($sql, array(TABLE_PREFIX, $pref_defaults));
 
-	$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('pref_is_auto_login','".$auto_login."')";
-	$result = mysql_query($sql, $db);
+	$sql    = "REPLACE INTO %sconfig VALUES ('pref_inbox_notify','%s')";
+	$result = queryDB($sql, array(TABLE_PREFIX, $mnot));
 
+	$sql    = "REPLACE INTO %sconfig VALUES ('pref_is_auto_login','%s')";
+	$result = queryDB($sql, array(TABLE_PREFIX, $auto_login));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.$_SERVER['PHP_SELF'].'?current_tab='.$_POST['current_tab']);
 	exit;
@@ -138,22 +139,21 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 	if (is_mobile_device()) {
 		$_SESSION['prefs']['PREF_THEME'] = $current_theme;
 	}
-	
-	$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
-	$result = mysql_query($sql, $db);
-	if (mysql_num_rows($result) > 0)
-	{
-		$row_notify = mysql_fetch_assoc($result);
+
+	$sql	= "SELECT value FROM %sconfig WHERE name='pref_inbox_notify'";
+	$row_notify = queryDB($sql, array(TABLE_PREFIX), TRUE);
+    
+    if(count($row_notify) > 0){
 		$notify = $row_notify['value'];
 	}
 	else
 		$notify = $_config_defaults['pref_inbox_notify'];
 	
-	$sql	= "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_is_auto_login'";
-	$result = mysql_query($sql, $db);
-	if (mysql_num_rows($result) > 0)
-	{
-		$row_is_auto_login = mysql_fetch_assoc($result);
+	$sql	= "SELECT value FROM %sconfig WHERE name='pref_is_auto_login'";
+	$row_is_auto_login = queryDB($sql, array(TABLE_PREFIX), TRUE);
+	
+    if(count($row_is_auto_login) > 0){
+
 		$auto_login = $row_is_auto_login["value"];
 	}
 	else
