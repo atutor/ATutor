@@ -30,9 +30,10 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['submit'])) {
 	if (!empty($_POST['form_old_password_hidden'])) {
 		//check if old password entered is correct
-		$sql	= "SELECT password FROM ".TABLE_PREFIX."admins WHERE login='$_SESSION[login]'";
-		$result = mysql_query($sql,$db);
-		if ($row = mysql_fetch_assoc($result)) {
+		$sql	= "SELECT password FROM %sadmins WHERE login='%s'";
+		$row = queryDB($sql,array(TABLE_PREFIX, $_SESSION['login']), TRUE);
+		
+		if(count($row) > 0){
 			if ($row['password'] != $_POST['form_old_password_hidden']) {
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: my_password.php');
@@ -62,9 +63,9 @@ if (isset($_POST['submit'])) {
 	if (!$msg->containsErrors()) {			
 		$password   = addslashes($_POST['form_password_hidden']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$password', last_login=last_login WHERE login='$_SESSION[login]'";
-		$result = mysql_query($sql, $db);
-
+		$sql    = "UPDATE %sadmins SET password='%s', last_login=last_login WHERE login='%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $password, $_SESSION['login']));
+		
 		$msg->addFeedback('PASSWORD_CHANGED');
 		header('Location: '.AT_BASE_HREF.'admin/index.php');
 		exit;
