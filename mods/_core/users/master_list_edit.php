@@ -31,10 +31,11 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['public_field'] = $addslashes($_POST['public_field']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."master_list SET public_field='$_POST[public_field]' WHERE public_field='$_POST[id]'";
-		$result = mysql_query($sql, $db);
-
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'master_list', mysql_affected_rows($db), $sql);
+		//write_to_log(AT_ADMIN_LOG_UPDATE, 'master_list', mysql_affected_rows($db), $sql);
+		$sql = "UPDATE %smaster_list SET public_field='%s' WHERE public_field='%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['public_field'], $_POST['id']));
+        global $sqlout;
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'master_list', $result, $sqlout);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
@@ -45,9 +46,10 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."master_list WHERE public_field='$_REQUEST[id]'";
-$result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+$sql = "SELECT * FROM %smaster_list WHERE public_field='%s'";
+$row = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['id']), TRUE);
+
+if(count($row) == 0){
 	$msg->addError('USER_NOT_FOUND');
 	$msg->printErrors();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
@@ -56,5 +58,5 @@ if (!($row = mysql_fetch_assoc($result))) {
 	$_POST = $row;
 }
 
-$savant->display('admin/users/master_list_edit.php');
+$savant->display('admin/users/master_list_edit.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
