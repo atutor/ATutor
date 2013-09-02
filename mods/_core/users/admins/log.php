@@ -31,16 +31,16 @@ if (isset($_GET['login']) && $_GET['login']) {
 	$login_where = ' WHERE login=\''.$_GET['login'].'\'';
 }
 
-$sql	= "SELECT COUNT(login) FROM ".TABLE_PREFIX."admin_log $login_where";
-$result = mysql_query($sql, $db);
+$sql	= "SELECT COUNT(login) FROM %sadmin_log $login_where";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 
-if (($row = mysql_fetch_row($result))==0) {
+if($row['COUNT(login)'] == 0){
 	echo '<tr><td colspan="7" class="row1">'._AT('no_log_found_').'</td></tr>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
-	$num_results = $row[0];
+	$num_results = $row['COUNT(login)'];
 	$results_per_page = 50;
 	$num_pages = max(ceil($num_results / $results_per_page), 1);
 	$page = intval($_GET['p']);
@@ -66,12 +66,12 @@ if (($row = mysql_fetch_row($result))==0) {
 	$offset = ($page-1)*$results_per_page;
 
 	$sql    = "SELECT * FROM ".TABLE_PREFIX."admin_log $login_where ORDER BY `time` DESC LIMIT $offset, $results_per_page";
-	$result = mysql_query($sql, $db);
+	$rows_log = queryDB($sql, array(TABLE_PREFIX));
 ?>
 
 
 <?php 
-$savant->assign('result', $result);
+$savant->assign('rows_log', $rows_log);
 $savant->assign('operations', $operations);
 $savant->display('admin/users/log.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
