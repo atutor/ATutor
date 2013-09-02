@@ -23,10 +23,10 @@ if (isset($_POST['submit_no'])) {
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['id'] = $addslashes($_POST['id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE public_field='$_POST[id]'";
-	$result = mysql_query($sql, $db);
-
-	write_to_log(AT_ADMIN_LOG_DELETE, 'master_list', mysql_affected_rows($db), $sql);
+	$sql = "DELETE FROM %smaster_list WHERE public_field='%s'";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['id']));
+    global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'master_list', $result, $sqlout);
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.AT_BASE_HREF.'mods/_core/users/master_list.php');
@@ -35,9 +35,10 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <?php
 $_GET['id'] = $addslashes($_GET['id']);
-$sql = "SELECT * FROM ".TABLE_PREFIX."master_list WHERE public_field='$_GET[id]'";
-$result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+
+$sql = "SELECT * FROM %smaster_list WHERE public_field='%s'";
+$row = queryDB($sql, array(TABLE_PREFIX, $_GET['id']));
+if(count($row) == 0){
 	echo _AT('no_user_found');
 } else {
 	$hidden_vars['id'] = $_GET['id'];
