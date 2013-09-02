@@ -46,17 +46,18 @@ if (isset($_POST['submit'])) {
 
 		if ($_POST['override'] > 0) {
 			/* Delete all the un-created accounts. (There is no member to delete or disable). */
-			$sql = "DELETE FROM ".TABLE_PREFIX."master_list WHERE member_id=0";
-			$result = mysql_query($sql, $db);
-
+			$sql = "DELETE FROM %smaster_list WHERE member_id=0";
+			$result = queryDB($sql, array(TABLE_PREFIX));
+			
 			/* Get all the created accounts. (They will be disabled or deleted if not in the new list). */
-			$sql = "SELECT public_field, member_id FROM ".TABLE_PREFIX."master_list";
-			$result = mysql_query($sql, $db);
-			$num_affected += mysql_affected_rows($db);
-			if ($num_affected > 0) {
-				$number_of_updated += $num_affected;
+			$sql = "SELECT public_field, member_id FROM %smaster_list";
+			$rows_master = queryDB($sql, array(TABLE_PREFIX));
+			$num_rows = count($rows_master);
+			
+			if ($num_rows > 0) {
+				$number_of_updated += $num_rows;
 			}
-			while ($row = mysql_fetch_assoc($result)) {
+			foreach($rows_master as $row){
 				$existing_accounts[$row['public_field']] = $row['member_id'];
 			}
 		}
@@ -69,12 +70,12 @@ if (isset($_POST['submit'])) {
 				$row[0] = addslashes($row[0]);
 				$row[1] = md5($row[1]); // this may be hashed
 
-				$sql = "INSERT INTO ".TABLE_PREFIX."master_list VALUES ('$row[0]', '$row[1]', 0)";
-				mysql_query($sql, $db);
+				$sql = "INSERT INTO %smaster_list VALUES ('%s', '%s', 0)";
+				$result = queryDB($sql, array(TABLE_PREFIX, $row['0'], $row['1']));
+				global $sqlout;
+				write_to_log(AT_ADMIN_LOG_INSERT, 'master_list', $result, $sqlout);
 
-				write_to_log(AT_ADMIN_LOG_INSERT, 'master_list', mysql_affected_rows($db), $sql);
-				$num_affected = mysql_affected_rows($db);
-				if ($num_affected > 0) {
+				if ($result > 0) {
 					$number_of_updated += $num_affected;
 				}
 			}
@@ -86,20 +87,20 @@ if (isset($_POST['submit'])) {
 			// disable missing accounts
 			$existing_accounts = implode(',', $existing_accounts);
 
-			$sql    = "UPDATE ".TABLE_PREFIX."members SET status=".AT_STATUS_DISABLED.", creation_date=creation_date, last_login=last_login WHERE member_id IN ($existing_accounts)";
-			$result = mysql_query($sql, $db);
-			
-			write_to_log(AT_ADMIN_LOG_UPDATE, 'members', mysql_affected_rows($db), $sql);
+			$sql    = "UPDATE %smembers SET status=%d, creation_date=creation_date, last_login=last_login WHERE member_id IN (%s)";
+			$result = queryDB($sql, array(TABLE_PREFIX, AT_STATUS_DISABLED, $existing_accounts));
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_UPDATE, 'members', $result, $sqlout);
 
 			// un-enrol disabled accounts
-			$sql    = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id IN ($existing_accounts)";
-			$result = mysql_query($sql, $db);
+			$sql    = "DELETE FROM %scourse_enrollment WHERE member_id IN (%s)";
+			$result = queryDB($sql, array(TABLE_PREFIX, $existing_accounts));
 
-			$num_affected = mysql_affected_rows($db);
-			if ($num_affected > 0) {
+			if ($result > 0) {
 				$number_of_updated += $num_affected;
 			}
-			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', mysql_affected_rows($db), $sql);
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_DELETE, 'course_enrollment', $result, $sqlout);
 			
 		} else if ($_POST['override'] == 2) {
 			// delete missing accounts
@@ -163,7 +164,7 @@ if ($_GET['search']) {
 		$term = str_replace(array('%','_'), array('\%', '\_'), $term);
 		if ($term) {
 			if (strpos($term, '-') === FALSE) {
-				$term = '%'.$term.'%';
+				$term = '%%'.$term.'%%';
 				$sql .= "(M.public_field LIKE '$term') OR ";
 			} else {
 				// range search
@@ -184,10 +185,8 @@ if ($_GET['search']) {
 	$search = '1';
 }
 
-$sql	= "SELECT COUNT(member_id) AS cnt FROM ".TABLE_PREFIX."master_list M WHERE $status AND $search";
-
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql	= "SELECT COUNT(member_id) AS cnt FROM %smaster_list M WHERE $status AND $search";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 
 $num_results = $row['cnt'];
 
@@ -200,9 +199,11 @@ if (!$page) {
 $offset = ($page-1)*$results_per_page;
 
 $sql	= "SELECT M.*, B.login, B.first_name, B.second_name, B.last_name FROM ".TABLE_PREFIX."master_list M LEFT JOIN ".TABLE_PREFIX."members B USING (member_id) WHERE $status AND $search ORDER BY M.public_field LIMIT $offset, $results_per_page";
-$result = mysql_query($sql, $db);
+$rows_master = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX));
+
+
 $savant->assign('num_results', $num_results);
 $savant->assign('num_pages', $num_pages);
-$savant->assign('result', $result);
+$savant->assign('rows_master', $rows_master);
 $savant->display('admin/users/master_list.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
