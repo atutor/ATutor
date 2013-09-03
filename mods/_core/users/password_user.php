@@ -40,12 +40,13 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['id'] = intval($_POST['id']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET password= '$_POST[form_password_hidden]', creation_date=creation_date, last_login=last_login WHERE member_id=$_POST[id]";
-		$result = mysql_query($sql, $db);
-
-		$sql	= "SELECT login, email FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[id]";
-		$result = mysql_query($sql,$db);
-		if ($row = mysql_fetch_assoc($result)) {
+		$sql = "UPDATE %smembers SET password= '%s', creation_date=creation_date, last_login=last_login WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['form_password_hidden'], $_POST['id']));
+		
+		$sql	= "SELECT login, email FROM %smembers WHERE member_id=%d";
+		$row = queryDB($sql,array(TABLE_PREFIX, $_POST['id']), TRUE);
+		
+		if(count($row) > 0){
 			$r_login = $row['login'];	
 			$r_email = $row['email'];
 
@@ -83,10 +84,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = intval($_GET['id']);
 
-$sql	= "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-$result = mysql_query($sql, $db);
+$sql	= "SELECT login FROM %smembers WHERE member_id=%d";
+$row_login = queryDB($sql, array(TABLE_PREFIX, $id));
 
-if (!$row = mysql_fetch_assoc($result)) {
+if(count($row_login) == 0){
 	$msg->printErrors('USER_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
