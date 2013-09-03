@@ -149,13 +149,13 @@ global $addslashes;
  * @return an array of preferences
  */
 function assignDefaultPrefs() {
-	global $db, $_config_defaults;      
-	$sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
-	$result = mysql_query($sql, $db);
+	global $_config_defaults;      
+	//$sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
+	//$result = mysql_query($sql, $db);
+	$sql    = "SELECT value FROM %sconfig WHERE name='pref_defaults'";
+	$row_defaults = queryDB($sql, array(TABLE_PREFIX), TRUE);
 	
-	if (mysql_num_rows($result) > 0)
-	{
-		$row_defaults = mysql_fetch_assoc($result);
+	if(count($row_defaults) > 0){
 		$default = $row_defaults["value"];
 		
 		$temp_prefs = unserialize($default);
@@ -179,17 +179,16 @@ function assignDefaultPrefs() {
  * @return the value of the inbox notification preference
  */
 function assignDefaultMnot() {
-global $db, $_config_defaults;
-        $sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_inbox_notify'";
-        $result = mysql_query($sql, $db);
-        if (mysql_num_rows($result) > 0)
-        {
-            $row_notify = mysql_fetch_assoc($result);
-            $mnot = $row_notify["value"];
-        }
-        else
-            $mnot = $_config_defaults['pref_inbox_notify'];
-        return $mnot;
+    global $_config_defaults;
+    $sql    = "SELECT value FROM %sconfig WHERE name='pref_inbox_notify'";
+    $row_notify = queryDB($sql, array(TABLE_PREFIX), TRUE);
+    
+    if(count($row_notify) > 0){
+        $mnot = $row_notify["value"];
+    }
+    else
+        $mnot = $_config_defaults['pref_inbox_notify'];
+    return $mnot;
 }
 
 /**
@@ -198,17 +197,16 @@ global $db, $_config_defaults;
  * @return the value of the auto login preference
  */
 function assignDefaultAutologin() {
-global $db, $_config_defaults;;
-        $sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_is_auto_login'";
-        $result = mysql_query($sql, $db);
-        if (mysql_num_rows($result) > 0)
-        {
-            $row_is_auto_login = mysql_fetch_assoc($result);
-            $auto_login = $row_is_auto_login["value"];
-        }
-        else
-            $auto_login = $_config_defaults['pref_is_auto_login'];
-        return $auto_login;
+    global $_config_defaults;
+   
+    $sql    = "SELECT value FROM %sconfig WHERE name='pref_is_auto_login'";
+    $row_is_auto_login = queryDB($sql, array(TABLE_PREFIX), TRUE);
+    if(count($row_is_auto_login) > 0){
+        $auto_login = $row_is_auto_login["value"];
+    }
+    else
+        $auto_login = $_config_defaults['pref_is_auto_login'];
+    return $auto_login;
 
 }
 
@@ -221,8 +219,6 @@ global $db, $_config_defaults;;
  * @return string - either 'enable' if the cookies were set, or 'disable' otherwise.
  */
 function setAutoLoginCookie($toDo) {
-    global $db;
-
     //set default values for disabled auto login cookies
     $parts = parse_url(AT_BASE_HREF);
     $path = $parts['path'];
@@ -234,9 +230,8 @@ function setAutoLoginCookie($toDo) {
 	//if enable auto login, set actual cookie values
 	if ($toDo == 'enable') {
 		$time = time() + 172800;
-		$sql	= "SELECT password, last_login FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
-		$row	= mysql_fetch_assoc($result);
+		$sql	= "SELECT password, last_login FROM %smembers WHERE member_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		$password = $row["password"];
 		$last_login = $row["last_login"];
 		$login = $_SESSION['login'];	
