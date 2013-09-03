@@ -37,11 +37,12 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$password     = $addslashes($_POST['form_password_hidden']);
 
-		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='$password', last_login=last_login WHERE login='$_POST[login]'";
-		$result = mysql_query($sql, $db);
-
+		$sql    = "UPDATE %sadmins SET password='%s', last_login=last_login WHERE login='%s'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $password, $_POST['login']));
+        
+        // a static version of the SQL that does not post the submitted password to the log
 		$sql    = "UPDATE ".TABLE_PREFIX."admins SET password='********' WHERE login='$_POST[login]'";
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', mysql_affected_rows($db), $sql);
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', $result, $sql);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.AT_BASE_HREF.'mods/_core/users/admins/index.php');
@@ -53,9 +54,10 @@ if (isset($_POST['cancel'])) {
 
 $_GET['login'] = $addslashes($_REQUEST['login']);
 
-$sql = "SELECT login FROM ".TABLE_PREFIX."admins WHERE login='$_GET[login]'";
-$result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+$sql = "SELECT login FROM %sadmins WHERE login='%s'";
+$row = queryDB($sql, array(TABLE_PREFIX, $_GET['login']), TRUE);
+
+if(count($row) == 0){
 	$msg->addError('USER_NOT_FOUND');
 	$msg->printErrors();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
