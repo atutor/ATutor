@@ -23,10 +23,10 @@ if (isset($_POST['submit_no'])) {
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	//clean up the db
-	$sql    = "DELETE FROM ".TABLE_PREFIX."admin_log";
-	$result = mysql_query($sql, $db);
-
-	write_to_log(AT_ADMIN_LOG_DELETE, 'admin_log', mysql_affected_rows($db), $sql);
+	$sql    = "DELETE FROM %sadmin_log";
+	$result = queryDB($sql, array(TABLE_PREFIX));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'admin_log', $result, $sqlout);
 
 	$msg->addFeedback('ADMIN_LOG_RESET');
 	header('Location: ./log.php');
