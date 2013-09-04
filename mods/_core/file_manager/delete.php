@@ -57,17 +57,9 @@ if (isset($_POST['submit_yes'])) {
 		{ 
 			// delete according definition of primary resources and alternatives for adapted content
 			$filename = '../'.$pathext.$filename;
-			debug($filename);
+
 			// 1. delete secondary resources types
-		/*	$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types
-			         WHERE secondary_resource_id in (SELECT secondary_resource_id 
-			                      FROM ".TABLE_PREFIX."secondary_resources
-			                     WHERE secondary_resource = '".$filename."'
-			                        OR primary_resource_id in (SELECT primary_resource_id
-			                                      FROM ".TABLE_PREFIX."primary_resources
-			                                     WHERE resource='".$filename."'))";
-			$result = mysql_query($sql, $db);
-			*/
+
 			$sql = "DELETE FROM %ssecondary_resources_types
 			         WHERE secondary_resource_id in (SELECT secondary_resource_id 
 			                      FROM %ssecondary_resources
@@ -78,14 +70,7 @@ if (isset($_POST['submit_yes'])) {
 			$result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $filename ,TABLE_PREFIX, $filename));
 						
 			// 2. delete secondary resources 
-	/*		$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources
-			         WHERE secondary_resource = '".$filename."'
-			            OR primary_resource_id in (SELECT primary_resource_id
-			                     FROM ".TABLE_PREFIX."primary_resources
-			                    WHERE resource='".$filename."')";
-			$result = mysql_query($sql, $db);
-			
-			*/
+
 			$sql = "DELETE FROM %ssecondary_resources
 			         WHERE secondary_resource = '%s'
 			            OR primary_resource_id in (SELECT primary_resource_id
@@ -94,12 +79,7 @@ if (isset($_POST['submit_yes'])) {
 			$result = queryDB($sql, array(TABLE_PREFIX, $filename, TABLE_PREFIX, $filename));	
 
 			// 3. delete primary resources types
-		/*	$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources_types
-			         WHERE primary_resource_id in (SELECT primary_resource_id 
-			                      FROM ".TABLE_PREFIX."primary_resources
-			                     WHERE resource = '".$filename."')";
-			$result = mysql_query($sql, $db);
-			*/
+
 			$sql = "DELETE FROM %sprimary_resources_types
 			         WHERE primary_resource_id in (SELECT primary_resource_id 
 			                      FROM %sprimary_resources
@@ -107,11 +87,7 @@ if (isset($_POST['submit_yes'])) {
 			$result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $filename));		
 				
 			// 4. delete primary resources 
-			/*
-			$sql = "DELETE FROM ".TABLE_PREFIX."primary_resources
-			         WHERE resource = '".$filename."'";
-			$result = mysql_query($sql, $db);
-			*/
+
 			$sql = "DELETE FROM %sprimary_resources
 			         WHERE resource = '%s'";
 			$result = queryDB($sql, array(TABLE_PREFIX,$filename ));

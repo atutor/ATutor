@@ -56,13 +56,11 @@ function generate_table($condition, $col, $order, $unenr, $filter) {
 		$condition .= ' AND CE.privileges<>0';
 	}
 	if ($filter['group'] > 0) {
-		//$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id=".$filter['group'];
-		//$result = mysql_query($sql, $db);
+
 		$sql = "SELECT member_id FROM %sgroups_members WHERE group_id=%d";
 		$rows_group_members = queryDB($sql, array(TABLE_PREFIX, $filter['group']));
 		
 		foreach($rows_group_members as $row){
-		//while ($row = mysql_fetch_assoc($result)) {
 			$members_list .= ',' . $row['member_id'];
 		}
 		$condition .= ' AND CE.member_id IN (0'.$members_list.')';

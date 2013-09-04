@@ -150,8 +150,7 @@ global $addslashes;
  */
 function assignDefaultPrefs() {
 	global $_config_defaults;      
-	//$sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='pref_defaults'";
-	//$result = mysql_query($sql, $db);
+
 	$sql    = "SELECT value FROM %sconfig WHERE name='pref_defaults'";
 	$row_defaults = queryDB($sql, array(TABLE_PREFIX), TRUE);
 	

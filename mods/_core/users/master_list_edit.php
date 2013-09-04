@@ -31,7 +31,6 @@ if (isset($_POST['cancel'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['public_field'] = $addslashes($_POST['public_field']);
 
-		//write_to_log(AT_ADMIN_LOG_UPDATE, 'master_list', mysql_affected_rows($db), $sql);
 		$sql = "UPDATE %smaster_list SET public_field='%s' WHERE public_field='%s'";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['public_field'], $_POST['id']));
         global $sqlout;

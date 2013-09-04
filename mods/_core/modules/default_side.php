@@ -55,7 +55,6 @@ if (isset($_POST['submit'])) {
 		$result = queryDB($sql, array(TABLE_PREFIX));
 	}
 
-	//$result = mysql_query($sql, $db);
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location:'. $_SERVER[PHP_SELF]);
 	exit;

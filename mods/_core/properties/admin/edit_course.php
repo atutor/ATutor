@@ -61,7 +61,6 @@ if (!$course){
 				$result2 = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 			}
 
-			//$result2 = mysql_query($sql, $db);
 }
 *******/
 
