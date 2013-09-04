@@ -27,11 +27,14 @@ if (isset($_POST['submit_yes'])) {
 	foreach ($ids as $id) {
 		//make sure not instructor of a course
 		$id = intval($id);
-		$sql	= "SELECT course_id FROM ".TABLE_PREFIX."courses WHERE member_id=$id";
-		$result = mysql_query($sql, $db);
-		if (!mysql_fetch_assoc($result)) {
-			$sql2 = "UPDATE ".TABLE_PREFIX."members SET status=".$status.", creation_date = creation_date WHERE member_id=$id";
-			$result2 = mysql_query($sql2,$db);
+		
+		$sql	= "SELECT course_id FROM %scourses WHERE member_id=$id";
+		$rows_courses = queryDB($sql, array(TABLE_PREFIX, $id));
+		
+		if(count($rows_courses) == 0){
+		
+			$sql2 = "UPDATE %smembers SET status=%d, creation_date = creation_date WHERE member_id=%d";
+			$result2 = queryDB($sql2,array(TABLE_PREFIX, $status, $id));
 		}
 	}
 
