@@ -28,8 +28,9 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 	} else {
 		$cids = implode(',', $_POST['enrolled']);
-		$sql = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id={$_POST['id']} AND course_id IN ($cids)";
-		mysql_query($sql, $db);
+
+		$sql = "DELETE FROM %scourse_enrollment WHERE member_id=%d AND course_id IN (%s)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $cids));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_SERVER['PHP_SELF'] . '?id='.$_POST['id']);
@@ -42,9 +43,10 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 	} else {
 		$cids = implode(',', $_POST['pending']);
-		$sql = "DELETE FROM ".TABLE_PREFIX."course_enrollment WHERE member_id={$_POST['id']} AND course_id IN ($cids)";
-		mysql_query($sql, $db);
 
+		$sql = "DELETE FROM %scourse_enrollment WHERE member_id=%d AND course_id IN (%s)";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $cids));
+		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_SERVER['PHP_SELF'] . '?id='.$_POST['id']);
 		exit;
@@ -56,8 +58,9 @@ if (isset($_POST['cancel'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 	} else {
 		$cids = implode(',', $_POST['pending']);
-		$sql = "UPDATE ".TABLE_PREFIX."course_enrollment SET approved='y' WHERE member_id={$_POST['id']} AND course_id IN ($cids)";
-		mysql_query($sql, $db);
+
+		$sql = "UPDATE %scourse_enrollment SET approved='y' WHERE member_id=%d AND course_id IN (%s)";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $cids));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_SERVER['PHP_SELF'] . '?id='.$_POST['id']);
@@ -69,9 +72,10 @@ if (isset($_POST['cancel'])) {
 	if (!is_array($_POST['not_enrolled'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 	} else {
-		foreach ($_POST['not_enrolled'] as $cid) {
-			$sql = "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ({$_POST['id']}, $cid, 'y', 0, '', 0)";
-			mysql_query($sql, $db);
+		foreach ($_POST['not_enrolled'] as $cid){
+		
+			$sql = "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '', 0)";
+			queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $cid));
 		}
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.$_SERVER['PHP_SELF'] . '?id='.$_POST['id']);
@@ -86,19 +90,21 @@ $_pages['mods/_core/users/user_enrollment.php']['title'] = _AT('enrollment').': 
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT login FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-$result = mysql_query($sql, $db);
+$sql	= "SELECT login FROM %smembers WHERE member_id=%d";
+$row_member = queryDB($sql, array(TABLE_PREFIX, $id));
 
-if (!$row = mysql_fetch_assoc($result)) {
+if(count($row_member) == 0){
 	$msg->printErrors('USER_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 $enrollment = array();
-$sql = "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$id";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+$sql = "SELECT * FROM %scourse_enrollment WHERE member_id=%d";
+$rows_enrolment = queryDB($sql, array(TABLE_PREFIX, $id));
+
+foreach($rows_enrolment as $row){
 	$enrollment[$row['course_id']] = $row;
 }
 
