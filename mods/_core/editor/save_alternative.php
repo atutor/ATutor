@@ -34,35 +34,29 @@ if ($pid == 0 || $type_id == 0 || $secondary_resource == '') exit;
 global $db;
 // delete the existing alternative for this (pid, a_type)
 $sql = "SELECT sr.secondary_resource_id 
-          FROM ".TABLE_PREFIX."secondary_resources sr, ".TABLE_PREFIX."secondary_resources_types srt
+          FROM %ssecondary_resources sr, %ssecondary_resources_types srt
          WHERE sr.secondary_resource_id = srt.secondary_resource_id
-           AND sr.primary_resource_id = ".$pid."
-           AND sr.language_code = '".$_SESSION['lang']."'
-           AND srt.type_id=".$type_id;
-$existing_secondary_result = mysql_query($sql, $db);
+           AND sr.primary_resource_id = %d
+           AND sr.language_code = '%s'
+           AND srt.type_id=%d";
+$rows_existing_secondary = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $pid, $_SESSION['lang'], $type_id));
 
-while ($existing_secondary = mysql_fetch_assoc($existing_secondary_result))
-{
-	$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources 
-	         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id'];
-	$result = mysql_query($sql, $db);
+foreach($rows_existing_secondary as $existing_secondary){
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."secondary_resources_types 
-	         WHERE secondary_resource_id = ".$existing_secondary['secondary_resource_id']."
-	           AND type_id=".$type_id;
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %ssecondary_resources WHERE secondary_resource_id = %d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $existing_secondary['secondary_resource_id']));
+
+	$sql = "DELETE FROM %ssecondary_resources_types WHERE secondary_resource_id = %d AND type_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $existing_secondary['secondary_resource_id'], $type_id));
 }
 
 // insert new alternative
-$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources (primary_resource_id, secondary_resource, language_code)
-        VALUES (".$pid.", '".mysql_real_escape_string($secondary_resource)."', '".$_SESSION['lang']."')";
-$result = mysql_query($sql, $db);
-$secondary_resource_id = mysql_insert_id();
+$sql = "INSERT INTO %ssecondary_resources (primary_resource_id, secondary_resource, language_code) VALUES (%d, '%s', '%s')";
+$result = queryDB($sql, array(TABLE_PREFIX, $pid, $secondary_resource, $_SESSION['lang']));
+$secondary_resource_id = at_insert_id();
 
-$sql = "INSERT INTO ".TABLE_PREFIX."secondary_resources_types (secondary_resource_id, type_id)
-        VALUES (".$secondary_resource_id.", ".$type_id.")";
-$result = mysql_query($sql, $db);
-
+$sql = "INSERT INTO %ssecondary_resources_types (secondary_resource_id, type_id) VALUES (%d, %d)";
+$result = queryDB($sql, array(TABLE_PREFIX, $secondary_resource_id, $type_id));
 exit;
 
 ?>
