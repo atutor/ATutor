@@ -133,7 +133,7 @@ function enroll ($list) {
 	for ($i=0; $i < $num_list; $i++)	{
 		$id = intval($list[$i]);
 		$members .= ' OR (member_id='.$id.')';
-		$sql = "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, 'Student', 0)";
+		$sql = "REPLACE INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, 'Student', 0)";
 		$result_enrolled = queryDB($sql, array(TABLE_PREFIX, $id, $course_id));
 		if($result_enrolled != 1){
 			$sql = "UPDATE %scourse_enrollment SET approved='y' WHERE course_id=%d AND member_id=%d";
