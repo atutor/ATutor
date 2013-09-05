@@ -24,8 +24,8 @@
 </tr>
 </tfoot>
 <tbody>
-	<?php if ($row = mysql_fetch_assoc($this->result)): ?>
-		<?php do { ?>
+	<?php if(count($this->rows_news) > 0): ?>
+		<?php foreach($this->rows_news as $row){ ?>
 			<tr onkeydown="document.form['n<?php echo $row['news_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['n<?php echo $row['news_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['news_id']; ?>">
 			
 				<td><input type="radio" name="aid" value="<?php echo $row['news_id']; ?>" id="n<?php echo $row['news_id']; ?>" /></td>
@@ -33,7 +33,7 @@
 				<td><label for="n<?php echo $row['news_id']; ?>"><?php echo AT_print($row['title'], 'news.title'); ?></label></td>
 				<td><?php echo AT_date(_AT('announcement_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></td>
 			</tr>
-		<?php } while ($row = mysql_fetch_assoc($this->result)); ?>
+		<?php }  ?>
 	<?php else: ?>
 		<tr>
 			<td colspan="3"><?php echo _AT('none_found'); ?></td>
