@@ -22,9 +22,9 @@ if ($cid == 0) {
 }
 
 /* show the content page */
-$result = $contentManager->getContentPage($cid);
+$rows_content = $contentManager->getContentPage($cid);
 
-foreach($result as $content_row){
+foreach($rows_content as $content_row){
     if (!$content_row) {
         $_pages['content.php']['title_var'] = 'missing_content';
         $_pages['content.php']['parent']    = 'index.php';
