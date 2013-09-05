@@ -44,8 +44,6 @@ if (isset($_GET['asc'])) {
 	$col   = 'date';
 }
 
-//$sql	= "SELECT news_id, title, date FROM ".TABLE_PREFIX."news WHERE course_id=$_SESSION[course_id] ORDER BY $col $order";
-//$result = mysql_query($sql, $db);
 $sql	= "SELECT news_id, title, date FROM %snews WHERE course_id=%d ORDER BY $col $order";
 $rows_news = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 
