@@ -12,10 +12,8 @@ function news_convert($row, $course_id, $table_id_map, $version) {
 	static $member_id;
 
 	if (!isset($member_id)) {
-		global $db;
-		$sql        = "SELECT member_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course_id";
-		$result     = mysql_query($sql, $db);
-		$member_row = mysql_fetch_assoc($result);
+		$sql        = "SELECT member_id FROM %scourses WHERE course_id=%d";
+		$member_row    = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
 		$member_id  = $member_row['member_id'];
 	}
 	$new_row = array();

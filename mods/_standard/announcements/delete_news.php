@@ -23,8 +23,8 @@ if (isset($_POST['submit_no'])) {
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['form_news_id'] = intval($_POST['form_news_id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."news WHERE news_id=$_POST[form_news_id] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %snews WHERE news_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['form_news_id'], $_SESSION['course_id']));
 	
 	/* update announcement RSS: */
 	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS1.0.xml')) {
@@ -45,14 +45,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 	$_GET['aid'] = intval($_GET['aid']); 
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."news WHERE news_id=$_GET[aid] AND course_id=$_SESSION[course_id]";
-
-	$result = mysql_query($sql,$db);
-	if (mysql_num_rows($result) == 0) {
+	$sql = "SELECT * FROM %snews WHERE news_id=%d AND course_id=%d";
+	$row_news = queryDB($sql, array(TABLE_PREFIX, $_GET['aid'], $_SESSION['course_id']), TRUE);
+	
+	if(count($row_news) == 0){
 		$msg->printErrors('ITEM_NOT_FOUND');
 	} else {
-		$row = mysql_fetch_assoc($result);
-
+        $row = $row_news;
 		$hidden_vars['delete_news']  = TRUE;
 		$hidden_vars['form_news_id'] = $row['news_id'];
 		
