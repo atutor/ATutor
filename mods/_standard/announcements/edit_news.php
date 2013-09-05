@@ -100,9 +100,12 @@ if ($aid == 0) {
 	exit;
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."news WHERE news_id=$aid AND course_id=$_SESSION[course_id]";
-$result = mysql_query($sql,$db);
-if (!($row = mysql_fetch_array($result))) {
+//$sql = "SELECT * FROM ".TABLE_PREFIX."news WHERE news_id=$aid AND course_id=$_SESSION[course_id]";
+//$result = mysql_query($sql,$db);
+$sql = "SELECT * FROM %snews WHERE news_id=%d AND course_id=%d";
+$row = queryDB($sql,array(TABLE_PREFIX, $aid, $_SESSION['course_id']), TRUE);
+
+if(count($row) == 0){
 	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
