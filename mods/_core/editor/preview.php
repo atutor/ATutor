@@ -27,9 +27,9 @@ if ($cid == 0) {
 	exit;
 }
 
-$result = $contentManager->getContentPage($cid);
+$rows_content = $contentManager->getContentPage($cid);
 
-if (!($content_row = @mysql_fetch_assoc($result))) {
+if(count($rows_content) == 0){
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('PAGE_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
@@ -42,10 +42,11 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
 }
 
-if ($content_row['content_path']) {
-	$content_base_href .= $content_row['content_path'].'/';
+foreach($rows_content as $content_row){
+    if ($content_row['content_path']) {
+        $content_base_href .= $content_row['content_path'].'/';
+    }
 }
-
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
