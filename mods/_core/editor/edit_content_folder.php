@@ -105,7 +105,6 @@ if ($_POST['submit'])
 				$sql = "INSERT INTO %scontent_prerequisites 
 				           SET content_id=%d, type='".CONTENT_PRE_TEST."', item_id=%d";
 				$result = queryDB($sql, array(TABLE_PREFIX, $cid, $tid));
-				//if ($result===false) $msg->addError('MYSQL_FAILED');
 			}
 		}
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
