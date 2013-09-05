@@ -1,8 +1,6 @@
 <?php
 
 function announcements_delete($course) {
-	global $db;
-
 	/* announcement RSS: */
 	if (file_exists(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS1.0.xml')) {
 		@unlink(AT_CONTENT_DIR . 'feeds/' . $course . '/RSS1.0.xml');
@@ -12,9 +10,8 @@ function announcements_delete($course) {
 	}
 
 	//announcements
-	$sql	= "DELETE FROM ".TABLE_PREFIX."news WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-
+	$sql	= "DELETE FROM %snews WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $course));
 }
 
 ?>
