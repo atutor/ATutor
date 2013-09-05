@@ -11,19 +11,21 @@
     function courses_extend_date($member_id, $course_id) {
         
         global $db;
-        $course = array();      
-               $sql = "SELECT course_id FROM %scourse_enrollment WHERE member_id = %d";
+        $course = array();     
+        
+        //create array of enrolled or pending enrollment courses for current user
+        $sql = "SELECT course_id FROM %scourse_enrollment WHERE member_id = %d";
         $rows_enrolled = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
         $enrolled_count = count( $rows_enrolled);
+        
         foreach($rows_enrolled as $row){
             $c++;
             if($c == $enrolled_count){
-            $enrolled .= $row['course_id'];
+                 $enrolled .= $row['course_id'];
             }else{
-            $enrolled .= $row['course_id'].",";
+                 $enrolled .= $row['course_id'].",";
             }
         }
-        debug_to_log($enrolled);
         
         // get the course details along with the relevant dates
         $sql = "SELECT M.first_name, M.last_name, C.title, C.release_date, C.end_date
