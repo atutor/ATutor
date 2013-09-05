@@ -123,7 +123,6 @@ function assign_categories_course_count(&$categories) {
 	$rows_cats = queryDB($sql, array(TABLE_PREFIX), true);
 	
 	foreach($rows_cats, as $rows){
-	//while ($row = mysql_fetch_assoc($result)) {
 		if ($row['cat_id'] == 0) {
 			$num_uncategorized = $row['cnt'];
 		} else {
