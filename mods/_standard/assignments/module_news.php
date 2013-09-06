@@ -23,10 +23,11 @@ function assignments_news() {
 		return $news;
 	} 
 
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'assignments WHERE course_id IN '.$enrolled_courses.' ORDER BY date_due DESC';
-	$result = mysql_query($sql, $db);
-	if($result){
-		while($row = mysql_fetch_assoc($result)){
+	$sql = 'SELECT * FROM %sassignments WHERE course_id IN %s ORDER BY date_due DESC';
+	$rows_assignments = queryDB($sql, array(TABLE_PREFIX, $enrolled_courses));
+
+	if(count($rows_assignments) > 0){
+	    foreach($rows_assignments as $row){
 			$news[] = array('time'=>$row['date_due'], 
 							'object'=>$row, 
 							'course'=>$system_courses[$row['course_id']]['title'],
