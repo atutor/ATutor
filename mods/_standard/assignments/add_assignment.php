@@ -24,10 +24,10 @@ if (isset ($_GET['id'])){
 	// editing an existing assignment
 	$id = intval($_GET['id']); 
 
-	$sql = "SELECT *, DATE_FORMAT(date_due, '%Y-%m-%d %H:%i:00') AS date_due, DATE_FORMAT(date_cutoff, '%Y-%m-%d %H:%i:00') AS date_cutoff FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] AND assignment_id=$id";
+	$sql = "SELECT *, DATE_FORMAT(date_due, '%%Y-%%m-%%d %%H:%%i:00') AS date_due, DATE_FORMAT(date_cutoff, '%%Y-%%m-%%d %%H:%%i:00') AS date_cutoff FROM %sassignments WHERE course_id=%d AND assignment_id=%d";
+	$row_assignments = queryDB($sql,array(TABLE_PREFIX, $_SESSION['course_id'], $id), TRUE);
 
-	$result = mysql_query($sql,$db);
-	if (!($row = mysql_fetch_assoc($result))) {
+	if(count($row_assignments) == 0){
 		// should not happen
 		$msg->addFeedback('ASSIGNMENT_NOT_FOUND');
 		header('Location: index_instructor.php');
@@ -35,11 +35,11 @@ if (isset ($_GET['id'])){
 	}
 
 	// get values of existing assignment from database
-	$title			= $row['title'];
-	$assign_to		= $row['assign_to'];
-	$multi_submit	= $row['multi_submit'];
+	$title			= $row_assignments['title'];
+	$assign_to		= $row_assignments['assign_to'];
+	$multi_submit	= $row_assignments['multi_submit'];
 
-	$array1			= explode (' ', $row['date_due'], 2);
+	$array1			= explode (' ', $row_assignments['date_due'], 2);
 	$array_date_due	= explode ('-', $array1[0],3);
 	$array_time_due	= explode (':', $array1[1]);
 	$dueyear		= $array_date_due[0];
@@ -55,7 +55,7 @@ if (isset ($_GET['id'])){
 	}
 
 	// use date from database
-	$array2 = explode (' ', $row['date_cutoff'], 2);
+	$array2 = explode (' ', $row_assignments['date_cutoff'], 2);
 	$array_date_cutoff = explode ('-', $array2[0],3);
 	$array_time_cutoff = explode (':', $array2[1]);
 	$cutoffyear		= $array_date_cutoff[0];
@@ -66,7 +66,7 @@ if (isset ($_GET['id'])){
 
 	if ($cutoffyear == '0000'){
 		$late_submit	= '0'; // allow late submissions always
-	} else if ($row['date_cutoff'] == $row['date_due']){
+	} else if ($row_assignments['date_cutoff'] == $row_assignments['date_due']){
 		$late_submit	= '1'; // allow late submissions never
 		// use today's date as default
 		$cutoffday		= $today['mday'];
@@ -166,22 +166,17 @@ else if (isset($_POST['submit'])) {
 		// Are we creating a new assignment or updating an existing assignment?
 		if ($id == '0'){
 			// creating a new assignment
-			$sql = "INSERT INTO ".TABLE_PREFIX."assignments VALUES (NULL, $_SESSION[course_id],
-				'$title',
-				'$assign_to',
-				'$date_due',
-				'$date_cutoff',
-				'$multi_submit'
-				)";
 
-			$result = mysql_query($sql,$db);
+			$sql = "INSERT INTO %sassignments VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s')";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $title, $assign_to, $date_due, $date_cutoff, $multi_submit));
 			$msg->addFeedback('ASSIGNMENT_ADDED');
+			
 		} else { // updating an existing assignment
-			$assign_to = 'assign_to';
+			$assign_to = $_POST['assign_to'];
 
-			$sql = "UPDATE ".TABLE_PREFIX."assignments SET title='$title', assign_to=$assign_to, date_due='$date_due', date_cutoff='$date_cutoff' WHERE assignment_id='$id' AND course_id=$_SESSION[course_id]";
-
-			$result = mysql_query($sql,$db);
+			$sql = "UPDATE %sassignments SET title='%s', assign_to=%d, date_due='%s', date_cutoff='%s' WHERE assignment_id=%d AND course_id=%d";
+			$result = queryDB($sql,array(TABLE_PREFIX, $title, $assign_to, $date_due, $date_cutoff, $id, $_SESSION['course_id']));
+			
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
 		header('Location: index_instructor.php');
@@ -264,9 +259,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					echo _AT('all_students'); 
 				} else { // name of group goes here
 					$sql = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$assign_to AND course_id=$_SESSION[course_id]";
-					$result = mysql_query($sql, $db);
-					$type_row = mysql_fetch_assoc($result);
+					$type_row = queryDB($sql, array(TABLE_PREFIX, $assign_to, $_SESSION['course_id']), TRUE);
 					echo $type_row['title'];
+					echo '<input type="hidden" name="assign_to" value="'.$assign_to.'" />';
 				}
 				?>
 			<?php } else { // creating a new assignment
@@ -275,9 +270,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 					<option value="0" <?php if ($assign_to == '0'){ echo 'selected="selected"'; } ?> label="<?php  echo _AT('all_students'); ?>"><?php  echo _AT('all_students'); ?></option>
 					<optgroup label="<?php  echo _AT('specific_groups'); ?>">
 						<?php
-							$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id={$_SESSION['course_id']} ORDER BY title";
-							$result = mysql_query($sql, $db);
-							while ($type_row = mysql_fetch_assoc($result)) {
+							$sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY title";
+							$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+							
+							foreach($rows_group_types as $type_row){
 								echo '<option value="'.$type_row['type_id'].'" ';
 								if ($assign_to == $type_row['type_id']) {
 									echo 'selected="selected"';
