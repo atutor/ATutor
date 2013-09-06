@@ -5,16 +5,18 @@ function assignments_delete($course) {
 	
 	require_once(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php');
 
-	$sql	= "SELECT assignment_id FROM ".TABLE_PREFIX."assignments WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) 
-	{
+	$sql	= "SELECT assignment_id FROM %sassignments WHERE course_id=%d";
+	$rows_assignments = queryDB($sql, array(TABLE_PREFIX, $course));
+	
+	/////
+	// NOT SURE WHY THIS IS HERE
+	foreach($rows_assignments as $row){
 		fs_delete_workspace(WORKSPACE_ASSIGNMENT, $row['assignment_id']);
 	}
 
 	// delete assignment folders/files from file storage
-	$sql = "DELETE FROM ".TABLE_PREFIX."assignments WHERE course_id=$course";
-	mysql_query($sql, $db);
+	$sql = "DELETE FROM %sassignments WHERE course_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $course));
 }
 
 ?>
