@@ -1,4 +1,4 @@
-
+<?php exit; // this template does not seem to be use. ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="id" value="<?php echo $this->id ?>" />
 <div class="input-form">	
