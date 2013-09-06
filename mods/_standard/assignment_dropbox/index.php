@@ -15,7 +15,6 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); // for get_human_size()
 require_once(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php'); // for get_human_size()
 require('assignment_dropbox.inc.php');
-
 $owner_type = WORKSPACE_ASSIGNMENT;
 
 if (isset($_REQUEST['owner_id']) && !($has_priv = ad_authenticate($_REQUEST['owner_id']))) {
@@ -41,17 +40,6 @@ if (isset($_POST['upload']) && isset($_POST['owner_id'])) {
 		$msg->addError('FILE_NOT_SAVED');
 	}
 
-	// check that we own this folder
-//	if ($parent_folder_id) {
-//		$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
-//		$result = mysql_query($sql, $db);
-//		if (!$row = mysql_fetch_assoc($result)) {
-//			$msg->addError('ACCESS_DENIED');
-//			header('Location: '.AT_BASE_HREF.'mods/_standard/file_storage/index.php');
-//			exit;
-//		}
-//	}
-
 	if (!$msg->containsErrors()) {
 		$_POST['description'] = $addslashes(trim($_POST['description']));
 		$_FILES['file']['name'] = addslashes($_FILES['file']['name']);
@@ -62,33 +50,18 @@ if (isset($_POST['upload']) && isset($_POST['owner_id'])) {
 			$num_comments = 0;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files
+		$sql = "INSERT INTO %sfiles
 		               (owner_type, owner_id, member_id, folder_id, 
 		                parent_file_id, date, num_comments, num_revisions, file_name,
 		                file_size, description) 
-		        VALUES ($owner_type, $_POST[owner_id], $_SESSION[member_id], $_POST[folder_id], 
-		                0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', 
-		                {$_FILES['file']['size']}, '$_POST[description]')";
-		$result = mysql_query($sql, $db);
+		        VALUES (%d, %d, %d, %d, 
+		                0, NOW(), %d, 0, '%s', 
+		                %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $owner_type, $_POST['owner_id'], $_SESSION['member_id'], $_POST['folder_id'], $num_comments, $_FILES['file']['name'], $_FILES['file']['size'], $_POST['description']));
 
-		if ($result && ($file_id = mysql_insert_id($db))) {
+		if($result > 0 && ($file_id = at_insert_id())){
 			$path = fs_get_file_path($file_id);
 			move_uploaded_file($_FILES['file']['tmp_name'], $path . $file_id);
-
-			// check if this file name already exists
-//			$sql = "SELECT file_id, num_revisions FROM ".TABLE_PREFIX."files WHERE owner_type=$owner_type AND owner_id=$owner_id AND folder_id=$parent_folder_id AND file_id<>$file_id AND file_name='{$_FILES['file']['name']}' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
-//			$result = mysql_query($sql, $db);
-//			if ($row = mysql_fetch_assoc($result)) {
-//				if ($_config['fs_versioning']) {
-//					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id, date=date WHERE file_id=$row[file_id]";
-//					$result = mysql_query($sql, $db);
-//
-//					$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=$row[num_revisions]+1, date=date WHERE file_id=$file_id";
-//					$result = mysql_query($sql, $db);
-//				} else {
-//					fs_delete_file($row['file_id'], $owner_type, $owner_id);
-//				}
-//			}
 
 			$msg->addFeedback('ASSIGNMENT_HANDED_IN');
 			header('Location: index.php');
@@ -119,9 +92,11 @@ if ($has_priv && isset($_POST['delete']) && is_array($files)) {
 	$file_list_to_print = '';
 	$files = implode(',', $files);
 	$hidden_vars['files'] = $files;
-	$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($files) AND owner_type=$owner_type AND owner_id=$_REQUEST[owner_id] ORDER BY file_name";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	$sql = "SELECT file_name FROM %sfiles WHERE file_id IN (%s) AND owner_type=%d AND owner_id=%d ORDER BY file_name";
+	$rows_files = queryDB($sql, array(TABLE_PREFIX, $files, $owner_type, $_REQUEST['owner_id']));
+    
+    foreach($rows_files as $row){
 		$file_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.htmlspecialchars($row['file_name']).'</li>';
 	}
 	$msg->addConfirm(array('FILE_DELETE', $file_list_to_print), $hidden_vars);
@@ -182,8 +157,8 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) { // instructor
 	            AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time()."))
 	        ORDER BY title";
 }
-$assignment_list_result = mysql_query($sql, $db);
 
+$rows_assignment_list = queryDB($sql, array());
 $_custom_css = $_base_path . 'mods/_standard/assignment_dropbox/module.css'; // use a custom stylesheet
 
 require (AT_INCLUDE_PATH.'header.inc.php');
@@ -191,12 +166,12 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <div class="input-form">
 <?php
-if (mysql_num_rows($assignment_list_result) == 0) {
+if(count($rows_assignment_list) == 0){
 	echo _AT('none_found');
 }
 else {
 	echo _AT('flag_text', '<img src="'.AT_BASE_HREF.'mods/_standard/assignment_dropbox/flag.png" border="0" />');
-	while ($assignment_row = mysql_fetch_assoc($assignment_list_result)) {
+	foreach($rows_assignment_list as $assignment_row){
 		$owner_id = $assignment_row['assignment_id'];
 		
 		if ($assignment_row['group_id'] == 0) {
@@ -206,16 +181,18 @@ else {
 		}
 		
 		// default sql for instructor: find all submitted assignments
-		$sql = "SELECT * FROM ".TABLE_PREFIX."files 
-		         WHERE owner_type=$owner_type 
-		           AND owner_id=$owner_id 
+		$sql = "SELECT * FROM %sfiles 
+		         WHERE owner_type=%d 
+		           AND owner_id=%d 
 		           AND parent_file_id=0";
 		// students: find his own submitted assignments
 		if (!authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 			$sql .= " AND folder_id=$folder_id 
 		           ORDER BY date DESC, file_name, file_size";
 		}
-		$result = mysql_query($sql, $db);
+
+		$rows_files = queryDB($sql, array(TABLE_PREFIX, $owner_type, $owner_id));
+
 ?>
   <div id="assignment_desc">
     <h4>
@@ -229,7 +206,8 @@ else {
       <?php echo $assignment_row['title']; ?>
       </a>
       <div id="flag<?php echo $assignment_row['assignment_id']; ?>" class="flagdiv">
-      <?php if (mysql_num_rows($result) > 0) { ?>
+      <?php 
+      if(count($rows_files) > 0){ ?>
         <img src="<?php echo AT_BASE_HREF; ?>mods/_standard/assignment_dropbox/flag.png" border="0" />
       <?php }?>    
       </div>
@@ -264,12 +242,13 @@ else {
     </tfoot>
   
     <tbody>
-  <?php if (mysql_num_rows($result) == 0) { ?>
+  <?php 
+  if(count($rows_files) == 0){ ?>
       <tr>
         <td colspan="5"><?php echo _AT('none_found'); ?></td>
       </tr>
   <?php } else { 
-  while ($file_info = mysql_fetch_assoc($result)) {?> 
+  foreach($rows_files as $file_info){ ?> 
       <tr onmousedown="document.form<?php echo $assignment_row['assignment_id']; ?>['r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>'].checked = !document.form<?php echo $assignment_row['assignment_id']; ?>['r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>'].checked; togglerowhighlight(this, 'r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>');" id="r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>_0">
         <td valign="top" width="10">
           <input type="checkbox" name="files<?php echo $assignment_row['assignment_id']; ?>[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" />
@@ -280,22 +259,6 @@ else {
           <p class="fm-desc"><?php echo htmlspecialchars($file_info['description']); ?></p>
 		  <?php endif; ?>
         </td>
-		<!-- <td valign="top">
-			<?php if ($_config['fs_versioning']): ?>
-				<?php if ($file_info['num_revisions']): 
-					if ($file_info['num_revisions'] == 1) {
-						$lang_var = 'fs_revision';
-					} else {
-						$lang_var = 'fs_revisions';
-					}
-					?>
-					
-          <a href="<?php echo url_rewrite('mods/_standard/file_storage/revisions.php'.$owner_arg_prefix.'id='.$file_info['file_id']); ?>"><?php echo _AT($lang_var, $file_info['num_revisions']); ?></a>
-				<?php else: ?>
-					-
-				<?php endif; ?>
-			<?php endif; ?>
-        </td> -->
         <td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
         <td align="right" valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file_info['date'], AT_DATE_MYSQL_DATETIME); ?></td>
         <td valign="top">
@@ -309,7 +272,7 @@ else {
         <a href="<?php echo url_rewrite('mods/_standard/file_storage/comments.php?ot='.$owner_type.SEP.'oid='. $assignment_row['assignment_id'].SEP.'id='.$file_info['file_id']); ?>"><?php echo _AT($lang_var, $file_info['num_comments']); ?></a></td>
 	  </tr>
   <?php }?>
-  <?php } // end of while ($file_info) ?>
+  <?php } // end of foreach ($file_info) ?>
     </tbody>
   
     </table>
@@ -364,14 +327,13 @@ ATutor.mods.assignment_dropbox = ATutor.mods.assignment_dropbox || {};
     //set up the open/close state of each assignment div
     var initialize = function () {
         <?php 
-        if (mysql_num_rows($assignment_list_result) > 0) {
-        	mysql_data_seek($assignment_list_result, 0);
-        	while ($assignment_row = mysql_fetch_assoc($assignment_list_result)) {
+        if(count($rows_assignment_list) > 0){
+        	foreach($rows_assignment_list as $assignment_row){
         ?>
     			if (ATutor.getcookie("ad<?php echo $assignment_row['assignment_id'].'_'.$_SESSION['member_id']; ?>") == "0") {
 		    		ATutor.mods.assignment_dropbox.toggleDiv(<?php echo $assignment_row['assignment_id']; ?>, 0);
 		    	}
-        <?php } // end of while
+        <?php } // end of foreach
         } // end of if?>
     };
     
