@@ -39,10 +39,10 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) { // instructor
 	        ORDER BY date_due DESC";
 }
 $sql .= " LIMIT $link_limit";
-$result = mysql_query($sql, $db);
 
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
+$rows_assignments = queryDB($sql, array());
+if(count($rows_assignments) > 0){
+    foreach($rows_assignments as $row){
 		/****
 		* SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY are defined in include/lib/constance.lib.inc
 		* SUBLINK_TEXT_LEN determins the maxium length of the string to be displayed on "detail view" box.
@@ -50,9 +50,6 @@ if (mysql_num_rows($result) > 0) {
 		$title = $row['title'] . ' ('._AT("due_date").': '.$row['date_due'].')';
 		$list[] = '<a href="'.AT_BASE_HREF.'mods/_standard/assignment_dropbox/index.php">'. 
 		          $title .'</a>';
-//		$list[] = '<a href="mods/assignment_dropbox/index.php"'.
-//		          (strlen($row['value']) > SUBLINK_TEXT_LEN ? ' title="'.$row['value'].'"' : '') .'>'. 
-//		          validate_length($row['value'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
 	}
 	return $list;	
 } else {
