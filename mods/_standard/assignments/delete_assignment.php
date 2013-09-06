@@ -25,9 +25,8 @@ else if (isset($_POST['submit_yes'])) {
 	$_POST['assignment_id'] = intval($_POST['assignment_id']);
 
 	// delete the assignment from the table
-	$sql = "DELETE FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] AND assignment_id=$_POST[assignment_id]";
-	$result = mysql_query($sql, $db);
-
+	$sql = "DELETE FROM %sassignments WHERE course_id=%d AND assignment_id=%d";
+	$result = queryDB($sql,array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['assignment_id']));
 	// delete all the files for this assignment
 	require(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php');
 	fs_delete_workspace(WORKSPACE_ASSIGNMENT, $_POST['assignment_id']);
@@ -41,10 +40,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $_GET['id'] = intval($_GET['id']); 
 
-$sql = "SELECT title FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] AND assignment_id=$_GET[id]";
-$result = mysql_query($sql, $db);
+$sql = "SELECT title FROM %sassignments WHERE course_id=%d AND assignment_id=%d";
+$row_assignment = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_GET['id']), TRUE);
 
-if ($row = mysql_fetch_assoc($result)){
+if(count($row_assignment) > 0){
 	$hidden_vars['assignment_id'] = $_GET['id'];
 	$confirm = array('DELETE_ASSIGNMENT', AT_print($row['title'], 'assignment.title'));
 	$msg->addConfirm($confirm, $hidden_vars);
