@@ -10,29 +10,21 @@
      */
     function assignments_extend_date($member_id, $course_id) {
 
-        global $db;
+        //global $db;
         $assignments = array();
         
         // get course title
-        $sql = "SELECT title 
-                FROM ". TABLE_PREFIX . "courses 
-                WHERE course_id = '". $course_id . "'";
-                
-        $result       = mysql_query($sql,$db) or die(mysql_error());
-        $row          = mysql_fetch_assoc($result);
+        $sql = "SELECT title  FROM %scourses  WHERE course_id = %d";             
+        $row       = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
         $course_title = $row['title'];
-        
-        $sql = "SELECT assignment_id,title,date_due,date_cutoff
-                FROM " . TABLE_PREFIX . "assignments
-                WHERE course_id = '" . $course_id . "'";
 
-        $result     = mysql_query($sql,$db) or die(mysql_error());
-        $row_count  = mysql_num_rows($result);
+        $sql = "SELECT assignment_id,title,date_due,date_cutoff FROM %sassignments WHERE course_id = %d";
+        $rows_courses     = queryDB($sql,array(TABLE_PREFIX, $course_id));
+        $row_count  = count($rows_courses);
 
         if ($row_count > 0) {
             $index = 0;
-            while ($row = mysql_fetch_assoc($result)) {
-                
+            foreach($rows_courses as $row){
                 $assignment_id = $row['assignment_id'];
                 $unix_ts       = strtotime($row['date_due']);
                 $time          = date('h:i A',$unix_ts);
