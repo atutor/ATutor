@@ -34,42 +34,41 @@ function ad_authenticate($owner_id) {
 	else
 	{ 
 		// students have read access to their own assignments
-		global $db;
-		$sql = "SELECT COUNT(*) cnt FROM ".TABLE_PREFIX."files
-		         WHERE owner_id =".$owner_id."
-                   AND owner_type= ".WORKSPACE_ASSIGNMENT."
-                   AND member_id = ".$_SESSION['member_id'];
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		
+
+		$sql = "SELECT COUNT(*) cnt FROM %sfiles
+		         WHERE owner_id = %d
+                   AND owner_type= %d
+                   AND member_id = %d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $owner_id, WORKSPACE_ASSIGNMENT, $_SESSION['member_id']), TRUE);
+	
 		if ($row['cnt'] > 0) RETURN true;
 		
 		// enrolled students can submit the assignments that assign to him/her
 		if ($_SESSION['member_id'] && $_SESSION['enroll']) {
 			// assignments that are assigned to all students
-			$sql = "SELECT count(*) cnt FROM ".TABLE_PREFIX."assignments 
-                     WHERE assignment_id = ".$owner_id."
+
+			$sql = "SELECT count(*) cnt FROM %sassignments 
+                     WHERE assignment_id = %d
                        AND assign_to=0 
-                       AND course_id=".$_SESSION[course_id];
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
-			
+                       AND course_id=%d";
+			$row= queryDB($sql, array(TABLE_PREFIX, $owner_id, $_SESSION['course_id']), TRUE);
+					
 			if ($row['cnt'] > 0) RETURN true;
 
 			// assignments that are assigned to a group, 
 			// and this group has "file storage" tool available
 			// and the student is in this group
 			$groups_list = implode(',',$_SESSION['groups']);  // the groups that the student belongs to
+
 			$sql = "SELECT count(*) cnt
-		              FROM ".TABLE_PREFIX."groups_types gt, ".TABLE_PREFIX."groups g, ".TABLE_PREFIX."assignments a
-		             WHERE g.group_id in (".$groups_list.")
-		               AND g.group_id in (SELECT group_id FROM ".TABLE_PREFIX."file_storage_groups)
+		              FROM %sgroups_types gt, %sgroups g, %sassignments a
+		             WHERE g.group_id in (%s)
+		               AND g.group_id in (SELECT group_id FROM %sfile_storage_groups)
 		               AND g.type_id = gt.type_id
-		               AND gt.course_id = $_SESSION[course_id]
+		               AND gt.course_id = %d
 		               AND gt.type_id = a.assign_to
-		               AND a.assignment_id = ".$owner_id;
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+		               AND a.assignment_id = %d";
+			$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $groups_list, TABLE_PREFIX, $_SESSION['course_id'], $owner_id), TRUE);
 			
 			if ($row['cnt'] > 0) RETURN true;
 		}
