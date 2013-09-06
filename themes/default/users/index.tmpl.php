@@ -101,7 +101,7 @@
 		
     //display current news
 
-    if(isset($_GET['p']) && $_GET['p'] == 0){
+    if(!isset($_GET['p']) && $_GET['p'] == 0){
       $p = 1;
     }else{
       $p = intval($_GET['p']);
@@ -119,6 +119,7 @@
 	$page = isset($$page) ? $page : '';
 	
     print_paginator($page, $num_pages, '', 1); 
+
     for($i=$start;$i<=$end; $i++){
 	$count = $i;
 	if (isset($this->all_news)) {
