@@ -37,6 +37,7 @@ $orders = array('ASC' => 'DESC', 'DESC' => 'ASC');
 $cols   = array('title' => 1, 'date_due' => 1);
 $sort = 'title';
 $order = 'ASC';
+
 if (isset($_GET['sort'])){
 	$sort = isset($cols[$_GET['sort']]) ? $_GET['sort'] : 'title';
 }
@@ -46,12 +47,17 @@ if (isset($_GET['order'])){
 		$order = 'ASC';
 	}
 }
-$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY $sort $order";
-$result = mysql_query($sql, $db);
-$sql2 = "SELECT title FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[assign_to] AND course_id=$_SESSION[course_id]";
-$type_result = mysql_query($sql2, $db);
-$savant->assign('result', $result);
+
+$sql = "SELECT * FROM %sassignments WHERE course_id=%d ORDER BY $sort $order";
+$rows_assignments = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
+foreach($rows_assignments as $row){
+    $sql2 = "SELECT title FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+    $rows_type[$row['assignment_id']] = queryDB($sql2, array(TABLE_PREFIX, $row['assign_to'], $_SESSION['course_id']), TRUE);
+}
+
+$savant->assign('rows_assignments', $rows_assignments);
 $savant->assign('sort', $sort);
-$savant->assign('type_result', $type_result);
+$savant->assign('rows_type', $rows_type);
 $savant->display('instructor/assignments/index_instructor.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

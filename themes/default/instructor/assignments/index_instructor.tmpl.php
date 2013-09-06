@@ -25,7 +25,10 @@
 	<th scope="col"><a href="mods/_standard/assignments/index_instructor.php?sort=date_due<?php echo SEP; ?>order=<?php echo $orders[$order]; ?>"><?php echo _AT('due_date'); ?></a></th>
 </tr>
 </thead>
-<?php if (($this->result != 0) && ($row = mysql_fetch_assoc($this->result))) : ?>
+<?php 
+
+if(count($this->rows_assignments) > 0){ ?>
+
 <tfoot>
 <tr>
 	<td colspan="4">
@@ -37,7 +40,9 @@
 </tr>
 </tfoot>
 <tbody>
-	<?php do { ?>
+	<?php 
+	foreach($this->rows_assignments as $row){
+	?>
 		<tr onkeydown="document.form['a<?php echo $row['assignment_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['a<?php echo $row['assignment_id']; ?>'].checked = true; rowselect(this);" id="a_<?php echo $row['assignment_id']; ?>_0">
 		
 		<td><input type="radio" id="a<?php echo $row['assignment_id']; ?>" name="assignment" value="<?php echo $row['assignment_id']; ?>" 
@@ -56,23 +61,32 @@
 
 		<td><label for="a<?php echo $row['assignment_id']; ?>"><?php echo AT_print($row['title'], 'assignment.title'); ?></label></td>
 
-		<td><?php if($row['assign_to'] == '0'){echo _AT('all_students'); } else {
-				
-					$type_row = mysql_fetch_assoc($this->type_result);
-					echo $type_row['title']; } ?></td>
-
-		<td><?php  if ($row['date_due'] == '0000-00-00 00:00:00'){
+		<td><?php
+		        if($row['assign_to'] == '0'){
+		                echo _AT('all_students'); 
+		        } else {
+		            foreach($this->rows_type as $row_key=>$row_type){
+                        if($row['assignment_id'] == $row_key){
+                            echo $row_type['title']; 
+                        }
+					}
+				} ?>
+					</td>
+                
+		<td><?php  
+		if ($row['date_due'] == '0000-00-00 00:00:00'){
 			echo _AT('none');
 		}else {
 			echo AT_Date(_AT('forum_date_format'), $row['date_due'], AT_DATE_MYSQL_DATETIME);
 		}?></td>
 		</tr>
-	<?php } while($row = mysql_fetch_assoc($this->result)); ?>
+	<?php } 
+	?>
 </tbody>
-<?php else: ?>
+<?php } else { ?>
 	<tr>
 		<td colspan="4"><strong><?php echo _AT('none_found'); ?></strong></td>
 	</tr>
-<?php endif; ?>
+<?php } ?>
 </table>
 </form>
