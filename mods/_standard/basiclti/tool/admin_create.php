@@ -37,18 +37,19 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['form_basiclti'])) {
 
     if ( at_form_validate($blti_admin_form, $msg) ) {
-        $sql = "SELECT count(*) cnt FROM ".TABLE_PREFIX."basiclti_tools WHERE toolid = '".
-		mysql_real_escape_string($_POST['toolid'])."';";
-        $result = mysql_query($sql, $db) or die(mysql_error());
-        $row = mysql_fetch_assoc($result);
+
+        $sql = "SELECT count(*) cnt FROM %sbasiclti_tools WHERE toolid = '%s'";
+        $row = queryDB($sql, array(TABLE_PREFIX, $_POST['toolid']), TRUE);
 
         if ($row["cnt"] != 0) {
-           $msg->addFeedback('NEED_UNIQUE_TOOLID');
+           $msg->addError('NEED_UNIQUE_TOOLID');
 	} else {
+
             $sql = at_form_insert($_POST, $blti_admin_form);
-            $sql = 'INSERT INTO '.TABLE_PREFIX."basiclti_tools ".$sql;
-            $result = mysql_query($sql, $db) or die(mysql_error());
-            write_to_log(AT_ADMIN_LOG_INSERT, 'basiclti_create', mysql_affected_rows($db), $sql);
+            $sql = 'INSERT INTO %sbasiclti_tools '.$sql;
+            $result = queryDB($sql, array(TABLE_PREFIX));
+            global $sqlout;
+            write_to_log(AT_ADMIN_LOG_INSERT, 'basiclti_create', $result, $sqlout);
             $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 
