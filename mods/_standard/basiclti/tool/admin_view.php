@@ -12,11 +12,11 @@ if (isset($_POST['done'])) {
         exit;
 } 
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_tools WHERE id = ".$tool.";";
-$result = mysql_query($sql, $db) or die(mysql_error());
-$toolrow = mysql_fetch_assoc($result);
+$sql = "SELECT * FROM %sbasiclti_tools WHERE id = %d";
+$toolrow = queryDB($sql, array(TABLE_PREFIX, $tool), TRUE);
+
 if ( $toolrow['id'] != $tool ) {
-    $msg->addFeedback('COULD_NOT_LOAD_TOOL');
+    $msg->addError('COULD_NOT_LOAD_TOOL');
     header('Location: '.AT_BASE_HREF.'mods/_standard/basiclti/index_admin.php');
     exit;
 }
