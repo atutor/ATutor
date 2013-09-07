@@ -200,6 +200,7 @@ function at_form_validate($form_definition, $msg ) {
 }
 
 function at_get_field_value($fieldvalue, $type = false) {
+    global  $addslashes;
     if ( $fieldvalue === false ) {
        $fieldvalue = 'NULL';
     } else if ( is_int($fieldvalue) ) {
