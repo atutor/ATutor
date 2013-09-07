@@ -57,7 +57,7 @@ if (isset($_POST['cancel'])) {
 }
 
 $sql = "SELECT * FROM %sbasiclti_tools WHERE id = %d";
-$toolrow = queryDB($sql, array(TABLE_PREFIX, $tool));
+$toolrow = queryDB($sql, array(TABLE_PREFIX, $tool), TRUE);
 
 if ( $toolrow['id'] != $tool ) {
     $msg->addError('COULD_NOT_LOAD_TOOL');
