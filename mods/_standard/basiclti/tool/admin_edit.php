@@ -38,18 +38,17 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['form_basiclti'], $tool)) {
 
     if ( at_form_validate($blti_admin_form, $msg) ) {
-        $sql = "SELECT count(*) cnt FROM ".TABLE_PREFIX."basiclti_tools WHERE toolid = '".
-                mysql_real_escape_string($_POST['toolid'])."' AND id != $tool;";
-        $result = mysql_query($sql, $db) or die(mysql_error());
-        $row = mysql_fetch_assoc($result);
+        $sql = "SELECT count(*) cnt FROM %sbasiclti_tools WHERE toolid = '%s' AND id != %d";
+        $row = queryDB($sql, array(TABLE_PREFIX, $_POST['toolid'], $tool), TRUE);
 
         if ($row["cnt"] != 0) {
-           $msg->addFeedback('NEED_UNIQUE_TOOLID');
+           $msg->addError('NEED_UNIQUE_TOOLID');
         } else {
             $sql = at_form_update($_POST, $blti_admin_form);
-            $sql = 'UPDATE '.TABLE_PREFIX."basiclti_tools SET ".$sql." WHERE id = $tool;";
-            $result = mysql_query($sql, $db) or die(mysql_error());
-            write_to_log(AT_ADMIN_LOG_INSERT, 'basiclti_create', mysql_affected_rows($db), $sql);
+            $sql = 'UPDATE %sbasiclti_tools SET '.$sql.' WHERE id = %d';
+            $result = queryDB($sql, array(TABLE_PREFIX, $tool));
+            global $sqlout;
+            write_to_log(AT_ADMIN_LOG_INSERT, 'basiclti_create', $result, $sqlout);
             $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
             header('Location: '.AT_BASE_HREF.'mods/_standard/basiclti/index_admin.php');
             exit;
@@ -57,11 +56,11 @@ if (isset($_POST['cancel'])) {
     }
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_tools WHERE id = ".$tool.";";
-$result = mysql_query($sql, $db) or die(mysql_error());
-$toolrow = mysql_fetch_assoc($result);
+$sql = "SELECT * FROM %sbasiclti_tools WHERE id = %d";
+$toolrow = queryDB($sql, array(TABLE_PREFIX, $tool));
+
 if ( $toolrow['id'] != $tool ) {
-    $msg->addFeedback('COULD_NOT_LOAD_TOOL');
+    $msg->addError('COULD_NOT_LOAD_TOOL');
     header('Location: '.AT_BASE_HREF.'mods/_standard/basiclti/index_admin.php');
     exit;
 }
