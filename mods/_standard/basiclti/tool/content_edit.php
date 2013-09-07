@@ -33,48 +33,46 @@ if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) {
 // Add/Update The Tool
 if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg)) {
     $toolid = $_POST['toolid']; // Escaping is done in the at_form_util code
-    $sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
-            WHERE content_id=".$_POST[cid]." AND course_id=".$_SESSION[course_id];
 
-
-    $result = mysql_query($sql, $db);
+    $sql = "SELECT * FROM %sbasiclti_content WHERE content_id=%d AND course_id=%d";
+    $row_content = queryDB($sql, array(TABLE_PREFIX, $_POST['cid'], $_SESSION['course_id']), TRUE);
+    
     if ( $toolid == '--none--' ) {
-        $sql = "DELETE FROM ". TABLE_PREFIX . "basiclti_content 
-                       WHERE content_id=".$_POST[cid]." AND 
-                             course_id=".$_SESSION[course_id];
-            $result = mysql_query($sql, $db);
-            if ($result===false) {
+
+            $sql = "DELETE FROM %sbasiclti_content WHERE content_id=%d AND course_id=%d";
+            $result = queryDB($sql, array(TABLE_PREFIX, $_POST['cid'], $_SESSION['course_id']));
+            if ($result === false) {
                 $msg->addError('MYSQL_FAILED');
             } else {
                 $msg->addFeedback('BASICLTI_DELETED');
             }
-    } else if ( mysql_num_rows($result) == 0 ) {
-            $sql = "INSERT INTO ". TABLE_PREFIX . "basiclti_content 
-                       SET toolid='".$toolid."', content_id=".$_POST[cid].",
-                             course_id=".$_SESSION[course_id];
+    } else if ( count($row_content) == 0 ) {
 
-            $result = mysql_query($sql, $db);
-            if ($result===false) {
+            $sql = "INSERT INTO %sbasiclti_content SET toolid='%s', content_id=%d, course_id=%d";
+            $result = queryDB($sql, array(TABLE_PREFIX, $toolid, $_POST['cid'], $_SESSION['course_id']));
+            
+            if ($result == 0) {
                 $msg->addError('MYSQL_FAILED');
             } else {
                 $msg->addFeedback('BASICLTI_SAVED');
             }
 
-    } else if ( $result !== false ) {
-
+    } else if ( count($row_content) > 0 ) {
             $gradebook_test_id = 0;
-            $basiclti_content_row = mysql_fetch_assoc($result);
+            $basiclti_content_row = $row_content;
             $placementsecret = $basiclti_content_row['placementsecret'];
             $gradebook_check = intval($_POST['gradebook_test_id']);
             if ( isset($_POST['gradebook_test_id']) && $gradebook_check > 0 ) {
-		$gradebook_test_id = $gradebook_check;
+		        $gradebook_test_id = $gradebook_check;
+
                 $sql = "SELECT g.gradebook_test_id AS id, g.title AS title
-                        FROM  ".TABLE_PREFIX."gradebook_tests AS g
-                        WHERE g.course_id = ".$_SESSION[course_id]."
+                        FROM  %sgradebook_tests AS g
+                        WHERE g.course_id = %d
                         AND g.type = 'External' and g.grade_scale_id = 0
-                        AND gradebook_test_id = ".$gradebook_test_id;
-                $result = mysql_query($sql, $db);
-                if ( $result === false ) {
+                        AND gradebook_test_id = %d";
+                $rows_grades = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $gradebook_test_id));
+                                
+                if ( $rows_grades == 0 ) {
                     $gradebook_test_id = 0;
                 } else {
                     if ( strlen($placementsecret) < 1 ) {
@@ -86,11 +84,11 @@ if ( isset($_POST['toolid']) && at_form_validate($blti_content_edit_form, $msg))
             $fields = array('toolid' => $toolid, 'gradebook_test_id' => $gradebook_test_id,
                             'placementsecret' => $placementsecret);
             $sql = at_form_update($_POST, $blti_content_edit_form, $fields);
-            $sql = "UPDATE ". TABLE_PREFIX . "basiclti_content 
-                       SET ".$sql." WHERE content_id=".$_POST[cid]." AND 
-                           course_id=".$_SESSION[course_id];
-            $result = mysql_query($sql, $db);
-            if ($result===false) {
+
+            $sql = "UPDATE %sbasiclti_content SET ".$sql." WHERE content_id=%d AND course_id=%d";
+            $result = queryDB($sql, array(TABLE_PREFIX, $_POST['cid'], $_SESSION['course_id']));
+
+            if ($result === false) {
                 $msg->addError('MYSQL_FAILED');
             } else {
              //   $msg->addFeedback('BASICLTI_SAVED');
@@ -135,9 +133,6 @@ if(isset($_POST['save'])){
 			$value	= explode('|', $_POST['lesson'][$i]);
 			list($log, $depth, $key) = $value;
 
-			//echo '<div>'.$_POST['lesson'][$i].'</div>';
-
-			//
 			
 			if($log != $current_log){
 				$current_log = $log;
@@ -146,10 +141,7 @@ if(isset($_POST['save'])){
 			}
 
 			if(!empty($offspring) AND $depth > end($offspring)){
-				/*
-				echo 'JUMP: '.$key;
-				echo '<br/>';
-				*/
+
 				continue;
 			}else{
 				$res[]	= $key;
@@ -167,7 +159,6 @@ if(isset($_POST['save'])){
 
 			// AContent course
 			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_LiveContentLink.class.php');
-			//$course_id	= htmlentities($_POST['course_list']);
 
 			$content_id	= $res[$i];
 			$xml	= null;
@@ -181,8 +172,9 @@ if(isset($_POST['save'])){
 			}else{
 				$this_cid = $_REQUEST['cid'];
 			}
-			$sql_folder = "UPDATE ".TABLE_PREFIX."content SET content_type ='1', content_parent_id = '0', formatting = '0' WHERE content_id = '".$this_cid."'";
-			$result = mysql_query($sql_folder, $db);
+
+			$sql_folder = "UPDATE %scontent SET content_type ='1', content_parent_id = '0', formatting = '0' WHERE content_id = %d";
+			$result = queryDB($sql_folder, array(TABLE_PREFIX, $this_cid));
 
 			require_once(AT_INCLUDE_PATH . 'classes/AContent_lcl/AContent_lcl_importxml.class.php');
 			$ac_xml	= new AContent_lcl_importxml();
@@ -193,12 +185,7 @@ if(isset($_POST['save'])){
 			if($import){
 				$msg->addFeedback('BASICLTI_SAVED');
 			}
-			/*
-			if($import)
-				echo '<div>DEBUG: Ok!</div>';
-			else
-				echo '<div>DEBUG: Error!</div>';
-			*/		}
+        }
 	}
 	
 	// show "Close window" button
@@ -210,14 +197,13 @@ if(isset($_POST['save'])){
 
 	die();
 }
-//--
 
 /* get a list of all the tools, we have */
-$sql    = "SELECT * FROM ".TABLE_PREFIX."basiclti_tools WHERE course_id = 0".
-          " OR course_id=".$_SESSION[course_id]." ORDER BY course_id,title";
 
-$toolresult = mysql_query($sql, $db);
-$num_tools = mysql_num_rows($toolresult);
+$sql    = "SELECT * FROM %sbasiclti_tools WHERE course_id = 0".
+          " OR course_id=%d ORDER BY course_id,title";
+$rows_tools = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+$num_tools = count($rows_tools);
 
 //If there are no Tools, don't display anything except a message
 if ($num_tools == 0){
@@ -239,11 +225,9 @@ if ($num_tools == 0){
 <?php echo $msg->printFeedbacks();
 
 // Get the current content item
-$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content 
-                WHERE content_id=$cid";
-$contentresult = mysql_query($sql, $db);
-$basiclti_content_row = mysql_fetch_assoc($contentresult);
-// if ( $basiclti_content_row ) echo("FOUND"); else echo("NOT");
+$sql = "SELECT * FROM %sbasiclti_content WHERE content_id=%d";
+$basiclti_content_row = queryDB($sql, array(TABLE_PREFIX, $cid), TRUE);
+
 ?>
 <div class="row">
    <?php echo _AT('bl_choose_tool'); ?><br/>
@@ -251,7 +235,7 @@ $basiclti_content_row = mysql_fetch_assoc($contentresult);
       <option value="--none--">&nbsp;</option><?php
       $basiclti_tool_row = false;
       $found = false;  // Only the first one
-      while ( $tool = mysql_fetch_assoc($toolresult) ) {
+      foreach($rows_tools as $tool){
          $selected = "";
          if ( ! $found && $tool['toolid'] == $basiclti_content_row['toolid'] ) {
            $selected = ' selected="yes"';
@@ -265,16 +249,16 @@ $basiclti_content_row = mysql_fetch_assoc($contentresult);
 <?php
 if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
     $sql = "SELECT g.gradebook_test_id AS id, g.title AS title
-            FROM  ".TABLE_PREFIX."gradebook_tests AS g
-            WHERE g.course_id = ".$_SESSION[course_id]."
+            FROM  %sgradebook_tests AS g
+            WHERE g.course_id = %d
             AND g.type = 'External' and g.grade_scale_id = 0";
-    $graderesult = mysql_query($sql, $db);
-    if ( $graderesult !== false && mysql_num_rows($graderesult) > 0) { ?>
+    $rows_grades = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id]));
+    if(count($rows_grades) > 0) { ?>
 <div class="row">
    <?php echo _AT('bl_choose_gradbook_entry'); ?><br/>
         <select id="gradebook_test_id" name="gradebook_test_id"> 
            <option value="--none--">&nbsp;</option><?php
-        while ( $gradeitem = mysql_fetch_assoc($graderesult) ) {
+           foreach($rows_grades as $gradeitem){
             echo($gradeitem['title']);
             $selected = "";
             if ( $gradeitem['id'] == $basiclti_content_row['gradebook_test_id'] ) {
@@ -291,7 +275,6 @@ if ( $basiclti_tool_row != false && $basiclti_tool_row['acceptgrades'] == 1 ) {
 
 </div>
 </legend>
-<!--</form>-->
 </div>
 
 <?php
