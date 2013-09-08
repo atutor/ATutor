@@ -21,11 +21,11 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 $sql = "SELECT t.id AS id,t.title AS title,t.toolid AS toolid,
                t.description AS description, COUNT(c.id) AS cnt 
-        FROM ".TABLE_PREFIX."basiclti_tools AS t 
-        LEFT OUTER JOIN ".TABLE_PREFIX."basiclti_content as c
+        FROM %sbasiclti_tools AS t 
+        LEFT OUTER JOIN %sbasiclti_content as c
         ON t.toolid = c.toolid
         WHERE t.course_id = 0 GROUP BY t.toolid ORDER BY t.title";
-$result = mysql_query($sql, $db) or die(mysql_error());
+$rows_tools = queryDB($sql, array(TABLE_PREFIX,TABLE_PREFIX));
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <table class="data static" summary="" rules="all">
@@ -44,7 +44,7 @@ $result = mysql_query($sql, $db) or die(mysql_error());
 		</tr>
 	</tfoot>
         <tbody>
-                <?php while($row = mysql_fetch_array($result)) { ?><tr>
+                <?php foreach($rows_tools as $row){ ?><tr>
  		<td><input type="radio" name="id" value="<?php echo $row['id']; ?>" id="m<?php echo $row['id']; ?>" /></td>
                 <td><label for="m<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></td>
                 <td><?php echo $row['toolid']; ?></td>
