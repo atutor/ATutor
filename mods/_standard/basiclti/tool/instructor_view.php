@@ -17,12 +17,11 @@ if (isset($_POST['done'])) {
         exit;
 } 
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_tools WHERE id = ".$tool.
-       " AND course_id = ". $_SESSION['course_id'];
-$result = mysql_query($sql, $db) or die(mysql_error());
-$toolrow = mysql_fetch_assoc($result);
+$sql = "SELECT * FROM %sbasiclti_tools WHERE id = %d AND course_id = %d";
+$toolrow = queryDB($sql, array(TABLE_PREFIX, $tool, $_SESSION['course_id']), TRUE);
+
 if ( $toolrow['id'] != $tool ) {
-    $msg->addFeedback('COULD_NOT_LOAD_TOOL');
+    $msg->addError('UNABLE_TO_FIND_TOOL');
     header('Location: '.AT_BASE_HREF.'mods/_standard/basiclti/index_instructor.php');
     exit;
 }
