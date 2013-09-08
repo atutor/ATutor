@@ -1,4 +1,6 @@
 <?php
+// THIS FILE APPEARS TO BE UNUSED, TEST WITH IMS VALIDATOR
+//exit;
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 

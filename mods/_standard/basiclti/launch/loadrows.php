@@ -1,6 +1,6 @@
 <?php
-// THIS FILE APPEARS TO BE UNUSED
-exit;
+// THIS FILE APPEARS TO BE UNUSED, TEST WITH IMS VALIDATOR
+// exit;
 // Needs $content_id and $member_id for the BasicLTI placement 
 /*$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
                 WHERE content_id=".$content_id;

@@ -1,5 +1,6 @@
 <?php
-
+// THIS FILE APPEARS TO BE UNUSED, TEST WITH IMS LTI VALIDATOR
+// exit;
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'config.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
@@ -187,8 +188,11 @@ $course_id = $atutor_content_row['course_id'];
             WHERE e.course_id = '.$course_id.' AND m.member_id ='.$member_id.'
             AND g.gradebook_test_id = '.$gradebook_test_id."
             AND g.type = 'External' and g.grade_scale_id = 0";
-        $gradebook_result = mysql_query($sql, $db);
-        $count = mysql_num_rows($gradebook_result);
+        //$gradebook_result = mysql_query($sql, $db);
+        //$count = mysql_num_rows($gradebook_result);
+        $rows_gradebook = queryDB($sql, array());
+        $count = count($rows_gradebook):
+        //$count = mysql_num_rows($gradebook_result);
         if ( $count < 1 ) {
             doError("Not gradable");
         }
@@ -205,13 +209,16 @@ $course_id = $atutor_content_row['course_id'];
             AND g.type = 'External' and g.grade_scale_id = 0";
 
         if ( $lti_message_type == "basic-lis-readresult" ) {
-            $grade_result = mysql_query($read_sql, $db);
-            $count = mysql_num_rows($gradebook_result);
+            //$grade_result = mysql_query($read_sql, $db);
+            //$count = mysql_num_rows($gradebook_result);
+            $row_grades = queryDB($read_sql, array());
+            $count = count($row_grades);
             if ( $count < 1 ) {
                 doError("Not gradable");
             }
             unset($grade);
-            $grade_row = mysql_fetch_assoc($grade_result);
+            //$grade_row = mysql_fetch_assoc($grade_result);
+            $grade_row = $row_grades;
             if ( $grade_row === false ) {
                 // Skip
             } else if ( isset($grade_row['grade']) ) { 
@@ -234,11 +241,14 @@ $course_id = $atutor_content_row['course_id'];
        }
     
         if ( $lti_message_type == "basic-lis-deleteresult" ) {
-            $delete_sql = 'DELETE FROM '.TABLE_PREFIX.'gradebook_detail 
+/*            $delete_sql = 'DELETE FROM '.TABLE_PREFIX.'gradebook_detail 
                 WHERE member_id ='.$member_id.'
                 AND gradebook_test_id = '.$gradebook_test_id;
 
             $gradebook_result = mysql_query($delete_sql, $db);
+*/
+            $delete_sql = 'DELETE FROM %sgradebook_detail WHERE member_id = %d AND gradebook_test_id = %d';
+            $gradebook_result = queryDB($delete_sql, array(TABLE_PREFIX, $member_id, $gradebook_test_id));
             if ( $gradebook_result === false ) {
                 doError("Could not delete grade");
             }
@@ -254,12 +264,20 @@ $course_id = $atutor_content_row['course_id'];
             }
 
             // TODO: Greg - do we do Insert or Update?
-            $replace_sql = 'INSERT INTO '.TABLE_PREFIX.'gradebook_detail 
+        /*    $replace_sql = 'INSERT INTO '.TABLE_PREFIX.'gradebook_detail 
                 (gradebook_test_id, member_id, grade) VALUES
                 ('.$gradebook_test_id.','.$member_id.','.$gradeval.')
                 ON DUPLICATE KEY UPDATE grade='.$gradeval;
 
             $gradebook_result = mysql_query($replace_sql, $db);
+            */
+            $replace_sql = 'INSERT INTO %sgradebook_detail 
+                (gradebook_test_id, member_id, grade) VALUES
+                (%d,%d,%d)
+                ON DUPLICATE KEY UPDATE grade=%d';
+
+            $gradebook_result = queryDB($replace_sql, array(TABLE_PREFIX, $gradebook_test_id, $member_id, $gradeval, $gradeval));
+                        
             if ( $gradebook_result === false ) {
                 // TODO: Log message would be good here
                 doError("Could not store grade");
@@ -278,31 +296,46 @@ $course_id = $atutor_content_row['course_id'];
         if ( ! isset($setting) ) doError('Missing setting value');
         // $sql = "UPDATE {$CFG->prefix}basiclti SET 
                // setting='". mysql_escape_string($setting) . "' WHERE id=" . $basiclti->id;
-        $sql = "UPDATE ".TABLE_PREFIX."basiclti_content
+     /*   $sql = "UPDATE ".TABLE_PREFIX."basiclti_content
                SET setting='". mysql_escape_string($setting) . "' WHERE content_id=" . $placement;
         $success = mysql_query($sql);
+        */
+        $sql = "UPDATE %sbasiclti_content SET setting='%s' WHERE content_id=%d";
+        $success = queryDB($sql, array(TABLE_PREFIX, $setting, $placement));
         if ( $success ) {
             print message_response('Success', 'Status', 'fullsuccess', 'Setting updated');
         } else {
             doError("Error updating setting");
         }
     } else if ( $lti_message_type == "basic-lti-deletesetting" ) {
-        $sql = "UPDATE ".TABLE_PREFIX."basiclti_content
+       /* $sql = "UPDATE ".TABLE_PREFIX."basiclti_content
                SET setting='' WHERE content_id=" . $placement;
         $success = mysql_query($sql);
+        */
+        $sql = "UPDATE %sbasiclti_content SET setting='' WHERE content_id=%d";
+        $success = queryDB($sql, array(TABLE_PREFIX, $placement));
+        
         if ( $success ) {
             print message_response('Success', 'Status', 'fullsuccess', 'Setting deleted');
         } else {
             doError("Error updating setting");
         }
     } else if ( $message_type == "roster" ) {
-        $sql = 'SELECT role,m.member_id AS member_id,first_name,last_name,email 
+      /*  $sql = 'SELECT role,m.member_id AS member_id,first_name,last_name,email 
             FROM  '.TABLE_PREFIX.'course_enrollment AS e
             JOIN  '.TABLE_PREFIX.'members AS m ON e.member_id = m.member_id 
             WHERE course_id = '.$course_id;
         $roster_result = mysql_query($sql, $db);
+        */
+        $sql = 'SELECT role,m.member_id AS member_id,first_name,last_name,email 
+            FROM  %scourse_enrollment AS e
+            JOIN  %smembers AS m ON e.member_id = m.member_id 
+            WHERE course_id = %d';
+        $rows_roster = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id));
+
         $xml = "  <memberships>\n";
-        while ($row = mysql_fetch_assoc($roster_result)) {
+        foreach($rows_roster as $row){
+       // while ($row = mysql_fetch_assoc($roster_result)) {
             $role = "Learner";
             if ( $row['role'] == 'Instructor' ) $role = 'Instructor';
             $userxml = "    <member>\n".
