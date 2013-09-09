@@ -340,7 +340,13 @@ if (isset($_SESSION['member_id']) && $_SESSION['login']) {
     require_once(AT_INCLUDE_PATH.'footer.inc.php');
     exit;
 }
-
+function validate_enid($en_id){
+    if(preg_match("/^[a-zA-Z0-9]{6,10}$/", $en_id)){
+        return $en_id;
+    } else {
+        return;
+    }
+}
 unset($_SESSION['member_id']);
 unset($_SESSION['valid_user']);
 unset($_SESSION['login']);

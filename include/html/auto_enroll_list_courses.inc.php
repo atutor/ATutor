@@ -15,7 +15,7 @@
 // Lists all courses to auto enroll
 if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 {
-	$associate_string = $_REQUEST["en_id"];
+	$associate_string = validate_enid($_REQUEST["en_id"]);
 	
 	$cats	= array();
 	$cats[0] = _AT('cats_uncategorized');

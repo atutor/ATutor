@@ -18,7 +18,7 @@
 if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 {
 
-	$associate_string = $_REQUEST["en_id"];
+	$associate_string = validate_enid($_REQUEST["en_id"]);
 
 	$sql_courses = "SELECT aec.course_id
 	                  FROM %sauto_enroll a, 
