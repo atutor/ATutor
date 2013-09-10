@@ -11,8 +11,17 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
- 
+
 $month_names = $month_name_con['en'];
+
+// Hack to accommodate missing start dates in the content editor's
+// Properties>Start Date field. Likely due to bad import via LTI/AContent
+
+if(isset($today_year)){
+    $today_year = date('Y');
+    $today_mon = date('n');
+    $today_day = (date('d')-1);
+}
 
 		echo '<select name="day'.$name.'">';
 		for ($i = 1; $i <= 31; $i++) {
