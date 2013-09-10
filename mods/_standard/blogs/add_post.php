@@ -37,8 +37,9 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['private'] = abs($_POST['private']);
-		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts VALUES (NULL, $_SESSION[member_id], ".BLOGS_GROUP.", $_POST[oid], $_POST[private], NOW(), 0, '$_POST[title]', '$_POST[body]')";
-		mysql_query($sql, $db);
+
+		$sql = "INSERT INTO %sblog_posts VALUES (NULL, %d, %d, %d, %d, NOW(), 0, '%s', '%s')";
+		queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], BLOGS_GROUP, $_POST['oid'], $_POST['private'], $_POST['title'], $_POST['body']));		
 		
 		if (!isset($sub)) { 
 			require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');

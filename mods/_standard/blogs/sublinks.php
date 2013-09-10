@@ -16,16 +16,17 @@ global $db;
 
 $record_limit = 3;	// Number of sublinks to display for this module on course home page -> detail view
 
-$sql = "SELECT G.group_id, G.title, G.modules FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."groups_types T USING (type_id) WHERE T.course_id=$_SESSION[course_id] ORDER BY G.title LIMIT $record_limit";
-$result = mysql_query($sql, $db);
+$sql = "SELECT G.group_id, G.title, G.modules FROM %sgroups G INNER JOIN %sgroups_types T USING (type_id) WHERE T.course_id=%d ORDER BY G.title LIMIT %d";
+$rows_groups = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $record_limit));
 
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
+if(count($rows_groups)){
+    foreach($rows_groups as $row){
 		if (strpos($row['modules'], '_standard/blogs') !== FALSE) {
 			// retrieve the last posted date/time from this blog
-			$sql = "SELECT MAX(date) AS date FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id={$row['group_id']}";
-			$date_result = mysql_query($sql, $db);
-			if (($date_row = mysql_fetch_assoc($date_result)) && $date_row['date']) {
+			$sql = "SELECT MAX(date) AS date FROM %sblog_posts WHERE owner_type=%d AND owner_id=%d";
+			$date_row = queryDB($sql, array(TABLE_PREFIX, BLOGS_GROUP, $row['group_id']), TRUE);
+			
+			if(count($date_row) > 0){
 				$last_updated = ' - ' . _AT('last_updated', AT_date(_AT('forum_date_format'), $date_row['date'], AT_DATE_MYSQL_DATETIME));
 			} else {
 				$last_updated = '';
