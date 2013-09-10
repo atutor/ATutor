@@ -59,15 +59,24 @@ if (isset($_GET['p'])) {
 }
 
 $num_posts_per_page = 20;
-$start = ($page - 1) * $num_posts_per_page;
 
-$count = 0;
+$sql = "SELECT count(post_id) as cnt FROM %sblog_posts WHERE owner_id= %d";
+$blog_cnt = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['oid']), TRUE);
 
-$sql = "SELECT post_id, member_id, private, num_comments, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] ORDER BY date DESC LIMIT $start, " . ($num_posts_per_page+1);
-$result = mysql_query($sql, $db);
+if($blog_cnt['cnt'] >  $num_posts_per_page){
+    $start = ($page-1) * $num_posts_per_page ;
+} else{
+    $start = 0 ;
+}
+
+$sql = "SELECT post_id, member_id, private, num_comments, date, title, body FROM %sblog_posts WHERE $auth owner_type=%d AND owner_id=%d ORDER BY date DESC LIMIT $start, " . ($num_posts_per_page);
+$rows_posts = queryDB($sql, array(TABLE_PREFIX, BLOGS_GROUP, $_REQUEST['oid']));
+
 ?>
-<?php if (mysql_num_rows($result)): ?>
-	<?php while (($row = mysql_fetch_assoc($result)) && ($count < $num_posts_per_page)): $count++; ?>
+<?php if(count($rows_posts) > 0){ ?>
+	<?php 
+	foreach($rows_posts as $row){
+	?>
 		<div class="entry">
 			<h2><a href="<?php echo url_rewrite('mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']); ?>"><?php echo AT_print($row['title'], 'blog_posts.title'); ?></a>
 			<?php if ($row['private']): ?>
@@ -80,15 +89,20 @@ $result = mysql_query($sql, $db);
 			<p><a href="<?php echo url_rewrite('mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$row['post_id']); ?>#comments"><?php echo _AT('comments_num', $row['num_comments']); ?></a></p>
 			<hr />
 		</div>
-	<?php endwhile; ?>
+	<?php } ?>
 	<?php
-		if (mysql_num_rows($result) > $num_posts_per_page) {
 
-			echo '<a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'p='.(++$page)).'">'._AT('previous_posts').'</a>';
+		if($blog_cnt['cnt'] > $num_posts_per_page && $page > 1){
+	        $next_prev_blogs = '<a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'p='.($page-1)).'">'._AT('previous').'</a>';
+		} 
+	    if(((($page)*$num_posts_per_page)) < ($blog_cnt['cnt'])){
+			$next_prev_blogs .= ' | <a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id.SEP.'p='.($page+1)).'">'._AT('next').'</a>';
+	
 		}
+		echo $next_prev_blogs;
 	?>
-<?php else: ?>
+<?php } else { ?>
 	<p><?php echo _AT('none_found'); ?></p>
-<?php endif; ?>
+<?php }  ?>
 
 <?php require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
