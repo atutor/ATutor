@@ -59,23 +59,16 @@ function blogs_authenticate($owner_type, $owner_id) {
 			return BLOGS_AUTH_RW;
 		}
 
-		//global $db;
-		//$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id";
-		//$result = mysql_query($sql, $db);
 		$sql = "SELECT type_id FROM %sgroups WHERE group_id=%d";
 		$rows_groups = queryDB($sql, array(TABLE_PREFIX, $owner_id));
 		
 		if(count($rows_groups) == 0){
-		//if (!$row = mysql_fetch_assoc($result)) {
 			return BLOGS_AUTH_NONE;
 		}
 
-		//$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups_types WHERE type_id=$row[type_id] AND course_id=$_SESSION[course_id]";
-		//$result = mysql_query($sql, $db);
 		$sql = "SELECT type_id FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
 		$rows_types = queryDB($sql, array(TABLE_PREFIX, $row['type_id'], $_SESSION['course_id']));
 		if(count($rows_types) == 0){
-		//if (!$row = mysql_fetch_assoc($result)) {
 			return BLOGS_AUTH_NONE;
 		}
 
@@ -87,11 +80,6 @@ function blogs_authenticate($owner_type, $owner_id) {
 function blogs_get_blog_name($owner_type, $owner_id) {
 	if ($owner_type == BLOGS_GROUP) {
 		// get group name
-		global $db;
-
-		//$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id";
-		//$result = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($result);
 		$sql = "SELECT title FROM %sgroups WHERE group_id=%d";
 		$row = queryDB($sql, array(TABLE_PREFIX, $owner_id), TRUE);
 		
