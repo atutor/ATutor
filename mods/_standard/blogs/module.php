@@ -53,6 +53,7 @@ function blogs_get_group_url($group_id) {
  * returns BLOGS_AUTH_WRITE if the user can write
  */
 function blogs_authenticate($owner_type, $owner_id) {
+
 	// ensure that this group is in the course
 	if ($owner_type == BLOGS_GROUP) {
 		if (isset($_SESSION['groups'][$owner_id])) {
@@ -65,12 +66,12 @@ function blogs_authenticate($owner_type, $owner_id) {
 		if(count($rows_groups) == 0){
 			return BLOGS_AUTH_NONE;
 		}
-
-		$sql = "SELECT type_id FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
-		$rows_types = queryDB($sql, array(TABLE_PREFIX, $row['type_id'], $_SESSION['course_id']));
-		if(count($rows_types) == 0){
-			return BLOGS_AUTH_NONE;
-		}
+        $sql = "SELECT type_id FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
+        $rows_types = queryDB($sql, array(TABLE_PREFIX, $row['type_id'], $_SESSION['course_id']));
+        if(count($rows_types) == 0){
+        
+            return BLOGS_AUTH_NONE;
+        }
 
 		return BLOGS_AUTH_READ;
 	}
