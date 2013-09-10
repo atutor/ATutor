@@ -28,8 +28,9 @@ $auth = '';
 if (!query_bit($owner_status, BLOGS_AUTH_WRITE)) {
 	$auth = 'private=0 AND ';
 }
-$sql = "SELECT member_id, private, date, title, body FROM ".TABLE_PREFIX."blog_posts WHERE $auth owner_type=".BLOGS_GROUP." AND owner_id=$owner_id AND post_id=$id ORDER BY date DESC";
-$result = mysql_query($sql, $db);
+
+$sql = "SELECT member_id, private, date, title, body FROM %sblog_posts WHERE $auth owner_type=%d AND owner_id=%d AND post_id=%d ORDER BY date DESC";
+$post_row = queryDB($sql, array(TABLE_PREFIX, BLOGS_GROUP, $owner_id, $id), TRUE);
 
 
 if (isset($_POST['submit']) && $_SESSION['member_id']) {
@@ -42,19 +43,20 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$sql = "INSERT INTO ".TABLE_PREFIX."blog_posts_comments VALUES (NULL, $id, $_SESSION[member_id], NOW(), $_POST[private], '$_POST[body]')";
-		mysql_query($sql, $db);
-		$comments_affected_rows = mysql_affected_rows($db);
+
+		$sql = "INSERT INTO %sblog_posts_comments VALUES (NULL, %d, %d, NOW(), %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $id, $_SESSION['member_id'], $_POST['private'], $_POST['body']));
+		$comments_affected_rows = $result;
 		
 		if (!isset($sub)) { 
 			require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');
 			$sub = new subscription(); 
 		}
-		$sub->send_mail('blogcomment', $owner_id, mysql_insert_id());
+		$sub->send_mail('blogcomment', $owner_id, at_insert_id());
 		
 		if ($comments_affected_rows == 1) {
-			$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET num_comments=num_comments+1, date=date WHERE post_id=$id";
-			mysql_query($sql, $db);
+			$sql = "UPDATE %sblog_posts SET num_comments=num_comments+1, date=date WHERE post_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $id));
 		}
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -64,7 +66,7 @@ if (isset($_POST['submit']) && $_SESSION['member_id']) {
 	}
 }
 
-if (!$post_row = mysql_fetch_assoc($result)) {
+if(count($post_row) == 0){
 	header('Location: '.url_rewrite('mods/_standard/blogs/view.php?ot='.$owner_type.SEP.'oid='.$owner_id));
 	exit;
 }
@@ -98,10 +100,11 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 <a name="comments"></a><h2><?php echo _AT('comments'); ?></h2>
 <?php
-	$sql = "SELECT comment_id, member_id, date, comment FROM ".TABLE_PREFIX."blog_posts_comments WHERE post_id=$id ORDER BY date";
-	$result = mysql_query($sql, $db);
+	$sql = "SELECT comment_id, member_id, date, comment FROM %sblog_posts_comments WHERE post_id=%d ORDER BY date";
+	$rows_comments = queryDB($sql, array(TABLE_PREFIX, $id));
 ?>
-<?php while ($row = mysql_fetch_assoc($result)): ?>
+<?php 
+foreach($rows_comments as $row){ ?>
 	<div class="input-form">
 		<div class="row">
 			<h4 class="date"><?php echo get_display_name($row['member_id']); ?> - <?php echo AT_date(_AT('forum_date_format'), $row['date'], AT_DATE_MYSQL_DATETIME); ?></h4>
@@ -116,7 +119,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		</div>
 	</div>
 
-<?php endwhile; ?>
+<?php } ?>
 
 <?php if ($_SESSION['member_id']): ?>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF'].'?ot='.$owner_type.SEP.'oid='.$owner_id; ?>" name="form">
