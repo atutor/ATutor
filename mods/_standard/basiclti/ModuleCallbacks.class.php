@@ -21,18 +21,17 @@ class BasicLTICallbacks {
 	 */ 
 	public static function appendContent($cid) {
 		if ( !is_int($_SESSION['course_id']) || $_SESSION['course_id'] < 1 ) return;
-		$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
-			WHERE content_id=".$cid." AND course_id = ".$_SESSION['course_id'];
-		global $db;
-		$instanceresult = mysql_query($sql, $db);
- 		if ( $instanceresult == false ) return;
-		$basiclti_content_row = mysql_fetch_assoc($instanceresult);
+
+		$sql = "SELECT * FROM %sbasiclti_content WHERE content_id=%d AND course_id =%d" ;
+		$basiclti_content_row = queryDB($sql, array(TABLE_PREFIX, $cid, $_SESSION['course_id']), TRUE);
+ 		if(count($basiclti_content_row) == 0) return;
+
 		if ( $basiclti_content_row === false ) return;
 		$toolid = $basiclti_content_row['toolid'];
-		$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_tools
-                		WHERE toolid='".$toolid."'";
-		$contentresult = mysql_query($sql, $db);
-		$basiclti_tool_row = mysql_fetch_assoc($contentresult);
+
+		$sql = "SELECT * FROM %sbasiclti_tools WHERE toolid='%s'";
+		$basiclti_tool_row = queryDB($sql, array(TABLE_PREFIX, $toolid), TRUE);
+				
 		if ( ! $basiclti_tool_row ) {
 			return _AT('blti_missing_tool').$toolid;
 		}
