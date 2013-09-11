@@ -10,9 +10,8 @@ function basiclti_delete($course) {
 	global $db;
 
 	// delete basiclti course table entries
-	$sql = "DELETE FROM ".TABLE_PREFIX."basiclti WHERE course_id=$course";
-	mysql_query($sql, $db);
-
+	$sql = "DELETE FROM %sbasiclti_content WHERE course_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $course));
 	// delete basiclti course files
 	$path = AT_CONTENT_DIR .'basiclti/' . $course .'/';
 	clr_dir($path);
