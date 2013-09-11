@@ -17,11 +17,13 @@ $month_names = $month_name_con['en'];
 // Hack to accommodate missing start dates in the content editor's
 // Properties>Start Date field. Likely due to bad import via LTI/AContent
 
-if(isset($today_year)){
+if($today_year == '0000' || $today_year == '0'){
     $today_year = date('Y');
     $today_mon = date('n');
-    $today_day = (date('d')-1);
+    $today_day = (date('d'));
+    $today_hour = (date('h')-1);
 }
+
 
 		echo '<select name="day'.$name.'">';
 		for ($i = 1; $i <= 31; $i++) {
