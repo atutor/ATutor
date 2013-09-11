@@ -38,9 +38,9 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['private'] = abs($_POST['private']);
-		$sql = "UPDATE ".TABLE_PREFIX."blog_posts SET private=$_POST[private], title='$_POST[title]', body='$_POST[body]', date=date WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
-		mysql_query($sql, $db);
 
+		$sql = "UPDATE %sblog_posts SET private=%d, title='%s', body='%s', date=date WHERE owner_type=%d AND owner_id=%d AND post_id=%d";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['private'], $_POST['title'], $_POST['body'], BLOGS_GROUP, $_REQUEST['oid'], $id));
 		$msg->addFeedback('POST_ADDED_SUCCESSFULLY');
 
 		header('Location: '.url_rewrite('mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid'].SEP.'id='.$id, AT_PRETTY_URL_IS_HEADER));
@@ -49,9 +49,9 @@ if (isset($_POST['cancel'])) {
 }
 
 $id = abs($_REQUEST['id']);
-$sql = "SELECT private, title, body FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
-$result = mysql_query($sql, $db);
-$post_row = mysql_fetch_assoc($result);
+
+$sql = "SELECT private, title, body FROM %sblog_posts WHERE owner_type=%d AND owner_id=%d AND post_id=%d";
+$post_row = queryDB($sql, array(TABLE_PREFIX, BLOGS_GROUP, $_REQUEST['oid'], $id), TRUE);
 
 $_pages['mods/_standard/blogs/edit_post.php']['parent']    = 'mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id'];
 $_pages['mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id']] = $_pages['mods/_standard/blogs/post.php'];
