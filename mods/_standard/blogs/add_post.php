@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 			require_once(AT_INCLUDE_PATH .'classes/subscribe.class.php');
 			$sub = new subscription(); 
 		}
-		$sub->send_mail('blog', $_POST['oid'], mysql_insert_id());
+		$sub->send_mail('blog', $_POST['oid'], at_insert_id());
 		$msg->addFeedback('POST_ADDED_SUCCESSFULLY');
 	
 		header('Location: '.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid'], AT_PRETTY_URL_IS_HEADER));
