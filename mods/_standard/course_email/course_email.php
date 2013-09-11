@@ -81,9 +81,10 @@ if (isset($_POST['cancel'])) {
 			$groups = implode(',', $_POST['groups']);
 
 			$group_members = array();
-			$sql = "SELECT member_id FROM ".TABLE_PREFIX."groups_members WHERE group_id IN ($groups)";
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
+			$sql = "SELECT member_id FROM %sgroups_members WHERE group_id IN (%s)";
+			$rows_members = queryDB($sql, array(TABLE_PREFIX, $groups));
+			
+			foreach($rows_members as $row){
 				$group_members[] = $row['member_id'];
 			}
 			$group_members = implode(',', $group_members);
@@ -98,13 +99,12 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$email_sql = substr_replace($email_sql, '', -4). ')'; // strip off the last ' OR '
-		$result = mysql_query($email_sql,$db);
-
+		$rows_emails = queryDB($email_sql, array());
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 		// generate email recipients
 		$mail_list = array();
-		while ($row = mysql_fetch_assoc($result)) {
+		foreach($rows_emails as $row){
 			$mail_list[]=$row['email'];
 			$fname_list[$row['email']] = $row['first_name'];
 			$lname_list[$row['email']] = $row['last_name'];
@@ -112,22 +112,21 @@ if (isset($_POST['cancel'])) {
 		}
 
 		// Get instructor ID.
-		$result = mysql_query("SELECT member_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course",$db);
-		$row = mysql_fetch_assoc($result);
+		$sql = "SELECT member_id FROM %scourses WHERE course_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $course), TRUE);
 		$instructor_id = $row['member_id'];
 
 		// Add instructor to email list if he is not the one sending email.
 		if ($instructor_id != $_SESSION['member_id']) {
-			//$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
-			$sql = "SELECT email FROM ".TABLE_PREFIX."members WHERE member_id=$instructor_id";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+			$sql = "SELECT email FROM %smembers WHERE member_id=$instructor_id";
+			$row = queryDB($sql, array(TABLE_PREFIX, $instructor_id), TRUE);
+
 			$mail_list[]= $row['email'];
 		}
 
 		// Get the sender.		
-		$result = mysql_query("SELECT email, first_name, last_name,login,password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]", $db);
-		$row	= mysql_fetch_assoc($result);
+		$sql = "SELECT email, first_name, last_name,login,password FROM %smembers WHERE member_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		$mail_list[] = $row['email'];
 	// Prep the mailer.
 		// set some user specific variables for the body (
@@ -164,9 +163,9 @@ if (isset($_POST['cancel'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M WHERE C.course_id=$course AND C.member_id=M.member_id AND M.member_id<>$_SESSION[member_id] ORDER BY C.approved, M.login";
-$result = mysql_query($sql,$db);
-$row	= mysql_fetch_array($result);
+$sql	= "SELECT COUNT(*) AS cnt FROM %scourse_enrollment C, %smembers M WHERE C.course_id=%d AND C.member_id=M.member_id AND M.member_id<>%d ORDER BY C.approved, M.login";
+$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course, $_SESSION['member_id']), TRUE);
+
 if ($row['cnt'] == 0) {
 	$msg->printInfos('NO_STUDENTS');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
@@ -174,23 +173,20 @@ if ($row['cnt'] == 0) {
 }
 
 //fetch groups names, same as first out of loop query. 
-$sql = "SELECT type_id, title FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
-$result = mysql_query($sql, $db);
+$sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY title";
+$rows_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 
 
 $group_type_rows = array(); 
 
-while ($row = mysql_fetch_assoc($result)) {  
-	//While a row of data exists, put the fields "title" and "type_id", into $row as an associative array. 
-
+foreach($rows_types as $row){
     $group_type_rows[$row['type_id']] = $row; 
     //save the first SQL result set ($row) into $group_type_rows. Use type_id as the key to map each row
-     
+    $sql = "SELECT group_id, title FROM %sgroups WHERE type_id=%d ORDER BY title";
+    $rows_groups = queryDB($sql, array(TABLE_PREFIX, $row['type_id']));
     
-    $sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
-    $group_result = mysql_query($sql, $db);
     //second loop adds a child array to our $group_type_rows created above to store the data
-    while($group_rows = mysql_fetch_assoc($group_result)) {
+    foreach($rows_groups as $group_rows){
         $group_type_rows[$row['type_id']]['group_type_row'][] = $group_rows;
     }
 
