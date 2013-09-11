@@ -31,9 +31,8 @@ if (isset($_POST['submit_no'])) {
 } else if (isset($_POST['submit_yes'])) {
 	$id = abs($_POST['id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id=$_REQUEST[oid] AND post_id=$id";
-	mysql_query($sql, $db);
-
+	$sql = "DELETE FROM %sblog_posts WHERE owner_type=%d AND owner_id=%d AND post_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, BLOGS_GROUP, $_REQUEST['oid'], $id));
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
 	header('Location: view.php?ot='.BLOGS_GROUP.SEP.'oid='.$_POST['oid']);
@@ -41,9 +40,9 @@ if (isset($_POST['submit_no'])) {
 }
 
 $id = abs($_REQUEST['id']);
-$sql = "SELECT title, body FROM ".TABLE_PREFIX."blog_posts WHERE owner_type=".BLOGS_GROUP." AND owner_id=$owner_id AND post_id=$id";
-$result = mysql_query($sql, $db);
-$post_row = mysql_fetch_assoc($result);
+$sql = "SELECT title, body FROM %sblog_posts WHERE owner_type=%d AND owner_id=%d AND post_id=%d";
+$post_row = queryDB($sql, array(TABLE_PREFIX, BLOGS_GROUP, $owner_id, $id), TRUE);
+
 
 $_pages['mods/_standard/blogs/delete_post.php']['parent']    = 'mods/_standard/blogs/post.php?ot='.BLOGS_GROUP.SEP.'oid='.$_REQUEST['oid'].SEP.'id='.$_REQUEST['id'];
 
@@ -61,9 +60,9 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $_REQUEST['ot'], 'oid' => $_REQUEST['oid']);
 //get the post title to print into the confirm box
-$sql = 'SELECT title FROM '.TABLE_PREFIX.'blog_posts WHERE post_id='.$id;
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql = 'SELECT title FROM %sblog_posts WHERE post_id=%d';
+$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+
 $msg->addConfirm(array('DELETE', $row['title']), $hidden_vars);
 $msg->printConfirm();
 ?>
