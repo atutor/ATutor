@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">ATutor Calendar</name> 
+    <description lang="en">
+        Displays dates relevant to the user's courses. 
+        Create personal events and Synchronize Google Calendar in ATutor.
+    </description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+        <maintainer> 
+            <name>Anurup Raveendran</name> 
+            <email>anurupraveendran@gmail.com</email> 
+        </maintainer>
+        <maintainer> 
+            <name>Herat Gandhi</name> 
+            <email>heratgandhi@ymail.com</email> 
+        </maintainer>
+    </maintainers> 
+    <url>http://atutor.ca</url> 
+    <license>GPL/ATutor</license> 
+    <release> 
+        <version>1.0</version> 
+        <date>2012-08-20</date> 
+        <state>stable</state> 
+        <notes>This module requires the module_extend_date patch to be installed for the courses,tests, and assignments modules.</notes> 
+    </release> 
+</module>

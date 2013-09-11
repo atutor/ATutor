@@ -1,0 +1,407 @@
+ATutor Calendar Module Documentation
+------------------------------------
+
+WEBSITE
+-------
+http://atutorcalendar.wordpress.com/
+
+LICENSE
+-------
+GPL/ATutor
+
+FEATURES
+--------
+* 3 different views of the calendar
+* View ATutor course related events
+* Create and edit personal events
+* Synchronize with Google Calendar
+* Import iCalendar file
+* Export iCalendar file
+* Mini calendar in the side menu
+* Fully accessible interface
+* Share calendar with other users
+* Bookmark the shared calendar
+
+Contents-------------------
+ |--Introduction
+ |--Requirements
+ |--Installation
+ |--Design & Implementation
+    |-- Calendar Interface
+    |-- Views
+        |-- Month View
+        |-- Week View
+        |-- Day View
+    |-- Export Interface
+    |-- Import Interface
+    |-- Synchronize with Google Calendar
+        |-- Connect/Disconnect Google Account
+        |-- Enable/Disable Google Calendar
+        |-- Edit/Delete Event
+    |-- Share the Calendar
+        |-- Bookmark the Calendar
+    |-- Mini Calendar
+ |--Code Structure
+    |-- Module
+    |-- Patch
+    |-- Database
+  -------------------------
+  
+ INTRODUCTION
+ ------------
+ 
+  The ATutor Calendar Module allows the user to view the dates 
+  relevant to his/her courses using a full calendar interface.
+  The calendar accesses dates via AJAX. User can create personal
+  events in the calendar.This module also enables users to 
+  synchronize Google Calendars in ATutor. User can also export 
+  and import iCalendar file. Using calendar sharing feature, 
+  user can share his/her calendar to other user/s. The shared 
+  calendar can also be bookmarked to view again in future. 
+  The calendar interface has 3 views: month view, week view 
+  and day view. This calendar is fully accessible. There are 
+  many different types of events displayed in the calendar. 
+  So to differentiate the events, unique colors are used for 
+  different calendars. The associated color of an event can be 
+  found in the right side calendar panel.
+  
+ REQUIREMENTS
+ ------------
+ 
+  This module requires that the atutor_cal_1 patch be installed on 
+  the server, which updates the Module.class.php script.
+  
+  Note:- There are module_extend_date.php scripts located in 
+         3 folders(assignments,tests and courses) in the patch folder. 
+         These have to be manually copied into the respective 
+         module folders assignments(mods/_standard/assignments),
+         tests(mods/_standard/tests) and courses(mods/_core/courses).         
+ 
+ INSTALLATION
+ ------------
+    
+    Refer to http://help.atutor.ca/developer/modules.html#installation 
+    on how to install a module.
+   
+ DESIGN & IMPLEMENTATION
+ -----------------------
+ 
+  The ATutor Calendar Module uses full calendar interface developed 
+  by Adam Shaw. The calendar provides the users three views: Month, Week 
+  and Day. There are also two navigation buttons on the top. 
+  Today button allows users to jump to current month/ current week/
+  current day according to view. There is also a miniature version 
+  of this calendar provided in the side menu. This mini calendar 
+  allows only month view. On the home page of module, there is a 
+  side menu displayed in the right side. The side menu displays various 
+  options available to a user. It also contains various color codes.
+  
+  Calendar Interface
+  ------------------
+     The calendar interface displays the dates based on the 
+     courses that the user is enrolled in. Each date has its own 
+     class. For example, course dates are displayed in a color 
+     different from the test dates. This makes it easier for the
+     user to distinguish dates. The calendar receives these 
+     dates via the modules which are exposed using the 
+     module_extend_date.php script. The calendar interface 
+     also uses tooltips. Users can also insert personal events
+     in the calendar. This is accomplished using jQuery 
+     Dialog. The calendar design is screen reader friendly.
+     Users can navigate the whole interface using keyboard. 
+     
+  Views
+  -----
+     The views interface provides with the user a more detailed 
+     event description. It is divided into 3 views namely Month,Week 
+     and Date views which are explained below. ATutor events are
+     in-editable while personal events are editable.
+     
+        Month View
+        ----------
+         This view shows other dates that are in the same month. 
+         Clicking on any date in the Month View will open the 
+         dialog to enter new event in the calendar. Clicking 
+         on an editable event will open dialog to edit that event.
+         
+        Week View
+        ---------
+         This view shows other dates that are in the same week. 
+         Clicking on any date in the Week View will open the 
+         dialog to enter new event in the calendar. Clicking 
+         on an editable event will open dialog to edit or 
+         delete that event. There is a facility to enter 
+         all day long events in the top of the Week View.
+        
+        Day View
+        --------
+         This view shows other dates that are in the same day. 
+         Clicking on any date in the Day View will open the 
+         dialog to enter new event in the calendar. Clicking 
+         on an editable event will open dialog to edit or 
+         delete that event. There is a facility to enter all 
+         day long events in the top of the Day View.
+
+         
+  Export Interface
+  ----------------
+     This allows the user to export their course dates to the 
+     iCal calendar format which can be used in calendars like 
+     Google Calendar, outlook, etc. To export events in the 
+     ics file, user needs to click on the "Export ics file" 
+     link in the right side menu.
+    
+  Import Interface
+  ----------------
+     To import events from ics file, this module uses 
+     SG_iCal parser. When user clicks on the 
+     "Import ics file" link in the righ side menu, he/she 
+     is shown the file upload form. Once the user uploads the 
+     file, the uploaded ics file is parsed and events are 
+     extracted from it. Then the database is populated with 
+     these events.
+     
+  Synchronize with Google Calendar
+  --------------------------------
+     It becomes quite tedious to import/export ics files frequently. 
+     So this module provides a feature to synchronize ATutor calendar with 
+     Google Calendar. The Zend framework is used to realize this feature.
+        
+        Connect/Disconnect Google Account
+        ---------------------------------
+         To synchronize Google Calendar, the first step is to connect 
+         ATutor with Google Account. To do that, user needs to click 
+         on "Connect with Google Calendar". Once he/she clicks on this
+         link, a pop-up window appears. This windows asks user to 
+         login the Google Account. If user is already signed in or 
+         he/she signs in using this window, he/she is asked for 
+         his consent to use his data. When user gives his/her permission,
+         this pop-up window closes. User does not need to log 
+         in again and again. If user has connected the Google Account 
+         and now he/she wants to disconnect then all he/she has to do 
+         is click on the "Disconnect from Google Calendar" link in the 
+         right side menu.
+        
+        Enable/Disable Google Calendar
+        ------------------------------
+         Once the user has connected his/her Google Account, 
+         all the available calendars in the Google Calendar 
+         of user's account are displayed in the right side menu. 
+         There is a checkbox right before each calendar name. 
+         If user checks a checkbox then the corresponding calendar 
+         is synchronized with ATutor calendar. The events from that 
+         calendar are displayed in the ATutor calendar interface. 
+         If user wants to disable a calendar then he/she can uncheck 
+         the checkbox of the corresponding calendar.
+        
+        Edit/Delete Event
+        -----------------
+         User can edit/delete the events from synchronized 
+         Google Calendar from ATutor. Once the calendar is 
+         synchronized, events from that calendar is displayed 
+         in the ATutor. When user clicks on an event and if 
+         user has ownership of that calendar then a dialog 
+         to edit event appears. If user edits an event then the 
+         change is also propagated to the Google. If user 
+         deletes an event then that event also vanishes 
+         from Google Calendar.
+         
+  Share Calendar
+  --------------
+     This module enables users to share their calendars 
+     with other users. To share a calendar with other user/s, 
+     click on the "Share Calendar" link in the right menu. 
+     Then the form to share calendar appears. Here user has 
+     3 options: Share calendar with all other students in 
+     the course, Select from list and Enter email address. 
+     When user selects "Select from list", then a dropdown 
+     menu of all the possible recipients is displayed and 
+     user can select a user from this list. If user 
+     selects "Enter email address" then user can manually 
+     enter email address of the recipient. The other option 
+     in this sharing form is to enter calendar name. This 
+     is an optional field. If this field is left blank 
+     then default name is given as "Calendar of [user name]". 
+     When user presses "Send" button, the recipients get an 
+     email with the link of shared calendar. Personal events 
+     and ATutor internal events can be shared. Due to security
+     concerns, Google Calendar events cannot be shared.
+
+        Bookmark the Calendar
+        ---------------------
+         If the recipient opens the link of a shared calendar 
+         and he is already signed in the ATutor then he/she can 
+         see events in the ATutor calendar interface and an option
+         "Bookmark this calendar" in the right side. If user 
+         selects that option then this shared calendar is 
+         bookmarked in the ATutor and a link to this calendar 
+         will be displayed in user's calendar homepage. 
+         User may also bookmark the calendar in the browser. 
+         When the user clicks on a bookmarked calendar, options
+         to change name of the calendar and to remove this 
+         bookmark are displayed.
+         
+  Mini Calendar
+  -------------
+     If instructor has enabled side menu of calendar then 
+     a miniature version of the calendar is displayed in 
+     the side menu. The personal events and ATutor internal 
+     events are displayed there. These events are not readable
+     but user can see color stripes and if he/she hovers cursor 
+     over this stripe, event titles are displayed in tooltips. 
+    
+  CODE STRUCTURE
+  --------------
+  
+   MODULE
+   ------
+   
+   The following is the code structure for the module.
+   
+    -index.php              -- Home page of this module where user can
+                               access all the features of the module.
+
+    -index_public.php       -- Enables a user to view shared calendar.
+    
+    -send_mail.php          -- Provides interface to share calendar with
+                               other users.
+
+    -change_view.php        -- Saves the current state of calendar in session.
+                               So when user refreshes the page, he/she 
+                               will get same view again.
+
+    -export.php             -- Exports the events in ics file which can be 
+                               imported by other calendar programs.
+
+    -file_import.php        -- Provides interface to upload ics file.
+
+    -import_db.php          -- Imports events from uploaded ics file into database.
+
+    -getlanguage.php        -- This script is used by javascripts to retrieve
+                               text for given language token. AJAX is used 
+                               for this procedure.
+
+    -google_calendar_db_sync.php -- Synchronizes Google calendar ids in the database.
+
+    -google_calendar_update.php -- Updates events in Google Calendar when they are
+                                    updated in the ATutor.
+
+    -google_calendarlist.php -- Displays available calendars in user's Google 
+                                account.
+
+    -google_connect_disconnect.php -- This script associates and dissociates user's
+                                      Google account with ATutor calendar module.
+
+    -json-events-gcal.php   -- Retrieves events from synchronized Google calendars
+                               and returns them in JSON format.
+                                                
+    -json-events.php        -- Retrieves personal and ATutor internal events and
+                               returns them in JSON format.
+                                         
+    -update.php             -- This script is used to create, edit and delete
+                               events.
+                               
+    -module.php             -- Configuration file of this module.
+    
+    -module.xml             -- This file is used to display module information
+                               during installation process.
+    
+    -module_install.php     -- Script used to install module.
+    
+    -module_uninstall.php   -- Script used to uninstall module.
+                                                
+    -side_menu.inc.php      -- Displays mini calendar in the side menu.
+    
+    -lib/SG_iCal/           -- SG_iCal parser is used to parse ics files.
+    
+    -lib/Zend/              -- This folder contains Zend framework which is
+                               used to interact with Google Calendar.
+                               
+    -lib/jquery/            -- Includes custom jquery css and related images.
+    
+    -lib/fullcalendar/      -- This folder includes core javascripts and css
+                               files which are used to display calendar interface.
+                                                
+    -patch/                 -- This folder contains patch for ATutor which
+                               enables event retrieval from ATutor.
+    
+    -includes/classes/events.class.php -- Provides all the functions which can be 
+                                          used to retrieve personal and ATutor 
+                                          internal events.
+                                                
+    -includes/classes/googlecalendar.class.php -- Provides functions to retrieve 
+                                                  Google Calendar events.
+                                                    
+    -img/                   -- Contains images used in front end interface.  
+
+   PATCH
+   -----
+   
+     Module.class.php(modified) -- The script Module.class.php
+     (mods/_core/modules/classes/) is altered so that a extend_date 
+     function is added. This allows to access dates 
+     via the module(courses|tests|assignments).
+                                    
+     module_extend_date.php     -- This script allows the modules 
+     to expose the dates that are associated with that module. It 
+     should be located in all 3 modules(courses|tests|assignments).
+   
+   DATABASE
+   --------
+     The calendar module has following 3 tables:
+      -----------------
+     | calendar_events |
+      ---------------------------------------------------
+     | id     | int       | AUTO_INCREMENT, Primary Key  |
+     | title  | varchar   |                              |
+     | start  | datetime  |                              |
+     | end    | datetime  |                              |
+     | allDay | varchar   |                              |
+     | userid | int       |                              |
+      ---------------------------------------------------
+      The `calendar_events` table is used to store users'
+      personal events. Events imported from iCalendar file
+      are also stored in this table. This table has all the
+      properties of an event. `title` is used to store event
+      description. `start` and `end` indicate event's start
+      and end date & time respectively. `allDay` is of boolean
+      type which indicates whether an event is all day long
+      or not. `userid` stores owner of the event. `userid`
+      is very useful while retrieving events.
+      
+      --------------------
+     |calendar_google_sync|
+      -------------------------------------------------
+     | id     | int      | AUTO_INCREMENT, Primary Key |
+     | token  | varchar  |                             |
+     | userid | int      |                             |
+     | calids | text     |                             |
+      -------------------------------------------------
+      The `calendar_google_sync` table stores Google related
+      user data. The `token` is the session token returned by
+      Google. This token is very important in maintaining session.
+      Using this token only, user does not need to log in again 
+      and again. The `userid` indicates owner of the token.
+      `calids` store calendar ids of Google Calendars. This field
+      only stores ids of those calendars which user has selected to
+      synchronize with ATutor. Multiple calendar ids are 
+      seperated by ",".
+      
+      -------------------
+     | calendar_bookmark |
+      ---------------------
+     | memberid  | int     |
+     | ownerid   | int     |
+     | courseid  | int     |
+     | calname   | varchar |
+      ---------------------
+      The `calendar_bookmark` table stores bookmarked calendars 
+      for users. This module provides facility to bookmark
+      shared calendars. This table is at the core for this feature.
+      When user chooses to bookmark a calendar, an entry is made in 
+      this table. The `memberid` stores member id of the current
+      user who wants to bookmark shared calendar for future use.
+      `ownerid` is the member id of the user who owns the events
+      of shared calendar. `courseid` is the id of the course from
+      which owner has shared the calendar. `calname` is the name
+      of the bookmark.
