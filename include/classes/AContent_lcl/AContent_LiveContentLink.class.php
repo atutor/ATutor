@@ -544,7 +544,7 @@
 								$current_item->test_message,
 								$current_item->content_type);
 
-			return mysql_insert_id();
+			return at_insert_id();
 
 		}
 
