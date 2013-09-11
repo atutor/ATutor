@@ -646,11 +646,12 @@ INSERT INTO `modules` VALUES ('_standard/assignments',   2, 524288,    0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/gradebook',     2, 1048576, 4096, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/student_tools', 2, 2097152,   0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/farchive',      2, 4194304, 0, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/social',	 2, 8388608, 0, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/photos',	 2, 16777216, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/social',	     2, 8388608, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/photos',	     2, 16777216, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/flowplayer',	 2, 33554432, 0, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/basiclti', 2, 67108864, 16384, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/basiclti',      2, 67108864, 16384, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/assignment_dropbox', 2, 134217728, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/calendar',      2, 268435456, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
 INSERT INTO `modules` VALUES ('_core/courses',           2, 0,         4, 0, 0);
 INSERT INTO `modules` VALUES ('_core/backups',           2, 1,         8, 0, 0);
@@ -666,12 +667,12 @@ INSERT INTO `modules` VALUES ('_core/content_packaging', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/google_search', 2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/blogs',         2, 0, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/profile_pictures', 2, 0, 0, 0, 0);
-INSERT INTO `modules` VALUES ('_standard/patcher', 2, 0, 1024, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/patcher',       2, 0, 1024, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/support_tools', 2, 0, 2048, 0, 0);
 # added by Bologna CC. Please check if it is the right position to insert it!
-INSERT INTO `modules` VALUES ('_core/tool_manager', 2, 0, 0, 0, 0);
-INSERT INTO `modules` VALUES ('_core/modules', 2, 0, 8192, 0, 0);
-INSERT INTO `modules` VALUES('_standard/vimeo', 2, 0, 1, 0, 0);
+INSERT INTO `modules` VALUES ('_core/tool_manager',      2, 0, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_core/modules',           2, 0, 8192, 0, 0);
+INSERT INTO `modules` VALUES('_standard/vimeo',          2, 0, 1, 0, 0);
 
 # --------------------------------------------------------
 # Table structure for table `news`

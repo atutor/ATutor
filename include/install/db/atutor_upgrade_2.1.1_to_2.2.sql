@@ -32,3 +32,6 @@ CREATE TABLE `calendar_notification` (
   `memberid` int(11),
   `status` int(8)
 ) ENGINE = MyISAM;
+
+##### get next bitwise value, col 3?
+## INSERT INTO `modules` VALUES ('_standard/calendar',      2, 268435456, 0, 0, 0);
