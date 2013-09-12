@@ -19,12 +19,21 @@
     if (isset($_GET['pub']) && $_GET['pub'] == 1) {
          $_user_location = 'public';
     }
-    
+        // Get a list of this user's enrolled courses
+
     //Retrieve all the personal events.
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
     require('includes/classes/events.class.php');
     
+    if(!isset($_GET['cid']) && !isset($_GET['all'])) {
+        $sql = "SELECT course_id FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=".$_SESSION['member_id'];
+        $rows_enrolled = queryDB($sql, array());
+    
+        foreach($rows_enrolled as $row){
+            $courses[] = $row['course_id'];
+        }
+    }
     $eventObj = new Events();
     
     //Create an empty array and push all the events in it.
@@ -40,22 +49,50 @@
         
     foreach ($eventObj->get_personal_events($member) as $event) {
         if (!isset($_GET['all'])) {
-            $event['editable'] = false;
+            $event['editable'] = true ;
         }
         array_push($rows, $event);
     }
     
+ 
     if (isset($_GET['all']) || isset($_GET['mini']) || isset($_GET['mid'])) {
         if (isset($_GET['all']) || isset($_GET['mini'])) {
-            foreach ($eventObj->get_atutor_events($_SESSION['member_id'],$_SESSION['course_id']) as $event) {
-                array_push($rows, $event);
+                         debug_to_log($_GET);
+            if(is_array($courses)){
+                 debug_to_log($courses);
+                $i = 0;
+                    foreach ($eventObj->get_atutor_events($_SESSION['member_id'],$courses[$i]) as $event) {
+                        array_push($rows, $event);
+                        $i++;
+                    }
+            }else{
+                foreach ($eventObj->get_atutor_events($_SESSION['member_id'],$_SESSION['course_id']) as $event) {
+                    array_push($rows, $event);
+                }
+            
             }
+            
         }
         if (isset($_GET['mid'])) {
-            foreach ($eventObj->get_atutor_events($_GET['mid'],$_GET['cid']) as $event) {
-                array_push($rows, $event);
+            if(!isset($_GET['cid'])){
+                $_GET['cid'] = $courses;
             }
+
+              if(is_array($_GET['cid'])){
+                $t = 0;
+                    foreach ($eventObj->get_atutor_events($_GET['mid'],$courses[$t]) as $event) {
+                        array_push($rows, $event);
+                        $t++;
+                    }
+              } else{
+                foreach ($eventObj->get_atutor_events($_GET['mid'],$_GET['cid']) as $event) {
+                     array_push($rows, $event);
+                }
+              }
+
         }
     }    
     echo $eventObj->caledar_encode($rows);
+    
+    
 ?>
