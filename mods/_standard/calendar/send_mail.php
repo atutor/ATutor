@@ -14,9 +14,16 @@
     /**
      * This file is used to send emails for sharing calendars.
      */    
+        $_user_location = 'public';
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+    if (!$_SESSION['valid_user']) {
+        require(AT_INCLUDE_PATH.'header.inc.php');
+        $info = array('INVALID_USER', $_SESSION['course_id']);
+        $msg->printInfos($info);
+        require(AT_INCLUDE_PATH.'footer.inc.php');
+        exit;
+    }
     if ($_POST['cancel']) {
         //user pressed cancel button
         header('Location: index.php');
@@ -51,13 +58,11 @@
         }
         
         if ($_POST['to'] == 1) {
-            $sql    = "SELECT * FROM " . TABLE_PREFIX . "members WHERE member_id IN (SELECT member_id FROM ".
-                      TABLE_PREFIX . "course_enrollment WHERE status=" . AT_STATUS_STUDENT.
-                      " and course_id=" . $_SESSION['course_id'] . " and member_id <> ".
-                      $_SESSION['member_id']." )";
-            $result = mysql_query($sql,$db);
-            $norow  = mysql_num_rows($result);
-            if ($norow < 1) {
+
+            $sql = "SELECT * FROM %smembers WHERE member_id IN (SELECT member_id FROM %scourse_enrollment WHERE status=%d and course_id=%d and member_id <> %d )";
+            $nowrow = queryDB($sql,array(TABLE_PREFIX, TABLE_PREFIX, AT_STATUS_STUDENT, $_SESSION['course_id'], $_SESSION['member_id']));
+            
+            if (count($norow) < 1) {
                 $msg->addError('NO_RECIPIENTS');
             }
         }
@@ -65,12 +70,13 @@
         if (!$msg->containsErrors()) {
             if ($_POST['to'] == 1) {
                 // choose all members associated with course
-                $sql    = "SELECT * FROM " . TABLE_PREFIX . "members WHERE member_id IN (SELECT member_id FROM ".
-                          TABLE_PREFIX . "course_enrollment WHERE status=" . AT_STATUS_STUDENT . " and course_id=".
-                          $_SESSION['course_id'] . " and member_id <> " . $_SESSION['member_id'] . " )";
+                $sql    = "SELECT * FROM %smembers WHERE member_id IN (SELECT member_id FROM %scourse_enrollment WHERE status=%d and course_id=%d and member_id <> %d)";                                   
+                $rows_recipients = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, AT_STATUS_STUDENT, $_SESSION['course_id'], $_SESSION['member_id']));
+                
             } else if ($_POST['to'] == 2) {
                 // choose particular login
-                $sql     = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = ".$_POST['selection'];
+               $sql  = "SELECT * FROM %smembers WHERE member_id = %d";
+               $rows_recipients = queryDB($sql, array(TABLE_PREFIX, $_POST['selection']));
             } else {
                 //user entered email address
             }
@@ -79,8 +85,7 @@
             $mail = new ATutorMailer;
             
             if ($_POST['to'] == 1 || $_POST['to'] == 2) {
-                $result = mysql_query($sql,$db);
-                while ($row = mysql_fetch_assoc($result)) {
+                foreach($rows_recipients as $row){
                     $mail->AddBCC($row['email']);
                 }        
             } else {
@@ -95,20 +100,21 @@
             
             $body      = get_display_name($_SESSION['member_id']) . _AT('calendar_email_part1') . '"' . $calname . 
                          '"' . _AT('calendar_email_part2');
-            $sql       = "SELECT * FROM ".TABLE_PREFIX."members WHERE member_id = ".$_SESSION['member_id'];
-            $result    = mysql_query($sql,$db);
+                         
+
+            $sql       = "SELECT * FROM %smembers WHERE member_id = %d";
+            $rows_members    = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+            
             $fromemail = $_config['contact_email'];
             
-            while ($row = mysql_fetch_assoc($result)) {
+            foreach($rows_members as $row){
                 $fromemail = $row['email'];
             }
             
             $body .= AT_BASE_HREF . "mods/_standard/calendar/index_public.php?mid=".
                     urlencode(base64_encode($_SESSION['member_id'])) . "&email=1&cid=".
                     $_SESSION['course_id'] . "&calname=" . urlencode($calname);
-            //echo $body;
-            //exit;
-                    
+                
             $mail->From     = $fromemail;
             $mail->FromName = $_config['site_name'];
             $mail->AddAddress($fromemail);
@@ -175,18 +181,14 @@
         <span id="selection" <?php if( $_POST['to'] != 2 ) echo "class='fc-forme-hide'"; ?>>
                
             <?php
-                global $db;
-                $sql    = "SELECT login,member_id FROM " . TABLE_PREFIX.
-                          "members WHERE member_id IN (SELECT member_id FROM " . TABLE_PREFIX.
-                          "course_enrollment WHERE status=" . AT_STATUS_STUDENT.
-                          " and course_id=" . $_SESSION['course_id'].
-                          " and member_id <> " . $_SESSION['member_id'] . " )";
-                $result = mysql_query($sql, $db);
-                $norow  = mysql_num_rows($result);
+                $sql    = "SELECT login,member_id FROM %smembers WHERE member_id IN (SELECT member_id FROM %scourse_enrollment WHERE status=%d and course_id=%d and member_id <> %d)";
+                $rows_recipients = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, AT_STATUS_STUDENT, $_SESSION['course_id'], $_SESSION['member_id']));
+                $norow  = count($rows_recipients);
+                
                 if ($norow > 0) {
                     echo "<label for='selection1'>" . _AT('calendar_membrselect') . ": </label>";
                     echo "<select name='selection' id='selection1'>";
-                    while ($row = mysql_fetch_assoc($result)) {
+                    foreach($rows_recipients as $row){
                         echo "<option value='" . $row['member_id'] . "'>" . $row['login'] . "</option>";                    
                     }
                     echo "</select>";
