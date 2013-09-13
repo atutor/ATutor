@@ -42,14 +42,12 @@
          * @return mixed Array containing all personal events of a user
          */
         public function get_personal_events($userid, $export = FALSE) {
-            global $db;
             $rows = array();
-            $query = "SELECT * FROM `".TABLE_PREFIX."calendar_events` WHERE userid='".
-                     $userid."'";
-            $result = mysql_query($query,$db);
-        
+
+            $query = "SELECT * FROM `%scalendar_events` WHERE userid=%d";
+            $rows_events = queryDB($query,array(TABLE_PREFIX, $userid));
             //Create an empty array and push all the events in it.
-            while ($row = mysql_fetch_assoc($result)) {
+            foreach($rows_events as $row){
                 if (!$export) { 
                     $row["editable"] = true;
                     $row["calendar"] = "Personal event";
@@ -71,17 +69,11 @@
         public function get_atutor_events($member_id, $course_id, $export = FALSE) {
             /* check if the user is enrolled in the course */
             try {
-                global $db;
-                
-                $sql = "SELECT COUNT(*) FROM
-                       `".TABLE_PREFIX."course_enrollment`
-                        WHERE `member_id`='".$member_id."'
-                        AND   `course_id`='".$course_id."'";
-                
-                $result = mysql_query($sql,$db);
-                $row = mysql_fetch_row($result);
-                
-                if ($row[0]>0) {
+   
+                $sql = "SELECT COUNT(*) FROM `%scourse_enrollment` WHERE `member_id`=%d AND   `course_id`=%d";           
+                $row = queryDB($sql,array(TABLE_PREFIX, $member_id, $course_id), TRUE);
+                 
+                if (count($row) > 0) {
                     global $moduleFactory;
                     $rows    = array();
                                     
