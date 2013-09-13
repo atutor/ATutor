@@ -25,9 +25,9 @@
         $msg->addError('CAL_FILE_ERROR');
         header('Location: file_import.php');
     } else {
-        if (file_exists('../../content/calendar/' . $filename)) {
+        if (file_exists('../../../content/calendar/' . $filename)) {
             //File already exists so replace it with new version
-            if (unlink('../../content/calendar/' . $filename)) {
+            if (unlink('../../../content/calendar/' . $filename)) {
                 //File successfully deleted
             }
             else {
@@ -38,7 +38,7 @@
         }
         //Move uploaded file to proper location in content directory
         move_uploaded_file($_FILES['file']['tmp_name'],
-        '../../content/calendar/' . $filename);
+        '../../../content/calendar/' . $filename);
     }
 
     require_once('lib/SG_iCal/SG_iCal.php');
@@ -47,7 +47,7 @@
         echo '<pre>' . print_r($x,true) . '</pre>';
     }
     //Open iCal File
-    $ICS = '../../content/calendar/' . $filename;
+    $ICS = '../../../content/calendar/' . $filename;
     $ical = new SG_iCalReader($ICS);
     $query = new SG_iCal_Query();
     //Get all the events from ics file
@@ -94,14 +94,12 @@
                 $alld = "false";
             }
             //Insert each event in the database
-            $query = "INSERT INTO `" . TABLE_PREFIX . "calendar_events` (title,start,end,allDay,userid) values".
-            " ('".$event['title']."','". Date('Y-m-d H:m:s',$event['start']) . "','".
-            Date('Y-m-d H:m:s',$event['end']). "','".$alld."','".$_SESSION['member_id']."')" ;
-            
-            mysql_query($query, $db);
+
+            $query = "INSERT INTO `%scalendar_events` (title,start,end,allDay,userid) values ('%s','%s','%s','%s',%d)" ; 
+            queryDB($query, array(TABLE_PREFIX, $event['title'], Date('Y-m-d H:m:s',$event['start']), Date('Y-m-d H:m:s',$event['end']), $alld, $_SESSION['member_id']));
         }
     }
     $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-    unlink('../../content/calendar/'.$filename);
+    unlink('../../../content/calendar/'.$filename);
     header('Location: index.php');
 ?>
