@@ -21,6 +21,7 @@
      * If the request is for dissociation then user's entry in the 
      * database is removed and session token is invalidated. 
      */
+              $_user_location	= 'public';
     require_once 'includes/classes/googlecalendar.class.php';
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');

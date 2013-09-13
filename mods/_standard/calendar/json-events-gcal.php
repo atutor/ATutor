@@ -14,6 +14,7 @@
     /**
      * This file returns events from Google Calendar in JSON format.
      */
+        $_user_location	= 'public';
     require_once 'includes/classes/googlecalendar.class.php';
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');

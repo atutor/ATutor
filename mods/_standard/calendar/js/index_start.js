@@ -361,7 +361,8 @@ $(document).ready(function () {
         editable: false,
         //Retrieve events from php file.
         eventSources: [
-            'mods/_standard/calendar/json-events.php?mid=' + id + '&pub=1',
+            'mods/_standard/calendar/json-events.php?all=1',
+            'mods/_standard/calendar/json-events.php?mid=' + mid + '&pub=1',
             'mods/_standard/calendar/json-events-gcal.php'
         ]
     });
@@ -415,6 +416,7 @@ $(document).ready(function () {
                     calendar.fullCalendar("refetchEvents");
                 }
             );
+            
             $(this).dialog("close");
             activeelem.focus();
         } else {

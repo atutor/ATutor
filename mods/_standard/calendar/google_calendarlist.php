@@ -14,7 +14,9 @@
     /**
      * This file is used to display all the available
      * calendars in Google Account of the user.
-     */     
+     */  
+   //debug_to_log("im in list.php");
+      $_user_location = 'public';
     require_once 'includes/classes/googlecalendar.class.php';
 
     $gcalobj = new GoogleCalendar();

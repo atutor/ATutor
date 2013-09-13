@@ -14,7 +14,7 @@
     /**
      * This file provides calendar interface.
      */
-    $_user_location	= 'users';
+    $_user_location	= 'public';
     
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -56,6 +56,7 @@
     }
     $global_js_vars = "
         var view_name               = $view_name;
+        var mid               = '".$_SESSION['member_id']."';
         var calendar_tooltip_event  = '" . _AT('calendar_tooltip_event') . "';
         var calendar_prv_mnth       = '" . _AT('calendar_prv_mnth') . "';
         var calendar_prv_week       = '" . _AT('calendar_prv_week') . "';
@@ -81,12 +82,24 @@
     $_custom_head .= 
     '<script language="javascript" type="text/javascript">' . $global_js_vars . '</script>
     <script language="javascript" type="text/javascript" src="' . AT_BASE_HREF .
-     'mods/_standard/calendar/js/index_start.js"></script>';
+     'mods/_standard/calendar/js/index_mystart.js"></script>';
     $_custom_css = $_base_path . 'mods/_standard/calendar/lib/fullcalendar/fullcalendar-theme.css'; // use a custom stylesheet
     require(AT_INCLUDE_PATH.'header.inc.php');
-              //  debug_to_log( $eventObj->get_personal_events($_SESSION['member_id']));  
+    
+    // Get a list of this user's enrolled courses
+    $sql = "SELECT course_id FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=".$_SESSION['member_id'];
+    $rows_enrolled = queryDB($sql, array());
+    
+    foreach($rows_enrolled as $row){
+        $courses[] = $row['course_id'];
+    }
 ?>
 <!-- Loader wheel to indicate on-going transfer of data -->
+
+<script language="javascript" type="text/javascript">
+
+    var userid = "<?php echo $_SESSION['member_id']; ?>";
+    </script>
 <div style="left:50%; z-index:20000; position:absolute; top:50%" id="loader">
     <img src="mods/_standard/calendar/img/loader.gif" alt="Loading" /> 
 </div>

@@ -35,7 +35,7 @@
     '<script language="javascript" type="text/javascript">' . $global_js_vars . '</script>
     <script language="javascript" type="text/javascript" src="' . AT_BASE_HREF .
      'mods/_standard/calendar/js/index_public.js"></script>';
-        debug('something');
+
     //Get member id from request if it is not set then display default message
     if (!isset($_GET['mid'])) {
         require(AT_INCLUDE_PATH.'header.inc.php'); 
@@ -43,7 +43,7 @@
         require(AT_INCLUDE_PATH.'footer.inc.php'); 
         exit;
     }
-    debug('something');
+
     global $db;
     //User requested to bookmark calendar
     if (isset($_GET['bookm']) && $_GET['bookm'] == 1) {

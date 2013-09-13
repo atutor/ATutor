@@ -54,12 +54,9 @@
         array_push($rows, $event);
     }
     
- 
     if (isset($_GET['all']) || isset($_GET['mini']) || isset($_GET['mid'])) {
         if (isset($_GET['all']) || isset($_GET['mini'])) {
-                         debug_to_log($_GET);
             if(is_array($courses)){
-                 debug_to_log($courses);
                 $i = 0;
                     foreach ($eventObj->get_atutor_events($_SESSION['member_id'],$courses[$i]) as $event) {
                         array_push($rows, $event);
@@ -68,10 +65,8 @@
             }else{
                 foreach ($eventObj->get_atutor_events($_SESSION['member_id'],$_SESSION['course_id']) as $event) {
                     array_push($rows, $event);
-                }
-            
+                }           
             }
-            
         }
         if (isset($_GET['mid'])) {
             if(!isset($_GET['cid'])){
@@ -80,9 +75,11 @@
 
               if(is_array($_GET['cid'])){
                 $t = 0;
-                    foreach ($eventObj->get_atutor_events($_GET['mid'],$courses[$t]) as $event) {
-                        array_push($rows, $event);
-                        $t++;
+                   foreach($courses as $course_id){
+                        foreach ($eventObj->get_atutor_events($_GET['mid'], $course_id) as $event) {
+                            array_push($rows, $event);
+                            $t++;
+                        }
                     }
               } else{
                 foreach ($eventObj->get_atutor_events($_GET['mid'],$_GET['cid']) as $event) {

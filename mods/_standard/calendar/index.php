@@ -14,9 +14,18 @@
     /**
      * This file provides calendar interface.
      */
-    
+    $_user_location	= 'public';
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
+    
+    
+if (!$_SESSION['valid_user']) {
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	$info = array('INVALID_USER', $_SESSION['course_id']);
+	$msg->printInfos($info);
+	require(AT_INCLUDE_PATH.'footer.inc.php');
+	exit;
+}
     
     global $db;
     
@@ -54,6 +63,7 @@
     }
     $global_js_vars = "
         var view_name               = $view_name;
+                var mid               = '".$_SESSION['member_id']."';
         var calendar_tooltip_event  = '" . _AT('calendar_tooltip_event') . "';
         var calendar_prv_mnth       = '" . _AT('calendar_prv_mnth') . "';
         var calendar_prv_week       = '" . _AT('calendar_prv_week') . "';
@@ -82,6 +92,7 @@
      'mods/_standard/calendar/js/index.js"></script>';
     $_custom_css = $_base_path . 'mods/_standard/calendar/lib/fullcalendar/fullcalendar-theme.css'; // use a custom stylesheet
     require(AT_INCLUDE_PATH.'header.inc.php');
+
 ?>
 <!-- Loader wheel to indicate on-going transfer of data -->
 <div style="left:50%; z-index:20000; position:absolute; top:50%" id="loader">
@@ -146,6 +157,7 @@
                 ?>
             </li>
     <?php
+
         /**
          * Check if user has token for Google Account. If yes then display disconnect option
          * otherwise display connect option.
@@ -163,6 +175,7 @@
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php' target='_blank'>".
                 _AT('calendar_connect_gcal'). "</a></li></ul></fieldset>";
         }
+           
     ?>
     <br/>
     <!-- Display color codes with description. -->

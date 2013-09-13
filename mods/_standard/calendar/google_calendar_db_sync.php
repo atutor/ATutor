@@ -17,6 +17,7 @@
      * available Google calendars for sync. If user changes preference
      * for a calendar then it is reflected in the database using this file.
      */
+         $_user_location = 'public';
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -24,28 +25,27 @@
     $new_id = $_GET['calid'];
     $mode  = $_GET['mode'];
 
-    global $db;
     if ($mode == 'add') {
         //Get calendar ids from database, append the new id and update database
-        $query    = "SELECT * FROM " . TABLE_PREFIX . "calendar_google_sync WHERE userid='".
-                    $_SESSION['member_id']."'";
-        $result   = mysql_query($query);
-        $row_val  = mysql_fetch_assoc($result);
+
+        $query    = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+        $row_val   = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
         $prev_val = $row_val['calids'];
         $prev_val .= htmlspecialchars($new_id).',';
-        $query    = "UPDATE " . TABLE_PREFIX . "calendar_google_sync SET calids='".
-                    $prev_val. "' WHERE userid='" . $_SESSION['member_id'] . "'";
-        mysql_query($query, $db);
+
+        $query    = "UPDATE %scalendar_google_sync SET calids='%s' WHERE userid=%d";
+        queryDB($query, array(TABLE_PREFIX, $prev_val, $_SESSION['member_id']));
+
     } else {
         //Get calendar ids from database, remove entry for selected id and update database
-        $query    = "SELECT * FROM " . TABLE_PREFIX . "calendar_google_sync WHERE userid='".
-                   $_SESSION['member_id'] . "'";
-        $result   = mysql_query($query);
-        $row_val  = mysql_fetch_assoc($result);
+
+        $query    = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+        $row_val   = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id'] ), TRUE);
         $prev_val = $row_val['calids'];
+
         $prev_val = str_replace(htmlspecialchars($new_id) . ",", "", $prev_val);
-        $query    = "UPDATE " . TABLE_PREFIX . "calendar_google_sync SET calids='".
-                   $prev_val . "' WHERE userid='" . $_SESSION['member_id'] . "'";
-        mysql_query($query, $db);
+
+        $query    = "UPDATE %scalendar_google_sync SET calids='%s' WHERE userid=%d";
+        queryDB($query, array(TABLE_PREFIX, $prev_val, $_SESSION['member_id']));
     }
 ?>
