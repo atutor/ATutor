@@ -23,10 +23,11 @@ function faq_news() {
         return $news;
     } 
 
-    $sql = "SELECT * FROM ".TABLE_PREFIX."faq_topics T INNER JOIN ".TABLE_PREFIX."faq_entries E ON T.topic_id = E.topic_id WHERE T.course_id IN $enrolled_courses ORDER BY E.revised_date DESC";
-    $result = mysql_query($sql, $db);
-    if($result){
-        while($row = mysql_fetch_assoc($result)){
+    $sql = "SELECT * FROM %sfaq_topics T INNER JOIN %sfaq_entries E ON T.topic_id = E.topic_id WHERE T.course_id IN %s ORDER BY E.revised_date DESC";
+    $rows_faqs = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $enrolled_courses));
+    
+    if(count($rows_faqs) > 0){
+        foreach($rows_faqs as $row){
             $news[] = array('time'=>$row['revised_date'], 
             'alt'=>_AT('faq'),'object'=>$row,
             'course'=>$system_courses[$row['course_id']]['title'], 
