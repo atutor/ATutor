@@ -109,8 +109,8 @@ if (isset($_POST['submit'])) {
 		$home_links = '';
 	}
 
-	$sql    = "UPDATE ".TABLE_PREFIX."courses SET home_links='$home_links', main_links='$main_links' WHERE course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
+	$sql    = "UPDATE %scourses SET home_links='%s', main_links='%s' WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $home_links, $main_links, $_SESSION['course_id']));
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: modules.php');
