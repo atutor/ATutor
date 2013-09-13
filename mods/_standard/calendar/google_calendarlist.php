@@ -15,23 +15,20 @@
      * This file is used to display all the available
      * calendars in Google Account of the user.
      */  
-   //debug_to_log("im in list.php");
+
       $_user_location = 'public';
     require_once 'includes/classes/googlecalendar.class.php';
 
     $gcalobj = new GoogleCalendar();
-    global $db;
-    
-    $query  = "SELECT * FROM " . TABLE_PREFIX . "calendar_google_sync WHERE userid='" . 
-              $_SESSION['member_id'] . "'";
-    $result = mysql_query($query, $db);
+
+    $query  = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+    $row = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
     //Check if user has associated his/her Google account or not
-    if (mysql_num_rows($result) > 0) {
+    if(count($row) > 0){
         /**
          * User has already associated his/her Google account. 
          * So get the session token from database.
          */
-        $row                      = mysql_fetch_assoc($result);
         $_SESSION['sessionToken'] = $row['token'];
         //Verify token
         if ($gcalobj->isvalidtoken($_SESSION['sessionToken'])) {
