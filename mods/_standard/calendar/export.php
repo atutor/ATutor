@@ -14,6 +14,7 @@
     /**
      * This file is used to generate ics file.
      */
+    $_user_location	= 'public';
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
     require('includes/classes/events.class.php');
