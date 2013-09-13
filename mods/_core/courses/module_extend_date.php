@@ -28,14 +28,15 @@
         }
         
         // get the course details along with the relevant dates
-        $sql = "SELECT M.first_name, M.last_name, C.title, C.release_date, C.end_date
+  /*      $sql = "SELECT M.first_name, M.last_name, C.title, C.release_date, C.end_date
                 FROM %scourses C , %smembers M , %scourse_enrollment E WHERE C.course_id IN (%s) AND M.member_id = '%d' 
                 AND E.member_id = M.member_id AND E.course_id = C.course_id";   
-        
-        
-        $rows_courses = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $enrolled, $member_id));
-        $row_count  = count($rows_courses);     
-        
+      */  
+
+        $sql = "SELECT * FROM %scourses WHERE course_id = $course_id";     
+        $rows_courses = queryDB($sql, array(TABLE_PREFIX));
+        $row_count  = count($rows_courses);    
+
         if ($row_count > 0) {
             $index = 0; 
             foreach($rows_courses as $row){           
