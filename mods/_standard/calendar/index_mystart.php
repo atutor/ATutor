@@ -18,8 +18,15 @@
     
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
-
-    global $db;
+    
+    if (!$_SESSION['valid_user']) {
+        require(AT_INCLUDE_PATH.'header.inc.php');
+        $info = array('INVALID_USER', $_SESSION['course_id']);
+        $msg->printInfos($info);
+        require(AT_INCLUDE_PATH.'footer.inc.php');
+        exit;
+    }
+   // global $db;
     
     //Check if patch is installed or not
     require('includes/classes/events.class.php');
@@ -35,13 +42,21 @@
 
     //Change status of email notifications
     if (isset($_GET['noti']) && $_GET['noti'] == 1) {
-        $sql = "UPDATE " . TABLE_PREFIX . "calendar_notification SET status = 1 WHERE 
+      /*  $sql = "UPDATE " . TABLE_PREFIX . "calendar_notification SET status = 1 WHERE 
                  memberid = " . $_SESSION['member_id'];
         mysql_query($sql,$db);
+        */
+        $sql = "UPDATE %scalendar_notification SET status = 1 WHERE memberid = %d";
+        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+        
     } else if (isset($_GET['noti']) && $_GET['noti'] == 0) {
-        $sql = "UPDATE " . TABLE_PREFIX . "calendar_notification SET status = 0 WHERE 
+    
+      /*  $sql = "UPDATE " . TABLE_PREFIX . "calendar_notification SET status = 0 WHERE 
                  memberid = " . $_SESSION['member_id'];
         mysql_query($sql,$db);
+        */
+        $sql = "UPDATE %scalendar_notification SET status = 0 WHERE memberid = %d";
+        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
     }
 
     //Change view according to session value
@@ -87,12 +102,13 @@
     require(AT_INCLUDE_PATH.'header.inc.php');
     
     // Get a list of this user's enrolled courses
-    $sql = "SELECT course_id FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=".$_SESSION['member_id'];
-    $rows_enrolled = queryDB($sql, array());
+    $sql = "SELECT course_id FROM %scourse_enrollment WHERE member_id=%d";
+    $rows_enrolled = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
     
     foreach($rows_enrolled as $row){
         $courses[] = $row['course_id'];
     }
+    debug_to_log($courses);
 ?>
 <!-- Loader wheel to indicate on-going transfer of data -->
 
@@ -125,30 +141,37 @@
                 <?php echo _AT('calendar_notification');?>:&nbsp;
                 <?php
                     //Find current status of notification
-                    $sql    = "SELECT * FROM " . TABLE_PREFIX . "calendar_notification WHERE memberid=".
-                      $_SESSION['member_id'];
+                    $sql    = "SELECT * FROM %scalendar_notification WHERE memberid=%d";
+                    $row_notification = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
                     $status = 0;  
-                    $result = mysql_query($sql, $db);
                     
-                    if (is_null($result) || !$result) {
+                    if(count($row_notification) == 0){
+                   // if (is_null($result) || !$result) {
                         //Not any entry for user, make one default entry
-                        $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_notification VALUES (".
+                    /*    $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_notification VALUES (".
                                $_SESSION['member_id'] . ",0)";
                         mysql_query($sql, $db);
+                        */
+                        $sql = "INSERT INTO %scalendar_notification VALUES (%d,0)";
+                        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
                         $status = 0;
-                    } else if (is_resource($result) && mysql_num_rows($result) > 0) {
+                   // } else if (is_resource($result) && mysql_num_rows($result) > 0) {
+                      } else if(count($row_notification) > 0){
                         //There is an entry in the table, find the value
-                        $row = mysql_fetch_row($result);
-                        if ($row[1] == 0) {
+                        //$row = mysql_fetch_row($result);
+                        if ($row_notification['status'] == 0) {
                             $status = 0;
                         } else {
                             $status = 1;
                         }
                     } else {
                         //Not any entry for user, make one default entry
-                        $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_notification VALUES (".
+                      /*  $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_notification VALUES (".
                                $_SESSION['member_id'] . ",0)";
                         mysql_query($sql, $db);
+                        */
+                        $sql = "INSERT INTO %scalendar_notification VALUES (%d,0)";
+                        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
                         $status = 0;
                     }
                     //Put button to reflect current status
@@ -166,10 +189,13 @@
          * Check if user has token for Google Account. If yes then display disconnect option
          * otherwise display connect option.
          */
-        $query = "SELECT * FROM ".TABLE_PREFIX."calendar_google_sync WHERE userid='".$_SESSION['member_id']."'";
-        $result = mysql_query($query,$db);
-        
-        if (mysql_num_rows($result) > 0) {
+        //$query = "SELECT * FROM ".TABLE_PREFIX."calendar_google_sync WHERE userid='".$_SESSION['member_id']."'";
+       // $result = mysql_query($query,$db);
+        $query = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+        $rows_gcals = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));
+                
+        if(count($rows_gcals) > 0){
+       // if (mysql_num_rows($result) > 0) {
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php?logout=yes' target='_blank'>".
                  _AT('calendar_disconnect_gcal') . "</a></li></ul></fieldset>";
             echo "<br/><fieldset><legend><h4>". _AT('calendar_gcals') . "</h4></legend>";
@@ -221,10 +247,12 @@
         /**
          * If user has bookmarked calendars then display them.
          */
-        $query = "SELECT * FROM " . TABLE_PREFIX.
-                 "calendar_bookmark WHERE memberid = ".$_SESSION['member_id'];
-        $result   = mysql_query($query,$db);
-        if (mysql_num_rows( $result ) > 0) {
+
+        $query = "SELECT * FROM %scalendar_bookmark WHERE memberid = %d";
+        $rows_bookmarks   = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));
+        
+        if(count($rows_bookmarks) > 0){
+
     ?>
     <fieldset>
     <legend>
@@ -234,7 +262,8 @@
     </legend>
     <ul class="social_side_menu">
         <?php
-            while ($row = mysql_fetch_assoc($result)) {
+            foreach($rows_bookmarks as $row){
+            //while ($row = mysql_fetch_assoc($result)) {
         ?>
         <li>
             <a  href='mods/_standard/calendar/index_mystart.php?mid=<?php echo urlencode(base64_encode($row['ownerid'])); ?>&cid=<?php echo $row['courseid']; ?>&calname=<?php echo $row['calname']; ?>'><?php echo $row['calname'];?>
