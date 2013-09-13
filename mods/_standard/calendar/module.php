@@ -93,6 +93,6 @@
      * Public page to display shared calendar
      */
    // $this->_pages[AT_NAV_PUBLIC] = array('mods/_standard/calendar/index_public.php');
-   // $this->_pages['mods/_standard/calendar/index_public.php']['title_var'] = 'calendar';
+    $this->_pages['mods/_standard/calendar/index_public.php']['title_var'] = 'calendar';
     //$this->_pages['mods/_standard/calendar/google_connect_disconnect.php.php']['title_var'] = 'calendar';
 ?>
