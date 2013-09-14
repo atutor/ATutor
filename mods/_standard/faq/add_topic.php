@@ -30,9 +30,9 @@ if (isset($_POST['cancel'])) {
 		//This will truncate the content of the length to 240 as defined in the db.
 		$_POST['name'] = validate_length($_POST['name'], 250);
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."faq_topics VALUES (NULL, $_SESSION[course_id], '$_POST[name]')";
-		$result = mysql_query($sql,$db);
-		
+		$sql	= "INSERT INTO %sfaq_topics VALUES (NULL, %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['name']));
+				
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index_instructor.php');
 		exit;
