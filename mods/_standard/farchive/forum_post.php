@@ -57,12 +57,11 @@ fwrite($main, "<div class='threadlist'>");
 
 $filearr = array();  // will hold all the files that were created
 
-$sql = "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=".$forum_id." ORDER BY date ASC LIMIT 0, 70";
-$result = mysql_query($sql) or die(mysql_error());
+$sql = "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H-%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE parent_id=0 AND forum_id=%d ORDER BY date ASC LIMIT 0, 70";
+$rows_threads = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
 // Print out each post for each thread
-while ($row = mysql_fetch_array($result)) {
-
+foreach($rows_threads as $row){
 
     $handle = fopen(AT_CONTENT_DIR."/t-".$row['post_id'].".html", "w");
     array_push($filearr, "t-".$row['post_id'].".html");
@@ -73,14 +72,13 @@ while ($row = mysql_fetch_array($result)) {
     fwrite($handle, "<div><p><br /><h1>".$row['subject']."</h1></div><br />");
     fwrite($handle, "<div><ul class='forum-thread'>");
 
-    $sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=".$row['post_id']." AND forum_id=".$forum_id." ORDER BY date ASC LIMIT 0, 70";
-
-    $result_post = mysql_query($sql, $db);
+    $sql	= "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H-%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE parent_id=%d AND forum_id=%d ORDER BY date ASC LIMIT 0, 70";
+    $rows_posts = queryDB($sql, array(TABLE_PREFIX, $row['post_id'], $forum_id));
     ob_start();
 
     print_entry2($row);
     
-    while ($post_row = mysql_fetch_assoc($result_post)) {
+    foreach($rows_posts as $post_row){
         print_entry2($post_row);
     }
     fwrite($handle, ob_get_contents());
