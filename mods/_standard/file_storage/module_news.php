@@ -17,7 +17,7 @@
  */
 
 function file_storage_news() {
-	global $db, $enrolled_courses, $system_courses;
+	global $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == '') {
@@ -48,21 +48,20 @@ function file_storage_news() {
 	                from " . TABLE_PREFIX . "groups_members gm 
 	                where gm.group_id = g.group_id))
 	         ORDER BY date DESC";
-	$result = mysql_query($sql, $db);
-	
-	if($result){
-		while($row = mysql_fetch_assoc($result)){
-		//debug($row);
+
+	$rows_files = queryDB($sql, array());
+	if(count($rows_files) > 0){
+	    foreach($rows_files as $row){
 		
 			if($row['description'] !=""){
 				$filetext = $row['description'];
 			} else {
 				$filetext = $row['file_name'];
 			}
-			$sql = "SELECT course_id, home_links, main_links from ".TABLE_PREFIX."courses WHERE course_id = '$row[course_id]'";
-			$result = mysql_query($sql, $db);
-			$row2 = mysql_fetch_assoc($result);
-			
+
+			$sql = "SELECT course_id, home_links, main_links from %scourses WHERE course_id = %d";
+			$row2 = queryDB($sql, array(TABLE_PREFIX, $row['course_id']), TRUE);
+						
 			// check if course has file storage enabled
 			
 			if(strstr( $row2['home_links'], 'file_storage') || strstr( $row2['main_links'], 'file_storage') ){
