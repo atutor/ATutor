@@ -7,9 +7,10 @@
 
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="topic"><?php  echo _AT('topic'); ?></label><br />
 		<select name="topic_id" id="topic">
-			<?php while ($row = mysql_fetch_assoc($this->result)): ?>
+			<?php 
+			foreach($this->rows_topics as $row){ ?>
 				<option value="<?php echo $row['topic_id']; ?>"<?php if (isset($_POST['topic_id']) && ($row['topic_id'] == $_POST['topic_id'])) { echo ' selected="selected"'; } ?>><?php echo AT_print($row['name'], 'input.text'); ?></option>
-			<?php endwhile; ?>
+			<?php } ?>
 		</select>
 	</div>
 	<div class="row">

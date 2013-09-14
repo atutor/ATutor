@@ -69,14 +69,18 @@ $onload = 'document.form.topic.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
-	$result = mysql_query($sql, $db);
-	$num_topics = mysql_num_rows($result);
-	if (!$num_topics) {
+	//$sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
+	//$result = mysql_query($sql, $db);
+	//$num_topics = mysql_num_rows($result);
+	$sql	= "SELECT name, topic_id FROM %sfaq_topics WHERE course_id=%d ORDER BY name";
+	$rows_topics = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
+    if(count($rows_topics) == 0){
 		$msg->printErrors('NO_FAQ_TOPICS');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-$savant->assign('result', $result);
+//$savant->assign('result', $result);
+$savant->assign('rows_topics', $rows_topics);
 $savant->display('instructor/faq/add_question.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
