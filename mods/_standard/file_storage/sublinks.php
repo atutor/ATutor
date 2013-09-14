@@ -6,11 +6,11 @@ global $db;
 
 $file_limit = 3;		//Numero massimo dei possibili sottocontenuti visualizzabili nella home-page
 
-$sql = "SELECT file_id, file_name, description FROM ".TABLE_PREFIX."files WHERE owner_id=$_SESSION[course_id] ORDER BY date DESC LIMIT $file_limit";
-$result = mysql_query($sql, $db);
+$sql = "SELECT file_id, file_name, description FROM %sfiles WHERE owner_id=%d ORDER BY date DESC LIMIT %d";
+$rows_files = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $file_limit));
 
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
+if(count($rows_files) > 0){
+	foreach($rows_files as $row){
 		if($row['description'] !=""){
 			$filetext = $row['description'];
 		}else{
