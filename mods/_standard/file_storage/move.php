@@ -43,18 +43,17 @@ if (isset($_POST['cancel'])) {
 		foreach ($_POST['files'] as $file) {
 			$file = abs($file);
 			// check if this file name already exists
-			$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id=$file";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
-
-			$sql = "SELECT file_id FROM ".TABLE_PREFIX."files WHERE folder_id={$_POST['new_folder']} AND file_id<>$file AND file_name='{$row['file_name']}' AND parent_file_id=0 AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_id DESC LIMIT 1";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
+			$sql = "SELECT file_name FROM %sfiles WHERE file_id=%d";
+			$row = queryDB($sql, array(TABLE_PREFIX, $file), TRUE);
+			
+			$sql = "SELECT file_id FROM %sfiles WHERE folder_id=%d AND file_id<>%d AND file_name='%s' AND parent_file_id=0 AND owner_type=%d AND owner_id=%d ORDER BY file_id DESC LIMIT 1";
+			$row = queryDB($sql, array(TABLE_PREFIX, $_POST['new_folder'], $file, $row['file_name'], $owner_type, $owner_id), TRUE);
+			if(count($row) > 0){
 				fs_delete_file($row['file_id'], $owner_type, $owner_id);
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET folder_id={$_POST['new_folder']}, date=date WHERE file_id=$file AND owner_type=$owner_type AND owner_id=$owner_id";
-			mysql_query($sql, $db);
+			$sql = "UPDATE %sfiles SET folder_id=%d, date=date WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $_POST['new_folder'], $file, $owner_type, $owner_id));
 		}
 		$msg->addFeedback('FILES_MOVED');
 	}
@@ -62,8 +61,9 @@ if (isset($_POST['cancel'])) {
 	if (isset($_POST['folders'])) {
 		foreach ($_POST['folders'] as $folder) {
 			$file = abs($file);
-			$sql = "UPDATE ".TABLE_PREFIX."folders SET parent_folder_id={$_POST['new_folder']} WHERE folder_id=$folder AND owner_type=$owner_type AND owner_id=$owner_id";
-			mysql_query($sql, $db);
+
+			$sql = "UPDATE %sfolders SET parent_folder_id=%d WHERE folder_id=%d AND owner_type=%d AND owner_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $_POST['new_folder'], $folder, $owner_type, $owner_id));
 		}
 		$msg->addFeedback('DIRS_MOVED');
 	}
@@ -77,9 +77,11 @@ $folder_id = abs($_GET['folder']);
 
 // can't use fs_get_folders() because we want all folders, not just at one level
 $folders = array();
-$sql = "SELECT folder_id, parent_folder_id, title FROM ".TABLE_PREFIX."folders WHERE owner_type=$owner_type AND owner_id=$owner_id ORDER BY parent_folder_id, title";
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+$sql = "SELECT folder_id, parent_folder_id, title FROM %sfolders WHERE owner_type=%d AND owner_id=%d ORDER BY parent_folder_id, title";
+$rows_folders = queryDB($sql, array(TABLE_PREFIX, $owner_type, $owner_id));
+
+foreach($rows_folders as $row){
 	$folders[$row['parent_folder_id']][$row['folder_id']] = $row;
 }
 
