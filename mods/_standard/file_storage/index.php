@@ -179,7 +179,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 
 		$sql = "SELECT file_name, file_size FROM %sfiles WHERE file_id=%d";
 		$row = queryDB($sql, array(TABLE_PREFIX, $file_id), TRUE);
-		
+
 		if(count($row) > 0){
 			$ext = fs_get_file_extension($row['file_name']);
 
@@ -190,6 +190,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 			}
 			$file_path = fs_get_file_path($file_id) . $file_id;
 			$row['file_name'] = str_replace(array('"', "'", ' ', ','), '_', $row['file_name']);
+	
 			ob_end_clean();
 			header("Content-Encoding: none");
 			header("Content-Type: ' . $file_mime .'", true);
@@ -214,7 +215,6 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 		// zip multiple files and folders
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile = new zipfile();
-
 		$zip_file_name = fs_get_workspace($owner_type, $owner_id); // want the name of the workspace
 		$zip_file_name = str_replace(" ","_",$zip_file_name );
 
@@ -224,28 +224,40 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 
 				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM %sfiles WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
 				$row = queryDB($sql, array(TABLE_PREFIX, $file_id, $owner_type, $owner_id));
-				
 				if(count($row) > 0 && file_exists($file_path)){
 					$zipfile->add_file(file_get_contents($file_path), $row['file_name'], $row['date']);
 				}
 			}
 		}
+
 		if (is_array($_GET['folders'])) {
 			foreach($_GET['folders'] as $folder_id) {
-				fs_download_folder($folder_id, $zipfile, $owner_type, $owner_id);
+
+				$row = fs_download_folder($folder_id, $zipfile, $owner_type, $owner_id);
 				$row['title'] = str_replace(" ","_",$row['title']  );
 				$zipfile->create_dir($row['title']);
+
 			}
 
-			if (count($_GET['folders']) == 1) {
-				// zip just one folder, use that folder's title as the zip file name
-				$row = fs_get_folder_by_id($_GET['folders'][0], $owner_type, $owner_id);
-				if ($row) {
-					$zip_file_name = $row['title'];
-					$zip_file_name = str_replace(" ","_",$zip_file_name );
-				}
-			}
-		}
+            if (count($_GET['folders']) == 1) {
+            
+                // zip just one folder, use that folder's title as the zip file name
+                $row = fs_get_folder_by_id($_GET['folders'][0], $owner_type, $owner_id);
+                $folders = fs_get_folder_by_id($folder_id, $owner_type, $owner_id);
+                // if its an assignment directory, use the login as the filename
+                $sql = "SELECT login from %smembers WHERE member_id = %d";
+                $row_login = queryDB($sql, array(TABLE_PREFIX, $folders['folder_id']), TRUE);
+
+                if (isset($row['title'])) {
+                    $zip_file_name = $row['title'];
+                    $zip_file_name = str_replace(" ","_",$zip_file_name );
+                }else if(isset($row_login['login'])){
+                    $zip_file_name = $row_login['login'];
+                    $zip_file_name = str_replace(" ","_",$zip_file_name );
+                }
+            }
+        }
+
 		$zipfile->close();
 		$zipfile->send_file($zip_file_name);
 	}
@@ -253,6 +265,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 }
 // action - Delete Files/Folders (pre-confirmation)
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+
 	$hidden_vars = array();
 	$hidden_vars['folder'] = $folder_id;
 	$hidden_vars['ot']     = $owner_type;
@@ -452,7 +465,6 @@ $rows_files = queryDB($sql, array(TABLE_PREFIX, $folder_id, $owner_type, $owner_
 foreach($rows_files as $row){
 	$files[] = $row;
 }
-
 ?>
 
 <?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
