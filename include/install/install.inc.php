@@ -419,7 +419,8 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 		} else {
 			$msg->addError('UNABLE_CONNECT_DB');
 		}
-	} 
+		return false;
+	}
 
 	$tb_prefix = $addslashes($tb_prefix);
 	$db_name = $addslashes($db_name);
