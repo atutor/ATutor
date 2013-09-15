@@ -432,7 +432,7 @@ function fs_download_folder($folder_id, &$zipfile, $owner_type, $owner_id, $path
 	$rows = fs_get_folder_by_pid($folder_id, $owner_type, $owner_id);
 
 	foreach ($rows as $row) {
-		fs_download_folder($row['folder_id'], $zipfile, $owner_type, $owner_id, $path . $parent_row['title'] . '');
+		fs_download_folder($row['folder_id'], $zipfile, $owner_type, $owner_id, $path . $parent_row['title'] . '/');
 	}
 }
 
