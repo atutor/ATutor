@@ -29,8 +29,8 @@
         
         // get the course details along with the relevant dates
 
-        $sql = "SELECT * FROM %scourses WHERE course_id = $course_id";     
-        $rows_courses = queryDB($sql, array(TABLE_PREFIX));
+        $sql = "SELECT * FROM %scourses WHERE course_id =%d";     
+        $rows_courses = queryDB($sql, array(TABLE_PREFIX, $course_id));
         $row_count  = count($rows_courses);    
 
         if ($row_count > 0) {
@@ -42,8 +42,7 @@
                     // release_date
                     $course[$index] = array(
                                 "id"        => rand(10000,15000) . '',
-                                "title"     => _AT('calendar_course_start') . $row['title']/*. 
-                                               _AT('calendar_course_token')*/,
+                                "title"     => _AT('calendar_course_start') . $row['title'],
                                 "start"     => $row['release_date'],
                                 "end"       => $row['release_date'],
                                 "allDay"    => false,
@@ -59,8 +58,7 @@
                     $time    = date('h:i A',$unix_ts);
                     $course[$index] = array(
                             "id"        => rand(10000,15000).'',
-                            "title"     => _AT('calendar_course_end') . $row['title']/*.
-                                           _AT('calendar_course_token')*/,
+                            "title"     => _AT('calendar_course_end') . $row['title'],
                             "start"     => $row['end_date'],
                             "end"       => $row['end_date'],
                             "allDay"    => false,

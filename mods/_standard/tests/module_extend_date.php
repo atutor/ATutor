@@ -10,35 +10,27 @@
      */
     function tests_extend_date($member_id, $course_id) {
 
-        global $db;
         $tests = array();
         
         // get course title
-        $sql = "SELECT title 
-                FROM " . TABLE_PREFIX . "courses 
-                WHERE course_id = '" . $course_id . "'";
-                
-        $result       = mysql_query($sql,$db) or die(mysql_error());
-        $row          = mysql_fetch_assoc($result);
-        $course_title = $row['title'];
-        
-        $sql = "SELECT title,test_id,start_date,end_date
-                FROM " . TABLE_PREFIX . "tests
-                WHERE course_id = '" . $course_id . "'";
 
-        $result    = mysql_query($sql,$db) or die(mysql_error());
-        $row_count = mysql_num_rows($result);
+        $sql = "SELECT title  FROM %scourses  WHERE course_id = %d";               
+        $row       = queryDB($sql,array(TABLE_PREFIX, $course_id), TRUE);
         
-        if ($row_count > 0) {
+        $course_title = $row['title'];
+
+        $sql = "SELECT title,test_id,start_date,end_date FROM %stests WHERE course_id = %d";
+        $rows_tests    = queryDB($sql,array(TABLE_PREFIX, $course_id));
+            
+        if (count($rows_tests) > 0) {
             $index = 0;
-            while ($row = mysql_fetch_assoc($result)) {
+            foreach($rows_tests as $row){
                 if (strpos( $row['start_date'] . '', '0000-00-00' ) === false) {
                     $unix_ts = strtotime($row['start_date']);
                     $time    = date('h:i A',$unix_ts);
                     $tests[$index] = array(
                                 "id"        => rand(20000,25000).'',
-                                "title"     => _AT('calendar_test_start') . $row['title']/*. 
-                                               _AT('calendar_test_token')*/,
+                                "title"     => _AT('calendar_test_start') . $row['title'],
                                 "start"     => $row['start_date'],
                                 "end"       => $row['start_date'],
                                 "allDay"    => false,
@@ -53,8 +45,7 @@
                 if (strpos( $row['end_date'] . '', '0000-00-00' ) === false) {        
                     $tests[$index] = array(
                                 "id"        => rand(20000,25000) . '',
-                                "title"     => _AT('calendar_test_end') . $row['title']/*.
-                                               _AT('calendar_test_token')*/,
+                                "title"     => _AT('calendar_test_end') . $row['title'],
                                 "start"     => $row['end_date'],
                                 "end"       => $row['end_date'],
                                 "allDay"    => false,
@@ -66,6 +57,7 @@
                 }
             }
         }
+        
         return $tests;
     }
 ?>

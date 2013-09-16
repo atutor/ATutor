@@ -59,7 +59,7 @@
         
         if ($_POST['to'] == 1) {
 
-            $sql = "SELECT * FROM %smembers WHERE member_id IN (SELECT member_id FROM %scourse_enrollment WHERE status=%d and course_id=%d and member_id <> %d )";
+            $sql    = "SELECT * FROM %smembers WHERE member_id IN (SELECT member_id FROM %scourse_enrollment WHERE status=%d and course_id=%d and member_id <> %d )";
             $nowrow = queryDB($sql,array(TABLE_PREFIX, TABLE_PREFIX, AT_STATUS_STUDENT, $_SESSION['course_id'], $_SESSION['member_id']));
             
             if (count($norow) < 1) {
@@ -75,7 +75,7 @@
                 
             } else if ($_POST['to'] == 2) {
                 // choose particular login
-               $sql  = "SELECT * FROM %smembers WHERE member_id = %d";
+               $sql     = "SELECT * FROM %smembers WHERE member_id = %d";
                $rows_recipients = queryDB($sql, array(TABLE_PREFIX, $_POST['selection']));
             } else {
                 //user entered email address
