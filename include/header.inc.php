@@ -106,7 +106,7 @@ $custom_head .= '
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js" type="text/javascript"></script>
 	<script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	$(document).ready(function() {
+	$("body").load(function() {
         ATutor.autoLogout({
             timeLogout              : '.$session_timeout.',
             timeWarningBeforeLogout : '.$session_warning.',
