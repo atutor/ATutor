@@ -512,7 +512,7 @@ $(document).ready(function () {
         if ($('#viewname1').val() == "true") {
             ends = $("#date-end1").val();
         } else {
-            ends =  $("#date-start1").val();
+            ends =  $("#date-end1").val();
                 
             var timestr = $('#time-start1').val().split(':');
             var timestp = $('#time-end1').val().split(':');                        
