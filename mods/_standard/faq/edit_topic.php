@@ -39,9 +39,9 @@ if (isset($_POST['submit'])) {
 		//This will truncate the content of the length to 240 as defined in the db.
 		$_POST['name'] = validate_length($_POST['name'], 250);
 
-		$sql	= "UPDATE ".TABLE_PREFIX."faq_topics SET name='$_POST[name]' WHERE topic_id=$id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql,$db);
-
+		$sql	= "UPDATE %sfaq_topics SET name='%s' WHERE topic_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['name'], $id, $_SESSION['course_id']));
+		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: index_instructor.php');
 		exit;
@@ -57,15 +57,17 @@ if ($id == 0) {
 	exit;
 }
 
-$sql	= "SELECT name FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] AND topic_id=$id ORDER BY name";
-$result = mysql_query($sql, $db);
-if (!$row = mysql_fetch_assoc($result)) {
+$sql	= "SELECT name FROM %sfaq_topics WHERE course_id=%d AND topic_id=%d ORDER BY name";
+$row_topic = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $id), TRUE);
+
+if(count($row_topic) == 0){
 	$msg->printErrorS('ITEM_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 } else if (!isset($_POST['name'])) {
-	$_POST['name'] = $row['name'];
+	$_POST['name'] = $row_topic['name'];
 }
+
 $savant->assign('id', $id);
 $savant->display('instructor/faq/edit_topic.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

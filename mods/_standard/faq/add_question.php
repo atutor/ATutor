@@ -49,11 +49,14 @@ if (isset($_POST['cancel'])) {
 		$_POST['answer'] = validate_length($_POST['answer'], 250);
 
 		// check that this topic_id belongs to this course:
-		$sql    = "SELECT topic_id FROM ".TABLE_PREFIX."faq_topics WHERE topic_id=$_POST[topic_id] AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
-			$sql	= "INSERT INTO ".TABLE_PREFIX."faq_entries VALUES (NULL, $_POST[topic_id], NOW(), 1, '$_POST[question]', '$_POST[answer]')";
-			$result = mysql_query($sql,$db);
+
+		$sql    = "SELECT topic_id FROM %sfaq_topics WHERE topic_id=%d AND course_id=%d";
+		$rows_topics = queryDB($sql, array(TABLE_PREFIX, $_POST['topic_id'], $_SESSION['course_id']), TRUE);
+		
+	    if(count($rows_topics) > 0){
+
+			$sql	= "INSERT INTO %sfaq_entries VALUES (NULL, %d, NOW(), 1, '%s', '%s')";
+			$result = queryDB($sql,array(TABLE_PREFIX, $_POST['topic_id'], $_POST['question'], $_POST['answer']));
 		}
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -66,14 +69,15 @@ $onload = 'document.form.topic.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-	$sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
-	$result = mysql_query($sql, $db);
-	$num_topics = mysql_num_rows($result);
-	if (!$num_topics) {
+	$sql	= "SELECT name, topic_id FROM %sfaq_topics WHERE course_id=%d ORDER BY name";
+	$rows_topics = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
+    if(count($rows_topics) == 0){
 		$msg->printErrors('NO_FAQ_TOPICS');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
-$savant->assign('result', $result);
+
+$savant->assign('rows_topics', $rows_topics);
 $savant->display('instructor/faq/add_question.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>

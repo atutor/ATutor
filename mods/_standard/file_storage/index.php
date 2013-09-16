@@ -176,9 +176,11 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['move']) 
 else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['files']))) {
 	if (is_array($_GET['files']) && (count($_GET['files']) == 1) && empty($_GET['folders'])) {
 		$file_id = current($_GET['files']);
-		$sql = "SELECT file_name, file_size FROM ".TABLE_PREFIX."files WHERE file_id=$file_id";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
+
+		$sql = "SELECT file_name, file_size FROM %sfiles WHERE file_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $file_id), TRUE);
+
+		if(count($row) > 0){
 			$ext = fs_get_file_extension($row['file_name']);
 
 			if (isset($mime[$ext]) && $mime[$ext][0]) {
@@ -188,6 +190,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 			}
 			$file_path = fs_get_file_path($file_id) . $file_id;
 			$row['file_name'] = str_replace(array('"', "'", ' ', ','), '_', $row['file_name']);
+	
 			ob_end_clean();
 			header("Content-Encoding: none");
 			header("Content-Type: ' . $file_mime .'", true);
@@ -212,38 +215,49 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 		// zip multiple files and folders
 		require(AT_INCLUDE_PATH . 'classes/zipfile.class.php');
 		$zipfile = new zipfile();
-
 		$zip_file_name = fs_get_workspace($owner_type, $owner_id); // want the name of the workspace
 		$zip_file_name = str_replace(" ","_",$zip_file_name );
 
 		if (is_array($_GET['files'])) {
 			foreach ($_GET['files'] as $file_id) {
 				$file_path = fs_get_file_path($file_id) . $file_id;
-				
 
-				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM ".TABLE_PREFIX."files WHERE file_id=$file_id AND owner_type=$owner_type AND owner_id=$owner_id";
-				$result = mysql_query($sql, $db);
-				if (($row = mysql_fetch_assoc($result)) && file_exists($file_path)) {
+				$sql = "SELECT file_name, UNIX_TIMESTAMP(date) AS date FROM %sfiles WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+				$row = queryDB($sql, array(TABLE_PREFIX, $file_id, $owner_type, $owner_id));
+				if(count($row) > 0 && file_exists($file_path)){
 					$zipfile->add_file(file_get_contents($file_path), $row['file_name'], $row['date']);
 				}
 			}
 		}
+
 		if (is_array($_GET['folders'])) {
 			foreach($_GET['folders'] as $folder_id) {
-				fs_download_folder($folder_id, $zipfile, $owner_type, $owner_id);
+
+				$row = fs_download_folder($folder_id, $zipfile, $owner_type, $owner_id);
 				$row['title'] = str_replace(" ","_",$row['title']  );
 				$zipfile->create_dir($row['title']);
+
 			}
 
-			if (count($_GET['folders']) == 1) {
-				// zip just one folder, use that folder's title as the zip file name
-				$row = fs_get_folder_by_id($_GET['folders'][0], $owner_type, $owner_id);
-				if ($row) {
-					$zip_file_name = $row['title'];
-					$zip_file_name = str_replace(" ","_",$zip_file_name );
-				}
-			}
-		}
+            if (count($_GET['folders']) == 1) {
+            
+                // zip just one folder, use that folder's title as the zip file name
+                $row = fs_get_folder_by_id($_GET['folders'][0], $owner_type, $owner_id);
+                $folders = fs_get_folder_by_id($folder_id, $owner_type, $owner_id);
+                // if its an assignment directory, use the login as the filename
+                $sql = "SELECT login from %smembers WHERE member_id = %d";
+                $row_login = queryDB($sql, array(TABLE_PREFIX, $folders['folder_id']), TRUE);
+
+                if (isset($row['title'])) {
+                    $zip_file_name = $row['title'];
+                    $zip_file_name = str_replace(" ","_",$zip_file_name );
+                }else if(isset($row_login['login'])){
+                    $zip_file_name = $row_login['login'];
+                    $zip_file_name = str_replace(" ","_",$zip_file_name );
+                }
+            }
+        }
+
 		$zipfile->close();
 		$zipfile->send_file($zip_file_name);
 	}
@@ -251,6 +265,7 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 }
 // action - Delete Files/Folders (pre-confirmation)
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
+
 	$hidden_vars = array();
 	$hidden_vars['folder'] = $folder_id;
 	$hidden_vars['ot']     = $owner_type;
@@ -259,9 +274,11 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 		$file_list_to_print = '';
 		$files = implode(',', $_GET['files']);
 		$hidden_vars['files'] = $files;
-		$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($files) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_name";
-		$result = mysql_query($sql, $db);
-		while ($row = mysql_fetch_assoc($result)) {
+
+		$sql = "SELECT file_name FROM %sfiles WHERE file_id IN (%s) AND owner_type=%d AND owner_id=%d ORDER BY file_name";
+		$rows_file_names = queryDB($sql, array(TABLE_PREFIX, $files, $owner_type, $owner_id));
+		
+		foreach($rows_file_names as $row){
 			$file_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.htmlspecialchars($row['file_name']).'</li>';
 		}
 		$msg->addConfirm(array('FILE_DELETE', $file_list_to_print), $hidden_vars);
@@ -331,8 +348,9 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['submit_
 
 		$parent_folder_id = abs($_POST['folder']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (NULL, $parent_folder_id, $owner_type, $owner_id, '$_POST[new_folder_name]')";
-		$result = mysql_query($sql, $db);
+		$sql = "INSERT INTO %sfolders VALUES (NULL, %d, %d, %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $parent_folder_id, $owner_type, $owner_id, $_POST['new_folder_name']));
+		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.url_rewrite('mods/_standard/file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder_id, AT_PRETTY_URL_IS_HEADER));
 		exit;
@@ -357,9 +375,11 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 
 	// check that we own this folder
 	if ($parent_folder_id) {
-		$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
-		$result = mysql_query($sql, $db);
-		if (!$row = mysql_fetch_assoc($result)) {
+	
+		$sql = "SELECT folder_id FROM %sfolders WHERE folder_id=%d AND owner_type=%d AND owner_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $parent_folder_id, $owner_type, $owner_id), TRUE);
+		
+		if(count($row) == 0){
 			$msg->addError('ACCESS_DENIED');
 			header('Location: '.AT_BASE_HREF.'mods/_standard/file_storage/index.php');
 			exit;
@@ -376,23 +396,26 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_POST['upload'
 			$num_comments = 0;
 		}
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (NULL, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '{$_FILES['file']['name']}', {$_FILES['file']['size']}, '$_POST[description]')";
-		$result = mysql_query($sql, $db);
-
-		if ($result && ($file_id = mysql_insert_id($db))) {
+		$sql = "INSERT INTO %sfiles VALUES (NULL, %d, %d, %d, %d, 0, NOW(), %d, 0, '%s', %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $owner_type, $owner_id, $_SESSION['member_id'], $parent_folder_id, $num_comments, $_FILES['file']['name'], $_FILES['file']['size'], $_POST['description']));
+		
+		if ($result > 0 && ($file_id = at_insert_id())) {
 			$path = fs_get_file_path($file_id);
 			move_uploaded_file($_FILES['file']['tmp_name'], $path . $file_id);
 
 			// check if this file name already exists
-			$sql = "SELECT file_id, num_revisions FROM ".TABLE_PREFIX."files WHERE owner_type=$owner_type AND owner_id=$owner_id AND folder_id=$parent_folder_id AND file_id<>$file_id AND file_name='{$_FILES['file']['name']}' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
-				if ($_config['fs_versioning']) {
-					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id, date=date WHERE file_id=$row[file_id]";
-					$result = mysql_query($sql, $db);
+			$sql = "SELECT file_id, num_revisions FROM %sfiles WHERE owner_type=%d AND owner_id=%d AND folder_id=%d AND file_id<>%d AND file_name='%s' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
+			$row = queryDB($sql, array(TABLE_PREFIX, $owner_type, $owner_id, $parent_folder_id, $file_id, $_FILES['file']['name']), TRUE);
 
-					$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=$row[num_revisions]+1, date=date WHERE file_id=$file_id";
-					$result = mysql_query($sql, $db);
+            if(count($row) > 0){
+				if ($_config['fs_versioning']) {
+
+					$sql = "UPDATE %sfiles SET parent_file_id=%d, date=date WHERE file_id=%d";
+					$result = queryDB($sql, array(TABLE_PREFIX, $file_id, $row['file_id']));
+					
+					$sql = "UPDATE %sfiles SET num_revisions=%d+1, date=date WHERE file_id=%d";
+					$result = queryDB($sql, array(TABLE_PREFIX, $row['num_revisions'], $file_id));
+					
 				} else {
 					fs_delete_file($row['file_id'], $owner_type, $owner_id);
 				}
@@ -435,13 +458,13 @@ $folder_path = fs_get_folder_path($folder_id, $owner_type, $owner_id);
 $folders = fs_get_folder_by_pid($folder_id, $owner_type, $owner_id);
 
 $files = array();
-$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$owner_type AND owner_id=$owner_id AND parent_file_id=0 ORDER BY $col $order";
-$result = mysql_query($sql, $db);
 
-while ($row = mysql_fetch_assoc($result)) {
+$sql = "SELECT * FROM %sfiles WHERE folder_id=%d AND owner_type=%d AND owner_id=%d AND parent_file_id=0 ORDER BY $col $order";
+$rows_files = queryDB($sql, array(TABLE_PREFIX, $folder_id, $owner_type, $owner_id));
+
+foreach($rows_files as $row){
 	$files[] = $row;
 }
-
 ?>
 
 <?php if (query_bit($owner_status, WORKSPACE_AUTH_WRITE)): ?>
@@ -493,32 +516,38 @@ while ($row = mysql_fetch_assoc($result)) {
 if ($_SESSION['groups']) {
 	$file_storage_groups = array();
 	$groups_list = implode(',',$_SESSION['groups']);
-	$sql = "SELECT G.type_id, G.title, G.group_id FROM ".TABLE_PREFIX."file_storage_groups FS INNER JOIN ".TABLE_PREFIX."groups G USING (group_id) WHERE FS.group_id IN ($groups_list) ORDER BY G.type_id, G.title";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	$sql = "SELECT G.type_id, G.title, G.group_id FROM %sfile_storage_groups FS INNER JOIN %sgroups G USING (group_id) WHERE FS.group_id IN (%s) ORDER BY G.type_id, G.title";
+	$rows_groupfs = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $groups_list));
+	
+	foreach($rows_groupfs as $row){
 		$file_storage_groups[] = $row;
 	}
 }
 
 if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
 	$file_storage_assignments = array();
-	$sql = "SELECT * FROM ".TABLE_PREFIX."assignments WHERE course_id=$_SESSION[course_id] ORDER BY title";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	
+	$sql = "SELECT * FROM %sassignments WHERE course_id=%d ORDER BY title";
+	$rows_assignments = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+	
+	foreach($rows_assignments as $row){
 		$file_storage_assignments[] = $row;
 	}
 }
 
 if ($_SESSION['member_id'] && $_SESSION['enroll']){
 	$my_assignments = array();
-	$sql = "SELECT distinct a.title, a.assignment_id FROM ".TABLE_PREFIX."assignments a, ".TABLE_PREFIX."files f
-	         WHERE a.course_id = ".$_SESSION['course_id']."
+
+	$sql = "SELECT distinct a.title, a.assignment_id FROM %sassignments a, %sfiles f
+	         WHERE a.course_id = %d
 	           AND a.assignment_id = f.owner_id
-	           AND f.owner_type= ".WORKSPACE_ASSIGNMENT."
-	           AND f.member_id = ".$_SESSION['member_id']."
+	           AND f.owner_type= %d
+	           AND f.member_id = %d
 	         ORDER BY a.title";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	$rows_assignments2 = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], WORKSPACE_ASSIGNMENT, $_SESSION['member_id']));
+
+    foreach($rows_assignments2 as $row){
 		$my_assignments[] = $row;
 	}
 }

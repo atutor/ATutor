@@ -16,11 +16,11 @@ global $db;
 
 $record_limit = 3;	// Number of sublinks to display for this module on course home page -> detail view
 
-$sql = "SELECT C.member_id, M.login FROM ".TABLE_PREFIX."course_enrollment C, ".TABLE_PREFIX."members M	WHERE C.course_id=$_SESSION[course_id] AND C.member_id=M.member_id AND (C.approved='y' OR C.approved='a') limit ".$record_limit;
-$result = mysql_query($sql, $db);
+$sql = "SELECT C.member_id, M.login FROM %scourse_enrollment C, %smembers M	WHERE C.course_id=%d AND C.member_id=M.member_id AND (C.approved='y' OR C.approved='a') limit %d";
+$rows_members = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $record_limit));
 
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
+if(count($rows_members) > 0){
+    foreach($rows_members as $row){
 		$list[] = '<a href="'.url_rewrite('profile.php?id='.$row['member_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 		          (strlen($row['login']) > SUBLINK_TEXT_LEN ? ' title="'.$row['login'].'"' : '') .'>'. 
 		          validate_length($row['login'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>'; 

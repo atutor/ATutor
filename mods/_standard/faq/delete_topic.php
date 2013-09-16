@@ -24,11 +24,13 @@ if (isset($_POST['submit_no'])) {
 	$_POST['id'] = intval($_POST['id']);
 
 	// check that this topic_id belongs to this course:
-	$sql = "DELETE FROM ".TABLE_PREFIX."faq_topics WHERE topic_id=$_POST[id] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-	if (mysql_affected_rows($db) == 1) {
-		$sql = "DELETE FROM ".TABLE_PREFIX."faq_entries WHERE topic_id=$_POST[topic_id]";
-		$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %sfaq_topics WHERE topic_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $_SESSION['course_id']));
+	
+	if($result > 0){
+
+		$sql = "DELETE FROM %sfaq_entries WHERE topic_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['id']));
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -42,9 +44,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $_GET['id'] = intval($_GET['id']); 
 
 $sql = "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE topic_id=$_GET[id]";
+$row = queryDB($sql,array(TABLE_PREFIX, $_GET['id']));
 
-$result = mysql_query($sql,$db);
-if ($row = mysql_fetch_assoc($result)) {
+if(count($row) > 0){
+
 	$hidden_vars['id'] = $_GET['id'];
 
 	$confirm = array('DELETE_FAQ_TOPIC', AT_print($row['name'], 'faqs.topic'));

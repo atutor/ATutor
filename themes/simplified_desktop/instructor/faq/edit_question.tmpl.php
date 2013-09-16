@@ -12,7 +12,7 @@
 		<select name="topic_id" id="topic">
 		<?php if(!empty($this->faq_topics)):?>
 			<?php foreach($this->faq_topics as $topic_row):?>
-				<option value="<?php echo $topic_row['topic_id']; ?>"<?php if ($topic_row['topic_id'] == $row['topic_id']) { echo ' selected="selected"'; } ?>><?php echo AT_print($topic_row['name'], 'input.text'); ?></option>			
+				<option value="<?php echo $topic_row['topic_id']; ?>"<?php if ($topic_row['topic_id'] == $this->row['topic_id']) { echo ' selected="selected"'; } ?>><?php echo AT_print($topic_row['name'], 'input.text'); ?></option>			
 			<?php endforeach;?>		
 		<?php endif;?>
 		</select>

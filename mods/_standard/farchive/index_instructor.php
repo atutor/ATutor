@@ -3,11 +3,10 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 
+$sql = "SELECT forum_id, title FROM %sforums";
+$rows_forums = queryDB($sql, array(TABLE_PREFIX));
 
-$sql = "SELECT forum_id, title FROM ".TABLE_PREFIX."forums";
-$result = mysql_query($sql) or die(mysql_error());
-
-if (mysql_num_rows($result) == 0) {
+if(count($rows_forums) == 0){
     $msg->addInfo('NO_FORUMS');
     require (AT_INCLUDE_PATH.'header.inc.php');
     exit;
@@ -32,16 +31,17 @@ require (AT_INCLUDE_PATH.'header.inc.php');
                 // ---Get course forums for the specific course id
 
                 $courseOptions = "";
-                $sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_courses WHERE course_id='".$course_id."'";
-                $result = mysql_query($sql) or die(mysql_error());
+
+                $sql = "SELECT forum_id FROM %sforums_courses WHERE course_id=%d";
+                $rows_forums_id = queryDB($sql, array(TABLE_PREFIX, $course_id)); 
                 
-                while ($fid = mysql_fetch_row($result)) {
+                foreach($rows_forums_id as $fid){  
 
-                    $sql = "SELECT title FROM ".TABLE_PREFIX."forums WHERE forum_id='".$fid[0]."'";
-                    $result2 = mysql_query($sql) or die(mysql_error());
-
-                    while ($row = mysql_fetch_row($result2)) {
-                        $courseOptions .= "<option value='".$fid[0]."'>".$row[0]."</option>";
+                    $sql = "SELECT title FROM %sforums WHERE forum_id=%d";
+                    $rows_ftitles = queryDB($sql, array(TABLE_PREFIX, $fid['forum_id']));
+                    
+                    foreach($rows_ftitles as $row){
+                        $courseOptions .= "<option value='".$fid['forum_id']."'>".$row['title']."</option>";
                     }
                 }
 
@@ -57,29 +57,27 @@ require (AT_INCLUDE_PATH.'header.inc.php');
                 $groupOptions = "";
 
                 // get type_id(s) for this course
-                $sql = "SELECT type_id FROM ".TABLE_PREFIX."groups_types WHERE course_id='".$course_id."'";
-                $result = mysql_query($sql) or die(msyql_error());
-
-                while ($type_id = mysql_fetch_row($result)) {
-
+                $sql = "SELECT type_id FROM %sgroups_types WHERE course_id=%d";
+                $rows_gtypes = queryDB($sql, array(TABLE_PREFIX, $course_id));
+                global $sqlout;
+    
+       
+                foreach($rows_gtypes as $type_id){
                     // get group_id(s) for each type
-                    $sql = "SELECT group_id, title FROM ".TABLE_PREFIX."groups WHERE type_id='".$type_id[0]."'";
-                    $result2 = mysql_query($sql) or die(mysql_error());
+                    $sql = "SELECT group_id, title FROM %sgroups WHERE type_id=%d";
+                    $rows_gids = queryDB($sql, array(TABLE_PREFIX, $type_id['type_id']));
 
-                    while ($group_id = mysql_fetch_row($result2)) {
-                        
+                    foreach($rows_gids as $group_id){                    
                         // get forum_id for each group
-                        $sql = "SELECT forum_id FROM ".TABLE_PREFIX."forums_groups WHERE group_id='".$group_id[0]."'";
-                        $result3 = mysql_query($sql) or die(mysql_error());
+                        $sql = "SELECT forum_id FROM %sforums_groups WHERE group_id=%d";
+                        $rows_fgids = queryDB($sql, array(TABLE_PREFIX, $group_id['group_id']));
 
-                        while ($fid = mysql_fetch_row($result3)) {
-
+                        foreach($rows_fgids as $fid){
                             // get forum title for this fid
-                            $sql = "SELECT title FROM ".TABLE_PREFIX."forums WHERE forum_id='".$fid[0]."'";
-                            $result4 = mysql_query($sql) or die(mysql_error());
-                            $row = mysql_fetch_row($result4);
+                            $sql = "SELECT title FROM %sforums WHERE forum_id=%d";
+                            $row = queryDB($sql, array(TABLE_PREFIX, $fid['forum_id']), TRUE);
 
-                            $groupOptions .= "<option value='".$fid[0]."'>".$group_id[1]."</option>";
+                            $groupOptions .= "<option value='".$fid['forum_id']."'>".$group_id['title']."</option>";
                         }
                     }
                 }

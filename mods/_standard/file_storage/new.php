@@ -37,9 +37,11 @@ if (isset($_POST['cancel'])) {
 
 	// check that we own this folder
 	if ($parent_folder_id) {
-		$sql = "SELECT folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$parent_folder_id AND owner_type=$owner_type AND owner_id=$owner_id";
-		$result = mysql_query($sql, $db);
-		if (!$row = mysql_fetch_assoc($result)) {
+
+		$sql = "SELECT folder_id FROM %sfolders WHERE folder_id=%d AND owner_type=%d AND owner_id=%d";
+		$rows_folders = queryDB($sql, array(TABLE_PREFIX, $parent_folder_id, $owner_type, $owner_id));
+		
+		if(count($rows_folders) == 0){
 			$msg->addError('ACCESS_DENIED');
 			header('Location: index.php');
 			exit;
@@ -63,33 +65,38 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$size = strlen($_POST['body']);
-		$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (NULL, $owner_type, $owner_id, $_SESSION[member_id], $parent_folder_id, 0, NOW(), $num_comments, 0, '$_POST[name]',$size, '$_POST[description]')";
-		$result = mysql_query($sql, $db);
 
-		if ($result && ($file_id = mysql_insert_id($db))) {
+		$sql = "INSERT INTO %sfiles VALUES (NULL, %d, %d, %d, %d, 0, NOW(), %d, 0, '%s',%d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $owner_type, $owner_id, $_SESSION['member_id'], $parent_folder_id, $num_comments, $_POST['name'], $size, $_POST['description']));
+
+	    if($result > 0 && ($file_id = at_insert_id())) {
 			$file_path = fs_get_file_path($file_id) . $file_id;
 			$fp = fopen($file_path, 'wb');
 			fwrite($fp, $_POST['body'], $size);
 			fclose($fp);
 
 			// check if this file name already exists
-			$sql = "SELECT file_id, num_revisions FROM ".TABLE_PREFIX."files WHERE owner_type=$owner_type AND owner_id=$owner_id AND folder_id=$parent_folder_id AND file_id<>$file_id AND file_name='$_POST[name]' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
-				if ($_config['fs_versioning']) {
-					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id, date=date WHERE file_id=$row[file_id]";
-					$result = mysql_query($sql, $db);
 
-					$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=$row[num_revisions]+1, date=date WHERE file_id=$file_id";
-					$result = mysql_query($sql, $db);
+			$sql = "SELECT file_id, num_revisions FROM %sfiles WHERE owner_type=%d AND owner_id=%d AND folder_id=%d AND file_id<>%d AND file_name='%s' AND parent_file_id=0 ORDER BY file_id DESC LIMIT 1";
+			$rows_revisions = queryDB($sql, array(TABLE_PREFIX, $owner_type, $owner_id, $parent_folder_id, $file_id, $_POST['name']));
+            if(count($rows_revisions) > 0){
+				if ($_config['fs_versioning']) {
+
+					$sql = "UPDATE %sfiles SET parent_file_id=%d, date=date WHERE file_id=%d";
+					$result = queryDB($sql, array(TABLE_PREFIX, $file_id, $row['file_id']));
+
+					$sql = "UPDATE %sfiles SET num_revisions=%d+1, date=date WHERE file_id=%d";
+					$result = queryDB($sql, array(TABLE_PREFIX, $row['num_revisions'], $file_id));
+					
 				} else {
 					fs_delete_file($row['file_id'], $owner_type, $owner_id);
 				}
 			}
 
 			if ($_POST['comment']){
-				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
-				mysql_query($sql, $db);
+
+				$sql = "INSERT INTO %sfiles_comments VALUES (NULL, %d, %d, NOW(), '%s')";
+				queryDB($sql, array(TABLE_PREFIX, $file_id, $_SESSION['member_id'], $_POST['comment']));
 			}
 
 			$msg->addFeedback(array('FILE_SAVED', $_POST['name']));

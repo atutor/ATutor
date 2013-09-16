@@ -27,9 +27,13 @@
 			<label for="groups"><?php echo _AT('groups'); ?></label><br />
 			<select name="group" id="groups">
 				<option value="0" id="g0" ><?php echo _AT('entire_course'); ?></option>
-			<?php while ($row = mysql_fetch_assoc($this->result_groups)): ?>
-				<option value="<?php echo $row['group_id']; ?>" id="g<?php echo $row['group_id']; ?>" <?php if ($group == $row['group_id']) { echo 'selected="selected"'; } ?> ><?php echo $row['type_title'] . ': ' . $row['title']; ?></option>
-			<?php endwhile; ?>
+			<?php 
+			if($this->rows_groups > 0){
+                foreach($this->rows_groups as $row){ ?>
+                    <option value="<?php echo $row['group_id']; ?>" id="g<?php echo $row['group_id']; ?>" <?php if ($this->group == $row['group_id']) { echo 'selected="selected"'; } ?> ><?php echo $row['type_title'] . ': ' . $row['title']; ?></option>
+                <?php 
+                }
+			}  ?>
 			</select>
 
 		</div>

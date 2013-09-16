@@ -30,6 +30,7 @@ if (isset($_GET['id'])) {
 }
 
 if (isset($_POST['submit'])) {
+
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['answer'] = trim($_POST['answer']);
 
@@ -56,8 +57,8 @@ if (isset($_POST['submit'])) {
 		$_POST['question'] = validate_length($_POST['question'], 250);
 		$_POST['answer'] = validate_length($_POST['answer'], 250);
 
-		$sql = "UPDATE ".TABLE_PREFIX."faq_entries SET question='$_POST[question]', answer='$_POST[answer]', topic_id=$_POST[topic_id] WHERE entry_id=$id";
-		$result = mysql_query($sql,$db);
+		$sql = "UPDATE %sfaq_entries SET question='%s', answer='%s', topic_id=%d WHERE entry_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['question'], $_POST['answer'], $_POST['topic_id'], $id));
 
 		$msg->addFeedback('QUESTION_UPDATED');
 		header('Location: index_instructor.php');
@@ -74,35 +75,34 @@ if ($id == 0) {
 	exit;
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."faq_entries WHERE entry_id=$id";
-$result = mysql_query($sql,$db);
-if (!($row = mysql_fetch_assoc($result))) {
+$sql = "SELECT * FROM %sfaq_entries WHERE entry_id=%d";
+$row = queryDB($sql,array(TABLE_PREFIX, $id), TRUE);
+
+if(count($row) == 0){
 	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 
-$sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
-$result = mysql_query($sql, $db);
-$num_topics = mysql_num_rows($result);
-if (!$num_topics) {
+$sql	= "SELECT name, topic_id FROM %sfaq_topics WHERE course_id=%d ORDER BY name";
+$rows_topics = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
+if (count($rows_topics) == 0) {
 	$msg->printErrorS('NO_FAQ_TOPICS');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
-$sql	= "SELECT name, topic_id FROM ".TABLE_PREFIX."faq_topics WHERE course_id=$_SESSION[course_id] ORDER BY name";
-$result = mysql_query($sql, $db);
+$sql	= "SELECT name, topic_id FROM %sfaq_topics WHERE course_id=%d ORDER BY name";
+$rows_topics = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 $faq_topics = array();
-while ($topic_row = mysql_fetch_assoc($result)){
+
+foreach($rows_topics as $topic_row){
 	$faq_topics[] = $topic_row;
 }
 				
-
-
 $savant->assign('row', $row);
-$savant->assign('result', $result);
 $savant->assign('faq_topics', $faq_topics);
 $savant->display('instructor/faq/edit_question.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

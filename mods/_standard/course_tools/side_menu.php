@@ -35,8 +35,9 @@ if (isset($_POST['submit'])) {
 
 	$side_menu = implode('|', $_POST['stack']);
 
-	$sql    = "UPDATE ".TABLE_PREFIX."courses SET side_menu='$side_menu' WHERE course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
+	$sql    = "UPDATE %scourses SET side_menu='%s' WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $side_menu, $_SESSION['course_id']));
+	
 	$msg->addFeedback('COURSE_PREFS_SAVED');
 	header('Location: side_menu.php');
 	exit;
