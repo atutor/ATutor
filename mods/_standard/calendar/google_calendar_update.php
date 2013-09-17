@@ -14,7 +14,8 @@
     /**
      * This file is used to reflect changes from ATutor to Google Calendar.
      */
-         $_user_location = 'public';
+          $_user_location = 'public';
+    
     require_once 'includes/classes/googlecalendar.class.php';
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
