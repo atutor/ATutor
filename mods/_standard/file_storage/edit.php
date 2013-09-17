@@ -52,14 +52,14 @@ if (isset($_POST['cancel'])) {
 			$num_comments = 0;
 			
 			if ($_POST['comment']){
-				$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $_POST[id], $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
-				mysql_query($sql, $db);
-
+				$sql = "INSERT INTO %sfiles_comments VALUES (NULL, %d, %d, NOW(), '%s')";
+				queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $_SESSION['member_id'], $_POST['comment']));
 				$num_comments = 1;
 			}
 
-			$sql = "UPDATE ".TABLE_PREFIX."files SET file_name='$_POST[name]', description='$_POST[description]', num_comments=num_comments+$num_comments, date=date WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
-			mysql_query($sql, $db);
+			$sql = "UPDATE %sfiles SET file_name='%s', description='%s', num_comments=num_comments+%d, date=date WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $_POST['name'], $_POST['description'], $num_comments, $_POST['id'], $owner_type, $owner_id));
+		
 		} else {
 			// this file is editable, and has changed
 
@@ -70,15 +70,15 @@ if (isset($_POST['cancel'])) {
 			} else {
 				$num_comments = 0;
 			}
-			$sql = "SELECT * FROM ".TABLE_PREFIX."files WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+
+			$sql = "SELECT * FROM %sfiles WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+			$row = queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $owner_type, $owner_id), TRUE);
 
 			if ($_config['fs_versioning']) {
-				$sql = "INSERT INTO ".TABLE_PREFIX."files VALUES (NULL, {$row['owner_type']}, {$row['owner_id']}, $_SESSION[member_id], {$row['folder_id']}, 0, NOW(), $num_comments, {$row['num_revisions']}+1, '{$_POST['name']}', $size, '$_POST[description]')";
-				$result = mysql_query($sql, $db);
+				$sql = "INSERT INTO %sfiles VALUES (NULL, %d, %d, %d, %d, 0, NOW(), %d, %d+1, '%s', %d, '%s')";
+				$result = queryDB($sql, array(TABLE_PREFIX, $row['owner_type'], $row['owner_id'], $_SESSION['member_id'], $row['folder_id'], $num_comments, $row['num_revisions'], $_POST['name'], $size, $_POST['description']));
 
-				$file_id = mysql_insert_id($db);
+			    $file_id = at_insert_id();
 
 				$file_path = fs_get_file_path($file_id);
 				if ($fp = fopen($file_path . $file_id, 'wb')) {
@@ -86,12 +86,12 @@ if (isset($_POST['cancel'])) {
 					fwrite($fp, $_POST['body'], $size);
 					fclose($fp);
 
-					$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$file_id, date=date WHERE file_id=$_POST[id] AND owner_type=$owner_type AND owner_id=$owner_id";
-					$result = mysql_query($sql, $db);
-
+					$sql = "UPDATE %sfiles SET parent_file_id=%d, date=date WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+					$result = queryDB($sql, array(TABLE_PREFIX, $file_id, $_POST[id], $owner_type, $owner_id));
 					if ($_POST['comment']){
-						$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $file_id, $_SESSION[member_id], NOW(), '{$_POST['comment']}')";
-						mysql_query($sql, $db);
+
+						$sql = "INSERT INTO %sfiles_comments VALUES (NULL, %d, %d, NOW(), '%s')";
+						queryDB($sql, array(TABLE_PREFIX, $file_id, $_SESSION['member_id'], $_POST['comment']));
 					}
 				}
 			} else {
@@ -123,9 +123,10 @@ if (($_POST['setvisual'] && !$_POST['settext']) || $_GET['setvisual']) {
 
 $id = abs($_REQUEST['id']);
 
-$sql = "SELECT file_name, folder_id, description FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
-$result = mysql_query($sql, $db);
-if (!$row = mysql_fetch_assoc($result)) {
+$sql = "SELECT file_name, folder_id, description FROM %sfiles WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $id, $owner_type, $owner_id), TRUE);
+
+if(count($row) == 0){
 	$msg->printErrors('FILE_NOT_EXIST');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;

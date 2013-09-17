@@ -41,9 +41,9 @@ if (isset($_POST['cancel'])) {
 		$folder = abs($_POST['folder']);
 		$parent_folder = abs($_POST['parent_folder']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."folders SET title='$_POST[name]' WHERE owner_type=$owner_type AND owner_id=$owner_id AND folder_id=$_POST[id] AND parent_folder_id=$parent_folder";
-		mysql_query($sql, $db);
-
+		$sql = "UPDATE %sfolders SET title='%s' WHERE owner_type=%d AND owner_id=%d AND folder_id=%d AND parent_folder_id=%d";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['name'], $owner_type, $owner_id, $_POST['id'], $parent_folder));
+		
 		$msg->addFeedback('FOLDER_EDITED_SUCCESSFULLY');
 		header('Location: '.url_rewrite('mods/_standard/file_storage/index.php'.$owner_arg_prefix.'folder='.$parent_folder, AT_PRETTY_URL_IS_HEADER));
 		exit;
@@ -58,9 +58,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = abs($_GET['id']);
 
-$sql = "SELECT title, parent_folder_id FROM ".TABLE_PREFIX."folders WHERE folder_id=$id";
-$result = mysql_query($sql, $db);
-if (!$row = mysql_fetch_assoc($result)) {
+$sql = "SELECT title, parent_folder_id FROM %sfolders WHERE folder_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+
+if(count($row) == 0){
 	$msg->printErrors('FOLDER_NOT_EXIST');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
