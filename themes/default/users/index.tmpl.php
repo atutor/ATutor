@@ -1,6 +1,5 @@
 <?php 
 
-exit;
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <div id="my_courses_container" <?php if($_config['show_current'] != 1){ echo ' style="width:90%;"'; } ?>>
 <table class="data" style="width:100%;">
