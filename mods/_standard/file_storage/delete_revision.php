@@ -37,22 +37,21 @@ if (isset($_POST['submit_no'])) {
 	$path = fs_get_revisions($id, $owner_type, $owner_id);
 
 	// set the new parent //
-	$sql = "SELECT parent_file_id, owner_type, owner_id, folder_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$sql = "SELECT parent_file_id, owner_type, owner_id, folder_id FROM %sfiles WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $id, $owner_type, $owner_id), TRUE);
 
-	$sql = "UPDATE ".TABLE_PREFIX."files SET parent_file_id=$row[parent_file_id], date=date WHERE parent_file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
-	mysql_query($sql, $db);
+	$sql = "UPDATE %sfiles SET parent_file_id=%d, date=date WHERE parent_file_id=%d AND owner_type=%d AND owner_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $row['parent_file_id'], $id, $owner_type, $owner_id));
+		
+	$sql = "UPDATE %sfiles SET num_revisions=num_revisions-1, date=date WHERE file_id>%d AND owner_type=%d AND owner_id=%d AND folder_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $id, $row['owner_type'], $row['owner_id'], $row['folder_id']));
 
-	$sql = "UPDATE ".TABLE_PREFIX."files SET num_revisions=num_revisions-1, date=date WHERE file_id>$id AND owner_type=$row[owner_type] AND owner_id=$row[owner_id] AND folder_id=$row[folder_id]";
-	mysql_query($sql, $db);
+	$sql = "DELETE FROM %sfiles WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $id, $owner_type, $owner_id));
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
-	mysql_query($sql, $db);
-
-	$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$id";
-	mysql_query($sql, $db);
-
+	$sql = "DELETE FROM %sfiles_comments WHERE file_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $id));
+	
 	$file = fs_get_file_path($id);
 	if (file_exists($file . $id)) {
 		@unlink($file . $id);
@@ -77,9 +76,10 @@ if (isset($_POST['submit_no'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT file_id, file_name, owner_type, owner_id, date, member_id FROM ".TABLE_PREFIX."files WHERE file_id=$id AND owner_type=$owner_type AND owner_id=$owner_id";
-$result = mysql_query($sql, $db);
-if (!$row = mysql_fetch_assoc($result)) {
+$sql = "SELECT file_id, file_name, owner_type, owner_id, date, member_id FROM %sfiles WHERE file_id=%d AND owner_type=%d AND owner_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $id, $owner_type, $owner_id), TRUE);
+
+if(count($row) == 0){
 	$msg->printErrors('FILE_NOT_EXIST');
 } else {
 	$hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id);
