@@ -58,6 +58,13 @@ while ($row = mysql_fetch_assoc($result)) {
 	$courses[] = array_merge($row, (array) $tests);
 }
 
+//Get a list of custom course icons
+$sql2="SELECT icon, course_id from ".TABLE_PREFIX."courses ";
+$result2 = mysql_query($sql2, $db);
+while($row2=mysql_fetch_assoc($result2)){
+    $filename[$row2{'course_id'}] = $row2['icon'];
+}
+
 function get_category_name($cat_id) {
 	global $db;
 	$sql	= "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$cat_id;
@@ -108,7 +115,7 @@ foreach($module_list as $key=>$obj) {
 }
 
 usort($all_news, 'all_news_cmp');
-
+$savant->assign('icons', $filename);
 $savant->assign('all_news', $all_news);
 $savant->assign('courses', $courses);
 

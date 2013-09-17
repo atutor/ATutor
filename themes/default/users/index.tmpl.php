@@ -20,28 +20,19 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 			      <img src="images/clr.gif" class="icon" border="1" width="79" height="79" alt="<?php echo htmlentities_utf8($row['title']); ?>" />
 	      <?php else: 
 			      echo $link;  
-
-		    $sql2="SELECT icon from ".TABLE_PREFIX."courses WHERE course_id='$row[course_id]'";
-				    $result2 = mysql_query($sql2, $db);
-				    
-				    while($row2=mysql_fetch_assoc($result2)){
-					    $filename = $row2['icon'];
-				    }
-		    
-		    $path = AT_CONTENT_DIR .$row['course_id'].'/custom_icons/'.$filename;
-		    
-		    if (file_exists($path)) {
-			if (defined('AT_FORCE_GET_FILE')) {
-			    $dir = 'get_course_icon.php?id='.$row['course_id'];
-			} else {
-			    $dir = 'content/' . $_SESSION['course_id'] . '/'.$row['icon'];
-			}
-		    } else {
-			    $dir = "images/courses/".$row['icon'];
-		    }
-		    ?>
-		    <img src="<?php echo $dir; ?>" class="icon" border="0" alt="<?php echo htmlentities_utf8($row['title']); ?>" />
-				    <?php echo $link2; ?>
+		    $path = AT_CONTENT_DIR .$row['course_id'].'/custom_icons/'.$this->icon[$row['course_id']];
+					if (file_exists($path)) {
+						if (defined('AT_FORCE_GET_FILE')) {
+							$dir = 'get_course_icon.php?id='.$row['course_id'];
+						} else {
+							$dir = 'content/' . $_SESSION['course_id'] . '/'.$row['icon'];
+						}
+					} else {
+						$dir = "images/courses/".$row['icon'];
+					}
+					?>
+					<img src="<?php echo $dir; ?>" class="icon" border="0" alt="<?php echo htmlentities_utf8($row['title']); ?>" />
+						<?php echo $link2; ?>
 		    <?php endif; ?>
 
 
