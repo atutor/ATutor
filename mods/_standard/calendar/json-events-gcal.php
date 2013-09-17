@@ -23,21 +23,19 @@
     define('CALENDAR_DEF_COLOR','#3399FF');
     
     $gcalobj = new GoogleCalendar();
+
+    $qry = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+    $row = queryDB($qry, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
     
-    global $db;
-    $qry = "SELECT * FROM " . TABLE_PREFIX . "calendar_google_sync WHERE userid='".
-            $_SESSION['member_id']."'";
-    $res = mysql_query($qry, $db);
-    if (mysql_num_rows($res) > 0) {
-        $row = mysql_fetch_assoc($res);
+    if(count( $row) > 0){
         $_SESSION['sessionToken'] = $row['token'];
         
         if ($gcalobj->isvalidtoken($_SESSION['sessionToken'])) {
          $client  = $gcalobj->getAuthSubHttpClient();
-         $query   = "SELECT * FROM ".TABLE_PREFIX."calendar_google_sync WHERE userid='".
-                    $_SESSION['member_id']."'";
-         $res     = mysql_query($query,$db);
-         $rowval  = mysql_fetch_assoc($res);
+
+         $query   = "SELECT * FROM %scalendar_google_sync WHERE userid= %d";
+         $rowval     = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+
          $prevval = $rowval['calids'];
 
          outputCalendarByDateRange($client, $_GET['start'], $_GET['end'], $prevval, $gcalobj);
