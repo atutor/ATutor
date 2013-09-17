@@ -164,10 +164,10 @@
                     //Put button to reflect current status
                     if ($status == 1) {
                         echo _AT('calendar_noti_on');
-                        echo "<br/><a href='mods/_standard/calendar/index.php?noti=0'>" . _AT('calendar_noti_turn'). " " . _AT('calendar_noti_off') . "</a>";
+                        echo "<br/><a href='mods/_standard/calendar/index_mystart.php?noti=0'>" . _AT('calendar_noti_turn'). " " . _AT('calendar_noti_off') . "</a>";
                     } else {
                         echo _AT('calendar_noti_off');
-                        echo "<br/><a href='mods/_standard/calendar/index.php?noti=1'>" . _AT('calendar_noti_turn'). " " . _AT('calendar_noti_on') . "</a>";
+                        echo "<br/><a href='mods/_standard/calendar/index_mystart.php?noti=1'>" . _AT('calendar_noti_turn'). " " . _AT('calendar_noti_on') . "</a>";
                     }
                 ?>
             </li>
