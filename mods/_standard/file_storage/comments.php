@@ -47,8 +47,9 @@ if (isset($_GET['done'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['edit_comment'] = $addslashes($_POST['edit_comment']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."files_comments SET comment='$_POST[edit_comment]', date=date WHERE member_id=$_SESSION[member_id] AND comment_id=$_POST[comment_id]";
-		mysql_query($sql, $db);
+		$sql = "UPDATE %sfiles_comments SET comment='%s', date=date WHERE member_id=%d AND comment_id=%d";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['edit_comment'], $_SESSION['member_id'], $_POST['comment_id']));
+		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.url_rewrite('mods/_standard/file_storage/comments.php'.$owner_arg_prefix.'id='.$_GET['id'], AT_PRETTY_URL_IS_HEADER));
 		exit;
@@ -69,9 +70,11 @@ if (isset($_GET['done'])) {
 		$_POST['comment'] = $addslashes($_POST['comment']);
 
 		$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $_POST[id], $_SESSION[member_id], NOW(), '$_POST[comment]')";
-		if (mysql_query($sql, $db)) {
-			$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments+1, date=date WHERE file_id=$_POST[id]";
-			mysql_query($sql, $db);
+        $result = queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $_SESSION['member_id'], $_POST['comment']));
+        
+        if($result > 0){
+			$sql = "UPDATE %sfiles SET num_comments=num_comments+1, date=date WHERE file_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $_POST['id']));
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -138,10 +141,13 @@ if (!$files) {
 
 <?php
 $_GET['comment_id'] = isset($_GET['comment_id']) ? intval($_GET['comment_id']) : 0;
-	$sql = "SELECT * FROM ".TABLE_PREFIX."files_comments WHERE file_id=$id ORDER BY date ASC";
-	$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)): ?>
-	<?php do { ?>
+
+	$sql = "SELECT * FROM %sfiles_comments WHERE file_id=%d ORDER BY date ASC";
+	$rows_files_comments = queryDB($sql, array(TABLE_PREFIX, $id));
+	
+	if(count($rows_files_comments) > 0): ?>
+	
+	<?php foreach($rows_files_comments as $row){ ?>
 		<div class="input-form">
 			<?php if (($row['member_id'] == $_SESSION['member_id']) && ($row['comment_id'] == $_GET['comment_id'])): ?>
 				<form method="post" action="mods/_standard/file_storage/comments.php<?php echo $owner_arg_prefix.'id='.$id;?>" name="form">
@@ -168,7 +174,7 @@ if ($row = mysql_fetch_assoc($result)): ?>
 				</div>
 			<?php endif; ?>
 		</div>
-	<?php } while ($row = mysql_fetch_assoc($result)); ?>
+	<?php }  ?>
 <?php elseif(0): ?>
 	<div class="input-form">
 		<div class="row">
