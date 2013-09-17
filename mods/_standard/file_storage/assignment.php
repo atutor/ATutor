@@ -47,9 +47,11 @@ if (isset($_POST['cancel'])) {
 		}
 
 	} else {
-		$sql = "SELECT group_id FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id AND type_id=$assignment_row[assign_to]";
-		$result = mysql_query($sql, $db);
-		if (!$row = mysql_fetch_assoc($result)) {
+
+		$sql = "SELECT group_id FROM %sgroups WHERE group_id=$owner_id AND type_id=%d";
+		$rows_groups = queryDB($sql, array(TABLE_PREFIX, $owner_id, $assignment_row['assign_to']));		
+		
+		if(count($rows_groups) == 0){
 			$msg->addError('ACCESS_DENIED');
 			header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 			exit;
@@ -77,22 +79,23 @@ if ($owner_type == WORKSPACE_GROUP) {
 	// get all the assignments assigned to this group type
 
 	$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id LIMIT 1";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-
-	$sql = "SELECT assignment_id, title, date_due, date_cutoff FROM ".TABLE_PREFIX."assignments WHERE assign_to=$row[type_id] AND course_id=$_SESSION[course_id] AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
+	$row = queryDB($sql, array(TABLE_PREFIX, $owner_id), TRUE);
+	
+	$sql = "SELECT assignment_id, title, date_due, date_cutoff FROM %sassignments WHERE assign_to=%d AND course_id=%d AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
+    $rows_assignments  = queryDB($sql, array(TABLE_PREFIX, $row['type_id'], $_SESSION['course_id']));
 
 } else if ($owner_type == WORKSPACE_PERSONAL) {
 	// get all the assignments assigned to students
+	$sql = "SELECT assignment_id, title, date_due FROM %sassignments WHERE assign_to=0 AND course_id=%d AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
+    $rows_assignments = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 
-	$sql = "SELECT assignment_id, title, date_due FROM ".TABLE_PREFIX."assignments WHERE assign_to=0 AND course_id=$_SESSION[course_id] AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
 } else {
 	exit('wrong workspace');
 }
 
 $assignments = array();
-$result = mysql_query($sql, $db);
-while ($row = mysql_fetch_assoc($result)) {
+
+foreach($rows_assignments  as $row){
 	$assignments[] = $row;
 }
 
@@ -132,12 +135,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<ul style="list-style: none; margin: 0px; padding: 0px 10px;">
 			<?php
 				$file_list = implode(',', $_GET['files']);
-				$sql = "SELECT file_name FROM ".TABLE_PREFIX."files WHERE file_id IN ($file_list) AND owner_type=$owner_type AND owner_id=$owner_id ORDER BY file_name";
-				$result = mysql_query($sql, $db);
+				$sql = "SELECT file_name FROM %sfiles WHERE file_id IN (%s) AND owner_type=%d AND owner_id=%d ORDER BY file_name";
+				$rows_filenames = queryDB($sql, array(TABLE_PREFIX, $file_list, $owner_type, $owner_id));
 			?>
-			<?php while ($row = mysql_fetch_assoc($result)): ?>
+			<?php 
+			foreach($rows_filenames as $row){?>
 				<li><img src="images/file_types/<?php echo fs_get_file_type_icon($row['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $row['file_name']; ?></li>
-			<?php endwhile; ?>
+			<?php }  ?>
 		</ul>
 	</div>
 
