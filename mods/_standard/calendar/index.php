@@ -27,28 +27,28 @@ if (!$_SESSION['valid_user']) {
 	exit;
 }
     
-    global $db;
-    
     //Check if patch is installed or not
     require('includes/classes/events.class.php');
     
     $eventObj = new Events();
+    /*
     if($eventObj->get_atutor_events($_SESSION['member_id'],$_SESSION['course_id']) == "error") {
         require(AT_INCLUDE_PATH.'header.inc.php');
         echo _AT('calendar_patch_error');
         require(AT_INCLUDE_PATH.'footer.inc.php');
         exit();
     }
-    
+    */
     //Change status of email notifications
     if (isset($_GET['noti']) && $_GET['noti'] == 1) {
-        $sql = "UPDATE " . TABLE_PREFIX . "calendar_notification SET status = 1 WHERE 
-                 memberid = " . $_SESSION['member_id'];
-        mysql_query($sql,$db);
+
+        $sql = "UPDATE %scalendar_notification SET status = 1 WHERE memberid = %d";
+        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+        
     } else if (isset($_GET['noti']) && $_GET['noti'] == 0) {
-        $sql = "UPDATE " . TABLE_PREFIX . "calendar_notification SET status = 0 WHERE 
-                 memberid = " . $_SESSION['member_id'];
-        mysql_query($sql,$db);
+
+        $sql = "UPDATE %scalendar_notification SET status = 0 WHERE memberid = %d";
+        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
     }
 
     //Change view according to session value
@@ -120,30 +120,30 @@ if (!$_SESSION['valid_user']) {
                 <?php echo _AT('calendar_notification');?>:&nbsp;
                 <?php
                     //Find current status of notification
-                    $sql    = "SELECT * FROM " . TABLE_PREFIX . "calendar_notification WHERE memberid=".
-                      $_SESSION['member_id'];
-                    $status = 0;  
-                    $result = mysql_query($sql, $db);
+
+                    $sql    = "SELECT * FROM %scalendar_notification WHERE memberid=%d";
+                    $row_notify = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);     
                     
-                    if (is_null($result) || !$result) {
+                    $status = 0;           
+                    if(count($row_notify) == 0){
                         //Not any entry for user, make one default entry
-                        $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_notification VALUES (".
-                               $_SESSION['member_id'] . ",0)";
-                        mysql_query($sql, $db);
+                        $sql = "INSERT INTO %scalendar_notification VALUES (%d,0)";
+                        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+                        
                         $status = 0;
-                    } else if (is_resource($result) && mysql_num_rows($result) > 0) {
+
+                    } else if (count($row_notify) > 0) {
                         //There is an entry in the table, find the value
-                        $row = mysql_fetch_row($result);
-                        if ($row[1] == 0) {
+
+                        if ($row_notify['status'] == 0) {
                             $status = 0;
                         } else {
                             $status = 1;
                         }
                     } else {
                         //Not any entry for user, make one default entry
-                        $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_notification VALUES (".
-                               $_SESSION['member_id'] . ",0)";
-                        mysql_query($sql, $db);
+                        $sql = "INSERT INTO %scalendar_notification VALUES (%d,0)";
+                        queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
                         $status = 0;
                     }
                     //Put button to reflect current status
@@ -162,15 +162,18 @@ if (!$_SESSION['valid_user']) {
          * Check if user has token for Google Account. If yes then display disconnect option
          * otherwise display connect option.
          */
-        $query = "SELECT * FROM ".TABLE_PREFIX."calendar_google_sync WHERE userid='".$_SESSION['member_id']."'";
-        $result = mysql_query($query,$db);
-        
-        if (mysql_num_rows($result) > 0) {
+
+        $query = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+        $row_gsync = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));     
+          
+        if(count($row_gsync) > 0){
+
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php?logout=yes' target='_blank'>".
                  _AT('calendar_disconnect_gcal') . "</a></li></ul></fieldset>";
             echo "<br/><fieldset><legend><h4>". _AT('calendar_gcals') . "</h4></legend>";
             include('google_calendarlist.php');
             echo "</fieldset>";
+            
         } else {
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php' target='_blank'>".
                 _AT('calendar_connect_gcal'). "</a></li></ul></fieldset>";
@@ -218,10 +221,12 @@ if (!$_SESSION['valid_user']) {
         /**
          * If user has bookmarked calendars then display them.
          */
-        $query = "SELECT * FROM " . TABLE_PREFIX.
-                 "calendar_bookmark WHERE memberid = ".$_SESSION['member_id'];
-        $result   = mysql_query($query,$db);
-        if (mysql_num_rows( $result ) > 0) {
+
+        $query = "SELECT * FROM %scalendar_bookmark WHERE memberid = %d";
+        $rows_bookmarks   = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));
+        
+        if(count($rows_bookmarks) > 0){
+
     ?>
     <fieldset>
     <legend>
@@ -231,7 +236,7 @@ if (!$_SESSION['valid_user']) {
     </legend>
     <ul class="social_side_menu">
         <?php
-            while ($row = mysql_fetch_assoc($result)) {
+        foreach($rows_bookmarks as $row){
         ?>
         <li>
             <a  href='mods/_standard/calendar/index_public.php?mid=<?php echo urlencode(base64_encode($row['ownerid'])); ?>&cid=<?php echo $row['courseid']; ?>&calname=<?php echo $row['calname']; ?>'><?php echo $row['calname'];?>
