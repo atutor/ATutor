@@ -39,11 +39,12 @@ if (isset($_POST['submit_no'])) {
 	$_POST['file_id'] = abs($_POST['file_id']);
 	$_POST['id'] = abs($_POST['id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."files_comments WHERE file_id=$_POST[file_id] AND comment_id=$_POST[id] AND member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	if (mysql_affected_rows($db) == 1) {
-		$sql = "UPDATE ".TABLE_PREFIX."files SET num_comments=num_comments-1, date=date WHERE owner_type=$owner_type AND owner_id=$owner_id AND file_id=$_POST[file_id]";
-		$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %sfiles_comments WHERE file_id=%d AND comment_id=%d AND member_id=%d";
+	$rows_comments = queryDB($sql, array(TABLE_PREFIX, $_POST['file_id'], $_POST['id'], $_SESSION['member_id']));
+
+    if(count($rows_comments) == 1){
+		$sql = "UPDATE %sfiles SET num_comments=num_comments-1, date=date WHERE owner_type=%d AND owner_id=%d AND file_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $owner_type, $owner_id, $_POST['file_id']));
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
