@@ -23,15 +23,14 @@
         require('includes/classes/events.class.php');
         require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
                     
-        global $db;
-        
         //Iterate through each member's preference
-        $sql       = "SELECT * FROM " . TABLE_PREFIX . "calendar_notification WHERE 1=1";
-        $result    = mysql_query($sql,$db);
+
+        $sql       = "SELECT * FROM %scalendar_notification WHERE 1=1";
+        $rows_notify    = queryDB($sql, array(TABLE_PREFIX));
         
         $event_obj = new Events();
                 
-        while ($row = mysql_fetch_assoc($result)) {
+        foreach($rows_notify as $row){
             //Send email only when preference is 1
             if ($row['status'] == 1) {
                 $all_events = array();
@@ -44,10 +43,10 @@
                 }
                 
                 //Get course events
-                $sql_q      = "SELECT course_id FROM " . TABLE_PREFIX . "course_enrollment 
-                                WHERE member_id = " . $row['memberid'];
-                $result_q   = mysql_query($sql_q,$db);
-                while ($row_q = mysql_fetch_assoc($result_q)) {
+                $sql_q      = "SELECT course_id FROM %scourse_enrollment WHERE member_id = %d";
+                $rows_enrolled   = queryDB($sql_q, array(TABLE_PREFIX, TABLE_PREFIX));
+                
+                foreach($rows_enrolled as $row_q){
                     $course_events = $event_obj -> get_atutor_events($row['memberid'],$row_q['course_id']);
                     foreach ($course_events as $event) {
                         $all_events[]  = $event;
@@ -73,18 +72,17 @@
                 $mail->AddAddress($_config['contact_email']);
                 $mail->Subject = $stripslashes(_AT('calendar_noti_title'));
                 $mail->Body    = $email_msg;
+
+                $sql_email      = "SELECT email FROM %smembers WHERE member_id = %d";
+                $row_email   = queryDB($sql_email, array(TABLE_PREFIX, $row['memberid']), TRUE);
+
                 
-                $sql_email      = "SELECT email FROM " . TABLE_PREFIX . "members
-                                    WHERE member_id = " . $row['memberid'];
-                $result_email   = mysql_query($sql_email,$db);
-                $row_email      = mysql_fetch_row($result_email);
-                
-                $mail->AddBCC($row_email[0]);
+                $mail->AddBCC($row_email['email']);
                 $mail->Send();
                 unset($mail);
                 
                 //For testing
-                //echo "<br/>".$email_msg."<br/>".$row_email[0];               
+               // echo "<br/>".$email_msg."<br/>".$row_email['mail'];               
             }
         }
     }
