@@ -3103,3 +3103,9 @@ div.onRight {
 div.input-form.remedialContent {
 	overflow: auto;
 }
+
+.fc-state-active, .fc-state-active .fc-button-inner {
+    background: none repeat scroll 0 0 #B7C68B !important;
+    border-color: #555555;
+    font-weight:700;
+}
