@@ -44,11 +44,13 @@ if (!$_SESSION['valid_user']) {
 
         $sql = "UPDATE %scalendar_notification SET status = 1 WHERE memberid = %d";
         queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+        $msg->addFeedback('NOTIFY_ON');
         
     } else if (isset($_GET['noti']) && $_GET['noti'] == 0) {
 
         $sql = "UPDATE %scalendar_notification SET status = 0 WHERE memberid = %d";
         queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+        $msg->addFeedback('NOTIFY_OFF');
     }
 
     //Change view according to session value
