@@ -46,7 +46,7 @@ if (isset($_POST['cancel'])) {
 		$_POST['topic_id'] = intval($_POST['topic_id']);
 		//These will truncate the content of the length to 240 as defined in the db.
 		$_POST['question'] = validate_length($_POST['question'], 250);
-		$_POST['answer'] = validate_length($_POST['answer'], 250);
+		//$_POST['answer'] = validate_length($_POST['answer'], 250);
 
 		// check that this topic_id belongs to this course:
 

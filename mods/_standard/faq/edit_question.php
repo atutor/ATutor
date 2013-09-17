@@ -55,7 +55,7 @@ if (isset($_POST['submit'])) {
 		$_POST['topic_id'] = intval($_POST['topic_id']);
 		//These will truncate the content of the length to 240 as defined in the db.
 		$_POST['question'] = validate_length($_POST['question'], 250);
-		$_POST['answer'] = validate_length($_POST['answer'], 250);
+		//$_POST['answer'] = validate_length($_POST['answer'], 250);
 
 		$sql = "UPDATE %sfaq_entries SET question='%s', answer='%s', topic_id=%d WHERE entry_id=%d";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['question'], $_POST['answer'], $_POST['topic_id'], $id));
