@@ -101,8 +101,7 @@ if (!$files) {
 ?>
 
 <?php if ($_config['fs_versioning']): ?>
-	<form method="get" action="<?php echo 'mods/_standard/file_storage/comments.php'
-	//@harris echo $_SERVER['PHP_SELF']; ?>">
+	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 	<input type="hidden" name="ot" value="<?php echo $owner_type; ?>" />
 	<input type="hidden" name="oid" value="<?php echo $owner_id; ?>" />
 	<div class="input-form" style="width: 95%">
