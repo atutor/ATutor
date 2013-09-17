@@ -44,31 +44,27 @@
         exit;
     }
 
-    global $db;
+   // global $db;
     //User requested to bookmark calendar
     if (isset($_GET['bookm']) && $_GET['bookm'] == 1) {
         if (isset($_SESSION['member_id'])) {
             //Check whether user already bookmarked the calendar
-            $sql    = "SELECT * FROM " . TABLE_PREFIX . "calendar_bookmark WHERE memberid=".
-                      $_SESSION['member_id'] . " AND ownerid=" . base64_decode(urldecode($_GET['mid'])).
-                      " AND courseid=" . $_GET['cid'];
-            $result = mysql_query($sql, $db);
+
+            $sql    = "SELECT * FROM %scalendar_bookmark WHERE memberid=%d AND ownerid=%d AND courseid=%d";
+            $row_bookmarks = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], base64_decode(urldecode($_GET['mid'])), $_GET['cid']), TRUE);
+            
             //If user has already bookmarked calendar then display error
-            if (is_null($result) || !$result) {
+            
+            if(count($row_bookmarks) == 0 ){
                 //Not bookmarked so bookmark now
-                $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_bookmark VALUES (".
-                       $_SESSION['member_id'] . "," . base64_decode(urldecode($_GET['mid'])) . "," . $_GET['cid']. 
-                       ",'" . $_GET['calname'] . "')";
-                mysql_query($sql, $db);
-            } else if (is_resource($result) && mysql_num_rows($result) > 0) {
+
+                $sql = "INSERT INTO %scalendar_bookmark VALUES (%d,%d,%d,'%s')";
+                queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], base64_decode(urldecode($_GET['mid'])), $_GET['cid'], $_GET['calname']));
+
+            } else if ( count($row_bookmarks) > 0) {
                 $msg->addError('ALREADY_BOOKMARKED');
-            } else {
-                //Not bookmarked so bookmark now
-                $sql = "INSERT INTO " . TABLE_PREFIX . "calendar_bookmark VALUES (".
-                       $_SESSION['member_id'] . "," . base64_decode(urldecode($_GET['mid'])) . "," . $_GET['cid']. 
-                       ",'" . $_GET['calname'] . "')";
-                mysql_query($sql, $db);
             }
+
             header('Location: index.php');
             exit;
         } else {
@@ -80,9 +76,10 @@
     } else if (isset($_GET['del']) && $_GET['del'] == 1) {
         //Delete the bookmark
         if (isset($_SESSION['member_id'])) {
-            $sql = "DELETE FROM " . TABLE_PREFIX . "calendar_bookmark WHERE memberid=".
-                   $_SESSION['member_id'] . " AND ownerid=" . base64_decode(urldecode($_GET['mid']));
-            mysql_query($sql, $db);
+
+            $sql = "DELETE FROM %scalendar_bookmark WHERE memberid=%d AND ownerid=%d";
+            queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], base64_decode(urldecode($_GET['mid']))));
+            
             header('Location: index.php');
             exit;
         }
@@ -91,10 +88,10 @@
                 && trim($_GET['calname']) != "") {
         //Change name of bookmark
         if (isset($_SESSION['member_id'])) {
-            $sql = "UPDATE " . TABLE_PREFIX . "calendar_bookmark SET calname='".
-                    $_GET['calname'] . "' WHERE memberid=".
-                    $_SESSION['member_id'] . " AND ownerid=" . base64_decode(urldecode($_GET['mid']));
-            mysql_query($sql, $db);
+
+            $sql = "UPDATE %scalendar_bookmark SET calname='%s' WHERE memberid=&d AND ownerid=%d";
+            queryDB($sql, array(TABLE_PREFIX, $_GET['calname'], $_SESSION['member_id'], base64_decode(urldecode($_GET['mid']))));
+            
             header('Location: index.php');
             exit;
         }
