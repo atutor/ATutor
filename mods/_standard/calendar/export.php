@@ -19,7 +19,6 @@
     require(AT_INCLUDE_PATH.'vitals.inc.php');
     require('includes/classes/events.class.php');
     
-    global $db;
     $rows     = array();
     $eventObj = new Events();
     
