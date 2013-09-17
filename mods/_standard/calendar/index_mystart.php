@@ -31,24 +31,27 @@
     require('includes/classes/events.class.php');
     
     $eventObj = new Events();
+    /*
     if($eventObj->get_atutor_events($_SESSION['member_id'],$_SESSION['course_id']) == "error") {
         require(AT_INCLUDE_PATH.'header.inc.php');
         echo _AT('calendar_patch_error');
         require(AT_INCLUDE_PATH.'footer.inc.php');
         exit();
     }
-    
+    */
 
     //Change status of email notifications
     if (isset($_GET['noti']) && $_GET['noti'] == 1) {
 
         $sql = "UPDATE %scalendar_notification SET status = 1 WHERE memberid = %d";
         queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+        $msg->addFeedback('NOTIFY_ON');
         
     } else if (isset($_GET['noti']) && $_GET['noti'] == 0) {
 
         $sql = "UPDATE %scalendar_notification SET status = 0 WHERE memberid = %d";
         queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+        $msg->addFeedback('NOTIFY_OFF');
     }
 
     //Change view according to session value
