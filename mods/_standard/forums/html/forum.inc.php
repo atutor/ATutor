@@ -11,9 +11,8 @@
 /************************************************************************/
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid";
-$result	= mysql_query($sql, $db);
-$num_threads = mysql_fetch_assoc($result);
+$sql	= "SELECT COUNT(*) AS cnt FROM %sforums_threads WHERE parent_id=0 AND forum_id=%d";
+$num_threads = queryDB($sql, array(TABLE_PREFIX, $fid), TRUE);
 $num_threads = $num_threads['cnt'];
 
 $num_per_page = 10;
@@ -41,10 +40,10 @@ if (isset($_GET['asc'])) {
 	$col   = 'last_comment';
 }
 
-$sql	= "SELECT *, last_comment + 0 AS stamp, DATE_FORMAT(last_comment, '%Y-%m-%d %H:%i:%s') AS last_comment FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=0 AND forum_id=$fid AND member_id>0 ORDER BY sticky DESC, $col $order LIMIT $start,$num_per_page";
-$result	= mysql_query($sql, $db);
+$sql	= "SELECT *, last_comment + 0 AS stamp, DATE_FORMAT(last_comment, '%%Y-%%m-%%d %%H:%%i:%%s') AS last_comment FROM %sforums_threads WHERE parent_id=0 AND forum_id=%d AND member_id>0 ORDER BY sticky DESC, %s %s LIMIT %d,%d";
+$rows_comments	= queryDB($sql, array(TABLE_PREFIX, $fid, $col, $order, $start, $num_per_page));
 
-if (!($row = mysql_fetch_assoc($result))) {
+if(count($rows_comments)== 0){
 	echo '<div class="input-form">';
 	$msg->printInfos('NO_POSTS_FOUND');
 	echo '</div>';
@@ -101,8 +100,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 	echo '</tr>';
 	echo '</tfoot>';
 	echo '<tbody>';
-
-	do {
+    foreach($rows_comments as $row){
 		/* crop the subject, if needed */
 		$full_subject = $row['subject'];	//save a copy before croping
 		if ($strlen($row['subject']) > 28) {
@@ -188,7 +186,7 @@ if (!($row = mysql_fetch_assoc($result))) {
 		}
 		echo '</tr>';
 
-	} while ($row = mysql_fetch_assoc($result));
+	} 
 	echo '</tbody>';
 	echo '</table>';
 
