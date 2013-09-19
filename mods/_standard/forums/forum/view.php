@@ -70,10 +70,11 @@ if (!$_GET['page']) {
 $start = ($page-1)*$num_per_page;
 	
 /* get the first thread first */
-$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H:%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
-$result	= mysql_query($sql, $db);
 
-if (!($post_row = mysql_fetch_array($result))) {
+$sql	= "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H:%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE post_id=%d AND forum_id=%d";
+$post_row	= queryDB($sql, array(TABLE_PREFIX, $pid, $fid), TRUE);
+
+if(count($post_row) == 0){
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$_pages['mods/_standard/forums/forum/view.php']['title']  = _AT('no_post');
 
@@ -97,11 +98,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	*/
 
 	if ($_SESSION['valid_user'] === true) {
-		$sql2 = "INSERT INTO ".TABLE_PREFIX."forums_accessed VALUES ($pid, $_SESSION[member_id], NOW(), 0)";
-		$result2 = mysql_query($sql2, $db);
-		if (!$result2) {
-			$sql2 = "UPDATE ".TABLE_PREFIX."forums_accessed SET last_accessed=NOW() WHERE post_id=$pid AND member_id=$_SESSION[member_id]";
-			$result2 = mysql_query($sql2, $db);
+
+		$sql2 = "SELECT member_id FROM %sforums_accessed WHERE member_id = %d AND post_id =%d";
+		$row = queryDB($sql2, array(TABLE_PREFIX, $_SESSION[member_id], $pid));
+		
+		if(count($row) > 0){
+			$sql2 = "UPDATE %sforums_accessed SET last_accessed=NOW() WHERE post_id=%d AND member_id=%d";
+			$result = queryDB($sql2, array(TABLE_PREFIX, $pid, $_SESSION['member_id']));
+		} else {
+			$sql2 = "INSERT INTO %sforums_accessed VALUES ($pid, $_SESSION[member_id], NOW(), 0)";
+		    $result = queryDB($sql2, array(TABLE_PREFIX));
 		}
 	}
 	
@@ -127,15 +133,17 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	  <div class="forum-paginator">&nbsp;
 	  </div><br />';
 
-	$sql	= "SELECT *, DATE_FORMAT(date, '%Y-%m-%d %H-%i:%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE parent_id=$pid AND forum_id=$fid ORDER BY date ";
-	if ($_SESSION['thread_order'] == 'a')
-		$sql .= "ASC LIMIT $start, $num_per_page";
-	else
-		$sql .= "DESC LIMIT $start, $num_per_page";
-	
-	$result	= mysql_query($sql, $db);
+	$sql	= "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H-%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE parent_id=%d AND forum_id=%d ORDER BY date ";
 
-	if (mysql_num_rows($result) > 0)
+
+	if ($_SESSION['thread_order'] == 'a')
+		$sql .= "ASC LIMIT %d, %d";
+	else
+		$sql .= "DESC LIMIT %d, %d";
+
+	$rows_threads	= queryDB($sql, array(TABLE_PREFIX, $pid, $fid, $start, $num_per_page));
+	
+	if(count($rows_threads) > 0)
 	{
 		echo '<div class="forum-paginator">';
 		echo '<div style="float:right;">';
@@ -164,8 +172,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		}
 		echo '</div>';
 		echo '<ul class="forum-thread">';
-	
-		while ($row = mysql_fetch_assoc($result)) {
+	     foreach($rows_threads as $row){
+		//while ($row = mysql_fetch_assoc($result)) {
 			print_entry($row);
 			$subject = $row['subject'];
 			if ($_GET['reply'] == $row['post_id']) {
@@ -197,10 +205,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 	
 	if ($_SESSION['valid_user'] === true && $_SESSION['enroll'] && !$locked) {
-		$sql	= "SELECT subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_GET[pid] AND member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
-		if ($row['subscribe']) {
+		$sql	= "SELECT subscribe FROM %sforums_accessed WHERE post_id=%d AND member_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_GET['pid'], $_SESSION['member_id']), TRUE);
+
+		if ($row['subscribe'] == 1) {
 			echo '<p><a href="mods/_standard/forums/forum/subscribe.php?fid='.$fid.SEP.'pid='.$_GET['pid'].SEP.'us=1">'._AT('unsubscribe').'</a></p>';
 			$subscribed = true;
 		} else {
