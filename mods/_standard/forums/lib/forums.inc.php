@@ -19,7 +19,6 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * @access  public
 * @param   integer $course		id of the course
 * @return  string array			each row is a forum 
-* @see     $db					in include/vitals.inc.php
 * @see     is_shared_forum()
 * @author  Heidi Hazelton
 * @author  Joel Kronenberg
@@ -88,7 +87,6 @@ function get_forums($course) {
 * @access  public
 * @param   integer $forum_id	id of the forum
 * @return  boolean				true if this forum is shared, false otherwise
-* @see     $db					in include/vitals.inc.php
 * @author  Joel Kronenberg
 */
 function is_shared_forum($forum_id) {
@@ -109,7 +107,6 @@ function is_shared_forum($forum_id) {
 * @param   integer $forum_id	id of the forum
 * @param   integer $course		id of the course (for non-admins)
 * @return  string array			each row is a forum 
-* @see     $db					in include/vitals.inc.php
 * @author  Heidi Hazelton
 */
 function get_forum($forum_id, $course = '') {
@@ -137,7 +134,6 @@ function get_forum($forum_id, $course = '') {
 * @access  public
 * @param   integer $forum_id	id of the forum
 * @return  boolean				view (true) or not view (false)
-* @see     $db					in include/vitals.inc.php
 * @author  Heidi Hazelton
 */
 function valid_forum_user($forum_id) {
@@ -166,8 +162,6 @@ function valid_forum_user($forum_id) {
 * Adds a forum
 * @access  public
 * @param   array $_POST			add-forum form variables
-* @see     $db					in include/vitals.inc.php
-* @see     $addslashes			in include/vitals.inc.php
 * @author  Heidi Hazelton
 */
 function add_forum($forum_prop) {
@@ -189,18 +183,10 @@ function add_forum($forum_prop) {
 * @author  Heidi Hazelton
 */
 function edit_forum($forum_prop) {
-	global $db;
-	global $addslashes;
 
-	$forum_prop['title']  = $addslashes($forum_prop['title']);
-	$forum_prop['body']   = $addslashes($forum_prop['body']);
-
-	$forum_prop['fid']    = intval($forum_prop['fid']);
-	$forum_prop['edit']    = intval($forum_prop['edit']);
-
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='$forum_prop[title]', description='$forum_prop[body]', last_post=last_post, mins_to_edit=$forum_prop[edit] WHERE forum_id=$forum_prop[fid]";
-	$result = mysql_query($sql,$db);
-
+	$sql	= "UPDATE %sforums SET title='%s', description='%s', last_post=last_post, mins_to_edit=%d WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_prop['title'], $forum_prop['body'], $forum_prop['edit'], $forum_prop['fid']));
+	
 	return;
 }
 
@@ -210,38 +196,37 @@ function edit_forum($forum_prop) {
 * Assumes the user has the priv to delete this forum.
 * @access  public
 * @param   array $_POST			add-forum form variables
-* @see     $db					in include/vitals.inc.php
-* @see     $addslashes			in include/vitals.inc.php
 * @author  Heidi Hazelton
 */
 function delete_forum($forum_id) {
-	global $db;
 
-	$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_array($result)) {
-		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
-		$result2 = mysql_query($sql, $db);
+	$sql	= "SELECT post_id FROM %sforums_threads WHERE forum_id=%d";
+	$rows_threads = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+	
+	foreach($rows_threads as $row){
+
+		$sql	 = "DELETE FROM %sforums_accessed WHERE post_id=%d";
+		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['post_id']));
+
 	}
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
+	$sql	= "DELETE FROM %sforums_subscriptions WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+	
+	$sql    = "DELETE FROM %sforums_threads WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+	
+	$sql    = "DELETE FROM %sforums_courses WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
-	$sql    = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
+	$sql    = "DELETE FROM %sforums WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
+	$sql    = "DELETE FROM %scontent_forums_assoc WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
-	$sql    = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
-
-	$sql    = "DELETE FROM ".TABLE_PREFIX."content_forums_assoc WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
-
-	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
-	$result = mysql_query($sql, $db);
-
+	$sql = "OPTIMIZE TABLE %sforums_threads";
+	$result = queryDB($sql, array(TABLE_PREFIX));
 }
 
 function print_entry($row) {
