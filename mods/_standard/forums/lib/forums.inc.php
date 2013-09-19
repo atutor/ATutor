@@ -171,19 +171,12 @@ function valid_forum_user($forum_id) {
 * @author  Heidi Hazelton
 */
 function add_forum($forum_prop) {
-	global $db;
-	global $addslashes;
 
-	$forum_prop['title'] = $addslashes($forum_prop['title']);
-	$forum_prop['body']  = $addslashes($forum_prop['body']);
-	$forum_prop['edit']  = intval($forum_prop['edit']);
-
-	$sql	= "INSERT INTO ".TABLE_PREFIX."forums VALUES (NULL,'$forum_prop[title]', '$forum_prop[body]', 0, 0, NOW(), $forum_prop[edit])";
-	$result = mysql_query($sql,$db);
+	$sql	= "INSERT INTO %sforums VALUES (NULL,'%s', '%s', 0, 0, NOW(), %d)";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_prop['title'], $forum_prop['body'], $forum_prop['edit']));
 
 	$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (LAST_INSERT_ID(),  $_SESSION[course_id])";
-	$result = mysql_query($sql,$db);
-
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id]));
 	return;
 }
 
