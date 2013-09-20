@@ -28,9 +28,11 @@ if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
 	exit;
 }
 
-$sql = "SELECT subject FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid AND forum_id=$fid";
-$result = mysql_query($sql, $db);
-if (!($row = mysql_fetch_assoc($result))) {
+
+$sql = "SELECT subject FROM %sforums_threads WHERE post_id=%d AND forum_id=%d";
+$row_post = queryDB($sql, array(TABLE_PREFIX, $pid, $fid));
+
+if(count($row_post) == 0){
 	$msg->addError('FORUM_NOT_FOUND');
 	header('Location: list.php');
 	exit;
