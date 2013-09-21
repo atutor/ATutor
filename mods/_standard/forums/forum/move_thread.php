@@ -46,24 +46,25 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$_REQUEST[pid] AND forum_id=$_REQUEST[fid]";
-	$result = mysql_query($sql, $db);
-	if (!($row = mysql_fetch_assoc($result))) {
+	$sql	= "SELECT * FROM %sforums_threads WHERE post_id=%d AND forum_id=%d";
+	$row_thread = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['pid'], $_REQUEST['fid']), TRUE);
+	
+	if(count($row_thread) == 0){
 		$msg->addError('FORUM_NOT_FOUND');
 		header('Location: list.php');
 		exit;
 	} // else:
 
 	/* Decrement count for number of posts and topics*/
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts-1-".$row['num_comments'].", num_topics=num_topics-1, last_post=last_post WHERE forum_id=$_REQUEST[fid]";
-	$result = mysql_query($sql, $db);
+	$sql	= "UPDATE %sforums SET num_posts=num_posts-1-%d, num_topics=num_topics-1, last_post=last_post WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $row_thread['num_comments'], $_REQUEST['fid']));
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1+".$row['num_comments'].", num_topics=num_topics+1, last_post=last_post WHERE forum_id=$_REQUEST[new_fid]";
-	$result = mysql_query($sql, $db);
+	$sql	= "UPDATE %sforums SET num_posts=num_posts+1+%d, num_topics=num_topics+1, last_post=last_post WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $row_thread['num_comments'], $_REQUEST['new_fid']));
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET forum_id=$_REQUEST[new_fid], last_comment=last_comment, date=date WHERE (parent_id=$_REQUEST[pid] OR post_id=$_REQUEST[pid]) AND forum_id=$_REQUEST[fid]";
-	$result = mysql_query($sql, $db);
-
+	$sql	= "UPDATE %sforums_threads SET forum_id=%d, last_comment=last_comment, date=date WHERE (parent_id=%d OR post_id=%d) AND forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_REQUEST['new_fid'], $_REQUEST['pid'], $_REQUEST['pid'], $_REQUEST['fid']));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index.php?fid='.$_REQUEST['fid']);
 	exit;
