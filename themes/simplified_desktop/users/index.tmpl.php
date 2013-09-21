@@ -53,7 +53,8 @@
     $num_pages = (ceil($newscount/$perpage));;
     $start = ($p-1)*$perpage;
     $end = ($p*$perpage);
-
+	$page = isset($$page) ? $page : $p;
+	
     print_paginator($page, $num_pages, '', 1); 
     for($i=$start;$i<=$end; $i++){
 	$count = $i;
