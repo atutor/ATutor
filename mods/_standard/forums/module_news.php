@@ -24,11 +24,14 @@ function forums_news() {
 		return $news;
 	} 
 
-	$sql = 'SELECT E.approved, E.last_cid, C.* FROM '.TABLE_PREFIX.'course_enrollment E, '.TABLE_PREFIX.'courses C WHERE C.course_id in '. $enrolled_courses . ' AND E.member_id=1 AND E.course_id=C.course_id ORDER BY C.title';
-	$result = mysql_query($sql, $db);
-	if ($result) {
-		while($row = mysql_fetch_assoc($result)){
+	//$sql = 'SELECT E.approved, E.last_cid, C.* FROM '.TABLE_PREFIX.'course_enrollment E, '.TABLE_PREFIX.'courses C WHERE C.course_id in '. $enrolled_courses . '  AND E.member_id=1 AND E.course_id=C.course_id ORDER BY C.title';
+	//$result = mysql_query($sql, $db);
+	$sql = 'SELECT E.approved, E.last_cid, C.* FROM '.TABLE_PREFIX.'course_enrollment E, '.TABLE_PREFIX.'courses C WHERE C.course_id in '. $enrolled_courses . '  AND E.member_id='.$_SESSION['member_id'].' AND E.course_id=C.course_id ORDER BY C.title';
+	$rows_en_courses = queryDB($sql, array());
+    if(count($rows_en_courses) > 0){
+	    foreach($rows_en_courses as $row){
 			$all_forums = get_forums($row['course_id']);
+
 			if (is_array($all_forums)){
 				foreach($all_forums as $forums){
 					if (is_array($forums)){
