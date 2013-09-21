@@ -25,9 +25,10 @@ if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
 	exit;
 }
 
-$sql = "SELECT title FROM ".TABLE_PREFIX."forums WHERE forum_id=$fid";
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) {
+$sql = "SELECT title FROM %sforums WHERE forum_id=%d";
+$row_forum = queryDB($sql, array(TABLE_PREFIX, $fid), TRUE);
+
+if(count($row_forum) > 0){
 	$forum_title = $row['title'];
 } else {
 	$msg->addError('FORUM_NOT_FOUND');
@@ -36,14 +37,13 @@ if ($row = mysql_fetch_assoc($result)) {
 }
 
 if (isset($_GET['us'])) {
-	$sql = "DELETE from ".TABLE_PREFIX."forums_subscriptions WHERE forum_id = $fid AND member_id = $_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE from %sforums_subscriptions WHERE forum_id = %d AND member_id = %d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $fid, $_SESSION['member_id']));
 	$msg->addFeedback(array(FORUM_UNSUBSCRIBED, $forum_title));
 
 } else {
-	$sql = "INSERT into ".TABLE_PREFIX."forums_subscriptions VALUES($fid, '$_SESSION[member_id]')";
-	mysql_query($sql, $db);
-
+	$sql = "INSERT into %sforums_subscriptions VALUES(%d, %d)";
+	queryDB($sql, array(TABLE_PREFIX, $fid, $_SESSION['member_id']));
 	$msg->addFeedback(array(FORUM_SUBSCRIBED,$forum_title));
 }
 
