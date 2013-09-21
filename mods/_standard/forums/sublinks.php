@@ -3,8 +3,6 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 require(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
-global $db;
-
 $record_limit = 3;		//Numero massimo dei possibili sottocontenuti visualizzabili nella home-page
 $cnt = 0;               // count number of returned forums
 
