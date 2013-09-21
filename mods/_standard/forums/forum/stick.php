@@ -19,8 +19,8 @@ authenticate(AT_PRIV_FORUMS);
 $pid = intval($_GET['pid']);
 
 /* ABS(sticky-1) : if 1 then 0, if 0 then 1 */
-$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET sticky=ABS(sticky-1), last_comment=last_comment, date=date WHERE post_id=$pid";
-$result = mysql_query($sql, $db);
+$sql	= "UPDATE %sforums_threads SET sticky=ABS(sticky-1), last_comment=last_comment, date=date WHERE post_id=%d";
+$result = queryDB($sql, array(TABLE_PREFIX, $pid));
 
 $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 
