@@ -81,35 +81,44 @@ if (isset($_POST['cancel'])) {
 		$sql_subject = $addslashes($_POST['subject']);
 		$sql_body    = $addslashes($_POST['body']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."forums_threads VALUES (NULL, $_POST[parent_id], $_SESSION[member_id], $_POST[fid], '$now', 0, '$sql_subject', '$sql_body', '$now', 0, 0)";
-		$result = mysql_query($sql, $db);
-		$this_id = mysql_insert_id($db);
-
+		$sql = "INSERT INTO %sforums_threads VALUES (NULL, %d, %d, %d, '%s', 0, '%s', '%s', '%s', 0, 0)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['parent_id'], $_SESSION['member_id'], $_POST['fid'], $now, $sql_subject, $sql_body, $now));
+		$this_id = at_insert_id();
+		
 		/* Increment count for posts in forums table in database */
-		$sql = "UPDATE ".TABLE_PREFIX."forums SET num_posts=num_posts+1, last_post='$now' WHERE forum_id=$_POST[fid]";
-		$result	 = mysql_query($sql, $db);
 
+		$sql = "UPDATE %sforums SET num_posts=num_posts+1, last_post='%s' WHERE forum_id=%d";
+		$result	 = queryDB($sql, array(TABLE_PREFIX, $now, $_POST['fid']));
+		
 		// If there are subscribers to this forum, send them an email notification
 		$subscriber_email_list = array(); // list of subscribers array('email', 'full_name')
 		$subscriber_list       = '';
 		$enrolled = array();
-		//get list of student enrolled in this course
+		
+		// get list of student enrolled in this course
 		// This needs to be replaced with a tool to clean forum subscriptions when unenrolling
-		$sql = "SELECT member_id from ".TABLE_PREFIX."course_enrollment WHERE course_id = '$_SESSION[course_id]' AND approved = 'y'";
-		$result1 = mysql_query($sql, $db);
-		while($row = mysql_fetch_assoc($result1)){
+
+		$sql = "SELECT member_id from %scourse_enrollment WHERE course_id = %d AND approved = 'y'";
+		$rows_enrolled = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+		
+		foreach($rows_enrolled as $row){
 			$enrolled[] = $row['member_id'];
 		}
 		//get a list of users subscribed to this forum
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$fid";
-		$result = mysql_query($sql, $db);
-		while($row = mysql_fetch_assoc($result)){
+
+		$sql = "SELECT member_id FROM %sforums_subscriptions WHERE forum_id=%d";
+		$rows_subscribed = queryDB($sql, array(TABLE_PREFIX, $fid));	
+		
+		foreach($rows_subscribed as $row){	
 			$subscriber_list .= $row['member_id'] . ',';
 		}
 		if ($_POST['parent_id']) {
-			$sql = "SELECT member_id FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$_POST[parent_id] AND subscribe=1";
-			$result = mysql_query($sql, $db);
-			while($row = mysql_fetch_assoc($result)){
+
+			$sql = "SELECT member_id FROM %sforums_accessed WHERE post_id=%d AND subscribe=1";
+			$rows_subscribed = queryDB($sql, array(TABLE_PREFIX, $_POST['parent_id']));
+			
+			foreach($rows_subscribed as $row){
+
 				if(in_array($row['member_id'], $enrolled)){
 					$subscriber_list .= $row['member_id'] . ',';
 				}
@@ -118,15 +127,18 @@ if (isset($_POST['cancel'])) {
 		$subscriber_list = $substr($subscriber_list, 0, -1);
 
 		if ($subscriber_list != '') {
-			$sql = "SELECT first_name, second_name, last_name, email, member_id FROM ".TABLE_PREFIX."members WHERE member_id IN ($subscriber_list)";
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
+
+			$sql = "SELECT first_name, second_name, last_name, email, member_id FROM %smembers WHERE member_id IN (%s)";
+			$rows_email = queryDB($sql, array(TABLE_PREFIX, $subscriber_list));
+			
+			foreach($rows_email as $row){
 				$subscriber_email_list[] = array('email'=> $row['email'], 'full_name' => $row['first_name'] . ' '. $row['second_name'] . ' ' . $row['last_name'], 'member_id'=>$row['member_id']);
 			}
 		}
-		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET num_comments=num_comments+1, last_comment='$now', date=date WHERE post_id=$_POST[parent_id]";
-		$result = mysql_query($sql, $db);
 
+		$sql = "UPDATE %sforums_threads SET num_comments=num_comments+1, last_comment='$s', date=date WHERE post_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $now, $_POST['parent_id']));
+		
 		if ($subscriber_email_list) {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
@@ -163,20 +175,23 @@ if (isset($_POST['cancel'])) {
 			} else {
 				$subject = $_POST['subject'];
 			}
-			$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_accessed VALUES ($this_id, $_SESSION[member_id], NOW(), 1)";
-			$result = mysql_query($sql, $db);
 
+			$sql	= "REPLACE INTO %sforums_accessed VALUES (%d, %d, NOW(), 1)";
+			$result = queryDB($sql, array(TABLE_PREFIX, $this_id, $_SESSION['member_id']));
+			
 			$msg->addFeedback(array('THREAD_SUBSCRIBED', $subject));
 		} else if ($_POST['parent_id'] == 0) {
 			// not subscribe and it's a new thread, mark read:
 
-			$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_accessed VALUES ($this_id, $_SESSION[member_id], NOW(), 0)";
-			$result = mysql_query($sql, $db);
+			$sql	= "REPLACE INTO %sforums_accessed VALUES (%d, %d, NOW(), 0)";
+			$result = queryDB($sql, array(TABLE_PREFIX, $this_id, $_SESSION['member_id']));
 		}
 
 		if ($_POST['parent_id'] == 0) {
-			$sql = "UPDATE ".TABLE_PREFIX."forums SET num_topics=num_topics+1, last_post='$now' WHERE forum_id=$_POST[fid]";
-			$result	 = mysql_query($sql, $db);
+
+			$sql = "UPDATE %sforums SET num_topics=num_topics+1, last_post='%s' WHERE forum_id=%d";
+			$result	 = queryDB($sql, array(TABLE_PREFIX, $now, $_POST['fid']));
+			
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 			$_POST['parent_id'] = $this_id;
 		}
