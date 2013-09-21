@@ -58,12 +58,13 @@ if ($num_shared || $num_nonshared || $num_groups) {
 			<tr>
 				<td><a href="<?php echo url_rewrite('mods/_standard/forums/forum/index.php?fid='.$row['forum_id']); ?>"><?php echo AT_print($row['title'], 'forums.title'); ?></a> <?php
 					// patch has added the two icons below
-					if ($_SESSION['enroll']) {
-						$sql	= "SELECT 1 AS constant FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$row[forum_id] AND member_id=$_SESSION[member_id]";
-						$result1 = mysql_query($sql, $db);
-					
-if ($row1 = mysql_fetch_row($result1)) {
-					echo '<a href="mods/_standard/forums/forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">
+					if (isset($_SESSION['enroll'])) {
+
+						$sql	= "SELECT 1 AS constant FROM %sforums_subscriptions WHERE forum_id=%d AND member_id=%d";
+						$row1 = queryDB($sql, array(TABLE_PREFIX, $row['forum_id'], $_SESSION['member_id']));
+						
+						if(count($row1) > 0){				
+					        echo '<a href="mods/_standard/forums/forum/subscribe_forum.php?fid='.$row['forum_id'].SEP.'us=1">
 							<br /><img border="0" src="'.AT_BASE_HREF.'images/unsubscribe-envelope.png" alt="" /> '._AT('unsubscribe1').'</a>';
 						} else {
 							echo '<a href="mods/_standard/forums/forum/subscribe_forum.php?fid='.$row['forum_id'].'">
