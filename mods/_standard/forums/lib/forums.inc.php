@@ -146,7 +146,7 @@ function valid_forum_user($forum_id) {
 		if (!empty($_SESSION['groups'])){
 			$groups = implode(',', $_SESSION['groups']);
 			
-			$sql	= "SELECT forum_id FROM %sforums_groups WHERE group_id IN (%d) AND forum_id=%d";
+			$sql	= "SELECT forum_id FROM %sforums_groups WHERE group_id IN (%s) AND forum_id=%d";
 			$row= queryDB($sql, array(TABLE_PREFIX, $groups, $forum_id));
 			
 			if(count($row) >0){
