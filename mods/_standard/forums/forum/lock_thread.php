@@ -40,13 +40,10 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/index.php?fid='.$fid);
 	exit;
 } else if (isset($_POST['submit'])) {
-	$_POST['lock'] = intval($_POST['lock']);
-	$_POST['pid']  = intval($_POST['pid']);
-	$_POST['fid']  = intval($_POST['fid']);
 
-	$sql	= "UPDATE ".TABLE_PREFIX."forums_threads SET locked=$_POST[lock], last_comment=last_comment, date=date WHERE post_id=$_POST[pid]";
-	$result = mysql_query($sql, $db);
-
+	$sql	= "UPDATE %sforums_threads SET locked=%d, last_comment=last_comment, date=date WHERE post_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['lock'], $_POST['pid']));
+	
 	if($_POST['lock'] == '1' || $_POST['lock'] == '2'){
 		$msg->addFeedback('THREAD_LOCKED');
 		header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/index.php?fid='.$fid);
