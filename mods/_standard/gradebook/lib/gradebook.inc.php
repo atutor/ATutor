@@ -30,25 +30,31 @@ function get_grade_scales_array($member_id = 0)
 {
 	global $db;
 	
+	//$sql = "SELECT d.grade_scale_id, MIN(percentage_to) min, MAX(percentage_to) max FROM ".TABLE_PREFIX."grade_scales_detail d, ".TABLE_PREFIX."grade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND g.member_id = ". $member_id ." GROUP BY d.grade_scale_id";
+	//$result = mysql_query($sql, $db) or die(mysql_error());
 	$sql = "SELECT d.grade_scale_id, MIN(percentage_to) min, MAX(percentage_to) max FROM ".TABLE_PREFIX."grade_scales_detail d, ".TABLE_PREFIX."grade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND g.member_id = ". $member_id ." GROUP BY d.grade_scale_id";
-	$result = mysql_query($sql, $db) or die(mysql_error());
+	$rows_scales = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $member_id));
 
 	$preset_grade_scales = array();
-	while ($row = mysql_fetch_assoc($result))
-	{
-		$sql_min = "SELECT scale_value FROM ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id=".$row["grade_scale_id"]." AND percentage_to=".$row["min"];
-		$result_min = mysql_query($sql_min, $db) or die(mysql_error());
-		$row_min = mysql_fetch_assoc($result_min);
+	foreach($rows_scales as $row){
+	//while ($row = mysql_fetch_assoc($result))
+	//{
+		//$sql_min = "SELECT scale_value FROM ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id=".$row["grade_scale_id"]." AND percentage_to=".$row["min"];
+		//$result_min = mysql_query($sql_min, $db) or die(mysql_error());
+		//$row_min = mysql_fetch_assoc($result_min);
+		$sql_min = "SELECT scale_value FROM %sgrade_scales_detail WHERE grade_scale_id=%d AND percentage_to=%d";
+		$row_min = queryDB($sql_min, array(TABLE_PREFIX, $row['grade_scale_id'], $row['min']), TRUE);
 		$min_value = $row_min['scale_value'];
 		
-		$sql_max = "SELECT scale_value FROM ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id=".$row["grade_scale_id"]." AND percentage_to=".$row["max"];
-		$result_max = mysql_query($sql_max, $db) or die(mysql_error());
-		$row_max = mysql_fetch_assoc($result_max);
+		//$sql_max = "SELECT scale_value FROM ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id=".$row["grade_scale_id"]." AND percentage_to=".$row["max"];
+		//$result_max = mysql_query($sql_max, $db) or die(mysql_error());
+		//$row_max = mysql_fetch_assoc($result_max);
+		$sql_max = "SELECT scale_value FROM %sgrade_scales_detail WHERE grade_scale_id=%d AND percentage_to=%d";
+		$row_max = queryDB($sql_max, array(TABLE_PREFIX, $row['grade_scale_id'], $row['max']), TRUE);
 		$max_value = $row_max['scale_value'];
 		
 		$preset_grade_scales[$row["grade_scale_id"]] = $max_value . " - ". $min_value;
 	}
-	
 	return $preset_grade_scales;
 }
 
@@ -109,7 +115,7 @@ function get_mark_by_grade($grade_scale_id, $score, $out_of='')
 	
 	$score = trim($score);
 	$out_of = trim($out_of);
-	
+
 	if ($out_of == '') $default_mark = $score;
 	else $default_mark = $score ." / " . $out_of;
 
@@ -118,16 +124,15 @@ function get_mark_by_grade($grade_scale_id, $score, $out_of='')
 		$mark = $default_mark;
 	else // raw score
 	{
-		$sql_grade = "SELECT * from ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id = ". $grade_scale_id. " ORDER BY percentage_to DESC";
-		$result_grade	= mysql_query($sql_grade, $db) or die(mysql_error());
+		$sql_grade = "SELECT * from %sgrade_scales_detail WHERE grade_scale_id = %d ORDER BY percentage_to DESC";
+		$rows_scales	= queryDB($sql_grade, array(TABLE_PREFIX, $grade_scale_id));
 		
-		if (mysql_num_rows($result_grade) == 0)
+		if(count($rows_scales) == 0)
 			$mark = $default_mark;
 		else
 		{
 			// check if $score is already the grade. If it is, return $score
-			while ($row_grade = mysql_fetch_assoc($result_grade))
-			{
+			foreach($rows_scales as $row_grade){
 				if ($row_grade['scale_value'] == $score) return $score;
 			}
 			
@@ -136,9 +141,7 @@ function get_mark_by_grade($grade_scale_id, $score, $out_of='')
 			else if ($out_of <> '' && $out_of <> 0)  // raw final score
 				$mark_in_percentage = $score / $out_of * 100;
 
-			mysql_data_seek($result_grade, 0);
-			while ($row_grade = mysql_fetch_assoc($result_grade))
-			{
+			foreach($rows_scales as $row_grade){
 				if ($mark_in_percentage <= $row_grade['percentage_to'] && $mark_in_percentage >= $row_grade['percentage_from'])
 					$mark = $row_grade['scale_value'];
 			}
