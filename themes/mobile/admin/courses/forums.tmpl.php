@@ -22,7 +22,8 @@
 <tr>
 	<th colspan="4"><?php echo _AT('shared_forums'); ?></th>
 </tr>
-<?php 
+<?php
+if(count($this->shared_forums) > 0){ 
 foreach ($this->shared_forums as $forum) {
 
 ?>
@@ -35,7 +36,11 @@ foreach ($this->shared_forums as $forum) {
 	</td>
 	</tr>
 <?php }?>
-
+<?php } else { ?>
+	<tr>
+		<td colspan="4"><strong><?php echo _AT('no_forums'); ?></strong></td>
+	</tr>
+<?php } ?>
 </tbody>
 <tbody>
 	<tr>

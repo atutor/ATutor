@@ -22,17 +22,24 @@
 	<th colspan="4"><?php echo _AT('shared_forums'); ?></th>
 </tr>
 <?php 
-foreach ($this->shared_forums as $forum) {
 
+if(count($this->shared_forums) > 0){
+    foreach ($this->shared_forums as $forum) {
+    ?>
+        <tr onkeydown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['id']; ?>">
+        <td><input type="radio" name="id" value= "<?php echo $forum['id']; ?>" id="f<?php echo $forum['id']; ?>" /></td>
+        <td><label for="f<?php echo $forum['id']; ?>"> <?php echo	AT_print($forum['title'], 'forums.title'); ?>  </label></td>
+        <td><?php echo AT_print($forum['desc'], 'forums.description'); ?></td>
+        <td> <?php foreach ($forum["courses"] as $course) {echo $course. "  ";} ?>
+        </td>
+        </tr>
+    <?php }
+}else{ ?>
+<tr>
+	<td colspan="4"><strong><?php  echo _AT('no_forums');?></strong></td>
+</tr>
+<?php }
 ?>
-    <tr onkeydown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['f<?php echo $forum['id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $forum['id']; ?>">
-    <td><input type="radio" name="id" value= "<?php echo $forum['id']; ?>" id="f<?php echo $forum['id']; ?>" /></td>
-	<td><label for="f<?php echo $forum['id']; ?>"> <?php echo	AT_print($forum['title'], 'forums.title'); ?>  </label></td>
-	<td><?php echo AT_print($forum['desc'], 'forums.description'); ?></td>
-	<td> <?php foreach ($forum["courses"] as $course) {echo $course. "  ";} ?>
-	</td>
-	</tr>
-<?php }?>
 
 </tbody>
 <tbody>
