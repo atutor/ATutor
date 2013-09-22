@@ -12,8 +12,6 @@
 /************************************************************************/
 // $Id$
 
-//CHECK DISPLAY OF "NO FORUMS FOUND" WHEN NO SHARED FORUMS PRESENT
-
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
@@ -49,9 +47,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			$shared_forums[$i]["desc"] = AT_print($forum['description'], 'forums.description');
 
 			$courses = array();//create an empty array
-			$sql = "SELECT F.course_id FROM ".TABLE_PREFIX."forums_courses F WHERE F.forum_id=$forum[forum_id]";
-			$c_result = mysql_query($sql, $db);
-			while ($course = mysql_fetch_assoc($c_result)) {
+
+			$sql = "SELECT F.course_id FROM %sforums_courses F WHERE F.forum_id=%d";
+			$rows_courses = queryDB($sql, array(TABLE_PREFIX, $forum['forum_id']));
+			
+			foreach($rows_courses as $course){
 				$courses[] = $system_courses[$course['course_id']]['title'];
 			}
 			natcasesort($courses);
