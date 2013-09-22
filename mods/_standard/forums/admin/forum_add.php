@@ -39,16 +39,21 @@ if (isset($_POST['cancel'])) {
 
 	if (!($msg->containsErrors())) {
 		//add forum
-		$sql	= "INSERT INTO ".TABLE_PREFIX."forums (title, description, mins_to_edit) VALUES ('" . $_POST['title'] . "','" . $_POST['description'] ."', $_POST[edit])";
-		$result	= mysql_query($sql, $db);
-		$forum_id = mysql_insert_id($db);
-		write_to_log(AT_ADMIN_LOG_INSERT, 'forums', mysql_affected_rows($db), $sql);
+
+		$sql	= "INSERT INTO %sforums (title, description, mins_to_edit) VALUES ('%s','%s', %d)";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $_POST['title'], $_POST['description'], $_POST['edit']));
+		$forum_id = at_insert_id();
+		
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_INSERT, 'forums', $result, $sqlout);
 
 		//for each course, add an entry to the forums_courses table
 		foreach ($_POST['courses'] as $course) {
-			$sql	= "INSERT INTO ".TABLE_PREFIX."forums_courses VALUES (" . $forum_id . "," . $course . ")";
-			$result	= mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_INSERT, 'forums_courses', mysql_affected_rows($db), $sql);
+
+			$sql	= "INSERT INTO %sforums_courses VALUES (%d,%d)";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $forum_id, $course));
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_INSERT, 'forums_courses', $result, $sqlout);
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -62,10 +67,11 @@ if (isset($_POST['cancel'])) {
 
 $onload = 'document.form.title.focus();';
 
-		$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
-		$result = mysql_query($sql, $db);
-		$savant->assign('result', $result);		
-
+		$sql = "SELECT course_id, title FROM %scourses ORDER BY title";
+		$rows_titles = queryDB($sql, array(TABLE_PREFIX));
+	
+		$savant->assign('titles', $rows_titles);		
+		
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 $savant->assign('system_courses', $system_courses);

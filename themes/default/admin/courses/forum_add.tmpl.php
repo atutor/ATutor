@@ -21,7 +21,7 @@
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="courses"><?php echo _AT('courses'); ?></label><br />
 		<?php if ($this->system_courses): ?>
 			<select name="courses[]" id="courses" multiple="multiple" size="5"><?php
-				while ($row = mysql_fetch_assoc($this->result)) {
+			    foreach($this->titles as $row){
 					echo '<option value="'.$row['course_id'].'">'.$row['title'].'</option>';		
 				}
 				?>
