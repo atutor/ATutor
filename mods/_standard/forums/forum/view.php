@@ -173,7 +173,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '</div>';
 		echo '<ul class="forum-thread">';
 	     foreach($rows_threads as $row){
-		//while ($row = mysql_fetch_assoc($result)) {
 			print_entry($row);
 			$subject = $row['subject'];
 			if ($_GET['reply'] == $row['post_id']) {
