@@ -30,9 +30,10 @@ if (!$pid || !$fid || !valid_forum_user($fid)) {
 	exit;
 }
 
-$sql = "SELECT *, UNIX_TIMESTAMP(date) AS udate FROM ".TABLE_PREFIX."forums_threads WHERE post_id=$pid";
-$result = mysql_query($sql,$db);
-if (!($post_row = mysql_fetch_assoc($result))) {
+$sql = "SELECT *, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE post_id=%d";
+$post_row = queryDB($sql, array(TABLE_PREFIX, $pid), TRUE);
+
+if(count($post_row) == 0){
 	$msg->addError('ITEM_NOT_FOUND');
 	header('Location: '.url_rewrite('/mods/_standard/forums/forum/list.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
@@ -83,9 +84,10 @@ if ($_POST['edit_post']) {
 		$msg->addError(array('EMPTY_FIELDS', $missing_fields));
 	}
 	if (!$msg->containsErrors()) {
-		$sql = "UPDATE ".TABLE_PREFIX."forums_threads SET subject='$_POST[subject]', body='$_POST[body]', last_comment=last_comment, date=date WHERE post_id=$_POST[pid]";
-		$result = mysql_query($sql,$db);
 
+		$sql = "UPDATE %sforums_threads SET subject='%s', body='%s', last_comment=last_comment, date=date WHERE post_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['subject'], $_POST['body'], $_POST['pid']));
+		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if ($_POST['ppid'] == 0) {
 			$_POST['ppid'] = $_POST['pid'];
