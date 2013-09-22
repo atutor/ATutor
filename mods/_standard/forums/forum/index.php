@@ -42,9 +42,11 @@ $_pages['search.php?search_within[]=forums']['parent']    = 'mods/_standard/foru
 /* the last accessed field */
 $last_accessed = array();
 if ($_SESSION['valid_user'] === true && $_SESSION['enroll']) {
-	$sql	= "SELECT post_id, last_accessed + 0 AS last_accessed, subscribe FROM ".TABLE_PREFIX."forums_accessed WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	$sql	= "SELECT post_id, last_accessed + 0 AS last_accessed, subscribe FROM %sforums_accessed WHERE member_id=%d";
+	$rows_forums = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+
+    foreach($rows_forums as $row){
 		$post_id = $row['post_id'];
 		unset($row['post_id']);
 		$last_accessed[$post_id] = $row;
