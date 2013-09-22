@@ -26,30 +26,33 @@ if (isset($_POST['submit_no'])) {
 } else if (isset($_POST['submit_yes'])) {
 	$forum_id = intval($_POST['forum']);
 
-	$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_array($result)) {
-		$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row[post_id]";
-		$result2 = mysql_query($sql, $db);
+	$sql	= "SELECT post_id FROM %sforums_threads WHERE forum_id=%d";
+	$rows_threads = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+
+    foreach($rows_threads as $row){
+		$sql	 = "DELETE FROM %sforums_accessed WHERE post_id=%d";
+		$result2 = queryDB($sql, array(TABLE_PREFIX, $row['post_id']));
 	}
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
+	$sql	= "DELETE FROM %sforums_subscriptions WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
-	$sql    = "DELETE FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
+	$sql    = "DELETE FROM %sforums_threads WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'forums_courses', mysql_affected_rows($db), $sql);
+	$sql = "DELETE FROM %sforums_courses WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'forums_courses', $result, $sqlout);
 
-	$sql    = "DELETE FROM ".TABLE_PREFIX."forums WHERE forum_id=$forum_id";
-	$result = mysql_query($sql, $db);
-	write_to_log(AT_ADMIN_LOG_DELETE, 'forums', mysql_affected_rows($db), $sql);
+	$sql    = "DELETE FROM %sforums WHERE forum_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+	global $sqlout;
+	write_to_log(AT_ADMIN_LOG_DELETE, 'forums', $result, $sqlout);
 	
-	$sql = "OPTIMIZE TABLE ".TABLE_PREFIX."forums_threads";
-	$result = mysql_query($sql, $db);
-
+	$sql = "OPTIMIZE TABLE %sforums_threads";
+	$result = queryDB($sql, array(TABLE_PREFIX,));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: forums.php');
 	exit;
