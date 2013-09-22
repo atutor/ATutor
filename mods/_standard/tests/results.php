@@ -231,7 +231,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 <tbody>
 
 <?php
-debug($rows);
+
  if ($rowt): ?>
 	<?php foreach ($rowt as $row): ?>
 		<tr onmousedown="document.form['r<?php echo $row['result_id']; ?>'].checked = !document.form['r<?php echo $row['result_id']; ?>'].checked; togglerowhighlight(this, 'r<?php echo $row['result_id']; ?>');" id="rr<?php echo $row['result_id']; ?>">
