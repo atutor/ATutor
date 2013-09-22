@@ -28,8 +28,7 @@
 			}
 			echo '> '._AT('all').' </option>';
 			*/
-			
-			while ($row = mysql_fetch_assoc($this->result)) {
+			foreach($this->titles as $row){
 				if (in_array($row['course_id'], $this->courses) ) {
 					echo '<option value="'.$row['course_id'].'" selected="selected">'.AT_print($row['title'], 'input.text').'</option>';		
 				} else {

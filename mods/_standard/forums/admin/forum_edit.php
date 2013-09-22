@@ -45,17 +45,20 @@ if (isset($_POST['cancel'])) {
 		$_POST['edit'] = intval($_POST['edit']);
 		$_POST['description']  = $addslashes($_POST['description']);
 
-		$sql	= "UPDATE ".TABLE_PREFIX."forums SET title='" . $_POST['title'] . "', description='" . $_POST['description'] . "', last_post=last_post, mins_to_edit=$_POST[edit] WHERE forum_id=".$forum_id;
-		$result	= mysql_query($sql, $db);
-		write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', mysql_affected_rows($db), $sql);
+		$sql	= "UPDATE %sforums SET title='%s', description='%s', last_post=last_post, mins_to_edit=%d WHERE forum_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $_POST['title'], $_POST['description'], $_POST['edit'], $forum_id));
+		
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_UPDATE, 'forums', $result, $sqlout);
 
 		// unsubscribe all the members who are NOT in $_POST['courses']
 		$courses_list = implode(',', $_POST['courses']);
 
 		// list of all the students who are in other courses as well
-		$sql     = "SELECT member_id FROM ".TABLE_PREFIX."course_enrollment WHERE course_id IN ($courses_list)";
-		$result2 = mysql_query($sql, $db);
-		while ($row2 = mysql_fetch_assoc($result2)) {
+		$sql     = "SELECT member_id FROM %scourse_enrollment WHERE course_id IN (%s)";
+		$rows_enrolled = queryDB($sql, array(TABLE_PREFIX, $courses_list));
+		
+		foreach($rows_enrolled as $row2){
 			$students[] = $row2['member_id'];
 		}
 
@@ -64,32 +67,42 @@ if (isset($_POST['cancel'])) {
 
 		if ($students_list) {
 			// remove the subscriptions
-			$sql	= "SELECT post_id FROM ".TABLE_PREFIX."forums_threads WHERE forum_id=$forum_id";
-			$result2 = mysql_query($sql, $db);
-			while ($row2 = mysql_fetch_assoc($result2)) {
-				$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_accessed WHERE post_id=$row2[post_id] AND member_id NOT IN ($students_list)";
-				$result3 = mysql_query($sql, $db);
+
+			$sql	= "SELECT post_id FROM %sforums_threads WHERE forum_id=%d";
+			$rows_threads = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+			
+			foreach($rows_threads as $row2){
+
+				$sql	 = "DELETE FROM %sforums_accessed WHERE post_id=%d AND member_id NOT IN (%s)";
+				$result3 = queryDB($sql, array(TABLE_PREFIX, $row2['post_id'], $students_list));
 			}
 
-			$sql	 = "DELETE FROM ".TABLE_PREFIX."forums_subscriptions WHERE forum_id=$forum_id AND member_id NOT IN ($students_list)";
-			$result3 = mysql_query($sql, $db);
+			$sql	 = "DELETE FROM %sforums_subscriptions WHERE forum_id=%d AND member_id NOT IN (%s)";
+			$result3 = queryDB($sql, array(TABLE_PREFIX, $forum_id, $students_list));
 		}
 
-		$sql = "DELETE FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum_id AND course_id NOT IN ($courses_list)";
-		$result = mysql_query($sql, $db);
-		write_to_log(AT_ADMIN_LOG_DELETE, 'forums_courses', mysql_affected_rows($db), $sql);
+		$sql = "DELETE FROM %sforums_courses WHERE forum_id=%d AND course_id NOT IN (%s)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $forum_id, $courses_list));
+		
+		global $sqlout;
+		write_to_log(AT_ADMIN_LOG_DELETE, 'forums_courses', $result, $sqlout);
 
 		//update forums_courses
 		if (in_array('0', $_POST['courses'])) {
 			//general course - used by all.  put one entry in forums_courses w/ course_id=0
-			$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_courses VALUES (" . $_POST['forum'] . ", 0)";
-			$result	= mysql_query($sql, $db);
-			write_to_log(AT_ADMIN_LOG_REPLACE, 'forums_courses', mysql_affected_rows($db), $sql);
+			$sql	= "REPLACE INTO %sforums_courses VALUES (%d, 0)";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $_POST['forum']));
+			
+			global $sqlout;
+			write_to_log(AT_ADMIN_LOG_REPLACE, 'forums_courses', $result, $sqlout);
 		} else {
 			foreach ($_POST['courses'] as $course) {
-				$sql	= "REPLACE INTO ".TABLE_PREFIX."forums_courses VALUES (" . $_POST['forum'] . "," . $course . ")";
-				$result	= mysql_query($sql, $db);
-				write_to_log(AT_ADMIN_LOG_REPLACE, 'forums_courses', mysql_affected_rows($db), $sql);
+
+				$sql	= "REPLACE INTO %sforums_courses VALUES (%d,%d)";
+				$result	= queryDB($sql, array(TABLE_PREFIX, $_POST['forum'], $course));
+				
+				global $sqlout;
+				write_to_log(AT_ADMIN_LOG_REPLACE, 'forums_courses', $result, $sqlout);
 			}
 		}
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -107,19 +120,21 @@ if (!($forum = @get_forum($_GET['forum']))) {
 } else {
 	$msg->printAll();
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id]";
-	$result	= mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	$sql	= "SELECT * FROM %sforums_courses WHERE forum_id=%d";
+	$rows_courses	= queryDB($sql, array(TABLE_PREFIX, $forum['forum_id']));
+	
+	foreach($rows_courses as $row){
 		$courses[] = $row['course_id'];		
 	}
-$sql = "SELECT course_id, title FROM ".TABLE_PREFIX."courses ORDER BY title";
-	$result = mysql_query($sql, $db);
+
+	$sql = "SELECT course_id, title FROM %scourses ORDER BY title";
+	$rows_titles = queryDB($sql, array(TABLE_PREFIX));
 ?>
 	
 <?php
 }
+$savant->assign('titles', $rows_titles);
 $savant->assign('courses', $courses);
-$savant->assign('result', $result);
 $savant->assign('forum', $forum);
 $savant->display('admin/courses/forum_edit.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php');
