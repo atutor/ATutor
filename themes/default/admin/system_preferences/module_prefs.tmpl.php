@@ -25,7 +25,7 @@
 		</div>
 		<div class="row">
 			<label for="key">Key</label>
-			<input type="text" name="key" size="80" id="key" value="<?php echo $key; ?>" style="min-width: 90%;" />
+			<input type="text" name="key" size="80" id="key" value="<?php echo $this->key; ?>" style="min-width: 90%;" />
 		</div>
 
 		<div class="row buttons">

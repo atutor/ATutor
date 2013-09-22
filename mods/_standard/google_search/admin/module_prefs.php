@@ -13,15 +13,16 @@ if (isset($_GET['keyIsValidated'])){
 	$_GET['gtype'] = trim($_GET['gtype']);
 	if ($_GET['keyIsValidated']=='true'){
 		$key = $addslashes($_GET['key']);
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES('gsearch','$key')";
-		$result = mysql_query($sql, $db);
+		$sql = "REPLACE INTO %sconfig VALUES('gsearch','%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $key));
 		$msg->addFeedback('GOOGLE_KEY_SAVED');
 	} elseif ($_GET['keyIsValidated']=='false'){
 		//If invalid, remove whatever key that's in the system
 		$msg->addError('GOOGLE_KEY_INVALID');
 		$key = htmlspecialchars($stripslashes($_GET['key']));
 		$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='gsearch'";
-		$result = mysql_query($sql, $db);
+		$result = queryDB($sql, array(TABLE_PREFIX));
+		
 		$key = '';
 	}
 	//Manually print it out
@@ -54,12 +55,12 @@ if (isset($_POST['submit'])) {
 				$msg->addError('GOOGLE_KEY_INVALID');
 				$key = htmlspecialchars($stripslashes($_POST['key']));
 				$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='gsearch'";
-				$result = mysql_query($sql, $db);
+				$result = queryDB($sql, array(TABLE_PREFIX));
 				$key = '';
 			} else {
 				$key = $addslashes($_POST['key']);
-				$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES('gsearch','$key')";
-				$result = mysql_query($sql, $db);
+				$sql = "REPLACE INTO %sconfig VALUES('gsearch','%s')";
+				$result = queryDB($sql, array(TABLE_PREFIX, $key));
 				$msg->addFeedback('GOOGLE_KEY_SAVED');
 			}
 		} elseif ($_POST['gtype']==GOOGLE_TYPE_AJAX){			
@@ -74,21 +75,24 @@ if (isset($_POST['submit'])) {
 		<?php
 		}
 	} else {
-		$sql = "DELETE FROM ".TABLE_PREFIX."config WHERE name='gsearch'";
-		$result = mysql_query($sql, $db);
+
+		$sql = "DELETE FROM %sconfig WHERE name='gsearch'";
+		$result = queryDB($sql, array(TABLE_PREFIX));
 		$msg->addFeedback('GOOGLE_KEY_SAVED');
 		$key = '';
 	}
 
 	//Set Google interface's type.
 	$googleType = $addslashes($_POST['gtype']);
-	$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES('gtype','$googleType')";
-	$result = mysql_query($sql, $db);
+
+	$sql = "REPLACE INTO %sconfig VALUES('gtype','%s')";
+	$result = queryDB($sql, array(TABLE_PREFIX, $googleType));
 
 	//Manually print it out
 	$msg->printAll();
 }
 
+$savant->assign('key', $key);
 $savant->assign('googleType', $googleType);
 $savant->display('admin/system_preferences/module_prefs.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
