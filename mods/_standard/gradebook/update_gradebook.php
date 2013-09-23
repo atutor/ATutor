@@ -256,8 +256,10 @@ else
 					" ORDER BY title";
 	$result_at = mysql_query($sql_at, $db) or die(mysql_error());
 	
-	if (mysql_num_rows($result_at) == 0)
+	if (mysql_num_rows($result_at) == 0){
+		 echo '<span>'. _AT("tests") .' '. _AT("combine_from").'</span><br />';
 		 echo _AT('none_found');
+	}
 	else
 	{
 		echo '	<div class="row">'."\n\r";
