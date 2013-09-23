@@ -107,14 +107,13 @@ global $system_courses, $_custom_css, $db;
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
-<div class="page_wrapper">
-<div id="header">
 <div class="bypass">
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
 	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
 
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php if(isset($_REQUEST['cid'])){echo htmlentities_utf8($_REQUEST['cid']);}  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
 </div>	
+<div id="top-bar">
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
 	else:
@@ -169,6 +168,10 @@ global $system_courses, $_custom_css, $db;
 		<a href="<?php echo $this->base_path; ?>help/index.php"><?php echo _AT('help'); ?></a>	
 		</div>
 	</div>
+</div>
+<div class="page_wrapper">
+
+<div id="header">
 
 
 	<?php

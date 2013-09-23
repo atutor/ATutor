@@ -28,11 +28,12 @@
 			&nbsp;
 		</div>
 
-<div id="footer">
+
 
 </div>
 </div> <!-- end page wrapper --> 
-<br />	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
+<div id="footer">
+<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
 <script language="javascript" type="text/javascript">
 //<!--
@@ -41,6 +42,7 @@
 </script>
 <div class="logo">
       <a href="http://www.atutor.ca/"><img src="<?php echo $this->base_path; ?>images/AT_Logo_1_sm.png"  alt="ATutor Logo" style="border:none;" /></a>
+</div>
 </div>
 </body>
 </html>

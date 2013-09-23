@@ -2,10 +2,13 @@ div.input-form {
 	width: 95%; 
 	margin-left:auto; 
 	margin-right:auto;
-	border: 1px #685642 solid;
+	/*border: 1px #685642 solid; */
+	border-top:1px solid #E5E5E5;
+	border-bottom:1px solid #E5E5E5;
 	margin-bottom: 10px;
 	line-height:150%;
-	background-color: #F4F0CB;
+    box-shadow: 0em .1em 0em #cccccc inset;*/
+
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 /*    -moz-box-shadow:.1em .1em .2em #999999;
@@ -25,7 +28,7 @@ div.input-form div.row {
 
 /*<img> and <a> tags: on mouse hover the color of the background will keep the same!*/
 div.input-form div.row img,a:hover{
-    background-color:#F4F0CB;
+    background-color:#DADADA;
 }
 
 div.input-form .footer {
@@ -73,14 +76,13 @@ div.input-form div.buttons {
 	padding:8px;
 }
 div.input-form div.buttons input {
-background-color: #B3A580;
     border: 1px solid #F4F0CB;
-    color: #FFFFFF;
+    color: #000000;
 }
 
 
 div.input-form div.buttons input:hover, div.input-form div.buttons input:focus{
-	background-color: #DED29E;
+	background-color: #DADADA;
 	color: #685642;
 }
 
@@ -131,7 +133,7 @@ div.input-form input[type=submit]{
 /*	font-size:100%;*/
 }
 select{
-	background-color:#F4F0CB;
+	background-color:#E5E5E5;
 	border-radius: .2em .2em .2em .2em;
 	-moz-border-radius: .2em .2em .2em .2em;
 /*	-moz-box-shadow:.2em .2em .3em #999999;
