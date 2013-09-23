@@ -34,4 +34,7 @@ CREATE TABLE `calendar_notification` (
 ) ENGINE = MyISAM;
 
 ##### get next bitwise value, col 3?
-## INSERT INTO `modules` VALUES ('_standard/calendar',      2, 268435456, 0, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/calendar',      2, 268435456, 0, 0, 0);
+
+#### Add the old ATutor 2.1 default theme as an addon
+INSERT INTO `themes` VALUES ('ATutor 2.1', '2.2', 'default21', 'Desktop', NOW(), 'This is the default theme  from ATutor 2.1', 1, 0);
