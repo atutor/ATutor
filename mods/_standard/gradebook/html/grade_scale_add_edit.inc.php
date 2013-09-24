@@ -68,25 +68,21 @@ else if (isset($_POST['submit']))
 
 		if ($action == "add")
 		{
-			$sql	= "INSERT INTO ".TABLE_PREFIX."grade_scales
-			         (member_id, scale_name, created_date) 
-			         VALUES (" . $_SESSION["member_id"] . ", '". $_POST["scale_name"] ."', now())";
-			$result	= mysql_query($sql, $db) or die(mysql_error());
-			
-			$grade_scale_id = mysql_insert_id();
+
+			$sql	= "INSERT INTO %sgrade_scales (member_id, scale_name, created_date) VALUES ( %d, '%s', now())";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $_SESSION["member_id"], $_POST["scale_name"]));
+
+			$grade_scale_id = at_insert_id();
 		}
 		else if ($action == "edit" && isset($_POST["grade_scale_id"]))
 		{
 			$grade_scale_id = $_POST["grade_scale_id"];
-			
-			$sql	= "UPDATE ".TABLE_PREFIX."grade_scales
-			            SET scale_name = '".$_POST["scale_name"]."'
-			         WHERE grade_scale_id = ". $grade_scale_id;
-			$result	= mysql_query($sql, $db) or die(mysql_error());
-			
+
+			$sql	= "UPDATE %sgrade_scales SET scale_name = '%s' WHERE grade_scale_id = %d";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $_POST["scale_name"], $grade_scale_id));		
 			// clean up scale details for new insertions
-			$sql = "DELETE FROM ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id = ". $grade_scale_id;
-			$result	= mysql_query($sql, $db) or die(mysql_error());
+			$sql = "DELETE FROM %sgrade_scales_detail WHERE grade_scale_id = %d";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $grade_scale_id));
 		}
 		
 		for ($i=0; $i<10; $i++) 
@@ -96,13 +92,9 @@ else if (isset($_POST['submit']))
 				$_POST['scale_value'][$i] = $addslashes(trim($_POST['scale_value'][$i]));
 				$_POST['percentage_from'][$i] = intval($_POST['percentage_from'][$i]);
 				$_POST['percentage_to'][$i] = intval($_POST['percentage_to'][$i]);
-	
-				$sql	= "INSERT INTO ".TABLE_PREFIX."grade_scales_detail
-				         (grade_scale_id, scale_value, percentage_from, percentage_to) 
-				         VALUES (" . $grade_scale_id . ", '". $_POST['scale_value'][$i] ."', ".$_POST['percentage_from'][$i].", ".$_POST['percentage_to'][$i].")";
 
-//				print $sql;
-				$result	= mysql_query($sql, $db) or die(mysql_error());
+				$sql	= "INSERT INTO %sgrade_scales_detail (grade_scale_id, scale_value, percentage_from, percentage_to) VALUES (%d, '%s', %d, %d)";
+				$result	= queryDB($sql, array(TABLE_PREFIX, $grade_scale_id, $_POST['scale_value'][$i], $_POST['percentage_from'][$i], $_POST['percentage_to'][$i]));
 			}
 		}
 		
@@ -125,19 +117,18 @@ else if (isset($_POST['preset']) || ($action == 'edit' && isset($_REQUEST['grade
 	{
 		// load preset
 		$_POST['selected_grade_scale_id'] = intval($_POST['selected_grade_scale_id']);
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."grade_scales_detail d, ".TABLE_PREFIX."grade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND d.grade_scale_id=".$_POST[selected_grade_scale_id]." ORDER BY percentage_to DESC";
+		$sql	= "SELECT * FROM ".TABLE_PREFIX."grade_scales_detail d, %sgrade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND d.grade_scale_id=%d ORDER BY percentage_to DESC";
+	    $rows_scales = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_POST[selected_grade_scale_id]));
 	}
 	else if ($action == 'edit' && isset($_REQUEST['grade_scale_id']))
 	{
 		// edit existing
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."grade_scales_detail d, ".TABLE_PREFIX."grade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND d.grade_scale_id=".$_REQUEST['grade_scale_id']." ORDER BY percentage_to DESC";
+		$sql	= "SELECT * FROM %sgrade_scales_detail d, %sgrade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND d.grade_scale_id=%d ORDER BY percentage_to DESC";
+	    $rows_scales = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_REQUEST['grade_scale_id']));
 	}
-	
-	$result	= mysql_query($sql, $db) or die(mysql_error());
-	
+
 	$i = 0;
-	while ($row = mysql_fetch_assoc($result))
-	{
+	foreach($rows_scales as $row){
 		$_POST["scale_name"] = $row["scale_name"];
 		$_POST["scale_value"][$i] = $row["scale_value"];
 		$_POST["percentage_from"][$i] = $row["percentage_from"];
