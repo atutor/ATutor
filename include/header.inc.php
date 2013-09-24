@@ -89,37 +89,39 @@ if (isset($_custom_head)) {
 
 // Set session timeout warning if user is logged in
 if(isset($_SESSION['valid_user'])){
-// Setup the timeout warning when a user logs in
-if($_config['session_timeout']){
-	$_at_timeout = ($_config['session_timeout']*60);
-}else{
-	$_at_timeout = '1200';
-}
+    // Setup the timeout warning when a user logs in
+    if($_config['session_timeout']){
+        $_at_timeout = ($_config['session_timeout']*60);
+    }else{
+        $_at_timeout = '1200';
+    }
 
-$session_timeout = intVal($_at_timeout) * 1000;
-$session_warning = 300 * 1000;                      // 5 minutes
+    $session_timeout = intVal($_at_timeout) * 1000;
+    $session_warning = 300 * 1000;                      // 5 minutes
 
-$custom_head .= '
-	<link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
-	<script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
-	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
-	<script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js" type="text/javascript"></script>
-	<script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	$(document).ready(function() {
-        ATutor.autoLogout({
-            timeLogout              : '.$session_timeout.',
-            timeWarningBeforeLogout : '.$session_warning.',
-            logoutUrl               : "'.AT_print($_base_path, 'url.base').'logout.php",
-            title                   : "'._AT('session_timeout_title').'",
-            textButtonLogout        : "'._AT('session_timeout_logout_now').'",
-            textButtonStayConnected : "'._AT('session_timeout_stay_connected').'",
-            message                 : "'._AT('session_will_expire').'"
+    $custom_head .= '
+        <link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
+        <script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
+        <script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
+        <script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js" type="text/javascript"></script>
+        <script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>';
+    
+    if(isset($_SESSION['member_id'])){
+        $custom_head .= "\n".'    <script type="text/javascript">
+        $(document).ready(function() {
+            ATutor.autoLogout({
+                timeLogout              : '.$session_timeout.',
+                timeWarningBeforeLogout : '.$session_warning.',
+                logoutUrl               : "'.AT_print($_base_path, 'url.base').'logout.php",
+                title                   : "'._AT('session_timeout_title').'",
+                textButtonLogout        : "'._AT('session_timeout_logout_now').'",
+                textButtonStayConnected : "'._AT('session_timeout_stay_connected').'",
+                message                 : "'._AT('session_will_expire').'"
+            });
         });
-	});
-	
-	</script>
-  ';
+    
+        </script>';
+    }
 }
 // End session timeout warning
 
