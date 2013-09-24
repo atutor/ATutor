@@ -44,6 +44,7 @@ function print_row($grade_scale_id, $scale_name, $value, $created_date, $post_gr
 
 if (isset($_POST['remove'], $_POST['grade_scale_id'])) 
 {
+
 	header('Location: grade_scale_delete.php?grade_scale_id='.$_POST['grade_scale_id']);
 	exit;
 } 
