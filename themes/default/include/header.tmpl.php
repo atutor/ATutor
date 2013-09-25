@@ -54,7 +54,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // will have to be moved to the header.inc.php
 global $system_courses, $_custom_css, $db;
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+?>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
 <head>
 	<?php if(isset($this->section_title)){ ?>
@@ -95,8 +96,8 @@ global $system_courses, $_custom_css, $db;
     <!-- Fluid and jQuery Dependencies -->
     <script type="text/javascript" src="<?php echo $this->base_href; ?>jscripts/infusion/InfusionAll.js"></script>
     <script type="text/javascript" src="<?php echo $this->base_href; ?>jscripts/infusion/framework/enhancement/js/ProgressiveEnhancement.js"></script>
-        
-	<script language="javascript" type="text/javascript">
+    <script src="<?php echo $this->base_path; ?>jscripts/mobile.js" type="text/javascript"></script>   
+	<script type="text/javascript">
 	//<!--
 	jQuery.noConflict();
 	//-->
@@ -108,10 +109,9 @@ global $system_courses, $_custom_css, $db;
 </head>
 <body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
 <div class="bypass">
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c">
-	<img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_content'); ?> ALT+c" /></a>
-
-	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php if(isset($_REQUEST['cid'])){echo htmlentities_utf8($_REQUEST['cid']);}  ?>"  accesskey="m"><img src="<?php echo $this->base_path; ?>images/clr.gif" height="1" width="1" border="0" alt="<?php echo _AT('goto_menu'); ?> ALT+m" /></a>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c" title="<?php echo _AT('goto_content'); ?> Alt-c">
+	<?php echo _AT('goto_content'); ?></a>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php if(isset($_REQUEST['cid'])){echo htmlentities_utf8($_REQUEST['cid']);}  ?>"  accesskey="m" title="<?php echo _AT('goto_menu'); ?> Alt-m"><?php echo _AT('goto_menu'); ?></a>
 </div>	
 <div id="top-bar">
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
@@ -207,8 +207,38 @@ global $system_courses, $_custom_css, $db;
 
 </div>
 
-<div id="topnavlistcontainer"  role="navigation">
+
+<div id="sm_topnav">
+    <?php if ($this->current_sub_level_page): ?>
+    <div id="topnavlistcontainer_sm" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" style="height:auto;">
+    <a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);"><?php echo _AT('navigation'); ?></a>
+    <br />
+        <div id="navigation-column">
+        <?php if ($this->current_sub_level_page): ?>
+        <ul id="topnavlist_sm"  class="fl-list-menu" role="menu">
+            <?php $accesscounter = 0; //initialize ?>
+            <?php foreach ($this->top_level_pages as $page): ?>
+                <?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+                <?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+                <?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+                <?php if ($page['url'] == $this->current_top_level_page): ?>
+                    <!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
+                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+                <?php else: ?>
+                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+                <?php endif; ?>
+                <?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+            <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+    </div>
+    </div>
+    <?php endif; ?>	
+</div>		
+				
 <!-- the main navigation. in our case, tabs -->
+<div id="lrg_topnav">
+<div id="topnavlistcontainer"  role="navigation">
 	<ul id="topnavlist">
 		<?php $accesscounter = 0; //initialize ?>
 		<?php foreach ($this->top_level_pages as $page): ?>
@@ -223,6 +253,7 @@ global $system_courses, $_custom_css, $db;
 			<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
 		<?php endforeach; ?>
 	</ul>
+</div> 
 </div>
 
 <div class="logoutbar">
@@ -232,7 +263,7 @@ global $system_courses, $_custom_css, $db;
 		<?php $path_parts = explode("/", $this->current_top_level_page); 
 		      $last_path_part = $path_parts[sizeof($path_parts) - 1];
                if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
-		    <a class="pref_wiz_launcher"><img border="0" alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" class="img1616"/></a> |
+		    <a class="pref_wiz_launcher"><img alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" src="<?php echo $this->base_href; ?>images/wand.png" class="img1616"/></a> |
 		    <?php } ?> 
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | 
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
@@ -276,30 +307,34 @@ global $system_courses, $_custom_css, $db;
 			echo 'style="'.$style.'"';
 		endif; ?>>
 	<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
-		<div id="leftcolumn"  role="complementary">
-		  <a name="menu"></a>
+		<div id="content_link" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+				<a class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo  _AT("content"); ?></a>	
+		</div>	
+		<div id="leftcolumn" role="complementary">
+		  <a id="menu"></a>
 		     <div id="side-menu">
 		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 		    </div>
 		</div>
 	<?php endif; ?>
 
+	
 	<div id="contentcolumn"  role="main">
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
-		   <a href="javascript:void(0)" accesskey="n"><img src="" title="" alt="" border="0" class="img1616"/></a>
+		   <a href="javascript:void(0)" accesskey="n"><img src="" title="" alt="" class="img1616"/></a>
 		</div>
-
+		<br />
 		<div class="sequence-links">
 		<?php if ($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"]) { ?>
 			<?php if ($this->sequence_links['resume']): ?>
-					<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.png" border="0" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img1616" /></a>
+					<a style="color:white;" href="<?php echo $this->sequence_links['resume']['url']; ?>" accesskey="."><img src="<?php echo $this->img; ?>resume.png" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?> Alt+." alt="<?php echo $this->sequence_links['resume']['title']; ?> Alt+." class="img1616" /></a>
 			<?php else:
 				if ($this->sequence_links['previous']): ?>
-					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->img; ?>previous.png" border="0" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img1616" /></a>
+					<a href="<?php echo $this->sequence_links['previous']['url']; ?>" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," accesskey=","><img src="<?php echo $this->img; ?>previous.png" alt="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?> Alt+," class="img1616" /></a>
 				<?php endif;
 				if ($this->sequence_links['next']): ?>
-					<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->img; ?>next.png" border="0" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img1616" /></a>
+					<a href="<?php echo $this->sequence_links['next']['url']; ?>" title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." accesskey="."><img src="<?php echo $this->img; ?>next.png" alt="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?> Alt+." class="img1616" /></a>
 				<?php endif; ?>
 			<?php endif; ?>
 		<?php } ?>
@@ -308,34 +343,16 @@ global $system_courses, $_custom_css, $db;
 		<?php endif; ?>
 
 	<!-- the page title -->
-	<a name="content" title="<?php echo _AT('content'); ?>"></a>
+	<a id="content" title="<?php echo _AT('content'); ?>"></a>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 	<?php global $msg; $msg->printAll(); $_base_href;?>
 
 	<?php if (count($this->sub_level_pages) > 0): ?>
-
-<!-- <div id="topnavlistcontainer">
-	<ul id="topnavlist">
-		<?php $accesscounter = 0; //initialize ?>
-		<?php foreach ($this->top_level_pages as $page): ?>
-			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-			<?php if ($page['url'] == $this->current_top_level_page): ?>
-				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
-			<?php else: ?>
-				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
-			<?php endif; ?>
-			<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-		<?php endforeach; ?>
-	</ul>
-</div> -->
-
 		<div id="subnavlistcontainer" role="navigation">
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">
-				<img border="0" width="10" height="11" alt="<?php echo _AT('back_to').' '.htmlentities_utf8($this->back_to_page['title']); ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;" class="img1111"/></a>&nbsp;
+				<img width="10" height="11" alt="<?php echo _AT('back_to').' '.htmlentities_utf8($this->back_to_page['title']); ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;" class="img1111"/></a>&nbsp;
 			<?php endif; ?>
 			</div>
 

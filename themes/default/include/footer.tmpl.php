@@ -27,13 +27,9 @@
 		<?php } ?>
 			&nbsp;
 		</div>
-
-
-
-</div>
 </div> <!-- end page wrapper --> 
 <div id="footer">
-<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
+<br />	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
 <script language="javascript" type="text/javascript">
 //<!--

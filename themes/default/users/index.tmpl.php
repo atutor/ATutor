@@ -1,21 +1,20 @@
 <?php 
 
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-<div id="my_courses_container" <?php if($_config['show_current'] != 1){ echo ' style="width:90%;"'; } ?>>
+<div id="my_courses_container" <?php if($_config['show_current'] != 1){ echo ' class="wide"';} else {echo ' class="narrow"';} ?>>
 <table class="data" style="width:100%;">
-<tr><th></th>
+<tr><th  class="hidecol480"></th>
 <th><?php echo _AT('course'); ?></th>
-<th><?php echo _AT('instructor'); ?></th>
-<th><?php echo _AT('status'); ?></th>
+<th class="hidecol480"><?php echo _AT('instructor'); ?></th>
+<th class="hidecol700"><?php echo _AT('status'); ?></th>
 <th><?php echo _AT('shortcuts'); ?></th>
 </tr>
 <?php foreach ($this->courses as $row):
     static $counter;
     $counter++;
 ?>
-
     <tr class="<?php if ($counter %2) { echo 'odd'; } else { echo 'even'; } ?>">
-    <td>
+    <td  class="hidecol480">
       <?php if ($row['icon'] == ''): ?>
                   <img src="images/clr.gif" class="icon" border="1" width="79" height="79" alt="<?php echo htmlentities_utf8($row['title']); ?>" />
           <?php else: 
@@ -40,8 +39,8 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
     <td><?php echo '<a href="'.url_rewrite('bounce.php?course=' . $row['course_id']) . '"> '.htmlentities_utf8($row['title']).'</a>' ?>
     <br /><small><?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?></small>
     </td>
-    <td><small><?php echo '<a href="'.AT_BASE_HREF.'inbox/send_message.php?id='.$row['member_id'].'">'. get_display_name($row['member_id']).'</a>'; ?></small></td>
-    <td><small>
+    <td class="hidecol480"><small><?php echo '<a href="'.AT_BASE_HREF.'inbox/send_message.php?id='.$row['member_id'].'">'. get_display_name($row['member_id']).'</a>'; ?></small></td>
+    <td class="hidecol700"><small>
     <?php    
 
             if ($_SESSION['member_id'] == $row['member_id']) {
