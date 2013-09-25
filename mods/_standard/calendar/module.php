@@ -34,9 +34,9 @@
     define('AT_ADMIN_PRIV_CALENDAR', $this->getAdminPrivilege());
     global $_custom_head;
     $_custom_head .='
-    <script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.
+    <script type="text/javascript" src="'.AT_BASE_HREF.
     'jscripts/infusion/InfusionAll.js"></script>
-    <script language="javascript" type="text/javascript" src="'.AT_BASE_HREF.
+    <script type="text/javascript" src="'.AT_BASE_HREF.
     'jscripts/lib/calendar.js"></script>
     <link href="'.AT_BASE_HREF.'mods/_standard/calendar/lib/jquery/jquery-ui-1.8.20.custom.css" rel="stylesheet" type="text/css"/>
     <link href="'.AT_BASE_HREF.'jscripts/infusion/lib/jquery/plugins/tooltip/css/jquery.tooltip.css" rel="stylesheet" type="text/css"/>';
