@@ -24,8 +24,7 @@ require_once("lib/gradebook.inc.php");
 // print feedback, otherwise, add this test into gradebook.
 function add_test($test_id, $title)
 {
-	global $db, $msg;
-	
+	global  $msg;	
 	$no_error = true;
 	
 	$studs_take_num = get_studs_take_more_than_once($_SESSION["course_id"], $test_id);
@@ -46,21 +45,17 @@ function add_test($test_id, $title)
 
 	if ($no_error)  // add into gradebook
 	{
-	    $_POST["selected_grade_scale_id"] = intval($_POST["selected_grade_scale_id"]);
-		$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (id, type, grade_scale_id)
-		               VALUES (". $test_id. ", 'ATutor Test', ".$_POST["selected_grade_scale_id"].")";
-		$result_insert = mysql_query($sql_insert, $db) or die(mysql_error());
+		$sql_insert = "INSERT INTO %sgradebook_tests (id, type, grade_scale_id) VALUES (%d, 'ATutor Test', %d)";
+		$result_insert = queryDB($sql_insert, array(TABLE_PREFIX, $test_id, $_POST["selected_grade_scale_id"]));
 	}
 }
 
 function add_assignment($assignment_id)
 {
-	global $db;
 	$_POST["selected_grade_scale_id"] = intval($_POST["selected_grade_scale_id"]);
-	
-	$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (id, type, grade_scale_id)
-	               VALUES (". $assignment_id. ", 'ATutor Assignment', ".$_POST["selected_grade_scale_id"].")";
-	$result_insert = mysql_query($sql_insert, $db) or die(mysql_error());
+
+	$sql_insert = "INSERT INTO %sgradebook_tests (id, type, grade_scale_id) VALUES (%d, 'ATutor Assignment', %d)";
+	$result_insert = queryDB($sql_insert, array(TABLE_PREFIX, $assignment_id, $_POST["selected_grade_scale_id"]));
 }
 
 if (isset($_POST['cancel'])) 
@@ -75,27 +70,21 @@ else if (isset($_POST['addATutorTest']))
 	{
 		if ($matches[1] == 0) // add all applicable tests
 		{
-			$sql = "SELECT * FROM ".TABLE_PREFIX."tests t".
-							" WHERE course_id=".$_SESSION["course_id"].
-							" AND num_takes = 1".
-							" AND NOT EXISTS (SELECT 1".
-															" FROM ".TABLE_PREFIX."gradebook_tests g".
-															" WHERE g.id = t.test_id".
-															" AND g.type='ATutor Test')";
-			$result	= mysql_query($sql, $db) or die(mysql_error());
+
+			$sql = "SELECT * FROM %stests t WHERE course_id = %d AND num_takes = 1 AND NOT EXISTS". 
+			    " (SELECT 1 FROM %sgradebook_tests g WHERE g.id = t.test_id AND g.type='ATutor Test')";
+			$rows_tests	= queryDB($sql, array(TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX));		
 			
-			while ($row = mysql_fetch_assoc($result))
-			{
+			foreach($rows_tests as $row){
 				add_test($row["test_id"], $row["title"]);
 			}
 		}
 		else // add one atutor test
 		{
-			$sql = "SELECT * FROM ".TABLE_PREFIX."tests t".
-							" WHERE test_id=".$matches[1];
-			$result	= mysql_query($sql, $db) or die(mysql_error());
-			$row = mysql_fetch_assoc($result);
 			
+			$sql = "SELECT * FROM %stests t WHERE test_id=%d";
+			$row	= queryDB($sql, array(TABLE_PREFIX, $matches[1]), TRUE);
+
 			add_test($matches[1], $row["title"]);
 		}
 	}
@@ -103,16 +92,12 @@ else if (isset($_POST['addATutorTest']))
 	{
 		if ($matches[1] == 0) // add all applicable tests
 		{
-			$sql = "SELECT * FROM ".TABLE_PREFIX."assignments a".
-							" WHERE course_id=".$_SESSION["course_id"].
-							" AND NOT EXISTS (SELECT 1".
-															" FROM ".TABLE_PREFIX."gradebook_tests g".
-															" WHERE g.id = a.assignment_id".
-															" AND g.type='ATutor Assignment')";
-			$result	= mysql_query($sql, $db) or die(mysql_error());
+
+			$sql = "SELECT * FROM %sassignments a WHERE course_id=%d AND NOT EXISTS (SELECT 1 FROM %sgradebook_tests g ".
+			        "WHERE g.id = a.assignment_id AND g.type='ATutor Assignment')";
+			$rows_assignments	= queryDB($sql, array(TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX));	
 			
-			while ($row = mysql_fetch_assoc($result))
-			{
+			foreach($rows_assignments as $row){		
 				add_assignment($row["assignment_id"]);
 			}
 		}
@@ -152,9 +137,8 @@ else if (isset($_POST['addExternalTest']))
 		if ($_POST["has_due_date"] == 'true')
 			$date_due = $_POST["year_due"]. '-' .str_pad ($_POST["month_due"], 2, "0", STR_PAD_LEFT). '-' .str_pad ($_POST["day_due"], 2, "0", STR_PAD_LEFT). ' '.str_pad ($_POST["hour_due"], 2, "0", STR_PAD_LEFT). ':' .str_pad ($_POST["min_due"], 2, "0", STR_PAD_LEFT) . ':00';
 
-		$sql_insert = "INSERT INTO ".TABLE_PREFIX."gradebook_tests (course_id, type, title, due_date, grade_scale_id)
-		               VALUES (".$_SESSION["course_id"].", 'External', '". $_POST["title"]. "', '".$date_due . "', ".$_POST["selected_grade_scale_id"].")";
-		$result_insert = mysql_query($sql_insert, $db) or die(mysql_error());
+		$sql_insert = "INSERT INTO %sgradebook_tests (course_id, type, title, due_date, grade_scale_id) VALUES (%d, 'External', '%s', '%s', %d)";
+		$result_insert = queryDB($sql_insert, array(TABLE_PREFIX, $_SESSION["course_id"], $_POST["title"], $date_due, $_POST["selected_grade_scale_id"]));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: gradebook_tests.php');
@@ -178,30 +162,19 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 // list of atutor tests that can be added into gradebook. 
 // These tests can only be taken once and are not in gradebook yet
 // note: surveys are excluded by checking if question weights are defined
-$sql_at = "SELECT * FROM ".TABLE_PREFIX."tests t".
-				" WHERE course_id=".$_SESSION["course_id"].
-				" AND num_takes = 1".
-				" AND NOT EXISTS (SELECT 1".
-												" FROM ".TABLE_PREFIX."gradebook_tests g".
-												" WHERE g.id = t.test_id".
-												" AND g.type='ATutor Test')".
-				" AND test_id IN (SELECT test_id FROM ".TABLE_PREFIX."tests_questions_assoc ".
-								" GROUP BY test_id ".
-								" HAVING sum(weight) > 0) ".
-				" ORDER BY title";
-$result_at = mysql_query($sql_at, $db) or die(mysql_error());
 
-$sql_aa = "SELECT * FROM ".TABLE_PREFIX."assignments a".
-				" WHERE course_id=".$_SESSION["course_id"].
-				" AND NOT EXISTS (SELECT 1".
-												" FROM ".TABLE_PREFIX."gradebook_tests g".
-												" WHERE g.id = a.assignment_id".
-												" AND g.type='ATutor Assignment')".
-				" ORDER BY title";
-$result_aa = mysql_query($sql_aa, $db) or die(mysql_error());
+$sql_at = "SELECT * FROM %stests t WHERE course_id=%d AND num_takes = 1".
+				" AND NOT EXISTS (SELECT 1 FROM %sgradebook_tests g WHERE g.id = t.test_id AND g.type='ATutor Test')".
+				" AND test_id IN (SELECT test_id FROM %stests_questions_assoc GROUP BY test_id HAVING sum(weight) > 0) ORDER BY title";
+$rows_tests = queryDB($sql_at, array(TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX, TABLE_PREFIX));
 
-if (mysql_num_rows($result_at) == 0 && mysql_num_rows($result_aa) == 0)
-{
+$sql_aa = "SELECT * FROM %sassignments a WHERE course_id=%d AND NOT EXISTS (SELECT 1".
+				" FROM %sgradebook_tests g WHERE g.id = a.assignment_id AND g.type='ATutor Assignment') ORDER BY title";
+$rows_assignments = queryDB($sql_aa, array(TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX));
+
+
+if(count($rows_tests) == 0 && count($rows_assignments) == 0 ){
+
 	 echo _AT('none_found');
 }
 else
@@ -210,25 +183,21 @@ else
 	echo '		<label for="select_tid">'. _AT("title") .'</label><br />'."\n\r";
 	echo '		<select name="id" id="select_tid">'."\n\r";
 	
-	if (mysql_num_rows($result_aa) > 0)
-	{
+	if(count($rows_assignments) > 0 ){
 		echo '			<optgroup label="'. _AT('assignments') .'">'."\n\r";
 		echo '				<option value="aa_0">'._AT('all_atutor_assignments').'</option>'."\n\r";
 	
-		while ($row_aa = mysql_fetch_assoc($result_aa))
-		{
+	    foreach($rows_assignments as $row_aa){
 			echo '			<option value="aa_'.$row_aa[assignement_id].'">'.$row_aa[title].'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
 
-	if (mysql_num_rows($result_at) > 0)
-	{
+    if(count($rows_tests) > 0){
 		echo '			<optgroup label="'. _AT('tests') .'">'."\n\r";
 		echo '				<option value="at_0">'._AT('all_atutor_tests').'</option>'."\n\r";
-	
-		while ($row_at = mysql_fetch_assoc($result_at))
-		{
+	    
+	    foreach($rows_tests as $row_at){
 			echo '			<option value="at_'.$row_at[test_id].'">'.$row_at[title].'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
