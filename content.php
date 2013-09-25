@@ -150,7 +150,7 @@ if ($content_row['use_customized_head'] && strlen($content_row['head']) > 0)
 
 global $_custom_head;
 $_custom_head .= '
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 	//<!--
 		jQuery(".tooltip").tooltip();
 	//-->
