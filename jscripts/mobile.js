@@ -23,16 +23,12 @@ ATutor.mobile = ATutor.mobile || {};
         // any click on the page closes the content menu but the link "content_link" itself
         $(document).click(function (e) {
             // hide content menu
-            if ($('#side-menu').has("#" + e.target.id).length === 0) {
-                $('#side-menu').slideUp(600);
-                $('#content_link').removeClass('content_link_tablet_highlight triangle-isosceles top right');
-                $('#content_link_phone').removeClass('topnavlist-link-highlight content-closed');
-            }
             if ($('#content').has("#" + e.target.id).length === 0) {
                 $('#content').slideUp(600);
                 $('#content_link').removeClass('content_link_tablet_highlight triangle-isosceles top right');
                 $('#content_link_phone').removeClass('topnavlist-link-highlight content-closed');
             }
+
             // hide navigation menu
             $('#navigation-column').slideUp(200);
             $('#topnavlist-link').removeClass('topnavlist-link-highlight triangle-isosceles top topnavlist-link-highlight-background');
@@ -40,25 +36,13 @@ ATutor.mobile = ATutor.mobile || {};
         
         // open/close the content menu - tablets
         $('#content_link').click(function (e) {
-            $('#side-menu').slideToggle(500);
+            $('#content').slideToggle(0);
             $('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
             
             return false;
         });
-         $('#content_link').click(function (e) {
-            $('#content').slideToggle(500);
-            $('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
-            
-            return false;
-        });       
+        
         // open/close content menu - smartphones
-        $('#content_link_phone').click(function (e) {
-            $('#side-menu').slideToggle();
-            $('#content_link_phone').toggleClass('topnavlist-link-highlight').toggleClass('content-closed');
-            $('.subnavcontain').toggleClass('subnavcontain3');
-            
-            return false;
-        });
         $('#content_link_phone').click(function (e) {
             $('#content').slideToggle();
             $('#content_link_phone').toggleClass('topnavlist-link-highlight').toggleClass('content-closed');
@@ -66,6 +50,7 @@ ATutor.mobile = ATutor.mobile || {};
             
             return false;
         });
+        
         $('#subnavlist-link').click(function (e) {
             $('#subnavlist').slideToggle();
             $('#subnavlist-link').toggleClass('content-closed').toggleClass('subnavcontain-active');
