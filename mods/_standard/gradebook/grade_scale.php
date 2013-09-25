@@ -44,7 +44,6 @@ function print_row($grade_scale_id, $scale_name, $value, $created_date, $post_gr
 
 if (isset($_POST['remove'], $_POST['grade_scale_id'])) 
 {
-
 	header('Location: grade_scale_delete.php?grade_scale_id='.$_POST['grade_scale_id']);
 	exit;
 } 
@@ -90,12 +89,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tbody>
 <?php
 
-$sql = "SELECT g.*, d.* from ".TABLE_PREFIX."grade_scales g, ".TABLE_PREFIX."grade_scales_detail d WHERE g.member_id= ".$_SESSION["member_id"]." AND g.grade_scale_id = d.grade_scale_id ORDER BY g.grade_scale_id, d.percentage_to desc";
+$sql = "SELECT g.*, d.* from %sgrade_scales g, %sgrade_scales_detail d WHERE g.member_id= %d AND g.grade_scale_id = d.grade_scale_id ORDER BY g.grade_scale_id, d.percentage_to desc";
+$rows_scales_new = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION["member_id"], ));
 
-$result = mysql_query($sql, $db) or die(mysql_error());
-
-if (mysql_num_rows($result) == 0)
-{
+if(count($rows_scales_new) == 0){
 ?>
 	<tr>
 		<td colspan="5"><?php echo _AT('none_found'); ?></td>
@@ -105,8 +102,7 @@ if (mysql_num_rows($result) == 0)
 else
 {
 	$prev_row['grade_scale_id'] = 0;
-	while ($row = mysql_fetch_assoc($result))
-	{
+	foreach($rows_scales_new as $row){
 		if ($row['grade_scale_id'] <> $prev_row['grade_scale_id'])
 		{
 			// print row
@@ -145,11 +141,9 @@ else
 
 // print preset scale table
 $sql = "SELECT g.*, d.* from ".TABLE_PREFIX."grade_scales g, ".TABLE_PREFIX."grade_scales_detail d WHERE g.member_id= 0 AND g.grade_scale_id = d.grade_scale_id ORDER BY g.grade_scale_id, d.percentage_to desc";
+$rows_scales = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX));
 
-$result = mysql_query($sql, $db) or die(mysql_error());
-
-if (mysql_num_rows($result) == 0)
-{
+if(count($rows_scales) == 0){
 ?>
 	<tr>
 		<td colspan="5"><?php echo _AT('none_found'); ?></td>
@@ -159,8 +153,7 @@ if (mysql_num_rows($result) == 0)
 else
 {
 	$prev_row['grade_scale_id'] = 0;
-	while ($row = mysql_fetch_assoc($result))
-	{
+	foreach($rows_scales as $row){
 		if ($row['grade_scale_id'] <> $prev_row['grade_scale_id'])
 		{
 			// print row
