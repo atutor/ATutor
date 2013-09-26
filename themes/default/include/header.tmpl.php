@@ -307,15 +307,21 @@ global $system_courses, $_custom_css, $db;
 			echo 'style="'.$style.'"';
 		endif; ?>>
 	<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
+<div id="sm_content">
 		<div id="content_link" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 				<a class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo  _AT("content"); ?></a>	
 		</div>	
+</div>
+<div id="lrg_content">
 		<div id="leftcolumn" role="complementary">
 		  <a id="menu"></a>
 		     <div id="side-menu">
 		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 		    </div>
 		</div>
+</div>		
+		
+
 	<?php endif; ?>
 
 	

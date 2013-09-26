@@ -152,3 +152,15 @@ select{
 	text-align: right; 
 	font-weight: bold;
 }
+
+@media screen and (max-device-width: 640px) {
+    input{
+        font-size:1.2em !important;
+    }
+}
+@media screen and (max-device-width: 640px) {
+    input{
+        font-size:1.2em !important;
+    }
+
+}

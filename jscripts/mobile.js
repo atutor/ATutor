@@ -23,25 +23,36 @@ ATutor.mobile = ATutor.mobile || {};
         // any click on the page closes the content menu but the link "content_link" itself
         $(document).click(function (e) {
             // hide content menu
-            if ($('#content').has("#" + e.target.id).length === 0) {
-                $('#content').slideUp(600);
+/*            if ($('#lrg_content').has("#" + e.target.id).length === 0) {
+                $('#lrg_content').slideUp(600);
                 $('#content_link').removeClass('content_link_tablet_highlight triangle-isosceles top right');
                 $('#content_link_phone').removeClass('topnavlist-link-highlight content-closed');
             }
-
+*/
             // hide navigation menu
             $('#navigation-column').slideUp(200);
             $('#topnavlist-link').removeClass('topnavlist-link-highlight triangle-isosceles top topnavlist-link-highlight-background');
         });
         
         // open/close the content menu - tablets
-        $('#content_link').click(function (e) {
+  /*      $('#content_link').click(function (e) {
             $('#content').slideToggle(0);
             $('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
             
             return false;
-        });
-        
+        });*/
+        $('#content_link').click(function (e) {
+            $('#lrg_content').slideToggle(500);
+            $('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
+            
+            return false;
+        }); 
+ /*       $('#content_link').click(function (e) {
+            $('#side-menu').slideToggle(500);
+            $('#content_link').toggleClass('content_link_tablet_highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('right');
+            
+            return false;
+        });*/
         // open/close content menu - smartphones
         $('#content_link_phone').click(function (e) {
             $('#content').slideToggle();
