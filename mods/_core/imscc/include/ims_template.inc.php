@@ -222,6 +222,7 @@ function print_organizations($parent_id,
 				$content_test_rs = $contentManager->getContentTestsAssoc($content['content_id']);	
 				$test_ids = array();		//reset test ids
 				//$my_files = array();		//reset myfiles.
+				foreach ($content_test_rs as $content_test_row){
 					//export
 					$test_ids[] = $content_test_row['test_id'];
 					//the 'added_files' is for adding into the manifest file in this zip
@@ -473,8 +474,7 @@ function print_organizations($parent_id,
 			for ($i=0; $i<$depth; $i++) {
 				echo $space;
 			}
-//debug($_menu, $content['content_id']);
-//			if (!empty($_menu[$content['content_id']])){
+
 			echo $prefix.'</item>';
 //			}
 			echo "\n";
