@@ -568,7 +568,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
      */
     ATutor.users.preferences.setStyles = function (bg_color, fg_color, hl_color, font, font_size) {
         var font_style = font ? 'font-family:' + font + ' !important;\n' : '';
-        var font_size_style = font_size ? 'font-size:' + font_size + 'em !important;\n' : '';
+        var font_size_style = font_size ? 'font-size:' + font_size + 'em;\n' : '';
         var bg_color_style = bg_color ? 'background-color: #' + bg_color + ' !important;\n' + 'background-image: none  !important;\n' : '';
         var fg_color_style = fg_color ? 'color: #' + fg_color + ' !important;\n' : '';
         var hl_color_style = hl_color ? 'background-color: #' + hl_color + '! important;\n' : '';
