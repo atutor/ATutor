@@ -2,11 +2,11 @@
 
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <div id="my_courses_container" <?php if($_config['show_current'] != 1){ echo ' class="wide"';} else {echo ' class="narrow"';} ?>>
-<table class="data" style="width:100%;">
+<table class="data">
 <tr><th  class="hidecol480"></th>
 <th><?php echo _AT('course'); ?></th>
 <th class="hidecol480"><?php echo _AT('instructor'); ?></th>
-<th class="hidecol700"><?php echo _AT('status'); ?></th>
+<th class="hidecol480"><?php echo _AT('status'); ?></th>
 <th><?php echo _AT('shortcuts'); ?></th>
 </tr>
 <?php foreach ($this->courses as $row):
@@ -40,7 +40,7 @@ require(AT_INCLUDE_PATH.'header.inc.php'); ?>
     <br /><small><?php echo _AT('category'); ?>: <?php echo get_category_name($row['cat_id']); ?></small>
     </td>
     <td class="hidecol480"><small><?php echo '<a href="'.AT_BASE_HREF.'inbox/send_message.php?id='.$row['member_id'].'">'. get_display_name($row['member_id']).'</a>'; ?></small></td>
-    <td class="hidecol700"><small>
+    <td class="hidecol480"><small>
     <?php    
 
             if ($_SESSION['member_id'] == $row['member_id']) {

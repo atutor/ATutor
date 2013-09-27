@@ -158,9 +158,8 @@ select{
         font-size:1.2em !important;
     }
 }
-@media screen and (max-device-width: 640px) {
+@media screen and (max-device-width: 1024px) {
     input{
-        font-size:1.2em !important;
+        font-size:1em !important;
     }
-
 }

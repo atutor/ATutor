@@ -211,7 +211,7 @@ global $system_courses, $_custom_css, $db;
 <div id="sm_topnav">
     <?php if ($this->current_sub_level_page): ?>
     <div id="topnavlistcontainer_sm" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" style="height:auto;">
-    <a class="navigation-bar-button topnavlist-link" id="topnavlist-link" href="javascript:void(0);"><?php echo _AT('navigation'); ?></a>
+    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);"><?php echo _AT('navigation'); ?></a>
     <br />
         <div id="navigation-column">
         <?php if ($this->current_sub_level_page): ?>
@@ -238,22 +238,22 @@ global $system_courses, $_custom_css, $db;
 				
 <!-- the main navigation. in our case, tabs -->
 <div id="lrg_topnav">
-<div id="topnavlistcontainer"  role="navigation">
-	<ul id="topnavlist">
-		<?php $accesscounter = 0; //initialize ?>
-		<?php foreach ($this->top_level_pages as $page): ?>
-			<?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-			<?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-			<?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-			<?php if ($page['url'] == $this->current_top_level_page): ?>
-				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
-			<?php else: ?>
-				<li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
-			<?php endif; ?>
-			<?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-		<?php endforeach; ?>
-	</ul>
-</div> 
+    <div id="topnavlistcontainer"  role="navigation">
+        <ul id="topnavlist">
+            <?php $accesscounter = 0; //initialize ?>
+            <?php foreach ($this->top_level_pages as $page): ?>
+                <?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+                <?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+                <?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+                <?php if ($page['url'] == $this->current_top_level_page): ?>
+                    <li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
+                <?php else: ?>
+                    <li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
+                <?php endif; ?>
+                <?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+            <?php endforeach; ?>
+        </ul>
+    </div> 
 </div>
 
 <div class="logoutbar">

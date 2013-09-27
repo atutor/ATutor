@@ -38,7 +38,7 @@ body {
 	margin:0px;
 	background-color: #ffffff;
 	color:#003333;
-	font-size:0.8em;
+/* 	font-size:0.8em; */
 
 	
 }
@@ -1327,6 +1327,7 @@ a#guide {
 	background-image: url('images/help.png'); 
 	background-repeat: no-repeat; 
 	background-position: 2px 2px;
+	background-size:1.1em 1.1em;
 	padding: 3px 10px 5px 30px;
 	text-decoration:none;
 	font-size:0.85em;
@@ -2615,6 +2616,7 @@ width:3.5em;
 div.topbar{
 	float:left;
 	width: 95%;
+	height:auto;
 }
 div.paginator{
 	float: right;
@@ -3202,15 +3204,25 @@ div.input-form.remedialContent {
         width:100%;
         float:0;
     } 
-        .hidecol700{
+    .hidecol700{
         visibility:hidden;
         display:none;
     } 
 }
 
 /* iPad screen width */
+@media screen and (max-device-width: 1024px) {
+    body{
+        font-size: 1.5em !important;
+    }
+    #jumpmenu{
+        font-size:.8em !important;
+    }
+    .button{
+        font-size:.8em !important;
+    }  
+}
 @media screen and (max-width: 1024px) {
-
     .current_box{
          width:100%;
         margin-left:0;
@@ -3249,7 +3261,8 @@ div.input-form.remedialContent {
     }
     .logo{
         display:none;    
-    }
+    }    
+
     ul#topnavlist_sm li{
         border:0;
         float:left;
@@ -3263,6 +3276,9 @@ div.input-form.remedialContent {
     ul#topnavlist_sm li a {
         background-color:transparent;
         width:100%
+        color: #685642;
+        font-weight:700;
+        text-decoration: none;
     }
     ul#topnavlist_sm li, ul#topnavlist_sm li a:hover, ul#topnavlist_sm li a:focus, ul#topnavlist_sm li a.active {
         /*background-color:  #B7C68B; */
@@ -3278,17 +3294,24 @@ div.input-form.remedialContent {
     }
     #sm_topnav{
         display:inline;
+        border:.1px solid white;
+    }
+    .logoutbar{
+    clear:both;
     }
     #lrg_topnav{
         display:none;
     }
     a.topnavlist-link{
-        border-top: thin solid white;
         border-bottom: 3px solid #D26911;
         padding: .5em .5em .5em .5em;
+        color: #685642;
+        font-weight:700;
+        text-decoration: none;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
     }
+    
 	#navigation-column{
 	    width:100%;
 	    padding-top:1em;
@@ -3299,7 +3322,6 @@ div.input-form.remedialContent {
     }
     div.box, div.box ul{
         display:none !important;
-        background-color:#ffffff;
         border:none;
     }
 
@@ -3309,10 +3331,13 @@ div.input-form.remedialContent {
         height:auto;
         float:left;
         clear:both;
-        width:95%;
+        width:25em;
+        background-color:#F3F3F3;
+        box-shadow: 0px 2px 10px 2px #F3F3F3;
         border:1px solid #E5E5E5;
         border-radius:.5em;
         margin-top:-.5em;
+
     }
     #leftcolumn br{
         display:none;
@@ -3322,6 +3347,9 @@ div.input-form.remedialContent {
         float:left;
         clear:both;
         width:5em;
+        color: #685642;
+        font-weight:700;
+        text-decoration: none;
         border-bottom: 3px solid #D26911;
         padding: .5em .3em .5em .5em;
         background-color: #F3F3F3;
@@ -3362,20 +3390,111 @@ div.input-form.remedialContent {
     .img1616{
         font-size:1.5em;
     }
+    .img-size-tree{
+        font-size:1.5em;
+    }
 }
-/********** for 480px or less *********/
+/********** for 640px or less *********/
 @media screen and (max-device-width: 640px) {
     body{
-        font-size:2.5em !important;
+        font-size:2.2em !important;
+    }
+    #jumpmenu{
+        margin-top:.5em;
+        margin-left:2em;;
+        margin-right:auto;
+        font-size:1.2em !important;
+    }
+    .button{
+        font-size:1.2em !important;
+    } 
+
+    div#top-links-text{
+        float:left;
+        margin-top:.2em;
+        margin-left:2em;
+    } 
+    .site-name{
+        margin-top:0;
+        margin-bottom:2em;;
+        float:left;
+        clear:both;
+        font-size:1em;
+    }  
+    #breadcrumbs{
+        display:none
+    }
+    div.news{
+        width:90%;
+    }
+    div.home_box, div.outside_box {
+        width: 20em;
+        height: 8em;	
+        margin-top: 1em;
+        padding: 3px;
+        padding-bottom: .4em;
+        float: left;
+    }
+    .hidecol480{
+        display:none;
+    } 
+    .current_box{
+        width:90%;
+    }  
+    #sm_topnav{
+        display:inline;
+    }
+    #lrg_topnav{
+        display:none;
+        visibility:hidden;
+    }  
+    a.topnavlist-link{
+        float:left;
+        clear:both;
+        border-bottom: 3px solid #D26911;
+        border-radius:.3em .3em 0em 0em;
+        padding: .5em .5em .5em .5em;
+        color: #685642;
+        font-weight:700;
+        background-color: #F3F3F3;
+    	background-image: linear-gradient(#FAFAFA, #EAEAEA);
     }
 }
-@media screen and (max-device-width: 640px) {
+@media screen and (max-width: 640px) {
 
-    .current_box{
-        width:100%;
-        max-width:480px
-        margin-left:0;
+    #jumpmenu{
+        font-size:1.2em !important;
     }
+    .button{
+        font-size:1.2em !important;
+    }
+    #top-bar{
+        height:auto;
+    }
+    .site-name{
+        margin-top:0;
+        float:left;
+        clear:both;
+        font-size:1em;
+    }
+    div#top-links-jump{
+         float:left;
+         margin-top:1em;
+         margin-left:1em;
+    }
+    div#top-links-text{
+        float:left;
+         margin-top:.2em;
+         margin-bottom:1em;
+         margin-left:1em;
+    }
+    h1#section-title{
+        float:left;
+        margin-left:0;
+        font-size:1em;
+        margin-bottom:.5em;
+    }
+
     #my_courses_container{
         width:100%;
         float:0;
@@ -3400,11 +3519,15 @@ div.input-form.remedialContent {
         margin-right:auto;
     }
     div#topnavlistcontainer_sm {
+        float:left;
+       clear:both;
         margin-left:0;
+        width:100%;
     }
     ul#topnavlist_sm li{
         border:0;
         float:left;
+        clear:both;
         margin-left:0;
         display: block;
         width:100%;
@@ -3433,14 +3556,18 @@ div.input-form.remedialContent {
     }
     #lrg_topnav{
         display:none;
+        visibility:hidden;
     }
+    
     a.topnavlist-link{
         border-bottom: 3px solid #D26911;
-        border-radius:.3em .3em 0em .3em;
+        border-radius:.3em .3em 0em 0em;
         padding: .5em .5em .5em .5em;
+        color: #685642;
+        font-weight:700;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
-    }
+    } 
     div#info, div#error, div#feedback{
         width:95%;
     }
@@ -3507,10 +3634,6 @@ div.input-form.remedialContent {
         display:none;
     }
 
-    h1#section-title{
-        margin-top:1em;
-        font-size:1em;
-    }
 
     div.box{
         display:none;
@@ -3524,6 +3647,8 @@ div.input-form.remedialContent {
 
     #menu_ContentNavigation{
         display:inline !important;
+        background-color:#F3F3F3;
+        box-shadow: .2em. .2em .0em;
         width:21em;
         margin-bottom: 2em;
         clear:both;
@@ -3542,7 +3667,7 @@ div.input-form.remedialContent {
         margin-top:1.5em;
     }
     #breadcrumbs{
-        display:none
+        display:none;
     }
     #lrg_content{
         display:none;
@@ -3554,5 +3679,19 @@ div.input-form.remedialContent {
         max-width: 100%;
         height: auto;
         width: auto;
+    }
+    div.news{
+        width:90%;
+    }
+    div.home_box, div.outside_box {
+        width: 20em;
+        height: 8em;	
+        margin-top: 1em;
+        padding: 3px;
+        padding-bottom: .4em;
+        float: left;
+    }
+    #my_courses_container{
+    min-width:0;
     }
 }
