@@ -26,11 +26,11 @@ if (isset($_POST['submit_no'])) {
 	/* delete has been confirmed, delete this category */
 	$gradebook_test_id	= intval($_POST['gradebook_test_id']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id=$gradebook_test_id";
-	$result = mysql_query($sql, $db) or die(mysql_error());
+	$sql = "DELETE FROM %sgradebook_tests WHERE gradebook_test_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id));
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=$gradebook_test_id";
-	$result = mysql_query($sql, $db) or die(mysql_error());
+	$sql = "DELETE FROM %sgradebook_detail WHERE gradebook_test_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id));
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: gradebook_tests.php');
@@ -42,26 +42,24 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $_GET['gradebook_test_id'] = intval($_GET['gradebook_test_id']); 
 
 $sql = "(SELECT g.gradebook_test_id, t.title".
-				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t".
+				" FROM %sgradebook_tests g, %stests t".
 				" WHERE g.type='ATutor Test'".
 				" AND g.id = t.test_id".
-				" AND g.gradebook_test_id=".$_GET['gradebook_test_id'].")".
+				" AND g.gradebook_test_id=%d)".
 				" UNION (SELECT g.gradebook_test_id, a.title".
-				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."assignments a".
+				" FROM %sgradebook_tests g, %sassignments a".
 				" WHERE g.type='ATutor Assignment'".
 				" AND g.id = a.assignment_id".
-				" AND g.gradebook_test_id=".$_GET['gradebook_test_id'].")".
+				" AND g.gradebook_test_id=%d)".
 				" UNION (SELECT gradebook_test_id, title ".
-				" FROM ".TABLE_PREFIX."gradebook_tests".
+				" FROM %sgradebook_tests".
 				" WHERE type='External'".
-				" AND gradebook_test_id=".$_GET['gradebook_test_id'].")";
-				
-$result = mysql_query($sql,$db) or die(mysql_error());
-
-if (mysql_num_rows($result) == 0) {
+				" AND gradebook_test_id=%d)";
+			
+$row = queryDB($sql,array(TABLE_PREFIX, TABLE_PREFIX, $_GET['gradebook_test_id'], TABLE_PREFIX, TABLE_PREFIX, $_GET['gradebook_test_id'], TABLE_PREFIX, $_GET['gradebook_test_id']), TRUE);
+if(count($row) == 0){
 	$msg->printErrors('ITEM_NOT_FOUND');
 } else {
-	$row = mysql_fetch_assoc($result);
 	
 	$hidden_vars['title']= $row["title"];
 	$hidden_vars['gradebook_test_id']	= $row['gradebook_test_id'];
