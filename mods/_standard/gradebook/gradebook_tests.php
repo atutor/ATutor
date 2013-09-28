@@ -60,25 +60,23 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </tfoot>
 <tbody>
 <?php
-
 $sql = "(SELECT g.gradebook_test_id, type, t.title, grade_scale_id".
-				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t".
+				" FROM %sgradebook_tests g, %stests t".
 				" WHERE g.type='ATutor Test'".
 				" AND g.id = t.test_id".
-				" AND t.course_id=".$_SESSION["course_id"].")".
+				" AND t.course_id=%d)".
 				" UNION (SELECT g.gradebook_test_id, g.type, a.title, grade_scale_id".
-				" FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."assignments a".
+				" FROM %sgradebook_tests g, %sassignments a".
 				" WHERE g.type='ATutor Assignment'".
 				" AND g.id = a.assignment_id".
-				" AND a.course_id=".$_SESSION["course_id"].")".
+				" AND a.course_id=%d)".
 				" UNION (SELECT gradebook_test_id, type, title, grade_scale_id".
-				" FROM ".TABLE_PREFIX."gradebook_tests".
-				" WHERE course_id=".$_SESSION["course_id"].")".
+				" FROM %sgradebook_tests".
+				" WHERE course_id=%d)".
 				" ORDER BY type, title";
-$result = mysql_query($sql, $db) or die(mysql_error());
+$row_grades = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX, $_SESSION["course_id"]));
 
-if (mysql_num_rows($result) == 0)
-{
+if(count($row_grades) == 0){
 ?>
 	<tr>
 		<td colspan="5"><?php echo _AT('none_found'); ?></td>
@@ -89,27 +87,25 @@ else
 {
 	// Initialize scale content array
 	$scale_content[0] = _AT("raw_final_score");
-	$sql_scale_ids = "SELECT grade_scale_id from ".TABLE_PREFIX."grade_scales g";
-	$result_scale_ids = mysql_query($sql_scale_ids, $db) or die(mysql_error());
 
-	while ($row_scale_ids = mysql_fetch_assoc($result_scale_ids))
-	{
-		$sql_detail = "SELECT * from ".TABLE_PREFIX."grade_scales_detail d WHERE d.grade_scale_id = ".$row_scale_ids["grade_scale_id"]." ORDER BY d.percentage_to desc";
-		$result_detail = mysql_query($sql_detail, $db) or die(mysql_error());
+	$sql_scale_ids = "SELECT grade_scale_id from %sgrade_scales g";
+	$rows_scale_ids = queryDB($sql_scale_ids, array(TABLE_PREFIX));
+
+    foreach($rows_scale_ids as $row_scale_ids){
+
+		$sql_detail = "SELECT * from %sgrade_scales_detail d WHERE d.grade_scale_id = %d ORDER BY d.percentage_to desc";
+		$rows_detail = queryDB($sql_detail, array(TABLE_PREFIX, $row_scale_ids["grade_scale_id"]));
 		
 		$whole_scale_value = "";
 		
-		while ($row_detail = mysql_fetch_assoc($result_detail))
-		{
+		foreach($rows_detail as $row_detail){
 			$whole_scale_value .= $row_detail['scale_value'] . ' = ' . $row_detail['percentage_from'] . ' to ' . $row_detail['percentage_to'] . '%<br>';
 		}
 		
 		if ($whole_scale_value <> '') $scale_content[$row_scale_ids["grade_scale_id"]] = $whole_scale_value;
 	}
 	// End of initialize scale content array
-
-	while ($row = mysql_fetch_assoc($result))
-	{
+    foreach($row_grades as $row){
 ?>
 		<tr onmousedown="document.form['m<?php echo $row["gradebook_test_id"]; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row["gradebook_test_id"]; ?>">
 			<td width="10"><input type="radio" name="gradebook_test_id" value="<?php echo $row["gradebook_test_id"]; ?>" id="m<?php echo $row["gradebook_test_id"]; ?>" <?php if ($row["gradebook_test_id"]==$_POST['gradebook_test_id']) echo 'checked'; ?> /></td>
