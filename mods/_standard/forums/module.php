@@ -25,6 +25,7 @@ $this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_sta
 
 $this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
 $this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/index.php';
+$this->_pages['mods/_standard/forums/add_forum.php']['children']  = array('mods/_standard/forums/forum/list.php','search.php?search_within[]=forums');
 
 $this->_pages['mods/_standard/forums/delete_forum.php']['title_var']  = 'delete_forum';
 $this->_pages['mods/_standard/forums/delete_forum.php']['parent'] = 'mods/_standard/forums/forums/index.php';
@@ -43,7 +44,7 @@ $this->_pages['mods/_standard/forums/forum/list.php']['icon']		  = 'images/pin.p
 
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FORUMS, TRUE) && $_SESSION['hide_admin'] == 0){
 $this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
-$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/forum/list';
+$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/forum/list.php';
 $this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums', 'mods/_standard/forums/add_forum.php');
 
 }else{
