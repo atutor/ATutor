@@ -37,12 +37,14 @@ else if (isset($_GET['save']))
             $matches[1] = intval($matches[1]);
             $matches[2] = intval($matches[2]);
             
-            $sql = "SELECT grade_scale_id FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id = ". $matches[1];
-            $result	= mysql_query($sql, $db) or die(mysql_error());
-            $row = mysql_fetch_assoc($result);
-
-            $sql = "REPLACE ".TABLE_PREFIX."gradebook_detail SET gradebook_test_id = ". $matches[1].", member_id=". $matches[2].", grade='".get_mark_by_grade($row["grade_scale_id"], $value)."'";
-            $result	= mysql_query($sql, $db) or die(mysql_error());
+            $sql = "SELECT grade_scale_id FROM %sgradebook_tests WHERE gradebook_test_id = %d";
+            $row	= queryDB($sql, array(TABLE_PREFIX, $matches[1]), TRUE);
+            
+            $sql = "REPLACE %sgradebook_detail SET gradebook_test_id = %d, member_id=%d, grade='".get_mark_by_grade($row["grade_scale_id"], $value)."'";
+            $result	= queryDB($sql, array(TABLE_PREFIX, $matches[1], $matches[2]));
+            if($result > 0){
+                $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+            }
         }
     }
 }
@@ -72,23 +74,23 @@ $all_tests = array();
 $all_students = array();
 
 // generate test array
+
 $sql = "(SELECT g.gradebook_test_id, g.id, g.type, t.title".
-                " FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t".
+                " FROM %sgradebook_tests g, %stests t".
                 " WHERE g.type='ATutor Test'".
                 " AND g.id = t.test_id".
-                " AND t.course_id=".$_SESSION["course_id"]." ORDER BY title)".
+                " AND t.course_id=%d ORDER BY title)".
                 " UNION (SELECT g.gradebook_test_id, g.id, g.type, a.title".
-                " FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."assignments a".
+                " FROM %sgradebook_tests g, %sassignments a".
                 " WHERE g.type='ATutor Assignment'".
                 " AND g.id = a.assignment_id".
-                " AND a.course_id=".$_SESSION["course_id"]." ORDER BY title)".
+                " AND a.course_id=%d ORDER BY title)".
                 " UNION (SELECT gradebook_test_id, id, type, title".
-                " FROM ".TABLE_PREFIX."gradebook_tests".
-                " WHERE course_id=".$_SESSION["course_id"]." ORDER BY title)";
-$result	= mysql_query($sql, $db) or die(mysql_error());
+                " FROM %sgradebook_tests".
+                " WHERE course_id=%d ORDER BY title)";
+$rows_grades	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX, $_SESSION["course_id"]));
 
-while ($row = mysql_fetch_assoc($result))
-{
+foreach($rows_grades as $row){
     $no_error = true;
     
     if($row["type"]=="ATutor Test")
@@ -114,15 +116,17 @@ while ($row = mysql_fetch_assoc($result))
 }
 
 // generate students array
-$sql_students = "SELECT m.first_name, m.last_name, e.member_id FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role!='Instructor'";
+$sql_students = "SELECT m.first_name, m.last_name, e.member_id FROM %smembers m, %scourse_enrollment e WHERE m.member_id = e.member_id AND e.course_id=%d AND e.approved='y' AND e.role!='Instructor'";
 if ($order_col == "name")
 {
     $sql_students .= " ORDER BY m.first_name ".$order.",m.last_name ".$order;
 }
-$result	= mysql_query($sql_students, $db) or die(mysql_error());
 
-while ($row = mysql_fetch_assoc($result))
+$rows_members	= queryDB($sql_students, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"]));
+
+foreach($rows_members as $row){
     array_push($all_students, $row);
+}
 // end of initialization
 
 // Creates arrays for filtered test/student
@@ -170,9 +174,9 @@ else
 foreach ($selected_tests as $selected_test)
     foreach($selected_students as $selected_student)
     {
-        $sql = "SELECT grade FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=".$selected_test["gradebook_test_id"]." AND member_id=".$selected_student["member_id"];
-        $result = mysql_query($sql, $db) or die(mysql_error());
-        $row = mysql_fetch_assoc($result);
+
+        $sql = "SELECT grade FROM %sgradebook_detail WHERE gradebook_test_id=%d AND member_id=%d";
+        $row = queryDB($sql, array(TABLE_PREFIX, $selected_test["gradebook_test_id"], $selected_student["member_id"]), TRUE);
         
         $grades[$selected_test["gradebook_test_id"]][$selected_student["member_id"]] = $row["grade"];
     }
@@ -269,10 +273,10 @@ if ($num_students > 0)
 
         foreach ($selected_tests as $selected_test)
         {
-            $sql = "SELECT grade FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=".$selected_test["gradebook_test_id"]." AND member_id=".$selected_students[$i]["member_id"];
-            $result = mysql_query($sql, $db) or die(mysql_error());
-            $row = mysql_fetch_assoc($result);
-            
+
+            $sql = "SELECT grade FROM %sgradebook_detail WHERE gradebook_test_id=%d AND member_id=%d";
+            $row = queryDB($sql, array(TABLE_PREFIX, $selected_test["gradebook_test_id"], $selected_students[$i]["member_id"]), TRUE);
+                        
             $row["grade"] = htmlspecialchars($row["grade"]);   // handle html special chars
             
             if ($_GET["edit"]=="c_".$selected_test["gradebook_test_id"] || $_GET["edit"]=="r_".$selected_students[$i]["member_id"] && ($selected_test["type"]=="External" || $selected_test["type"]=="ATutor Assignment"))
