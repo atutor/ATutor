@@ -238,12 +238,9 @@ if ($patch_id > 0)
 	// display remove permission info
 	unset($_SESSION['remove_permission']);
 
-	$sql = "SELECT * FROM ".TABLE_PREFIX."patches 
-	         WHERE patches_id = " . $patch_id;
+	$sql = "SELECT * FROM %spatches WHERE patches_id = %d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $patch_id));
 
-	$result = mysql_query($sql, $db) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
-	
 	if ($row["remove_permission_files"]<> "")
 	{
 		$remove_permission_files = $_SESSION['remove_permission'] = get_array_by_delimiter($row["remove_permission_files"], "|");
@@ -331,12 +328,13 @@ $msg->printAll();
 <tbody>
 <?php 
 // display installed patches
-$sql = "select * from ".TABLE_PREFIX."patches " .
-       "where applied_version = '" . VERSION . "' ".
+
+$sql = "select * from %spatches " .
+       "where applied_version = '%s' ".
        "order by atutor_patch_id";
 
-$result = mysql_query($sql, $db);
-$num_of_patches = mysql_num_rows($result) + count($patch_list_array);
+$rows_patches = queryDB($sql, array(TABLE_PREFIX, VERSION));
+$num_of_patches = count($rows_patches) + count($patch_list_array);
 
 if ($num_of_patches == 0)
 {
@@ -354,8 +352,7 @@ if ($num_of_patches == 0)
 }
 else
 {
-	while ($row = mysql_fetch_assoc($result))
-	{
+    foreach($rows_patches as $row){
 			print_patch_row($row, $row['patches_id'], false);
 	}
 	
