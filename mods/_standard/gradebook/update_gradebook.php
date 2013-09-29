@@ -23,12 +23,11 @@ require_once("lib/gradebook.inc.php");
 // print feedback and return false, otherwise, return true.
 function is_test_updatable($gradebook_test_id)
 {
-	global $db, $msg;
-	
-	$sql = "SELECT g.id, t.title FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t WHERE g.id=t.test_id AND g.type='ATutor Test' AND g.gradebook_test_id = ". $gradebook_test_id;
-	$result = mysql_query($sql, $db) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
-	
+	global $msg;
+
+	$sql = "SELECT g.id, t.title FROM %sgradebook_tests g, %stests t WHERE g.id=t.test_id AND g.type='ATutor Test' AND g.gradebook_test_id = %d";
+	$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $gradebook_test_id), TRUE);
+		
 	$no_error = true;
 	
 	$studs_take_num = get_studs_take_more_than_once($_SESSION["course_id"], $row["id"]);
@@ -55,11 +54,10 @@ function is_test_updatable($gradebook_test_id)
 
 function update_gradebook($gradebook_test_id, $member_id)
 {
-	global $db;
 
-	$sql = "SELECT id, grade_scale_id FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id = ". $gradebook_test_id;
-	$result = mysql_query($sql, $db) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
+	$sql = "SELECT id, grade_scale_id FROM %sgradebook_tests WHERE gradebook_test_id = %d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id), TRUE);
+	
 	$test_id = $row["id"];
 	$grade_scale_id = $row["grade_scale_id"];
 	
@@ -68,8 +66,9 @@ function update_gradebook($gradebook_test_id, $member_id)
 	
 	if ($grade <> "")
 	{
-		$sql = "REPLACE INTO ".TABLE_PREFIX."gradebook_detail(gradebook_test_id, member_id, grade) VALUES (".$gradebook_test_id.", ".$member_id.", '".$grade."')";
-		$result = mysql_query($sql, $db) or die(mysql_error());
+
+		$sql = "REPLACE INTO %sgradebook_detail(gradebook_test_id, member_id, grade) VALUES (%d, %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id, $member_id, $grade));
 	}
 }
 
@@ -78,10 +77,12 @@ $tests = array();
 $students = array();
 
 // generate gradebook test array
-$sql = "SELECT *, t.title FROM ".TABLE_PREFIX."gradebook_tests g, ".TABLE_PREFIX."tests t WHERE g.id = t.test_id AND g.type='ATutor Test' AND t.course_id=".$_SESSION["course_id"];
-$result	= mysql_query($sql, $db) or die(mysql_error());
-while ($row = mysql_fetch_assoc($result))
-{
+
+$sql = "SELECT *, t.title FROM %sgradebook_tests g, %stests t WHERE g.id = t.test_id AND g.type='ATutor Test' AND t.course_id=%d";
+$rows_tests	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"]));
+
+foreach($rows_tests as $row){
+
 	$test["gradebook_test_id"] =  $row["gradebook_test_id"];
 	$test["title"] =  $row["title"];
 	
@@ -89,11 +90,11 @@ while ($row = mysql_fetch_assoc($result))
 }
 
 // generate students array
-$sql = "SELECT m.first_name, m.last_name, e.member_id FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role<>'Instructor' ORDER BY m.first_name,m.last_name";
-$result	= mysql_query($sql, $db) or die(mysql_error());
 
-while ($row = mysql_fetch_assoc($result))
-{
+$sql = "SELECT m.first_name, m.last_name, e.member_id FROM %smembers m, %scourse_enrollment e WHERE m.member_id = e.member_id AND e.course_id=%d AND e.approved='y' AND e.role<>'Instructor' ORDER BY m.first_name,m.last_name";
+$rows_members	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"]));
+
+foreach($rows_members as $row){
 	$student["first_name"] = $row["first_name"];
 	$student["last_name"] = $row["last_name"];
 	$student["member_id"] = $row["member_id"];
@@ -123,8 +124,9 @@ else if (isset($_POST['update']))
 					if ($_POST["member_id"]==0)
 					{
 						// delete old data for this test
-						$sql = "DELETE from ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id = ".$test["gradebook_test_id"];
-						$result	= mysql_query($sql, $db) or die(mysql_error());
+
+						$sql = "DELETE from %sgradebook_detail WHERE gradebook_test_id = %d";
+						$result	= queryDB($sql, array(TABLE_PREFIX, $test["gradebook_test_id"]));
 						
 						foreach($students as $student)
 							update_gradebook($test["gradebook_test_id"], $student["member_id"]);
@@ -141,9 +143,10 @@ else if (isset($_POST['update']))
 				if ($_POST["member_id"]==0)
 				{
 					// delete old data for this test
-					$sql = "DELETE from ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id = ".$_POST["gradebook_test_id"];
-					$result	= mysql_query($sql, $db) or die(mysql_error());
-					
+
+					$sql = "DELETE from %sgradebook_detail WHERE gradebook_test_id = %d";
+					$result	= queryDB($sql, array(TABLE_PREFIX, $_POST["gradebook_test_id"]));	
+									
 					foreach($students as $student)
 						update_gradebook($_POST["gradebook_test_id"], $student["member_id"]);
 				}
@@ -245,20 +248,21 @@ else
 	// list of atutor tests that can be combined. 
 	// These tests can only be taken once and are not in gradebook yet
 	// note: surveys are excluded by checking if question weights are defined
-	$sql_at = "SELECT * FROM ".TABLE_PREFIX."tests t".
-					" WHERE course_id=".$_SESSION["course_id"].
+
+	$sql_at = "SELECT * FROM %stests t".
+					" WHERE course_id=%d".
 					" AND num_takes = 1".
 					" AND NOT EXISTS (SELECT 1".
-													" FROM ".TABLE_PREFIX."gradebook_tests g".
-													" WHERE g.id = t.test_id".
-													" AND g.type='ATutor Test')".
-				" AND test_id IN (SELECT test_id FROM ".TABLE_PREFIX."tests_questions_assoc ".
-								" GROUP BY test_id ".
-								" HAVING sum(weight) > 0) ".
+                    " FROM %sgradebook_tests g".
+                    " WHERE g.id = t.test_id".
+                    " AND g.type='ATutor Test')".
+                    " AND test_id IN (SELECT test_id FROM %stests_questions_assoc ".
+					" GROUP BY test_id ".
+					" HAVING sum(weight) > 0) ".
 					" ORDER BY title";
-	$result_at = mysql_query($sql_at, $db) or die(mysql_error());
-	
-	if (mysql_num_rows($result_at) == 0){
+	$rows_at = queryDB($sql_at, array(TABLE_PREFIX, $_SESSION["course_id"], TABLE_PREFIX, TABLE_PREFIX));
+		
+	if(count($rows_at) == 0){
 		 echo '<span>'. _AT("tests") .' '. _AT("combine_from").'</span><br />';
 		 echo _AT('none_found');
 	}
@@ -267,12 +271,9 @@ else
 		echo '	<div class="row">'."\n\r";
 		echo '		<label for="select_tid3">'. _AT("tests") .' '. _AT("combine_from").'</label><br />'."\n\r";
 		echo '		<select name="test_id" id="select_tid3">'."\n\r";
-		
-		if (mysql_num_rows($result_at) > 0)
-		{
-			while ($row_at = mysql_fetch_assoc($result_at))
-			{
-				echo '			<option value="'.$row_at[test_id].'">'.$row_at[title].'</option>'."\n\r";
+		if(count($rows_at) > 0){
+		    foreach($rows_at as $row_at){
+				echo '			<option value="'.$row_at['test_id'].'">'.$row_at['title'].'</option>'."\n\r";
 			}
 		}
 	
