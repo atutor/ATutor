@@ -62,12 +62,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php
 $include_javascript = true;
 
-$sql = "SELECT * from ".TABLE_PREFIX."myown_patches m order by last_modified desc";
+$sql = "SELECT * from %smyown_patches m order by last_modified desc";
+$rows_mypatches = queryDB($sql, array(TABLE_PREFIX));
 
-$result = mysql_query($sql, $db) or die(mysql_error());
-
-if (mysql_num_rows($result) == 0)
-{
+if(count($rows_mypatches) == 0){
 ?>
 	<tr>
 		<td colspan="5"><?php echo _AT('none_found'); ?></td>
@@ -76,8 +74,7 @@ if (mysql_num_rows($result) == 0)
 }
 else
 {
-	while ($row = mysql_fetch_assoc($result))
-	{
+    foreach($rows_mypatches as $row){
 	?>
 		<tr onmousedown="document.form['m<?php echo $row['myown_patch_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['myown_patch_id']; ?>">
 			<td width="10"><input type="radio" name="myown_patch_id" value="<?php echo $row['myown_patch_id']; ?>" id="m<?php echo $row['myown_patch_id']; ?>" <?php if ($row['myown_patch_id']==$_POST['myown_patch_id']) echo 'checked'; ?> /></td>
