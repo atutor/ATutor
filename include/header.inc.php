@@ -170,13 +170,16 @@ $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 $_path = get_path($current_page);
 
 unset($_path[0]);
-if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
+
+if(isset($_SESSION['tool_origin'])){
+    $back_to_page = $_SESSION['tool_origin'];
+}else if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
 } else if (isset($_path[1]['url'], $_sub_level_pages[0]['url']) && $_path[1]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = isset($_path[2]) ? $_path[2] : null;
 } else if (isset($_path[1])) {
 	$back_to_page = $_path[1];
-}
+} 
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_path[] = array('url' => AT_print($_base_path . url_rewrite('index.php'),'url.base'), 'title' => $_SESSION['course_title']);
@@ -343,5 +346,5 @@ if ((isset($_REQUEST['framed']) && $_REQUEST['framed']) || (isset($_REQUEST['pop
     $savant->display('include/header.tmpl.php');
 }
 
-
+//tool_origin('off');
 ?>

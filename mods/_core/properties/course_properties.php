@@ -23,10 +23,14 @@ authenticate(AT_PRIV_ADMIN);
 $course = $_SESSION['course_id'];
 $isadmin   = FALSE;
 
+tool_origin($_SERVER['HTTP_REFERER']);
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: ../../../tools/index.php');
-	exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 
 
 }else if($_POST['submit']){
@@ -37,7 +41,9 @@ if (isset($_POST['cancel'])) {
 
 	if (is_numeric($errors)) {
 		$msg->addFeedback('COURSE_PROPERTIES');
-		header('Location: '.AT_BASE_HREF.'tools/index.php');	
+		$return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url );
 		exit;
 	}
 		
@@ -53,7 +59,9 @@ if (isset($_POST['cancel'])) {
 
 	if (is_numeric($errors)) {
 		$msg->addFeedback('COURSE_PROPERTIES');
-		header('Location: '.AT_BASE_HREF.'tools/index.php');	
+		$return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url );
 		exit;
 	}
 }

@@ -422,15 +422,19 @@ function get_current_sub_navigation_page($current_page) {
 }
 
 function get_path($current_page) {
-    global $_pages, $_base_path;
+    global $_pages, $_base_path, $_base_href;
 
     $path = array();
     
     if (!page_available($current_page)){
     	return $path;
     }
-     
-    $parent_page = $_pages[$current_page]['parent'];
+    if($_pages[$current_page]['other_parent'] && $_SERVER['HTTP_REFERER'] == $_base_href.'tools/index.php'){
+        $parent_page = $_pages[$current_page]['other_parent'];
+    }else{
+        $parent_page = $_pages[$current_page]['parent'];
+    }
+    //$parent_page = $_pages[$current_page]['parent'];
 
     if (isset($_pages[$current_page]['title'])) {
         $_page_title = $_pages[$current_page]['title'];

@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_STYLES);
-
+tool_origin($_SERVER['HTTP_REFERER']);
 if (isset($_POST['up'])) {
 	$up = key($_POST['up']);
 	$_new_modules  = array();
@@ -113,7 +113,9 @@ if (isset($_POST['submit'])) {
 	$result = queryDB($sql, array(TABLE_PREFIX, $home_links, $main_links, $_SESSION['course_id']));
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: modules.php');
+	$return_url = $_SESSION['tool_origin']['url'];
+    unset($_SESSION['tool_origin']);
+	header('Location: '.$return_url);
 	exit;
 }
 

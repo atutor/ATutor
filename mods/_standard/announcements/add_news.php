@@ -17,9 +17,13 @@ require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 
 authenticate(AT_PRIV_ANNOUNCEMENTS);
 
+tool_origin($_SERVER['HTTP_REFERER']);
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
+	$return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+	header('Location: '.$return_url);
 	exit;
 } 
 
@@ -63,8 +67,10 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 		if (file_exists(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml')) {
 			@unlink(AT_CONTENT_DIR . 'feeds/' . $_SESSION['course_id'] . '/RSS2.0.xml');
 		}
-
-		header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		//header('Location: '.AT_BASE_HREF.'mods/_standard/announcements/index.php');
+		header('Location: '.$return_url );
 		exit;
 	}
 }

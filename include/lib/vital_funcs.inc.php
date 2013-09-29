@@ -1115,4 +1115,21 @@ function debug($var, $title='') {
 	echo $str;
 	echo '</pre>';
 }
+/**
+ * Set session variable with tool origin page to create back to page
+ * @param	string	url/off
+ * @author	Greg Gay
+ * @date	Sept 28, 2013
+ */
+function tool_origin($path){
+    if($path == 'off'){
+       if(isset($_SESSION['tool_origin'])){
+            unset($_SESSION['tool_origin']);
+        }
+    }else if(!isset($_SESSION['tool_origin']['url'])){
+        $_SESSION['tool_origin']['url'] = $path;
+        $_SESSION['tool_origin']['title'] = $system_courses[$course];
+    }
+}
+
 ?>

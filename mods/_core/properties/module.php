@@ -45,7 +45,7 @@ $this->_pages['mods/_core/properties/course_properties.php']['guide']     = 'ins
 	
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ADMIN, TRUE) && $_SESSION['hide_admin'] == 0){	
     $this->_pages['mods/_core/properties/course_properties.php']['title_var'] = 'properties';
-    $this->_pages['mods/_core/properties/course_properties.php']['parent']    = 'index.php';
+    $this->_pages['mods/_core/properties/course_properties.php']['other_parent']    = 'index.php';
     $this->_pages['index.php']['children']  = array('mods/_core/properties/course_properties.php');
 }
 ?>

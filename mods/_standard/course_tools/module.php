@@ -17,7 +17,7 @@ $this->_pages['mods/_standard/course_tools/modules.php']['avail_in_mobile']   = 
 	
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_STYLES, TRUE) && $_SESSION['hide_admin'] == 0){	
     $this->_pages['mods/_standard/course_tools/modules.php']['title_var'] = 'course_tools';
-    $this->_pages['mods/_standard/course_tools/modules.php']['parent']    = 'index.php';
+    $this->_pages['mods/_standard/course_tools/modules.php']['other_parent']    = 'index.php';
     $this->_pages['index.php']['children']  = array('mods/_standard/course_tools/modules.php');
 }
 
