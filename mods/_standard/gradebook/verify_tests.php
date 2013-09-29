@@ -20,23 +20,28 @@ authenticate(AT_PRIV_ENROLLMENT);
 require('lib/gradebook.inc.php');
 
 /************  GETTING INFO FROM CREATE/IMPORT CALLS  **********/
-if (isset($_POST['cancel']) || !isset($_POST["gradebook_test_id"]) || !isset($_POST["test_id"])) 
+if (isset($_POST['cancel'])) 
 {
+
 	$msg->addFeedback('CANCELLED');
 	header('Location: update_gradebook.php');
 	exit;
 } 
+else if(!isset($_POST["gradebook_test_id"]) || !isset($_POST["test_id"])){
+	$msg->addError('MISSING_TEST');
+	header('Location: update_gradebook.php');
+	exit;
+}
 else if (isset($_POST['combine']))
 {
 	//Check if the "combine from test" has students taking it more than once
 	$no_error = true;
-	
-	$sql = "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=".$_POST["test_id"];
-	$result = mysql_query($sql, $db) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
+
+	$sql = "SELECT title FROM %stests WHERE test_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_POST["test_id"]), TRUE);
 
 	$studs_take_num = get_studs_take_more_than_once($_SESSION["course_id"], $_POST["test_id"]);
-	
+
 	foreach ($studs_take_num as $member_id => $num)
 	{
 		if ($no_error) $no_error = false;
@@ -53,16 +58,16 @@ else if (isset($_POST['combine']))
 	
 	if (!$msg->containsErrors()) 
 	{
-		$sql = "SELECT id, grade_scale_id FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id = ". $_POST["gradebook_test_id"];
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		$row = mysql_fetch_assoc($result) or die(mysql_error());
+
+		$sql = "SELECT id, grade_scale_id FROM %sgradebook_tests WHERE gradebook_test_id = %d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_POST["gradebook_test_id"]), TRUE);
+		
 		$grade_scale_id = $row["grade_scale_id"];
 
-		$sql = "SELECT m.first_name, m.last_name, m.email, e.member_id FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role<>'Instructor' ORDER BY m.first_name,m.last_name";
-		$result	= mysql_query($sql, $db) or die(mysql_error());
-		
-		while ($row = mysql_fetch_assoc($result))
-		{
+		$sql = "SELECT m.first_name, m.last_name, m.email, e.member_id FROM %smembers m, %scourse_enrollment e WHERE m.member_id = e.member_id AND e.course_id=%d AND e.approved='y' AND e.role<>'Instructor' ORDER BY m.first_name,m.last_name";
+		$rows_enrolled	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION["course_id"]));
+			
+		foreach($rows_enrolled as $row){	
 			$grade = get_member_grade($_POST["test_id"], $row["member_id"], $grade_scale_id);
 			
 			if ($grade <> "")

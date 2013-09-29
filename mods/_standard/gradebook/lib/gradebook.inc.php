@@ -28,27 +28,17 @@ define ('OVERWRITE', 4);
 
 function get_grade_scales_array($member_id = 0)
 {
-	global $db;
-	
-	//$sql = "SELECT d.grade_scale_id, MIN(percentage_to) min, MAX(percentage_to) max FROM ".TABLE_PREFIX."grade_scales_detail d, ".TABLE_PREFIX."grade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND g.member_id = ". $member_id ." GROUP BY d.grade_scale_id";
-	//$result = mysql_query($sql, $db) or die(mysql_error());
+
 	$sql = "SELECT d.grade_scale_id, MIN(percentage_to) min, MAX(percentage_to) max FROM ".TABLE_PREFIX."grade_scales_detail d, ".TABLE_PREFIX."grade_scales g WHERE d.grade_scale_id = g.grade_scale_id AND g.member_id = ". $member_id ." GROUP BY d.grade_scale_id";
 	$rows_scales = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $member_id));
 
 	$preset_grade_scales = array();
 	foreach($rows_scales as $row){
-	//while ($row = mysql_fetch_assoc($result))
-	//{
-		//$sql_min = "SELECT scale_value FROM ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id=".$row["grade_scale_id"]." AND percentage_to=".$row["min"];
-		//$result_min = mysql_query($sql_min, $db) or die(mysql_error());
-		//$row_min = mysql_fetch_assoc($result_min);
+
 		$sql_min = "SELECT scale_value FROM %sgrade_scales_detail WHERE grade_scale_id=%d AND percentage_to=%d";
 		$row_min = queryDB($sql_min, array(TABLE_PREFIX, $row['grade_scale_id'], $row['min']), TRUE);
 		$min_value = $row_min['scale_value'];
-		
-		//$sql_max = "SELECT scale_value FROM ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id=".$row["grade_scale_id"]." AND percentage_to=".$row["max"];
-		//$result_max = mysql_query($sql_max, $db) or die(mysql_error());
-		//$row_max = mysql_fetch_assoc($result_max);
+
 		$sql_max = "SELECT scale_value FROM %sgrade_scales_detail WHERE grade_scale_id=%d AND percentage_to=%d";
 		$row_max = queryDB($sql_max, array(TABLE_PREFIX, $row['grade_scale_id'], $row['max']), TRUE);
 		$max_value = $row_max['scale_value'];
@@ -111,8 +101,7 @@ function print_grade_scale_selectbox($selected_grade_scale_id = 0, $id_name="sel
 // don't have to provide $out_of
 function get_mark_by_grade($grade_scale_id, $score, $out_of='')
 {
-	global $db;
-	
+
 	$score = trim($score);
 	$out_of = trim($out_of);
 
@@ -157,25 +146,18 @@ function get_mark_by_grade($grade_scale_id, $score, $out_of='')
 function get_member_grade($test_id, $member_id, $grade_scale_id)
 {
     // THIS FUNCTION UNTESTED WITH queryDB()
-	//global $db;
-
+    
 	require_once(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 	
 	$grade = "";
 	
 	// find out final_score, out_of
-	//$sql = "SELECT t.random, t.out_of, r.result_id, r.final_score FROM ".TABLE_PREFIX."tests t, ".TABLE_PREFIX."tests_results r WHERE t.test_id=".$test_id." AND t.test_id=r.test_id AND r.member_id='".$member_id."'";
-	//$result = mysql_query($sql, $db);
-	//$row = mysql_fetch_assoc($result);
-	//debug($sql);
+
 	$sql = "SELECT t.random, t.out_of, r.result_id, r.final_score FROM %stests t, %stests_results r WHERE t.test_id=%d AND t.test_id=r.test_id AND r.member_id=%d";
 	$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $test_id, $member_id), TRUE);
-	//global $sqlout;
-    //debug_to_log($sqlout);
+
     if(count($row) > 0 && $row["final_score"] <> ""){
-    
-	//if (mysql_num_rows($result) > 0 && $row["final_score"] <> "")
-	//{
+
 		if ($row['random']) {
 			$out_of = get_random_outof($test_id, $row['result_id']);
 		} else {
@@ -199,17 +181,13 @@ function get_member_grade($test_id, $member_id, $grade_scale_id)
 function get_studs_take_more_than_once($course_id, $test_id)
 {
 	// THIS FUNCTION UNTESTED WITH queryDB()
-	//global $db;
 	
 	$rtn_array = array();
-	
-	//$sql = "SELECT m.member_id, count(result_id) num FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e, ".TABLE_PREFIX."tests_results t WHERE m.member_id = e.member_id AND e.course_id = ".$course_id." AND e.approved='y' AND e.role <> 'Instructor' AND e.member_id=t.member_id AND t.test_id=".$test_id." GROUP BY m.first_name, m.last_name having count(*) > 1";
-	//$result = mysql_query($sql, $db) or die(mysql_error());
+
 	$sql = "SELECT m.member_id, count(result_id) num FROM %smembers m, %scourse_enrollment e, %stests_results t WHERE m.member_id = e.member_id AND e.course_id = %d AND e.approved='y' AND e.role <> 'Instructor' AND e.member_id=t.member_id AND t.test_id=%d GROUP BY m.first_name, m.last_name having count(*) > 1";
 	$rows_members = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $course_id, $test_id));
 
     foreach($rows_members as $row){
-	//while ($row = mysql_fetch_assoc($result))
 		$rtn_array[$row["member_id"]. " " . $row["last_name"]] = $row["num"];
     }
 	return $rtn_array;
@@ -222,12 +200,7 @@ function get_studs_take_more_than_once($course_id, $test_id)
 //         or, -1 if grades are comparable
 function compare_grades($grade1, $grade2, $gradebook_test_id, $mode = "higher")
 {
-	//global $db;
-	
-	// get grade scale id
-	//$sql = "SELECT grade_scale_id FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id = ".$gradebook_test_id;
-	//$result	= mysql_query($sql, $db) or die(mysql_error());
-	//$row = mysql_fetch_assoc($result);
+
 	$sql = "SELECT grade_scale_id FROM %sgradebook_tests WHERE gradebook_test_id = %d";
 	$row	= queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id), TRUE);
 	$grade_scale_id = $row["grade_scale_id"];
@@ -248,15 +221,11 @@ function compare_grades($grade1, $grade2, $gradebook_test_id, $mode = "higher")
 		$grade2 = get_mark_by_grade($grade_scale_id, $grade2);
 
 		$grades = array();
-	
-		//$sql_grade = "SELECT scale_value from ".TABLE_PREFIX."grade_scales_detail WHERE grade_scale_id = ". $grade_scale_id. " ORDER BY percentage_to DESC";
-		//$result_grade	= mysql_query($sql_grade, $db) or die(mysql_error());
+
 		$sql_grade = "SELECT scale_value from %sgrade_scales_detail WHERE grade_scale_id = %d ORDER BY percentage_to DESC";
 		$rows_grade	= queryDB($sql_grade, array(TABLE_PREFIX, $grade_scale_id));
 		
 		foreach($rows_grade as $row_grade){
-		//while ($row_grade = mysql_fetch_assoc($result_grade))
-		//{
 			$grades[] = $row_grade["scale_value"];
 		}
 
@@ -328,38 +297,32 @@ function check_user_info($record)
 
 	if ($record['member_id'] == '')
 	{
-		//$sql = "SELECT * FROM ".TABLE_PREFIX."members m, ".TABLE_PREFIX."course_enrollment e WHERE m.first_name='".$record['fname']."' AND m.last_name='".$record['lname']."' AND m.email='".$record['email']."' AND m.member_id = e.member_id AND e.course_id=".$_SESSION["course_id"]." AND e.approved='y' AND e.role<>'Instructor'";
-		//$result = mysql_query($sql, $db) or die(mysql_error());
+
 		$sql = "SELECT * FROM %smembers m, %scourse_enrollment e WHERE m.first_name='%s' AND m.last_name='%s' AND m.email='%s' AND m.member_id = e.member_id AND e.course_id=%d AND e.approved='y' AND e.role<>'Instructor'";
 		$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $record['fname'], $record['lname'], $record['email'], $_SESSION["course_id"]), TRUE);
 		
 		if(count($row) == 0){	
-		//if (mysql_num_rows($result) == 0) 
 			$record['error'] = _AT("student_not_exists");
 		}else{
-			//$row = mysql_fetch_assoc($result);
+
 			$record['member_id'] = $row["member_id"];
 		}
 	}
 	
 	if ($record['error'] == "" && $record['member_id'] > 0)
 	{
-		//$sql = "SELECT grade FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=".$record['gradebook_test_id']. " AND member_id=".$record["member_id"];
-		//$result = mysql_query($sql, $db) or die(mysql_error());
+
 		$sql = "SELECT grade FROM %sgradebook_detail WHERE gradebook_test_id=%d AND member_id=%d";
 		$row = queryDB($sql, array(TABLE_PREFIX, $record['gradebook_test_id'], $record["member_id"]), TRUE);
 				
 		if (count($row) > 0 && $record['solve_conflict'] == 0){
-		//if (mysql_num_rows($result) > 0 && $record['solve_conflict'] == 0) 
-		//{
-			//$row = mysql_fetch_assoc($result);
+
 			$record['error'] = _AT("grade_already_exists", $row["grade"]);
 			$record['conflict'] = 1;
 		}
 		
 		if (count($row) > 0 && $record['solve_conflict'] > 0) 
 		{
-			//$row = mysql_fetch_assoc($result);
 			
 			if ($record['solve_conflict'] == USE_HIGHER_GRADE || $record['solve_conflict'] == USE_LOWER_GRADE) 
 			{
@@ -394,33 +357,28 @@ function check_user_info($record)
 // update gradebook
 function update_gradebook_external_test($students, $gradebook_test_id)
 {
-	global $db, $msg;
+	global  $msg;
 
 	foreach($students as $student)
 	{
 		if (!$student['remove'])
 		{
 			// retrieve member id
-			//$sql = "SELECT member_id FROM ".TABLE_PREFIX."members m WHERE m.first_name='".$student['fname']."' AND m.last_name='".$student['lname']."' AND m.email='".$student['email']."'";
-			//$result = mysql_query($sql, $db) or die(mysql_error());
-			//$row = mysql_fetch_assoc($result);
+
 			$sql = "SELECT member_id FROM %smembers m WHERE m.first_name='%s' AND m.last_name='%s' AND m.email='%s'";
 			$row = queryDB($sql, array(TABLE_PREFIX, $student['fname'], $student['lname'], $student['email']), TRUE);
 
 			$member_id = $row["member_id"];
 
 			// retrieve grade scale id
-			//$sql = "SELECT grade_scale_id FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id=".$gradebook_test_id;
-			//$result = mysql_query($sql, $db) or die(mysql_error());
-			//$row = mysql_fetch_assoc($result);
+
 			$sql = "SELECT grade_scale_id FROM %sgradebook_tests WHERE gradebook_test_id=%d";
 			$row = queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id), TRUE);
 
 			$grade_scale_id = $row["grade_scale_id"];
 			
 			$grade = get_mark_by_grade($grade_scale_id, $student["grade"]);
-			//$sql = "REPLACE INTO ".TABLE_PREFIX."gradebook_detail(gradebook_test_id, member_id, grade) VALUES(".$gradebook_test_id.", ".$member_id.", '".$grade."')";
-			//$result = mysql_query($sql, $db) or die(mysql_error());
+
 			$sql = "REPLACE INTO %sgradebook_detail(gradebook_test_id, member_id, grade) VALUES(%d, %d, '%s')";
 			$result = queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id, $member_id, $grade));	
 				
@@ -456,11 +414,7 @@ function median($grade_array)
 // return class average of the given test_id
 function get_class_avg($gradebook_test_id)
 {
-	global $db;
-	
-	//$sql = "SELECT * FROM ".TABLE_PREFIX."gradebook_tests WHERE gradebook_test_id=".$gradebook_test_id;
-	//$result = mysql_query($sql, $db) or die(mysql_error());
-	//$row = mysql_fetch_assoc($result);
+
 	$sql = "SELECT * FROM %sgradebook_tests WHERE gradebook_test_id=%d";
 	$row = queryDB($sql, array(TABLE_PREFIX, $gradebook_test_id), TRUE);
 		
@@ -468,17 +422,12 @@ function get_class_avg($gradebook_test_id)
 	{
 		require_once (AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 
-		//$sql_test = "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=".$row["id"];
-		//$result_test = mysql_query($sql_test, $db) or die(mysql_error());
-		//$row_test = mysql_fetch_assoc($result_test);
 		$sql_test = "SELECT * FROM %stests WHERE test_id=%d";
 		$row_test = queryDB($sql_test, array(TABLE_PREFIX, $row["id"]), TRUE);
 		
 		if ($row_test['out_of'] == 0 || $row_test['result_release']==AT_RELEASE_NEVER)
 			return _AT("na");
-		
-		//$sql_marks = "SELECT * FROM ".TABLE_PREFIX."tests_results WHERE test_id=".$row["id"]. " AND status=1";
-		//$result_marks = mysql_query($sql_marks, $db) or die(mysql_error());
+
 		$sql_marks = "SELECT * FROM %stests_results WHERE test_id=%d AND status=1";
 		$rows_marks = queryDB($sql_marks, array(TABLE_PREFIX, $row["id"]));
 				
@@ -486,8 +435,7 @@ function get_class_avg($gradebook_test_id)
 		$total_final_score = 0;
 		$total_out_of = 0;
 		foreach($rows_marks as $row_marks){
-		//while ($row_marks = mysql_fetch_assoc($result_marks))
-		//{
+
 			if ($row_marks['final_score'] == '' ) continue;
 			
 			$num_students++;
@@ -512,14 +460,12 @@ function get_class_avg($gradebook_test_id)
 	}
 	else  // external test
 	{
-		//$sql_grades = "SELECT * FROM ".TABLE_PREFIX."gradebook_detail WHERE gradebook_test_id=".$gradebook_test_id." ORDER BY grade";
-		//$result_grades = mysql_query($sql_grades, $db) or die(mysql_error());
+
 		$sql_grades = "SELECT * FROM %sgradebook_detail WHERE gradebook_test_id= %d ORDER BY grade";
 		$rows_grades = queryDB($sql_grades, array(TABLE_PREFIX, $gradebook_test_id, ));
 				
 		$grade_array = array();
 		foreach($rows_grades as $row_grades){
-		//while ($row_grades = mysql_fetch_assoc($result_grades))
 			$grade_array[] = $row_grades["grade"];
 		}	
 		$avg_grade = median($grade_array);
