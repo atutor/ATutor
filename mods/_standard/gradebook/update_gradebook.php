@@ -16,7 +16,7 @@ $page = 'gradebook';
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
-
+tool_origin();
 require_once("lib/gradebook.inc.php");
 
 // Checks if the given test has students taken it more than once, if has,
@@ -105,7 +105,9 @@ while ($row = mysql_fetch_assoc($result))
 if (isset($_POST['cancel'])) 
 {
 	$msg->addFeedback('CANCELLED');
-	header('Location: gradebook_tests.php');
+    $return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+	header('Location: '.$return_url);
 	exit;
 } 
 else if (isset($_POST['update'])) 

@@ -17,9 +17,9 @@ $page = 'gradebook';
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
-
+tool_origin();
 require_once("lib/gradebook.inc.php");
-
+//$_pages['mods/_standard/gradebook/gradebook_add_tests.php']['parent'] = $_SERVER['HTTP_REFERRER'];
 // Checks if the given test has students taken it more than once, if has, don't add
 // print feedback, otherwise, add this test into gradebook.
 function add_test($test_id, $title)
@@ -61,7 +61,10 @@ function add_assignment($assignment_id)
 if (isset($_POST['cancel'])) 
 {
 	$msg->addFeedback('CANCELLED');
-	header('Location: gradebook_tests.php');
+	$return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+	header('Location: '.$return_url);
+	//header('Location: gradebook_tests.php');
 	exit;
 } 
 else if (isset($_POST['addATutorTest'])) 
@@ -108,7 +111,11 @@ else if (isset($_POST['addATutorTest']))
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: gradebook_tests.php');
+	//header('Location: gradebook_tests.php');
+	//header("Location: ".$_pages['mods/_standard/gradebook/gradebook_add_tests.php']['parent']);
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 	exit;
 } 
 else if (isset($_POST['addExternalTest'])) 
@@ -141,7 +148,10 @@ else if (isset($_POST['addExternalTest']))
 		$result_insert = queryDB($sql_insert, array(TABLE_PREFIX, $_SESSION["course_id"], $_POST["title"], $date_due, $_POST["selected_grade_scale_id"]));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: gradebook_tests.php');
+		//header('Location: gradebook_tests.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 }

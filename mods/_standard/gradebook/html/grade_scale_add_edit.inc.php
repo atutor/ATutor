@@ -26,7 +26,7 @@ $page = 'gradebook';
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
-
+tool_origin();
 require('lib/gradebook.inc.php');
 
 if (isset($_POST['action'])) $action = $_POST['action'];
@@ -34,7 +34,10 @@ if (isset($_POST['action'])) $action = $_POST['action'];
 if (isset($_POST['cancel'])) 
 {
 	$msg->addFeedback('CANCELLED');
-	header('Location: grade_scale.php');
+	//header('Location: grade_scale.php');
+    $return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+    header('Location: '.$return_url);	
 	exit;
 } 
 else if (isset($_POST['submit'])) 
@@ -99,7 +102,10 @@ else if (isset($_POST['submit']))
 		}
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: grade_scale.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		//header('Location: grade_scale.php');
 		exit;
 	}
 } 

@@ -16,13 +16,15 @@ $page = "gradebook";
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
-
+tool_origin();
 require_once("lib/gradebook.inc.php");
 
 if (isset($_GET['cancel'])) 
 {
     $msg->addFeedback('CANCELLED');
-    header('Location: gradebook_tests.php');
+    $return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+	header('Location: '.$return_url);
     exit;
 } 
 else if (isset($_GET['save'])) 

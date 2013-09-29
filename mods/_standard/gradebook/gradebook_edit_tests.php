@@ -17,12 +17,14 @@ $page = 'gradebook';
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
-
+tool_origin();
 require_once("lib/gradebook.inc.php");
 if (isset($_POST['cancel'])) 
 {
 	$msg->addFeedback('CANCELLED');
-	header('Location: gradebook_tests.php');
+    $return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+	header('Location: '.$return_url);
 	exit;
 } 
 else if (isset($_POST['save'])) 
@@ -63,7 +65,9 @@ else if (isset($_POST['save']))
 		$result = queryDB($sql, array(TABLE_PREFIX, $_POST["selected_grade_scale_id"], $_REQUEST["gradebook_test_id"]));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: gradebook_tests.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+	    header('Location: '.$return_url);
 		exit;
 	}
 } 

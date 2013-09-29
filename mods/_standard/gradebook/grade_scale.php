@@ -16,7 +16,7 @@ $page = 'gradebook';
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
-
+tool_origin();
 function print_row($grade_scale_id, $scale_name, $value, $created_date, $post_grade_scale_id, $print_radio_button=true)
 {
 ?>

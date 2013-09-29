@@ -17,7 +17,7 @@ $page = "gradebook";
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
-
+tool_origin($_SERVER['HTTP_REFERER']);
 // initialize relationship between gradebook_test_id and external test name
 $tests = array();
 
@@ -51,7 +51,10 @@ $rows_e = queryDB($sql_e, array(TABLE_PREFIX, $_SESSION["course_id"]));
 if (isset($_POST['cancel'])) 
 {
 	$msg->addFeedback('CANCELLED');
-	header('Location: gradebook_tests.php');
+	$return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+	header('Location: '.$return_url);
+	//header('Location: gradebook_tests.php');
 	exit;
 } 
 else if (isset($_POST['export'])) 

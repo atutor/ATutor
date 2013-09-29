@@ -17,9 +17,13 @@ $page = 'gradebook';
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GRADEBOOK);
+tool_origin();
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
+//        $return_url = $_SESSION['tool_origin']['url'];
+//        tool_origin('off');
+//header('Location: '.$return_url);
 	header('Location: grade_scale.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
@@ -35,8 +39,11 @@ if (isset($_POST['submit_no'])) {
 	$sql = "UPDATE %sgradebook_tests SET grade_scale_id=0 WHERE grade_scale_id=%d";
 	$result = queryDB($sql, array(TABLE_PREFIX, $grade_scale_id));
 
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	header('Location: grade_scale.php');
+    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+    $return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+    header('Location: '.$return_url);
+	//header('Location: grade_scale.php');
 	exit;
 }
 

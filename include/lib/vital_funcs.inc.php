@@ -1121,11 +1121,14 @@ function debug($var, $title='') {
  * @author	Greg Gay
  * @date	Sept 28, 2013
  */
-function tool_origin($path){
+function tool_origin($path=''){
     if($path == 'off'){
        if(isset($_SESSION['tool_origin'])){
             unset($_SESSION['tool_origin']);
         }
+    } else if(!isset($_SESSION['tool_origin']['url']) && $path == ''){
+        $_SESSION['tool_origin']['url'] = $_SERVER['HTTP_REFERER'];
+        $_SESSION['tool_origin']['title'] = $_SESSION['origin_title'];        
     }else if(!isset($_SESSION['tool_origin']['url'])){
         $_SESSION['tool_origin']['url'] = $path;
         $_SESSION['tool_origin']['title'] = $_SESSION['origin_title'];
