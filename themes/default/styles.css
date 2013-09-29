@@ -1110,22 +1110,24 @@ h4.box {
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding:.2em;
-	border-top:1px solid #F4F0CB;
+/*	border-top:1px solid #F4F0CB;
 	border-left:1px solid #F4F0CB;
 	border-right:1px solid #F4F0CB;
 		border-bottom:1px solid #F4F0CB;
+*/
 /*	-moz-box-shadow:.1em .1em .1em #999999;
 	box-shadow: .1em .1em .1em #999999;*/
 }
 h2.box {
-	font-size:0.85em;
+	font-size:1em;
 	padding: 2px;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 	padding:.2em;
-	border-top:1px solid #B7C68B;
+/*	border-top:1px solid #B7C68B;
 	border-left:1px solid #B7C68B;
 	border-right:1px solid #B7C68B;
+	*/
 	      background-image: linear-gradient(#FAFAFA, #EAEAEA);
 		border-bottom:1px solid #F4F0CB;
 /*	-moz-box-shadow:.1em .1em .1em #999999;
@@ -1138,10 +1140,10 @@ div.box {
 	color: black;
 	font-size:0.85em;
 	font-weight: normal;
-	border-left:1px solid #B7C68B;
+/*	border-left:1px solid #B7C68B;
 	border-right:1px solid #B7C68B;
 	border-bottom:1px solid #B7C68B;
-	border-radius:.0em .0em .5em .5em;
+	border-radius:.0em .0em .5em .5em; */
 	-moz-border-radius: .0em .0em .5em .5em;
 /*	border-left:1px solid #ccc;
 	border-right:1px solid #ccc;
@@ -2586,9 +2588,11 @@ img.img1111{
 height:.8em;
 width:.8em;
 }
-img.img2424{
-
-
+img.imggoback{
+height:1.9em;
+width:1.9em;
+margin-top:-.3em;
+margin-right:1em;
 }
 input[type=image].fl-force-right{
 height:.9em;
