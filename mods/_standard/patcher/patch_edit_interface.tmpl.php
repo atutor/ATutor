@@ -59,11 +59,10 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 		<tbody>
 <?php
 // when edit existing patch
-if ($result_patch_dependent)  
-{
-	$num_of_dependents = mysql_num_rows($result_patch_dependent);
-	while ($row_patch_dependent = mysql_fetch_assoc($result_patch_dependent))
-	{
+
+if(count($rows_patch_dependent) > 0){
+	$num_of_dependents = count($rows_patch_dependent);
+	foreach($rows_patch_dependent as $row_patch_dependent){
 	?>
 			<tr>
 				<td><input id="dependent_patch" name="dependent_patch[]" value="<?php echo $row_patch_dependent['dependent_patch_id']; ?>" type="text" maxlength="100" size="100" style="max-width:100%; display:block" /></td>
@@ -337,7 +336,7 @@ var ACTION_HTML_TEMPLATE = ' \
 
 
 <script language="JavaScript" type="text/javascript">
-	var patch_files = <?php echo json_encode_result($result_patch_files); ?>;
+	var patch_files = <?php echo json_encode_result($rows_patch_files); ?>;
 	
 	window.onload = function() {
 		for(var i=0; i<patch_files.length; i++) {
