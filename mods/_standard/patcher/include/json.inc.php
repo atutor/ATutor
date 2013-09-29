@@ -21,12 +21,6 @@ function json_encode_result($phpdata) {
 		return php2js_object($phpdata);
 }
 
-
-//function json_decode($jsonata) {
-//	return $phpdata;
-//}
-
-
 // convert a PHP object to javascript object
 function php2js_object($phpobj) {
 	$str = ""; 
@@ -41,9 +35,11 @@ function php2js_object($phpobj) {
 	}
 	
 	return "{" . $str . "}";
+	
+		//return "php2js_object failed";
 }
 
-// convert a PHP object to javascript object
+// convert a PHP array to javascript object
 function php2js_array($phparr) {
 	$str = "";
 
@@ -62,12 +58,19 @@ function php2js_array($phparr) {
 // convert a SQL result object to javascript object
 function php2js_sqlresult($phpsql) {
 	// Printing results
+	
+	/// WITH queryDB() returned is always an array
+	// This function should no longer be necessary
+	/*
 	$rows = array();
 	while ($line = mysql_fetch_assoc($phpsql)) {
 		$rows[] = $line;
 	}
 	mysql_free_result($phpsql);
 	return php2js_array($rows);
+	*/
+	return;
+	//return "php2js_sqlresult failed";
 }
 
 function escapeString($string) {

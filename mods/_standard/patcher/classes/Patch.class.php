@@ -183,15 +183,15 @@ class Patch {
 			foreach($this->backup_files as $backup_file)
 				$backup_files .= $backup_file. '|';
 		
-			$updateInfo = array("backup_files"=>mysql_real_escape_string($backup_files));
-		}
+			$updateInfo = array("backup_files"=>my_add_null_slashes($backup_files));
 	
 		if (count($this->patch_files) > 0)
 		{
 			foreach($this->patch_files as $patch_file)
 				$patch_files .= $patch_file. '|';
 		
-			$updateInfo = array_merge($updateInfo, array("patch_files"=>mysql_real_escape_string($patch_files)));
+			$updateInfo = array_merge($updateInfo, array("patch_files"=>my_add_null_slashes($patch_files)));			
+			
 		}
 	
 		if (is_array($_SESSION['remove_permission']) && count($_SESSION['remove_permission']))
@@ -199,7 +199,7 @@ class Patch {
 			foreach($_SESSION['remove_permission'] as $remove_permission_file)
 				$remove_permission_files .= $remove_permission_file. '|';
 
-			$updateInfo = array_merge($updateInfo, array("remove_permission_files"=>mysql_real_escape_string($remove_permission_files), "status"=>"Partly Installed"));
+			$updateInfo = array_merge($updateInfo, array("remove_permission_files"=>my_add_null_slashes($remove_permission_files), "status"=>"Partly Installed"));
 		}
 		else
 		{
@@ -211,8 +211,8 @@ class Patch {
 		unset($_SESSION['remove_permission']);
 
 		return true;
-	}
-
+	    }
+    }
 	/**
 	* return patch array
 	* @access  public
@@ -386,7 +386,7 @@ class Patch {
 		}
 		
 		return true;
-	}
+}
 	
     /**
     * Loop thru all the patch files that will be overwitten or altered, 
@@ -483,7 +483,7 @@ class Patch {
 	*/
 	function isFileModified($folder, $file)
 	{
-		global $db;
+		//global $db;
 
 		if (!$this->github_server_connected) return true;
 		
@@ -497,16 +497,15 @@ class Patch {
 
 		// check if the local file has been modified by user. if it is, don't overwrite
 		if (strcasecmp($github_file_content, $local_file_content)) {
+		
 			// check if the file was changed by previous installed patches
-			$sql = "SELECT count(*) num_of_updates FROM " . TABLE_PREFIX. "patches patches, " . TABLE_PREFIX."patches_files patches_files " .
-			       "WHERE patches.applied_version = '" . VERSION . "' ".
+			$sql = "SELECT count(*) num_of_updates FROM %spatches patches, %spatches_files patches_files " .
+			       "WHERE patches.applied_version = '%s' ".
 			       "  AND patches.status = 'Installed' " .
 			       "  AND patches.patches_id = patches_files.patches_id " .
-			       "  AND patches_files.name = '" . $file . "'";
-			
-			$result = mysql_query($sql, $db) or die(mysql_error());
-			$row = mysql_fetch_assoc($result);
-			
+			       "  AND patches_files.name = '%s'";		
+			$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, VERSION, $file), TRUE);
+		
 			if ($row["num_of_updates"] == 0) return true;
 		}
 		return false;
@@ -516,7 +515,7 @@ class Patch {
 	 * Get the commit hash for the current ATutor release
 	 * @access  private
 	 */
-	private function getReleaseCommitNum() {
+	function getReleaseCommitNum() {
 		$releases_json = file_get_contents($this->github_fetch_tags_url);
 		$release_tags = json_decode($releases_json);
 		$atutor_tag_name = 'atutor_' . str_replace('.', '_', VERSION);
@@ -772,9 +771,7 @@ class Patch {
 	*/
 	function createPatchesRecord($patch_summary_array)
 	{
-		global $db;
-		
-		$sql = "INSERT INTO " . TABLE_PREFIX. "patches " .
+		$sql = "INSERT INTO %spatches " .
 					 "(atutor_patch_id, 
 					   applied_version,
 					   patch_folder,
@@ -787,25 +784,17 @@ class Patch {
 					   patch_files,
 					   author,
 					   installed_date)
-					  VALUES
-					  ('".$patch_summary_array["atutor_patch_id"]."',
-					   '".$patch_summary_array["applied_version"]."',
-					   '".mysql_real_escape_string($patch_summary_array["patch_folder"])."',
-					   '".mysql_real_escape_string($patch_summary_array["description"])."',
-					   '".$patch_summary_array["available_to"]."',
-					   '".mysql_real_escape_string($patch_summary_array["sql"])."',
-					   '".$patch_summary_array["status"]."',
-					   '',
-					   '',
-					   '',
-					   '".mysql_real_escape_string($patch_summary_array["author"])."',
-					   now()
-					   )";
-
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		
-		$this->patch_id = mysql_insert_id();
-		
+					  VALUES ('%s', '%s', '%s', '%s',  '%s', '%s', '%s', '', '', '', '%s', now())";
+		$result = queryDB($sql, array(TABLE_PREFIX,
+		                            $patch_summary_array["atutor_patch_id"],
+		                            $patch_summary_array["applied_version"],
+		                            my_add_null_slashes($patch_summary_array["patch_folder"]),
+		                            my_add_null_slashes($patch_summary_array["description"]),
+		                            $patch_summary_array["available_to"],
+		                            my_add_null_slashes($patch_summary_array["sql"]),
+		                            $patch_summary_array["status"],
+		                            my_add_null_slashes($patch_summary_array["author"])));
+		$this->patch_id = at_insert_id();		
 		return true;
 	}
 
@@ -817,24 +806,14 @@ class Patch {
 	*/
 	function createPatchesFilesRecord($patch_files_array)
 	{
-		global $db;
-		
-		$sql = "INSERT INTO " . TABLE_PREFIX. "patches_files " .
-					 "(patches_id, 
-					   action,
-					   name,
-					   location)
-					  VALUES
-					  (".$this->patch_id.",
-					   '".$patch_files_array['action']."',
-					   '".mysql_real_escape_string($patch_files_array['name'])."',
-					   '".mysql_real_escape_string($patch_files_array['location'])."'
-					   )";
 
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		
-		$this->patch_file_id = mysql_insert_id();
-
+		$sql = "INSERT INTO %spatches_files (patches_id, action, name, location) VALUES (%d, '%s', '%s', '%s' )";
+		$result = queryDB($sql, array(TABLE_PREFIX, 
+		                                $this->patch_id, 
+		                                $this->patch_id, $patch_files_array['action'], 
+		                                my_add_null_slashes($patch_files_array['name']), 
+		                                my_add_null_slashes($patch_files_array['location'])));		
+		$this->patch_file_id = at_insert_id();
 		return true;
 	}
 
@@ -845,23 +824,13 @@ class Patch {
 	* @author  Cindy Qi Li
 	*/
 	function createPatchesFilesActionsRecord($patch_files_actions_array)
-	{
-		global $db;
-		
-		$sql = "INSERT INTO " . TABLE_PREFIX. "patches_files_actions " .
-					 "(patches_files_id, 
-					   action,
-					   code_from,
-					   code_to)
-					  VALUES
-					  (".$this->patch_file_id.",
-					   '".$patch_files_actions_array['type']."',
-					   '".mysql_real_escape_string($patch_files_actions_array['code_from'])."',
-					   '".mysql_real_escape_string($patch_files_actions_array['code_to'])."'
-					   )";
-
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		
+	{		
+		$sql = "INSERT INTO %spatches_files_actions(patches_files_id, action, code_from, code_to) VALUES (%d, '%s', '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, 
+		                                intval($this->patch_file_id), 
+		                                $patch_files_actions_array['type'], 
+		                                my_add_null_slashes($patch_files_actions_array['code_from']), 
+		                                my_add_null_slashes($patch_files_actions_array['code_to'])), FALSE, FALSE);	
 		return true;
 	}
 }

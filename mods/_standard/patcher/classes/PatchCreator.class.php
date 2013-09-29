@@ -136,45 +136,50 @@ class PatchCreator {
 		
 		if ($this->current_patch_id == 0)
 		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches 
+
+			$sql = "INSERT INTO %smyown_patches 
 		               (atutor_patch_id, 
 		                applied_version,
 		                description,
 		                sql_statement,
 		                status,
 		                last_modified)
-			        VALUES ('".$this->patch_info_array["atutor_patch_id"]."', 
-			                '".$this->patch_info_array["atutor_version_to_apply"]."', 
-			                '".$this->patch_info_array["description"]."', 
-			                '".$this->patch_info_array["sql_statement"]."', 
-			                'Created',
-			                now())";
+			        VALUES ('%s', '%s', '%s', '%s', 'Created', now())";
+			$result = queryDB($sql, array(TABLE_PREFIX, $this->patch_info_array["atutor_patch_id"], $this->patch_info_array["atutor_version_to_apply"], $this->patch_info_array["description"], $this->patch_info_array["sql_statement"]));
+
 		}
 		else
 		{
-			$sql = "UPDATE ".TABLE_PREFIX."myown_patches 
-			           SET atutor_patch_id = '". $this->patch_info_array["atutor_patch_id"] ."',
-			               applied_version = '". $this->patch_info_array["atutor_version_to_apply"] ."',
-			               description = '". $this->patch_info_array["description"] ."',
-			               sql_statement = '". $this->patch_info_array["sql_statement"] ."',
+
+			$sql = "UPDATE %smyown_patches 
+			           SET atutor_patch_id = '%s',
+			               applied_version = '%s',
+			               description = '%s',
+			               sql_statement = '%s',
 			               status = 'Created',
 			               last_modified = now()
-			         WHERE myown_patch_id = ". $this->current_patch_id;
+			         WHERE myown_patch_id = %d";
+			$result = queryDB($sql, array(TABLE_PREFIX, 
+			                                $this->patch_info_array["atutor_patch_id"],
+			                                $this->patch_info_array["atutor_version_to_apply"],
+			                                 $this->patch_info_array["description"],
+			                                 $this->patch_info_array["sql_statement"],
+			                                 $this->current_patch_id));
 		}
 
-		$result = mysql_query($sql, $db) or die(mysql_error());
-		
+
 		if ($this->current_patch_id == 0)
 		{
-			$this->current_patch_id = mysql_insert_id();
+			$this->current_patch_id = at_insert_id();
 		}
 		else // delete records for current_patch_id in tables myown_patches_dependent & myown_patches_files
 		{
-			$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_dependent WHERE myown_patch_id = " . $this->current_patch_id;
-			$result = mysql_query($sql, $db) or die(mysql_error());
-			
-			$sql = "DELETE FROM ".TABLE_PREFIX."myown_patches_files WHERE myown_patch_id = " . $this->current_patch_id;
-			$result = mysql_query($sql, $db) or die(mysql_error());
+
+			$sql = "DELETE FROM %smyown_patches_dependent WHERE myown_patch_id = %d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $this->current_patch_id));
+
+			$sql = "DELETE FROM %smyown_patches_files WHERE myown_patch_id = %d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $this->current_patch_id));
 		}
 		
 		// insert records into table myown_patches_dependent
@@ -182,13 +187,8 @@ class PatchCreator {
 		{
 			foreach ($this->patch_info_array["dependent_patches"] as $dependent_patch)
 			{
-				$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_dependent 
-		               (myown_patch_id, 
-		                dependent_patch_id)
-			        VALUES ('".$this->current_patch_id."', 
-			                '".$dependent_patch."')";
-
-				$result = mysql_query($sql, $db) or die(mysql_error());
+				$sql = "INSERT INTO %smyown_patches_dependent (myown_patch_id, dependent_patch_id) VALUES (%d, '%s')";
+				$result = queryDB($sql, array(TABLE_PREFIX, $this->current_patch_id, $dependent_patch));
 			}
 		}
 		
@@ -201,24 +201,19 @@ class PatchCreator {
 					$upload_to = $this->saveFile($file_info);
 				else
 					$upload_to = "";
-					
-				$sql = "INSERT INTO ".TABLE_PREFIX."myown_patches_files
-		               (myown_patch_id, 
-		               	action,
-		               	name,
-		               	location,
-		               	code_from,
-		                code_to,
-		                uploaded_file)
-			        VALUES ('".$this->current_patch_id."', 
-			                '".$file_info["action"]."', 
-			                '".$file_info["file_name"]."', 
-			                '".$file_info["directory"]."', 
-			                '".$file_info["code_from"]."', 
-			                '".$file_info["code_to"]."',
-			                '".addslashes($upload_to)."')";
+	
+				$sql = "INSERT INTO %smyown_patches_files
+		               (myown_patch_id, action, name, location, code_from, code_to, uploaded_file)
+			            VALUES ('%s', '%s', '%s', '%s', '%s', '%s', '%s')";
 
-				$result = mysql_query($sql, $db) or die(mysql_error());
+				$result = queryDB($sql, array(TABLE_PREFIX,
+				                                intval($this->current_patch_id),
+				                                $file_info["action"],
+				                                my_add_null_slashes($file_info["file_name"]),
+				                                my_add_null_slashes($file_info["directory"]),
+				                                my_add_null_slashes($file_info["code_from"]),
+				                                my_add_null_slashes($file_info["code_to"]),
+				                                my_add_null_slashes($upload_to)), FALSE, FALSE);			
 			}
 		}
 	}

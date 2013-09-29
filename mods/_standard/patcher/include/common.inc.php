@@ -69,9 +69,8 @@ function print_feedback( $feedback, $notes='' ) {
 */
 function updatePatchesRecord($patch_id, $updateInfo)
 {
-	global $db;
-	
-	$sql_prefix = "Update ". TABLE_PREFIX. "patches set ";
+
+	$sql_prefix = "Update %spatches set ";
 	
 	foreach ($updateInfo as $key => $value)
 	{
@@ -79,8 +78,7 @@ function updatePatchesRecord($patch_id, $updateInfo)
 	}
 	
 	$sql = substr($sql_prefix . $sql_middle, 0, -2) . " where patches_id = " . $patch_id;
-
-	$result = mysql_query($sql, $db) or die(mysql_error());
+	$result = queryDB($sql, array(TABLE_PREFIX));
 	
 	return true;
 }
@@ -127,17 +125,15 @@ function clear_dir($dir) {
  */
 function is_patch_installed($patch_id)
 {
-	global $db;
-	
 	// Only displays the patches that are not installed
-	$sql = "select count(*) num_of_installed from ".TABLE_PREFIX."patches " .
-	       "where atutor_patch_id = '" . $patch_id ."'".
-	       " and applied_version = '".VERSION."'".
-	       " and status like '%Installed'";
 
-	$result = mysql_query($sql, $db) or die(mysql_error());
-	$row = mysql_fetch_assoc($result);
-	
+	$sql = "select count(*) num_of_installed from %spatches " .
+	       "where atutor_patch_id = '%s'".
+	       " and applied_version = '%s'".
+	       " and status like '%%Installed'";
+	$row = queryDB($sql,array(TABLE_PREFIX, $patch_id, VERSION), TRUE);
+
+		
 	if ($row["num_of_installed"] > 0) return true;
 	else return false;
 }
