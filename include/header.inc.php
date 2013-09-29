@@ -168,12 +168,29 @@ $_sub_level_pages        = get_sub_navigation($current_page);
 $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 
 $_path = get_path($current_page);
-
 unset($_path[0]);
+if (isset($_pages[$current_page]['title'])) {
+	$_page_title = $_pages[$current_page]['title'];
+} else {
+	$_page_title = _AT($_pages[$current_page]['title_var']);
+}
 
+/*****
+* When setting the back_to_page, determine the URL the tool is being accessed from
+* and the title of that page, and hold in the SESSION for as long as that tool
+* is being used. Allows return via a student page or the Manage page.
+****/
+if(!isset($_SESSION['tool_origin'])){
+    $_SESSION['origin_title'] = $_page_title;
+}
 if(isset($_SESSION['tool_origin'])){
-    $back_to_page = $_SESSION['tool_origin'];
-}else if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
+    if($_SESSION['tool_origin']['url'] == $_base_href.$current_page){
+        unset($_SESSION['tool_origin']);
+        unset($back_to_page);
+    }else{
+        $back_to_page = $_SESSION['tool_origin'];
+    }
+} else if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
 } else if (isset($_path[1]['url'], $_sub_level_pages[0]['url']) && $_path[1]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = isset($_path[2]) ? $_path[2] : null;
@@ -194,13 +211,13 @@ if (isset($_SESSION['member_id']) && $_SESSION['member_id']) {
 }
 
 $_path = array_reverse($_path);
-
+/*
 if (isset($_pages[$current_page]['title'])) {
 	$_page_title = $_pages[$current_page]['title'];
 } else {
 	$_page_title = _AT($_pages[$current_page]['title_var']);
 }
-
+*/
 
 
 /* calculate the section_title: */

@@ -1128,7 +1128,7 @@ function tool_origin($path){
         }
     }else if(!isset($_SESSION['tool_origin']['url'])){
         $_SESSION['tool_origin']['url'] = $path;
-        $_SESSION['tool_origin']['title'] = $system_courses[$course];
+        $_SESSION['tool_origin']['title'] = $_SESSION['origin_title'];
     }
 }
 

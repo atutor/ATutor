@@ -358,7 +358,7 @@ global $system_courses, $_custom_css, $db;
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">
-				<img width="10" height="11" alt="<?php echo _AT('back_to').' '.htmlentities_utf8($this->back_to_page['title']); ?>" src="<?php echo $this->base_href; ?>images/arrowicon.gif" style="float:left;" class="img1111"/></a>&nbsp;
+				<img width="25" height="24" alt="<?php echo _AT('back_to').' '.htmlentities_utf8($this->back_to_page['title']); ?>" title="<?php echo _AT('back_to').' '.htmlentities_utf8($this->back_to_page['title']); ?>" src="<?php echo $this->base_href; ?>images/goback.png" style="float:left;" class="imggoback"/></a>&nbsp;
 			<?php endif; ?>
 			</div>
 
