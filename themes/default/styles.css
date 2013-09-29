@@ -1619,6 +1619,7 @@ ul#topnavlist li {
 	list-style: none;
 	display: inline-block;
 	height:2.0em;
+    border-bottom: 3px solid transparent;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
 
@@ -1636,7 +1637,7 @@ ul#topnavlist li, ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavl
 	
 
 }
-ul#topnavlist li a.active{
+ul#topnavlist li a.active, ul#topnavlist li:hover, ul#topnavlist li a:focus{
 		border-bottom: 3px solid #D26911;
 }
 ul#topnavlist li a {
@@ -1956,6 +1957,7 @@ div.home_box {
 }
 div#subnavlistcontainer {
 	width:90%;
+	border-bottom:1px solid #E5E5E5;
 	margin:auto;
 	height:2em;
 
@@ -2007,10 +2009,10 @@ ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li:hover{
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
-	border-bottom:thin solid #F4F0CB;
+	border-bottom:1px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-ul#subnavlist li.active{
+ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li a:focus{
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
@@ -2020,7 +2022,8 @@ ul#subnavlist li.active{
 ul#subnavlist li a {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
-    	height: 1.5em;
+    height: 1.5em;
+    padding:.2em;
    	text-decoration:underline;
 	font-weight:500;
 }
