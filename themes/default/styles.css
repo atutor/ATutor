@@ -1123,13 +1123,14 @@ h2.box {
 	padding: 2px;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	padding:.2em;
+	padding:.5em;
 /*	border-top:1px solid #B7C68B;
 	border-left:1px solid #B7C68B;
 	border-right:1px solid #B7C68B;
 	*/
-	      background-image: linear-gradient(#FAFAFA, #EAEAEA);
-		border-bottom:1px solid #F4F0CB;
+	height:2em;
+	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	border-bottom:1px solid #F4F0CB;
 /*	-moz-box-shadow:.1em .1em .1em #999999;
 	box-shadow: .1em .1em .1em #999999;*/
 }
@@ -1618,7 +1619,7 @@ ul#topnavlist li {
 
 	list-style: none;
 	display: inline-block;
-	height:2.0em;
+	height:1.9em;
     border-bottom: 3px solid transparent;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
@@ -1669,24 +1670,48 @@ ul#topnavlist li a.selected {
 }
 
 ol#tools>li:hover {
-	border: 1px solid #e0e0e0;
-	background-color: #DED29E; 
+	border: 1px solid #E5E5E5;
+	background-color: #F3F3F3; 
 }
 
 /*  tool list on admin home and manage screens  */
+/*
  li.top-tool { 
+    text-align: top;
 	list-style: none;
 	padding: 2px 2px 2px 5px;
 	margin-bottom: 5px; 
-	margin-left:-1em;
+	width:20%;
+	min-width:12em;
+	height:15em;
 	margin-right:1em;
 	line-height: 200%; 
-	background-color: #F4F0CB; 
+	background-color: #F5F9FC; 
 	border-bottom: 1px solid #efefef; 
 	border: 1px solid #F4F0CB;
+	display:inline-block;
 }
-
-li.top-tool a {  font-weight: bold; } 
+*/
+ li.top-tool { 
+    padding:.3em;
+	background-color: #F5F9FC; 
+	border: 1px solid #F4F0CB;
+ 	display:inline-block;
+    vertical-align:top;
+	width:20%;
+	min-width:12em;
+	height:14em; 
+	line-height: 200%;	
+	margin: 5px;
+ }
+li.top-tool a {  
+    font-weight: bold; 
+    width:12em;
+    height:2em;
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    border-bottom: 1px solid #F4F0CB;
+} 
 
 li.child-tool a { 
 	font-weight: normal; 
@@ -1697,15 +1722,16 @@ ul.child-top-tool {
 	margin-top: -5px;
 	padding-left: 0px;
 	margin-left: 0px;
-	display: inline;
 }
 ul.child-top-tool:before {
-	content: " : ";
+/*	content: " : ";*/
 }
 
 li.child-tool {
-	display: inline;
+	list-style: none;
 	margin-right: 5px;
+	margin-left: 5px;
+	
 /*	font-size: 80%;*/
 }
 
@@ -2596,6 +2622,7 @@ height:1.9em;
 width:1.9em;
 margin-top:-.3em;
 margin-right:1em;
+margin-left:-3.5em;
 }
 input[type=image].fl-force-right{
 height:.9em;
