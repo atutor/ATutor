@@ -257,7 +257,7 @@ global $system_courses, $_custom_css, $db;
 </div>
 
 <div class="logoutbar">
-
+<?php  admin_switch(); ?>
 	<div>
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
 		<?php $path_parts = explode("/", $this->current_top_level_page); 

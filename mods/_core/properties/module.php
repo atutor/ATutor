@@ -43,9 +43,9 @@ $this->_pages['mods/_core/properties/course_properties.php']['guide']     = 'ins
 	$this->_pages['mods/_core/properties/access.php']['parent']    = 'mods/_core/properties/course_properties.php';
 	$this->_pages['mods/_core/properties/access.php']['guide']     = 'instructor/?p=authenticated_access.php';
 	
-if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ADMIN, TRUE) && $_SESSION['hide_admin'] == 0){	
-    $this->_pages['mods/_core/properties/course_properties.php']['title_var'] = 'properties';
-    $this->_pages['mods/_core/properties/course_properties.php']['other_parent']    = 'index.php';
-    $this->_pages['index.php']['children']  = array('mods/_core/properties/course_properties.php');
+if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ADMIN, TRUE)) && $_SESSION['hide_admin'] == 1){	
+   // $this->_pages['mods/_core/properties/course_properties.php']['title_var'] = 'properties';
+   //$this->_pages['mods/_core/properties/course_properties.php']['other_parent']    = 'index.php';
+   $this->_pages['index.php']['children']  = array('mods/_core/properties/course_properties.php');
 }
 ?>

@@ -163,6 +163,22 @@ if (empty($_top_level_pages)) {
 		$_top_level_pages = get_main_navigation($_pages[AT_NAV_COURSE][0]);
 	}
 }
+
+/****
+Toggle the hide_admin Session variable to turn admin tools on or off
+****/
+if($_GET['hide_admin'] == '2'){
+	unset($_SESSION['hide_admin']);
+	$msg->addFeedback('TOOLS_OFF');
+	header('Location:'.$_SERVER['PHP_SELF']);
+	exit;
+} else if($_GET['hide_admin'] == '1') {
+	$_SESSION['hide_admin'] = 1;
+	$msg->addFeedback('TOOLS_ON');
+	header('Location:'.$_SERVER['PHP_SELF']);
+	exit;
+}
+
 $_sub_level_pages        = get_sub_navigation($current_page);
 
 $_current_sub_level_page = get_current_sub_navigation_page($current_page);
@@ -255,7 +271,7 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 } else if (!$_SESSION['course_id']) {
 	$section_title = _AT('my_start_page');
 }
-//debug($_path);
+
 $savant->assign('current_top_level_page', $_current_top_level_page);
 $savant->assign('sub_level_pages', $_sub_level_pages);
 $savant->assign('current_sub_level_page', $_current_sub_level_page);
@@ -325,13 +341,30 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 	*/
 }
 
+function admin_switch(){ 
+	if($_SESSION['is_admin'] > 0) {?>
+		<ul id="admin_switch">
+				<li><?php echo _AT('manage'); ?></li>
+			<?php if($_SESSION['hide_admin'] > 0){ ?>
+				<li  class="active left">On</li>
+			<?php }else{ ?>
+				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=1">On</a></li>
+			<?php } ?>
+			 <?php if($_SESSION['hide_admin'] > 0){ ?>
+				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=2">Off</a></li>
+			<?php }else{ ?>
+				<li class="active right">Off</li>
+			<?php } ?>   
+		</ul>
+    <?php } ?>
+<?php } 
+    
 // array of content tools for shortcuts tool bar.
 if (isset($_tool_shortcuts)) $savant->assign('shortcuts', $_tool_shortcuts);
 
 /* Register our Errorhandler on everypage */
 //require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 //$err = new ErrorHandler();
-
 
 //TODO*******************BOLOGNA*******************REMOVE ME*******************/
 // if filemanager is a inside a popup or a frame
