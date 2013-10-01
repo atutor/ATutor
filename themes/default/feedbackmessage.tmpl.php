@@ -9,7 +9,7 @@
  
 // header
 ?>
-<div id="feedback">
+<div id="feedback" role="alertdialog">
 	<?php if (is_array($this->item)) : ?>
 		<ul>
 		<?php foreach($this->item as $e) : ?>
