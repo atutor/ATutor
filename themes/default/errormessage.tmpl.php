@@ -9,7 +9,7 @@
  
 // header
 ?>
-<div id="error">
+<div id="error" role="alertdialog">
 	<h4><?php echo _AT('the_follow_errors_occurred'); ?></h4>
 	<?php if (is_array($this->item)) : ?>
 		<ul>

@@ -9,7 +9,7 @@
  
 ?>
 
-<div id="warning">
+<div id="warning" role="alertdialog">
 	<?php if (is_array($this->item)) : ?>
 		<ul>
 		<?php foreach($this->item as $e) : ?>

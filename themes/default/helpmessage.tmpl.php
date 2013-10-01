@@ -9,7 +9,7 @@ global $_base_href;
 
 ?>
 
-<div id="help" class="divClass">
+<div id="help" class="divClass" role="alertdialog">
     <a href="#" onclick="return false;" id="delete" class="deleteDiv">
         <img src="<?php echo $_base_href; ?>mods/helpme/images/close.png" alt="<?php echo _AT('helpme_dismiss'); ?>" title="<?php echo _AT('helpme_dismiss'); ?>" role="link"/>
     </a>
