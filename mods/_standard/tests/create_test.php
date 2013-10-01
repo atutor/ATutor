@@ -18,13 +18,15 @@ require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.p
 $_custom_head .= '<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_standard/tests/js/tests.js"></script>';
 
 authenticate(AT_PRIV_TESTS);
-
+tool_origin();
 $test_type = 'normal';
 
 if (isset($_POST['cancel'])) {
     $msg->addFeedback('CANCELLED');
-    header('Location: index.php');
-    exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 } else if (isset($_POST['submit'])) {
     $missing_fields                = array();
     $_POST['title']                = $addslashes(trim($_POST['title']));
@@ -196,8 +198,10 @@ if (isset($_POST['cancel'])) {
         }
 
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-        header('Location: index.php');
-        exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
     }
 }
 

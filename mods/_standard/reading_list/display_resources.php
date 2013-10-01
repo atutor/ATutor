@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
-
+tool_origin();
 if (isset($_GET['edit'])) {
 	$_GET['resource_id'] = intval($_GET['resource_id']);
 

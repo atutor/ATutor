@@ -16,11 +16,14 @@ define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_GLOSSARY);
+tool_origin();
 
 if ($_POST['cancel']) {	
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
-	exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 }
 
 if (isset($_POST['submit'])) {
@@ -77,7 +80,9 @@ if (isset($_POST['submit'])) {
 		$result = queryDB($sql, array(TABLE_PREFIX), false, false);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: index.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 	$_GET['pcid'] = $_POST['pcid'];

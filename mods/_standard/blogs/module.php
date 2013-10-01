@@ -42,6 +42,12 @@ if (isset($_REQUEST['oid'])) {
 $_pages['mods/_standard/blogs/delete_comment.php']['title_var'] = 'delete';
 
 
+if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GROUPS, TRUE)) && $_SESSION['hide_admin'] == 1){	
+	$this->_pages['mods/_core/groups/create.php']['title_var'] = 'create_groups';
+	$this->_pages['mods/_core/groups/create.php']['parent']    = 'mods/_core/groups/index.php';
+    $this->_pages['mods/_standard/blogs/index.php']['children']  = array('mods/_core/groups/create.php');
+}
+
 function blogs_get_group_url($group_id) {
 	return 'mods/_standard/blogs/view.php?ot='.BLOGS_GROUP.SEP.'oid='.$group_id;
 }

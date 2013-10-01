@@ -64,7 +64,6 @@ if (isset($_POST['cancel']))
 	$return_url = $_SESSION['tool_origin']['url'];
     tool_origin('off');
 	header('Location: '.$return_url);
-	//header('Location: gradebook_tests.php');
 	exit;
 } 
 else if (isset($_POST['addATutorTest'])) 
@@ -111,8 +110,6 @@ else if (isset($_POST['addATutorTest']))
 	}
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-	//header('Location: gradebook_tests.php');
-	//header("Location: ".$_pages['mods/_standard/gradebook/gradebook_add_tests.php']['parent']);
         $return_url = $_SESSION['tool_origin']['url'];
         tool_origin('off');
 		header('Location: '.$return_url);
@@ -148,7 +145,6 @@ else if (isset($_POST['addExternalTest']))
 		$result_insert = queryDB($sql_insert, array(TABLE_PREFIX, $_SESSION["course_id"], $_POST["title"], $date_due, $_POST["selected_grade_scale_id"]));
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		//header('Location: gradebook_tests.php');
         $return_url = $_SESSION['tool_origin']['url'];
         tool_origin('off');
 		header('Location: '.$return_url);

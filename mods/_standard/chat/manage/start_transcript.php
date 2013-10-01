@@ -14,7 +14,7 @@
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-
+tool_origin();
 /* @See ./admin.php */
 function writeAdminSettings(&$admin) {
 	if (file_exists(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/admin.settings')) {
@@ -121,8 +121,10 @@ if (isset($_POST['submit'])) {
 			}
 			flock($fp, LOCK_UN);
 
-			header('Location: index.php');
-			exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 		}
 	} else if ($_POST['function'] == 'stopTran') {
 		$admin['produceTran'] = 0;
@@ -137,7 +139,9 @@ if (isset($_POST['submit'])) {
 		}
 		flock($fp, LOCK_UN);
 
-		header('Location: index.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 } else if ($_GET['function'] == 'clearOldChatIDs') {

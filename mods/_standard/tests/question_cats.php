@@ -17,7 +17,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TESTS);
-
+tool_origin();
 if (isset($_POST['edit'], $_POST['category'])) {
 	header('Location: question_cats_manage.php?catid='.$_POST['category']);
 	exit;

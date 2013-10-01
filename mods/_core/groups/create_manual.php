@@ -18,8 +18,9 @@ authenticate(AT_PRIV_GROUPS);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index.php');
-	exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 } else if (isset($_POST['submit'])) {
 	$modules = '';
 	if (isset($_POST['modules'])) {
@@ -82,9 +83,9 @@ if (isset($_POST['cancel'])) {
 		}
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-
-		header('Location: index.php');
-		exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 	} else {
 		$_POST['new_type']    = $stripslashes($_POST['new_type']);
 		$_POST['prefix']      = $stripslashes($_POST['prefix']);

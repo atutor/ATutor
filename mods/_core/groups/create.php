@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_GROUPS);
-
+tool_origin();
 if (isset($_GET['submit'], $_GET['create']) && ($_GET['create'] == 'automatic')) {
 	header('Location: create_automatic.php');
 	exit;

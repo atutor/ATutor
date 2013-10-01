@@ -14,11 +14,14 @@ define('AT_INCLUDE_PATH', '../../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_POLLS);
+tool_origin();
 
 if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: index.php');
-	exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 }
 
 if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
@@ -50,7 +53,9 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		$result = mysql_query($sql,$db);
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: index.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 	for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {

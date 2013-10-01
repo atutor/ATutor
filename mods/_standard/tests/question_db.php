@@ -14,7 +14,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/classes/testQuestions.class.php');
 authenticate(AT_PRIV_TESTS);
-
+tool_origin();
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$course_base_href = 'get.php/';
 } else {

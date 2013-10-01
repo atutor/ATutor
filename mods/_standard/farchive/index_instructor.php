@@ -2,6 +2,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
+tool_origin();
 
 $sql = "SELECT forum_id, title FROM %sforums";
 $rows_forums = queryDB($sql, array(TABLE_PREFIX));

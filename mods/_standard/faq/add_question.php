@@ -15,11 +15,13 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FAQ);
-
+tool_origin();
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: index_instructor.php');
-	exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 } else if (isset($_POST['submit'])) {
 	$_POST['question'] = trim($_POST['question']);
 	$_POST['answer'] = trim($_POST['answer']);
@@ -60,7 +62,9 @@ if (isset($_POST['cancel'])) {
 		}
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		header('Location: index_instructor.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 }
