@@ -220,17 +220,17 @@ class PhotoAlbum {
      * @return  int         album_id, FALSE if failed.
      */
     function createAlbum($name, $location, $description, $type, $permission, $member_id, $photo_id=0){
-        global $addslashes, $db;
+ //       global $addslashes, $db;
 
         //handle input
-        $name		= $addslashes($name);
-        $locatoin	= $addslashes($location);
-        $description = $addslashes($description);
+//        $name		= $addslashes($name);
+//        $locatoin	= $addslashes($location);
+//        $description = $addslashes($description);
         $type		= intval($type);
         $type		= ($type<=0)?AT_PA_TYPE_MY_ALBUM:$type;
-        $permission	= intval($permission);
-        $member_id  = intval($member_id);
-        $photo_id	= intval($photo_id);
+//        $permission	= intval($permission);
+//        $member_id  = intval($member_id);
+//        $photo_id	= intval($photo_id);
 
 /*        $sql = "INSERT INTO ".TABLE_PREFIX."pa_albums (name, location, description, type_id, member_id, permission, photo_id, created_date, last_updated) VALUES ('$name', '$location', '$description', $type, $member_id, $permission, $photo_id, NOW(), NOW())";
         $result = mysql_query($sql, $db);
@@ -286,11 +286,11 @@ class PhotoAlbum {
      * @param	int			permission, 0 for private, 1 for shared
      */
     function editAlbum($name, $location, $description, $type, $permission){
-        global $db, $addslashes;
+//        global $db, $addslashes;
         $id			 = $this->id;
-        $name		 = $addslashes($name);
-        $location	 = $addslashes($location);
-        $description = $addslashes($description);
+//        $name		 = $addslashes($name);
+//        $location	 = $addslashes($location);
+//        $description = $addslashes($description);
         $type		 = ($type==AT_PA_TYPE_COURSE_ALBUM)?AT_PA_TYPE_COURSE_ALBUM:AT_PA_TYPE_MY_ALBUM;
         $permission	 = ($permission==AT_PA_SHARED_ALBUM)?AT_PA_SHARED_ALBUM:AT_PA_PRIVATE_ALBUM;
         $info		 = $this->getAlbuminfo();
@@ -323,7 +323,7 @@ class PhotoAlbum {
      */
     function deleteAlbum(){
         //TODO Error checking on each step, if anyone fails, should report it to user
-        global $db;
+     //   global $db;
         $id = $this->id;
 
         //clean directory		
@@ -389,29 +389,39 @@ class PhotoAlbum {
         //$sql = 'UPDATE '.TABLE_PREFIX.'pa_albums SET last_updated=NOW() WHERE id='.$this->id;
         //mysql_query($sql, $db);
         $sql = 'UPDATE %spa_albums SET last_updated=NOW() WHERE id=%d';
-        mysql_query($sql, array(TABLE_PREFIX, $this->id));
+        queryDB($sql, array(TABLE_PREFIX, $this->id));
     }
 
     /** 
      * Get album photos
      */
     function getAlbumPhotos($offset=-1){
-        global $db;
+      //  global $db;
         $id = $this->id;
         $offset = intval($offset);
         $rows = array();
-
+/*
         $sql = "SELECT photos.* FROM " .TABLE_PREFIX."pa_photos photos LEFT JOIN ".TABLE_PREFIX."pa_albums albums ON albums.id=photos.album_id WHERE albums.id=$id ORDER BY ordering";
         if ($offset >= 0){
             $sql .= " LIMIT $offset ,".AT_PA_PHOTOS_PER_PAGE;
         }
 
         $result = mysql_query($sql, $db);
-        if ($result){
-            while ($row = mysql_fetch_assoc($result)){
+*/
+        $sql = "SELECT photos.* FROM %spa_photos photos LEFT JOIN %spa_albums albums ON albums.id=photos.album_id WHERE albums.id=%d ORDER BY ordering";
+        if ($offset >= 0){
+            $sql .= " LIMIT $offset ,".AT_PA_PHOTOS_PER_PAGE;
+        }
+
+        $rows = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $id));
+
+        //if ($result){
+        //    while ($row = mysql_fetch_assoc($result)){
+  /*      if (count($rows_photos) > 0){
+            foreach($rows_photos as $row){
                 $rows[] = $row;
             }
-        }
+        }*/
         return $rows;
     }
 
@@ -421,12 +431,15 @@ class PhotoAlbum {
      * @return  the album row, false on error
      */
     function getAlbumInfo(){
-        global $db;
+        //global $db;
         $id = $this->id;
-        $sql = "SELECT * FROM ".TABLE_PREFIX."pa_albums WHERE id=$id";
-        $result = mysql_query($sql, $db);
-        if ($result){
-            $row = mysql_fetch_assoc($result);
+        //$sql = "SELECT * FROM ".TABLE_PREFIX."pa_albums WHERE id=$id";
+        //$result = mysql_query($sql, $db);
+        $sql = "SELECT * FROM %spa_albums WHERE id=%d";
+        $row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);       
+        if(count($row) > 0){
+        //if ($result){
+            //$row = mysql_fetch_assoc($result);
             return $row;
         }
         return false;
@@ -437,7 +450,7 @@ class PhotoAlbum {
      * Default to be all.
      */
     function getAlbums($member_id, $type_id=-1, $offset=-1){
-        global $db;
+       // global $db;
         $type_id = intval($type_id);
         $member_id = intval($member_id);
         $offset = intval($offset);		
@@ -449,11 +462,11 @@ class PhotoAlbum {
             //if in my_start_page, get all enrolled course
             $course_sql = ($_SESSION['course_id']==0)?'':'AND ca.course_id='.$_SESSION['course_id'];
 
-            $sql = 'SELECT albums.* FROM '.TABLE_PREFIX.'pa_albums albums, 
-                        (SELECT ca.* FROM '.TABLE_PREFIX.'course_enrollment enrollments
-                            RIGHT JOIN '.TABLE_PREFIX."pa_course_album ca 
+            $sql = "SELECT albums.* FROM %spa_albums albums, 
+                        (SELECT ca.* FROM %scourse_enrollment enrollments
+                            RIGHT JOIN %spa_course_album ca 
                             ON enrollments.course_id=ca.course_id
-                            WHERE member_id=$member_id $course_id
+                            WHERE member_id=%d %d
                         ) AS allowed_albums
                         WHERE albums.id=allowed_albums.album_id";
         }
@@ -461,37 +474,50 @@ class PhotoAlbum {
             $sql .= " AND type_id=$type_id";
         }
         if ($offset > -1){
-            $sql .= " LIMIT $offset ," . AT_PA_ALBUMS_PER_PAGE;
+            $sql .= " LIMIT %d ," . AT_PA_ALBUMS_PER_PAGE;
+            $rows_albums = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $member_id, $course_id, $offset));
+        } else {
+            $rows_albums = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $member_id, $course_id));
         }
-        $result = mysql_query($sql, $db);
-        if($result){
-            while($row = mysql_fetch_assoc($result)){
+        //$result = mysql_query($sql, $db);
+/*        if(count($rows_albums) > 0){
+            foreach($rows_albums as $row){
+            //while($row = mysql_fetch_assoc($result)){
                 $rows[$row['id']] = $row;
             }
-        }
-        return $rows;
+        } */
+        return $rows_albums;
     }
 
     /**
      * Get all albums, used by Admin only.
      */
     function getAllAlbums($offset=-1){
-        global $db;
+        //global $db;
         $offset = intval($offset);
-
-        $sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_albums';
+/*        $sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_albums';
         
         if ($offset > -1){
              $sql .= " LIMIT $offset ," . AT_PA_ADMIN_ALBUMS_PER_PAGE;
         }
 
         $result = mysql_query($sql, $db);
-        if($result){
+*/
+        $sql = 'SELECT * FROM %spa_albums';
+        
+        if ($offset > -1){
+             $sql .= " LIMIT $offset ," . AT_PA_ADMIN_ALBUMS_PER_PAGE;
+        }
+
+        $rows_albums = queryDB($sql, array(TABLE_PREFIX));
+/*        if($result){
             while($row = mysql_fetch_assoc($result)){
                 $rows[$row['id']] = $row;
             }
         }
         return $rows;
+*/
+        return $rows_albums;
     }
 
 
@@ -501,20 +527,26 @@ class PhotoAlbum {
      * @param	int			Resultset's limit
      */
     function getSharedAlbums($isShared=true, $offset=-1){
-        global $db;
+        //global $db;
         $offset = intval($offset);
         $permission = ($isShared)? 1 : 0;
-
+/*
         $sql = 'SELECT * FROM '.TABLE_PREFIX."pa_albums WHERE permission=$permission";
         if ($offset > -1){
              $sql .= " LIMIT $offset ," . AT_PA_ALBUMS_PER_PAGE;
         }
         $result = mysql_query($sql, $db);
-        if ($result){
-            while ($row = mysql_fetch_assoc($result)){
-                $rows[$row['id']] = $row;
-            }
+*/
+        $sql = "SELECT * FROM %spa_albums WHERE permission=%d";
+        if ($offset > -1){
+             $sql .= " LIMIT $offset ," . AT_PA_ALBUMS_PER_PAGE;
         }
+        $rows = queryDB($sql, array(TABLE_PREFIX, $permission));
+       // if ($result){
+       //     while ($row = mysql_fetch_assoc($result)){
+       //         $rows[$row['id']] = $row;
+        //    }
+       // }
         return $rows;
     }
 
@@ -551,12 +583,14 @@ class PhotoAlbum {
         if (admin_authenticate(AT_ADMIN_PRIV_PHOTO_ALBUM, true)){
             return true;
         }
-
-        $sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_albums WHERE id=$album_id";
-        $result = mysql_query($sql, $db);
-        if ($result){
-            $row = mysql_fetch_assoc($result);
-            return ($row['member_id']==$member_id);
+       // $sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_albums WHERE id=$album_id";
+       // $result = mysql_query($sql, $db);
+        $sql = "SELECT member_id FROM %spa_albums WHERE id=%d";
+        $row_member = queryDB($sql, array(TABLE_PREFIX, $album_id), TRUE);
+        if(count($row_member) > 0){
+        //if ($result){
+            //$row = mysql_fetch_assoc($result);
+            return ($row_member['member_id']==$member_id);
         }
         return false;
     }
@@ -568,15 +602,19 @@ class PhotoAlbum {
      * @return	True if the given user has the privilege to delete/edit.
      */
     function checkPhotoPriv($photo_id, $member_id){
-        global $db;
-        $photo_id = intval($photo_id);
+       // global $db;
+       // $photo_id = intval($photo_id);
         $member_id = intval($member_id);
 
-        $sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_photos WHERE id=$photo_id";
-        $result = mysql_query($sql, $db);
-        if ($result){
-            $row = mysql_fetch_assoc($result);
-            return ($row['member_id']==$member_id);
+       // $sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_photos WHERE id=$photo_id";
+       // $result = mysql_query($sql, $db);
+        $sql = "SELECT member_id FROM %spa_photos WHERE id=%d";
+        $row_member = queryDB($sql, array(TABLE_PREFIX, $photo_id), TRUE);
+        
+        if(count($row_member) > 0){
+        //if ($result){
+        //    $row = mysql_fetch_assoc($result);
+            return ($row_member['member_id']==$member_id);
         }
         return false;
     }
@@ -590,15 +628,19 @@ class PhotoAlbum {
         $comment_id = intval($comment_id);
         $member_id = intval($member_id);
 
-        if ($isPhoto){
-            $sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_photo_comments WHERE id=$comment_id";
+        if (isset($isPhoto)){
+            //$sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_photo_comments WHERE id=$comment_id";
+             $sql = "SELECT member_id FROM %spa_photo_comments WHERE id=%d";
         } else {
-            $sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_album_comments WHERE id=$comment_id";
+            //$sql = "SELECT member_id FROM ".TABLE_PREFIX."pa_album_comments WHERE id=$comment_id";
+            $sql = "SELECT member_id FROM %spa_album_comments WHERE id=%d";
         }
-        $result = mysql_query($sql, $db);
-        if ($result){
-            $row = mysql_fetch_assoc($result);
-            return ($row['member_id']==$member_id);
+        //$result = mysql_query($sql, $db);
+        $row_comment = queryDB($sql, array(TABLE_PREFIX, $comment_id), TRUE);
+        if(count($row_comment) > 0){       
+        //if ($result){
+         //   $row = mysql_fetch_assoc($result);
+            return ($row_comment['member_id']==$member_id);
         }
         return false;
     }
@@ -611,18 +653,20 @@ class PhotoAlbum {
      * @param	boolean	true if it is photo_id, false otherwise
      */
     function addComment($id, $comment, $member_id, $isPhoto){
-        global $addslashes, $db;
+//        global $addslashes, $db;
 
-        $id = intval($id);
-        $member_id = intval($member_id);
-        $comment = $addslashes($comment);
+//        $id = intval($id);
+ //       $member_id = intval($member_id);
+//        $comment = $addslashes($comment);
 
         if(!$isPhoto){
-            $sql =	'INSERT INTO '.TABLE_PREFIX."pa_album_comments (album_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
+            //$sql =	'INSERT INTO '.TABLE_PREFIX."pa_album_comments (album_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
+            $sql =	"INSERT INTO %spa_album_comments (album_id, comment, member_id, created_date) VALUES (%d, '%s', %d, NOW())";
         } else {
-            $sql =	'INSERT INTO '.TABLE_PREFIX."pa_photo_comments (photo_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
+            //$sql =	'INSERT INTO '.TABLE_PREFIX."pa_photo_comments (photo_id, comment, member_id, created_date) VALUES ($id, '$comment', $member_id, NOW())";
+            $sql =	"INSERT INTO %spa_photo_comments (photo_id, comment, member_id, created_date) VALUES (%d, '%s', %d, NOW())";
         }
-        $result = mysql_query($sql, $db);
+        $result = queryDB($sql, array(TABLE_PREFIX, $id, $comment, $member_id));
         return $result;
     }
 
@@ -634,20 +678,23 @@ class PhotoAlbum {
      * @precondition	this->member_id has the privilige to edit comment.
      */
     function editComment($id, $comment, $isPhoto){
-        global $addslashes, $db;
+       // global $addslashes, $db;
 
-        $id = intval($id);
-        $comment = $addslashes($comment);
+        //$id = intval($id);
+      //  $comment = $addslashes($comment);
         if($id<1 || $comment==''){
             return false;
         }
 
         if (!$isPhoto){
-            $sql = 'UPDATE '.TABLE_PREFIX."pa_album_comments SET comment='$comment' WHERE id=$id";
+            //$sql = 'UPDATE '.TABLE_PREFIX."pa_album_comments SET comment='$comment' WHERE id=$id";
+            $sql = "UPDATE %spa_album_comments SET comment='%s' WHERE id=%d";
         } else {
-            $sql = 'UPDATE '.TABLE_PREFIX."pa_photo_comments SET comment='$comment' WHERE id=$id";
+            //$sql = 'UPDATE '.TABLE_PREFIX."pa_photo_comments SET comment='$comment' WHERE id=$id";
+            $sql = "UPDATE %spa_photo_comments SET comment='%s' WHERE id=%d";
         }
-        $result = mysql_query($sql, $db);
+        //$result = mysql_query($sql, $db);
+        $result = queryDB($sql, array(TABLE_PREFIX, $comment, $id));
         return $result;
     }
 
@@ -658,39 +705,47 @@ class PhotoAlbum {
      * @param	boolean	true of it is photo_id, false otherwise.
      */
     function getComments($id, $isPhoto){
-        global $db;
+ //       global $db;
         
-        $id = intval($id);
+//        $id = intval($id);
 
         if ($isPhoto){
-            $sql = 'SELECT * FROM '.TABLE_PREFIX."pa_photo_comments WHERE photo_id=$id";
+        //    $sql = 'SELECT * FROM '.TABLE_PREFIX."pa_photo_comments WHERE photo_id=$id";
+            $sql = "SELECT * FROM %spa_photo_comments WHERE photo_id=%d";
         } else {
-            $sql = 'SELECT * FROM '.TABLE_PREFIX."pa_album_comments WHERE album_id=$id";
+        //    $sql = 'SELECT * FROM '.TABLE_PREFIX."pa_album_comments WHERE album_id=$id";
+            $sql = "SELECT * FROM %spa_album_comments WHERE album_id=%d";
         }
         $sql .= ' ORDER BY created_date';
 
-        $result = mysql_query($sql, $db);
-        if($result){
+        //$result = mysql_query($sql, $db);
+        $rows_comments = queryDB($sql, array(TABLE_PREFIX, $id));
+        
+ /*       if($result){
             while ($row = mysql_fetch_assoc($result)){
                 $rows[] = $row;
             }
         }
-        return $rows;
+*/
+        return $rows_comments;
     }
 
     /**
      * Delete photo comment 
      */
     function deleteComment($id, $isPhoto){
-        global $db;
-        $id = intval($id);
+//        global $db;
+//        $id = intval($id);
         
         if ($isPhoto){
-            $sql = "DELETE FROM ".TABLE_PREFIX."pa_photo_comments WHERE id=$id";
+        //    $sql = "DELETE FROM ".TABLE_PREFIX."pa_photo_comments WHERE id=$id";
+            $sql = "DELETE FROM %spa_photo_comments WHERE id=%d";
         } else {
-            $sql = "DELETE FROM ".TABLE_PREFIX."pa_album_comments WHERE id=$id";
+        //    $sql = "DELETE FROM ".TABLE_PREFIX."pa_album_comments WHERE id=$id";
+            $sql = "DELETE FROM %spa_album_comments WHERE id=%d";
         }
-        mysql_query($sql, $db);
+        //mysql_query($sql, $db);
+        queryDB($sql, array(TABLE_PREFIX, $id));
     }
 
     /**
@@ -700,7 +755,7 @@ class PhotoAlbum {
      * @return	[Array, Array]	First array is albums, second array are matched photos
      */
     function search($words){
-        global $db, $addslashes;
+        //global $db, $addslashes;
         
         //init
         $visible_photos = array();
@@ -713,8 +768,9 @@ class PhotoAlbum {
 
         //filter 
         foreach($words as $k=>$v){
-            $v = $addslashes(trim($v));
-            $query .= "(description LIKE '%$v%' OR name LIKE '%$v%' OR alt_text LIKE '%$v%') OR ";	//for sql
+        //    $v = $addslashes(trim($v));
+            $v = trim($v);
+            $query .= "(description LIKE '%%$v%%' OR name LIKE '%%$v%%' OR alt_text LIKE '%%$v%%') OR ";	//for sql
             $pattern .= $v.'|';	//regex for albums
         }
         $pattern = str_replace (array('>', '<', '/', '\\'), "", $pattern);
@@ -723,7 +779,7 @@ class PhotoAlbum {
         //TODO: Optimize SQL, UNION is slow, but I think this is the fastest I can get, prove me wrong.
         //@harris
         /** Get all visible albums */
-        $sql = 'SELECT albums.* FROM '.TABLE_PREFIX.'pa_albums albums, 
+/*        $sql = 'SELECT albums.* FROM '.TABLE_PREFIX.'pa_albums albums, 
                     (SELECT ca.* FROM '.TABLE_PREFIX.'course_enrollment enrollments
                         RIGHT JOIN '.TABLE_PREFIX."pa_course_album ca 
                         ON enrollments.course_id=ca.course_id
@@ -733,23 +789,42 @@ class PhotoAlbum {
                 UNION
                 SELECT * FROM AT_pa_albums WHERE member_id=$_SESSION[member_id] OR permission=1";
         $result = mysql_query($sql, $db);
-        if (!$result){
+ */
+         $sql = "SELECT albums.* FROM %spa_albums albums, 
+                    (SELECT ca.* FROM %scourse_enrollment enrollments
+                        RIGHT JOIN %spa_course_album ca 
+                        ON enrollments.course_id=ca.course_id
+                        WHERE member_id=$_SESSION[member_id]
+                    ) AS allowed_albums
+                    WHERE albums.id=allowed_albums.album_id
+                UNION
+                SELECT * FROM AT_pa_albums WHERE member_id=%d OR permission=1";
+        $rows_albums = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $_SESSION[member_id]));
+        
+        if(count($rows_albums) == 0){
+        //if (!$result){
             return null;
         }
-        while($row = mysql_fetch_assoc($result)){
+        foreach($rows_albums as $row){
+        //while($row = mysql_fetch_assoc($result)){
             $visible_albums[$row['id']] = $row;
         }
         $visible_albums_ids = implode(', ', array_keys($visible_albums));
         
         /** Get all photos from these albums */
-        $sql = 'SELECT * FROM '.TABLE_PREFIX."pa_photos WHERE album_id IN ($visible_albums_ids)";		
+        //$sql = 'SELECT * FROM '.TABLE_PREFIX."pa_photos WHERE album_id IN ($visible_albums_ids)";		
+        $sql = "SELECT * FROM %spa_photos WHERE album_id IN (%s)";		
+
         $query = ' AND ' . substr($query, 0, -3);
         $sql = $sql . $query . ' LIMIT ' . AT_PA_PHOTO_SEARCH_LIMIT; 
-        $result = mysql_query($sql, $db);
-        if (!$result){
+        //$result = mysql_query($sql, $db);
+        $rows_photos = queryDB($sql, array(TABLE_PREFIX, $visible_albums_ids));
+        if(count($rows_photos) == 0){
+        //if (!$result){
             return null;
         }
-        while($row = mysql_fetch_assoc($result)){
+        foreach($rows_photos as $row){
+        //while($row = mysql_fetch_assoc($result)){
             $visible_photos[$row['id']] = $row;
         }
 
