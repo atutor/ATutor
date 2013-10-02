@@ -271,7 +271,6 @@ global $system_courses, $_custom_css, $db;
 			 <a href="<?php echo $this->base_path; ?>login.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('login'); ?></a> | <a href="<?php echo $this->base_path; ?>registration.php"><?php echo _AT('register'); ?></a>
 		<?php endif; ?>
 	</div>
-
 </div>
 
 	  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
@@ -299,6 +298,7 @@ global $system_courses, $_custom_css, $db;
 	      </ul>
       </div>
       <?php endif; ?>
+      <?php mobile_switch(); ?>
       </div>
 
 <div id="contentwrapper" 

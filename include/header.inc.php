@@ -178,7 +178,20 @@ if($_GET['hide_admin'] == '2'){
 	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
 }
-
+/****
+Toggle to switch between mobile and responsive themes
+****/
+if($_GET['mobile'] == '2'){
+	unset($_SESSION['responsive']);
+	$msg->addFeedback('MOBILE_OFF');
+	header('Location:'.$_SERVER['PHP_SELF']);
+	exit;
+} else if($_GET['mobile'] == '1') {
+	$_SESSION['responsive'] = 1;
+	$msg->addFeedback('MOBILE_ON');
+	header('Location:'.$_SERVER['PHP_SELF']);
+	exit;
+}
 $_sub_level_pages        = get_sub_navigation($current_page);
 
 $_current_sub_level_page = get_current_sub_navigation_page($current_page);
@@ -346,19 +359,35 @@ function admin_switch(){
 		<ul id="admin_switch">
 				<li><?php echo _AT('manage'); ?></li>
 			<?php if($_SESSION['hide_admin'] > 0){ ?>
-				<li  class="active left">On</li>
+				<li  class="active left"><?php echo _AT('on'); ?></li>
 			<?php }else{ ?>
-				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=1">On</a></li>
+				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=1"><?php echo _AT('on'); ?></a></li>
 			<?php } ?>
 			 <?php if($_SESSION['hide_admin'] > 0){ ?>
-				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=2">Off</a></li>
+				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=2"><?php echo _AT('off'); ?></a></li>
 			<?php }else{ ?>
-				<li class="active right">Off</li>
+				<li class="active right"><?php echo _AT('off'); ?></li>
 			<?php } ?>   
 		</ul>
     <?php } ?>
 <?php } 
-    
+function mobile_switch(){ 
+	if(is_mobile_device() > 0) {?>
+		<ul id="admin_switch">
+				<li><?php echo _AT('mobile'); ?></li>
+			<?php if($_SESSION['responsive'] > 0){ ?>
+				<li  class="active left"><?php echo _AT('on'); ?></li>
+			<?php }else{ ?>
+				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=1"><?php echo _AT('on'); ?></a></li>
+			<?php } ?>
+			 <?php if($_SESSION['responsive'] > 0){ ?>
+				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"><?php echo _AT('off'); ?></a></li>
+			<?php }else{ ?>
+				<li class="active right"><?php echo _AT('off'); ?></li>
+			<?php } ?>   
+		</ul>
+    <?php } ?>
+<?php } 
 // array of content tools for shortcuts tool bar.
 if (isset($_tool_shortcuts)) $savant->assign('shortcuts', $_tool_shortcuts);
 

@@ -337,9 +337,9 @@ function assign_session_prefs($prefs, $switch_mobile_theme = 0) {
 			$_SESSION['prefs'][$pref_name] = $value;
 		}
 	}
-	if (is_mobile_device() && $switch_mobile_theme) {
-		$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
-	}
+	//if (is_mobile_device() && $switch_mobile_theme) {
+	//	$_SESSION['prefs']['PREF_THEME'] = $_SESSION['prefs']['PREF_MOBILE_THEME'];
+	//}
 }
 
 function save_prefs( ) {
@@ -700,7 +700,12 @@ function get_main_theme_dir($customized) {
 function get_default_theme() {
 
 	if (is_mobile_device()) {
-		$default_status = 3;
+		//$default_status = 3;
+		if($_SESSION['responsive'] == 1){
+		    $default_status = 2;
+		}else{
+		    $default_status = 3;
+		}
 	} else {
 		$default_status = 2;
 	}
@@ -713,7 +718,11 @@ function get_default_theme() {
 
 function get_system_default_theme() {
 	if (is_mobile_device()) {
-		return 'mobile';
+		if($_SESSION['responsive'] == 1){
+		    return 'default';
+		}else{
+		    return 'mobile';
+		}
 	} else {
 		return 'default';
 	}

@@ -1985,7 +1985,7 @@ div#subnavlistcontainer {
 	width:90%;
 	border-bottom:1px solid #E5E5E5;
 	margin:auto;
-	height:2em;
+	height:auto;
 
 }
 div#subnavbacktopage {
@@ -3506,6 +3506,20 @@ background-color:#F5A59D;
     }
     .img-size-tree{
         font-size:1.5em;
+    }
+}
+/********** for 640px or less *********/
+@media screen and (max-device-width: 1000px) {
+
+    ul#subnavlist li{
+        float:left;
+        display: block;
+        width:90%;
+        height:auto;
+        text-align:left;
+        padding: 0em 0em 0em 0em;
+        background-color: #F3F3F3;
+    	background-image: linear-gradient(#FAFAFA, #EAEAEA);
     }
 }
 /********** for 640px or less *********/
