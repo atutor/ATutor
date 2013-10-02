@@ -285,7 +285,7 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 		<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 			<div class="subnavcontain">
 				<div class="rectangle">
-				<a id="content_link_phone"  class="content-expand" href="javascript:void(0);" >View Course Content</a> 
+				<a id="content_link_phone"  class="content-expand" href="javascript:void(0);" ><?php echo _AT(view_course_content); ?></a> 
 				<!-- <a href="#">content</a> -->
 				</div>
 			</div>
