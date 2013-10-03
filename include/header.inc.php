@@ -168,11 +168,13 @@ if (empty($_top_level_pages)) {
 Toggle the hide_admin Session variable to turn admin tools on or off
 ****/
 if($_GET['hide_admin'] == '2'){
+	global $msg;
 	unset($_SESSION['hide_admin']);
 	$msg->addFeedback('TOOLS_OFF');
 	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
 } else if($_GET['hide_admin'] == '1') {
+	global $msg;
 	$_SESSION['hide_admin'] = 1;
 	$msg->addFeedback('TOOLS_ON');
 	header('Location:'.$_SERVER['PHP_SELF']);
@@ -182,11 +184,13 @@ if($_GET['hide_admin'] == '2'){
 Toggle to switch between mobile and responsive themes
 ****/
 if($_GET['mobile'] == '2'){
+	global $msg;
 	unset($_SESSION['responsive']);
 	$msg->addFeedback('MOBILE_OFF');
 	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
 } else if($_GET['mobile'] == '1') {
+	global $msg;
 	$_SESSION['responsive'] = 1;
 	$msg->addFeedback('MOBILE_ON');
 	header('Location:'.$_SERVER['PHP_SELF']);
@@ -357,11 +361,10 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 function admin_switch(){ 
 	if($_SESSION['is_admin'] > 0) {?>
 		<ul id="admin_switch">
-				<li><?php echo _AT('manage'); ?></li>
 			<?php if($_SESSION['hide_admin'] > 0){ ?>
-				<li  class="active left"><?php echo _AT('on'); ?></li>
+				<li  class="active left"><?php echo _AT('manage'); ?></li>
 			<?php }else{ ?>
-				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=1"><?php echo _AT('on'); ?></a></li>
+				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=1"><?php echo _AT('manage'); ?></a></li>
 			<?php } ?>
 			 <?php if($_SESSION['hide_admin'] > 0){ ?>
 				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=2"><?php echo _AT('off'); ?></a></li>
@@ -374,17 +377,17 @@ function admin_switch(){
 function mobile_switch(){ 
 	if(is_mobile_device() > 0) {?>
 		<ul id="admin_switch">
-				<li><?php echo _AT('mobile'); ?></li>
-			<?php if($_SESSION['responsive'] > 0){ ?>
-				<li  class="active left"><?php echo _AT('on'); ?></li>
-			<?php }else{ ?>
-				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=1"><?php echo _AT('on'); ?></a></li>
-			<?php } ?>
 			 <?php if($_SESSION['responsive'] > 0){ ?>
-				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"><?php echo _AT('off'); ?></a></li>
+				<li class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"><?php echo _AT('mobile'); ?></a></li>
 			<?php }else{ ?>
-				<li class="active right"><?php echo _AT('off'); ?></li>
-			<?php } ?>   
+				<li class="active left"><?php echo _AT('mobile'); ?></li>
+			<?php } ?>
+			<?php if($_SESSION['responsive'] > 0){ ?>
+				<li  class="active right"><?php echo _AT('off'); ?></li>
+			<?php }else{ ?>
+				<li  class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=1"><?php echo _AT('off'); ?></a></li>
+			<?php } ?>
+   
 		</ul>
     <?php } ?>
 <?php } 

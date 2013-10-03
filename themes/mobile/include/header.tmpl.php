@@ -151,11 +151,13 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 				<?php endif; ?>
 				</h1>
 		</div>
+
 	</div> <!--  END HEADER -->
 
-
 	<div id="contentwrapper">
+
 	<div id="navigation-contentwrapper">
+		<?php mobile_switch(); ?>
 	<div id="navigation-bar">
 
 			<?php if ($this->current_sub_level_page): ?>
@@ -458,9 +460,9 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 	
 		
 
-	
-
-	
+	<div style="float:left;clear:both; height:auto; margin-top: 1em;">
+	<?php mobile_switch(); ?>
+	</div>
 	</div>
 	</div> <!--  END HEADER -->
 
@@ -520,7 +522,9 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 	
 	
 	<!-- </div>end #main -->
+			
 		<div id="contentwrapper" class="fl-container" >
+
 		<a name="page-title" id="page-title"></a>
 		<h2 class="page-title" ><?php echo $this->page_title; ?></h2>
 		<div id="subnavbacktopage" >
@@ -545,4 +549,4 @@ $wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 	 <?php endif; ?> 
 
 <?php endif; ?><!--  end header template for ipad/tablets -->
-<?php mobile_switch(); ?>		
+		

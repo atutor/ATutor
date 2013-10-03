@@ -298,7 +298,9 @@ global $system_courses, $_custom_css, $db;
 	      </ul>
       </div>
       <?php endif; ?>
+      <div style="font-size:.8em;margin-left:-.5em;">
       <?php mobile_switch(); ?>
+      </div>
       </div>
 
 <div id="contentwrapper" 

@@ -729,7 +729,9 @@ function get_system_default_theme() {
 }
 
 function is_mobile_theme($theme) {
-
+	if($_SESSION['responsive'] == 1){
+	    return false;
+	}
 	$sql	= "SELECT dir_name FROM %sthemes WHERE type='%s'";
 	$rows = queryDB($sql, array(TABLE_PREFIX, MOBILE_DEVICE));	
 	
@@ -739,8 +741,7 @@ function is_mobile_theme($theme) {
 		     is_dir(AT_SUBSITE_THEME_DIR . $theme))) {
 			return true;
 		}
-	}
-
+    }
 	return false;
 }
 
