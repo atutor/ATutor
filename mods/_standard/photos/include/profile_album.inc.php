@@ -15,26 +15,26 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include (AT_PA_INCLUDE.'lib.inc.php');
 include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
-//$_custom_css = $_base_path . AT_PA_BASENAME . 'module.css'; // use a custom stylesheet
+
 $_custom_head .= '<script src="'.$_base_path . AT_PA_BASENAME . 'include/ajaxupload.js" type="text/javascript"></script>';
 $member_id = intval($_GET['member_id']);
 $member_id = ($member_id==0)? $_SESSION['member_id']: $member_id;
 
 //run a check to see if any personal album exists, if not, create one.
-$sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_albums WHERE member_id='.$_SESSION['member_id'].' AND type_id='.AT_PA_TYPE_PERSONAL;
-$result = mysql_query($sql, $db);
-if ($result){
-	$rows = mysql_num_rows($result);
+$sql = "SELECT * FROM %spa_albums WHERE member_id=%d AND type_id=%d";
+$rows = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], AT_PA_TYPE_PERSONAL));
+
 	if ($rows==0){
 		//create one.
 		$pa = new PhotoAlbum();
 		$result = $pa->createAlbum(_AT('pa_profile_album'), '', '', AT_PA_TYPE_PERSONAL, AT_PA_PRIVATE_ALBUM, $_SESSION['member_id']);
-		$id = mysql_insert_id();
+		$id = at_insert_id();
 	} else {
-		$row = mysql_fetch_assoc($result);	//album info.
-		$id = $row['id'];
+        foreach($rows as $row){
+		    $id = $row['id'];
+		}
 	}
-}
+
 
 // Delete profile picture
 if($_POST['delete'] == '1'){
