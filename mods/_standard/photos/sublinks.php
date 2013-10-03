@@ -46,18 +46,12 @@ foreach($visible_albums as $album){
 $album_ids = substr($album_ids, 0, strlen($albums_ids) - 2);
 
 //album comments
-$sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_album_comments WHERE album_id IN ('.$album_ids.') ORDER BY created_date DESC';
-$result = mysql_query($sql, $db);
-while($row = mysql_fetch_assoc($result)){
-	$all_comments[] = $row;
-}
+$sql = "SELECT * FROM %spa_album_comments WHERE album_id IN (%s) ORDER BY created_date DESC";
+$all_comments = queryDB($sql, array(TABLE_PREFIX, $album_ids));
 
 //photo comments
-$sql = 'SELECT c.*, p.album_id FROM '.TABLE_PREFIX.'pa_photo_comments c LEFT JOIN '.TABLE_PREFIX.'pa_photos p ON p.id=c.photo_id WHERE p.album_id IN ('.$album_ids.') ORDER BY created_date DESC';
-$result = mysql_query($sql, $db);
-while($row = mysql_fetch_assoc($result)){
-	$all_comments[] = $row;
-}
+$sql = "SELECT c.*, p.album_id FROM %spa_photo_comments c LEFT JOIN %spa_photos p ON p.id=c.photo_id WHERE p.album_id IN (%s) ORDER BY created_date DESC";
+$all_comments = array_merge($all_comments, queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $album_ids)));
 
 if (empty($all_comments)){
 	return 0;
