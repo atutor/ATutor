@@ -20,9 +20,10 @@ if(isset($_POST['submit'])){
 	if ($max_memory <= 0){
 		$msg->addError('PA_MEMORY_INPUT_ERROR');
 	} else {
-		$sql = 'UPDATE '.TABLE_PREFIX."config SET value='$max_memory' WHERE name='pa_max_memory_per_member'";
-		$result = mysql_query($sql, $db);
-		if ($reuslt===false){
+		$sql = "UPDATE %sconfig SET value='%s' WHERE name='pa_max_memory_per_member'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $max_memory));
+
+		if ($result == 0){
 			$msg->addError('PA_MEMORY_SQL_ERROR');
 		} else {
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
