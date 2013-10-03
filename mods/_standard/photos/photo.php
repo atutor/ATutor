@@ -58,14 +58,10 @@ if($pa->checkPhotoPriv($pid, $_SESSION['member_id']) || $pa->checkAlbumPriv($_SE
 
 //run a quick query to get the next and previous id
 if (sizeof($photos) > 1){
-	//$sql = 'SELECT id, ordering FROM '.TABLE_PREFIX.'pa_photos WHERE album_id='.$aid.' AND (ordering='.($photo_info['ordering']-1).' OR ordering='.($photo_info['ordering']+1).') ORDER BY ordering';
-	//$result = mysql_query($sql, $db);
 	$sql = 'SELECT id, ordering FROM %spa_photos WHERE album_id=%d AND (ordering=%d OR ordering=%d) ORDER BY ordering';
 	$rows_next_prev = queryDB($sql, array(TABLE_PREFIX, $aid, $photo_info['ordering']-1, $photo_info['ordering']+1));
+
 	if(count($rows_next_prev) > 0){
-	//if ($result){
-		//$prev = mysql_fetch_assoc($result);
-		//$next = mysql_fetch_assoc($result);
 		$prev = $rows_next_prev[0];
 		$next = $rows_next_prev[1];
 
