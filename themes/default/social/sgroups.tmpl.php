@@ -9,10 +9,7 @@
 	}
 ?>
 <div class="social-wrapper">
-<div style="width:59%;float:left">
-<?php include('tiny_sgroups.tmpl.php'); ?>
-</div>
-<div style="width:39%;float:right">
+<div class="social-search">
 	<div class="input-form" style="padding:1em;min-height:4.5em;">
 		<div class="contentrow">
 			<h3><?php echo _AT('search_for_groups'); ?></h3>
@@ -29,12 +26,16 @@
 		</div>		
 	</div>
 </div>
-<div style="float:right;clear:right;width:39%;">
+<div class="social-search">
 	<div class="input-form" style="padding:1em;min-height:4.5em;">
 	<h3><?php echo _AT('create_group'); ?></h3>
 		<p><?php echo _AT('create_group_blurb');  ?></p>
 		<span><a href="<?php echo AT_SOCIAL_BASENAME; ?>groups/create.php"><?php echo _AT('create_group'); ?></a></span><br />
 	</div>
 </div>
+<div class="social-results" style="clear:left;vertical-align:top;">
+<?php include('tiny_sgroups.tmpl.php'); ?>
+</div>
+
 <div style="clear:both;"></div>
 </div>

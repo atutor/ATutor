@@ -15,7 +15,7 @@
 ?>
 <div class="social-wrapper">
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$this->search_field, 1);  ?>
-<div class="input-form" style="float:right; width:34%;padding:1em;min-height:4.5em;">
+<div class="input-form" id="social-search">
 	<div class="contentrow">
 		<h3><?php echo _AT('search_for_friends'); ?></h3>
 		<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'connections.php');?>" method="POST" id="search_friends_form">
@@ -35,7 +35,7 @@
 		</form>
 	</div>
 </div>
-<div class="" style="float:left; width:59%">
+<div class="social-results">
 	<div class="headingbox"><h3><?php echo _AT('connections'); ?></h3></div>
 	<div class="contentbox">
 	<?php 

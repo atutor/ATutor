@@ -20,12 +20,12 @@
 ?>
 <?php print_paginator($this->page, $this->num_pages, 'search_friends='.$search_field, 1);  ?>
 
-<div class="input-form" style="float:right; width:34%;padding:1em;min-height:4.5em;">
+<div class="input-form" id="social-search">
 	<div class="contentrow">
 		<h3><?php echo _AT('search_for_friends'); ?></h3>
 		<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'index_public.php');?>" method="POST" id="search_friends_form">
 			<label for="searchFriends" style="display:none;"><?php echo _AT('search'); ?></label>
-			<input type="text" size="60" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php if(isset($last_search)){echo $last_search;} ?>" onkeyup="showResults(this.value, 'livesearch', '<?php echo AT_SOCIAL_BASENAME; ?>index_public.php')"/>
+			<input type="text" name="search_friends_<?php echo $rand;?>" id="search_friends" value="<?php if(isset($last_search)){echo $last_search;} ?>" onkeyup="showResults(this.value, 'livesearch', '<?php echo AT_SOCIAL_BASENAME; ?>index_public.php')"/>
 			<input type="submit" name="search" value="<?php echo _AT('search'); ?>" class="button">
 			<input type="hidden" name="rand_key" value="<?php echo $rand; ?>" />
 			
@@ -33,7 +33,7 @@
 		</form>
 	</div>
 </div>
-<div class="" style="float:left; width:59%">
+<div class="social-results">
 	<div class="headingbox"><h3><?php echo _AT('search_results'); ?></h3></div>
 	<div class="contentbox">
 	<?php 
