@@ -39,6 +39,10 @@ ATutor.course = ATutor.course || {};
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
+  	 $('#message').css('display', 'inline').slideDown("slow");
+  	  setTimeout(function() {
+        $("#message").hide('blind', {}, 500)
+        }, 8000);
         ATutor.users.preferences.setStyles(
                      '<?php if(isset($_SESSION["prefs"]["PREF_BG_COLOUR"])){echo $_SESSION["prefs"]["PREF_BG_COLOUR"];} ?>',
                      '<?php if(isset($_SESSION["prefs"]["PREF_FG_COLOUR"])){ echo $_SESSION["prefs"]["PREF_FG_COLOUR"];} ?>',

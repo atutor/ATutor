@@ -105,22 +105,26 @@ global $system_courses, $_custom_css, $db;
     <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
     <?php echo $this->custom_css; ?>
     <?php echo $this->rtl_css; ?>
+
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
+<div id="top-bar">
+	
 <div class="bypass">
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c" title="<?php echo _AT('goto_content'); ?> Alt-c">
 	<?php echo _AT('goto_content'); ?></a>
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php if(isset($_REQUEST['cid'])){echo htmlentities_utf8($_REQUEST['cid']);}  ?>"  accesskey="m" title="<?php echo _AT('goto_menu'); ?> Alt-m"><?php echo _AT('goto_menu'); ?></a>
 </div>	
-<div id="top-bar">
+
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
 	else:
 		echo '<br />';	
 	endif; ?>
 
-	<div id="top-links"  role="navigation"> <!-- top help/search/login links -->
+	<div id="top-links"  role="navigation"> 
+	<!-- top help/search/login links -->
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<?php if(!$this->just_social): ?>
 			 <div id="top-links-jump">
@@ -353,7 +357,11 @@ global $system_courses, $_custom_css, $db;
 	<!-- the page title -->
 	<a id="content" title="<?php echo _AT('content'); ?>"></a>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
+	
+	<div id="message">
 	<?php global $msg; $msg->printAll(); $_base_href;?>
+    </div>
+    
 
 	<?php if (count($this->sub_level_pages) > 0): ?>
 		<div id="subnavlistcontainer" role="navigation">
@@ -366,8 +374,6 @@ global $system_courses, $_custom_css, $db;
 
 			<ul id="subnavlist">
 			<?php $num_pages = count($this->sub_level_pages); 
-
-
 
 ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>

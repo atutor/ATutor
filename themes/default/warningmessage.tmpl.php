@@ -13,7 +13,7 @@
 	<?php if (is_array($this->item)) : ?>
 		<ul>
 		<?php foreach($this->item as $e) : ?>
-			<li><?php echo $e; ?></li>
+			<li role="alert"><?php echo $e; ?></li>
 		<?php endforeach; ?>
 		</ul>
 	<?php endif; ?>
