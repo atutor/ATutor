@@ -78,9 +78,8 @@ if (isset($_POST['submit'])) {
 	<div class="row">	
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
 
-		<a name="jumpcodes"></a>
-	</div>
 
+	</div>
 	<?php if (!$subscribed): ?>
 		<div class="row">
 			<input type="checkbox" name="subscribe" value="1" id="sub" />
@@ -93,6 +92,7 @@ if (isset($_POST['submit'])) {
 	<?php endif; ?>
 </fieldset>
 	<div class="row buttons">
+			<a name="jumpcodes" id="jumpcode"></a>
 		<input name="submit" accesskey="s" type="submit" value=" <?php echo _AT('post'); ?>" />
 		<?php if ($new_thread == TRUE) : ?>
 			<input name="cancel" type="submit" value="<?php echo _AT('cancel'); ?>" />

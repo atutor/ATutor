@@ -355,7 +355,7 @@ global $system_courses, $_custom_css, $db;
 		<?php endif; ?>
 
 	<!-- the page title -->
-	<a id="content" title="<?php echo _AT('content'); ?>"></a>
+	<a id="content" name="content" title="<?php echo _AT('content'); ?>"></a>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 	
 	<div id="message">
