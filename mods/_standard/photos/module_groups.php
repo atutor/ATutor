@@ -23,13 +23,12 @@
 require_once (AT_INCLUDE_PATH.'../mods/_standard/photos/include/lib.inc.php');
 require_once (AT_INCLUDE_PATH.'../mods/_standard/photos/include/classes/PhotoAlbum.class.php');
 function photos_create_group($group_id) {
-	global $db;
     $group_id = intval($group_id);
     //get group name
-    $sql = 'SELECT title FROM ' . TABLE_PREFIX . "groups WHERE group_id=$group_id";
-    $result = mysql_query($sql, $db);
-    $group_info = mysql_fetch_assoc($result);
-    
+
+    $sql = "SELECT title FROM %sgroups WHERE group_id=%d";
+    $group_info = queryDB($sql, array(TABLE_PREFIX, $group_id), TRUE);
+
     $pa = new PhotoAlbum();
     $album_name = $group_info['title'] . '(' . _AT('group') . ')';
     $album_location = _AT('na');
@@ -43,24 +42,27 @@ function photos_create_group($group_id) {
         $msg->addError('PA_CREATE_ALBUM_FAILED');
         $result = false;
     } else {
-        $sql = 'INSERT INTO '.TABLE_PREFIX."pa_groups (group_id, album_id) VALUES ($group_id, $album_id)";
-        $result = mysql_query($sql, $db);
+
+        $sql = "INSERT INTO %spa_groups (group_id, album_id) VALUES (%d, %d)";
+        $result = queryDB($sql, array(TABLE_PREFIX, $group_id, $album_id));
     }
 }
 
 // delete group
 function photos_delete_group($group_id) {
-	global $db;
+
 	$group_id = intval($group_id);
-	$sql = "SELECT album_id FROM ".TABLE_PREFIX."pa_groups WHERE group_id=$group_id";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+
+	$sql = "SELECT album_id FROM %spa_groups WHERE group_id=%d";
+	$rows_groups = queryDB($sql, array(TABLE_PREFIX, $group_id));
+	
+	foreach($rows_groups as $row){
         $pa = new PhotoAlbum($row['album_id']);
 		$pa->deleteAlbum();
 	}
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."pa_groups WHERE group_id=$group_id";
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %spa_groups WHERE group_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $group_id));
 }
 
 ?>
