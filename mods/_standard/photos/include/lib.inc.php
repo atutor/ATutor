@@ -104,7 +104,7 @@ function checkPhoto($file){
 	}
 
 	// make sure under max file size
-	debug($_config['pa_max_memory_per_member']);
+
 	$allowed_usage = $_config['pa_max_memory_per_member'] * 1024 *1024;	//mb
 	if (memoryUsage($_SESSION['member_id']) > $allowed_usage){
 		$msg->addError('PA_EXCEEDED_MAX_USAGE');
@@ -129,13 +129,11 @@ function memoryUsage($member_id){
 	}
 
 	$memory_usage = 0;
-	//$sql = 'SELECT p.* FROM '.TABLE_PREFIX.'pa_photos p LEFT JOIN '.TABLE_PREFIX."pa_course_album ca ON p.album_id=ca.album_id WHERE member_id=$member_id AND ca.course_id IS NULL";
-	//$result = mysql_query($sql, $db);
+
 	$sql = "SELECT p.* FROM %spa_photos p LEFT JOIN %spa_course_album ca ON p.album_id=ca.album_id WHERE member_id=%d AND ca.course_id IS NULL";
 	$rows_photos = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $member_id));
 	if(count($rows_photos) > 0){
-	//if ($result){
-		//while ($row=mysql_fetch_assoc($result)){
+
 		foreach($rows_photos as $row){
 			$pa = new PhotoAlbum($row['album_id']);
 			$album_info = $pa->getAlbumInfo();
