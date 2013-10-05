@@ -24,7 +24,7 @@ $member_id = ($member_id==0)? $_SESSION['member_id']: $member_id;
 $sql = "SELECT * FROM %spa_albums WHERE member_id=%d AND type_id=%d";
 $rows = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], AT_PA_TYPE_PERSONAL));
 
-	if ($rows==0){
+	if (count($rows)==0){
 		//create one.
 		$pa = new PhotoAlbum();
 		$result = $pa->createAlbum(_AT('pa_profile_album'), '', '', AT_PA_TYPE_PERSONAL, AT_PA_PRIVATE_ALBUM, $_SESSION['member_id']);
