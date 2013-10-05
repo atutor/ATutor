@@ -45,8 +45,10 @@ define('AT_ADMIN_PRIV_PHOTO_ALBUM', $this->getAdminPrivilege());
 /*******
  * if this module is to be made available to students on the Home or Main Navigation.
  */
-//$_group_tool = $_student_tool = AT_PA_BASENAME.'index.php';
-$_student_tool = AT_PA_BASENAME.'index.php';
+$_group_tool = $_student_tool = AT_PA_BASENAME.'index.php';
+//$_group_tool = $_student_tool = 'mods/_standard/forums/forum/list.php';
+
+//$_student_tool = AT_PA_BASENAME.'index.php';
 $this->_list['pa_photo_gallery'] = array('title_var'=>'pa_photo_gallery','file'=>AT_PA_BASENAME.'sublinks.php');
 $this->_pages[AT_PA_BASENAME.'index.php']['icon']      = 'images/home-directory_sm.png';
 
@@ -149,5 +151,13 @@ $this->_pages[AT_PA_BASENAME.'edit_photos.php']['guide']     = 'general/?p=pa_al
 
 $this->_pages[AT_PA_BASENAME.'delete_comment.php']['title_var'] = 'pa_delete_comment';
 $this->_pages[AT_PA_BASENAME.'delete_comment.php']['parent'] = AT_PA_BASENAME.'photo.php';
+
+function photos_get_group_url() {
+    foreach($_SESSION['groups'] as $group_id){
+	$sql = "SELECT album_id FROM %spa_groups WHERE group_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $group_id), TRUE);
+	return 'mods/_standard/photos/albums.php?id='.$row['album_id'];
+	}
+}
 
 ?>
