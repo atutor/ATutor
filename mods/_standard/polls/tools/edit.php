@@ -50,11 +50,13 @@ if ($_POST['edit_poll']) {
 		}
 		$choices = substr($choices, 0, -1);
 
-		$sql = "UPDATE ".TABLE_PREFIX."polls SET question='$_POST[question]', created_date=created_date, $choices WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
-		$result = mysql_query($sql,$db);
-
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-		Header('Location: index.php');
+		$sql = "UPDATE %spolls SET question='%s', created_date=created_date, $choices WHERE poll_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['question'], $poll_id, $_SESSION['course_id']));
+        
+        if($result > 0){
+		    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		}
+		header('Location: index.php');
 		exit;
 	}
 	for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
@@ -70,15 +72,16 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
+
+	$sql = "SELECT * FROM %spolls WHERE poll_id=%d AND course_id=%d";
+	$row_poll = queryDB($sql,array(TABLE_PREFIX, $poll_id, $_SESSION['course_id']), TRUE);
 	
-	$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE poll_id=$poll_id AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql,$db);
-	if (!($row = mysql_fetch_assoc($result))) {
+	if(count($row_poll) == 0){
 		$msg->printErrors('ITEM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
 	}
 
-$savant->assign('row', $row);
+$savant->assign('row', $row_poll);
 $savant->display('instructor/polls/edit.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
