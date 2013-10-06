@@ -81,11 +81,12 @@ if (isset($_POST['cancel'])) {
 		include (AT_PA_INCLUDE.'lib.inc.php');
 		include (AT_PA_INCLUDE.'classes/PhotoAlbum.class.php');
         //run a check to see if any personal album exists, if not, create one.
-        $sql = 'SELECT * FROM '.TABLE_PREFIX.'pa_albums WHERE member_id='.$_SESSION['member_id'].' AND type_id='.AT_PA_TYPE_PERSONAL;
-        $result = mysql_query($sql, $db);
-        if ($result){
+
+        $sql = "SELECT * FROM %spa_albums WHERE member_id=%d AND type_id=".AT_PA_TYPE_PERSONAL;
+        $row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+
+        if(count($rows) > 0){
             //precondition: Profile Album always exists.
-	        $row = mysql_fetch_assoc($result);	//album info.
 	        $profile_aid = $row['id'];  //current profile album id
         }
         $pa_profile = new PhotoAlbum($profile_aid);
@@ -118,8 +119,8 @@ if (isset($_POST['cancel'])) {
 		    $album_info_new = $pa_profile->getAlbumInfo();
 		    $album_file_path_new = getAlbumFilePath($album_info_new['id'], $album_info_new['created_date']);
 		    $album_file_path_tn_new = $album_file_path_new.'_tn'.DIRECTORY_SEPARATOR;
-        	$album_file_path_new .= DIRECTORY_SEPARATOR;    	
-		    $added_photo_id = mysql_insert_id();		
+        	$album_file_path_new .= DIRECTORY_SEPARATOR;    			
+		    $added_photo_id = at_insert_id();		
 		    $photo_info_new = $pa->getPhotoInfo($added_photo_id);
 		    $photo_file_path_new = getPhotoFilePath($added_photo_id, $photo_info_new['name'], $photo_info_new['created_date']);
 		    $photo_location_new = AT_PA_CONTENT_DIR . $album_file_path_new . $photo_file_path_new;
