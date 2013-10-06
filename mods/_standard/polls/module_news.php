@@ -16,17 +16,18 @@
  * @return list of news, [timestamp]=>
  */
 function polls_news() {
-	global $db, $enrolled_courses, $system_courses;
+	global $enrolled_courses, $system_courses;
 	$news = array();
 
 	if ($enrolled_courses == ''){
 		return $news;
 	} 
 
-	$sql = 'SELECT * FROM '.TABLE_PREFIX.'polls WHERE course_id IN'.$enrolled_courses.' ORDER BY created_date DESC';
-	$result = mysql_query($sql, $db);
-	if($result){
-		while($row = mysql_fetch_assoc($result)){
+	$sql = "SELECT * FROM %spolls WHERE course_id IN %s ORDER BY created_date DESC";
+	$rows_polls = queryDB($sql, array(TABLE_PREFIX, $enrolled_courses));
+
+    if(count($rows_polls) > 0){
+		    foreach($rows_polls as $row){
 			$news[] = array('time'=>$row['created_date'], 
 							'object'=>$row,
 							'alt'=>_AT('polls'),
