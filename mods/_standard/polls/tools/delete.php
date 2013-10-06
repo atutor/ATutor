@@ -19,18 +19,20 @@ authenticate(AT_PRIV_POLLS);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: index.php');
+	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['pid'] = intval($_POST['pid']);
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."polls WHERE poll_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %spolls WHERE poll_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['pid'], $_SESSION['course_id']));
 
-	$sql = "DELETE FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$_POST[pid] AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	$sql = "DELETE FROM %spolls_members WHERE poll_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['pid']));
+    
+    if($result > 0){
+	    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+	}
 	header('Location: index.php');
 	exit;
 }
@@ -41,18 +43,17 @@ $msg->printErrors();
 
 $_GET['pid'] = intval($_GET['pid']); 
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE poll_id=$_GET[pid] AND course_id=$_SESSION[course_id]";
+$sql = "SELECT * FROM %spolls WHERE poll_id=%d AND course_id=%d";
+$rows_polls = queryDB($sql, array(TABLE_PREFIX, $_GET['pid'], $_SESSION['course_id']), TRUE);
 
-$result = mysql_query($sql,$db);
-if (mysql_num_rows($result) == 0) {
+if(count($rows_polls) == 0){
 	$msg->addError('ITEM_NOT_FOUND');
 } else {
-	$row = mysql_fetch_assoc($result);
 
 	$hidden_vars['delete_poll'] = TRUE;
 	$hidden_vars['pid'] = $_GET['pid'];
 
-	$confirm = array('DELETE_POLL', AT_print($row['question'], 'polls.question'));
+	$confirm = array('DELETE_POLL', AT_print($row_polls['question'], 'polls.question'));
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
 
