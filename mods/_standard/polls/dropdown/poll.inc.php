@@ -14,7 +14,6 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path, $include_all, $include_one;
 global $savant;
-global $db;
 
 // global $_course_id is set when a guest accessing a public course. 
 // This is to solve the issue that the google indexing fails as the session vars are lost.
@@ -24,12 +23,13 @@ if (isset($_SESSION['course_id'])) $_course_id = $_SESSION['course_id'];
 if (isset($_POST['poll_submit'], $_POST['choice'])) {
 	$poll_id = intval($_POST['poll_id']);
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."polls_members VALUES($poll_id, $_SESSION[member_id])";
-	if ($result = mysql_query($sql, $db)) {
+	$sql = "INSERT INTO %spolls_members VALUES(%d, %d)";
+	$result = queryDB($sql, array(TABLE_PREFIX, $poll_id, $_SESSION['member_id']));
+	
+	if($result > 0){
 		$n = intval($_POST['choice']);
-
-		$sql = "UPDATE ".TABLE_PREFIX."polls SET count$n=count$n+1, total=total+1 WHERE poll_id=$poll_id AND course_id=$_course_id";
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %spolls SET count%d=count%d+1, total=total+1 WHERE poll_id=%d AND course_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $n, $n, $poll_id, $_course_id));
 	}
 }
 
@@ -39,17 +39,17 @@ if (!isset($include_all, $include_one)) {
 	$include_one = ' checked="checked"';
 }
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."polls WHERE course_id=$_course_id ORDER BY created_date DESC LIMIT 1";
-$result = mysql_query($sql, $db);
+$sql = "SELECT * FROM %spolls WHERE course_id=%d ORDER BY created_date DESC LIMIT 1";
+$row = queryDB($sql, array(TABLE_PREFIX, $_course_id), TRUE);
 
-if ($row = mysql_fetch_assoc($result)) {
+if(count($row) > 0){
 	echo '<table width="100%">';
 
 	if (!authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN)) {
-		$sql = "SELECT * FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id] AND member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql, $db);
+		$sql = "SELECT * FROM %spolls_members WHERE poll_id=%d AND member_id=%d";
+		$my_row = queryDB($sql, array(TABLE_PREFIX, $row['poll_id'], $_SESSION['member_id']), TRUE);
 	}
-	if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN) || ($my_row = mysql_fetch_assoc($result))) {
+	if (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN) || (count($my_row) > 0)) {
 		echo '<tr>';
 		echo '<td valign="top" class="dropdown-heading" align="left"><strong>' . AT_print($row['question'], 'polls.question') . '</strong>';
 		echo '</td></tr>';
