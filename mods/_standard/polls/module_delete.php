@@ -1,19 +1,20 @@
 <?php
 
 function polls_delete($course) {
-	global $db;
 
-	$sql	= "SELECT poll_id FROM ".TABLE_PREFIX."polls WHERE course_id=$course";
-	$result = mysql_query($sql, $db);
-	if (!$result || !mysql_num_rows($result)) {
+	$sql	= "SELECT poll_id FROM %spolls WHERE course_id=%d";
+	$rows_polls = queryDB($sql, array(TABLE_PREFIX, $course));
+
+	if (count($rows_polls) == 0) {
 		return;
 	}
-	while ($row = mysql_fetch_assoc($result)) {
-		$sql	 = "DELETE FROM ".TABLE_PREFIX."polls_members WHERE poll_id=$row[poll_id]";
-		mysql_query($sql, $db);
+	foreach($rows_polls as $row){
+		$sql	 = "DELETE FROM %spolls_members WHERE poll_id=%d";
+		queryDB($sql, array(TABLE_PREFIX, $row['poll_id']));
 	}
-	$sql	= "DELETE FROM ".TABLE_PREFIX."polls WHERE course_id=$course";
-	mysql_query($sql, $db);
+
+	$sql	= "DELETE FROM %spolls WHERE course_id=%d";
+	queryDB($sql, array(TABLE_PREFIX, $course));
 }
 
 ?>
