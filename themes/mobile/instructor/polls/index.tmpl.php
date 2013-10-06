@@ -32,15 +32,15 @@
 </tr>
 </tfoot>
 <tbody>
-<?php if ($row = mysql_fetch_assoc($this->result)) : ?>
-	<?php do { ?>
+<?php if(count($this->rows_polls) > 0): ?>
+	<?php foreach($this->rows_polls as $row){ ?>
 		<tr onmousedown="document.form['p_<?php echo $row['poll_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['poll_id']; ?>">
 			<td><input type="radio" id="p_<?php echo $row['poll_id']; ?>" name="poll" value="<?php echo $row['poll_id']; ?>" /></td>
 			<td><label for="p_<?php echo $row['poll_id']; ?>"><?php echo AT_print($row['question'], 'polls.question'); ?></label></td>
 			<td><?php echo AT_DATE(_AT("server_date_format"), $row['created_date']); ?></td>
 			<td><?php echo $row['total']; ?></td>
 		</tr>
-	<?php } while($row = mysql_fetch_assoc($this->result)); ?>
+	<?php }  ?>
 <?php else: ?>
 	<tr>
 		<td colspan="4"><?php echo _AT('none_found'); ?></td>

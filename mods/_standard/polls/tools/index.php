@@ -44,11 +44,12 @@ if (isset($_GET['asc'])) {
 	$col   = 'created_date';
 }
 
-$sql	= "SELECT poll_id, question, created_date, total FROM ".TABLE_PREFIX."polls WHERE course_id=$_SESSION[course_id] ORDER BY $col $order";
-$result = mysql_query($sql, $db);
+$sql	= "SELECT poll_id, question, created_date, total FROM %spolls WHERE course_id=%d ORDER BY $col $order";
+$rows_polls = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
+$savant->assign('rows_polls', $rows_polls);
 $savant->assign('col', $col);
 $savant->assign('order', $order);
 $savant->assign('orders', $orders);
-$savant->assign('result', $result);
 $savant->display('instructor/polls/index.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php');  ?>
