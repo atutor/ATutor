@@ -49,10 +49,12 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		}
 		$choices = substr($choices, 0, -1);	//Remove the last comma.
 
-		$sql	= "INSERT INTO ".TABLE_PREFIX."polls VALUES (NULL, $_SESSION[course_id], '$_POST[question]', NOW(), 0, $choices)";
-		$result = mysql_query($sql,$db);
+		$sql	= "INSERT INTO %spolls VALUES (NULL, %d, '%s', NOW(), 0,  $choices)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['question']));
 		
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		if($result > 0){
+		    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		}
         $return_url = $_SESSION['tool_origin']['url'];
         tool_origin('off');
 		header('Location: '.$return_url);
