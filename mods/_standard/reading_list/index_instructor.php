@@ -17,25 +17,26 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
 tool_origin();
 if (isset($_GET['edit'])) {
+
 	if (!isset($_GET['reading'])) {
 		$msg->addError('NO_ITEM_SELECTED');
 		header('Location: index_instructor.php');
 		exit;
 	}
 
-	// reading ID of item that will be edited
-	$_GET['reading'] = intval($_GET['reading']);
-
 	// get resource ID of reading
-	$sql = "SELECT resource_id FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[course_id] AND reading_id=$_GET[reading]";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)){
+	$sql = "SELECT resource_id FROM %sreading_list WHERE course_id=%d AND reading_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_GET['reading']), TRUE);
+	
+	if(count($row) > 0){
 		// what kind of resource is it? (book, URL, file etc.)
-		$sql = "SELECT type FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$row[resource_id]";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)){
+
+		$sql = "SELECT type FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+		$row2 = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $row['resource_id']), TRUE);
+
+		if(count($row2) > 0){
 			// display the correct page for editing the resource
-			header('Location: edit_reading_'.substr($_rl_types[$row['type']], 3).'.php?id='. $_GET['reading']);
+			header('Location: edit_reading_'.substr($_rl_types[$row2['type']], 3).'.php?id='. $_GET['reading']);
 			exit;
 		}
 	}
@@ -83,8 +84,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </form>
 
 <?php
-$sql = "SELECT * FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[course_id] ORDER BY date_start";
-$result = mysql_query($sql, $db);
+
+$sql = "SELECT * FROM %sreading_list WHERE course_id=%d ORDER BY date_start";
+$rows_rlists = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -107,15 +110,20 @@ $result = mysql_query($sql, $db);
 	</td>
 </tr>
 </tfoot>
-<?php if ($row = mysql_fetch_assoc($result)): ?>
+<?php 
+    if(count($rows_rlists) > 0):
+?>
 <tbody>
-		<?php do { ?>
+		<?php 
+		    foreach($rows_rlists as $row){ 
+		?>
 
 			<?php // get the external resource using the resource ID from the reading
 			$id = $row['resource_id'];
-			$sql = "SELECT title FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
-			$resource_result = mysql_query($sql, $db);
-			if ($resource_row = mysql_fetch_assoc($resource_result)){ 
+			$sql = "SELECT title FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+			$resource_row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $id), TRUE);
+			
+			if(count($resource_row) > 0){
 			?>
 				<tr onmousedown="document.form['t<?php echo $row['reading_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['reading_id']; ?>_0">
 				
@@ -149,7 +157,7 @@ $result = mysql_query($sql, $db);
 
 			<?php } ?>
 
-		<?php } while($row = mysql_fetch_assoc($result)); ?>
+		<?php } ?>
 </tbody>
 <?php else: ?>
 	<tr>
