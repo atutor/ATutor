@@ -19,7 +19,7 @@ $this->_pages['mods/_standard/announcements/index.php']['children']  = array('mo
 	$this->_pages['mods/_standard/announcements/delete_news.php']['title_var']  = 'delete_announcement';
 	$this->_pages['mods/_standard/announcements/delete_news.php']['parent'] = 'mods/_standard/announcements/index.php';
 	
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ANNOUNCEMENTS, TRUE)) && $_SESSION['hide_admin'] == 1){	
+if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ANNOUNCEMENTS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
 	$this->_pages['mods/_standard/announceents/add_news.php']['title_var']  = 'add_announcement';
 	$this->_pages['mods/_standard/announcements/add_news.php']['other_parent'] = 'index.php';
 	$this->_pages['index.php']['children']  = array('mods/_standard/announcements/add_news.php');

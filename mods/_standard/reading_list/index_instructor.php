@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_READING_LIST);
-
+tool_origin();
 if (isset($_GET['edit'])) {
 	if (!isset($_GET['reading'])) {
 		$msg->addError('NO_ITEM_SELECTED');

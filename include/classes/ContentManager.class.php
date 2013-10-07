@@ -815,7 +815,7 @@ class ContentManager
 		// for the initialization of the inline edit fields
 		echo '<div id="editable_table">';
 		
-		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && !is_mobile_device() && $_SESSION['hide_admin'] == 1)
+		if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && !is_mobile_device() && $_SESSION['prefs']['PREF_HIDE_ADMIN']== 1)
 		{
 			echo "\n".'
 			<div class="menuedit">
@@ -990,7 +990,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 					}
 					
 					// instructors have privilege to delete content
-					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_device() && $_SESSION['hide_admin'] == 1) {
+					if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !isset($content['test_id']) && !is_mobile_device() && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1) {
 					    $link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].SEP.'redirect_to='.$redirect_to.'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
 					}
 				} 
@@ -1024,7 +1024,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 						$link .= $content['title'].'</span></strong>';
 						
 						// instructors have privilege to delete content
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device() && $_SESSION['hide_admin'] == 1) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device() && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1) {
 						    $link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].SEP.'redirect_to='.$redirect_to.'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
 						}
 					}
@@ -1058,7 +1058,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 						}
 						
 						// instructors have privilege to delete content
-						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device() && $_SESSION['hide_admin'] == 1) {
+						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device() && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1) {
 						    $link .= '<a href="'.$_base_path.'mods/_core/editor/delete_content.php?cid='.$content['content_id'].SEP.'redirect_to='.$redirect_to.'"><img src="'.AT_BASE_HREF.'images/x.gif" alt="'._AT("delete_content").'" title="'._AT("delete_content").'" class="del-content-icon" /></a>';
 						}
 					}

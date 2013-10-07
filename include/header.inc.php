@@ -169,13 +169,17 @@ Toggle the hide_admin Session variable to turn admin tools on or off
 ****/
 if($_GET['hide_admin'] == '2'){
 	global $msg;
-	unset($_SESSION['hide_admin']);
+	//unset($_SESSION['hide_admin']);
+	unset($_SESSION['prefs']['PREF_HIDE_ADMIN']);
+	save_prefs();
 	$msg->addFeedback('TOOLS_OFF');
 	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
 } else if($_GET['hide_admin'] == '1') {
 	global $msg;
-	$_SESSION['hide_admin'] = 1;
+	//$_SESSION['hide_admin'] = 1;
+	$_SESSION['prefs']['PREF_HIDE_ADMIN'] = 1;
+	save_prefs();
 	$msg->addFeedback('TOOLS_ON');
 	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
@@ -361,12 +365,12 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 function admin_switch(){ 
 	if($_SESSION['is_admin'] > 0) {?>
 		<ul id="admin_switch">
-			<?php if($_SESSION['hide_admin'] > 0){ ?>
+			<?php if($_SESSION['prefs']['PREF_HIDE_ADMIN'] > 0){ ?>
 				<li  class="active left"><?php echo _AT('manage'); ?></li>
 			<?php }else{ ?>
 				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=1"><?php echo _AT('manage'); ?></a></li>
 			<?php } ?>
-			 <?php if($_SESSION['hide_admin'] > 0){ ?>
+			 <?php if($_SESSION['prefs']['PREF_HIDE_ADMIN']> 0){ ?>
 				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=2"><?php echo _AT('off'); ?></a></li>
 			<?php }else{ ?>
 				<li class="active right"><?php echo _AT('off'); ?></li>

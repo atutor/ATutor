@@ -42,7 +42,7 @@ $this->_pages['mods/_standard/forums/forum/list.php']['img']        = 'images/ho
 $this->_pages['mods/_standard/forums/forum/list.php']['icon']		  = 'images/pin.png';		//added favicon
 //$this->_pages['forum/list.php']['text']		  = 'Sezione Forum';				//added text
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FORUMS, TRUE)) && $_SESSION['hide_admin'] == 1){	
+if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FORUMS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
 $this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
 $this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/forum/list.php';
 $this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums', 'mods/_standard/forums/add_forum.php');

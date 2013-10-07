@@ -14,7 +14,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ASSIGNMENTS);
-
+tool_origin();
 // initial values for controls
 $id = 0;
 $today = getdate();
@@ -30,7 +30,9 @@ if (isset ($_GET['id'])){
 	if(count($row_assignments) == 0){
 		// should not happen
 		$msg->addFeedback('ASSIGNMENT_NOT_FOUND');
-		header('Location: index_instructor.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 
@@ -84,8 +86,10 @@ if (isset ($_GET['id'])){
 else if (isset($_POST['cancel'])) {
 	// cancel, nothing happened
 	$msg->addFeedback('CANCELLED');
-	header('Location: index_instructor.php');
-	exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 }
 else if (isset($_POST['submit'])) {
 	// user has submitted form to update database
@@ -179,7 +183,9 @@ else if (isset($_POST['submit'])) {
 			
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		}
-		header('Location: index_instructor.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 } else { // creating a new assignment

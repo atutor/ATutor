@@ -14,6 +14,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN);
+tool_origin();
 
 if (isset($_POST['up'])) {
 	$up = key($_POST['up']);
@@ -70,8 +71,10 @@ if (isset($_POST['submit'])) {
 	$result = mysql_query($sql, $db);
 
 	$msg->addFeedback('STUDENT_TOOLS_SAVED');
-	header('Location: '.$_SERVER['PHP_SELF']);
-	exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');

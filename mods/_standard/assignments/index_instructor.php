@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ASSIGNMENTS);
-
+tool_origin();
 if (isset($_GET['edit'])) {
 	$_GET['assignment'] = intval($_GET['assignment']);
 	header('Location: edit_assignment.php?id='. $_GET['assignment']);

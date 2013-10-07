@@ -22,4 +22,11 @@ $this->_pages['mods/_standard/student_tools/instructor_index.php']['avail_in_mob
 $this->_pages['mods/_standard/student_tools/index.php']['title_var'] = 'student_tools';
 $this->_pages['mods/_standard/student_tools/index.php']['img']       = 'mods/_standard/student_tools/icon.gif';
 $this->_pages['mods/_standard/student_tools/index.php']['text']      = _AT('student_tools_text');
+
+
+if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GRADEBOOK, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+$this->_pages['mods/_standard/student_tools/instructor_index.php']['title_var'] = 'student_tools';
+$this->_pages['mods/_standard/student_tools/instructor_index.php']['parent']    = 'mods/_standard/student_tools/index.php';
+$this->_pages['mods/_standard/student_tools/index.php']['children']  = array('mods/_standard/student_tools/instructor_index.php');
+}
 ?>

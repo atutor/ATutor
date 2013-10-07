@@ -143,7 +143,7 @@ $this->_pages['mods/_standard/tests/take_test_q.php']['parent']    = 'mods/_stan
 $this->_pages['mods/_standard/tests/test_intro.php']['title_var'] = 'take_test';
 $this->_pages['mods/_standard/tests/test_intro.php']['parent']    = 'mods/_standard/tests/my_tests.php';
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_TESTS, TRUE)) && $_SESSION['hide_admin'] == 1){	
+if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_TESTS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
     $this->_pages['mods/_standard/tests/index.php']['title_var'] = 'tests';
     $this->_pages['mods/_standard/tests/index.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
     $this->_pages['mods/_standard/tests/question_db.php']['title_var'] = 'question_database';

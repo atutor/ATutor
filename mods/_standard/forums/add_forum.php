@@ -39,7 +39,11 @@ if ($_POST['add_forum'] && (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN))) {
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		//header('Location: '.AT_BASE_HREF.'mods/_standard/forums/index.php');
-		header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/list.php');
+		//header('Location: '.AT_BASE_HREF.'mods/_standard/forums/forum/list.php');
+		$return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 		exit;
 	}
 }

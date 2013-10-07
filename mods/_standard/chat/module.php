@@ -30,7 +30,7 @@ $this->_pages['mods/_standard/chat/manage/index.php']['guide']     = 'instructor
 	$this->_pages['mods/_standard/chat/manage/start_transcript.php']['title_var']  = 'chat_start_transcript';
 	$this->_pages['mods/_standard/chat/manage/start_transcript.php']['parent'] = 'mods/_standard/chat/manage/index.php';
 	
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CHAT, TRUE)) && $_SESSION['hide_admin'] == 1){	
+if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CHAT, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
 	$this->_pages['mods/_standard/chat/manage/start_transcript.php']['title_var'] = 'chat_transcript';
 	$this->_pages['mods/_standard/chat/manage/start_transcript.php']['other_parent']    = 'mods/_standard/chat/index.php';
     $this->_pages['mods/_standard/chat/index.php']['children']  = array('mods/_standard/chat/manage/start_transcript.php');
