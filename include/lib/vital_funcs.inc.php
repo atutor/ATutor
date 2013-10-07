@@ -701,7 +701,7 @@ function get_default_theme() {
 
 	if (is_mobile_device()) {
 		//$default_status = 3;
-		if($_SESSION['responsive'] == 1){
+		if($_SESSION['prefs']['PREF_RESPONSIVE'] == 1 || $_COOKIE['responsive'] == 1){
 		    $default_status = 2;
 		}else{
 		    $default_status = 3;
@@ -718,7 +718,7 @@ function get_default_theme() {
 
 function get_system_default_theme() {
 	if (is_mobile_device()) {
-		if($_SESSION['responsive'] == 1){
+		if($_SESSION['prefs']['PREF_RESPONSIVE'] == 1 || $_COOKIE['responsive'] == 1){
 		    return 'default';
 		}else{
 		    return 'mobile';
@@ -729,7 +729,7 @@ function get_system_default_theme() {
 }
 
 function is_mobile_theme($theme) {
-	if($_SESSION['responsive'] == 1){
+	if($_SESSION['prefs']['PREF_RESPONSIVE']  == 1 || $_COOKIE['responsive'] == 1){
 	    return false;
 	}
 	$sql	= "SELECT dir_name FROM %sthemes WHERE type='%s'";

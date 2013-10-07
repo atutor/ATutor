@@ -189,14 +189,19 @@ Toggle to switch between mobile and responsive themes
 ****/
 if($_GET['mobile'] == '2'){
 	global $msg;
-	unset($_SESSION['responsive']);
-	$msg->addFeedback('MOBILE_OFF');
+	unset($_SESSION['prefs']['PREF_RESPONSIVE'] );
+	//unset($_COOKIE['responsive']);
+	setcookie("responsive", NULL, -1);
+	save_prefs();
+	$msg->addFeedback('MOBILE_ON');
 	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
 } else if($_GET['mobile'] == '1') {
 	global $msg;
-	$_SESSION['responsive'] = 1;
-	$msg->addFeedback('MOBILE_ON');
+	$_SESSION['prefs']['PREF_RESPONSIVE'] = 1;
+	save_prefs();
+	setcookie("responsive", $_SESSION['prefs']['PREF_RESPONSIVE'], (time()+60*60*24*30)); // 30 day expire
+	$msg->addFeedback('MOBILE_OFF');
 	header('Location:'.$_SERVER['PHP_SELF']);
 	exit;
 }
@@ -381,12 +386,12 @@ function admin_switch(){
 function mobile_switch(){ 
 	if(is_mobile_device() > 0) {?>
 		<ul id="admin_switch">
-			 <?php if($_SESSION['responsive'] > 0){ ?>
+			 <?php if($_SESSION['prefs']['PREF_RESPONSIVE'] > 0){ ?>
 				<li class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"><?php echo _AT('mobile'); ?></a></li>
 			<?php }else{ ?>
 				<li class="active left"><?php echo _AT('mobile'); ?></li>
 			<?php } ?>
-			<?php if($_SESSION['responsive'] > 0){ ?>
+			<?php if($_SESSION['prefs']['PREF_RESPONSIVE'] > 0){ ?>
 				<li  class="active right"><?php echo _AT('off'); ?></li>
 			<?php }else{ ?>
 				<li  class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=1"><?php echo _AT('off'); ?></a></li>
