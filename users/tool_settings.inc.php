@@ -1,6 +1,6 @@
 <legend><strong><?php echo _AT("support_tools"); ?></strong>  </legend>  
 
-<div id="feedback" style="width:90%;">
+<div id="help" style="width:90%;">
 <?php echo _AT('prefs_set_tools'); ?></div>
 	<div class="row">
 <?php

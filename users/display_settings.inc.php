@@ -1,5 +1,5 @@
 <legend><strong><?php echo _AT("text"); ?></strong> </legend>   
-<div id="feedback">
+<div id="help">
 <?php echo _AT('prefs_set_display'); ?>
 </div>
 <div id="defaultfontsize-wrapper">

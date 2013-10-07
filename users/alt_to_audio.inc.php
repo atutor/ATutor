@@ -1,5 +1,5 @@
 <legend><strong><?php echo _AT("alt_to_audio"); ?></strong> </legend>  
-<div id="feedback" style="width:90%;">
+<div id="help">
 <?php echo _AT('prefs_set_audio'); ?>
 </div>
     <div class="row">

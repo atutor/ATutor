@@ -1,19 +1,19 @@
 div.input-form {
-	width: 95%; 
+	width: 100%; 
 	margin-left:auto; 
 	margin-right:auto;
+	background-color:#FAFAFA;
 	/*border: 1px #685642 solid; */
-	border-top:1px solid #E5E5E5;
-	border-bottom:1px solid #E5E5E5;
+/*	border-top:1px solid #E5E5E5;*/
+	border-bottom:1px solid #E5E5E5; 
 	margin-bottom: 10px;
 	line-height:150%;
-    box-shadow: 0em .1em 0em #cccccc inset;*/
+/*    box-shadow: 0em .1em 0em #cccccc inset;*/
 
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em .5em .5em;
 /*    -moz-box-shadow:.1em .1em .2em #999999;
     box-shadow: .1em .1em .2em #999999;*/
 	padding:.2em;
+	padding-left: 1em;
 }
 
 div.input-form div.row h3 {
@@ -28,7 +28,7 @@ div.input-form div.row {
 
 /*<img> and <a> tags: on mouse hover the color of the background will keep the same!*/
 div.input-form div.row img,a:hover{
-    background-color:#DADADA;
+
 }
 
 div.input-form .footer {
@@ -72,7 +72,8 @@ input[type=checkbox]{
 }
 
 div.input-form div.buttons {
-	text-align: right;
+	/* text-align: right; */
+	margin-left:1em;
 	padding:8px;
 }
 div.input-form div.buttons input {
@@ -139,6 +140,10 @@ select{
 /*	-moz-box-shadow:.2em .2em .3em #999999;
 	box-shadow: .2em .2em .3em #999999;*/
 /*	font-size:100%;*/
+}
+select:focus{
+	background-color:#ffffff;
+
 }
 .test_instruction{
 	background-color: #F4F0CB; 

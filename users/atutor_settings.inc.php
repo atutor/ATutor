@@ -26,7 +26,7 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 <?php  } ?>
 
 <legend><strong><?php echo _AT("atutor_settings"); ?></strong> </legend>  
-<div id="feedback" style="width:90%;">
+<div id="help" style="width:90%;">
 <?php echo _AT('prefs_set_atutor'); ?> 
 </div>
 <?php if (defined('AT_ENABLE_CATEGORY_THEMES') && AT_ENABLE_CATEGORY_THEMES){

@@ -1,5 +1,5 @@
 <legend><strong><?php echo _AT("alt_to_visual"); ?></strong> </legend>  
-<div id="feedback" style="width:90%;">
+<div id="help">
 <?php echo _AT('prefs_set_visual'); ?>
 </div>
     <div class="row">
