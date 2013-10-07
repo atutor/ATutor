@@ -25,8 +25,8 @@ if (isset($_POST['submit_no'])) {
 	$reading_id = $_POST['id'];
 
 	// delete the reading from the list
-	$sql = "DELETE FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[course_id] AND reading_id=$reading_id";
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %sreading_list WHERE course_id=%d AND reading_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], $reading_id));
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index_instructor.php');
@@ -39,15 +39,17 @@ $_GET['id'] = intval($_GET['id']);
 $reading_id = $_GET['id'];
 
 // get the resource ID for this reading
-$sql = "SELECT resource_id FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[course_id] AND reading_id=$reading_id";
-$result = mysql_query($sql, $db);
+$sql = "SELECT resource_id FROM %sreading_list WHERE course_id=%d AND reading_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $reading_id), TRUE);
 
-if ($row = mysql_fetch_assoc($result)){
+if(count($row) > 0){
 	// get the external resource using the resource ID from the reading
 	$resource_id = $row['resource_id'];
-	$sql = "SELECT title, date FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$resource_id";
-	$resource_result = mysql_query($sql, $db);
-	if ($resource_row = mysql_fetch_assoc($resource_result)){
+
+	$sql = "SELECT title, date FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+	$resource_row = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], $resource_id), TRUE);
+    
+    if(count($resource_row) > 0){
 		$hidden_vars['id'] = $reading_id;
 		$confirm = array('RL_DELETE_READING', AT_print($resource_row['title'], 'reading_list.title'));
 		$msg->addConfirm($confirm, $hidden_vars);
