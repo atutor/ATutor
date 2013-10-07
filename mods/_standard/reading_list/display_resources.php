@@ -20,9 +20,10 @@ if (isset($_GET['edit'])) {
 	$_GET['resource_id'] = intval($_GET['resource_id']);
 
 	// what kind of resource is user going to edit?
-	$sql = "SELECT type FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$_GET[resource_id]";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)){
+	$sql = "SELECT type FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_GET['resource_id']), TRUE);
+	
+	if(count($row) > 0){
 		header('Location: add_resource_'.substr($_rl_types[$row['type']], 3).'.php?id='. $_GET['resource_id']. SEP. 'page_return=display_resources.php');
 	}
 } else if (isset($_GET['delete'])) {
@@ -40,9 +41,9 @@ if (isset($_GET['edit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_BOOK." ORDER BY title";
-$result = mysql_query($sql, $db);
-$num_books = mysql_num_rows($result);
+$sql = "SELECT title, resource_id FROM %sexternal_resources WHERE course_id=%d AND type=%d ORDER BY title";
+$rows_books = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], RL_TYPE_BOOK));
+$num_books = count($rows_books);
 ?>
 <div class="input-form" style="width: 90%">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('create'); ?></legend>
@@ -65,8 +66,8 @@ $num_books = mysql_num_rows($result);
 </fieldset>
 </div>
 <?php
-$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] ORDER BY type";
-$result = mysql_query($sql, $db);
+$sql = "SELECT * FROM %sexternal_resources WHERE course_id=%d ORDER BY type";
+$rows_resources = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id]));
 ?>
 
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
@@ -85,10 +86,14 @@ $result = mysql_query($sql, $db);
 				    <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" /></td>
 </tr>
 </tfoot>
-<?php if ($row = mysql_fetch_assoc($result)) : ?>
+<?php 
+    if(count($rows_resources) > 0):
+?>
 <tbody>
 		<?php $first=true; // check the first radio button ?>
-		<?php do { ?>
+		<?php 
+		foreach($rows_resources as $row){
+		?>
 			<tr onmousedown="document.form['t<?php echo $row['resource_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['resource_id']; ?>_0">
 				
 			<td><input type="radio" id="t<?php echo $row['resource_id'];?>" name="resource_id" value="<?php echo $row['resource_id']; ?>"
@@ -97,7 +102,7 @@ $result = mysql_query($sql, $db);
 			<td><label for="t<?php echo $row['resource_id'];?>"><strong><?php echo AT_print($row['title'], 'input.text'); ?></strong></label></td>
 			<td><?php echo AT_print($row['author'], 'input.text'); ?></td>
 			</tr>
-		<?php } while($row = mysql_fetch_assoc($result)); ?>
+		<?php } ?>
 </tbody>
 <?php else: ?>
 	<tr>
