@@ -40,9 +40,8 @@ if (isset($_POST['cancel'])) {
 		$date_end = $_POST['endyear']. '-' .str_pad ($_POST['endmonth'], 2, "0", STR_PAD_LEFT). '-' .str_pad ($_POST['endday'], 2, "0", STR_PAD_LEFT);
 	}
 
-	$sql = "UPDATE ".TABLE_PREFIX."reading_list SET resource_id='$_POST[existing]', required='$_POST[readstatus]', comment='$_POST[comment]', date_start='$date_start', date_end='$date_end' WHERE reading_id='$_POST[id]' AND course_id=$_SESSION[course_id]";
-
-	$result = mysql_query($sql,$db);
+	$sql = "UPDATE %sreading_list SET resource_id='%s', required='%s', comment='%s', date_start='%s', date_end='%s' WHERE reading_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['existing'], $_POST['readstatus'], $_POST['comment'], $date_start, $_POST['id'], $_SESSION['course_id']));
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index_instructor.php');
@@ -58,17 +57,18 @@ $reading_id = $_GET['id'];
 $resource_id = 0;
 
 // get the resource ID using the reading ID
-$sql = "SELECT * FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[course_id] AND reading_id=$reading_id";
-$result = mysql_query($sql, $db);
-if ($rowreading = mysql_fetch_assoc($result)) {
-	$resource_id = $rowreading['resource_id'];
+$sql = "SELECT * FROM %sreading_list WHERE course_id=%d AND reading_id=%d";
+$row_reading = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $reading_id), TRUE);
+
+if(count($row_reading) > 0){
+	$resource_id = $row_reading['resource_id'];
 }
 
 // fill the select control using all the AV resources
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_AV." ORDER BY title";
-$av_result = mysql_query($sql, $db);
+$sql = "SELECT title, resource_id FROM %sexternal_resources WHERE course_id=%d AND type=%d ORDER BY title";
+$rows_av = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_AV));
 
-$num_avs = mysql_num_rows($av_result);
+$num_avs = count($rows_av);
 
 if ($num_avs == 0) {
 	header('Location: add_resource_av.php');
