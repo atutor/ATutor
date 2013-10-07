@@ -55,26 +55,25 @@ if (isset($_POST['cancel'])) {
 		$_POST['comments'] = $addslashes(validate_length($_POST['comments'], 255));
 		
 		if ($id == '0'){ // creating a new URL resource
-			$sql = "INSERT INTO ".TABLE_PREFIX."external_resources VALUES (NULL, $_SESSION[course_id],
-			".RL_TYPE_AV.", 
-			'$_POST[title]', 
-			'$_POST[author]', 
-			'$_POST[publisher]', 
-			'$_POST[date]', 
-			'$_POST[comments]',
-			'',
-			'')";
-			$result = mysql_query($sql,$db);
 
+			$sql = "INSERT INTO %sexternal_resources VALUES (NULL, %d,
+				%d, 
+				'$_POST[title]', 
+				'$_POST[author]', 
+				'$_POST[publisher]', 
+				'$_POST[date]', 
+				'$_POST[comments]',
+				'',
+				'')";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_AV));
+			
 			// index to new URL resource
-			$id_new = mysql_insert_id($db);
-
+			$id_new = at_insert_id();
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		} else { // modifying an existing URL resource
 
-			$sql = "UPDATE ".TABLE_PREFIX."external_resources SET title='$_POST[title]', author='$_POST[author]', publisher='$_POST[publisher]', date='$_POST[date]', comments='$_POST[comments]' WHERE resource_id='$id' AND course_id=$_SESSION[course_id]";
-
-			$result = mysql_query($sql,$db);
+			$sql = "UPDATE %sexternal_resources SET title='%s', author='%s', publisher='%s', date='%s', comments='%s', id='%s' WHERE resource_id=%d AND course_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['title'], $_POST['author'], $_POST['publisher'], $_POST['date'], $_POST['comments'], $_POST['isbn'], $id, $_SESSION['course_id']));
 
 			// index to URL resource
 			$id_new = $id;
@@ -102,10 +101,11 @@ if (isset($_POST['cancel'])) {
 if ($id && !isset($_POST['submit'])){
 	// yes, get resource from database
 	$id = intval ($_GET['id']);
-
-	$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
-	$result = mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)){
+	
+	$sql = "SELECT * FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $id), TRUE);
+	
+	if(count($row) > 0){
 		$title     = AT_print($row['title'], 'input.text');
 		$author    = AT_print($row['author'], 'input.text');
 		$publisher = AT_print($row['publisher'], 'input.text');
