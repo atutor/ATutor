@@ -39,7 +39,7 @@ ATutor.course = ATutor.course || {};
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
-  	 $('#message').css('display', 'inline').slideDown("slow");
+  	 $('#message').css('display', 'block').slideDown("slow");
   	  setTimeout(function() {
         $("#message").hide('blind', {}, 500)
         }, 8000);
