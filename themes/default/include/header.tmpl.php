@@ -293,7 +293,7 @@ global $system_courses, $_custom_css, $db;
 			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
       </div>
 		  <?php endif; ?>
-      <?php if (isset($this->shortcuts)): ?>
+      <?php if (isset($this->shortcuts) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1): ?>
       <div id="shortcuts">
 	      <ul>
 		      <?php foreach ($this->shortcuts as $link): ?>
@@ -377,7 +377,7 @@ global $system_courses, $_custom_css, $db;
 
 ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
-				
+
 				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
 				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></li>
 				<?php else: ?>

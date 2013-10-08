@@ -38,8 +38,9 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 <?php endif; ?>
 
 	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" id="title" name="title" size="40" value="<?php echo htmlspecialchars($this->row['title']); ?>" />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
+		<label for="title"><?php echo _AT('title'); ?></label><br />
+		<input type="text" id="title" name="title" size="40" value="<?php echo htmlspecialchars($this->row['title']); ?>" title="<?php echo _AT('title'); ?> <?php echo _AT('required_field'); ?>"/>
 	</div>
 
 	<div class="row">

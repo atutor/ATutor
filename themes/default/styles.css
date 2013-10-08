@@ -818,10 +818,18 @@ div#error ul, div#feedback ul, div#help ul {
 }
 
 #message{
-    display:none;
+/*    display:none;  */
     width:100%;
 }
 
+.message_link{
+    float:right;
+    margin-right:1em;
+}
+#message img{
+    float:right;
+    margin-right:1em;
+}
 div#error ul li{
 	margin-top: 5px;
 }

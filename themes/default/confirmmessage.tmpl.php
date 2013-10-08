@@ -15,8 +15,8 @@
 	<?php echo $this->hidden_vars; ?>
 <?php endif; ?>
 
-<div class="input-form">
-	<div class="row">
+<div class="input-form" aria-labelledby="confirm" aria-describedby="confirm">
+	<div class="row" id="confirm" role="alert">
 		<?php if (is_array($this->item)) : ?>
 			<?php foreach($this->item as $e) : ?>
 				<p><?php echo $e; ?></p>

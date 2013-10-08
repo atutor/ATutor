@@ -167,21 +167,36 @@ if (empty($_top_level_pages)) {
 /****
 Toggle the hide_admin Session variable to turn admin tools on or off
 ****/
+
 if($_GET['hide_admin'] == '2'){
 	global $msg;
 	//unset($_SESSION['hide_admin']);
+	if(isset($_GET['cid'])){
+		$tcid ="?cid=".intval($_GET['cid']).SEP;
+		$cid = intval($_GET['cid']);
+	} else if(isset($_GET['tcid'])){
+		$tcid ="?cid=".intval($_GET['tcid']).SEP;
+		$cid = intval($_GET['cid']);
+	}
 	unset($_SESSION['prefs']['PREF_HIDE_ADMIN']);
 	save_prefs();
 	$msg->addFeedback('TOOLS_OFF');
-	header('Location:'.$_SERVER['PHP_SELF']);
+	header('Location:'.$_SERVER['PHP_SELF'].$tcid);
 	exit;
 } else if($_GET['hide_admin'] == '1') {
 	global $msg;
+	if(isset($_GET['cid'])){
+		$tcid ="?cid=".intval($_GET['cid']).SEP;
+		$cid = intval($_GET['cid']);
+	} else if(isset($_GET['tcid'])){
+		$tcid ="?cid=".intval($_GET['tcid']).SEP;
+		$cid = intval($_GET['cid']);
+	}
 	//$_SESSION['hide_admin'] = 1;
 	$_SESSION['prefs']['PREF_HIDE_ADMIN'] = 1;
 	save_prefs();
 	$msg->addFeedback('TOOLS_ON');
-	header('Location:'.$_SERVER['PHP_SELF']);
+	header('Location:'.$_SERVER['PHP_SELF'].$tcid);
 	exit;
 }
 /****
@@ -190,19 +205,25 @@ Toggle to switch between mobile and responsive themes
 if($_GET['mobile'] == '2'){
 	global $msg;
 	unset($_SESSION['prefs']['PREF_RESPONSIVE'] );
+	if(isset($_GET['cid'])){
+		$cid="?cid=".$_GET['cid'];
+	}
 	//unset($_COOKIE['responsive']);
 	setcookie("responsive", NULL, -1);
 	save_prefs();
 	$msg->addFeedback('MOBILE_ON');
-	header('Location:'.$_SERVER['PHP_SELF']);
+	header('Location:'.$_SERVER['PHP_SELF'].$cid);
 	exit;
 } else if($_GET['mobile'] == '1') {
 	global $msg;
 	$_SESSION['prefs']['PREF_RESPONSIVE'] = 1;
+	if(isset($_GET['cid'])){
+		$cid="?cid=".$_GET['cid'];
+	}
 	save_prefs();
 	setcookie("responsive", $_SESSION['prefs']['PREF_RESPONSIVE'], (time()+60*60*24*30)); // 30 day expire
 	$msg->addFeedback('MOBILE_OFF');
-	header('Location:'.$_SERVER['PHP_SELF']);
+	header('Location:'.$_SERVER['PHP_SELF'].$cid);
 	exit;
 }
 $_sub_level_pages        = get_sub_navigation($current_page);
@@ -370,13 +391,20 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 function admin_switch(){ 
 	if($_SESSION['is_admin'] > 0) {?>
 		<ul id="admin_switch">
+			<?php
+			if(isset($_GET['cid'])){
+			 	$tcid ="cid=".intval($_GET['cid']).SEP;
+			} else if(isset($_GET['tcid'])){
+				$tcid ="cid=".intval($_GET['tcid']).SEP;
+			}
+			?>
 			<?php if($_SESSION['prefs']['PREF_HIDE_ADMIN'] > 0){ ?>
 				<li  class="active left"><?php echo _AT('manage'); ?></li>
 			<?php }else{ ?>
-				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=1"><?php echo _AT('manage'); ?></a></li>
+				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $tcid; ?>hide_admin=1"><?php echo _AT('manage'); ?></a></li>
 			<?php } ?>
 			 <?php if($_SESSION['prefs']['PREF_HIDE_ADMIN']> 0){ ?>
-				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?hide_admin=2"><?php echo _AT('off'); ?></a></li>
+				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $tcid; ?>hide_admin=2"><?php echo _AT('off'); ?></a></li>
 			<?php }else{ ?>
 				<li class="active right"><?php echo _AT('off'); ?></li>
 			<?php } ?>   
