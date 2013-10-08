@@ -40,9 +40,8 @@ if (isset($_POST['cancel'])) {
 		$date_end = $_POST['endyear']. '-' .str_pad ($_POST['endmonth'], 2, "0", STR_PAD_LEFT). '-' .str_pad ($_POST['endday'], 2, "0", STR_PAD_LEFT);
 	}
 
-	$sql = "UPDATE ".TABLE_PREFIX."reading_list SET resource_id='$_POST[existing]', required='$_POST[readstatus]', comment='$_POST[comment]', date_start='$date_start', date_end='$date_end' WHERE reading_id='$_POST[id]' AND course_id=$_SESSION[course_id]";
-
-	$result = mysql_query($sql,$db);
+	$sql = "UPDATE %sreading_list SET resource_id=%d, required='%s', comment='%s', date_start='%s', date_end='%s' WHERE reading_id=%d AND course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['existing'], $_POST['readstatus'], $_POST['comment'], $date_start, $date_end, $_POST['id'], $_SESSION['course_id']));
 
 	$msg->addFeedback('FILE_EDITED');
 	header('Location: index_instructor.php');
@@ -58,19 +57,18 @@ $reading_id = $_GET['id'];
 $resource_id = 0;
 
 // get the resource ID using the reading ID
-$sql = "SELECT * FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[course_id] AND reading_id=$reading_id";
-$result = mysql_query($sql, $db);
-if ($rowreading = mysql_fetch_assoc($result)) {
+$sql = "SELECT * FROM %sreading_list WHERE course_id=%d AND reading_id=%d";
+$rowreading = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $reading_id), TRUE);
+
+if(count($rowreading) > 0){
 	$resource_id = $rowreading['resource_id'];
 }
 
 // fill the select control using all the file resources
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_FILE." ORDER BY title";
-$file_result = mysql_query($sql, $db);
+$sql = "SELECT title, resource_id FROM %sexternal_resources WHERE course_id=%d AND type=%d ORDER BY title";
+$rows_files = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_FILE));
 
-$num_files = mysql_num_rows($file_result);
-
-if ($num_files == 0) {
+if (count($rows_files) == 0) {
 	header('Location: add_resource_file.php');
 	exit;
 }
@@ -86,9 +84,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<label for="title"><?php  echo _AT('rl_select_file'); ?>:</label>
 		<select name="existing" id="title">
 
-			<?php while ($row = mysql_fetch_assoc($file_result)): ?>
+			<?php 
+			foreach($rows_files as $row){
+			?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo AT_print($row['title'], 'input.text'); ?></option>
-			<?php endwhile; ?>
+			<?php } ?>
 		
 		</select>
 	</div>
