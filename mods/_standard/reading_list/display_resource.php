@@ -24,11 +24,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $id = intval ($_GET['id']);
 
-$sql = "SELECT * FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$id";
-$result = mysql_query($sql, $db);
-if (!$row = mysql_fetch_assoc($result)) {
+$sql = "SELECT * FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $id), TRUE);
+
+if($row['resource_id'] == 0){
 	// can't get resource from database
-	$msg->addError('ITEM_NOT_FOUND');
+	$msg->printErrors('ITEM_NOT_FOUND');
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }

@@ -25,13 +25,13 @@ if (isset($_POST['submit_no'])) {
 	$resource_id = $_POST['id'];
 
 	// delete the resource from the list
-	$sql = "DELETE FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$resource_id";
-	$result = mysql_query($sql, $db);
-
+	$sql = "DELETE FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $resource_id));
+	
 	// find any readings that use this resource and delete them too
-	$sql = "DELETE FROM ".TABLE_PREFIX."reading_list WHERE course_id=$_SESSION[course_id] AND resource_id=$resource_id";
-	$result = mysql_query($sql, $db);
-
+	$sql = "DELETE FROM %sreading_list WHERE course_id=%d AND resource_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $resource_id));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: display_resources.php');
 	exit;
@@ -43,10 +43,10 @@ $_GET['id'] = intval($_GET['id']);
 $resource_id = $_GET['id'];
 
 // get the resource ID for this reading
-$sql = "SELECT title FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND resource_id=$resource_id";
-$result = mysql_query($sql, $db);
+$sql = "SELECT title FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $resource_id), TRUE);
 
-if ($row = mysql_fetch_assoc($result)){
+if(count($row) > 0){
 	$hidden_vars['id'] = $resource_id;
 	$confirm = array('RL_DELETE_RESOURCE', AT_print($row['title'], 'reading_list.title'));
 	$msg->addConfirm($confirm, $hidden_vars);
