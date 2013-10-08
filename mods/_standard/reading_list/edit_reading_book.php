@@ -87,9 +87,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<label for="booktitle"><?php  echo _AT('rl_select_book'); ?>:</label>
 		<select name="existingbook" id="booktitle">
 
-			<?php while ($rowbook = mysql_fetch_assoc($book_result)): ?>
+			<?php 
+			foreach($rows_books as $rowbook){
+			?>
 				<option value="<?php echo $rowbook['resource_id']; ?>"<?php if ($rowbook['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo AT_print($rowbook['title'], 'input.text'); ?></option>
-			<?php endwhile; ?>
+			<?php } ?>
 		
 		</select>
 	</div>
