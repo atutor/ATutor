@@ -58,7 +58,7 @@ if (isset($_GET['existing'])){
 $today = getdate();
 
 $sql = "SELECT title, resource_id FROM %sexternal_resources WHERE course_id=%d AND type=%d ORDER BY title";
-$rows_resources = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], RL_TYPE_AV));
+$rows_resources = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_AV));
 
 if(count($rows_resources) == 0){
 	header('Location: add_resource_av.php?page_return=new_reading_av.php');
