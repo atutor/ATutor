@@ -43,14 +43,8 @@ if (isset($_POST['cancel'])) {
 		$date_end = $_POST['endyear']. '-' .str_pad ($_POST['endmonth'], 2, "0", STR_PAD_LEFT). '-' .str_pad ($_POST['endday'], 2, "0", STR_PAD_LEFT);
 	}
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."reading_list VALUES (NULL, $_SESSION[course_id],
-		'$_POST[existing]',
-		'$_POST[readstatus]',
-		'$date_start',
-		'$date_end',
-		'$_POST[comment]'
-		)";
-	$result = mysql_query($sql,$db);
+	$sql = "INSERT INTO %sreading_list VALUES (NULL, %d, '%s', '%s', '%s', '%s', '%s')";
+	$result = queryDB($sql,array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['existing'], $_POST['readstatus'], $date_start, $date_end, $_POST['comment']));
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index_instructor.php');
@@ -63,10 +57,10 @@ if (isset($_GET['existing'])){
 
 $today = getdate();
 
-$sql = "SELECT title, resource_id FROM ".TABLE_PREFIX."external_resources WHERE course_id=$_SESSION[course_id] AND type=".RL_TYPE_FILE." ORDER BY title";
-$files_result = mysql_query($sql, $db);
+$sql = "SELECT title, resource_id FROM %sexternal_resources WHERE course_id=%d AND type=%d ORDER BY title";
+$rows_resources = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_FILE));
 
-if (!mysql_num_rows($files_result)) {
+if(count($rows_resources) == 0){
 	header('Location: add_resource_file.php?page_return=new_reading_file.php');
 	exit;
 }
@@ -83,9 +77,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<label for="title"><?php  echo _AT('rl_select_file'); ?>:</label>
 		<select name="existing" id="title">
 
-			<?php while ($row = mysql_fetch_assoc($files_result)): ?>
+			<?php foreach($rows_resources as $row){?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $existing) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['title']); ?></option>
-			<?php endwhile; ?>
+			<?php } ?>
 		
 		</select>
 
