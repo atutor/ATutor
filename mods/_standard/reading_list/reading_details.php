@@ -12,6 +12,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+
+// THIS FILE DOES NOT APPEAR TO BE IN USE
+exit;
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 

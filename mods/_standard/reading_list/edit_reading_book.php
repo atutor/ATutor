@@ -59,10 +59,10 @@ $resource_id = 0;
 
 // get the resource ID using the reading ID
 $sql = "SELECT * FROM %sreading_list WHERE course_id=%d AND reading_id=%d";
-$row_reading = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $reading_id), TRUE);
+$rowreading = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $reading_id), TRUE);
 
-if(count($row_reading) > 0){
-	$resource_id = $row_reading['resource_id'];
+if(count($rowreading) > 0){
+	$resource_id = $rowreading['resource_id'];
 }
 // fill the select control using all the book resources
 

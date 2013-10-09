@@ -41,7 +41,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	$sql = "UPDATE %sreading_list SET resource_id='%s', required='%s', comment='%s', date_start='%s', date_end='%s' WHERE reading_id=%d AND course_id=%d";
-	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['existing'], $_POST['readstatus'], $_POST['comment'], $date_start, $_POST['id'], $_SESSION['course_id']));
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['existing'], $_POST['readstatus'], $_POST['comment'], $date_start, $date_end, $_POST['id'], $_SESSION['course_id']));
 
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: index_instructor.php');
@@ -58,10 +58,10 @@ $resource_id = 0;
 
 // get the resource ID using the reading ID
 $sql = "SELECT * FROM %sreading_list WHERE course_id=%d AND reading_id=%d";
-$row_reading = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $reading_id), TRUE);
+$rowreading = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $reading_id), TRUE);
 
-if(count($row_reading) > 0){
-	$resource_id = $row_reading['resource_id'];
+if(count($rowreading) > 0){
+	$resource_id = $rowreading['resource_id'];
 }
 
 // fill the select control using all the AV resources
@@ -85,9 +85,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<div class="row">
 		<label for="title"><?php  echo _AT('select_av'); ?>:</label>
 		<select name="existing" id="title">
-			<?php while ($row = mysql_fetch_assoc($av_result)): ?>
+			<?php 
+			foreach($rows_av as $row){
+            ?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $resource_id) { echo ' selected="selected"'; } ?>><?php echo AT_print($row['title'], 'input.text'); ?></option>
-			<?php endwhile; ?>
+			<?php }  ?>
 		</select>
 	</div>
 
