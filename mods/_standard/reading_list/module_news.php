@@ -20,7 +20,6 @@
  //exit;
  
 function reading_list_news() {
-return false;  // A SESSION['course_id'] NEEDS TO BE SET BEFORE THIS LINK WILL WORK
 global $db, $enrolled_courses, $system_courses;
 	$news = array();
 
@@ -34,8 +33,8 @@ global $db, $enrolled_courses, $system_courses;
 							'alt'=>_AT('reading_list'),
 							'course'=>$system_courses[$row['course_id']]['title'],
 							'thumb'=>'images/home-reading_list_sm.png',
-							'link'=>'<a href="'.url_rewrite('mods/_standard/reading_list/display_resource.php?id=' . $row['resource_id'],
-									AT_PRETTY_URL_IS_HEADER).'"'.(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'. 
+							'link'=>'<a href="bounce.php?course='.$row['course_id'].SEP.'p=mods/_standard/reading_list/display_resource.php?id=' . $row['resource_id']
+							.'"'.(strlen($row['title']) > SUBLINK_TEXT_LEN ? ' title="'.$row['title'].'"' : '') .'>'. 
 									validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>');
 		}	
 	}
