@@ -77,7 +77,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<label for="title"><?php  echo _AT('rl_select_file'); ?>:</label>
 		<select name="existing" id="title">
 
-			<?php foreach($rows_resources as $row){?>
+			<?php foreach($rows_resources as $row){ ?>
 				<option value="<?php echo $row['resource_id']; ?>"<?php if ($row['resource_id'] == $existing) { echo ' selected="selected"'; } ?>><?php echo htmlspecialchars($row['title']); ?></option>
 			<?php } ?>
 		
