@@ -44,7 +44,7 @@ function forums_news() {
 								'alt'=>_AT('forum'),
 								'thumb'=>'images/pin.png',
 								'course'=>$system_courses[$row['course_id']]['title'],
-								'link'=>'<a href="bounce.php?course='.$row['course_id'].SEP.'p='.urlencode('mods/_standard/forums/forum/index.php?fid='.$forum_obj['forum_id']).'"'.
+								'link'=>'<a href="bounce.php?course='.$row['course_id'].SEP.'pu='.urlencode('mods/_standard/forums/forum/index.php?fid='.$forum_obj['forum_id']).'"'.
 								(strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($link_title, 'forums.title').'"' : '') .'>'. 
 								AT_print(validate_length($link_title, SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY), 'forums.title') .'</a>');
 						}
