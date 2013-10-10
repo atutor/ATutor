@@ -52,11 +52,10 @@ if (isset($_POST['cancel'])) {
 } else if (isset($_POST['submit_yes'])) {
 	$_POST['url'] = $addslashes($_POST['url']);
 
-	$sql	= "INSERT INTO ".TABLE_PREFIX."feeds VALUES (NULL, '".$_POST['url']."')";
-	$result = mysql_query($sql, $db);
+	$sql	= "INSERT INTO %sfeeds VALUES (NULL, '%s')";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_POST['url']));
 
-	$feed_id = mysql_insert_id($db);
-	
+	$feed_id = at_insert_id();
 	//copy load file
 	copy('load_file.php', AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.inc.php');
 
