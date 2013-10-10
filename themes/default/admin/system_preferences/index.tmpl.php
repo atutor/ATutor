@@ -21,22 +21,22 @@
 <tbody>
 <?php 
 
-
-if (!($row = mysql_fetch_assoc($this->result))) { 
+if(count($this->rows_feeds) == 0){
 ?>
 
 	<tr>
 		<td colspan="3"><?php echo _AT('none_found'); ?></td>
 	</tr>
 <?php } else { ?>
-	<?php do { 
+	<?php 
+	    foreach($this->rows_feeds as $row){
 		$title_file = AT_CONTENT_DIR.'feeds/'.$row['feed_id'].'_rss_title.cache'; ?>
 		<tr onkeydown="document.form['f_<?php echo $row['feed_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['f_<?php echo $row['feed_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['feed_id']; ?>">
 			<td valign="top"><input type="radio" id="f_<?php echo $row['feed_id']; ?>" name="fid" value="<?php echo $row['feed_id']; ?>" /></td>
 			<td><label for="f_<?php echo $row['feed_id']; ?>"><?php if (file_exists($title_file)) { readfile($title_file); } ?></label></td>
 			<td><?php echo $row['url']; ?></td>
 		</tr>
-	<?php } while ($row = mysql_fetch_assoc($this->result)); ?>
+	<?php }  ?>
 
 <?php } ?>
 </tbody>

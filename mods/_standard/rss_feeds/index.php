@@ -33,9 +33,9 @@ if ((isset($_GET['preview']) || isset($_GET['edit']) || isset($_GET['delete'])) 
 
 require (AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds ORDER BY feed_id";
-$result = mysql_query($sql, $db);
+$sql	= "SELECT * FROM %sfeeds ORDER BY feed_id";
+$rows_feeds = queryDB($sql, array(TABLE_PREFIX));
 
-$savant->assign('result', $result);
+$savant->assign('rows_feeds', $rows_feeds);
 $savant->display('admin/system_preferences/index.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
