@@ -39,9 +39,9 @@ if (isset($_GET['submit'])) {
 
 	if (!$msg->containsErrors()) {
 		$_GET['url'] = $addslashes($_GET['url']);
-		
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."feeds VALUES(".$feed_id.", '".$_GET['url']."')";
-		$result = mysql_query($sql, $db);
+
+		$sql	= "REPLACE INTO %sfeeds VALUES(%d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $feed_id, $_GET['url']));
 
 		//update language
 		if ($f = @fopen($title_file, 'w')) {
@@ -65,9 +65,8 @@ if (isset($_GET['submit'])) {
 
 if ($feed_id != '') {
 
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".$feed_id;
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$sql	= "SELECT * FROM %sfeeds WHERE feed_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $feed_id), TRUE);
 	
 	if (file_exists($title_file)) {
 		$_GET['title'] = file_get_contents($title_file);
