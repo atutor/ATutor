@@ -49,10 +49,10 @@
 <div class="container" style="width:95%; margin:auto;">
 <table class="data">
 <tr>
-<th>&nbsp;</th>
+<th class="hidecol700">&nbsp;</th>
 <th><?php echo _AT('title'); ?></th>
-<th><?php echo _AT('description'); ?></th>
-<th><?php echo _AT('category'); ?></th>
+<th class="hidecol700"><?php echo _AT('description'); ?></th>
+<th class="hidecol700"><?php echo _AT('category'); ?></th>
 <th><?php echo _AT('instructor'); ?></th>
 <th><?php echo _AT('access'); ?></th>
 <th><?php echo _AT('shortcuts'); ?></th>
@@ -63,7 +63,7 @@
 	<?php foreach ($this->courses_rows as $row){ ?>
 	    <?php  $counter++; ?>
 		 <tr class="<?php if ($counter %2) { echo 'odd'; } else { echo 'even'; } ?>">
-		 <td>
+		 <td class="hidecol700">
 		
 		      <?php if ($row['icon']) { // if a course icon is available, display it here.  
 			      $style_for_title = 'style="height: 1.5em;"'; 
@@ -87,7 +87,7 @@
 		<td>
 				<h3><a href="<?php echo url_rewrite('bounce.php?course='.$row['course_id'], true); ?>"><?php echo htmlentities_utf8($row['title']); ?></a></h3>
 		</td>
-		<td>
+		<td class="hidecol700">
 			<?php if ($row['description']): ?>
 				<div style="height:6.4em;" title="<?php echo htmlentities_utf8($row['description']);?>"><?php echo substr(htmlentities_utf8($row['description'], true),0,150); 
 				if(strlen($row['description']) > 150){
@@ -98,7 +98,7 @@
 				<div style="height:6.4em;clear:right;" title="<?php echo htmlentities_utf8($row['description']);?>">&nbsp;</div>
 			<?php endif; ?>
 		</td>
-		<td>
+		<td class="hidecol700">
 			<?php if (is_array($this->cats) && $row['cat_id'] != 0): ?>
 				<a href="<?php echo $_SERVER['PHP_SELF'].'?'.$page_string.SEP; ?>category=<?php echo $row['cat_id']; ?>"><?php echo $this->cats[$row['cat_id']]; ?></a>
 			<?php endif; ?>

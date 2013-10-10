@@ -2333,7 +2333,7 @@ a.pref_wiz_launcher{
 }
 #my_courses_container{
 	  width:58%; 
-	  min-width:38em;
+	  min-width:20em;
 	  margin-left:1em;
 	  border:none;
 	  float:left;
@@ -3298,21 +3298,11 @@ border-radius: 0em .3em .3em 0em ;
 #admin_switch li.disabled{
 background-color:#C5C9C8;
 }
+
+
 /******* Responsive elements *******/
 @media screen and (max-width: 1600px) {
-    .current_box{
-        width:100%;
-        margin-left:0;
-    }
-    #my_courses_container{
-        margin-left:0;
-        width:100%;
-        float:0;
-    } 
-    .hidecol700{
-        visibility:hidden;
-        display:none;
-    } 
+
 }
 
 /* iPad screen width */
@@ -3393,15 +3383,7 @@ border:0;
     .content_link_tablet content_link{
         margin-left:1em;
     }
-    .current_box{
-        width:100%;
-        margin-left:0;
-    }
-    #my_courses_container{
-         margin-left:0;
-        width:100%;
-         float:0;
-    } 
+
     #contentcolumn{
         padding-left:0;
         padding-right:0;
@@ -3415,16 +3397,18 @@ border:0;
         float:left;
         margin-top:-2em;
     }
-    .hidecol700{
-        visibility:hidden;
-        display:none;
-    } 
+
     .narrow{
         width:100%;
     }
     .wide{
         width:100%;
     }
+#admin_switch{
+margin-left:0em;
+font-weight:700;
+
+}
 /*    div#info, div#error, div#feedback{
         width:95%;
     }
@@ -3456,6 +3440,7 @@ border:0;
         margin-left:0;
         display: block;
         width:100%;
+        padding: 1em 0em 1em .5em;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
     }
@@ -3580,6 +3565,7 @@ border:0;
     }
     #shortcuts{
         font-size:2em;
+        float:right;
     }
     .img1616{
         font-size:1.5em;
@@ -3587,6 +3573,23 @@ border:0;
     .img-size-tree{
         font-size:1.5em;
     }
+}
+@media screen and (max-device-width: 820px) {
+    .current_box{
+        width:100%;
+        margin-left:0;
+    }
+    #my_courses_container{
+        margin-left:0;
+        width:100%;
+        float:0;
+    } 
+    div.input-form {
+        line-height:1em;
+    }
+    .hidecol700{
+        display:none;
+    } 
 }
 /********** for 640px or less *********/
 @media screen and (max-device-width: 1000px) {
@@ -3596,7 +3599,7 @@ border:0;
         width:90%;
         height:auto;
         text-align:left;
-        padding: 0em 0em 0em 0em;
+        padding: 1em 0em 1em .5em;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
     }
@@ -3624,10 +3627,13 @@ border:0;
     .button{
         font-size:1.2em !important;
     } 
-
+    div.top-links{
+        margin-top:2em;
+        float:right;
+        clear:both;
+    }
     div#top-links-text{
         float:left;
-        margin-top:.2em;
         margin-left:2em;
     } 
     .site-name{
@@ -3655,7 +3661,8 @@ border:0;
         display:none;
     } 
     .current_box{
-        width:90%;
+        width:90%;       
+        margin-left:0;
     }  
     #sm_topnav{
         display:inline;
@@ -3715,9 +3722,14 @@ border:0;
     }
 
     #my_courses_container{
-        width:100%;
+        width:95%;
         float:0;
-    }    
+         margin-left:0;
+    }  
+    .current_box{
+        width:95%;
+        margin-left:0;
+    }  
     .hidecol700{
         display:none;
     } 
@@ -3794,13 +3806,16 @@ border:0;
         clear:left;
         padding:0 0 0 0;
     }
+    ul#subnavlist{
+        border:0;
+    }
     ul#subnavlist li{
         float:left;
         display: block;
         width:90%;
-        height:auto;
+
         text-align:left;
-        padding: 0em 0em 0em 0em;
+        padding: .5em 0em .5em 0em;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
     }
