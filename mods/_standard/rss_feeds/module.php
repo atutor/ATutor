@@ -54,7 +54,6 @@ while (false !== ($file = @readdir($dh))) {
 
 //creates or updates the cache file
 function make_cache_file($feed_id) {
-	global $db;
 	static $rss;
 
 	if (!isset($rss)) {  
@@ -65,10 +64,10 @@ function make_cache_file($feed_id) {
 		$rss->description = AT_FEED_SHOW_DESCRIPTION;
 	} 
 
-	$sql	= "SELECT url, feed_id FROM ".TABLE_PREFIX."feeds WHERE feed_id=".intval($feed_id);
-	$result = mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_assoc($result)) {
+	$sql	= "SELECT url, feed_id FROM %sfeeds WHERE feed_id=%d";
+	$row_feeds = queryDB($sql, array(TABLE_PREFIX, $feed_id), TRUE);
+	
+	if(count($row_feeds) > 0){
 		$output = $rss->get($row['url'], $row['feed_id']);
 
 		$cache_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.cache';
