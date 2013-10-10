@@ -25,13 +25,13 @@ if (isset($_POST['submit_no'])) {
 	$feed_id = intval($_POST['fid']);
 
 	//delete feed
-	$sql	= "DELETE FROM ".TABLE_PREFIX."feeds WHERE feed_id=$feed_id";
-	$result = mysql_query($sql, $db);
-
+	$sql	= "DELETE FROM %sfeeds WHERE feed_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $feed_id));
 	//delete feed title from lang
-	$sql	= "DELETE FROM ".TABLE_PREFIX."language_text WHERE term='".$feed_id."_rss_title'";
-	$result = mysql_query($sql, $db);
-
+    ///// THESE QUERIES DO NOT APPEAR TO BE USED, commented in 2.2
+	//$sql	= "DELETE FROM %slanguage_text WHERE term='%d_rss_title'";
+	//$result = queryDB($sql, array(TABLE_PREFIX, $feed_id));
+	
 	//delete files
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss.cache');
 	@unlink(AT_CONTENT_DIR.'/feeds/'.$feed_id.'_rss_title.cache');
@@ -45,11 +45,11 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php'); 
 
 	$feed_id = intval($_GET['fid']);
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."feeds WHERE feed_id=".$feed_id;
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
 
-	if (!$row) {
+	$sql	= "SELECT * FROM %sfeeds WHERE feed_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $feed_id), TRUE);
+
+	if (count($row) == 0) {
 		$msg->addError('FEED_NOT_FOUND');
 		$msg->printErrors();
 	} else {
