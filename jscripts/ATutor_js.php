@@ -39,16 +39,25 @@ ATutor.course = ATutor.course || {};
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
-  	/* $('#message').css('display', 'block').slideDown("slow");  */
-        /* To hide automatically, uncomment
+    /* To automatically hide feedback message, uncomment */
+  	/* $('#message').css('display', 'block').slideDown("slow");
             setTimeout(function() {
         $("#message").hide('blind', {}, 500)
-        }, 8000);*/
-        /* To hide when feedback div is clicked */
+        }, 8000);
+    */
+        
+    /* To hide feedback div when clicked */
         $("#message").click(function() {
          $("#message").hide('blind', {}, 500), 8000;
          return false;
-            });
+        });  
+    /* Show/Hide Advanced Admin System Preferecnes, set cookie */
+        $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
+            $("div.adv_toggle").click(function() {
+            $(this).toggleClass("active").next().toggle();
+            var new_value = $(".adv_opts").is(":visible") ? 'expanded' : 'collapsed';
+            $.cookie('showTop', new_value);
+        });
         ATutor.users.preferences.setStyles(
                      '<?php if(isset($_SESSION["prefs"]["PREF_BG_COLOUR"])){echo $_SESSION["prefs"]["PREF_BG_COLOUR"];} ?>',
                      '<?php if(isset($_SESSION["prefs"]["PREF_FG_COLOUR"])){ echo $_SESSION["prefs"]["PREF_FG_COLOUR"];} ?>',

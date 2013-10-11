@@ -167,7 +167,26 @@ if (!isset($_POST['submit'])) {
 		obj_y.disabled = "disabled";
 		obj_n.checked = "checked";
 	}
+function toggleform(id) {
+	if (document.getElementById(id).style.display == "none") {
+		//show
+		document.getElementById(id).style.display='';	
+
+		if (id == "c_folder") {
+			document.form0.new_folder_name.focus();
+		} else if (id == "upload") {
+			document.form0.file.focus();
+		}
+
+	} else {
+		//hide
+		document.getElementById(id).style.display='none';
+	}
+}
+
+// -->
 </script>
+
 
 
 <?php 
