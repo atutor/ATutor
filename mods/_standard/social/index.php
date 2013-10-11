@@ -52,9 +52,9 @@ if (isset($_GET['approval'])){
 	$id = intval($_GET['id']);
 	if ($_GET['approval'] == 'y'){
 		approveFriendRequest($id);
-		$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-		$result_notify = mysql_query($sql_notify, $db);
-		$row_notify = mysql_fetch_assoc($result_notify);
+
+		$sql_notify = "SELECT first_name, last_name, email FROM %smembers WHERE member_id=%d";
+		$row_notify = queryDB($sql_notify, array(TABLE_PREFIX, $id), TRUE);
 
 		if ($row_notify['email'] != '') {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
