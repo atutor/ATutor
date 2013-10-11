@@ -2029,6 +2029,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'pa_private', 'Private', 
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_processed', 'Processed', '2010-03-17 15:59:14', 'photo album');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_profile_album', 'Profile Album', '2010-03-17 15:50:26', 'photo album');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_redo', 'Redo', '2010-03-17 16:00:41', 'photo album');
+INSERT INTO `language_text` VALUES ('en', '_template', 'pa_set_album_cover', 'Make Album Cover', '2013-10-10 12:02:04', 'photo album');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_set_profile_pic', 'Make Profile Picture', '2010-03-25 12:02:04', 'photo album');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_shared', 'Shared', '2010-03-17 16:04:58', 'photo album');
 INSERT INTO `language_text` VALUES ('en', '_template', 'pa_shared_albums', 'Shared Albums', '2010-03-17 15:58:39', 'photo album');
