@@ -40,9 +40,9 @@ function printSocialNameForConnection($id, $trigger){
 		}
 	}
 
-	$sql	= 'SELECT login, first_name, second_name, last_name FROM '.TABLE_PREFIX.'members WHERE member_id='.$id;
-	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
+	$sql	= 'SELECT login, first_name, second_name, last_name FROM %smembers WHERE member_id=%d';
+	$row	= queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
+
 	return htmlentities_utf8(_AT($display_name_formats[$display_name_format], $row['login'], $row['first_name'], $row['second_name'], $row['last_name']));	
 }
 
@@ -102,9 +102,8 @@ if (isset($_GET['id'])){
 	if($id > 0){
 		addFriendRequest($id);
 		$msg->addFeedback('REQUEST_FRIEND_ADDED');
-		$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$id";
-		$result_notify = mysql_query($sql_notify, $db);
-		$row_notify = mysql_fetch_assoc($result_notify);
+		$sql_notify = "SELECT first_name, last_name, email FROM %smembers WHERE member_id=%d";
+		$row_notify = queryDB($sql_notify, array(TABLE_PREFIX, $id), TRUE);
 
 		if ($row_notify['email'] != '') {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
