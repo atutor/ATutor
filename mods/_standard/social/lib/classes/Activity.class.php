@@ -29,7 +29,6 @@ class Activity{
 	 * TODO: What happens if title is empty? Don't add it?
 	 */
 	function addActivity($id, $title, $app_id=0){
-		global $db, $addslashes;
 		$id = intval($id);
 		$app_id = intval($app_id);
 		$app_string = '';
@@ -41,8 +40,9 @@ class Activity{
 		}
 
 		if ($id > 0 && $title!=''){
-			$sql = 'INSERT INTO '.TABLE_PREFIX."social_activities SET member_id=$id, title='$title'".$app_string;
-			mysql_query($sql, $db);
+
+			$sql = "INSERT INTO %ssocial_activities SET member_id=%d, title='%s'".$app_string;
+			queryDB($sql, array(TABLE_PREFIX, $id, $title));
 		}
 	}
 
@@ -55,17 +55,18 @@ class Activity{
 	 * @return	The array of description of all the activities from the given user.
 	 */
 	function getActivities($id, $displayAll=false){
-		global $db;
+		//global $db;
 		$activities = array();
 		$id = intval($id);
 		if ($id > 0){
-			$sql = 'SELECT * FROM '.TABLE_PREFIX."social_activities WHERE member_id=$id ORDER BY created_date DESC";
+		   $sql = "SELECT * FROM %ssocial_activities WHERE member_id=%d ORDER BY created_date DESC";
+	
 			if (!$displayAll){
 				$sql .= ' LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
 			}
-			$result = mysql_query($sql, $db);
-			if ($result){
-				while($row = mysql_fetch_assoc($result)){
+			$rows_activities = queryDB($sql, array(TABLE_PREFIX, $id));
+			 if(count($rows_activities) > 0){
+		        foreach($rows_activities as $row){
 					$activities[$row['id']]['member_id'] = $row['member_id'];
 					$activities[$row['id']]['title'] = $row['title'];
 					$activities[$row['id']]['created_date'] = $row['created_date'];
@@ -84,12 +85,10 @@ class Activity{
 	 * @return	true if activity is deleted.
 	 */
 	function deleteActivity($id){
-		global $db;
-
 		$id = intval($id);
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_activities WHERE member_id='.$_SESSION['member_id'].' AND id='.$id;
-		mysql_query($sql, $db);
-		if (mysql_affected_rows() > 0){
+		$sql = 'DELETE FROM %ssocial_activities WHERE member_id=%d AND id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $id));
+		if($result > 0){
 			return true;
 		} else  {
 			return false;
@@ -105,19 +104,18 @@ class Activity{
 	 * @return	The array of description of all the activities of the given user's friends.
 	 */
 	 function getFriendsActivities($id, $displayAll=false){
-		global $db;
+		//global $db;
 		$activities = array();
 
 		$friends = getFriends($id);	
 		$friends_ids = implode(', ', array_keys($friends));
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_activities WHERE member_id IN ('.$friends_ids.') ORDER BY created_date DESC';
+		$sql = 'SELECT * FROM %ssocial_activities WHERE member_id IN (%s) ORDER BY created_date DESC';
 		if (!$displayAll){
 			$sql .= ' LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
 		}
-		$result = mysql_query($sql, $db);
-
-		if ($result){
-			while($row = mysql_fetch_assoc($result)){
+		$rows_activities = queryDB($sql, array(TABLE_PREFIX, $friends_ids));
+		if (count($rows_activities) > 0){
+			foreach($rows_activities as $row){
 				$activities[$row['id']]['member_id'] = $row['member_id'];
 				$activities[$row['id']]['title'] = $row['title'];
 				$activities[$row['id']]['created_date'] = $row['created_date'];
@@ -134,14 +132,12 @@ class Activity{
 	  * @return	the title string that has a hyperlink to the application itself.
 	  */
 	 function generateApplicationTitle($app_id){
-		global $db;
 		$app_id = intval($app_id);
 		
 		//This here, it is actually better to use $url instead of app_id.
 		//$url is the primary key.  $id is also a key, but it is not guranteed that it will be unique
-		$sql = 'SELECT title FROM '.TABLE_PREFIX."social_applications WHERE id=$app_id";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+		$sql = "SELECT title FROM %ssocial_applications WHERE id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $app_id), TRUE);
 		
 		$msg = _AT("has_added_app", url_rewrite(AT_SOCIAL_BASENAME.'applications.php?app_id='.$app_id, AT_PRETTY_URL_IS_HEADER),
 			htmlentities_utf8($row['title']));
