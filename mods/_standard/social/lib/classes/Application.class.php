@@ -40,7 +40,8 @@ class Application extends Applications{
 	 * @param	object		gadget object retrieved from JSON + cURL
 	 */
 	function addApplication($gadget_obj){ 
-		global $db, $addslashes;
+		global $addslashes;
+
 		//TODO: Many more fields to add
 //		$id						= $gadget_obj['moduleId'];   //after i change the URL to the key.
 		$author					= $addslashes($gadget_obj->author);
@@ -53,29 +54,29 @@ class Application extends Applications{
 		$height					= intval($gadget_obj->height);
 		$module_id				= intval($gadget_obj->module_id);
 		$url					= $addslashes($gadget_obj->url);
-		$userPrefs				= $addslashes(serialize($gadget_obj->userPrefs));
-		$views					= $addslashes(serialize($gadget_obj->views));
+		$userPrefs				= serialize($gadget_obj->userPrefs);
+		$views					= serialize($gadget_obj->views);
 		$scrolling				= intval(($gadget_obj->scrolling=='true'?1:0));
 
 		//determine next id
-		$sql = 'SELECT MAX(id) AS max_id FROM '.TABLE_PREFIX.'social_applications';
-		$result = mysql_query($sql, $db);
-		if ($result){
-			$row = mysql_fetch_assoc($result);
-			$id = $row['max_id'] + 1;
+		$sql = 'SELECT MAX(id) AS max_id FROM %ssocial_applications';
+		$row_maxid = queryDB($sql, array(TABLE_PREFIX), TRUE);
+
+        if($row_maxid['max_id'] > 0){
+			$id = $row_maxid['max_id'] + 1;
 		} else {
 			$id = 1;
 		}
+
 		$member_id = $_SESSION['member_id'];
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_applications (id, url, title, height, scrolling, screenshot, thumbnail, author, author_email, description, settings, views, last_updated) VALUES ($id, '$url', '$title', $height, $scrolling, '$screenshot', '$thumbnail', '$author', '$author_email', '$description', '$userPrefs', '$views', NOW())";
-		$result = mysql_query($sql, $db);
-		
+		$sql = "REPLACE INTO %ssocial_applications (id, url, title, height, scrolling, screenshot, thumbnail, author, author_email, description, settings, views, last_updated) VALUES (%d, '%s', '%s', %d, %d, '%s', '%s', '%s', '%s', '%s', '%s', '%s', NOW())";
+		$result = queryDB($sql,array(TABLE_PREFIX, $id, $url, $title, $height, $scrolling, $screenshot, $thumbnail, $author, $author_email, $description, $userPrefs, $views));                                  
+
 		//This application is already in the database, get its ID out
-		if (!$result){			
-			$sql = 'SELECT id, UNIX_TIMESTAMP(last_updated) AS last_updated FROM '.TABLE_PREFIX."social_applications WHERE url='$url'";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+		if($result == 0){
+			$sql = "SELECT id, UNIX_TIMESTAMP(last_updated) AS last_updated FROM %ssocial_applications WHERE url='%s'";
+			$row = queryDB($sql, array(TABLE_PREFIX, $url), TRUE);
 			$id = $row['id'];
 
 			//Update the gadget
@@ -83,9 +84,33 @@ class Application extends Applications{
 			//Use TIMESTAMP for now, but i perfer version #.
 			//If the gadget is SOCIAL_APPLICATION_UPDATE_SCHEDULE days old, update it
 			if (abs($row['last_updated']) < strtotime('-'.SOCIAL_APPLICATION_UPDATE_SCHEDULE.' day')){
-				$sql = 'UPDATE '.TABLE_PREFIX."social_applications SET title='$title', height=$height, scrolling=$scrolling, screenshot='$screenshot', thumbnail='$thumbnail', author='$author', author_email='$author_email', description='$description', settings='$userPrefs', views='$views', last_updated=NOW() WHERE url='$url'";
-				$result = mysql_query($sql, $db);
-				//echo $sql;
+				$sql = "UPDATE %ssocial_applications 
+				                SET title='%s', 
+				                    height=%d, 
+				                    scrolling=%d, 
+				                    screenshot='%s', 
+				                    thumbnail='%s', 
+				                    author='%s', 
+				                    author_email='%s', 
+				                    description='%s', 
+				                    settings='%s', 
+				                    views='%s', 
+				                    last_updated=NOW() 
+				                    WHERE url='%s'";
+				$result = queryDB($sql, array(
+				                    TABLE_PREFIX, 
+                                    $title, 
+                                    $height, 
+                                    $scrolling, 
+                                    $screenshot, 
+                                    $thumbnail, 
+                                    $author, 
+                                    $author_email,
+                                    $description,
+                                    $userPrefs,
+                                    $views,
+                                    $url));
+
 			}
 		} 
 
@@ -105,15 +130,14 @@ class Application extends Applications{
 	 * @param	int		application_id
 	 */
 	function addMemberApplication($member_id, $app_id){
-		global $db;
 
 		$member_id = intval($member_id);
 		$app_id = intval($app_id);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_members_applications (member_id, application_id) VALUES ($member_id, $app_id)";
-		$result = mysql_query($sql, $db);
-
-		if ($result){
+		$sql = "REPLACE INTO %ssocial_members_applications (member_id, application_id) VALUES (%d,%d)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $app_id));
+		
+		if ($result > 0){
 			//Add this to the home page
 			$home_settings = $this->getHomeDisplaySettings();
 			$home_settings[$app_id] = 1;	//manually set this application
@@ -169,15 +193,14 @@ class Application extends Applications{
 	 * @return	true(1) if the perference has been updated, false(0) otherwise.
 	 */
 	function setApplicationSettings($member_id, $key, $value){
-		global $addslashes, $db;
-
+		global $addslashes;
 		$app_id		= $this->id;
 		$member_id	= intval($member_id);		
 		$key		= $addslashes($key);
 		$value		= $addslashes($value);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($app_id, $member_id, '$key', '$value') ON DUPLICATE KEY UPDATE value='$value'";
-		$result = mysql_query($sql, $db);
+		$sql = 'REPLACE INTO '.TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES (%d, %d, '%s', '%s') ON DUPLICATE KEY UPDATE value='$value'";
+		$result = queryDB($sql, array(TABLE_PREFIX, $app_id, $member_id, $key, $value, $value));
 
 		//TODO: Might want to add something here to throw appropriate exceptions
 		return $result;
@@ -187,37 +210,40 @@ class Application extends Applications{
 	/**
 	 * Get member's applications
 	 * @param	int		the member id
+	 * WHERE IS THIS FUNCTION USED?
 	 */
-	function getMemberApplications($member_id){
-		global $db;
+/*	function getMemberApplications($member_id){
+		//global $db;
 		$result = array();
 
 		$member_id = intval($member_id);
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_members_applications WHERE member_id='.$member_id;
-		$rs = mysql_query($sql, $db);
-		if ($rs){
-			while($row = mysql_fetch_assoc($rs)){
+		$sql = 'SELECT * FROM %ssocial_members_applications WHERE member_id=%d';
+		$rs = queryDB($sql, array(TABLE_PREFIX, $member_id));
+		if(count($rs) > 0){
+		    foreach($rs as $row){
 				$result[] = $row['app_id'];
 			}
 		}
 		return $result;
 	}
-
+*/
 
 	/**
 	 * Get user perferences for this application
 	 * @return	array
 	 */
 	function getApplicationSettings($member_id){
-		global $db;
+
 		$result = array();
 		$member_id = intval($member_id);
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX."social_application_settings WHERE member_id=$member_id AND application_id=".$this->id;
-		$rs = mysql_query($sql);
-		if ($rs){
+        $sql = "SELECT * FROM %ssocial_application_settings WHERE member_id=%d AND application_id=%d";
+		$rs = queryDB($sql, array(TABLE_PREFIX, $member_id, $this->id));
+
+		// THIS LOOP IS REDUNDANT WITH QUERYDB() $rs = $result
+		if (count($rs) > 0){
 			//loop cause an application can have multiple pairs of key=>value
-			while ($row = mysql_fetch_assoc($rs)){
+			foreach($rs as $row){
 				$result[$row['name']] = $row['value'];
 			}
 		}
@@ -331,7 +357,6 @@ class Application extends Applications{
 						'default', // domain key, shindig will check for php/config/<domain>.php for container specific configuration
 						urlencode($this->getUrl()), // app url
 						$this->getModuleId());// mod id
-//debug($securityToken);
 //TODO: 
 		//   all the & should be using the constant "SEP", however, shingdig isn't parsing ";", 
 		//   it only parses "&".  Once shindig fixed this, we gotta change it back to SEP
@@ -371,13 +396,11 @@ class Application extends Applications{
 	 * @private
 	 */
 	function getApplicationPrefs(){
-		global $db;
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_applications WHERE id='.$this->id;
-		$rs = mysql_query($sql);
+		$sql = "SELECT * FROM %ssocial_applications WHERE id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $this->id), TRUE);
 
-		if ($rs){
-			$row = mysql_fetch_assoc($rs);
+		if (count($row) > 0){
 			//assign values
 			$this->url			= $row['url'];
 			$this->title		= $row['title'];
@@ -398,15 +421,16 @@ class Application extends Applications{
 	 * Delete an application
 	 */
 	function deleteApplication(){
-		global $db;
-
 		//delete application mapping
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_members_applications WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
-		$rs = mysql_query($sql);
+		if($_SESSION['member_id'] > 0){
+		    $delete_member_app = " AND member_id = ".$_SESSION['member_id'];
+		}
+		$sql = 'DELETE FROM %ssocial_members_applications WHERE application_id=%d '.$delete_member_app;
+		$rs = queryDB($sql, array(TABLE_PREFIX, $this->id));
 
 		//delete application data?
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_application_settings WHERE application_id='.$this->id.' AND member_id='.$_SESSION['member_id'];
-		$rs = mysql_query($sql);
+		$sql = 'DELETE FROM %ssocial_application_settings WHERE application_id=%d '.$delete_member_app;
+		$rs = queryDB($sql, array(TABLE_PREFIX, $this->id));
 
 		//delete application settings
 		$home_settings = $this->getHomeDisplaySettings();
