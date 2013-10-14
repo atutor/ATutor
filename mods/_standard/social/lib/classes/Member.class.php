@@ -24,7 +24,6 @@ class Member {
 		$this->id = intval($id);
 	}
 
-
 	/**
 	 * Add a new job position
 	 * @param	string		Name of the company, in full.
@@ -140,7 +139,8 @@ class Member {
 		$rep_address			= $addslashes($rep_address);
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_representation (member_id, rep_name, rep_title, rep_phone, rep_email, rep_address) VALUES ($member_id, '$rep_name', '$rep_title', '$rep_phone', '$rep_email', '$rep_address')";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+		editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
 	}
@@ -164,7 +164,8 @@ class Member {
 		$con_address			= $addslashes($con_address);
 		
 		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_contact (member_id, con_name, con_phone, con_email, con_address) VALUES ($member_id, '$con_name', '$con_phone', '$con_email', '$con_address')";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+		editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
 	}
@@ -193,7 +194,8 @@ class Member {
 		$per_disabilities		= $addslashes($per_disabilities);
 
 		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_personal (member_id, per_weight, per_height, per_hair, per_eyes, per_ethnicity, per_languages, per_disabilities) VALUES ($member_id, '$per_weight', '$per_height', '$per_hair', '$per_eyes','$per_ethnicity','$per_languages','$per_disabilities')";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+		editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
 	}
@@ -217,7 +219,8 @@ class Member {
 		$expertise		= $addslashes($expertise);
 		$others			= $addslashes($others);
 		$sql = 'INSERT INTO ' . TABLE_PREFIX . "social_member_additional_information (member_id, interests,  associations, awards, expertise, others) VALUES ($member_id, '$interests', '$associations', '$awards', '$expertise', '$others')";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+		editSocialFeedback($result);
 	}
 
 
@@ -231,7 +234,6 @@ class Member {
 		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_track (`member_id`, `visitor_id`, `timestamp`) VALUES (".$this->getID().", $visitor_id, NOW())";
 		mysql_query($sql, $db);
 	}
-
 
 	/**
 	 * Update a new job position
@@ -253,7 +255,8 @@ class Member {
 		$description = $addslashes($description);
 
 		$sql = 'UPDATE '.TABLE_PREFIX."social_member_position SET company='$company', title='$title', `from`='$from', `to`='$to', description='$description' WHERE id=$id";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+		editSocialFeedback($result);
 	}
 
 
@@ -284,7 +287,8 @@ class Member {
 		$description		= $addslashes($description);
 
 		$sql = 'UPDATE '.TABLE_PREFIX."social_member_education SET university='$university', `from`='$from', `to`='$to', country='$country', province='$province', degree='$degree', field='$field', description='$description' WHERE id=$id";
-		mysql_query($sql, $db);		
+		$result = mysql_query($sql, $db);	
+		editSocialFeedback($result);	
 	}
 
 
@@ -301,7 +305,8 @@ class Member {
 		$site_name	= $addslashes($site_name);
 
 		$sql = 'UPDATE '.TABLE_PREFIX."social_member_websites SET url='$url', site_name='$site_name' WHERE id=$id";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+		editSocialFeedback($result);
 	}
 
 
@@ -344,6 +349,7 @@ class Member {
 
 		$sql2 = 'INSERT INTO '.TABLE_PREFIX."social_member_additional_information SET ".$sql.", member_id=".$_SESSION['member_id'] . " ON DUPLICATE KEY UPDATE ".$sql;
 		mysql_query($sql2, $db);
+		
 	}
 	/**
 	 * Edit representation
