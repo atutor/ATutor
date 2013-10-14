@@ -17,6 +17,12 @@
  * This is developed based on the v8.1 Opensocial specification
  * http://www.opensocial.org/Technical-Resources/opensocial-spec-v081/rpc-protocol
  */
+ 
+ /*
+ * THIS FILE IS NOT IMPLEMENTED 
+ */
+ exit;
+ 
 class ATutorDbFetcher {
   private $url_prefix;
   private $cache;
@@ -103,9 +109,12 @@ class ATutorDbFetcher {
 //    $body = isset($activity['body']) ? $activity['body'] : '';
     $title = mysql_real_escape_string($title);
 //    $body = mysql_real_escape_string($body);
-	$sql = "INSERT INTO ".TABLE_PREFIX."social_activities (member_id, application_id, title, created_date) values ($member_id, $app_id, '$title', NOW())";
-    mysql_query($sql, $this->db);
-    if (! ($activityId = mysql_insert_id($this->db))) {
+	//$sql = "INSERT INTO ".TABLE_PREFIX."social_activities (member_id, application_id, title, created_date) values ($member_id, $app_id, '$title', NOW())";
+    //mysql_query($sql, $this->db);
+	$sql = "INSERT INTO %ssocial_activities (member_id, application_id, title, created_date) values (%d, %d, '%s', NOW())";
+    queryDB($sql, array(TABLE_PREFIX, $member_id, $app_id, $title));
+   // if (! ($activityId = mysql_insert_id($this->db))) {
+    if (! ($activityId = at_insert_id())) {
       return false;
     }
 
@@ -139,24 +148,30 @@ class ATutorDbFetcher {
 //  public function getActivities($ids, $appId, $sortBy, $filterBy, $filterOp, $filterValue, $startIndex, $count, $fields) {
     //TODO add support for filterBy, filterOp and filterValue
     $this->checkDb();
-    $activities = array();
+    $activities = array();   my_add_null_slashes
     foreach ($ids as $key => $val) {
-      $ids[$key] = mysql_real_escape_string($val);
+      //$ids[$key] = mysql_real_escape_string($val);
+      $ids[$key] = my_add_null_slashes($val);
     }
     $ids = implode(',', $ids);
     if (isset($activityIds) && is_array($activityIds)) {
       foreach ($activityIds as $key => $val) {
-        $activityIds[$key] = mysql_real_escape_string($val);
+        //$activityIds[$key] = mysql_real_escape_string($val);
+        $activityIds[$key] = my_add_null_slashes($val);
       }
       $activityIdQuery = " AND id IN (".implode(',', $activityIds);
     } else {
       $activityIdQuery = '';
     }
     // return a proper totalResults count
-	$sql = "SELECT count(id) FROM ".TABLE_PREFIX."social_activities WHERE member_id in ($ids) $activityIdQuery";
-    $res = mysql_query($sql, $this->db);
-    if ($res !== false) {
-      list($totalResults) = mysql_fetch_row($res);
+	//$sql = "SELECT count(id) FROM ".TABLE_PREFIX."social_activities WHERE member_id in ($ids) $activityIdQuery";
+    //$res = mysql_query($sql, $this->db);
+ 	$sql = "SELECT count(id) FROM %ssocial_activities WHERE member_id in (%s) $activityIdQuery";
+    $rows_activities = queryDB($sql,array(TABLE_PREFIX, $ids), TRUE);
+    //if ($res !== false) {
+    if(count($rows_activities) > 0){
+      //list($totalResults) = mysql_fetch_row($res);
+      list($totalResults) = $rows_activities;
     } else {
       $totalResults = '0';
     }
@@ -165,11 +180,15 @@ class ATutorDbFetcher {
     $activities['totalResults'] = $totalResults;
     $activities['startIndex'] = $startIndex;
     $activities['count'] = $count;
-    $query = "SELECT member_id, id, title, created_date FROM ".TABLE_PREFIX."social_activities WHERE member_id in ($ids) $activityIdQuery order by created_date desc limit $startIndex, $count";
-    $res = mysql_query($query, $this->db);
-    if ($res) {
-      if (mysql_num_rows($res)) {
-        while ($row = mysql_fetch_assoc($res)) {
+    //$query = "SELECT member_id, id, title, created_date FROM ".TABLE_PREFIX."social_activities WHERE member_id in ($ids) $activityIdQuery order by created_date desc limit $startIndex, $count";
+    //$res = mysql_query($query, $this->db);
+    $query = "SELECT member_id, id, title, created_date FROM %ssocial_activities WHERE member_id in (%s) $activityIdQuery order by created_date desc limit %d, %d";
+    $rows_my_activities = queryDB($query, array(TABLE_PREFIX, $ids, $startIndex, $count));
+    //if ($res) {
+      //if (mysql_num_rows($res)) {
+      if(count($rows_my_activities) == 0){
+        foreach($rows_my_activities as $row){
+       // while ($row = mysql_fetch_assoc($res)) {
           $activity = new Activity($row['id'], $row['member_id']);
           $activity->setStreamTitle('activities');
           $activity->setTitle($row['title']);
@@ -186,7 +205,7 @@ class ATutorDbFetcher {
     } else {
       return false;
     }
-  }
+  //}
 
   /**
    * Delete activity
@@ -202,9 +221,13 @@ class ATutorDbFetcher {
     $userId = intval($userId);
     $appId = intval($appId);
 	//can use this instead: 	$sql = "delete from ".TABLE_PREFIX."social_activities where id in ($activityIds)";
-	$sql = "DELETE FROM ".TABLE_PREFIX."social_activities WHERE member_id = $userId and application_id = $appId AND id IN ($activityIds)";
-    mysql_query($sql, $this->db);
-    return (mysql_affected_rows($this->db) != 0);
+	//$sql = "DELETE FROM ".TABLE_PREFIX."social_activities WHERE member_id = $userId and application_id = $appId AND id IN ($activityIds)";
+   // mysql_query($sql, $this->db);
+	$sql = "DELETE FROM %ssocial_activities WHERE member_id = %d and application_id = %d AND id IN (%s)";
+    $result = queryDB($sql, array(TABLE_PREFIX, $userId, $appId, $activityIds));
+    //return (mysql_affected_rows($this->db) != 0);
+
+    return ($result != 0);
   }
 
 /**
@@ -227,6 +250,7 @@ class ATutorDbFetcher {
    * @param     Array   member ids
    */
   public function getPersonGroups($ids){
+        // UNTESTED WITH QUERYDB()
         $this->checkDb();
         $ret = array();
 
@@ -234,10 +258,14 @@ class ATutorDbFetcher {
             $ids[$k] = intval($v);
         }
         $ids = implode(', ', $ids);
-        $sql = "SELECT m.member_id, g.id, g.name FROM ".TABLE_PREFIX."social_groups_members m LEFT JOIN ".TABLE_PREFIX."social_groups g ON m.group_id=g.id WHERE m.member_id IN ($ids)";
-        $result = mysql_query($sql, $this->db);
-        if ($result){
-            while(list($member_id, $group_id, $group_name) = mysql_fetch_row($result)){
+        //$sql = "SELECT m.member_id, g.id, g.name FROM ".TABLE_PREFIX."social_groups_members m LEFT JOIN ".TABLE_PREFIX."social_groups g ON m.group_id=g.id WHERE m.member_id IN ($ids)";
+       // $result = mysql_query($sql, $this->db);
+        $sql = "SELECT m.member_id, g.id, g.name FROM %ssocial_groups_members m LEFT JOIN %ssocial_groups g ON m.group_id=g.id WHERE m.member_id IN (%s)";
+        $rows_sgroups = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $ids), TRUE);
+        //if ($result){
+        if(count($rows_sgroups) > 0){
+            foreach($rows_sgroups as list($member_id, $group_id, $group_name)){
+            //while(list($member_id, $group_id, $group_name) = mysql_fetch_row($result)){
                 $ret[$member_id][] = array($group_id, $group_name);
             }
         }
@@ -251,6 +279,7 @@ class ATutorDbFetcher {
    * @return	null
    */
   public function createMessage($member_id, $appId, $message){
+    // UNTESTED WITH QUERYDB()
 	$this->checkDb();
 	$app_id = intval($app_id);
 	$member_id = intval($member_id);
@@ -263,8 +292,10 @@ class ATutorDbFetcher {
 	}
 
 	//safe guard 
-	$body = mysql_real_escape_string($message['body']);
-	$subject = mysql_real_escape_string($message['title']);
+	//$body = mysql_real_escape_string($message['body']);
+	//$subject = mysql_real_escape_string($message['title']);
+	$body =  my_add_null_slashes($message['body']);
+	$subject =  my_add_null_slashes($message['title']);
 	foreach ($recipients as $key => $val) {
       $recipients[$key] = intval($val);
     }
@@ -274,22 +305,30 @@ class ATutorDbFetcher {
 		if ($id==0){
 			continue;
 		}
-		$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, 0, $member_id, $id, NOW(), 1, 0, '$subject', '$body')";
-		$result = mysql_query($sql,$this->db);
+		//$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, 0, $member_id, $id, NOW(), 1, 0, '$subject', '$body')";
+		//$result = mysql_query($sql,$this->db);
+		$sql = "INSERT INTO %smessages VALUES (NULL, 0, %d, %d, NOW(), 1, 0, '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $id, $subject, $body));
 
 		// sent message box:
-		$sql = "INSERT INTO ".TABLE_PREFIX."messages_sent VALUES (NULL, 0, $member_id, $id, NOW(), '$subject', '$body')";
-		$result = mysql_query($sql,$this->db);
+		//$sql = "INSERT INTO ".TABLE_PREFIX."messages_sent VALUES (NULL, 0, $member_id, $id, NOW(), '$subject', '$body')";
+		//$result = mysql_query($sql,$this->db);
+		$sql = "INSERT INTO %smessages_sent VALUES (NULL, 0, %d, %d, NOW(), '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $id, $subject, $body));
 	}
   }
 
   public function getFriendIds($member_id) {
+    //UNTESTED WITH QUERYDB()
     $this->checkDb();
     $ret = array();
     $member_id = intval($member_id);
-	$sql = "SELECT member_id, friend_id from ".TABLE_PREFIX."social_friends WHERE member_id = $member_id or friend_id = $member_id";
-    $res = mysql_query($sql, $this->db);
-    while (list($mid, $fid) = mysql_fetch_row($res)) {
+	//$sql = "SELECT member_id, friend_id from ".TABLE_PREFIX."social_friends WHERE member_id = $member_id or friend_id = $member_id";
+    //$res = mysql_query($sql, $this->db);
+	$sql = "SELECT member_id, friend_id from %ssocial_friends WHERE member_id = %d or friend_id = %d";
+    $res = queryDB($sql, array(TABLE_PREFIX, $member_id, $member_id));
+    foreach($res as list($mid, $fid)){
+    //while (list($mid, $fid) = mysql_fetch_row($res)) {
       $id = ($mid == $member_id) ? $fid : $mid;
       $ret[] = $id;
     }
@@ -297,20 +336,30 @@ class ATutorDbFetcher {
   }
 
   public function setAppData($member_id, $key, $value, $app_id) {
+    //UNTESTED WITH QUERYDB()
 	$this->checkDb();
     $member_id = intval($member_id);
-    $key = mysql_real_escape_string($key);
-    $value = mysql_real_escape_string($value);
+    //$key = mysql_real_escape_string($key);
+    //$value = mysql_real_escape_string($value);
+    $key = my_add_null_slashes($key);
+    $value = my_add_null_slashes($value);
     $app_id = intval($app_id);
     if (empty($value)) {
       // empty key kind of became to mean "delete data" (was an old orkut hack that became part of the spec spec)
-	  $sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id AND member_id = $member_id AND name = '$key'";
-      if (! @mysql_query($sql, $this->db)) {
+	  //$sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id AND member_id = $member_id AND name = '$key'";
+      //if (! @mysql_query($sql, $this->db)) {
+	  $sql = "DELETE FROM %ssocial_application_settings WHERE application_id = %d AND member_id = %d AND name = '%s'";
+      $result = queryDB($sql, array(TABLE_PREFIX, $app_id, $member_id, $key));
+      if($result == 0){
+      //if (! @mysql_query($sql, $this->db)) {
         return false;
       }
     } else {
-		$sql ="INSERT INTO ".TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($app_id, $member_id, '$key', '$value') ON DUPLICATE KEY UPDATE VALUE = '$value'";
-      if (! @mysql_query($sql, $this->db)) {
+		//$sql ="INSERT INTO ".TABLE_PREFIX."social_application_settings (application_id, member_id, name, value) VALUES ($app_id, $member_id, '$key', '$value') ON DUPLICATE KEY UPDATE VALUE = '$value'";
+      //if (! @mysql_query($sql, $this->db)) {
+	  $sql ="INSERT INTO %ssocial_application_settings (application_id, member_id, name, value) VALUES (%d, %d, '%s', '%s') ON DUPLICATE KEY UPDATE VALUE = '%s'";
+      $result = queryDB($sql, array(TABLE_PREFIX, $app_id, $member_id, $key, $value, $value));
+      if ($result == 0) {
         return false;
       }
     }
@@ -318,18 +367,26 @@ class ATutorDbFetcher {
   }
 
   public function deleteAppData($member_id, $key, $app_id) {
+    //UNTESTED WITH QUERYDB()
 	$this->checkDb();
     $person_id = intval($member_id);
     $app_id = intval($app_id);
     if ($key == '*') {
-		$sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id = $member_id";
-      if (! @mysql_query($sql, $this->db)) {
+		//$sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id = $member_id";
+     // if (! @mysql_query($sql, $this->db)) {
+		$sql = "DELETE FROM %ssocial_application_settings WHERE application_id = %d and member_id = %d";
+        $result = queryDB($sql, array(TABLE_PREFIX, $app_id, $member_id));
+      if ($result == 0) {
         return false;
       }
     } else {
-      $key = mysql_real_escape_string($key);
-	  $sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id = $member_id and name = '$key'";
-      if (! @mysql_query($sql, $this->db)) {
+      //$key = mysql_real_escape_string($key);
+      $key = my_add_null_slashes($key);
+	  //$sql = "DELETE FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id = $member_id and name = '$key'";
+      //if (! @mysql_query($sql, $this->db)) {
+	  $sql = "DELETE FROM %ssocial_application_settings WHERE application_id = %d and member_id = %d and name = '%s'";
+      $result = queryDB(TABLE_PREFIX, $app_id, $member_id, $key);
+      if ($result == 0) {
         return false;
       }
     }
@@ -361,9 +418,13 @@ class ATutorDbFetcher {
     } else {
       $keys = '';
     }
-	$sql = "SELECT member_id, name, value FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id in (" . implode(',', $ids) . ") $keys";
-    $res = mysql_query($sql, $this->db);
-    while (list($member_id, $key, $value) = mysql_fetch_row($res)) {
+    $ids = implode(',', $ids);
+	//$sql = "SELECT member_id, name, value FROM ".TABLE_PREFIX."social_application_settings WHERE application_id = $app_id and member_id in (" . implode(',', $ids) . ") $keys";
+    //$res = mysql_query($sql, $this->db);
+	$sql = "SELECT member_id, name, value FROM %ssocial_application_settings WHERE application_id = %d and member_id in (%s) $keys";
+    $res = queryDB($sql, array(TABLE_PREFIX, $app_id, $ids));
+    foreach($res as list($member_id, $key, $value)){
+    //while (list($member_id, $key, $value) = mysql_fetch_row($res)) {
       if (! isset($data[$member_id])) {
         $data[$member_id] = array();
       }
@@ -386,11 +447,16 @@ class ATutorDbFetcher {
     } elseif ($options->getFilterBy() == 'all') {
       $options->setFilterBy(null);
     }
-    $query = "SELECT member.*, info.interests, info.associations, info.awards FROM ".TABLE_PREFIX."members member LEFT JOIN ".TABLE_PREFIX."social_member_additional_information info ON member.member_id=info.member_id WHERE  member.member_id IN (" . implode(',', $ids) . ") $filterQuery ORDER BY member.member_id ";
+    //$query = "SELECT member.*, info.interests, info.associations, info.awards FROM ".TABLE_PREFIX."members member LEFT JOIN ".TABLE_PREFIX."social_member_additional_information info ON member.member_id=info.member_id WHERE  member.member_id IN (" . implode(',', $ids) . ") $filterQuery ORDER BY member.member_id ";
 
-    $res = mysql_query($query, $this->db);
-    if ($res) {
-      while ($row = mysql_fetch_assoc($res)) {
+    //$res = mysql_query($query, $this->db);
+    $ids = implode(',', $ids);
+    $query = "SELECT member.*, info.interests, info.associations, info.awards FROM %smembers member LEFT JOIN %ssocial_member_additional_information info ON member.member_id=info.member_id WHERE  member.member_id IN (%s) $filterQuery ORDER BY member.member_id ";
+    $res = queryDB($query, array(TABLE_PREFIX, TABLE_PREFIX, $ids));
+    if(count($res) > 0){
+    //if ($res) {
+        foreach($res as $row){
+     // while ($row = mysql_fetch_assoc($res)) {
         $member_id = intval($row['member_id']);
         $name = new Name($row['first_name'] . ' ' . $row['last_name']);
 
@@ -452,10 +518,12 @@ class ATutorDbFetcher {
         /* the following fields require additional queries so are only executed if requested */
         if (isset($fields['activities']) || isset($fields['@all'])) {
           $activities = array();
-		  $sql = "select title from ".TABLE_PREFIX."social_activities where member_id = " . $member_id;
-          $res2 = mysql_query($sql, $this->db);
-
-          while (list($activity) = mysql_fetch_row($res2)) {
+		  //$sql = "select title from ".TABLE_PREFIX."social_activities where member_id = " . $member_id;
+          //$res2 = mysql_query($sql, $this->db);
+		  $sql = "select title from %ssocial_activities where member_id = %d";
+          $res2 = queryDB($sql, array(TABLE_PREFIX, $member_id));
+          foreach($res2 as list($activity)){
+          //while (list($activity) = mysql_fetch_row($res2)) {
             $activities[] = $activity;
           }
           $person->setActivities($activities);
@@ -463,9 +531,12 @@ class ATutorDbFetcher {
 
         if (isset($fields['addresses']) || isset($fields['@all'])) {
           $addresses = array();
-		  $sql = "select address, postal, city, province, country from ".TABLE_PREFIX."members m where m.member_id = " . $member_id;
-          $res2 = mysql_query($sql, $this->db);
-          while ($row = mysql_fetch_assoc($res2)) {
+		  //$sql = "select address, postal, city, province, country from ".TABLE_PREFIX."members m where m.member_id = " . $member_id;
+          //$res2 = mysql_query($sql, $this->db);
+		  $sql = "select address, postal, city, province, country from %smembers m where m.member_id = %d";
+          $res2 = queryDB($sql, array(TABLE_PREFIX, $member_id));
+          foreach($res2 as $row){
+          //while ($row = mysql_fetch_assoc($res2)) {
             if (empty($row['unstructured_address'])) {
               $row['unstructured_address'] = trim($row['street_address'] . " " . $row['province'] . " " . $row['country']);
             }
@@ -599,9 +670,12 @@ class ATutorDbFetcher {
         $organizations = array();
         $fetchedOrg = false;
         if (isset($fields['jobs']) || isset($fields['@all'])) {
-		  $sql = "SELECT * FROM ". TABLE_PREFIX . "social_member_position WHERE member_id = ".$member_id;
-          $res2 = mysql_query($sql, $this->db);
-          while ($row = mysql_fetch_assoc($res2)) {
+		  //$sql = "SELECT * FROM ". TABLE_PREFIX . "social_member_position WHERE member_id = ".$member_id;
+          //$res2 = mysql_query($sql, $this->db);
+		  $sql = "SELECT * FROM %ssocial_member_position WHERE member_id = %d";
+          $res2 = queryDB($sql, array(TABLE_PREFIX, $member_id));
+          foreach($res2 as $row){
+          //while ($row = mysql_fetch_assoc($res2)) {
             $organization = new Organization($row['company']);
             $organization->setDescription($row['description']);
             $organization->setEndDate($row['to']);
@@ -641,8 +715,11 @@ class ATutorDbFetcher {
           $fetchedOrg = true;
         }
         if (isset($fields['schools']) || isset($fields['@all'])) {
-          $res2 = mysql_query("SELECT * FROM ".TABLE_PREFIX."social_member_education WHERE member_id = " . $member_id, $this->db);
-          while ($row = mysql_fetch_assoc($res2)) {
+          //$res2 = mysql_query("SELECT * FROM ".TABLE_PREFIX."social_member_education WHERE member_id = " . $member_id, $this->db);
+          $sql = "SELECT * FROM %ssocial_member_education WHERE member_id = %d";
+          $res2 = queryDB($sql, array(TABLE_PREFIX, $member_id));
+          foreach($res2 as $row){
+          //while ($row = mysql_fetch_assoc($res2)) {
             $organization = new Organization($row['university']);
             $organization->setDescription($row['description']);
             $organization->setEndDate($row['to']);
@@ -705,9 +782,14 @@ class ATutorDbFetcher {
 */
         if (isset($fields['phoneNumbers']) || isset($fields['@all'])) {
           $numbers = array();
-          $res2 = mysql_query("SELECT phone FROM ".TABLE_PREFIX."members where member_id = " . $member_id, $this->db);
-		  if ($res2){
-			  while ($number = mysql_fetch_assoc($res2)) {
+          
+         // $res2 = mysql_query("SELECT phone FROM ".TABLE_PREFIX."members where member_id = " . $member_id, $this->db);
+        $sql = "SELECT phone FROM %smembers where member_id = %d";
+		 $res2 = queryDB($sql, array(TABLE_PREFIX, $member_id));
+		 if(count($res2) > 0){
+		  //if ($res2){
+		    foreach($res2 as $number){
+			  //while ($number = mysql_fetch_assoc($res2)) {
 				$numbers[] = new Phone($number, 'Home');	//default to 'Home' until ATutor supports Mobile, etc.
 			  }
 		  }
@@ -774,9 +856,13 @@ class ATutorDbFetcher {
 */
         if (isset($fields['urls']) || isset($fields['@all'])) {
           $strings = array();
-          $res2 = mysql_query("SELECT url, site_name FROM ".TABLE_PREFIX."social_member_websites WHERE member_id = " . $member_id, $this->db);
-		  if ($res2){
-			  while ($data = mysql_fetch_assoc($res2)) {
+          //$res2 = mysql_query("SELECT url, site_name FROM ".TABLE_PREFIX."social_member_websites WHERE member_id = " . $member_id, $this->db);
+            $sql = "SELECT url, site_name FROM %ssocial_member_websites WHERE member_id = %d"
+          $res2 = queryDB($sql, array(TABLE_PREFIX, $member_id));
+          if(count($res2) > 0)[
+		  //if ($res2){
+		    foreach($res2 as $data){
+			  //while ($data = mysql_fetch_assoc($res2)) {
 				/**
 				 * see
 				 * http://www.opensocial.org/Technical-Resources/opensocial-spec-v081/opensocial-reference#opensocial.Url
