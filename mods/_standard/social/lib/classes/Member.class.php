@@ -348,8 +348,8 @@ class Member {
 		}
 
 		$sql2 = 'INSERT INTO '.TABLE_PREFIX."social_member_additional_information SET ".$sql.", member_id=".$_SESSION['member_id'] . " ON DUPLICATE KEY UPDATE ".$sql;
-		mysql_query($sql2, $db);
-		
+		$result = mysql_query($sql2, $db);
+		editSocialFeedback($result);	
 	}
 	/**
 	 * Edit representation
@@ -371,7 +371,8 @@ class Member {
 		$rep_address			= $addslashes($rep_address);
 		
 		$sql = "UPDATE ".TABLE_PREFIX."social_member_representation SET rep_name='$rep_name', rep_title='$rep_title', rep_phone='$rep_phone', rep_email='$rep_email', rep_address='$rep_address' WHERE id='$id'";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+		editSocialFeedback($result);
 	}
 
 	/**
@@ -385,15 +386,10 @@ class Member {
 	 */
 
 	function updateContact($con_name, $con_phone, $con_email, $con_address){ 
-		global $addslashes, $db;
 		$member_id			= $this->id;
-		$con_name			= $addslashes($con_name);
-		$con_phone			= $addslashes($con_phone);
-		$con_email			= $addslashes($con_email);
-		$con_address			= $addslashes($con_address);
-		
-		$sql = "UPDATE ".TABLE_PREFIX."social_member_contact SET con_name='$con_name', con_phone='$con_phone', con_email='$con_email', con_address='con_address' WHERE id='$id'";
-		mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_member_contact SET con_name='%s', con_phone='%s', con_email='%s', con_address='%s' WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $con_name, $con_phone, $con_email, $con_address, $member_id));
+		editSocialFeedback($result);
 	}
 
 	/**
@@ -421,7 +417,8 @@ class Member {
 		$per_disabilities		= $addslashes($per_disabilities);
 
 		$sql = "UPDATE ".TABLE_PREFIX."social_member_personal SET per_weight = '$per_weight', per_height = '$per_height', per_hair = '$per_hair', per_eyes = '$per_eyes', per_ethnicity = '$per_ethnicity', per_languages = '$per_languages', per_disabilities = '$per_disabilities' WHERE member_id = '$member_id'";
-		mysql_query($sql, $db);
+		$result = mysql_query($sql, $db);
+	    editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
 	}

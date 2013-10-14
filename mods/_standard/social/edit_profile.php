@@ -83,11 +83,11 @@ if (isset($_POST['submit'])){
 			$rep_address		= $_POST['rep_address'];
 			$member->updateRepresentation($id, $rep_name, $rep_title, $rep_phone, $rep_email, $rep_address);
 		} elseif ($_POST['edit']=='contact'){
-			$rep_name 		= $_POST['con_name'];
-			$rep_phone		= $_POST['con_phone'];
-			$rep_email		= $_POST['con_email'];
-			$rep_address		= $_POST['con_address'];
-			$member->updateContact($id, $con_name, $con_phone, $con_email, $con_address);
+			$con_name 		= $_POST['con_name'];
+			$con_phone		= $_POST['con_phone'];
+			$con_email		= $_POST['con_email'];
+			$con_address		= $_POST['con_address'];
+			$member->updateContact($con_name, $con_phone, $con_email, $con_address);
 		} elseif ($_POST['edit']=='personal'){
 			$per_weight		= $_POST['per_weight'];
 			$per_height		= $_POST['per_height'];
@@ -289,7 +289,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		
 		//Template
 		$savant->assign('con_name', $row['con_name']);
-		$savant->assign('con_title', $row['con_title']);
 		$savant->assign('con_phone', $row['con_phone']);
 		$savant->assign('con_email', $row['con_email']);
 		$savant->assign('con_address', $row['con_address']);
