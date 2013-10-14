@@ -27,7 +27,7 @@ if ($_SESSION['valid_user'] !== true) {
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	Header('Location: profile.php');
+	Header('Location: sprofile.php');
 	exit;
 }
 
@@ -52,9 +52,10 @@ if (isset($_POST['submit'])) {
 		$last_name_sql   = $addslashes($_POST['last_name']);
 		$second_name_sql = $addslashes($_POST['second_name']);
 
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE first_name='$first_name_sql' AND second_name='$second_name_sql' AND last_name='$last_name_sql' AND member_id<>$_SESSION[member_id] LIMIT 1";
-		$result = mysql_query($sql, $db);
-		if (mysql_fetch_assoc($result)) {
+		/// WHY MUST NAMES BE UNIQUE?
+		$sql = "SELECT member_id FROM %smembers WHERE first_name='%s' AND second_name='%s' AND last_name='%s' AND member_id<>%d LIMIT 1";
+		$rows_member = queryDB($sql, array(TABLE_PREFIX, $first_name_sql, $second_name_sql, $last_name_sql, $_SESSION['member_id']));
+        if(count($rows_member) > 0){
 			$msg->addError('FIRST_LAST_NAME_UNIQUE');
 		}
 	}
@@ -112,24 +113,55 @@ if (isset($_POST['submit'])) {
 		$_POST['country']    = $addslashes($_POST['country']);
 		$_POST['phone']      = $addslashes($_POST['phone']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET website='$_POST[website]', first_name='$_POST[first_name]', second_name='$_POST[second_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]', private_email=$_POST[private_email], creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
-
-		$result = mysql_query($sql,$db);
-		if (!$result) {
-			$msg->printErrors('DB_NOT_UPDATED');
-			exit;
-		}
-
-		$msg->addFeedback('PROFILE_UPDATED');
-
-		header('Location: basic_profile.php');
+		$sql = "UPDATE %smembers 
+		                SET 
+		                website='%s', 
+		                first_name='%s', 
+		                second_name='%s', 
+		                last_name='%s', 
+		                dob='%s', 
+		                gender='%s', 
+		                address='%s', 
+		                postal='%s', 
+		                city='%s', 
+		                province='%s', 
+		                country='%s', 
+		                phone='%s', 
+		                language='%s', 
+		                private_email=%d, 
+		                creation_date=creation_date, 
+		                last_login=last_login 
+		                WHERE member_id=%d";
+	
+	    $result = queryDB($sql,array(
+	                TABLE_PREFIX,
+	                $_POST['website'],
+	                $_POST['first_name'], 
+	                $_POST['second_name'],
+	                $_POST['last_name'],
+	                $dob,
+	                $_POST['gender'],
+	                $_POST['address'],
+	                $_POST['postal'],
+	                $_POST['city'],
+	                $_POST['province'],
+	                $_POST['country'],
+	                $_POST['phone'],
+	                $_SESSION['lang'],
+	                $_POST['private_email'],
+	                $_SESSION['member_id']));
+        if($result > 0){
+            $msg->addFeedback('PROFILE_UPDATED');
+        } else {
+            $msg->addFeedback('PROFILE_UNCHANGED');
+        }
+		header('Location: sprofile.php');
 		exit;
 	}
 }
 
-$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-$result = mysql_query($sql,$db);
-$row = mysql_fetch_assoc($result);
+$sql	= 'SELECT * FROM %smembers WHERE member_id=%d';
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
@@ -138,11 +170,9 @@ if (!isset($_POST['submit'])) {
 
 /* template starts here */
 require(AT_INCLUDE_PATH.'header.inc.php');
-
 $savant->assign('row', $row);
 $onload = 'document.form.first_name.focus();';
 
-//$savant->display('registration.tmpl.php');
 $savant->display('social/basic_profile.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
