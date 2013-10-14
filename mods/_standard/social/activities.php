@@ -23,8 +23,8 @@ require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 $actvity_obj = new Activity();
 
 include(AT_INCLUDE_PATH.'header.inc.php');
-$savant->display('pubmenu.tmpl.php');
+//$savant->display('social/pubmenu.tmpl.php');
 $savant->assign('activities', $actvity_obj->getFriendsActivities($_SESSION['member_id'], true));
-$savant->display('activities.tmpl.php');
+$savant->display('social/activities.tmpl.php');
 include(AT_INCLUDE_PATH.'footer.inc.php');
 ?>
