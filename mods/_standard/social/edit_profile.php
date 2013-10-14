@@ -190,9 +190,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 	include(AT_INCLUDE_PATH.'header.inc.php');
 	$savant->assign('id', $id);
 	if ($_GET['edit']=='position'){
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_position WHERE id='.$id;
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT * FROM %ssocial_member_position WHERE id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
 		
@@ -204,9 +201,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('description', $row['description']);
 		$savant->display('social/edit_profile/edit_position.tmpl.php');
 	} elseif ($_GET['edit']=='education'){
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_education WHERE id='.$id;
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT * FROM %ssocial_member_education WHERE id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
 
@@ -221,9 +215,7 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('description', $row['description']);
 		$savant->display('social/edit_profile/edit_education.tmpl.php');
 	} elseif ($_GET['edit']=='websites'){
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_websites WHERE id='.$id;
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
+
 		$sql = 'SELECT * FROM %ssocial_member_websites WHERE id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
 		
@@ -233,9 +225,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->display('social/edit_profile/edit_websites.tmpl.php');
 
 	} elseif ($_GET['edit']=='interests'){
-		//$sql = 'SELECT interests FROM '.TABLE_PREFIX.'social_member_additional_information WHERE member_id='.$_SESSION['member_id'];
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT interests FROM %ssocial_member_additional_information WHERE member_id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		
@@ -244,9 +233,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('title', 'interests');
 		$savant->display('social/edit_profile/edit_additional.tmpl.php');
 	} elseif ($_GET['edit']=='associations'){
-		//$sql = 'SELECT associations FROM '.TABLE_PREFIX.'social_member_additional_information WHERE member_id='.$_SESSION['member_id'];
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT associations FROM %ssocial_member_additional_information WHERE member_id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		
@@ -255,9 +241,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('title', 'associations');
 		$savant->display('social/edit_profile/edit_additional.tmpl.php');
 	} elseif ($_GET['edit']=='awards'){
-		//$sql = 'SELECT awards FROM '.TABLE_PREFIX.'social_member_additional_information WHERE member_id='.$_SESSION['member_id'];
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT awards FROM %ssocial_member_additional_information WHERE member_id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		
@@ -266,9 +249,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->assign('title', 'awards');
 		$savant->display('social/edit_profile/edit_additional.tmpl.php');
 	} elseif ($_GET['edit']=='representation'){
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_representation WHERE member_id='.$_SESSION['member_id'];
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT * FROM %ssocial_member_representation WHERE member_id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 
@@ -281,9 +261,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->display('social/edit_profile/edit_representation.tmpl.php');
 
 	}elseif ($_GET['edit']=='contact'){
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_contact WHERE member_id='.$_SESSION['member_id'];
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT * FROM %ssocial_member_contact WHERE member_id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		
@@ -295,9 +272,6 @@ if (isset($_GET['edit']) && isset($_GET['id']) && (intval($_GET['id']) > 0)){
 		$savant->display('social/edit_profile/edit_contact.tmpl.php');
 
 	}elseif ($_GET['edit']=='personal'){
-		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_personal WHERE member_id='.$_SESSION['member_id'];
-		//$rs = mysql_query($sql, $db);
-		//$row = mysql_fetch_assoc($rs);
 		$sql = 'SELECT * FROM %ssocial_member_personal WHERE member_id=%d';
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		
