@@ -104,7 +104,6 @@ class Activity{
 	 * @return	The array of description of all the activities of the given user's friends.
 	 */
 	 function getFriendsActivities($id, $displayAll=false){
-		//global $db;
 		$activities = array();
 
 		$friends = getFriends($id);	
