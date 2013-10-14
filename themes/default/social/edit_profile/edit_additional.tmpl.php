@@ -2,6 +2,14 @@
 	global $addslashes;
 	//escape all strings
 	$title			= AT_print($this->title, 'input.text');
+	if($this->interests){
+	    $edit_this = AT_print($this->interests, 'input.text');
+	}else if ($this->associations){
+	    $edit_this = AT_print($this->associations, 'input.text');	
+	}else if($this->awards){
+	    $edit_this = AT_print($this->awards, 'input.text');	
+	}
+	
 ?>
 <form method="post" action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'edit_profile.php'); ?>">
 
@@ -10,7 +18,7 @@
 	<div>	
 			<label for="<?php echo $title;?>"><?php echo _AT($title); ?></label>
 		<div>
-			<textarea rows="4" cols="60" id="<?php echo $title;?>" name="<?php echo $title;?>"><?php echo $$title; ?></textarea>
+			<textarea rows="4" cols="60" id="<?php echo $title;?>" name="<?php echo $title;?>"><?php echo $edit_this; ?></textarea>
 		</div>
 		
 		<?php if (isset($this->id)): ?>
