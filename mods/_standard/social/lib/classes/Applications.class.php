@@ -30,14 +30,14 @@ class Applications {
 	 * @return hash of applications, id=>app obj
 	 */
 	function listMyApplications($use_settings=false){
-		global $db;
 		$hash = array();
 
-		$sql = 'SELECT id, title FROM '.TABLE_PREFIX.'social_applications a, (SELECT application_id FROM '.TABLE_PREFIX.'social_members_applications WHERE member_id='.$_SESSION['member_id'].') AS apps WHERE a.id=apps.application_id';
-		$result = mysql_query($sql, $db);
+		$sql = 'SELECT id, title FROM %ssocial_applications a, (SELECT application_id FROM %ssocial_members_applications WHERE member_id=%d) AS apps WHERE a.id=apps.application_id';
+		$rows_apps = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id']));
+		
 		$home_settings = $this->getHomeDisplaySettings();
-		if ($result){
-			while($row = mysql_fetch_assoc($result)){
+		if(count($rows_apps) > 0){
+		    foreach($rows_apps as $row){
 				$app = new Application($row['id']);
 				if($use_settings){
 					if(!isset($home_settings[$row['id']])){
@@ -54,13 +54,12 @@ class Applications {
 	 * Retrieve a list of all installed applications
 	 */
 	function listApplications(){
-		global $db;
 		$hash = array();
 
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_applications';
-		$result = mysql_query($sql, $db);
-
-		while ($row = mysql_fetch_assoc($result)){
+		$sql = 'SELECT * FROM %ssocial_applications';
+		$rows_apps = queryDB($sql, array(TABLE_PREFIX));
+		
+		foreach($rows_apps as $row){
 			$hash[$row['id']] = new Application($row['id']);
 		}
 		return $hash;
@@ -72,8 +71,6 @@ class Applications {
 	 * @param	array	array of application_id to be deleted.
 	 */
 	function deleteApplications($ids){
-		global $db;
-
 		//foreach of these ids, delete all their associations
 		foreach ($ids as $id){
 			$app = new Application($id);
@@ -82,8 +79,9 @@ class Applications {
 
 		//now delete it from the application table
 		$id_list = implode(', ', $ids);
-		$sql = 'DELETE FROM '.TABLE_PREFIX."social_applications WHERE id IN ($id_list)";
-		mysql_query($sql, $db);
+
+		$sql = "DELETE FROM %ssocial_applications WHERE id IN (%s)";
+		queryDB($sql, array(TABLE_PREFIX, $id_list));
 	}
 
 	/**
@@ -92,10 +90,9 @@ class Applications {
 	 * @param	mixed		settings array. [note: upgrade this to  an object if needed later on]
 	 */
 	function setHomeDisplaySettings($settings){
-		global $db, $addslashes;
-		$settings = $addslashes(serialize($settings));
-		$sql = 'REPLACE INTO '.TABLE_PREFIX."social_user_settings SET app_settings='".$settings."', member_id=".$_SESSION['member_id'];
-		$result = mysql_query($sql, $db);
+		$settings = serialize($settings);
+		$sql = "REPLACE INTO %ssocial_user_settings SET app_settings='%s', member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $settings, $_SESSION['member_id']));
 	}
 
 
@@ -115,11 +112,10 @@ class Applications {
 	 * @return	array of settings that define which gadget to be displayed on the social home page.
 	 */
 	function getHomeDisplaySettings(){
-		global $db;
-		$sql = 'SELECT app_settings FROM '.TABLE_PREFIX.'social_user_settings WHERE member_id='.$_SESSION['member_id'];
-		$rs = mysql_query($sql, $db);
-		if ($rs){
-			list($settings) = mysql_fetch_array($rs);
+		$sql = 'SELECT app_settings FROM %ssocial_user_settings WHERE member_id=%d';
+		$rs = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']),TRUE ,'', '', MYSQL_NUM);
+		if(count($rs) > 0){
+			list($settings) = $rs;
 		}
 		return unserialize($settings);
 	}
