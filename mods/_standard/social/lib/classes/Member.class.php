@@ -34,16 +34,10 @@ class Member {
 	 * @param	string		Description of what the position was about
 	 */
 	function addPosition($company, $title, $from, $to, $description){
-		global $addslashes, $db;
 		$member_id	= $this->id;
-		$company	= $addslashes($company);
-		$title		= $addslashes($title);
-		$from		= $addslashes($from);
-		$to			= $addslashes($to);
-		$description = $addslashes($description);
-
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_position (member_id, company, title, `from`, `to`, description) VALUES ($member_id, '$company', '$title', '$from', '$to', '$description')";
-		mysql_query($sql, $db);
+		$sql = "INSERT INTO %ssocial_member_position (member_id, company, title, `from`, `to`, description) VALUES (%d, '%s', '%s', '%s', '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $company, $title, $from, $to, $description));
+		editSocialFeedback($result);
 	}
 
 	
@@ -60,21 +54,12 @@ class Member {
 	 * @param	string		The field of study, ie. Computer Science
 	 * @param	string		The description of this education.
 	 */
-	function addEducation($university, $from, $to, $country, 
-						  $province, $degree, $field, $description){ 
-		global $addslashes, $db;
-		$member_id			= $this->id;
-		$university			= $addslashes($university);
-		$from				= $addslashes($from);
-		$to					= $addslashes($to);
-		$country			= $addslashes($country);
-		$province			= $addslashes($province);
-		$degree				= $addslashes($degree);
-		$field				= $addslashes($field);
-		$description		= $addslashes($description);
-		
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_education (member_id, university, `from`, `to`, country, province, degree, field, description) VALUES ($member_id, '$university', '$from', '$to', '$country', '$province', '$degree', '$field', '$description')";
-		mysql_query($sql, $db);
+	function addEducation($university, $from, $to, $country, $province, $degree, $field, $description){ 
+		$member_id	= $this->id;
+		$sql = "INSERT INTO %ssocial_member_education (member_id, university, `from`, `to`, country, province, degree, field, description) 
+		VALUES (%s, '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $university, $from, $to, $country, $province, $degree, $field, $description));
+		editSocialFeedback($result);
 	}
 
 
@@ -84,13 +69,10 @@ class Member {
 	 * @param	string		A name for the website.
 	 */
 	function addWebsite($url, $site_name){ 
-		global $addslashes, $db;
 		$member_id	= $this->id;
-		$url		= $addslashes($url);
-		$site_name	= $addslashes($site_name);
-
-		$sql = 'INSERT INTO '. TABLE_PREFIX ."social_member_websites (member_id, url, site_name) VALUES ($member_id, '$url', '$site_name')";
-		mysql_query($sql, $db);
+		$sql = "INSERT INTO %ssocial_member_websites (member_id, url, site_name) VALUES (%d, '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $url, $site_name));
+		editSocialFeedback($result);
 	}
 
 
@@ -130,16 +112,9 @@ class Member {
 	 * @param	string		The representative's mailing address
 	 */
 	function addRepresentation($rep_name, $rep_title, $rep_phone, $rep_email, $rep_address){ 
-		global $addslashes, $db;
-		$member_id			= $this->id;
-		$rep_name			= $addslashes($rep_name);
-		$rep_title			= $addslashes($rep_title);
-		$rep_phone			= $addslashes($rep_phone);
-		$rep_email			= $addslashes($rep_email);
-		$rep_address			= $addslashes($rep_address);
-		
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_representation (member_id, rep_name, rep_title, rep_phone, rep_email, rep_address) VALUES ($member_id, '$rep_name', '$rep_title', '$rep_phone', '$rep_email', '$rep_address')";
-		$result = mysql_query($sql, $db);
+		$member_id	= $this->id;
+		$sql = "INSERT INTO %ssocial_member_representation (member_id, rep_name, rep_title, rep_phone, rep_email, rep_address) VALUES (%d, '%s', '%s', '%s', '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $rep_name, $rep_title, $rep_phone, $rep_email, $rep_address));
 		editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
@@ -156,15 +131,9 @@ class Member {
 	 */
 
 	function addContact($con_name, $con_phone, $con_email, $con_address){ 
-		global $addslashes, $db;
-		$member_id			= $this->id;
-		$con_name			= $addslashes($con_name);
-		$con_phone			= $addslashes($con_phone);
-		$con_email			= $addslashes($con_email);
-		$con_address			= $addslashes($con_address);
-		
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_contact (member_id, con_name, con_phone, con_email, con_address) VALUES ($member_id, '$con_name', '$con_phone', '$con_email', '$con_address')";
-		$result = mysql_query($sql, $db);
+		$member_id = $this->id;
+		$sql = "INSERT INTO %ssocial_member_contact (member_id, con_name, con_phone, con_email, con_address) VALUES (%d, '%s', '%s', '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $con_name, $con_phone, $con_email, $con_address));
 		editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
@@ -183,24 +152,13 @@ class Member {
 	 */
 
 	function addPersonal($per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities){ 
-		global $addslashes, $db;
-		$member_id			= $this->id;
-		$per_weight			= $addslashes($per_weight);
-		$per_height			= $addslashes($per_height);
-		$per_hair			= $addslashes($per_hair);
-		$per_eyes			= $addslashes($per_eyes);
-		$per_ethnicity			= $addslashes($per_ethnicity);
-		$per_languages			= $addslashes($per_languages);
-		$per_disabilities		= $addslashes($per_disabilities);
-
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_personal (member_id, per_weight, per_height, per_hair, per_eyes, per_ethnicity, per_languages, per_disabilities) VALUES ($member_id, '$per_weight', '$per_height', '$per_hair', '$per_eyes','$per_ethnicity','$per_languages','$per_disabilities')";
-		$result = mysql_query($sql, $db);
+		$member_id	= $this->id;
+		$sql = "INSERT INTO %ssocial_member_personal (member_id, per_weight, per_height, per_hair, per_eyes, per_ethnicity, per_languages, per_disabilities) VALUES (%d, '%s', '%s', '%s', '%s','%s','%s','%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities));
 		editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
 	}
-
-
 
 	/** 
 	 * Add additional information, including interest, awards, associations.
@@ -211,15 +169,9 @@ class Member {
  	 * @param	string		any extra information
 	 */
 	function addAdditionalInformation($interests, $associations, $awards, $expertise, $others){ 
-		global $addslashes, $db;
-		$member_id		= $this->id;
-		$interests		= $addslashes($interests);
-		$associations	= $addslashes($associations);
-		$awards			= $addslashes($awards);
-		$expertise		= $addslashes($expertise);
-		$others			= $addslashes($others);
-		$sql = 'INSERT INTO ' . TABLE_PREFIX . "social_member_additional_information (member_id, interests,  associations, awards, expertise, others) VALUES ($member_id, '$interests', '$associations', '$awards', '$expertise', '$others')";
-		$result = mysql_query($sql, $db);
+		$member_id = $this->id;
+		$sql = "INSERT INTO %ssocial_member_additional_information (member_id, interests,  associations, awards, expertise, others) VALUES (%d, '%s', '%s', '%s', '%s', '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $member_id, $interests, $associations, $awards, $expertise, $others));
 		editSocialFeedback($result);
 	}
 
@@ -229,10 +181,8 @@ class Member {
 	 * @param	int		visitor id
 	 */
 	function addVisitor($visitor_id){
-		global $db;
-		$visitor_id = intval($visitor_id);
-		$sql = 'INSERT INTO '.TABLE_PREFIX."social_member_track (`member_id`, `visitor_id`, `timestamp`) VALUES (".$this->getID().", $visitor_id, NOW())";
-		mysql_query($sql, $db);
+		$sql = "INSERT INTO %ssocial_member_track (`member_id`, `visitor_id`, `timestamp`) VALUES (%d, %d, NOW())";
+		queryDB($sql, array(TABLE_PREFIX, $this->getID(), $visitor_id));
 	}
 
 	/**
@@ -246,16 +196,8 @@ class Member {
 	 * @param	string		Description of the position
 	 */
 	function updatePosition($id, $company, $title, $from, $to, $description){ 
-		global $addslashes, $db;
-		$id			 = intval($id);
-		$company	 = $addslashes($company);
-		$title		 = $addslashes($title);
-		$form		 = $addslashes($form);
-		$to			 = $addslashes($to);
-		$description = $addslashes($description);
-
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_position SET company='$company', title='$title', `from`='$from', `to`='$to', description='$description' WHERE id=$id";
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_member_position SET company='%s', title='%s', `from`='%s', `to`='%s', description='%s' WHERE id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $company, $title, $from, $to, $description, $id));
 		editSocialFeedback($result);
 	}
 
@@ -274,20 +216,19 @@ class Member {
 	 * @param	string		The field of study, ie. Computer Science
 	 * @param	string		The description of this education.
 	 */
-	function updateEducation($id, $university, $from, $to, $country, $province, $degree, $field, $description){ 
-		global $addslashes, $db;
-		$id					= intval($id);
-		$university			= $addslashes($university);
-		$from				= $addslashes($from);
-		$to					= $addslashes($to);
-		$country			= $addslashes($country);
-		$province			= $addslashes($province);
-		$degree				= $addslashes($degree);
-		$field				= $addslashes($field);
-		$description		= $addslashes($description);
-
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_education SET university='$university', `from`='$from', `to`='$to', country='$country', province='$province', degree='$degree', field='$field', description='$description' WHERE id=$id";
-		$result = mysql_query($sql, $db);	
+	function updateEducation($id, $university, $from, $to, $country, $province, $degree, $field, $description){ 	
+		$sql = "UPDATE %ssocial_member_education 
+		                SET 
+		                university='%s', 
+		                `from`='%s', 
+		                `to`='%s', 
+		                country='%s', 
+		                province='%s', 
+		                degree='%s', 
+		                field='%s', 
+		                description='%s' 
+		                WHERE id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $university, $from, $to, $country, $province, $degree, $field, $description, $id));	
 		editSocialFeedback($result);	
 	}
 
@@ -299,13 +240,8 @@ class Member {
 	 * @param	string		A name for the website.
 	 */
 	function updateWebsite($id, $url, $site_name){ 
-		global $addslashes, $db;
-		$id			= intval($id);
-		$url		= $addslashes($url);
-		$site_name	= $addslashes($site_name);
-
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_websites SET url='$url', site_name='$site_name' WHERE id=$id";
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_member_websites SET url='%s', site_name='%s' WHERE id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $url, $site_name, $id));
 		editSocialFeedback($result);
 	}
 
@@ -319,13 +255,6 @@ class Member {
  	 * @param	string		any extra information
 	 */
 	function updateAdditionalInformation($interests='', $associations='', $awards='', $expertise='', $others=''){ 
-		global $addslashes, $db;
-		$interests = $addslashes($interests);
-		$associations = $addslashes($associations);
-		$awards = $addslashes($awards);
-		$expertise = $addslashes($expertise);
-		$others = $addslashes($others);
-
 		$sql = '';
 		//tricky, not all fields get updated at once.  Update only the ones that has entries.
 		if ($interests!=''){
@@ -347,8 +276,8 @@ class Member {
 			$sql = substr($sql, 0, -2);
 		}
 
-		$sql2 = 'INSERT INTO '.TABLE_PREFIX."social_member_additional_information SET ".$sql.", member_id=".$_SESSION['member_id'] . " ON DUPLICATE KEY UPDATE ".$sql;
-		$result = mysql_query($sql2, $db);
+		$sql2 = "INSERT INTO %ssocial_member_additional_information SET ".$sql.", member_id=%d ON DUPLICATE KEY UPDATE ".$sql;
+		$result = queryDB($sql2, array(TABLE_PREFIX, $_SESSION['member_id']));
 		editSocialFeedback($result);	
 	}
 	/**
@@ -362,16 +291,9 @@ class Member {
 	 * @param	string		The representative's mailing address
 	 */
 	function updateRepresentation($id, $rep_name, $rep_title, $rep_phone, $rep_email, $rep_address){ 
-		global $addslashes, $db;
-		$member_id			= $this->id;
-		$rep_name			= $addslashes($rep_name);
-		$rep_title			= $addslashes($rep_title);
-		$rep_phone			= $addslashes($rep_phone);
-		$rep_email			= $addslashes($rep_email);
-		$rep_address			= $addslashes($rep_address);
-		
-		$sql = "UPDATE ".TABLE_PREFIX."social_member_representation SET rep_name='$rep_name', rep_title='$rep_title', rep_phone='$rep_phone', rep_email='$rep_email', rep_address='$rep_address' WHERE id='$id'";
-		$result = mysql_query($sql, $db);
+		$member_id	= $this->id;
+		$sql = "UPDATE %ssocial_member_representation SET rep_name='%s', rep_title='%s', rep_phone='%s', rep_email='%s', rep_address='%s' WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $rep_name, $rep_title, $rep_phone, $rep_email, $rep_address, $member_id));
 		editSocialFeedback($result);
 	}
 
@@ -406,18 +328,9 @@ class Member {
 	 */
 
 	function updatePersonal($per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities){ 
-		global $addslashes, $db;
-		$member_id			= $this->id;
-		$per_weight			= $addslashes($per_weight);
-		$per_height			= $addslashes($per_height);
-		$per_hair			= $addslashes($per_hair);
-		$per_eyes			= $addslashes($per_eyes);
-		$per_ethnicity			= $addslashes($per_ethnicity);
-		$per_languages			= $addslashes($per_languages);
-		$per_disabilities		= $addslashes($per_disabilities);
-
-		$sql = "UPDATE ".TABLE_PREFIX."social_member_personal SET per_weight = '$per_weight', per_height = '$per_height', per_hair = '$per_hair', per_eyes = '$per_eyes', per_ethnicity = '$per_ethnicity', per_languages = '$per_languages', per_disabilities = '$per_disabilities' WHERE member_id = '$member_id'";
-		$result = mysql_query($sql, $db);
+		$member_id	= $this->id;
+		$sql = "UPDATE %ssocial_member_personal SET per_weight = '%s', per_height = '%s', per_hair = '%s', per_eyes = '%s', per_ethnicity = '%s', per_languages = '%s', per_disabilities = '%s' WHERE member_id = %d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $per_weight, $per_height, $per_hair, $per_eyes, $per_ethnicity, $per_languages, $per_disabilities, $member_id));
 	    editSocialFeedback($result);
 		header('Location:edit_profile.php');
 		exit;
@@ -429,52 +342,40 @@ class Member {
 	 * This method tends to be have a negative impact on system run time.  
 	 */
 	function getDetails(){
-		global $db;
 		$sql =	'SELECT core.*, T.interests, T.associations, T.awards, T.expertise, T.others FROM '.
-				'(SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$this->id.') AS core '.
-				'LEFT JOIN '.
-				TABLE_PREFIX.'social_member_additional_information T ON core.member_id=T.member_id';
-		$result = mysql_query($sql, $db);
-		if ($result){
-			$row = mysql_fetch_assoc($result);
-			$this->profile = $row;
-		}
+				'(SELECT * FROM %smembers WHERE member_id=%d) AS core '.
+				'LEFT JOIN %ssocial_member_additional_information T ON core.member_id=T.member_id';
+		$row = queryDB($sql, array(TABLE_PREFIX, $this->id, TABLE_PREFIX ), TRUE);
+		$this->profile = $row;
+
 		return $this->profile;
 	}
-
 
 	/**
 	 * Get member address
 	 */
 	function getAddress(){
-		global $db;
-		$sql = 'SELECT address, postal, city, province, country FROM '.TABLE_PREFIX.'members WHERE member_id='.$this->id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			$row = mysql_fetch_assoc($result);
-		}
+		$sql = 'SELECT address, postal, city, province, country FROM %smembers WHERE member_id=%d';
+		$row = queryDB($sql, array(TABLE_PREFIX, $this->id), TRUE);
+
 		return $row;
 	}
 	
-
 	/**
 	 * Get position info
 	 * @return	the array of job/position
 	 */
 	function getPosition(){
-		global $db;
 		$position = array();
-
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_position WHERE member_id='.$this->id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while($row = mysql_fetch_assoc($result)){
+		$sql = 'SELECT * FROM %ssocial_member_position WHERE member_id=%d';
+		$rows_positions = queryDB($sql, array(TABLE_PREFIX, $this->id));
+		if(count($rows_positions ) > 0){
+		    foreach($rows_positions as $row){
 				$position[] = $row;
 			}
 		}
 		return $position;
 	}
-
 
 	/**
 	 * Get education info
@@ -482,35 +383,29 @@ class Member {
 	 * @return	the array of education details
 	 */
 	function getEducation(){
-		global $db;
 		$education = array();
-
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_education WHERE member_id='.$this->id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while($row = mysql_fetch_assoc($result)){
+		$sql = 'SELECT * FROM %ssocial_member_education WHERE member_id=%d';
+		$rows_education = queryDB($sql, array(TABLE_PREFIX, $this->id));
+		if(count($rows_education) > 0){
+		    foreach($rows_education as $row){
 				$education[] = $row;
 			}
 		}
 		return $education;
 	}
 
-
 	/** 
 	 * Get websites. can be 1+
 	 * @return	the array of website details.
 	 */
 	function getWebsites(){
-		global $db;
 		$websites = array();
-
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_websites WHERE member_id='.$this->id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while($row = mysql_fetch_assoc($result)){
+		$sql = 'SELECT * FROM %ssocial_member_websites WHERE member_id=%d';
+		$rows_websites = queryDB($sql, array(TABLE_PREFIX, $this->id));
+		if(count($rows_websites) > 0){
+		    foreach($rows_websites as $row){
 				//escape XSS
-				$row['url'] = htmlentities_utf8($row['url']);
-				
+				$row['url'] = htmlentities_utf8($row['url']);			
 				//index row entry
 				$websites[] = $row;
 			}
@@ -518,36 +413,32 @@ class Member {
 		return $websites;
 	}
 
-
 	/**
 	 * Get member's representative info 
 	 * @return	the array of representative's details
 	 */
 	function getRepresentation(){
-		global $db;
 		$representation = array();
-
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_representation WHERE member_id='.$this->id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while($row = mysql_fetch_assoc($result)){
+		$sql = 'SELECT * FROM %ssocial_member_representation WHERE member_id=%d';
+		$rows_reps = queryDB($sql, array(TABLE_PREFIX, $this->id));
+		if (count($rows_reps) > 0){
+			foreach($rows_reps as $row){
 				$representation[] = $row;
 			}
 		}
 		return $representation;
 	}
+	
 	/**
 	 * Get member's alternate contact info 
 	 * @return	the array of contact's details
 	 */
 	function getContact(){
-		global $db;
 		$contact = array();
-
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_contact WHERE member_id='.$this->id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while($row = mysql_fetch_assoc($result)){
+		$sql = 'SELECT * FROM %ssocial_member_contact WHERE member_id=%d';
+		$rows_contacts = queryDB($sql, array(TABLE_PREFIX, $this->id));
+		if (count($rows_contacts) > 0){
+		    foreach($rows_contacts as $row){
 				$contact[] = $row;
 			}
 		}
@@ -559,18 +450,10 @@ class Member {
 	 * @return	the array of personal characteristics
 	 */
 	function getPersonal(){
-		global $db;
 		$personal = array();
-
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_member_personal WHERE member_id='.$this->id;
-
-
-		$result = mysql_query($sql, $db);
-		if ($result){
-			$personal = mysql_fetch_assoc($result);
-		}
+		$sql = 'SELECT * FROM %ssocial_member_personal WHERE member_id=%d';
+		$personal = queryDB($sql, array(TABLE_PREFIX, $this->id), TRUE);
 		return $personal;
-
 	}
 
 	/**
@@ -578,17 +461,17 @@ class Member {
 	 * @return	the count of all visitors on this page, within a month. 
 	 */
 	function getVisitors(){
-		global $db;
 		$count = array('month'=>0, 'week'=>0, 'day'=>0, 'total'=>0);
 		//Time offsets
 		$month	= time() - 60*60*24*30;	//month, within 30days.
 		$week	= time() - 60*60*24*7;		//week, within 7 days.
 		$day	= time() - 60*60*24;		//day, within 24 hours.
 
-		$sql = 'SELECT visitor_id, UNIX_TIMESTAMP(timestamp) AS `current_time` FROM '.TABLE_PREFIX.'social_member_track WHERE member_id='.$this->id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		$sql = 'SELECT visitor_id, UNIX_TIMESTAMP(timestamp) AS `current_time` FROM %ssocial_member_track WHERE member_id=%d';
+		$rows_visitors = queryDB($sql, array(TABLE_PREFIX, $this->id));
+		
+		if (count($rows_visitors) > 0){
+			foreach($rows_visitors as $row){
 				if($row['current_time'] >= $month && $row['current_time'] <= $week){
 					$count['month']++;
 				} elseif ($row['current_time'] > $week && $row['current_time'] <= $day){
@@ -604,110 +487,96 @@ class Member {
 
 		//clean up table randomly, 1%
 		if (rand(1,100) == 1){
-			$sql = 'DELETE FROM '.TABLE_PREFIX."social_member_track WHERE UNIX_TIMESTAMP(`timestamp`) < $month";
-			mysql_query($sql, $db);
+			$sql = "DELETE FROM %ssocial_member_track WHERE UNIX_TIMESTAMP(`timestamp`) < %d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $month));
 		}
-		
-		return $count;
+		return $result;
 	}
 
-	
 	/**
 	 * Delete position
 	 * @param	int		position id
 	 */
 	function deletePosition($id){
-		global $db;
-
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_position WHERE id='.$id;
-		$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_member_position WHERE id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $id));
+		 editSocialFeedback($result);
 	 }
 
-	
 	/**
 	 * Delete education
 	 * @param	int		education id
 	 */
 	function deleteEducation($id){
-		global $db;
-
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_education WHERE id='.$id;
-		$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_member_education WHERE id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $id));
+		 editSocialFeedback($result);
 	}
 
-	
 	/**
 	 * Delete websites
 	 * @param	int		websites id
 	 */
 	function deleteWebsite($id){
-		global $db;
-
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_websites WHERE id='.$id;
-		$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_member_websites WHERE id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $id));
+		 editSocialFeedback($result);
 	}
 	
-
 	/**
 	 * Delete interest
 	 */
 	function deleteInterests(){
-		global $db;
-
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET interests='' WHERE member_id=".$this->getID();
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_member_additional_information SET interests='' WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
+		 editSocialFeedback($result);
 	}
-
 
 	/**
 	 * Delete associations
 	 */
 	function deleteAssociations(){
-		global $db;
-
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET associations='' WHERE member_id=".$this->getID();
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_member_additional_information SET associations='' WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
+		 editSocialFeedback($result);
 	}
 
-	
 	/**
 	 * Delete awards
 	 */
 	function deleteAwards(){
-		global $db;
-
-		$sql = 'UPDATE '.TABLE_PREFIX."social_member_additional_information SET awards='' WHERE member_id=".$this->getID();
-		$result = mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_member_additional_information SET awards='' WHERE member_id=%d";		
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
+		 editSocialFeedback($result);
 	}
 
 	/**
 	 * Delete representation
 	 */
 	function deleteRepresentation($member_id){
-		global $db;
-
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_representation WHERE member_id='.$this->getID();
-		$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_member_representation WHERE member_id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
+		 editSocialFeedback($result);
 
 	}
+	
 	/**
 	 * Delete contact
 	 */
 	function deleteContact(){
-		global $db;
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_contact WHERE member_id='.$this->getID();
-		$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_member_contact WHERE member_id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
+		 editSocialFeedback($result);
 	}
 
 	/**
 	 * Delete personal information
 	 */
 	function deletePersonal(){
-		global $db;
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_member_personal WHERE member_id='.$this->getID();
-		$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_member_personal WHERE member_id=%d';		
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
+		 editSocialFeedback($result);
 	}
-
 
 	/**
 	 * Get the ID of this member
