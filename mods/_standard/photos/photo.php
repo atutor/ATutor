@@ -80,10 +80,11 @@ if (sizeof($photos) > 1){
 //update photo album.
 if (isset($_GET['album_cover'])){
 	$result = $pa->editAlbumCover($_GET['album_cover']);
-	if ($result == 0)
+	if ($result == 0) {
 	    $msg->addError('PA_EDIT_PHOTO_FAILED');
-        else
+        } else {
             $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+        }
 }
 
 include (AT_INCLUDE_PATH.'header.inc.php');
