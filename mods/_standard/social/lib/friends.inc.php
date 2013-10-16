@@ -26,22 +26,18 @@ require_once(AT_SOCIAL_INCLUDE.'classes/Member.class.php');
  * TODO: Need optimization, too slow.
  */
 function getFriends($member_id, $limit=0){
-	//global $db, $addslashes;
 	$friends = array();
 	
 	//All member_id = member_id, and All friend_id = member_id
-	//$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM '.TABLE_PREFIX.'social_friends F LEFT JOIN '.TABLE_PREFIX.'members M ON F.friend_id=M.member_id WHERE (F.member_id='.$member_id.' OR F.friend_id='.$member_id.')';
 	$sql = 'SELECT F.member_id AS member_id, F.friend_id AS friend_id FROM %ssocial_friends F LEFT JOIN %smembers M ON F.friend_id=M.member_id WHERE (F.member_id=%d OR F.friend_id=%d)';
 
 	if ($limit > 0){
 		$sql .= ' ORDER BY RAND() LIMIT '.$limit;
 	}
-	//$result = mysql_query($sql, $db);
+
 	$rows_friends = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $member_id, $member_id));
 	
 	if(count($rows_friends) > 0){
-	//if ($result){
-		//while ($row = mysql_fetch_assoc($result)){
 		foreach($rows_friends as $row){
 			if ($row['member_id']==$member_id){
 				//member_id=member_id case
@@ -91,19 +87,14 @@ function isFriendOfFriend($member_a, $member_b){
  * Get a list of people you may know
  */
 function getPeopleYouMayKnow(){
-	//global $db;
 	$counter = 0;
 	$people_you_may_know = array();
 	$pending_requests = getPendingRequests(true);
 
-	//$sql = 'SELECT MAX(member_id) FROM '.TABLE_PREFIX.'members';
-	//$result = mysql_query($sql, $db);
 	$sql = 'SELECT MAX(member_id) as max_member FROM %smembers';
 	$row_member = queryDB($sql, array(TABLE_PREFIX), TRUE);
 	
 	if(count($row_member) >0){
-	//if ($result){
-		//list($max_id) = mysql_fetch_array($result);
 		$max_id = $row_member['max_member'];
 	} else {
 		return null;
@@ -148,7 +139,6 @@ function getPeopleYouMayKnow(){
  * @return	array of friend requests
  */
 function getPendingRequests($request_by_me=false){
-	global $db;
 	/* NOTE: This table is not bilinear, unlike the friends table.
 	 * In this table, please do not be confused, member_id is the one who requests
 	 * friend_id is the member that needs to approve/reject.  Thus, when we want to retrieve 
@@ -161,11 +151,10 @@ function getPendingRequests($request_by_me=false){
 	} else {
 		$sql = 'SELECT member_id AS id FROM %ssocial_friend_requests WHERE friend_id=%d';
 	}
-	//$rs = mysql_query($sql, $db);
+
 	$rows_friends = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
-	//myself=> pending objs
+
 	foreach($rows_friends as $row){
-	//while($row = mysql_fetch_assoc($rs)){
 		$requests[$row['id']] =	new Member($row['id']);
 	}
 	return $requests;
@@ -178,15 +167,12 @@ function getPendingRequests($request_by_me=false){
  * @param	int		the member being approved, not "MYSELF"
  */
 function approveFriendRequest($friend_id){
-	//global $db;
 	$friend_id = intval($friend_id);
 
 	if ($friend_id < 1){
 		return;
 	}
 	//TODO: hardcoded relationship = 1
-	//$sql = "INSERT INTO ".TABLE_PREFIX."social_friends SET member_id=$_SESSION[member_id], friend_id=$friend_id, relationship=1";
-	//$is_succeeded = mysql_query($sql, $db);	
 	$sql = "INSERT INTO %ssocial_friends SET member_id=%d, friend_id=%d, relationship=1";
 	$is_succeeded = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $friend_id));	
 	//remove the equivalent friend request
@@ -212,7 +198,6 @@ function approveFriendRequest($friend_id){
  * @param	int		the member being rejected, not "MYSELF"
  */
 function rejectFriendRequest($friend_id){
-	//global $db;
 	return removeFriendRequest($friend_id, $_SESSION['member_id']);
 }
 
@@ -223,9 +208,7 @@ function rejectFriendRequest($friend_id){
  * @param	friend_id	the member that decide approval/reject on this request
  */
 function removeFriendRequest($member_id, $friend_id){
-	//global $db;
-	//$sql = 'DELETE FROM '.TABLE_PREFIX."social_friend_requests WHERE member_id=$member_id AND friend_id=$friend_id";
-	//$is_succeeded = mysql_query($sql, $db);
+
 	$sql = "DELETE FROM %ssocial_friend_requests WHERE member_id=%d AND friend_id=%d";
 	$is_succeeded = queryDB($sql, array(TABLE_PREFIX, $member_id, $friend_id));
 	return $is_succeeded;
@@ -238,15 +221,12 @@ function removeFriendRequest($member_id, $friend_id){
   * @param	friend_id	the member_id of the friend
   */
 function addFriendRequest($friend_id){
-	//global $db;
 	$friend_id = intval($friend_id);
 
 	if ($friend_id < 1){
 	 return;
 	}
-
-	//$sql = "INSERT INTO ".TABLE_PREFIX."social_friend_requests SET member_id=$_SESSION[member_id], friend_id=$friend_id";
-	//mysql_query($sql, $db);		
+		
 	$sql = "INSERT INTO %ssocial_friend_requests SET member_id=%d, friend_id=%d";
 	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $friend_id));	
  }
@@ -258,11 +238,8 @@ function addFriendRequest($friend_id){
  * @param	int		user id
  */
 function removeFriend($friend_id){
-	//global $db;
 	$friend_id = intval($friend_id);
 
-	//$sql = 'DELETE FROM '.TABLE_PREFIX.'social_friends WHERE (member_id='.$_SESSION['member_id'].' AND '.'friend_id='.$friend_id.') OR (friend_id='.$_SESSION['member_id'].' AND '.'member_id='.$friend_id.')';
-	//mysql_query($sql, $db);
 	$sql = 'DELETE FROM %ssocial_friends WHERE (member_id=%d AND  friend_id=%d) OR (friend_id=%d AND member_id=%d)';
 	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $friend_id, $_SESSION['member_id'], $friend_id));
 }
@@ -278,8 +255,7 @@ function removeFriend($friend_id){
  * TODO: search needs work.  Order by the most matches to the least matches
  */ 
 function searchFriends($name, $searchMyFriends = false, $offset=-1){
-	//global $db, $addslashes;
-	global $db, $addslashes;
+	global $addslashes;
 	$result = array(); 
 	$my_friends = array();
 	$exact_match = false;
@@ -327,12 +303,9 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 		}
 		$sql .= $query;
 
-		//$rs = mysql_query($sql, $db);
 		$rows_friends = queryDB($sql, array(), '', FALSE);
-		//debug_to_log($rows_friends);
+		
 		if(count($rows_friends) > 0){
-		//if ($rs){
-			//while ($row = mysql_fetch_assoc($rs)){
 			foreach($rows_friends as $row){
 				if ($row['member_id']==$_SESSION['member_id']){
 					$this_id = $row['friend_id'];
@@ -367,15 +340,11 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 	if ($offset >= 0){
 		$sql .= " LIMIT $offset, ". SOCIAL_FRIEND_SEARCH_MAX;
 	}
-	debug_to_log($sql);
-	//$rs = mysql_query($sql, $db);
+
 	$rows_members = queryDB($sql, array());
-	//global $sqlout;
-	//debug_to_log($rows_members);
+
 	//Get all members out
 	foreach($rows_members as $row){
-	//while($row = mysql_fetch_assoc($rs)){
-
 		$this_id = $row['member_id'];
 
 
@@ -433,10 +402,7 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
  * @param	int		The group id in which we are inviting the person to.
  */
  function addGroupInvitation($member_id, $group_id){
-	 //global $db;
 
-	 //$sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_invitations (sender_id, group_id, member_id) VALUES ($_SESSION[member_id], $group_id, $member_id)";
-	 //$result = mysql_query($sql, $db);
 	 $sql = "INSERT INTO %ssocial_groups_invitations (sender_id, group_id, member_id) VALUES (%d, %d, %d)";
 	 $result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $group_id, $member_id));
 	 
@@ -452,17 +418,12 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
  * @return	list of groups id + sender_id
  */
  function getGroupInvitations(){
-	//global $db;
 	$inv = array();
 
-	//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_invitations WHERE member_id='.$_SESSION['member_id'];
-	//$result = mysql_query($sql, $db);
 	$sql = 'SELECT * FROM %ssocial_groups_invitations WHERE member_id=%d';
 	$rows_invites = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 	
 	if(count($rows_invites) > 0){
-	//if ($result){
-		//while ($row = mysql_fetch_assoc($result)){
 		foreach($rows_invites as $row){
 			$inv[$row['group_id']][] = $row['sender_id'];
 		}
@@ -477,16 +438,11 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
   * @return	list of groups id + sender_id
   */
  function getGroupRequests(){
-	 //global $db;
 	 $requests = array();
-
-	 //$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_requests WHERE member_id='.$_SESSION['member_id'];
-	 //$result = mysql_query($sql, $db);
 	 $sql = 'SELECT * FROM %ssocial_groups_requests WHERE member_id=%d';
-	 $rows_requests = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));	
+	 $rows_requests = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
+	 	
 	 if(count($rows_requests) > 0){   
-	 //if ($result){
-		//while ($row = mysql_fetch_assoc($result)){
 		foreach($rows_requests as $row){
 			$requests[$row['group_id']][] = $row['sender_id'];
 		}
@@ -502,8 +458,6 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
   * @param	int		sender's member_id
   */
 function acceptGroupInvitation($group_id){
-	//global $db;
-	
 	//will only add member if the group_id is valid.
 	if ($group_id <= 0){
 		return;
@@ -532,19 +486,13 @@ function acceptGroupInvitation($group_id){
   * @param	int		group id
   */
  function removeGroupInvitation($group_id){
-	//global $db;
 	$group_id = intval($group_id);
 
-	//delete invitation based on 3 primary keys
-//	$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_invitations WHERE group_id=$group_id AND sender_id=$sender_id AND member_id=$member_id";
 	//doesn't need sender_id cause we want to remove all anyway.
-	//$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_invitations WHERE group_id=$group_id AND member_id=$_SESSION[member_id]";
-	//$result = mysql_query($sql, $db);
 	$sql = "DELETE FROM %ssocial_groups_invitations WHERE group_id=%d AND member_id=%d";
-	$rows_invites = queryDB($sql, array(TABLE_PREFIX, $group_id, $_SESSION[member_id]));
+	$rows_invites = queryDB($sql, array(TABLE_PREFIX, $group_id, $_SESSION['member_id']));
 	
 	if(count($rows_invites) > 0){
-	//if ($result){
 		return true;
 	}
 	return false;
@@ -557,8 +505,6 @@ function acceptGroupInvitation($group_id){
   * @param	int		member that made this request
   */
  function acceptGroupRequest($group_id, $sender_id){
-	//global $db;
-	
 	//will only add member if the group_id is valid.
 	if ($group_id <= 0){
 		return;
@@ -590,17 +536,13 @@ function acceptGroupInvitation($group_id){
    * @param  int		member that made this request
   */
  function removeGroupRequest($group_id, $sender_id){
-	 //global $db;
 	 $group_id = intval($group_id);
 	 $sender_id = intval($sender_id);
 
-	 //$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_requests WHERE group_id=$group_id AND member_id=$_SESSION[member_id] AND sender_id=$sender_id";
-	 //$result = mysql_query($sql, $db);
 	 $sql = "DELETE FROM %ssocial_groups_requests WHERE group_id=%d AND member_id=%d AND sender_id=%d";
 	 $result = queryDB($sql, array(TABLE_PREFIX, $group_id, $_SESSION['member_id'], $sender_id));
 	 
 	 if($result > 0){
-	 //if ($result){
 		 return true;
 	 }
 	 return false;
