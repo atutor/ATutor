@@ -105,22 +105,25 @@ class Activity{
 	 */
 	 function getFriendsActivities($id, $displayAll=false){
 		$activities = array();
-
 		$friends = getFriends($id);	
 		$friends_ids = implode(', ', array_keys($friends));
-		$sql = 'SELECT * FROM %ssocial_activities WHERE member_id IN (%s) ORDER BY created_date DESC';
-		if (!$displayAll){
-			$sql .= ' LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
+		if($friends_ids != ''){
+            $sql = 'SELECT * FROM %ssocial_activities WHERE member_id IN (%s) ORDER BY created_date DESC';
+            if (!$displayAll){
+                $sql .= ' LIMIT '.SOCIAL_FRIEND_ACTIVITIES_MAX;
+            }
+            $rows_activities = queryDB($sql, array(TABLE_PREFIX, $friends_ids));
+            if (count($rows_activities) > 0){
+                foreach($rows_activities as $row){
+                    $activities[$row['id']]['member_id'] = $row['member_id'];
+                    $activities[$row['id']]['title'] = $row['title'];
+                    $activities[$row['id']]['created_date'] = $row['created_date'];
+                }
+            }
+		    return $activities;
+		}else{
+		    return false;
 		}
-		$rows_activities = queryDB($sql, array(TABLE_PREFIX, $friends_ids));
-		if (count($rows_activities) > 0){
-			foreach($rows_activities as $row){
-				$activities[$row['id']]['member_id'] = $row['member_id'];
-				$activities[$row['id']]['title'] = $row['title'];
-				$activities[$row['id']]['created_date'] = $row['created_date'];
-			}
-		}
-		return $activities;
 	 }
 
 
