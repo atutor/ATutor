@@ -211,7 +211,7 @@ function removeFriendRequest($member_id, $friend_id){
 
 	$sql = "DELETE FROM %ssocial_friend_requests WHERE member_id=%d AND friend_id=%d";
 	$is_succeeded = queryDB($sql, array(TABLE_PREFIX, $member_id, $friend_id));
-	editSocialFeedback($is_succeeded);
+	ContactFeedback($is_succeeded);
 	return $is_succeeded;
 }
 
@@ -244,7 +244,7 @@ function removeFriend($friend_id){
 	$sql = 'DELETE FROM %ssocial_friends WHERE (member_id=%d AND  friend_id=%d) OR (friend_id=%d AND member_id=%d)';
 	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $friend_id, $_SESSION['member_id'], $friend_id));
 
-	editSocialFeedback($result);
+	ContactFeedback($result);
 
 }
 
@@ -626,7 +626,7 @@ function getProfileLink($id, $str){
 function getMemberActivities($member_id){
 }
 
-function editSocialFeedback($result){
+function ContactFeedback($result){
     global $msg;
     if($result > 0){
         $msg->addFeedback('CONTACTS_UPDATED');
