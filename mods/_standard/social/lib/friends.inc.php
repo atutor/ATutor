@@ -72,8 +72,8 @@ function isFriendOfFriend($member_a, $member_b){
 	}
 	
 	$friends_of_b = getFriends($member_b);
-	if(!empty($friends_of_b)){
-	$fof = array_intersect($friends_of_a, $friends_of_b);	//friends of friends
+	if(!empty($friends_of_b) && !empty($friends_of_a)){
+	    $fof = array_intersect($friends_of_a, $friends_of_b);	//friends of friends
     }
 	//If it is not empty or not null, then they have friends 
 	if (!empty($fof) > 0){
@@ -211,6 +211,7 @@ function removeFriendRequest($member_id, $friend_id){
 
 	$sql = "DELETE FROM %ssocial_friend_requests WHERE member_id=%d AND friend_id=%d";
 	$is_succeeded = queryDB($sql, array(TABLE_PREFIX, $member_id, $friend_id));
+	editSocialFeedback($is_succeeded);
 	return $is_succeeded;
 }
 
@@ -241,7 +242,10 @@ function removeFriend($friend_id){
 	$friend_id = intval($friend_id);
 
 	$sql = 'DELETE FROM %ssocial_friends WHERE (member_id=%d AND  friend_id=%d) OR (friend_id=%d AND member_id=%d)';
-	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $friend_id, $_SESSION['member_id'], $friend_id));
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $friend_id, $_SESSION['member_id'], $friend_id));
+
+	editSocialFeedback($result);
+
 }
 
 
@@ -620,6 +624,15 @@ function getProfileLink($id, $str){
  * @param	member_id	The id of the member we wish to get the activities from.
  */
 function getMemberActivities($member_id){
+}
+
+function editSocialFeedback($result){
+    global $msg;
+    if($result > 0){
+        $msg->addFeedback('CONTACTS_UPDATED');
+    } else {
+        $msg->addFeedback('CONTACTS_UNCHANGED');
+    }
 }
 
 ?>
