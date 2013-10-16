@@ -76,8 +76,9 @@ function isFriendOfFriend($member_a, $member_b){
 	}
 	
 	$friends_of_b = getFriends($member_b);
+	if(!empty($friends_of_b)){
 	$fof = array_intersect($friends_of_a, $friends_of_b);	//friends of friends
-
+    }
 	//If it is not empty or not null, then they have friends 
 	if (!empty($fof) > 0){
 		return true;
