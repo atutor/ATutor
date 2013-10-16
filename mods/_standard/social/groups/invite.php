@@ -27,14 +27,12 @@ $group_obj = new SocialGroup($gid);
 
 //handles submit
 if (isset($_POST['inviteMember']) && isset($_POST['new_members'])){
-//	debug($_POST['new_members']);
 	//add to request table
 	foreach ($_POST['new_members'] as $k=>$v){
 		$k = intval($k);
 		if ($gid != ''){
-			$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$k";
-			$result_notify = mysql_query($sql_notify, $db);
-			$row_notify = mysql_fetch_assoc($result_notify);
+			$sql_notify = "SELECT first_name, last_name, email FROM %smembers WHERE member_id=%d";
+			$row_notify = queryDB($sql_notify, array(TABLE_PREFIX, $k));
 
 			if ($row_notify['email'] != '') {
 				require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
