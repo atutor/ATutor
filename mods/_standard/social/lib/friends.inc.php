@@ -410,6 +410,7 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 	foreach($my_friends as $friends){
 		//if it is in the connection, set the attribute
 		if($connections[$friends] != null){
+			$connections[$friends] = array();
 			$connections[$friends]['added'] = 1;
 		} 
 	}
@@ -417,6 +418,7 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 	foreach ($pending_requests as $friends=>$garbage){
 		//if it is already added, set pending =1
 		if ($connections[$friends] != null){
+			$connections[$friends] = array();
 			$connections[$friends]['pending'] = 1;
 		}
 	}
