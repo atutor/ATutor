@@ -47,10 +47,9 @@ function getFriends($member_id, $limit=0){
 				$friends[$row['member_id']]			=	$row['member_id'];
 			}
 		}
-		return $friends;
 	}
 
-	return false;
+	return $friends;
 }
 
 
