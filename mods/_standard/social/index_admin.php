@@ -18,8 +18,11 @@ admin_authenticate(AT_ADMIN_PRIV_SOCIAL);
 
 if($_POST['save']){
 	$shindig_url = $addslashes($_POST['shindig_url']);
-	$sql = "REPLACE into ".TABLE_PREFIX."config (name,value) VALUES('shindig_url','$shindig_url')";
-	if($result = mysql_query($sql, $db)){
+	
+	$sql = "REPLACE into %sconfig (name,value) VALUES('shindig_url','%s')";
+	$result = queryDB($sql, array(TABLE_PREFIX, $shindig_url));
+	
+	if($result > 0){
 		 $msg->addFeedback('SOCIAL_SETTINGS_SAVED');
 	}else{
  		$msg->addError('SOCIAL_SETTINGS_NOT_SAVED');
