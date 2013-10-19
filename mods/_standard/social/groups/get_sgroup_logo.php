@@ -22,12 +22,11 @@ require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/mime.inc.php');
 
 $id = intval($_GET['id']);
-$sql="SELECT logo from ".TABLE_PREFIX."social_groups WHERE id='$id'";
-$result = mysql_query($sql, $db);
 
-list($filename) = mysql_fetch_array($result);
+$sql="SELECT logo from %ssocial_groups WHERE id=%d";
+$filename = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
 
-$file = AT_CONTENT_DIR .'social/'.$filename;
+$file = AT_CONTENT_DIR .'social/'.$filename['logo'];
 
 $extensions = array('gif', 'jpg', 'png');
 $pathinfo = pathinfo($file);

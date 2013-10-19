@@ -71,7 +71,8 @@
 		<div class="photo_actions">
 			<a href="<?php echo AT_PA_BASENAME.'edit_photos.php?aid='.$this->aid.SEP.'pid='.$this->photo_info['id']; ?>" class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/edit.gif" alt="" border="0"  class="pa_tool_image"/><?php echo _AT('pa_edit_photo'); ?></a><br/>
 			<a href="<?php echo AT_PA_BASENAME.'delete_photo.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"  class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/x.gif" alt="" border="0" class="pa_tool_image"/><?php echo _AT('pa_delete_this_photo'); ?></a><br/>
-			<a href="<?php echo AT_PA_BASENAME.'set_profile_picture.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"  class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/profile.gif" alt="" border="0" class="pa_tool_image"/><?php echo _AT('pa_set_profile_pic'); ?></a>
+			<a href="<?php echo AT_PA_BASENAME.'set_profile_picture.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid;?>"  class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/profile.gif" alt="" border="0" class="pa_tool_image"/><?php echo _AT('pa_set_profile_pic'); ?></a><br/>
+                        <a href="<?php echo AT_PA_BASENAME.'photo.php?pid='.$this->photo_info['id'].SEP.'aid='.$this->aid.SEP.'album_cover='.$this->photo_info['id'];?>"  class="pa_tool_link"><img src="<?php echo $_base_href; ?>themes/<?php echo $_SESSION['prefs']['PREF_THEME']; ?>/images/profile.gif" alt="" border="0" class="pa_tool_image"/><?php echo _AT('pa_set_album_cover'); ?></a>
 		</div>
 		<?php else: ?>
 		<div class="photo_actions">

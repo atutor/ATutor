@@ -38,18 +38,16 @@ if ($group_obj->getPrivacy()==0){
 } else {
 	/*private*/
 	$result = $group_obj->addRequest();
-	if ($result){
-		$sql = "SELECT member_id from ".TABLE_PREFIX."social_groups WHERE id = '$gid'";
-
-		$result_sender = mysql_query($sql, $db);
-		$grpadmins = mysql_fetch_row($result_sender);
-		$grpadmin = $grpadmins['0'];
+	if ($result > 0){
+		$sql = "SELECT member_id from %ssocial_groups WHERE id = %d";
+		$grpadmins = queryDB($sql, array(TABLE_PREFIX, $gid), TRUE);
+		$grpadmin = $grpadmins['member_id'];
 
 		require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
+		
 		$sql_notify = "SELECT first_name, last_name, email FROM ".TABLE_PREFIX."members WHERE member_id=$grpadmin";
-		$result_notify = mysql_query($sql_notify, $db);
-		$row_notify = mysql_fetch_assoc($result_notify);
-
+		$row_notify = queryDB($sql_notify, array(TABLE_PREFIX, $grpadmin), TRUE);
+		
 		if ($row_notify['email'] != '') {
 			$body = _AT('notification_group_request', $group_obj->getName() , $_base_href.AT_SOCIAL_BASENAME.'index_mystart.php');
 			$sender = get_display_name($_SESSION['member_id']);
