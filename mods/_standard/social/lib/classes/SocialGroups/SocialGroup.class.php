@@ -39,20 +39,24 @@ class SocialGroup {
 		$this->group_id = intval($group_id);
 
 		if ($this->group_id > 0){
-			$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE id='.$this->group_id;
-			$result = mysql_query($sql, $db);
-			if (mysql_num_rows($result) > 0){
-				$row = mysql_fetch_assoc($result);
-				$this->user_id			= $row['member_id'];
+			//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups WHERE id='.$this->group_id;
+			//$result = mysql_query($sql, $db);
+			//if (mysql_num_rows($result) > 0){
+				//$row = mysql_fetch_assoc($result);
+
+			$sql = 'SELECT * FROM %ssocial_groups WHERE id=%d';
+			$row = queryDB($sql, array(TABLE_PREFIX, $this->group_id), TRUE);
+			if (count($row) > 0){
 				$this->logo				= $row['logo'];
 				$this->name				= $row['name'];
+				$this->user_id			= $row['member_id'];
 				$this->type_id			= $row['type_id'];
 				$this->privacy			= $row['privacy'];
 				$this->description		= $row['description'];
 				$this->created_date		= $row['created_date'];
 				$this->last_updated		= $row['last_updated'];
 				$this->group_members	= $this->getGroupMembers();
-				$this->group_activities = $this->getGroupActivities();
+				//$this->group_activities = $this->getGroupActivities();
 				$this->is_valid			= true;
 			} else {
 				//group does not exist, most likely deleted
@@ -73,10 +77,15 @@ class SocialGroup {
 			return $this->group_members;
 		}
 		$members = array();
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members WHERE group_id='.$this->group_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members WHERE group_id='.$this->group_id;
+		//$result = mysql_query($sql, $db);
+		//if ($result){
+
+		$sql = 'SELECT * FROM %ssocial_groups_members WHERE group_id=%d';
+		$rows_members = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+		if (count($rows_members) > 0){
+		    foreach($rows_members as $row){
+			//while ($row = mysql_fetch_assoc($result)){
 				$members[] = new Member($row['member_id']);
 			}
 		}
@@ -91,20 +100,32 @@ class SocialGroup {
 	 * @param	int		group id
 	 * @return	mixed	array of activities 
 	 */
+	 
+	 // THIS FUNCTION COULD NOT POSSIBLY WORK	 
+
 	 function getGroupActivities(){
-		 global $db;
+	 /*		 global $db;
 		 if (!empty($this->group_activities)){
 			return $this->group_activities;
 		}
 		 $activities = array();
-		 $sql = 'SELECT a,id AS id, a.title AS title FROM '.TABLE_PREFIX.'social_groups_activities g LEFT JOIN '.TABLE_PREFIX.'social_activities a ON g.activity_id=a.id WHERE g.group_id='.$this->group_id;
-		 $result = mysql_query($sql, $db);
-		 if ($result){
-			 while($row = mysql_fetch_assoc($result)){
+		 //$sql = 'SELECT a,id AS id, a.title AS title FROM '.TABLE_PREFIX.'social_groups_activities g LEFT JOIN '.TABLE_PREFIX.'social_activities a ON g.activity_id=a.id WHERE g.group_id='.$this->group_id;
+		 //$result = mysql_query($sql, $db);
+		 //if ($result){
+		//	 while($row = mysql_fetch_assoc($result)){
+
+		 $sql = 'SELECT a,id AS id, a.title AS title FROM %ssocial_groups_activities g LEFT JOIN %ssocial_activities a ON g.activity_id=a.id WHERE g.group_id=%d';
+		 $rows_gactivities = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $this->group_id));
+		 global $sqlout;
+		 debug($sqlout);
+		 
+		 if (count($rows_gactivities) > 0){
+			 foreach($rows_gactivities as $row){
 				 $activities[$row['id']] = $row['title'];
 			 }
 		 }
 		 return $activities;
+		 */
 	 }
 
 	/**
@@ -114,21 +135,25 @@ class SocialGroup {
 	 * @return the text of the message
 	 */
 	function getMessage($id, $member_id){
-		global $db;
+		//global $db;
+		//UNTESTED WITH QUERYDB()
 		$id = intval($id);
 		$member_id = intval($member_id);
 		
-		$sql = 'SELECT body FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID().' AND id='.$id;
-		
+		//$sql = 'SELECT body FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID().' AND id='.$id;
+		$sql = 'SELECT body FROM %ssocial_groups_board WHERE group_id=%d AND id=%d';
+				
 		//if not moderator
 		if($member_id!=$this->user_id){
 			$sql .= ' AND member_id='.$member_id;
 		} 
 
-		$rs = mysql_query($sql, $db);
-		if($rs){
-			list($body) = mysql_fetch_array($rs);
-			return htmlentities_utf8($body);
+		//$rs = mysql_query($sql, $db);
+		$row_message = queryDB($sql, array(TABLE_PREFIX, $this->getID(), $id), TRUE);
+		//if($rs){
+		if(count($row_message) > 0){
+			//list($body) = mysql_fetch_array($rs);
+			return htmlentities_utf8($row_message);
 		}
 		return false;
 	}
@@ -137,14 +162,19 @@ class SocialGroup {
 	 * Get message boards message, return a list sorted by date, in descending order
 	 */
 	 function getMessages(){
-		 global $db;
+		 //global $db;
 		 $result = array();	
 
-		 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID().' ORDER BY created_date DESC';
-		 $rs = mysql_query($sql, $db);
-
-		 if ($rs){
-			 while ($row = mysql_fetch_assoc($rs)){
+		 //$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID().' ORDER BY created_date DESC';
+		 //$rs = mysql_query($sql, $db);
+		 $sql = 'SELECT * FROM %ssocial_groups_board WHERE group_id=%d ORDER BY created_date DESC';
+		 $rows_messages = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
+		 
+		 //if ($rs){
+		// while ($row = mysql_fetch_assoc($rs)){
+		 if (count($rows_messages) > 0){
+		    foreach($rows_messages as $row){
+			// while ($row = mysql_fetch_assoc($rs)){
 				$row['body'] = htmlentities_utf8($row['body']);	//escape xss attack
 				$result [$row['id']] = $row;
 			 }
@@ -163,12 +193,17 @@ class SocialGroup {
 		return $this->user_id;
 	 }
 	 function getGroupType(){
-		 global $db;
+	    //global $db;
 		//or maybe print out the exact type name
-		$sql = 'SELECT title FROM '.TABLE_PREFIX.'social_groups_types WHERE type_id='.$this->type_id;
-		$result = mysql_query($sql, $db);
-		list($type_name) = mysql_fetch_row($result);
-		return _AT($type_name);
+		//$sql = 'SELECT title FROM '.TABLE_PREFIX.'social_groups_types WHERE type_id='.$this->type_id;
+		//$result = mysql_query($sql, $db);
+
+		$sql = 'SELECT title FROM %ssocial_groups_types WHERE type_id=%d';
+		$row_type = queryDB($sql, array(TABLE_PREFIX, $this->type_id), TRUE);
+		
+		//list($type_name) = mysql_fetch_row($result);
+		//return _AT($type_name);
+		return _AT($row_type['title']);
 	 }
 	 function getLogo()	{
 		if (!empty($this->logo)) {
@@ -206,12 +241,16 @@ class SocialGroup {
 	 * @return	boolean	true if succeded, false otherwise.
 	 */
 	 function addMember($member_id){
-		global $db;
+		//global $db;
 		$member_id = intval($member_id);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_members (group_id, member_id) VALUES ('.$this->group_id.", $member_id)";
-		$result = mysql_query($sql, $db);
-		if ($result){
+		//$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_members (group_id, member_id) VALUES ('.$this->group_id.", $member_id)";
+		//$result = mysql_query($sql, $db);
+
+		$sql = "INSERT INTO %ssocial_groups_members (group_id, member_id) VALUES (%d, %d)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->group_id, $member_id));
+		
+		if ($result > 0){
 			//add a record to the activities
 			$act = new Activity();		
 			$str1 = _AT('has_joined_group', '<a href="'. url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$this->getID(), AT_PRETTY_URL_IS_HEADER).'">'.htmlentities_utf8($this->getName()).'</a>');
@@ -229,25 +268,30 @@ class SocialGroup {
 	 * @param	int		member_id
 	 */
 	 function addInvitation($member_id) {
-		global $db;
+		//global $db;
 		$member_id = intval($member_id);
 
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_invitations (sender_id, member_id, group_id) VALUES ('
-				.$_SESSION['member_id'].', '.$member_id.', '.$this->getID().')';
-		$result = mysql_query($sql, $db);
+		//$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_invitations (sender_id, member_id, group_id) VALUES ('
+		//		.$_SESSION['member_id'].', '.$member_id.', '.$this->getID().')';
+		//$result = mysql_query($sql, $db);
+		$sql = 'INSERT INTO %ssocial_groups_invitations (sender_id, member_id, group_id) VALUES (%d, %d, %d)';
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $member_id, $this->getID()));
 	 }
 
 
-	/** 
+	/**     
 	 * Sends a request to the group creator 
 	 * @param	int		member_id
 	 */
 	function addRequest(){
-		global $db;
+		//global $db;
 	
-		$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_requests (sender_id, member_id, group_id) VALUES ('
-				.$_SESSION['member_id'].', '.$this->getUser().', '.$this->getID().')';
-		$result = mysql_query($sql, $db);
+		//$sql = 'INSERT INTO '.TABLE_PREFIX.'social_groups_requests (sender_id, member_id, group_id) VALUES ('
+		//		.$_SESSION['member_id'].', '.$this->getUser().', '.$this->getID().')';
+		//$result = mysql_query($sql, $db);
+		
+		$sql = 'INSERT INTO %ssocial_groups_requests (sender_id, member_id, group_id) VALUES (%d, %d, %d)';
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $this->getUser(), $this->getID()));
 		return $result;
 	}
 	
@@ -256,13 +300,16 @@ class SocialGroup {
 	 * @param	string	the message body
 	 */
 	 function addMessage($body) {
-		 global $db, $addslashes;
-		 $body = $addslashes($body);
+		 //global $db, $addslashes;
+		 //$body = $addslashes($body);
 		 $member_id = $_SESSION['member_id'];
 		 $group_id = $this->getID();
 
-		 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_board (member_id, group_id, body, created_date) VALUES ($member_id, $group_id, '$body', NOW())";
-		 $result = mysql_query($sql, $db);
+		 //$sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_board (member_id, group_id, body, created_date) VALUES ($member_id, $group_id, '$body', NOW())";
+		 //$result = mysql_query($sql, $db);
+
+		 $sql = "INSERT INTO %ssocial_groups_board (member_id, group_id, body, created_date) VALUES (%d, %d, '%s', NOW())";
+		 $result = queryDB($sql, array(TABLE_PREFIX, $member_id, $group_id, $body));
 		 return $result;
 	 }
 
@@ -274,8 +321,10 @@ class SocialGroup {
 	function updateGroupLogo($logo) {
 		global $db, $addslashes;
 		$logo = $addslashes($logo);
-		$sql = 'UPDATE '.TABLE_PREFIX."social_groups SET logo='$logo' WHERE id=".$this->getID();
-		$result = mysql_query($sql, $db);
+		//$sql = 'UPDATE '.TABLE_PREFIX."social_groups SET logo='$logo' WHERE id=".$this->getID();
+		//$result = mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_groups SET logo='$logo' WHERE id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
 		return $result;
 	}
 	
@@ -286,6 +335,7 @@ class SocialGroup {
 	 * @param	string	message body
 	 */
 	 function updateMessage($id, $body){
+	    // THIS FUNTION DOES NOT APPEAR TO BE IN USE
 		 global $db, $addslashes;
 		 $id = intval($id);
 		 $body = $addslashes($body);
@@ -293,8 +343,10 @@ class SocialGroup {
 			return false;
 		}
 
-		$sql = 'UPDATE '.TABLE_PREFIX."social_groups_board SET body='$body' WHERE id=$id";
-		$result = mysql_query($sql, $db);
+		//$sql = 'UPDATE '.TABLE_PREFIX."social_groups_board SET body='$body' WHERE id=$id";
+		//$result = mysql_query($sql, $db);
+		$sql = "UPDATE %ssocial_groups_board SET body='%s' WHERE id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $body, $id));
 		return $result;
 	 }
 	
@@ -305,7 +357,7 @@ class SocialGroup {
 	 * @retrun	boolean	troe successful and false otherwise.
 	 */
 	 function removeMember($member_id){
-		global $db;
+		//global $db;
 		$member_id = intval($member_id);
 
 		//quit if member_id = creator id
@@ -313,9 +365,12 @@ class SocialGroup {
 			return false;
 		}
 
-		$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_members WHERE member_id=$member_id AND group_id=".$this->group_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
+		//$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_members WHERE member_id=$member_id AND group_id=".$this->group_id;
+		//$result = mysql_query($sql, $db);
+
+		$sql = "DELETE FROM %ssocial_groups_members WHERE member_id=$member_id AND group_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+		if ($result > 0){
 			return true;
 		}
 		return false;
@@ -338,7 +393,7 @@ class SocialGroup {
 	 * ToDo: Delete just one?
 	 */
 	 function removeGroupActivities(){
-		 global $db;
+		 //global $db;
 
 		 $act_obj = new Activity();
 
@@ -349,8 +404,11 @@ class SocialGroup {
 		 }
 
 		 //Then remove the associations from social_groups_activities
-		 $sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_activities WHERE group_id=".$this->group_id;
-		 $result = mysql_query($sql, $db);
+		 //$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_activities WHERE group_id=".$this->group_id;
+		 //$result = mysql_query($sql, $db);
+		 $sql = "DELETE FROM %ssocial_groups_activities WHERE group_id=%d";
+		 $result = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+
 		 if ($result){
 			 return true;
 		 }
@@ -362,24 +420,33 @@ class SocialGroup {
 	 * Delete all group forums
 	 */
 	function removeGroupForums(){
+		/* SOCIAL_GROUPS_FORUMS DOES NOT EXIST
 		global $db;
 		include(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 		
 		//delete all forums for this social group
-		$sql = 'SELECT forum_id FROM '.TABLE_PREFIX.'social_groups_forums WHERE group_id='.$this->group_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		//$sql = 'SELECT forum_id FROM '.TABLE_PREFIX.'social_groups_forums WHERE group_id='.$this->group_id;
+		//$result = mysql_query($sql, $db);
+		$sql = 'SELECT forum_id FROM %ssocial_groups_forums WHERE group_id=%d';
+		$rows_forums = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+		//if ($result){
+		//	while ($row = mysql_fetch_assoc($result)){
+		if (count($rows_forums) >0){
+		    foreach($rows_forums as $row){
+			//while ($row = mysql_fetch_assoc($result)){
 				delete_forum($row['forum_id']);
 			}
 		}
 
+		//$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_forums WHERE group_id='.$this->group_id;
+		//$result = mysql_query($sql, $db);
 		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_forums WHERE group_id='.$this->group_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+		if ($result > 0){
 			return true;
 		} 
 		return false;
+		*/
 	}
 
 	
@@ -387,10 +454,12 @@ class SocialGroup {
 	 * Delete all group members
 	 */
 	function removeGroupMembers(){
-		global $db;
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_members WHERE group_id='.$this->group_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
+		//global $db;
+		//$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_members WHERE group_id='.$this->group_id;
+		//$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_groups_members WHERE group_id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+		if ($result > 0){
 			return true;
 		}
 		return false;
@@ -401,10 +470,12 @@ class SocialGroup {
 	 * Delete all requests inside this group
 	 */
 	function removeGroupRequests(){
-		global $db;
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_requests WHERE group_id='.$this->group_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
+		//global $db;
+		//$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_requests WHERE group_id='.$this->group_id;
+		//$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_groups_requests WHERE group_id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+		if ($result > 0){
 			return true;
 		}
 		return false;
@@ -415,10 +486,12 @@ class SocialGroup {
 	 * Delete all invitations inside this group
 	 */
 	function removeGroupInvitations(){
-		global $db;
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_invitations WHERE group_id='.$this->group_id;
-		$result = mysql_query($sql, $db);
-		if ($result){
+		//global $db;
+		//$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_invitations WHERE group_id='.$this->group_id;
+		//$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_groups_invitations WHERE group_id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->group_id));
+		if ($result > 0){
 			return true;
 		}
 		return false;
@@ -429,16 +502,18 @@ class SocialGroup {
 	 * @param	int		member_id
 	 */
 	function removeMessage($id, $member_id){
-		global $db;
+		//global $db;
 		$id = intval ($id);
 		$member_id = intval($member_id);
-		$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id ";
+		//$sql = 'DELETE FROM '.TABLE_PREFIX."social_groups_board WHERE id=$id ";
+		$sql = "DELETE FROM %ssocial_groups_board WHERE id=%d";
 
 		//if not moderator.
 		if ($member_id != $this->user_id){
 			$sql .= " AND member_id=$member_id";			
 		} 
-		$result = mysql_query($sql, $db);
+		//$result = mysql_query($sql, $db);
+		$result = queryDB($sql, array(TABLE_PREFIX, =$id));
 		return $result;
 	}
 
@@ -447,10 +522,12 @@ class SocialGroup {
 	 * Delete all the messages from the board
 	 */
 	function removeAllMessages(){
-		global $db;
+		//global $db;
 
-		$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID();
-		$result = mysql_query($sql, $db);
+		//$sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups_board WHERE group_id='.$this->getID();
+		//$result = mysql_query($sql, $db);
+		$sql = 'DELETE FROM %ssocial_groups_board WHERE group_id=%d';
+		$result = queryDB($sql, array(TABLE_PREFIX, $this->getID()));
 		return $result;
 	}
 
@@ -474,13 +551,41 @@ class SocialGroup {
 		//trim back the extra "AND "
 		$query = substr($query, 0, -4);
 		
-		$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members g LEFT JOIN '.TABLE_PREFIX.'members m ON g.member_id=m.member_id WHERE g.group_id='.$this->getID().' AND '.$query;
-		$rs = mysql_query($sql, $db);
+		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members g LEFT JOIN '.TABLE_PREFIX.'members m ON g.member_id=m.member_id WHERE g.group_id='.$this->getID().' AND '.$query;
+		//$rs = mysql_query($sql, $db);
+		$sql = 'SELECT * FROM %ssocial_groups_members g LEFT JOIN %smembers m ON g.member_id=m.member_id WHERE g.group_id=%d AND '.$query;
+		$rows_members = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX,  $this->getID()));
+		foreach($rows_members as $row){
+		//while ($row=mysql_fetch_assoc($rs)) {
+			$result[$row['member_id']] = new Member($row['member_id']);
+		}
+		return $result;
+	}
+/*	
+		function searchMembers($name){
+		global $db, $addslashes;
 
+		//break the names by space, then accumulate the query
+		$name = $addslashes($name);	
+		$sub_names = explode(' ', $name);
+		$args = array(TABLE_PREFIX, TABLE_PREFIX,  $this->getID());
+		foreach($sub_names as $piece){
+			//$query .= "(first_name LIKE '%$piece%' OR second_name LIKE '%$piece%' OR last_name LIKE '%$piece%' OR email LIKE '$piece') AND ";
+		    $query .= 'first_name LIKE %%%s%% OR second_name LIKE %%%s%% OR last_name LIKE %%%s%% OR email LIKE %s) AND )'
+		    array_push($args, $piece, $piece, $piece, $piece);
+		}
+		//trim back the extra "AND "
+		$query = substr($query, 0, -4);
+		
+		//$sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_members g LEFT JOIN '.TABLE_PREFIX.'members m ON g.member_id=m.member_id WHERE g.group_id='.$this->getID().' AND '.$query;
+		//$rs = mysql_query($sql, $db);
+		$sql = 'SELECT * FROM %ssocial_groups_members g LEFT JOIN %smembers m ON g.member_id=m.member_id WHERE g.group_id=%d AND '.$query;
+		$rs = queryDB($sql, $args);
 		while ($row=mysql_fetch_assoc($rs)) {
 			$result[$row['member_id']] = new Member($row['member_id']);
 		}
 		return $result;
 	}
+	*/
 }
 ?>
