@@ -33,7 +33,7 @@ class SocialGroups{
 	 * @return	the id of this new group if succeded, false otherwise.
 	 */
 	 function addGroup($type_id, $name, $description, $privacy){
-		 global $db, $addslashes;
+		 global $addslashes;
 
 		 $type_id = intval($type_id);
 		 $name = $addslashes($name);
@@ -41,14 +41,16 @@ class SocialGroups{
 		 $privacy = intval($privacy);
 		 $member_id = $_SESSION['member_id'];
 
-		 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups (`member_id`, `type_id`, `name`, `description`, `privacy`, `created_date`, `last_updated`) VALUES ($member_id, $type_id, '$name', '$description', $privacy, NOW(), NOW())";
-		 $result = mysql_query($sql, $db);
-		 $group_id = mysql_insert_id();
-		 if ($result){
+		 $sql = "INSERT INTO %ssocial_groups (`member_id`, `type_id`, `name`, `description`, `privacy`, `created_date`, `last_updated`) VALUES (%d, %d, '%s', '%s', %d, NOW(), NOW())";
+		 $result = queryDB($sql, array(TABLE_PREFIX, $member_id, $type_id, $name, $description, $privacy));
+		 $group_id = at_insert_id();
+		 
+		 if ($result > 0){
 			 //add it to the group member table
-			 $sql = 'INSERT INTO '.TABLE_PREFIX."social_groups_members (group_id, member_id) VALUES ($group_id, $_SESSION[member_id])";
-			 $result = mysql_query($sql, $db);
-			 if ($result){
+			 $sql = "INSERT INTO %ssocial_groups_members (group_id, member_id) VALUES (%d, %d)";
+			 $result = queryDB($sql, array(TABLE_PREFIX, $group_id, $_SESSION['member_id']));
+
+			 if ($result > 0){
 				$act = new Activity();		
 				$str1 = _AT('has_added_group', '<a href="'. url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$group_id).'">'.htmlentities_utf8($name)).'</a>';
 				$act->addActivity($member_id, $str1);
@@ -64,7 +66,6 @@ class SocialGroups{
 	 * @param	int		the group id
 	 */
 	 function removeGroup($id){
-		 global $db;
 		 $social_group = new SocialGroup($id);
 
 		 //remove group activities
@@ -89,8 +90,8 @@ class SocialGroups{
 		 $status &= $social_group->removeGroupLogo();
 
 		 //remove groups 
-		 $sql = 'DELETE FROM '.TABLE_PREFIX.'social_groups WHERE id='.$id;
-		 $status &= mysql_query($sql, $db);
+		 $sql = 'DELETE FROM %ssocial_groups WHERE id=%d';
+		 $status &= queryDB($sql, array(TABLE_PREFIX, $id));
 	 }
 
 
@@ -105,7 +106,7 @@ class SocialGroups{
 	 * @param	string	group privacy, private for 1, public for 0
 	 */
 	 function updateGroup($group_id, $member_id, $type_id, $name, $description, $logo, $privacy){
-		 global $db, $addslashes;
+		 global  $addslashes;
 
 		 $group_id = intval($group_id);
 		 $member_id = intval($member_id);
@@ -121,9 +122,9 @@ class SocialGroups{
 			 $logo_sql = '';
 		 }
 
-		 $sql = 'UPDATE '.TABLE_PREFIX."social_groups SET `member_id`=$member_id, `type_id`=$type_id, ".$logo_sql."`name`='$name', `privacy`=$privacy, `description`='$description', `last_updated`=NOW() WHERE id=$group_id";
-		 $result = mysql_query($sql, $db);
-		 if ($result){
+		 $sql = "UPDATE %ssocial_groups SET `member_id`=%d, `type_id`=%d, ".$logo_sql."`name`='%s', `privacy`=%d, `description`='%s', `last_updated`=NOW() WHERE id=%d";
+		 $result = queryDB($sql, array(TABLE_PREFIX, $member_id, $type_id, $name, $privacy, $description, $group_id));
+		 if ($result > 0){
 			 $act = new Activity();		
 			 $str1 = _AT('has_updated_group', '<a href="'. url_rewrite(AT_SOCIAL_BASENAME . 'groups/view.php?id='.$group_id).'">'.htmlentities_utf8($name)).'</a>';
 			 $act->addActivity($member_id, $str1);
@@ -139,13 +140,12 @@ class SocialGroups{
 	 * @return	list of group types
 	 */
 	 function getAllGroupType(){
-		 global $db, $addslashes;
 		 $group_types = array();
 
-		 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups_types';
-		 $result = mysql_query($sql, $db);
-		 if ($result){
-			 while($row = mysql_fetch_assoc($result)){
+		 $sql = 'SELECT * FROM %ssocial_groups_types';
+		 $rows_types = queryDB($sql, array(TABLE_PREFIX));
+		 if (count($rows_types) > 0){
+		    foreach($rows_types as $row){
 				$group_types[$row['type_id']] = $row['title'];
 			 }
 		 }
@@ -170,16 +170,16 @@ class SocialGroups{
 	 * @param	int	the index of which the entry to get
 	 */
 	 function getMemberGroups($member_id, $offset=-1){
-		 global $db;
 		 $my_groups = array();
 
-		 $sql = 'SELECT group_id FROM '.TABLE_PREFIX.'social_groups_members WHERE member_id='.$member_id;
+		 $sql = 'SELECT group_id FROM %ssocial_groups_members WHERE member_id=%d';
 		 if ($offset >= 0){
 			$sql .= " LIMIT $offset, ".SOCIAL_GROUP_MAX;
 		 }
-		 $result = mysql_query($sql, $db);
-		 if ($result){
-			 while($row = mysql_fetch_assoc($result)){
+
+		 $rows_members = queryDB($sql, array(TABLE_PREFIX, $member_id));
+		 if (count($rows_members > 0)){
+		    foreach($rows_members as $row){
 				$my_groups[] = $row['group_id'];
 			 }
 		 }
@@ -203,25 +203,26 @@ class SocialGroups{
 		 * 2. Give points to the result that has more match, or whatever our "point system" is
 		 * 3. Sort it in the order of most points to the least points.  
 		 */
-		 global $db, $addslashes;
+		 global  $addslashes;
 
-		 $sql = 'SELECT * FROM '.TABLE_PREFIX.'social_groups';
+		 $sql = 'SELECT * FROM %ssocial_groups';
 		 if ($query!=''){
 			 $search_result = array();
 			 $query = $addslashes(trim($query));
 			 $words = explode(' ', $query);
 			 foreach($words as $piece){
-				$extra .= "`name` LIKE '%$piece%' OR ";
-				$extra .= "`description` LIKE '%$piece%' OR ";
+				$extra .= "`name` LIKE '%%$piece%%' OR ";
+				$extra .= "`description` LIKE '%%$piece%%' OR ";
 			 }
 			 $extra = substr($extra, 0, -3);
 			 
 			 $sql .= ' WHERE '.$extra;
 		 }
-		 $result = mysql_query($sql, $db);
 
-		 if ($result){
-			while ($row = mysql_fetch_assoc($result)){
+		 $rows_groups = queryDB($sql, array(TABLE_PREFIX));
+	 
+		if ($rows_groups){
+		    foreach($rows_groups as $row){
 				$search_result[$row['id']]['obj'] = new SocialGroup($row['id']);
 				$search_result[$row['id']]['weight'] = $this->inQuery($words, $row['name']);
 			}
