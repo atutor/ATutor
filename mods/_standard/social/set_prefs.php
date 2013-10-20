@@ -33,7 +33,7 @@ if (empty($_GET['st']) || empty($_GET['name']) || ! isset($_GET['value'])) {
 
 	$result = $app->setApplicationSettings($_SESSION['member_id'], $key, $value);
 	if (!$result){
-		echo "<html><body><h1>500 - SQL Error: </h1>" . mysql_error() . "</body></html>";
+		echo "<html><body><h1>500 - SQL Error: </h1>" . at_db_error() . "</body></html>";
 	}
 
   } catch (Exception $e) {
