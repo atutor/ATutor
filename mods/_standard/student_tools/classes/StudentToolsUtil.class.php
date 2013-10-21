@@ -26,13 +26,13 @@ class StudentToolsUtil {
 	 * Return an empty array if no student tools defined.
 	 */
 	public static function getStudentTools($course_id) 
-	{
-		global $db;
-		
+	{		
 		$student_tools = array();
-		$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id=$course_id";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
+		
+		$sql = "SELECT links FROM %sfha_student_tools WHERE course_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
+		
+		if(count($row) > 0){
 			$student_tools = explode('|', $row['links']);
 		}
 		// removed the empty array value
