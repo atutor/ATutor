@@ -82,11 +82,11 @@ ATutor.course = ATutor.course || {};
 		menuImage.attr("src", menu_show_icon);
 		menuImage.attr("alt", ATutor.course.show);
 		menuImage.attr("title", ATutor.course.show);
-		
+
 		if (effect) {
 			jQuery("#side-menu").slideUp("slow");
 		} else {
-			jQuery("#side-menu").hide('slow');
+			jQuery("#side-menu").hide();
 		}
 			
 		ATutor.setcookie("side-menu", "none", 1);
