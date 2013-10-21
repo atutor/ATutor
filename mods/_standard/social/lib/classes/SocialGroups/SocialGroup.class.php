@@ -50,7 +50,7 @@ class SocialGroup {
 				$this->created_date		= $row['created_date'];
 				$this->last_updated		= $row['last_updated'];
 				$this->group_members	= $this->getGroupMembers();
-				//$this->group_activities = $this->getGroupActivities();
+				$this->group_activities = $this->getGroupActivities();
 				$this->is_valid			= true;
 			} else {
 				//group does not exist, most likely deleted
@@ -94,13 +94,13 @@ class SocialGroup {
 	 // THIS FUNCTION COULD NOT POSSIBLY WORK	 
 
 	 function getGroupActivities(){
-	 /*		 global $db;
+	 		 global $db;
 		 if (!empty($this->group_activities)){
 			return $this->group_activities;
 		}
 		 $activities = array();
 
-		 $sql = 'SELECT a,id AS id, a.title AS title FROM %ssocial_groups_activities g LEFT JOIN %ssocial_activities a ON g.activity_id=a.id WHERE g.group_id=%d';
+		 $sql = 'SELECT a.id AS id, a.title AS title FROM %ssocial_groups_activities g LEFT JOIN %ssocial_activities a ON g.activity_id=a.id WHERE g.group_id=%d';
 		 $rows_gactivities = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $this->group_id));
 
 		 if (count($rows_gactivities) > 0){
@@ -109,7 +109,7 @@ class SocialGroup {
 			 }
 		 }
 		 return $activities;
-		 */
+		 
 	 }
 
 	/**
