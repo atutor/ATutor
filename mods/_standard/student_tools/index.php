@@ -20,10 +20,8 @@ if(count($fha_student_tools) == "" ){
 	$msg->addInfo('NO_TOOLS_FOUND');
 }
 
-$sql = "SELECT home_view FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id = $_SESSION[course_id]";
-$result = mysql_query($sql,$db);
-$row= mysql_fetch_assoc($result);
-$home_view = $row['home_view'];
+
+
 
 // Enable drag and drop to reorder displayed modules when the module view mode is 
 // set to "detail view" and user role is instructor
