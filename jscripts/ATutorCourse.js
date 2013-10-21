@@ -86,7 +86,7 @@ ATutor.course = ATutor.course || {};
 		if (effect) {
 			jQuery("#side-menu").slideUp("slow");
 		} else {
-			jQuery("#side-menu").hide();
+			jQuery("#side-menu").hide('slow');
 		}
 			
 		ATutor.setcookie("side-menu", "none", 1);
@@ -101,7 +101,7 @@ ATutor.course = ATutor.course || {};
 		if (effect) {
 			jQuery("#side-menu").slideDown("slow");
 		} else {
-			jQuery("#side-menu").show();
+			jQuery("#side-menu").show('slow');
 		}
 		ATutor.setcookie("side-menu", "", 1);
 	};

@@ -70,7 +70,7 @@ jQuery(document).ready(function () {
 function remove_module(module)
 {
 	jQuery.post("'.AT_BASE_HREF.'move_module.php", { "remove":module, "from":"student_tools" }, function(data) {});
-	jQuery("div[id=\""+module.replace(/\//g,"-")+"\"]").remove();
+	jQuery("div[id=\""+module.replace(/\//g,"-")+"\"]").hide("slow");
 }
 
 </script>
