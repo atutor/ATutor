@@ -21,7 +21,9 @@ if(count($fha_student_tools) == "" ){
 }
 
 
-
+$sql = "SELECT home_view FROM %sfha_student_tools WHERE course_id = %d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
+$home_view = $row['home_view'];
 
 // Enable drag and drop to reorder displayed modules when the module view mode is 
 // set to "detail view" and user role is instructor
