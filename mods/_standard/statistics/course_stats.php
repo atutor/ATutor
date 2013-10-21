@@ -25,15 +25,17 @@ $month = intval($_GET['month']);
 	}
 
 	$days	= array();
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."course_stats WHERE course_id=$_SESSION[course_id] AND MONTH(login_date)=$month AND YEAR(login_date)=$year ORDER BY login_date ASC";
-	$result = mysql_query($sql, $db);
+
+	$sql	= "SELECT * FROM %scourse_stats WHERE course_id=%d AND MONTH(login_date)=%d AND YEAR(login_date)=%d ORDER BY login_date ASC";
+	$rows_stats = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'],$month, $year));
+	
 	//$today  = 1; /* we start on the 1st of the month */
 	$max_total_logins = 0;
 	$min_total_logins = (int) 99999999;
 	$total_logins = 0;
 
 	$empty = true;
-	while ($row = mysql_fetch_array($result)) {
+	foreach($rows_stats as $row){
 		$empty = false;
 		$row_day = substr($row['login_date'], 8, 2);
 
