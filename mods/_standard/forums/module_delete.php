@@ -16,14 +16,14 @@ function forums_delete($course) {
 
 			$sql	= "SELECT post_id FROM %sforums_threads WHERE forum_id=%d";
 			$rows_threads = queryDB($sql, array(TABLE_PREFIX, $forum_id));
+            if(count($rows_threads) > 0){
+                foreach($rows_threads as $row){
 
-            foreach($rows_threads as $row){
+                    $sql	 = "DELETE FROM %sforums_accessed WHERE post_id=%d";
+                    $result2 = queryDB($sql, array(TABLE_PREFIX, $row['post_id']));
 
-				$sql	 = "DELETE FROM %sforums_accessed WHERE post_id=%d";
-				$result2 = queryDB($sql, array(TABLE_PREFIX, $row['post_id']));
-
-			}
-
+                }
+            }
 			$sql	= "DELETE FROM %sforums_subscriptions WHERE forum_id=%d";
 			$result = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
@@ -42,22 +42,24 @@ function forums_delete($course) {
 		} else if ($row['cnt'] > 1) {
 			// this is a shared forum:
 			// debug('unsubscribe all the students who will not be able to access this forum anymore.');
-			$sql     = "SELECT course_id FROM ".TABLE_PREFIX."forums_courses WHERE forum_id=$forum[forum_id] AND course_id <> $course";
+			$sql     = "SELECT course_id FROM %sforums_courses WHERE forum_id=%d AND course_id <> %d";
 			$rows_cforums = queryDB($sql, array(TABLE_PREFIX, $forum['forum_id'], $course));
 			
-			foreach($rows_cforums as $row2){
-				$courses[] = $row2['course_id'];
+			if(count($rows_cforums) > 0){
+                foreach($rows_cforums as $row2){
+                    $courses[] = $row2['course_id'];
+                }
 			}
 			$courses_list = implode(',', $courses);
 
 			// list of all the students who are in other courses as well
 			$sql     = "SELECT member_id FROM %scourse_enrollment WHERE course_id IN (%s)";
 			$rows_enrolled = queryDB($sql, array(TABLE_PREFIX, $courses_list));	
-			
-			foreach($rows_enrolled as $row2){		
-				$students[] = $row2['member_id'];
-			}
-
+			if(count($rows_enrolled) > 0){
+                foreach($rows_enrolled as $row2){		
+                    $students[] = $row2['member_id'];
+                }
+            }
 			$students_list = implode(',', $students);
 			
 			if (isset($students_list)) {
@@ -65,10 +67,11 @@ function forums_delete($course) {
 				// remove the subscriptions
 				$sql	= "SELECT post_id FROM %sforums_threads WHERE forum_id=%d]";
 				$rows_threads = queryDB($sql, array(TABLE_PREFIX, $forum['forum_id']));
-				
-				foreach($rows_threads as $row2){
-					$sql	 = "DELETE FROM %sforums_accessed WHERE post_id=%d AND member_id NOT IN (%s)";
-					$result3 = queryDB($sql, array(TABLE_PREFIX, $row2['post_id'], $students_list));
+				if(count($rows_threads) > 0){
+                    foreach($rows_threads as $row2){
+                        $sql	 = "DELETE FROM %sforums_accessed WHERE post_id=%d AND member_id NOT IN (%s)";
+                        $result3 = queryDB($sql, array(TABLE_PREFIX, $row2['post_id'], $students_list));
+                    }
 				}
 
 				$sql	 = "DELETE FROM %sforums_subscriptions WHERE forum_id=%d AND member_id NOT IN (%d)";
