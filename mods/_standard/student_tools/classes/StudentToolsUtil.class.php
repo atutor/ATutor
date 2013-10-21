@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: ims_import.php 10319 2010-10-08 20:43:03Z hwong $
+// $Id:$
 
 /**
 * This class contains all the utility functions to set/get/clean progress 
