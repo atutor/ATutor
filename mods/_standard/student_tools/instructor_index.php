@@ -67,23 +67,27 @@ if (isset($_POST['submit'])) {
 		$main_links = '';
 	}
 	$main_links = $addslashes($main_links);
-	$sql    = "REPLACE INTO ".TABLE_PREFIX."fha_student_tools VALUES ($_SESSION[course_id], '$main_links', 1)";
-	$result = mysql_query($sql, $db);
 
-	$msg->addFeedback('STUDENT_TOOLS_SAVED');
+	$sql    = "REPLACE INTO %sfha_student_tools VALUES (%d, '%s', 1)";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $main_links));
+	
+	if($result > 0){
+	    $msg->addFeedback('STUDENT_TOOLS_SAVED');
         $return_url = $_SESSION['tool_origin']['url'];
         tool_origin('off');
 		header('Location: '.$return_url);
 		exit;
+	}
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $fha_student_tools = array();
 
-$sql = "SELECT links FROM ".TABLE_PREFIX."fha_student_tools WHERE course_id=$_SESSION[course_id] AND links <> ''";
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) {
+$sql = "SELECT links FROM %sfha_student_tools WHERE course_id=%d AND links <> ''";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
+
+if(count($row) > 0){
 	$fha_student_tools = explode('|', $row['links']);
 }
 
