@@ -74,6 +74,7 @@ global $system_courses, $_custom_css, $db;
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->theme_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
+    <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/jquery_mobile.css" type="text/css" media="print" />
 	<link rel="stylesheet" href="<?php echo $this->theme_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	    <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
@@ -102,10 +103,31 @@ global $system_courses, $_custom_css, $db;
 	jQuery.noConflict();
 	//-->
 	</script>
+    
     <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
     <?php echo $this->custom_css; ?>
     <?php echo $this->rtl_css; ?>
+<!-- switch scripts -->  
+	<script type='text/javascript' src="http://localhost/atutorgit/themes/default/jquery.switch.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="http://localhost/atutorgit/themes/default/jquery.switch.css">   
+<script type='text/javascript'>//<![CDATA[ 
+    $(function(){
+    $('#admin_switch').switchify({ on: "1", off: "0" });
+    $('#admin_switch').data('switch').bind('slide', function(e, type) {
+       $('ul').append('<li>Switching ' + type); 
+    });
 
+    // available options:
+    // 
+    // .switchify()
+    // => default (builds new switch widget)
+    // .switchify('update')
+    // => update the cached position of the widget
+    // .switchify({ on: "1", off: "0" })
+    // => specify the vals for "on" and "off"
+    });//]]>  
+
+</script>
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
