@@ -390,14 +390,15 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 
 function admin_switch(){ 
 	if($_SESSION['is_admin'] > 0) {?>
-<form>
-  <select id="admin_switch" name="hide_admin">
-  <option value="1">Manage</option>
-  <option value="0">Manage</option>
-    </select>
-</form>
-<ul></ul>
-
+<div class="admin_switch">	
+    <form>
+      <select id="admin_switch" name="hide_admin">
+      <option value="1">Manage</option>
+      <option value="0">Manage</option>
+        </select>
+    </form>
+    <ul></ul>
+</div>
 
 <!--		<ul id="admin_switch">
 			<?php
