@@ -75,7 +75,7 @@ if (isset($_GET['remove']) && isset($_GET['member_id'])){
 	//validate if this is the creator of group
 	if($_SESSION['member_id']==$grp_obj->getUser()){
 		$grp_obj->removeMember($member_id);
-		$msg->addFeedback('GRUOP_MEMBER_REMOVED');
+		$msg->addFeedback('GROUP_MEMBER_REMOVED');
 		header('Location: '.url_rewrite(AT_SOCIAL_BASENAME.'groups/list.php?id='.$id, AT_PRETTY_URL_IS_HEADER));
 		exit;
 	}

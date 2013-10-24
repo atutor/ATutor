@@ -390,7 +390,17 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 
 function admin_switch(){ 
 	if($_SESSION['is_admin'] > 0) {?>
-		<ul id="admin_switch">
+<div class="admin_switch">	
+    <form>
+      <select id="admin_switch" name="hide_admin">
+      <option value="1">Manage</option>
+      <option value="0">Manage</option>
+        </select>
+    </form>
+    <ul></ul>
+</div>
+
+<!--		<ul id="admin_switch">
 			<?php
 			if(isset($_GET['cid'])){
 			 	$tcid ="cid=".intval($_GET['cid']).SEP;
@@ -408,7 +418,7 @@ function admin_switch(){
 			<?php }else{ ?>
 				<li class="active right"><?php echo _AT('off'); ?></li>
 			<?php } ?>   
-		</ul>
+		</ul> -->
     <?php } ?>
 <?php } 
 function mobile_switch(){ 

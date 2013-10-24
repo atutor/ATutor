@@ -34,8 +34,8 @@ $_POST['note_taking'] == $addslashes($_POST['note_taking']);
 if (isset($_POST['submit'])) {
 	foreach ($_POST as $key => $value){
 		if($key != "submit"){
-		$sql    = "REPLACE INTO ".TABLE_PREFIX."config VALUES('$key', '$value')";
-		$result = mysql_query($sql, $db);
+		    $sql    = "REPLACE INTO %sconfig VALUES('%s', '%s')";
+		    $result = queryDB($sql, array(TABLE_PREFIX, $key, $value));
 		};
 	}
 		
