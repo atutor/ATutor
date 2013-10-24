@@ -17,11 +17,8 @@
 				if ($this->assign_to == '0'){ 
 					echo _AT('all_students'); 
 				} else { // name of group goes here
-					
-                                        $sql = "SELECT title FROM %sgroups_types WHERE type_id=%s AND course_id=%d";
-					$type_row = queryDB($sql, array(TABLE_PREFIX, $this->assign_to, $_SESSION['course_id']), TRUE);
-					echo $type_row['title'];
-                                        echo '<input type="hidden" name="assign_to" value="'.$this->assign_to.'" />';
+					echo $this->type_row['title'];
+                    echo '<input type="hidden" name="assign_to" value="'.$this->assign_to.'" />';
 				}
 				?>
 			<?php } else { // creating a new assignment
@@ -30,10 +27,7 @@
 					<option value="0" <?php if ($this->assign_to == '0'){ echo 'selected="selected"'; } ?> label="<?php  echo _AT('all_students'); ?>"><?php  echo _AT('all_students'); ?></option>
 					<optgroup label="<?php  echo _AT('specific_groups'); ?>">
 						<?php
-							$sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY title";
-							$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
-                                                        foreach($rows_group_types as $type_row){
-							//while ($type_row = mysql_fetch_assoc($result_assign)) {
+                            foreach($this->rows_group_types as $type_row){
 								echo '<option value="'.$type_row['type_id'].'" ';
 								if ($this->assign_to == $type_row['type_id']) {
 									echo 'selected="selected"';

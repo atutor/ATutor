@@ -243,10 +243,22 @@ if ($late_submit != '2'){
 	$onload .= ' disable_dates (true, \'_cutoff\');';
 }
 
+if($assign_to != 0) {
+    $sql = "SELECT title FROM %sgroups_types WHERE type_id=%s AND course_id=%d";
+    $type_row = queryDB($sql, array(TABLE_PREFIX, $assign_to, $_SESSION['course_id']), TRUE);
+}
+
+$sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY title";
+$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+
 require(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('id', $id);
 $savant->assign('title', $title);
 $savant->assign('assign_to', $assign_to);
+if($assign_to != 0) {
+    $savant->assign('type_row', $type_row);
+}
+$savant->assign('rows_group_types', $rows_group_types);
 $savant->assign('has_due_date', $has_due_date);
 $savant->assign('late_submit', $late_submit);
 
