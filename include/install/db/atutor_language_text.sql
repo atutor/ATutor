@@ -330,6 +330,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONFIRM_GOOD', '
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONTENT_DELETED', 'Content was successfully deleted', '2003-05-16 13:47:01', 'feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_CONTENT_DIR_CREATED', 'Content directory created successfully.', '2003-10-15 12:20:11', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_DEFAULT_FSIZE', 'The ''Max File Size'' was set to ''Default'' as the entered file size was either empty or negative.', '2003-10-14 16:13:40', 'course properites: file size was set to default');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_EMAIL_RECIPIENT_LIST', 'Course emails were successfully sent to %s', '2013-10-20 10:39:43', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_PREFS_SAVED', 'Course preferences were saved', '2003-05-16 13:47:01', 'feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_PROPERTIES', 'Course properties were successfully updated.', '2003-05-16 13:47:01', 'feedback msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_COURSE_REMOVED', 'Course was removed successfully.', '2003-05-16 13:47:01', 'feedback msg');
