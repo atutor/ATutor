@@ -111,23 +111,79 @@ global $system_courses, $_custom_css, $db;
 	<script type='text/javascript' src="http://localhost/atutorgit/themes/default/jquery.switch.min.js"></script>
     <link rel="stylesheet" type="text/css" href="http://localhost/atutorgit/themes/default/jquery.switch.css">   
 <script type='text/javascript'>//<![CDATA[ 
+    switch_cookie = $.cookie('showSubNav');
     $(function(){
+    // Handle the toggle switch
     $('#admin_switch').switchify({ on: "1", off: "0" });
-    $('#admin_switch').data('switch').bind('slide', function(e, type) {
-       $('ul').append('<li>Switching ' + type); 
+        $('#admin_switch').data('switch').bind('slide', function(e, type) {
+           $('ul').append('<li>Switching ' + type); 
+        });
     });
+    // Handle the hide/show of admin tools when toggle changes
+    $(document).ready(function(){
+        $( ".ui-switch" ).click(function(){
+            if($('#admin_switch').val() == 1){
+                //alert(switch_cookie);
+                $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
+                $(".menuedit").toggleClass("hidden").hide('slow');
+                $("#shortcuts").toggleClass("hidden").hide('slow');
+                $(".del-content-icon").toggleClass("hidden").hide('slow');
+                $.cookie('showSubNav', "off");                
+                return false; 
+            } else if($('#admin_switch').val() == 0) {
+                $("#subnavlistcontainer").toggleClass("show").show('slow');
+                $(".menuedit").toggleClass("show").show('slow');
+                $("#shortcuts").toggleClass("show").show('slow');
+                $(".del-content-icon").toggleClass("show").show('slow');      
+                $.cookie('showSubNav', "on");
+                return false;     
+            }
+        });
+         $( ".ui-switch" ).keypress(function(){
+            if($('#admin_switch').val() == 1){
+                //alert(switch_cookie);
+                $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
+                $(".menuedit").toggleClass("hidden").hide('slow');
+                $("#shortcuts").toggleClass("hidden").hide('slow');
+                $(".del-content-icon").toggleClass("hidden").hide('slow');
+                $.cookie('showSubNav', "off");                
+                return false; 
+            } else if($('#admin_switch').val() == 0) {
+                $("#subnavlistcontainer").toggleClass("show").show('slow');
+                $(".menuedit").toggleClass("show").show('slow');
+                $("#shortcuts").toggleClass("show").show('slow');
+                $(".del-content-icon").toggleClass("show").show('slow');      
+                $.cookie('showSubNav', "on");
+                return false;     
+            }
+        });       
+        
+        
+        /*
+        $(function(){
+         if(switch_cookie == '1'){
+         alert(switch_cookie);
+            $("#subnavlistcontainer").addClass("show").show('slow');
+            $(".menuedit").toggleClass("show").show('slow');
+            $("#shortcuts").toggleClass("show").show('slow');
+            $(".del-content-icon").toggleClass("show").show('slow');   
+            return false;                 
+        } else if(switch_cookie == '0'){
+        
+            $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
+            $(".menuedit").toggleClass("hidden").hide('slow');
+            $("#shortcuts").toggleClass("hidden").hide('slow');
+            $(".del-content-icon").toggleClass("hidden").hide('slow');  
+            return false;      
+        }  
+        });
+        */
 
-    // available options:
-    // 
-    // .switchify()
-    // => default (builds new switch widget)
-    // .switchify('update')
-    // => update the cached position of the widget
-    // .switchify({ on: "1", off: "0" })
-    // => specify the vals for "on" and "off"
-    });//]]>  
-
+       // alert(switch_cookie);
+    }); 
+    //]]>  
 </script>
+
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
