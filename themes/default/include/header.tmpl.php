@@ -74,8 +74,7 @@ global $system_courses, $_custom_css, $db;
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->theme_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/jquery_mobile.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $this->theme_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
+  	<link rel="stylesheet" href="<?php echo $this->theme_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	    <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<!--[if IE]>
@@ -108,79 +107,80 @@ global $system_courses, $_custom_css, $db;
     <?php echo $this->custom_css; ?>
     <?php echo $this->rtl_css; ?>
 <!-- switch scripts -->  
-	<script type='text/javascript' src="http://localhost/atutorgit/themes/default/jquery.switch.min.js"></script>
+	<script type='text/javascript' src="http://localhost/atutorgit/themes/default/jquery.switch.js"></script>
     <link rel="stylesheet" type="text/css" href="http://localhost/atutorgit/themes/default/jquery.switch.css">   
 <script type='text/javascript'>//<![CDATA[ 
-    switch_cookie = $.cookie('showSubNav');
-    $(function(){
-    // Handle the toggle switch
-    $('#admin_switch').switchify({ on: "1", off: "0" });
-        $('#admin_switch').data('switch').bind('slide', function(e, type) {
-           $('ul').append('<li>Switching ' + type); 
-        });
-    });
     // Handle the hide/show of admin tools when toggle changes
     $(document).ready(function(){
-        $( ".ui-switch" ).click(function(){
-            if($('#admin_switch').val() == 1){
-                //alert(switch_cookie);
+        if($.cookie("showSubNav") === "off"){
                 $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
                 $(".menuedit").toggleClass("hidden").hide('slow');
                 $("#shortcuts").toggleClass("hidden").hide('slow');
                 $(".del-content-icon").toggleClass("hidden").hide('slow');
-                $.cookie('showSubNav', "off");                
-                return false; 
-            } else if($('#admin_switch').val() == 0) {
+                $.cookie('showSubNav', "off", { expires: 30, path: '/' });
+        }
+        ATutor.switchView = function (viewFlag) {
+            if(viewFlag === "0"){
                 $("#subnavlistcontainer").toggleClass("show").show('slow');
                 $(".menuedit").toggleClass("show").show('slow');
                 $("#shortcuts").toggleClass("show").show('slow');
                 $(".del-content-icon").toggleClass("show").show('slow');      
-                $.cookie('showSubNav', "on");
-                return false;     
-            }
-        });
-         $( ".ui-switch" ).keypress(function(){
-            if($('#admin_switch').val() == 1){
-                //alert(switch_cookie);
+                $.cookie('showSubNav', "on", { expires: 30, path: '/' });
+                console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
+                console.log($('#admin_switch').val());
+               // console.log("type: " + type);
+            } else if(viewFlag === "1") {
                 $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
                 $(".menuedit").toggleClass("hidden").hide('slow');
                 $("#shortcuts").toggleClass("hidden").hide('slow');
                 $(".del-content-icon").toggleClass("hidden").hide('slow');
-                $.cookie('showSubNav', "off");                
-                return false; 
-            } else if($('#admin_switch').val() == 0) {
-                $("#subnavlistcontainer").toggleClass("show").show('slow');
-                $(".menuedit").toggleClass("show").show('slow');
-                $("#shortcuts").toggleClass("show").show('slow');
-                $(".del-content-icon").toggleClass("show").show('slow');      
-                $.cookie('showSubNav', "on");
-                return false;     
+                $.cookie('showSubNav', "off", { expires: 30, path: '/' });
+               console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
+               console.log($('#admin_switch').val());
+               // console.log("type: " + type);
             }
-        });       
+           //alert(viewFlag);
+            return false;     
+        };
         
+        // Handle the toggle switch
         
-        /*
-        $(function(){
-         if(switch_cookie == '1'){
-         alert(switch_cookie);
-            $("#subnavlistcontainer").addClass("show").show('slow');
-            $(".menuedit").toggleClass("show").show('slow');
-            $("#shortcuts").toggleClass("show").show('slow');
-            $(".del-content-icon").toggleClass("show").show('slow');   
-            return false;                 
-        } else if(switch_cookie == '0'){
-        
-            $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
-            $(".menuedit").toggleClass("hidden").hide('slow');
-            $("#shortcuts").toggleClass("hidden").hide('slow');
-            $(".del-content-icon").toggleClass("hidden").hide('slow');  
-            return false;      
-        }  
-        });
-        */
+        // Initialize the switch based on previously saved cookie value 
+        var initialStatus = ($.cookie('showSubNav') === "on") ? "0" : "1";
+       // console.log("initial status: " + initialStatus);
+      // alert(initialStatus);
+       // $('#admin_switch option[value="' + initialStatus + '"]').attr("selected", true);
 
-       // alert(switch_cookie);
+       // $('#admin_switch').switchify();
+        if( initialStatus === "0"){
+            $('#admin_switch').switchify();
+        }else if( initialStatus === "1"){
+            $('#admin_switch').switchify({ on: "1", off: "0" });
+        } else {
+            $('#admin_switch').switchify($.cookie('showSubNav'));
+        }
+      // $('#admin_switch').switchify({ on: "1", off: "0" });
+
+//         $('#admin_switch').val(($.cookie('showSubNav') === "on") ? "1" : "0");
+//       $('#admin_switch').data('switch').bind('switch:slide', function(e, type) {
+        
+        
+//        });
+        
+//         $('#admin_switch').data('switch').bind('switch:slide', function(e, type) {
+//            console.log("type: " + type);
+//             ATutor.switchView($('#admin_switch').val());
+//         });
+
+        $( ".ui-switch" ).bind("click keypress", function(){
+            ATutor.switchView($('#admin_switch').val());
+        });
+        
+       //ATutor.switchView($('#admin_switch').val());
+      // console.log("cookie:"+$.cookie("showSubNav"));
+       // console.log("switch val:"+$('#admin_switch').val());
     }); 
+
     //]]>  
 </script>
 
@@ -442,7 +442,8 @@ global $system_courses, $_custom_css, $db;
     
 
 	<?php if (count($this->sub_level_pages) > 0): ?>
-		<div id="subnavlistcontainer" role="navigation">
+		<div id="subnavlistcontainer" role="navigation"  aria-live="rude">
+		<a name="admin_tools" id="admin_tools" title="admin tools"></a>
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">

@@ -393,11 +393,14 @@ function admin_switch(){
 <div class="admin_switch">	
     <form>
       <select id="admin_switch" name="hide_admin">
-      <option value="1">Manage</option>
-      <option value="0">Manage</option>
+      <option value="1">Manage on</option>
+      <option value="0">Manage off</option>
         </select>
     </form>
     <ul></ul>
+    <div class="bypass">
+    <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#admin_tools">jump to admin tools</a>
+    </div>
 </div>
 
 <!--		<ul id="admin_switch">
