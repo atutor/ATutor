@@ -1566,8 +1566,8 @@ overflow:auto;
 
 }
 #contentcolumn {
-	padding-right: 1em;
-	padding-left: 1em;
+	padding-right: 1.5em;
+	padding-left: 1.5em;
 	overflow:auto;
 }
 
@@ -2608,13 +2608,14 @@ margin-top:-3.5em;
 }
 .del-content-icon{
 margin-left:.5em;
-	border:0;
+border:0;
 height:.9em;
 width:.9em;
 /*font-size:100%;*/
 }
 div.bypass{
 height:1px;
+float:left;
 }
 div.bypass a{
 font-size:0px;

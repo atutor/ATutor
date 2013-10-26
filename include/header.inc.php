@@ -390,38 +390,19 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 
 function admin_switch(){ 
 	if($_SESSION['is_admin'] > 0) {?>
-<div class="admin_switch">	
-    <form>
-      <select id="admin_switch" name="hide_admin">
-      <option value="1">Manage on</option>
-      <option value="0">Manage off</option>
-        </select>
-    </form>
-    <ul></ul>
-    <div class="bypass">
-    <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#admin_tools">jump to admin tools</a>
-    </div>
-</div>
+        <div class="admin_switch">	
+            <form>
+              <select id="admin_switch" name="hide_admin" title="switch">
+              <option value="1">Manage on</option>
+              <option value="0">Manage off</option>
+                </select>
+            </form>
+            <ul></ul>
 
-<!--		<ul id="admin_switch">
-			<?php
-			if(isset($_GET['cid'])){
-			 	$tcid ="cid=".intval($_GET['cid']).SEP;
-			} else if(isset($_GET['tcid'])){
-				$tcid ="cid=".intval($_GET['tcid']).SEP;
-			}
-			?>
-			<?php if($_SESSION['prefs']['PREF_HIDE_ADMIN'] > 0){ ?>
-				<li  class="active left"><?php echo _AT('manage'); ?></li>
-			<?php }else{ ?>
-				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $tcid; ?>hide_admin=1"><?php echo _AT('manage'); ?></a></li>
-			<?php } ?>
-			 <?php if($_SESSION['prefs']['PREF_HIDE_ADMIN']> 0){ ?>
-				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $tcid; ?>hide_admin=2"><?php echo _AT('off'); ?></a></li>
-			<?php }else{ ?>
-				<li class="active right"><?php echo _AT('off'); ?></li>
-			<?php } ?>   
-		</ul> -->
+        </div>
+        <div class="bypass">
+            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">jump to admin tools</a>
+        </div>
     <?php } ?>
 <?php } 
 function mobile_switch(){ 
