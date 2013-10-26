@@ -52,12 +52,13 @@ ATutor.course = ATutor.course || {};
          return false;
         });  
     /* Show/Hide Advanced Admin System Preferecnes, set cookie */
-        $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
+     /*   $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
             $("div.adv_toggle").click(function() {
             $(this).toggleClass("active").next().toggle();
             var new_value = $(".adv_opts").is(":visible") ? 'expanded' : 'collapsed';
             $.cookie('showTop', new_value);
         });
+        */
         ATutor.users.preferences.setStyles(
                      '<?php if(isset($_SESSION["prefs"]["PREF_BG_COLOUR"])){echo $_SESSION["prefs"]["PREF_BG_COLOUR"];} ?>',
                      '<?php if(isset($_SESSION["prefs"]["PREF_FG_COLOUR"])){ echo $_SESSION["prefs"]["PREF_FG_COLOUR"];} ?>',
