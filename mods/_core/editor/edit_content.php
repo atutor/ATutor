@@ -19,6 +19,7 @@ $get_related_glossary = true;
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_CONTENT);
+tool_origin();
 
 require(AT_INCLUDE_PATH.'lib/tinymce.inc.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');

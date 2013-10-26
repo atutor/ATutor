@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
-
+tool_origin();
 if (isset($_POST['move']) && isset($_POST['moved_cid'])) {
 	$arr = explode('_', key($_POST['move']), 2);
 	$new_pid = $arr[0];
