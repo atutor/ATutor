@@ -57,7 +57,11 @@ if (!isset($_GET['cid']) && !isset($_POST['cid'])) {
 } else {
 	$this->_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'edit_content_folder';
 }
-
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ANNOUNCEMENTS, TRUE)){	
+$this->_pages['mods/_core/editor/add_content.php']['title_var']    = 'add_content';
+$this->_pages['mods/_core/editor/add_content.php']['other_parent']   = 'index.php'; 
+	$this->_pages['index.php']['children']  = array('mods/_core/editor/add_content.php');
+}
 $this->_pages['mods/_core/editor/edit_content_folder.php']['parent']    = 'mods/_core/content/index.php';
 
 $this->_pages['mods/_core/editor/delete_content.php']['title_var'] = 'delete_content';

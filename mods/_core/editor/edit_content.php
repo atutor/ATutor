@@ -40,17 +40,25 @@ if ($_POST['close'] || $_GET['close']) {
     } else {
         $msg->addFeedback('CLOSED');
         if ($cid == 0) {
-            header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
-            exit;
+        
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
         }
     }
     
     if ($_REQUEST['cid'] == 0) {
-        header('Location: '.AT_BASE_HREF.'mods/_core/content/index.php');
-        exit;
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
     }
-    header('Location: '.$_base_path.url_rewrite('content.php?cid='.intval($_REQUEST['cid'])));
-    exit;
+    
+        $return_url = $_base_path.url_rewrite('content.php?cid='.intval($_REQUEST['cid'])); //$_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
+		exit;
 }
     
 $tabs = get_tabs();    
