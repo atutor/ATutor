@@ -39,6 +39,43 @@ ATutor.course = ATutor.course || {};
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
+                //Handle the hide admin tool switch
+                var initialStatus = ($.cookie('showSubNav') === "on") ? "1" : "0";
+                if(initialStatus === "0"){
+                    $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
+                    $(".menuedit").toggleClass("hidden").hide('slow');
+                    $("#shortcuts").toggleClass("hidden").hide('slow');
+                    $(".del-content-icon").toggleClass("hidden").hide('slow');   
+                }
+                ATutor.switchView = function (viewFlag) {
+                    if(viewFlag === "0"){
+                        $("#subnavlistcontainer").toggleClass("show").show('slow');
+                        $(".menuedit").toggleClass("show").show('slow');
+                        $("#shortcuts").toggleClass("show").show('slow');
+                        $(".del-content-icon").toggleClass("show").show('slow');      
+                        $.cookie('showSubNav', "on", { expires: 30, path: '/' });
+                        console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
+                        console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
+                    } else if(viewFlag === "1") {
+                        $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
+                        $(".menuedit").toggleClass("hidden").hide('slow');
+                        $("#shortcuts").toggleClass("hidden").hide('slow');
+                        $(".del-content-icon").toggleClass("hidden").hide('slow');
+                        $.cookie('showSubNav', "off", { expires: 30, path: '/' });
+                       console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
+                       console.log("switchval=" + $('#admin_switch').val() + ' initial=' + initialStatus);
+                    }
+                    return false;     
+                };
+                // Initialize the switch based on previously saved cookie value    
+                $('#admin_switch option[value="' + initialStatus + '"]').attr("selected", true);
+                $('#admin_switch').switchify();
+                $('#admin_switch').val(($.cookie('showSubNav') === "on") ? "1" : "0");
+                
+                $(".ui-switch").bind("click keypress", function(){
+                    ATutor.switchView($('#admin_switch').val());
+                });
+
     /* To automatically hide feedback message, uncomment */
   	/* $('#message').css('display', 'block').slideDown("slow");
             setTimeout(function() {
