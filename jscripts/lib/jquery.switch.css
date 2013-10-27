@@ -60,7 +60,7 @@ margin-top:-.5em;
   height: 25px; width: 25px;
   position: absolute;
   top: -2px; left: -12px;
-  background: url(images/jquery.switch.png);
+  background: url(../../images/jquery.switch.png);
   background-size: 25px 25px;
   
   -moz-border-radius: 15px;
