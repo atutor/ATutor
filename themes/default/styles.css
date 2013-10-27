@@ -3845,6 +3845,9 @@ font-weight:700;
         float:left;
         clear:both;
     }
+    .detail_switch{
+        margin-top:.5em;
+    }
     div#menutoggle {
         display:none;
         float:left;
