@@ -45,14 +45,18 @@ ATutor.course = ATutor.course || {};
                     $("#subnavlistcontainer").toggleClass("hidden").hide('slow');
                     $(".menuedit").toggleClass("hidden").hide('slow');
                     $("#shortcuts").toggleClass("hidden").hide('slow');
-                    $(".del-content-icon").toggleClass("hidden").hide('slow');   
+                    $(".del-content-icon").toggleClass("hidden").hide('slow'); 
+                    $(".detail_switch").toggleClass("hidden").hide('slow');  
+                    $(".buttonbox").toggleClass("hidden").hide('slow'); 
                 }
                 ATutor.switchView = function (viewFlag) {
                     if(viewFlag === "0"){
                         $("#subnavlistcontainer").toggleClass("show").show('slow');
                         $(".menuedit").toggleClass("show").show('slow');
                         $("#shortcuts").toggleClass("show").show('slow');
-                        $(".del-content-icon").toggleClass("show").show('slow');      
+                        $(".del-content-icon").toggleClass("show").show('slow');  
+                        $(".detail_switch").toggleClass("show").show('slow');  
+                        $(".buttonbox").toggleClass("show").show('slow');    
                         $.cookie('showSubNav', "on", { expires: 30, path: '/' });
                         console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
                         console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
@@ -61,6 +65,8 @@ ATutor.course = ATutor.course || {};
                         $(".menuedit").toggleClass("hidden").hide('slow');
                         $("#shortcuts").toggleClass("hidden").hide('slow');
                         $(".del-content-icon").toggleClass("hidden").hide('slow');
+                        $(".detail_switch").toggleClass("hidden").hide('slow');  
+                        $(".buttonbox").toggleClass("hidden").hide('slow');
                         $.cookie('showSubNav', "off", { expires: 30, path: '/' });
                        console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
                        console.log("switchval=" + $('#admin_switch').val() + ' initial=' + initialStatus);
