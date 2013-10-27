@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
-//TESTING SYNC GIT REPO
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //header('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
