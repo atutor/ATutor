@@ -107,8 +107,8 @@ global $system_courses, $_custom_css, $db;
     <?php echo $this->custom_css; ?>
     <?php echo $this->rtl_css; ?>
 <!-- switch scripts -->  
-	<script type='text/javascript' src="http://localhost/atutorgit/themes/default/jquery.switch.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://localhost/atutorgit/themes/default/jquery.switch.css">
+	<script type='text/javascript' src="<?php echo $this->base_path; ?>themes/default/jquery.switch.js"></script>
+    <link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>themes/default/jquery.switch.css">
     <?php 
     if($_SESSION['course_id'] > 0) {  ?>
         <script type='text/javascript'>//<![CDATA[ 
