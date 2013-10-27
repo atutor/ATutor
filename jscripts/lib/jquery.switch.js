@@ -276,7 +276,7 @@
       // slide to the "on" position
       $switch.bind('switch:slideon', function() {
         $switch.data('animating', true).removeAttr('data-dragging');
-        $master.stop().animate({ left: masterOn }, 'fast', function() {
+        $master.stop().animate({ left: masterOn }, 'slow', function() {
           $switch.data('animating', false).data('select').val(values.on);
           $switch.removeClass('off').addClass('on');
           mousedown = false; wait = false;
@@ -286,7 +286,7 @@
       // slide to the "off" position
       $switch.bind('switch:slideoff', function() {
         $switch.data('animating', true).removeAttr('data-dragging');
-        $master.stop().animate({ left: masterOff }, 'fast', function() {
+        $master.stop().animate({ left: masterOff }, 'slow', function() {
           $switch.data('animating', false).data('select').val(values.off);
           $switch.removeClass('on').addClass('off');
           mousedown = false; wait = false;
