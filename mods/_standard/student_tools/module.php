@@ -24,7 +24,7 @@ $this->_pages['mods/_standard/student_tools/index.php']['img']       = 'mods/_st
 $this->_pages['mods/_standard/student_tools/index.php']['text']      = _AT('student_tools_text');
 
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GRADEBOOK, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GRADEBOOK, TRUE)){	
 $this->_pages['mods/_standard/student_tools/instructor_index.php']['title_var'] = 'student_tools';
 $this->_pages['mods/_standard/student_tools/instructor_index.php']['parent']    = 'mods/_standard/student_tools/index.php';
 $this->_pages['mods/_standard/student_tools/index.php']['children']  = array('mods/_standard/student_tools/instructor_index.php');

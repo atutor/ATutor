@@ -90,7 +90,7 @@ $this->_pages['mods/_standard/gradebook/grade_scale_delete.php']['parent']    = 
 
 $this->_pages['mods/_standard/gradebook/my_gradebook.php']['text']      = _AT('gradebook_text');
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GRADEBOOK, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GRADEBOOK, TRUE)){	
     $this->_pages['mods/_standard/gradebook/gradebook_add_tests.php']['title_var']    = 'add_tests';
     $this->_pages['mods/_standard/gradebook/gradebook_add_tests.php']['other_parent']    = 'mods/_standard/gradebook/my_gradebook.php';
     $this->_pages['mods/_standard/gradebook/my_gradebook.php']['children']  = array('mods/_standard/gradebook/gradebook_add_tests.php', 'mods/_standard/gradebook/update_gradebook.php', 'mods/_standard/gradebook/import_export_external_marks.php', 'mods/_standard/gradebook/edit_marks.php', 'mods/_standard/gradebook/grade_scale.php');

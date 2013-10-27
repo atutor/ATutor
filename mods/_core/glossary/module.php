@@ -39,7 +39,7 @@ $this->_pages['mods/_core/glossary/tools/index.php']['avail_in_mobile']   = fals
 	$this->_pages['mods/_core/glossary/tools/delete.php']['title_var']  = 'delete_glossary';
 	$this->_pages['mods/_core/glossary/tools/delete.php']['parent'] = 'mods/_core/glossary/tools/index.php';
 	
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GLOSSARY, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GLOSSARY, TRUE)){	
     $this->_pages['mods/_core/glossary/tools/add.php']['title_var'] = 'add_glossary';
    $this->_pages['mods/_core/glossary/tools/add.php']['other_parent']    = 'mods/_core/glossary/index.php';
    $this->_pages['mods/_core/glossary/index.php']['children']  = array('mods/_core/glossary/tools/add.php');

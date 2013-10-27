@@ -164,7 +164,7 @@ if (isset($top_num) && $top_num != (int) $top_num) {
 }
 // used by header.inc.php
 $_tool_shortcuts = $contentManager->getToolShortcuts($content_row);
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CONTENT, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CONTENT, TRUE)){	
     $_pages['mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid']]['title_var'] = 'edit_content';
     $_pages['mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid']]['other_parent']   = 'content.php';
 	$_pages['mods/_core/editor/add_content.php']['title_var'] = 'add_content';

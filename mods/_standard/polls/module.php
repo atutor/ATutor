@@ -31,7 +31,7 @@ $this->_pages['mods/_standard/polls/tools/edit.php']['parent']    = 'mods/_stand
 $this->_pages['mods/_standard/polls/tools/delete.php']['title_var'] = 'delete_poll';
 $this->_pages['mods/_standard/polls/tools/delete.php']['parent']    = 'mods/_standard/polls/tools/index.php';
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_POLLS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_POLLS, TRUE)){	
 	$this->_pages['mods/_standard/polls/tools/add.php']['title_var'] = 'add_poll';
 	$this->_pages['mods/_standard/polls/tools/add.php']['other_parent']    = 'mods/_standard/polls/index.php';
     $this->_pages['mods/_standard/polls/index.php']['children']  = array('mods/_standard/polls/tools/add.php');

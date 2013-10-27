@@ -164,41 +164,7 @@ if (empty($_top_level_pages)) {
 	}
 }
 
-/****
-Toggle the hide_admin Session variable to turn admin tools on or off
-****/
 
-if($_GET['hide_admin'] == '2'){
-	global $msg;
-	//unset($_SESSION['hide_admin']);
-	if(isset($_GET['cid'])){
-		$tcid ="?cid=".intval($_GET['cid']).SEP;
-		$cid = intval($_GET['cid']);
-	} else if(isset($_GET['tcid'])){
-		$tcid ="?cid=".intval($_GET['tcid']).SEP;
-		$cid = intval($_GET['cid']);
-	}
-	unset($_SESSION['prefs']['PREF_HIDE_ADMIN']);
-	save_prefs();
-	$msg->addFeedback('TOOLS_OFF');
-	header('Location:'.$_SERVER['PHP_SELF'].$tcid);
-	exit;
-} else if($_GET['hide_admin'] == '1') {
-	global $msg;
-	if(isset($_GET['cid'])){
-		$tcid ="?cid=".intval($_GET['cid']).SEP;
-		$cid = intval($_GET['cid']);
-	} else if(isset($_GET['tcid'])){
-		$tcid ="?cid=".intval($_GET['tcid']).SEP;
-		$cid = intval($_GET['cid']);
-	}
-	//$_SESSION['hide_admin'] = 1;
-	$_SESSION['prefs']['PREF_HIDE_ADMIN'] = 1;
-	save_prefs();
-	$msg->addFeedback('TOOLS_ON');
-	header('Location:'.$_SERVER['PHP_SELF'].$tcid);
-	exit;
-}
 /****
 Toggle to switch between mobile and responsive themes
 ****/

@@ -42,7 +42,7 @@ if (isset($_REQUEST['oid'])) {
 $_pages['mods/_standard/blogs/delete_comment.php']['title_var'] = 'delete';
 
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GROUPS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GROUPS, TRUE)){	
 	$this->_pages['mods/_core/groups/create.php']['title_var'] = 'create_groups';
 	$this->_pages['mods/_core/groups/create.php']['parent']    = 'mods/_core/groups/index.php';
     $this->_pages['mods/_standard/blogs/index.php']['children']  = array('mods/_core/groups/create.php');

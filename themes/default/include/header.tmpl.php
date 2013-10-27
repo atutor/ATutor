@@ -156,18 +156,6 @@ global $system_courses, $_custom_css, $db;
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
-<?php
-/*
-debug($_COOKIE['showSubNav']);
-if($_COOKIE['showSubNav'] == 'on'){
-    $_SESSION['prefs']['PREF_HIDE_ADMIN'] = 1;
-
-} else if($_COOKIE['showSubNav'] == 'off'){
-    unset($_SESSION['prefs']['PREF_HIDE_ADMIN']);
-}
-*/
-
-?>
 <div id="top-bar">
 	
 <div class="bypass">
@@ -352,7 +340,7 @@ if($_COOKIE['showSubNav'] == 'on'){
 			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
       </div>
 		  <?php endif; ?>
-      <?php if (isset($this->shortcuts) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1): ?>
+      <?php if (isset($this->shortcuts)): ?>
       <div id="shortcuts">
 	      <ul>
 		      <?php foreach ($this->shortcuts as $link): ?>

@@ -90,7 +90,7 @@ $this->_pages['mods/_standard/reading_list/index_instructor.php']['avail_in_mobi
 	$this->_pages['mods/_standard/reading_list/delete_resource.php']['parent']    = 'mods/_standard/reading_list/index_instructor.php';
 
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_READING_LIST, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_READING_LIST, TRUE)){	
 	$this->_pages['mods/_standard/reading_list/display_resources.php']['title_var'] = 'rl_create_resources';
 	$this->_pages['mods/_standard/reading_list/display_resources.php']['other_parent']    = 'mods/_standard/reading_list/index.php';
     $this->_pages['mods/_standard/reading_list/index_instructor.php']['title_var'] = 'reading_list';

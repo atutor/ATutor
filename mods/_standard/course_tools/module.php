@@ -15,7 +15,7 @@ $this->_pages['mods/_standard/course_tools/modules.php']['avail_in_mobile']   = 
 	$this->_pages['mods/_standard/course_tools/side_menu.php']['guide']     = 'instructor/?p=side_menu.php';
 	$this->_pages['mods/_standard/course_tools/side_menu.php']['avail_in_mobile']   = true;
 	
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_STYLES, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_STYLES, TRUE)){	
     $this->_pages['mods/_standard/course_tools/modules.php']['title_var'] = 'course_tools';
     $this->_pages['mods/_standard/course_tools/modules.php']['other_parent']    = 'index.php';
     $this->_pages['index.php']['children']  = array('mods/_standard/course_tools/modules.php');

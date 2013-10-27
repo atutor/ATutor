@@ -44,7 +44,7 @@ $this->_pages['mods/_standard/assignments/index_instructor.php']['children'] =
        array_merge(is_array(isset($this->_pages['mods/_standard/assignments/index_instructor.php']['children'])) ? $this->_pages['mods/_standard/assignments/index_instructor.php']['children'] : array(), array('mods/_standard/assignment_dropbox/index.php'));
 }
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ASSIGNMENTS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ASSIGNMENTS, TRUE)){	
 	$this->_pages['mods/_standard/assignments/add_assignment.php']['title_var'] = 'add_assignment';
 	$this->_pages['mods/_standard/assignments/add_assignment.php']['other_parent']    = 'mods/_standard/assignment_dropbox/index.php';
     $this->_pages['mods/_standard/assignments/index_instructor.php']['title_var'] = 'assignments';
