@@ -52,10 +52,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
-
-$sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY start_date DESC";
-$result	= mysql_query($sql, $db);
-$num_tests = mysql_num_rows($result);
+$sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue FROM %stests WHERE course_id=%d ORDER BY start_date DESC";
+$rows_tests	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'] ));
+$num_tests = count($rows_tests);
 
 $cols=6;
 ?>
@@ -88,7 +87,8 @@ $cols=6;
 </tr>
 </thead>
 
-<?php if ($num_tests): ?>
+<?php if ($num_tests > 0):
+//if ($num_tests): ?>
 	<tfoot>
 	<tr>
 		<td colspan="7">
@@ -108,7 +108,8 @@ $cols=6;
 	</tfoot>
 	<tbody>
 
-	<?php while ($row = mysql_fetch_assoc($result)) : ?>
+	<?php 
+	foreach($rows_tests as $row){ ?>
 		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
 			<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
@@ -136,35 +137,36 @@ $cols=6;
 			?></td>
 			<td><?php
 				//get # marked submissions
-				$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id'];
-				$result_sub	= mysql_query($sql_sub, $db);
-				$row_sub = mysql_fetch_assoc($result_sub);
+				$sql_sub = "SELECT COUNT(*) AS sub_cnt FROM %stests_results WHERE status=1 AND test_id=%d";
+				$row_sub = queryDB($sql_sub, array(TABLE_PREFIX, $row['test_id']), TRUE);
+
 				echo $row_sub['sub_cnt'].' '._AT('submissions').', ';
 
 				//get # submissions
-				$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id']." AND final_score=''";
-				$result_sub	= mysql_query($sql_sub, $db);
-				$row_sub = mysql_fetch_assoc($result_sub);
+				$sql_sub = "SELECT COUNT(*) AS marked_cnt FROM %stests_results WHERE status=1 AND test_id=%d AND final_score=''";
+				$row_sub = queryDB($sql_sub, array(TABLE_PREFIX, $row['test_id']), TRUE);
+
 				echo $row_sub['marked_cnt'].' '._AT('unmarked');
 				?>
 			</td>
 			<td><?php
 				//get assigned groups
-				$sql_sub = "SELECT G.title FROM ".TABLE_PREFIX."groups G INNER JOIN ".TABLE_PREFIX."tests_groups T USING (group_id) WHERE T.test_id=".$row['test_id'];
-				$result_sub	= mysql_query($sql_sub, $db);
-				if (mysql_num_rows($result_sub) == 0) {
+				$sql_sub = "SELECT G.title FROM %sgroups G INNER JOIN %stests_groups T USING (group_id) WHERE T.test_id=%d";
+				$rows_groups	= queryDB($sql_sub, array(TABLE_PREFIX, TABLE_PREFIX, $row['test_id']));
+
+                if(count($rows_groups) == 0){
 					echo _AT('everyone');
 				} else {
 					$assigned_groups = '';
-					while ($row_sub = mysql_fetch_assoc($result_sub)) {
-						$assigned_groups .= $row_sub['title'].', ';
+					foreach($rows_groups as $row_groups){
+						$assigned_groups .= $row_groups['title'].', ';
 					}
 					echo substr($assigned_groups, 0, -2);
 				}				
 				?>
 			</td>
 		</tr>
-	<?php endwhile; ?>
+	<?php } ?>
 <?php else: ?>
 	<tbody>
 	<tr>
