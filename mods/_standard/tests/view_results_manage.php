@@ -29,10 +29,10 @@ $_pages['mods/_standard/tests/view_results_manage.php']['parent'] = 'mods/_stand
 $_pages['mods/_standard/tests/results.php?tid='.$tid]['title_var'] = 'submissions';
 $_pages['mods/_standard/tests/results.php?tid='.$tid]['parent'] = 'mods/_standard/tests/index.php';
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-$result	= mysql_query($sql, $db);
+$sql	= "SELECT * FROM %stests WHERE test_id=%d AND course_id=%d";
+$row	= queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
 
-if (!($row = mysql_fetch_array($result))){
+if(count($row) == 0){
 	require(AT_INCLUDE_PATH.'header.inc.php');
 	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
@@ -67,20 +67,25 @@ if ($_POST['cancel']) {
 				$final_score += $score;
 			}
 
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET score='$score' WHERE result_id=$rid AND question_id=$qid";
-			$result	= mysql_query($sql, $db);
+			$sql	= "UPDATE %stests_answers SET score='%s' WHERE result_id=%d AND question_id=%d";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $score, $rid, $qid));
 		}
 	}
 
-	if ($set_empty_final_score)
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=NULL, date_taken=date_taken, end_time=end_time WHERE result_id=$rid AND status=1";
-	else
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score='$final_score', date_taken=date_taken, end_time=end_time WHERE result_id=$rid AND status=1";
-	$result	= mysql_query($sql, $db);
+	if ($set_empty_final_score){
+		$sql	= "UPDATE %stests_results SET final_score=NULL, date_taken=date_taken, end_time=end_time WHERE result_id=%d AND status=1";
+	    $result	= queryDB($sql, array(TABLE_PREFIX, $rid));
+	} else {
+		$sql	= "UPDATE %stests_results SET final_score='%s', date_taken=date_taken, end_time=end_time WHERE result_id=%d AND status=1";
+	    $result	= queryDB($sql, array(TABLE_PREFIX, $final_score, $rid));
 
+    }
+
+  if($result > 0){
 	$msg->addFeedback('RESULTS_UPDATED');
 	header('Location: results.php?tid='.$tid);
 	exit;
+    }
 }
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
@@ -94,10 +99,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
 
-$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering";
-$result	= mysql_query($sql, $db);
+$sql	= "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering";
+$rows_questions	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $tid));
 
-if (mysql_num_rows($result) == 0) {
+if(count($rows_questions) == 0){
 	echo '<p>'._AT('no_questions').'</p>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -111,11 +116,13 @@ if (mysql_num_rows($result) == 0) {
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo AT_print($test_title, 'tests.title'); ?></legend>
 
-	<?php while ($row = mysql_fetch_assoc($result)) {
+	<?php 
+	foreach($rows_questions as $row){
 		/* get the results for this question */
-		$sql		= "SELECT C.* FROM ".TABLE_PREFIX."tests_answers C WHERE C.result_id=$rid AND C.question_id=$row[question_id]";
-		$result_a	= mysql_query($sql, $db);
-		if ($answer_row = mysql_fetch_assoc($result_a)) {
+		$sql		= "SELECT C.* FROM %stests_answers C WHERE C.result_id=%d AND C.question_id=%d";
+		$answer_row	= queryDB($sql, array(TABLE_PREFIX, $rid, $row['question_id']), TRUE);
+		
+		if(count($answer_row) > 0){
 			$obj = TestQuestions::getQuestion($row['type']);
 			$obj->displayResult($row, $answer_row, TRUE);
 
