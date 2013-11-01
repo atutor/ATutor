@@ -120,7 +120,7 @@ function test_question_qti_export_v2p1($question_ids) {
     require(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
     require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');    // for XML_HTMLSax
 
-    global $savant, $db, $system_courses, $languageManager;
+    global $savant, $system_courses, $languageManager;
 
     $course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
     $courseLanguage =& $languageManager->getLanguage($course_language);
@@ -135,9 +135,10 @@ function test_question_qti_export_v2p1($question_ids) {
 
     $question_ids_delim = implode(',',$question_ids);
 
-    $sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
-    $result = mysql_query($sql, $db);
-    while ($row = mysql_fetch_assoc($result)) {
+    $sql = "SELECT * FROM %stests_questions WHERE course_id=%d AND question_id IN(%s)";
+    $rows_questions = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $question_ids_delim));
+    
+    foreach($rows_questions as $row){
         $obj = TestQuestions::getQuestion($row['type']);
         $xml = $obj->exportQTI($row, $course_language_charset, '2.1');
         $local_dependencies = array();
@@ -187,7 +188,7 @@ function test_question_qti_export($question_ids) {
     require(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
     require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');    // for XML_HTMLSax
 
-    global $savant, $db, $system_courses, $languageManager;
+    global $savant, $system_courses, $languageManager;
 
     $course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
     $courseLanguage =& $languageManager->getLanguage($course_language);
@@ -202,9 +203,10 @@ function test_question_qti_export($question_ids) {
 
     $question_ids_delim = implode(',',$question_ids);
 
-    $sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
-    $result = mysql_query($sql, $db);
-    while ($row = mysql_fetch_assoc($result)) {
+    $sql = "SELECT * FROM %stests_questions WHERE course_id=%d AND question_id IN(%s)";
+    $rows_questions = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $question_ids_delim));
+    
+    foreach($rows_questions as $row){
         $obj = TestQuestions::getQuestion($row['type']);
         $local_xml = '';
         $local_xml = $obj->exportQTI($row, $course_language_charset, '1.2.1');
@@ -263,7 +265,7 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
     require_once(AT_INCLUDE_PATH.'classes/zipfile.class.php'); // for zipfile
     require_once(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');    // for XML_HTMLSax
     require_once(AT_INCLUDE_PATH.'lib/html_resource_parser.inc.php'); // for get_html_resources()
-    global $savant, $db, $system_courses, $languageManager, $test_zipped_files, $test_files, $use_cc;
+    global $savant, $system_courses, $languageManager, $test_zipped_files, $test_files, $use_cc;
     global $course_id;
 
     $course_id = $_SESSION['course_id'];
@@ -271,12 +273,11 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
     $course_language = $system_courses[$_SESSION['course_id']]['primary_language'];
     
     if ($course_language == '') {  // when oauth export into Transformable
-        $sql = "SELECT course_id, title, primary_language FROM ".TABLE_PREFIX."courses
-                 WHERE course_id = (SELECT course_id FROM ".TABLE_PREFIX."tests
-                                     WHERE test_id=".$tid.")";
-        $result    = mysql_query($sql, $db);
-        $course_row = mysql_fetch_assoc($result);
-        
+         $sql = "SELECT course_id, title, primary_language FROM %scourses
+                 WHERE course_id = (SELECT course_id FROM %stests
+                                     WHERE test_id=%d)";
+        $course_row    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+     
         $course_language = $course_row['primary_language'];
         $course_id = $course_row['course_id'];
         $course_title = $course_row['title'];
@@ -306,11 +307,12 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 
     //TODO: Merge the following 2 sqls together.
     //Randomized or not, export all the questions that are associated with it.
-    $sql    = "SELECT TQ.question_id, TQA.weight FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$course_id AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
-    $result    = mysql_query($sql, $db);
-    $question_ids = array();
 
-    while (($question_row = mysql_fetch_assoc($result)) != false){
+    $sql    = "SELECT TQ.question_id, TQA.weight FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+    $row_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid));
+
+    $question_ids = array();
+    foreach($row_questions as $question_row){
         $question_ids[] = $question_row['question_id'];
     }
 
@@ -321,11 +323,11 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
 
     $question_ids_delim = implode(',',$question_ids);    
 
-    //$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";
-    $sql = "SELECT TQ.*, TQA.weight, TQA.test_id FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=$tid AND TQ.question_id IN($question_ids_delim) ORDER BY TQA.ordering, TQA.question_id";
-
-    $result = mysql_query($sql, $db);
-    while ($row = mysql_fetch_assoc($result)) {
+    //$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND question_id IN($question_ids_delim)";   
+    $sql = "SELECT TQ.*, TQA.weight, TQA.test_id FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQA.test_id=%d AND TQ.question_id IN(%s) ORDER BY TQA.ordering, TQA.question_id";
+    $rows_tests = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid, $question_ids_delim));
+    
+    foreach($rows_tests as $row){
         $obj = TestQuestions::getQuestion($row['type']);
         $local_xml = '';
         $local_xml = $obj->exportQTI($row, $course_language_charset, '1.2.1');
@@ -347,9 +349,8 @@ function test_qti_export($tid, $test_title='', $zipfile = null){
     $xml = trim($xml);
 
     //get test title
-    $sql = "SELECT title, num_takes FROM ".TABLE_PREFIX."tests WHERE test_id = $tid";
-    $result = mysql_query($sql, $db);
-    $row = mysql_fetch_array($result);
+    $sql = "SELECT title, num_takes FROM %stests WHERE test_id = %d";
+    $row = queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
 
     //TODO: wrap around xml now
     $savant->assign('xml_content', $xml);
@@ -741,7 +742,7 @@ class OrderingQuestion extends AbstractTestQuestion {
 
     //QTI Import Ordering Question
     function importQTI($question){
-        global $msg, $db;
+        global $msg;
 
         if ($question['question'] == ''){
             $missing_fields[] = _AT('question');
@@ -811,9 +812,9 @@ class OrderingQuestion extends AbstractTestQuestion {
 
             $sql = vsprintf(AT_SQL_QUESTION_ORDERING, $sql_params);
 
-            $result    = mysql_query($sql, $db);
-            if ($result==true){
-                return mysql_insert_id();
+            $result    = queryDB($sql, array());
+            if($result > 0){
+                return at_insert_id();
             }            
         }
     }
@@ -867,7 +868,7 @@ class TruefalseQuestion extends AbstracttestQuestion {
 
     //QTI Import True/False Question
     function importQTI($question){
-        global $msg, $db;
+        global $msg;
 
         if ($question['question'] == ''){
             $msg->addError(array('EMPTY_FIELDS', _AT('statement')));
@@ -893,9 +894,10 @@ class TruefalseQuestion extends AbstracttestQuestion {
                                     'DEFAULT');
 
             $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);
-            $result    = mysql_query($sql, $db);
-            if ($result==true){
-                return mysql_insert_id();
+
+            $result    = queryDB($sql, array());
+            if($result > 0){
+                return at_insert_id();
             }            
         }
     }
@@ -965,7 +967,7 @@ class LikertQuestion extends AbstracttestQuestion {
 
     //QTI Import Likert Question
     function importQTI($question){
-        global $msg, $db;
+        global $msg;
 
         $empty_fields = array();
         if ($question['question'] == ''){
@@ -1023,9 +1025,10 @@ class LikertQuestion extends AbstracttestQuestion {
                                     $question['answer'][9]);
 
             $sql = vsprintf(AT_SQL_QUESTION_LIKERT, $sql_params);
-            $result    = mysql_query($sql, $db);
-            if ($result==true){
-                return mysql_insert_id();
+
+            $result    = queryDB($sql, array());
+            if($result > 0){
+                return at_insert_id();
             }
         }
     }
@@ -1073,7 +1076,7 @@ class LongQuestion extends AbstracttestQuestion {
 
     //QTI Import Open end/long Question
     function importQTI($question){
-        global $msg, $db;
+        global $msg;
 
         if ($question['question'] == ''){
 //            $msg->addError(array('EMPTY_FIELDS', _AT('question')));
@@ -1096,9 +1099,10 @@ class LongQuestion extends AbstracttestQuestion {
 
             $sql = vsprintf(AT_SQL_QUESTION_LONG, $sql_params);
 
-            $result    = mysql_query($sql, $db);
-            if ($result==true){
-                return mysql_insert_id();
+            $result    = queryDB($sql, array());
+            
+            if ($result > 0){
+                return at_insert_id();
             }
         }
     }
@@ -1229,7 +1233,7 @@ class MatchingQuestion extends AbstracttestQuestion {
 
     //QTI Import Matching Question
     function importQTI($question){
-        global $msg, $db;
+        global $msg;
 
         if (!is_array($question['answer'])){
             $temp = $question['answer'];
@@ -1295,9 +1299,9 @@ class MatchingQuestion extends AbstracttestQuestion {
 
             $sql = vsprintf(AT_SQL_QUESTION_MATCHINGDD, $sql_params);
 
-            $result    = mysql_query($sql, $db);
-            if ($result==true){
-                return mysql_insert_id();
+            $result    = queryDB($sql, array());
+            if ($result > 0){
+                return at_insert_id();
             }
         }
     }
@@ -1399,7 +1403,7 @@ class MultichoiceQuestion extends AbstracttestQuestion {
 
     //QTI Import Multiple Choice Question
     function importQTI($question){
-        global $msg, $db;
+        global $msg;
 
         if ($question['question'] == ''){
             $msg->addError(array('EMPTY_FIELDS', _AT('question')));
@@ -1454,9 +1458,10 @@ class MultichoiceQuestion extends AbstracttestQuestion {
             $sql = vsprintf(AT_SQL_QUESTION_MULTI, $sql_params);
 //debug($sql);
 //exit;
-            $result    = mysql_query($sql, $db);
-            if ($result==true){
-                return mysql_insert_id();
+
+            $result    = queryDB($sql, array());
+            if ($result > 0){
+                return at_insert_id();
             }
         }
     }
@@ -1504,7 +1509,7 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
     //QTI Import multianswer Question
     function importQTI($question){
-        global $msg, $db;
+        global $msg;
 
         if ($question['question'] == ''){
             $msg->addError(array('EMPTY_FIELDS', _AT('question')));
@@ -1590,9 +1595,9 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
                 $sql = vsprintf(AT_SQL_QUESTION_MULTIANSWER, $sql_params);
 
-                $result    = mysql_query($sql, $db);
-                if ($result==true){
-                    return mysql_insert_id();
+                $result    = queryDB($sql,array());
+                if ($result > 0){
+                    return at_insert_id();
                 }
             }
         }
