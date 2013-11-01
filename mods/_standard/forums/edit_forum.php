@@ -16,13 +16,16 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_FORUMS);
+tool_origin();
 
 require (AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
-	header('Location: '.AT_BASE_HREF.'mods/_standard/forums/index.php');
-	exit;
+    $return_url = $_SESSION['tool_origin']['url'];
+    tool_origin('off');
+    header('Location: '.$return_url);
+    exit;
 } else if (isset($_POST['edit_forum'])) {
 	$_POST['fid'] = intval($_POST['fid']);
 
@@ -40,7 +43,9 @@ if (isset($_POST['cancel'])) {
 			$msg->addError('FORUM_NO_EDIT_SHARE');
 		}
 		
-		header('Location: '.AT_BASE_HREF.'mods/_standard/forums/index.php');
+        $return_url = $_SESSION['tool_origin']['url'];
+        tool_origin('off');
+		header('Location: '.$return_url);
 		exit;
 	}
 }
