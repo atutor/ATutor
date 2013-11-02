@@ -254,7 +254,7 @@ function assemble_remedial_content($student_id, $test_id) {
         $msg->addError('AT_ERROR_UNKNOWN');
         return false;
     }
-        debug($rows_remedial);
+
     foreach($rows_remedial as $row){
         array_push($resultArray, $row['remedial_content']);
     }
