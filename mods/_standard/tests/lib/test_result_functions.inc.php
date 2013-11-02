@@ -18,43 +18,42 @@ $_custom_head .= '<script type="text/javascript" src="'.AT_BASE_HREF.'mods/_stan
 // if a valid user, then can come from the DB, otherwise
 // this might come from _POST or even _SESSION
 function get_test_result_id($test_id, &$max_pos) {
-    global $db;
 
     if ($_SESSION['member_id']) {
-        $sql    = "SELECT result_id, max_pos FROM ".TABLE_PREFIX."tests_results WHERE test_id=$test_id AND member_id='{$_SESSION['member_id']}' AND status=0";
+        $sql    = "SELECT result_id, max_pos FROM %stests_results WHERE test_id=%d AND member_id=%d AND status=0";
+        $rows_results    = queryDB($sql, array(TABLE_PREFIX, $test_id, $_SESSION['member_id']), TRUE);
     } else if ($_SESSION['test_result_id']) {
         // guest with on-going test
-        $sql    = "SELECT result_id, max_pos FROM ".TABLE_PREFIX."tests_results WHERE test_id=$test_id AND result_id={$_SESSION['test_result_id']} AND status=0";
+        $sql    = "SELECT result_id, max_pos FROM %stests_results WHERE test_id=%d AND result_id=%d AND status=0";
+        $rows_results    = queryDB($sql, array(TABLE_PREFIX, $test_id, $_SESSION['test_result_id']), TRUE);
     } else {
         return 0; // new guest
     }
 
-    $result    = mysql_query($sql, $db);
-    if ($row = mysql_fetch_assoc($result)) {
-        $max_pos = $row['max_pos'];
-        return $row['result_id'];
+   if(count($rows_results) > 0){
+        $max_pos = $rows_results['max_pos'];
+        return $rows_results['result_id'];
     }
 
     return 0;
 }
 
 function init_test_result_questions($test_id, $is_random, $num_questions, $mid) {
-    global $db;
 
-    $sql    = "INSERT INTO ".TABLE_PREFIX."tests_results VALUES (NULL, $test_id, '".$mid."', NOW(), '', 0, NOW(), 0)";
-    $result = mysql_query($sql, $db);
-    $result_id = mysql_insert_id($db);
-
+    $sql    = "INSERT INTO %stests_results VALUES (NULL, %d, '%s', NOW(), '', 0, NOW(), 0)";
+    $result = queryDB($sql, array(TABLE_PREFIX, $test_id, $mid));
+    $result_id = at_insert_id();
+    
     if ($is_random) {
         // Retrieve 'num_questions' question_id randomly from those who are related to this test_id
 
         $non_required_questions = array();
         $required_questions     = array();
 
-        $sql    = "SELECT question_id, required FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$test_id";
-        $result    = mysql_query($sql, $db);
-    
-        while ($row = mysql_fetch_assoc($result)) {
+        $sql    = "SELECT question_id, required FROM %stests_questions_assoc WHERE test_id=%d";
+        $rows_questions    = queryDB($sql, array(TABLE_PREFIX, $test_id));
+           
+        foreach($rows_questions as $row){
             if ($row['required'] == 1) {
                 $required_questions[] = $row['question_id'];
             } else {
@@ -70,17 +69,21 @@ function init_test_result_questions($test_id, $is_random, $num_questions, $mid) 
 
         $random_id_string = implode(',', $required_questions);
 
-        $sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id={$_SESSION['course_id']} AND TQA.test_id=$test_id AND TQA.question_id IN ($random_id_string) ORDER BY TQ.question_id";
+        $sql = "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d AND TQA.question_id IN (%s) ORDER BY TQ.question_id";
+        $rows_questions = queryDB($sql, array(TABLE_PREFIX,TABLE_PREFIX, $_SESSION['course_id'], $test_id, $random_id_string));
+        
     } else {
-        $sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id={$_SESSION['course_id']} AND TQA.test_id=$test_id ORDER BY TQA.ordering, TQA.question_id";
+
+        $sql = "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+        $rows_questions = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $test_id, ));
+    
     }
 
     // $sql either gets a random set of questions (if $test_row['random']) ordered by 'question_id'
     // or the set of all questions for this test (sorted by 'ordering').
-    $result = mysql_query($sql, $db);
-    while ($row = mysql_fetch_assoc($result)) {
-        $sql    = "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, {$row['question_id']}, {$_SESSION['member_id']}, '', '', '')";
-        mysql_query($sql, $db);
+    foreach($rows_questions as $row){
+        $sql    = "INSERT INTO %stests_answers VALUES (%d, %d, %d, '', '', '')";
+        $result = queryDB($sql, array(TABLE_PREFIX, $result_id, $row['question_id'], $_SESSION['member_id']));
     }
 
     return $result_id;
@@ -88,14 +91,12 @@ function init_test_result_questions($test_id, $is_random, $num_questions, $mid) 
 
 // $num_questions must be greater than or equal to $row_required['cnt'] + $row_optional['cnt']
 function get_total_weight($tid, $num_questions = null) {
-    global $db;
-    $sql = "SELECT SUM(weight) AS weight, COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid AND required = '1' GROUP BY required";
-    $result = mysql_query($sql, $db);
-    $row_required = mysql_fetch_assoc($result);
 
-    $sql = "SELECT SUM(weight) AS weight, COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid AND required = '0' GROUP BY required";
-    $result = mysql_query($sql, $db);
-    $row_optional = mysql_fetch_assoc($result);
+    $sql = "SELECT SUM(weight) AS weight, COUNT(*) AS cnt FROM %stests_questions_assoc WHERE test_id=%d AND required = '1' GROUP BY required";
+    $row_required = queryDB($sql, array(TABLE_PREFIX, $tid));
+
+    $sql = "SELECT SUM(weight) AS weight, COUNT(*) AS cnt FROM %stests_questions_assoc WHERE test_id=%d AND required = '0' GROUP BY required";
+    $row_optional = queryDB($sql, array(TABLE_PREFIX, $tid));
     
     $total_weight = 0;
 
@@ -116,34 +117,38 @@ function authenticate_test($tid) {
     if (!$_SESSION['enroll']) {
         return FALSE;
     }
-    global $db;
 
-    $sql    = "SELECT approved FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$_SESSION[course_id] AND approved='y'";
-    $result = mysql_query($sql, $db);
-    if (!($row = mysql_fetch_assoc($result))) {
+    $sql    = "SELECT approved FROM %scourse_enrollment WHERE member_id=%d AND course_id=%d AND approved='y'";
+    $result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $_SESSION['course_id']), TRUE);
+    if(count($result) == 0){
         return FALSE;
     }
 
-    $sql    = "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
-    $result = mysql_query($sql, $db);
-    if (mysql_num_rows($result) == 0) {
+    $sql    = "SELECT group_id FROM %stests_groups WHERE test_id=%d";
+    $rows_groups = queryDB($sql, array(TABLE_PREFIX,  $tid));
+    
+    if(count($rows_groups) == 0){
         // not limited to any group; everyone has access:
         return TRUE;
     }
-    while ($row = mysql_fetch_assoc($result)) {
-        $sql     = "SELECT * FROM ".TABLE_PREFIX."groups_members WHERE group_id=$row[group_id] AND member_id=$_SESSION[member_id]";
-        $result2 = mysql_query($sql, $db);
-
-        if ($row2 = mysql_fetch_assoc($result2)) {
+    
+    foreach($rows_groups as $row){
+        $sql     = "SELECT * FROM %sgroups_members WHERE group_id=%d AND member_id=%d";
+        $rows_members = queryDB($sql, array(TABLE_PREFIX, $row['group_id'], $_SESSION['member_id']));
+        if(count($rows_members) > 0){
             return TRUE;
         }
     }
 
     //Check assistants privileges
-    $sql = "SELECT privileges FROM at_course_enrollment a WHERE member_id=$_SESSION[member_id] AND course_id=$_SESSION[course_id]";
-    $result = mysql_query($sql, $db);
-    if ($result){
-        list($privileges) = mysql_fetch_array($result);
+
+    $sql = "SELECT privileges FROM %scourse_enrollment a WHERE member_id=%d AND course_id=%d";
+    $row_privileges = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $_SESSION['course_id']), TRUE);
+    
+    if(count($row_privileges) > 0){
+
+        list($privileges) = $row_privileges;
+
         if (query_bit($privileges, AT_PRIV_GROUPS) && query_bit($privileges, AT_PRIV_TESTS)){
             return TRUE;
         }
@@ -155,18 +160,16 @@ function authenticate_test($tid) {
 
 function print_question_cats($cat_id = 0) {    
 
-    global $db;
-
     echo '<option value="0"';
     if ($cat_id == 0) {
         echo ' selected="selected"';
     }
     echo '>'._AT('cats_uncategorized').'</option>' . "\n";
 
-    $sql    = 'SELECT * FROM '.TABLE_PREFIX.'tests_questions_categories WHERE course_id='.$_SESSION['course_id'].' ORDER BY title';
-    $result    = mysql_query($sql, $db);
-
-    while ($row = mysql_fetch_array($result)) {
+    $sql    = 'SELECT * FROM %stests_questions_categories WHERE course_id=%d ORDER BY title';
+    $rows_categories    = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+    
+    foreach($rows_categories as $row){
         echo '<option value="'.$row['category_id'].'"';
         if ($row['category_id'] == $cat_id) {
             echo ' selected="selected"';
@@ -186,14 +189,12 @@ function print_VE ($area) {
 }
 
 function get_random_outof($test_id, $result_id) {    
-    global $db;
     $total = 0;
-
-    $sql    = 'SELECT SUM(Q.weight) AS weight FROM '.TABLE_PREFIX.'tests_questions_assoc Q, '.TABLE_PREFIX.'tests_answers A WHERE Q.test_id='.$test_id.' AND Q.question_id=A.question_id AND A.result_id='.$result_id;
-
-    $result    = mysql_query($sql, $db);
-
-    if ($row = mysql_fetch_assoc($result)) {
+  
+    $sql    = 'SELECT SUM(Q.weight) AS weight FROM %stests_questions_assoc Q, %stests_answers A WHERE Q.test_id=%d AND Q.question_id=A.question_id AND A.result_id=%d';
+    $row    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $test_id, $result_id), TRUE);
+    
+    if(count($row) > 0){
         return $row['weight'];
     }
 
@@ -201,14 +202,11 @@ function get_random_outof($test_id, $result_id) {
 }
 
 // return the next guest id
-function get_next_guest_id()
-{
-    global $db;
-    
-    $sql = "SELECT max(cast(substring(guest_id,3) as unsigned))+1 next_guest_id FROM ".TABLE_PREFIX."guests";
-    $result    = mysql_query($sql, $db);
-    $row = mysql_fetch_assoc($result);
+function get_next_guest_id() {
 
+    $sql = "SELECT max(cast(substring(guest_id,3) as unsigned))+1 next_guest_id FROM %sguests";
+    $row = queryDB($sql, array(TABLE_PREFIX), TRUE);
+    
     if ($row["next_guest_id"] == "")  // first guest id
         return "G_0";
     else
@@ -224,7 +222,7 @@ function get_next_guest_id()
 * @author    Alexey Novak
 */
 function assemble_remedial_content($student_id, $test_id) {
-    global $db, $msg;
+    global $msg;
     
     $resultArray = array();
     $separator = "<BR />";
@@ -249,14 +247,16 @@ function assemble_remedial_content($student_id, $test_id) {
     
     $sql = vsprintf($sqlQuery, $sql_params);
     try {
-        $result    = mysql_query($sql, $db);
+    
+        $rows_remedial    = queryDB($sql, array());
+
     } catch (Exception $e) {
         $msg->addError('AT_ERROR_UNKNOWN');
         return false;
     }
-    
-    while ($row = mysql_fetch_array($result)) {
-        array_push($resultArray, $row[0]);
+        debug($rows_remedial);
+    foreach($rows_remedial as $row){
+        array_push($resultArray, $row['remedial_content']);
     }
     
     return $resultArray;
@@ -269,18 +269,17 @@ function assemble_remedial_content($student_id, $test_id) {
 * @author    Alexey Novak
 */
 function can_show_remedial_content($test_id) {
-    global $db, $msg;
+    global $msg;
     
     $sql = sprintf('SELECT remedial_content FROM '.TABLE_PREFIX.'tests WHERE test_id=%d', $test_id);
     
     try {
-        $result    = mysql_query($sql, $db);
+        $row    = queryDB($sql, array(), TRUE);
     } catch (Exception $e) {
         $msg->addError('AT_ERROR_UNKNOWN');
         return 0;
     }
-    
-    if ($row = @mysql_fetch_array($result)) {
+    if(count($row) > 0){
         return intval($row['remedial_content']);
     }
     
