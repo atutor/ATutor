@@ -29,33 +29,35 @@ $_pages['mods/_standard/tests/results_all.php?tid='.$tid]['title_var']  = 'mark_
 $_pages['mods/_standard/tests/results_all.php?tid='.$tid]['parent'] = 'mods/_standard/tests/results_all_quest.php';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
-$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
-$result	= mysql_query($sql, $db);
+/****** DOES NOT APPEAR TO BE IN USE
+$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+$row_questions	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $tid));
 $questions = array();
-while ($row = mysql_fetch_array($result)) {
+foreach($rows_questions as $row){
 	$row['score']	= 0;
 	$questions[]	= $row;
 	$q_sql .= $row['question_id'].',';
 }
 $q_sql = substr($q_sql, 0, -1);
 $num_questions = count($questions);
+******/
+
 
 //check if survey
 $sql	= "SELECT out_of, title, randomize_order FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$row = queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
 $tt = $row['title'];
+
 $random = $row['randomize_order'];
 
 echo '<h3>'.$row['title'].'</h3><br />';
 
 //get all the questions in this test, store them
-$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+$sql	= "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+$rows_questions = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION[course_id], $tid));
 
-$result = mysql_query($sql, $db);
 $questions = array();	
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_questions as $row){
 	$questions[$row['question_id']] = $row;
 }
 $long_qs = substr($long_qs, 0, -1);
@@ -65,13 +67,13 @@ $sql = "SELECT count(*), A.question_id, A.answer, A.score
 		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
 		WHERE R.status=1 AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid";
 
-if ($_POST["user_type"] == 1) $sql .= " AND R.member_id not like 'G_%' AND R.member_id > 0 ";
-if ($_POST["user_type"] == 2) $sql .= " AND (R.member_id like 'G_%' OR R.member_id = 0) ";
+if ($_POST["user_type"] == 1) $sql .= " AND R.member_id not like 'G_%%' AND R.member_id > 0 ";
+if ($_POST["user_type"] == 2) $sql .= " AND (R.member_id like 'G_%%' OR R.member_id = 0) ";
 
 $sql .=	" GROUP BY A.question_id, A.answer
 		ORDER BY A.question_id, A.answer";
 
-$result = mysql_query($sql, $db);
+$rows_answers = queryDB($sql, array($sql, array()));
 ?>
 
 <div class="input-form">
@@ -92,10 +94,10 @@ $result = mysql_query($sql, $db);
 </div>
 
 <?php
-echo '<img src="images/checkmark.gif" alt="'._AT('correct_answer').'" />- '._AT('correct_answer').'<br /></p>';
+echo '<img src="images/check.gif" alt="'._AT('correct_answer').'" />- '._AT('correct_answer').'<br /></p>';
 
 $ans = array();	
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_answers as $row){
 	$ans[$row['question_id']][$row['answer']] = array('count'=>$row['count(*)'], 'score'=>$row['score']);
 }
 
