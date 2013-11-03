@@ -33,7 +33,7 @@ function display_test_info($row, $anonymous)
 {
 	global $random, $num_questions, $total_weight, $questions, $total_score, $table_content, $csv_content;
 	global $passscore, $passpercent;
-	global $q_sql, $db;
+	global $q_sql;
 
 	$row['login'] = $row['login'] ? $row['login'] : '- '._AT('guest').' -';
 	$table_content .= '<tr>';
@@ -73,10 +73,11 @@ function display_test_info($row, $anonymous)
 	$answers = array(); /* need this, because we dont know which order they were selected in */
 
 	//get answers for this test result
-	$sql = "SELECT question_id, score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$row[result_id] AND question_id IN ($q_sql)";
-	$result2 = mysql_query($sql, $db);
-	if ($result2){
-		while ($row2 = mysql_fetch_assoc($result2)) {
+	$sql = "SELECT question_id, score FROM %stests_answers WHERE result_id=%d AND question_id IN (".$q_sql.")";
+	$rows_answers = queryDB($sql, array(TABLE_PREFIX, $row['result_id']));
+
+	if(count($rows_answers) > 0){
+	    foreach($rows_answers as $row2){
 			$answers[$row2['question_id']] = $row2['score'];
 		}
 	}
@@ -104,10 +105,10 @@ function display_test_info($row, $anonymous)
 	// append guest information into CSV content if the test is taken by a guest
 	if (substr($row['member_id'], 0, 2) == 'g_' || substr($row['member_id'], 0, 2) == 'G_')
 	{
-		$sql = "SELECT * FROM ".TABLE_PREFIX."guests WHERE guest_id='".$row['member_id']. "'";
-		$result3 = mysql_query($sql, $db);
-		$row3 = mysql_fetch_assoc($result3);
-		
+
+		$sql = "SELECT * FROM %sguests WHERE guest_id=%d";
+		$row3 = queryDB($sql, array(TABLE_PREFIX, $row['member_id']), TRUE);
+				
 		$csv_content .= ', '.quote_csv($row3['name']) . ', '.quote_csv($row3['organization']). ', '.quote_csv($row3['location']). ', '.quote_csv($row3['role']). ', '.quote_csv($row3['focus']);
 	}
 	
@@ -154,9 +155,9 @@ $csv_content = "";
 
 require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.php');
 
-$sql	= "SELECT title, out_of, result_release, randomize_order, passscore, passpercent FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
+$sql	= "SELECT title, out_of, result_release, randomize_order, passscore, passpercent FROM %stests WHERE test_id=%d";
+$row	= queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
+
 $out_of = $row['out_of'];
 $random = $row['randomize_order'];
 $passscore = $row['passscore'];
@@ -165,15 +166,13 @@ $test_title = str_replace (' ', '_', str_replace(array('"', '<', '>'), '', $row[
 
 $table_content .= '<h3>'.$row['title'].'</h3><br />';
 
-$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+$sql	= "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+$rows_questions	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $tid));
 
-//$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q WHERE Q.test_id=$tid AND Q.course_id=$_SESSION[course_id] ORDER BY ordering";
-$result	= mysql_query($sql, $db);
 $questions = array();
 $total_weight = 0;
 $i = 0;
-
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_questions as $row){
 	$row['score']	= 0;
 	$questions[$i]	= $row;
 	$questions[$i]['count'] = 0;
@@ -195,9 +194,10 @@ if ($_POST["user_type"] == 2) $sql .= " AND (R.member_id like 'G_%' OR R.member_
 
 $sql .= " ORDER BY M.login, R.date_taken";
 
-$result = mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
-if ($row = mysql_fetch_assoc($result)) {
+$rows_results = queryDB($sql, array());
+$num_results = count($rows_results);
+
+if(count($rows_results) > 0){
 	$total_score = 0;
 
 	// generate table/csv header line
@@ -224,8 +224,7 @@ if ($row = mysql_fetch_assoc($result)) {
 	$table_content .= '<tbody>';
 	
 	// if there's guest information to be exported into CSV, add header names
-	while ($row = mysql_fetch_assoc($result))
-	{
+	foreach($rows_results as $row){
 		if (substr($row['member_id'], 0, 2) == 'g_' || substr($row['member_id'], 0, 2) == 'G_')
 		{
 			$csv_content .= ', '. quote_csv(_AT('guest_name'));
@@ -237,18 +236,15 @@ if ($row = mysql_fetch_assoc($result)) {
 			break;
 		}
 	}
-	// reset $result for next loop
-	mysql_data_seek($result, 0);
 	
 	$csv_content .= "\n";
 	
-	$sql2	= "SELECT anonymous FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-	$result2	= mysql_query($sql2, $db);
-	$row2 =mysql_fetch_array($result2);
+	$sql2	= "SELECT anonymous FROM %stests WHERE test_id=%d AND course_id=%d";
+	$row2	= queryDB($sql2, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+
 	$anonymous = $row2['anonymous'];
 
-	while ($row = mysql_fetch_assoc($result))
-	{
+    foreach($rows_results as $row){
 		if ($random) {
 			$total_weight = get_random_outof($row['test_id'], $row['result_id']);
 		}
