@@ -65,9 +65,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] != 2)) {
 	if ($_GET['status'] == 0) {
-		$status = " AND R.final_score=''";
+		//$status = " AND R.final_score=''";
+		$status = "AND (R.final_score='' OR R.final_score='0')";
 	} else {
-		$status = " AND R.final_score<>''";
+		$status = " AND R.final_score<>'' AND R.final_score<>'0'";
 	}
 	$page_string .= SEP.'status='.$_GET['status'];
 } else {
@@ -76,16 +77,15 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] != 2))
 
 if ($_GET['user_type'] == 1 || $_GET['user_type'] == 2) {
 	if ($_GET['user_type'] == 1) {
-		$status = " AND R.member_id not like 'G_%' AND R.member_id > 0 ";
+		$status = " AND R.member_id not like 'G_%%' AND R.member_id > 0 ".$status;
 	} else {
-		$status = " AND (R.member_id like 'G_%' OR R.member_id = 0) ";
+		$status = " AND (R.member_id like 'G_%%' OR R.member_id = 0) ".$status;
 	}
 	$page_string .= SEP.'user_type='.$_GET['user_type'];
 }
-
 //get test info
 $sql	= "SELECT out_of, anonymous, random, title FROM %stests WHERE test_id=%d AND course_id=%d";
-$row	= queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+$row	= queryDB($sql,array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
 
 if(count($row) == 0){
 	$msg->printErrors('ITEM_NOT_FOUND');
@@ -143,12 +143,14 @@ if ($col == "full_name") usort($rows, "sortByFullName");
 $num_results = count($rows_results);
 //count unmarked: no need to do this query if filtre is already getting unmarked
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
+
 	$num_unmarked = $num_results;
+	
 } else {
 
-	$sql		= "SELECT count(*) as cnt FROM %stests_results R, %smembers M WHERE R.test_id=%d AND R.status=1 AND R.member_id=M.member_id AND R.final_score=''";
+	$sql	= "SELECT count(*) as cnt FROM %stests_results R, %smembers M WHERE R.test_id=%d AND R.status=1 AND R.member_id=M.member_id AND (R.final_score='' OR R.final_score='0')";
 	$row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
-	
+
 	$num_unmarked = $row['cnt'];
 }
 
