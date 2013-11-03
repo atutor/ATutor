@@ -26,9 +26,10 @@ $cid = $addslashes($_REQUEST['cid']);
 $cid_url = SEP.'cid='.$cid;
 
 //make sure max attempts not reached, and still on going
-$sql = sprintf('SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM %stests WHERE test_id=%d AND course_id=%d;', TABLE_PREFIX, $tid, $course_id);
-$result= mysql_query($sql, $db);
-$test_row = mysql_fetch_assoc($result);
+$sql = 'SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM %stests WHERE test_id=%d AND course_id=%d';
+$test_row = queryDB($sql, array(TABLE_PREFIX, $tid, $course_id), TRUE);
+
+
 /* check to make sure we can access this test: */
 if (!$test_row['guests'] && ($enroll == AT_ENROLL_NO || $enroll == AT_ENROLL_ALUMNUS)) {
     require(AT_INCLUDE_PATH.'header.inc.php');
@@ -49,9 +50,8 @@ if ($test_row['display']) {
 
 $out_of = $test_row['out_of'];
 
-$sql = sprintf('SELECT COUNT(*) AS cnt FROM %stests_results WHERE status=1 AND test_id=%d AND member_id=%d', TABLE_PREFIX, $tid, $member_id);
-$takes_result= mysql_query($sql, $db);
-$takes = mysql_fetch_assoc($takes_result);
+$sql = 'SELECT COUNT(*) AS cnt FROM %stests_results WHERE status=1 AND test_id=%d AND member_id=%d';
+$takes= queryDB($sql, array(TABLE_PREFIX, $tid, $member_id), TRUE);
 
 if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) || 
    ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
@@ -66,22 +66,25 @@ if (isset($_POST['submit'])) {
     $post_gid = $_POST['gid'];
     // insert
     if (!isset($post_gid)) {
-        $sql = sprintf('SELECT result_id FROM %stests_results WHERE test_id=%d AND member_id=%d AND status=0', TABLE_PREFIX, $tid, $member_id);
-        $result    = mysql_query($sql, $db);
-        $row    = mysql_fetch_assoc($result);
+
+        $sql = 'SELECT result_id FROM %stests_results WHERE test_id=%d AND member_id=%d AND status=0';
+        $row    = queryDB($sql, array(TABLE_PREFIX, $tid, $member_id), TRUE);
         $result_id = $row['result_id'];
+
     } else {
-        $sql = sprintf('INSERT INTO %stests_results VALUES (NULL, %d, %d, NOW(), "", 0, NOW(), 0)', TABLE_PREFIX, $tid, $post_gid);
-        $result = mysql_query($sql, $db);
-        $result_id = mysql_insert_id($db);
+
+        $sql = 'INSERT INTO %stests_results VALUES (NULL, %d, %d, NOW(), "", 0, NOW(), 0)';
+        $result = queryDB($sql, array(TABLE_PREFIX, $tid, $post_gid));
+        $result_id = at_insert_id();
     }
 
     $final_score     = 0;
     $set_final_score = TRUE; // whether or not to save the final score in the results table.
 
-    $sql    = "SELECT TQA.weight, TQA.question_id, TQ.type, TQ.answer_0, TQ.answer_1, TQ.answer_2, TQ.answer_3, TQ.answer_4, TQ.answer_5, TQ.answer_6, TQ.answer_7, TQ.answer_8, TQ.answer_9 FROM ".TABLE_PREFIX."tests_questions_assoc TQA INNER JOIN ".TABLE_PREFIX."tests_questions TQ USING (question_id) WHERE TQA.test_id=$tid ORDER BY TQA.ordering, TQ.question_id";
-    $result    = mysql_query($sql, $db);
-    while ($row = mysql_fetch_assoc($result)) {
+    $sql    = "SELECT TQA.weight, TQA.question_id, TQ.type, TQ.answer_0, TQ.answer_1, TQ.answer_2, TQ.answer_3, TQ.answer_4, TQ.answer_5, TQ.answer_6, TQ.answer_7, TQ.answer_8, TQ.answer_9 FROM %stests_questions_assoc TQA INNER JOIN %stests_questions TQ USING (question_id) WHERE TQA.test_id=%d ORDER BY TQA.ordering, TQ.question_id";
+    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid));
+
+    foreach($rows_questions as $row){
         $row_question_id = $row['question_id'];
         if (isset($_POST['answers'][$row_question_id])) {
             $obj = TestQuestions::getQuestion($row['type']);
@@ -91,11 +94,12 @@ if (isset($_POST['submit'])) {
             $answer_question_id = $_POST['answers'][$row_question_id];
             
             if (!isset($post_gid)) {
-                $sql = sprintf('UPDATE %stests_answers SET answer="%s", score="%s" WHERE result_id=%d AND question_id=%d', TABLE_PREFIX, $answer_question_id, $score, $result_id, $row_question_id);
+                $sql = 'UPDATE %stests_answers SET answer="%s", score="%s" WHERE result_id=%d AND question_id=%d';
+                queryDB($sql, array(TABLE_PREFIX, $answer_question_id, $score, $result_id, $row_question_id));
             } else {
-                $sql = sprintf('INSERT INTO %stests_answers (result_id, question_id, member_id, answer, score, notes) VALUES (%d, %d, 0, "%s", "%s", "")', TABLE_PREFIX, $result_id, $row_question_id, $answer_question_id, $score);
+                $sql = 'INSERT INTO %stests_answers (result_id, question_id, member_id, answer, score, notes) VALUES (%d, %d, 0, "%s", "%s", "")';
+                queryDB($sql, array(TABLE_PREFIX, $result_id, $row_question_id, $answer_question_id, $score));
             }
-            mysql_query($sql, $db);
 
             // don't set final score if there is any unmarked answers and release option is set to "after all answers are marked"
             if (is_null($score)) {
@@ -108,10 +112,9 @@ if (isset($_POST['submit'])) {
 
     // update the final score
     // update status to complate to fix refresh test issue.
-    $sql = sprintf('UPDATE %stests_results SET final_score=%s, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=%d', 
-                       TABLE_PREFIX, ($set_empty_final_score) ? 'NULL' : $final_score, $result_id
-    );
-    $result    = mysql_query($sql, $db);
+
+    $sql = 'UPDATE %stests_results SET final_score=%s, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=%d';
+    $result    = queryDB($sql, array(TABLE_PREFIX, ($set_empty_final_score) ? 'NULL' : $final_score, $result_id));
 
     $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
     if ((!$enroll && !isset($cid)) || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
@@ -140,10 +143,12 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 // first check if there's an 'in progress' test.
 // this is the only place in the code that makes sure there is only ONE 'in progress' test going on.
 $in_progress = false;
-$sql = sprintf("SELECT result_id FROM %stests_results WHERE member_id=%d AND test_id=%d AND status=0", TABLE_PREFIX, $member_id, $tid);
 
-$result  = mysql_query($sql);
-if ($row = mysql_fetch_assoc($result)) {
+$sql = "SELECT result_id FROM %stests_results WHERE member_id=%d AND test_id=%d AND status=0";
+$row  = queryDB($sql, array(TABLE_PREFIX, $member_id, $tid), TRUE);
+
+if(count($row) > 0){
+
     $result_id = $row['result_id'];
     $in_progress = true;
 
@@ -157,10 +162,10 @@ if ($row = mysql_fetch_assoc($result)) {
     $non_required_questions = array();
     $required_questions     = array();
 
-    $sql = sprintf('SELECT question_id, required FROM %stests_questions_assoc WHERE test_id=%d', TABLE_PREFIX, $tid);
-    $result    = mysql_query($sql, $db);
+    $sql = 'SELECT question_id, required FROM %stests_questions_assoc WHERE test_id=%d';
+    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, $tid));
     
-    while ($row = mysql_fetch_assoc($result)) {
+    foreach($rows_questions as $row){
         if ($row['required'] == 1) {
             $required_questions[] = $row['question_id'];
         } else {
@@ -180,13 +185,15 @@ if ($row = mysql_fetch_assoc($result)) {
     $sql = sprintf("SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id", TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid);
 }
 
-$result    = mysql_query($sql, $db);
+$rows_questions    = queryDB($sql, array());
 $questions = array();
-while ($row = mysql_fetch_assoc($result)) {
+
+foreach($rows_questions as $row){
     $questions[] = $row;
 }
 
 // Shuffle questions if the order is set to be random
+// Mantis 5383: THIS CAUSES RESHUFFLE EVERYTIME THE TAKE TEST PAGE RELOADS 
 if ($test_row['random']) {
     shuffle($questions);
 }
@@ -199,9 +206,11 @@ if (!$result || !$questions) {
 
 // save $questions with no response, and set status to 'in progress' in test_results <---
 if (!$gid && !$in_progress) {
-    $sql = sprintf('INSERT INTO %stests_results VALUES (NULL, %d, %d, NOW(), "", 0, NOW(), 0)', TABLE_PREFIX, $tid, $member_id);
-    $result = mysql_query($sql, $db);
-    $result_id = mysql_insert_id($db);
+
+    $sql = 'INSERT INTO %stests_results VALUES (NULL, %d, %d, NOW(), "", 0, NOW(), 0)';
+    $result = queryDB($sql, array(TABLE_PREFIX, $tid, $member_id));
+    $result_id = at_insert_id();
+
 }
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -234,8 +243,9 @@ if (!$gid && !$in_progress) {
     <?php
     foreach ($questions as $row) {
         if (!isset($post_gid) && !$in_progress) {
-            $sql    = "INSERT INTO ".TABLE_PREFIX."tests_answers VALUES ($result_id, $row[question_id], $member_id, '', '', '')";
-            mysql_query($sql, $db);
+
+            $sql    = "INSERT INTO %stests_answers VALUES (%d, %d, %d, '', '', '')";
+            queryDB($sql, array(TABLE_PREFIX, $result_id, $row[question_id], $member_id));
         }
 
         $obj = TestQuestions::getQuestion($row['type']);
