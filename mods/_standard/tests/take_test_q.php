@@ -29,9 +29,9 @@ else
 	$mid = $_SESSION['member_id'];
 
 //make sure max attempts not reached, and still on going
-$sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
-$result= mysql_query($sql, $db);
-$test_row = mysql_fetch_assoc($result);
+$sql		= "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM %stests WHERE test_id=%d AND course_id=%d";
+$test_row = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+
 /* check to make sure we can access this test: */
 if (!$test_row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS)) {
 	require(AT_INCLUDE_PATH.'header.inc.php');
@@ -53,16 +53,16 @@ if (!$test_row['display']) {
 
 $out_of = $test_row['out_of'];
 
-$sql	= "SELECT COUNT(*) AS num_questions FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql	= "SELECT COUNT(*) AS num_questions FROM %stests_questions_assoc WHERE test_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
+
+
 if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) {
 	$test_row['num_questions'] = $row['num_questions'];
 }
-
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$mid."'";
-$takes_result= mysql_query($sql, $db) or die(mysql_error());
-$takes = mysql_fetch_assoc($takes_result);	
+	
+$sql = "SELECT COUNT(*) AS cnt FROM %stests_results WHERE status=1 AND test_id=%d AND member_id=%d";
+$takes = queryDB($sql, array(TABLE_PREFIX, $tid, $mid), TRUE);
 
 if ( (($test_row['start_date'] > time()) || ($test_row['end_date'] < time())) || 
    ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
@@ -91,13 +91,12 @@ else
 // set position to allow users to return to a test they have partially completed, and continue from where they left of.
 if (!isset($_GET['pos']) && $result_id > 0)
 {
-	$sql = "SELECT COUNT(*) total_questions FROM ".TABLE_PREFIX."tests_answers WHERE result_id = ". $result_id;
-	$total_result = mysql_query($sql, $db) or die(mysql_error());
-	$total = mysql_fetch_assoc($total_result);
-	
-	$sql = "SELECT COUNT(*) pos FROM ".TABLE_PREFIX."tests_answers WHERE result_id = ". $result_id ." AND answer <> ''";
-	$answer_result = mysql_query($sql, $db) or die(mysql_error());
-	$answer = mysql_fetch_assoc($answer_result);
+
+	$sql = "SELECT COUNT(*) total_questions FROM %stests_answers WHERE result_id = %d";
+	$total = queryDB($sql, array(TABLE_PREFIX, $result_id), TRUE);
+
+	$sql = "SELECT COUNT(*) pos FROM %stests_answers WHERE result_id = %d AND answer <> ''";
+	$answer = queryDB($sql, array(TABLE_PREFIX, $result_id), TRUE);
 
 	// if user answered all the questions without cliking last "next" button, resume test at the last question
 	$pos = ($total['total_questions'] == $answer['pos']) ? (--$answer['pos']) : $answer['pos'];
@@ -131,24 +130,24 @@ if ($result_id == 0) {
 	$question_id = intval(key($_POST['answers']));
 
 	// get the old score (incase this question is being re-answered)
-	$sql = "SELECT score FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$result_id AND question_id=$question_id";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$sql = "SELECT score FROM %stests_answers WHERE result_id=%d AND question_id=%d";
+	$row= queryDB($sql, array(TABLE_PREFIX, $result_id, $question_id), TRUE);
+
 	$old_score = $row['score'];
 
 	$score = 0;
 
-	$sql = "SELECT TQA.weight, TQA.question_id, TQ.type, TQ.answer_0, TQ.answer_1, TQ.answer_2, TQ.answer_3, TQ.answer_4, TQ.answer_5, TQ.answer_6, TQ.answer_7, TQ.answer_8, TQ.answer_9 FROM ".TABLE_PREFIX."tests_questions_assoc TQA INNER JOIN ".TABLE_PREFIX."tests_questions TQ USING (question_id) WHERE TQA.test_id=$tid AND TQA.question_id=$question_id";
-	$result	= mysql_query($sql, $db);
-
-	if ($row = mysql_fetch_assoc($result)) {
+	$sql = "SELECT TQA.weight, TQA.question_id, TQ.type, TQ.answer_0, TQ.answer_1, TQ.answer_2, TQ.answer_3, TQ.answer_4, TQ.answer_5, TQ.answer_6, TQ.answer_7, TQ.answer_8, TQ.answer_9 FROM %stests_questions_assoc TQA INNER JOIN %stests_questions TQ USING (question_id) WHERE TQA.test_id=%d AND TQA.question_id=%d";
+	$row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid, $question_id), TRUE);
+	
+	if(count($row) > 0){
 		if (isset($_POST['answers'][$row['question_id']])) {
 			$obj = TestQuestions::getQuestion($row['type']);
 			$score = $obj->mark($row);
 
-			$sql	= "UPDATE ".TABLE_PREFIX."tests_answers SET answer='{$_POST[answers][$row[question_id]]}', score='$score' WHERE result_id=$result_id AND question_id=$row[question_id]";
-			mysql_query($sql, $db);
-			
+			$sql	= "UPDATE %stests_answers SET answer='%s', score='%s' WHERE result_id=%d AND question_id=%d";
+			queryDB($sql, array(TABLE_PREFIX, $_POST['answers'][$row['question_id']], $score, $result_id, $row['question_id']));			
+
 			if (is_null($score) && $test_row['result_release']==AT_RELEASE_MARKED)
 				$_REQUEST['efs'] = 1; // set final score to empty if there's any unmarked question and release option is "once quiz submitted and all questions are marked"
 		}
@@ -158,14 +157,14 @@ if ($result_id == 0) {
 
 	if ($_REQUEST['efs']) // set final score to empty if there's any unmarked question and release option is "once quiz submitted and all questions are marked"
 	{
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=null, date_taken=date_taken, end_time=NOW(), max_pos=$pos WHERE result_id=$result_id";
-		$result	= mysql_query($sql, $db);
+		$sql	= "UPDATE %stests_results SET final_score=null, date_taken=date_taken, end_time=NOW(), max_pos=%d WHERE result_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $pos, $result_id));
 	}
 	// update the final score
 	// update status to complate to fix refresh test issue.
 	else if ($pos > $max_pos) {
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=final_score + $score, date_taken=date_taken, end_time=NOW(), max_pos=$pos WHERE result_id=$result_id";
-		$result	= mysql_query($sql, $db);
+		$sql	= "UPDATE %stests_results SET final_score=final_score + %d, date_taken=date_taken, end_time=NOW(), max_pos=%d WHERE result_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $score, $pos, $result_id));
 	} else {
 		// this question has already been answered, so we have to re-mark it, which means finding the OLD score for this question and adjusting
 		// $score with the positive or negative difference.
@@ -173,8 +172,8 @@ if ($result_id == 0) {
 
 		$score = $old_score - $score;
 
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET final_score=final_score - $score, date_taken=date_taken, end_time=NOW() WHERE result_id=$result_id";
-		$result	= mysql_query($sql, $db);
+		$sql	= "UPDATE %stests_results SET final_score=final_score - %d, date_taken=date_taken, end_time=NOW() WHERE result_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $score, $result_id));
 	}
 
 	if (isset($_POST['previous'])) {
@@ -186,9 +185,9 @@ if ($result_id == 0) {
 
 	if ($pos >= $test_row['num_questions']) {
 		// end of the test.
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_results SET status=1, date_taken=date_taken, end_time=NOW() WHERE result_id=$result_id";
-		$result	= mysql_query($sql, $db);
-
+		$sql	= "UPDATE %stests_results SET status=1, date_taken=date_taken, end_time=NOW() WHERE result_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $result_id));
+		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if ((!$_SESSION['enroll'] && !isset($cid)) || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
 			header('Location: '.url_rewrite('mods/_standard/tests/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
@@ -229,12 +228,12 @@ for ($i = 0; $i < $pos; $i++) {
 
 // retrieve the test questions that were saved to `tests_answers`
 if ($test_row['random']) {
-	$sql	= "SELECT R.*, A.*, Q.* FROM ".TABLE_PREFIX."tests_answers R INNER JOIN ".TABLE_PREFIX."tests_questions_assoc A USING (question_id) INNER JOIN ".TABLE_PREFIX."tests_questions Q USING (question_id) WHERE R.result_id=$result_id AND A.test_id=$tid ORDER BY Q.question_id LIMIT $pos, 1";
+	$sql	= "SELECT R.*, A.*, Q.* FROM %stests_answers R INNER JOIN %stests_questions_assoc A USING (question_id) INNER JOIN %stests_questions Q USING (question_id) WHERE R.result_id=%d AND A.test_id=%d ORDER BY Q.question_id LIMIT %d, 1";
 } else {
-	$sql	= "SELECT R.*, A.*, Q.* FROM ".TABLE_PREFIX."tests_answers R INNER JOIN ".TABLE_PREFIX."tests_questions_assoc A USING (question_id) INNER JOIN ".TABLE_PREFIX."tests_questions Q USING (question_id) WHERE R.result_id=$result_id AND A.test_id=$tid ORDER BY A.ordering, Q.question_id LIMIT $pos, 1";
+	$sql	= "SELECT R.*, A.*, Q.* FROM %stests_answers R INNER JOIN %stests_questions_assoc A USING (question_id) INNER JOIN %stests_questions Q USING (question_id) WHERE R.result_id=%d AND A.test_id=%d ORDER BY A.ordering, Q.question_id LIMIT %d, 1";
 }
-$result	= mysql_query($sql, $db);
-$question_row = mysql_fetch_assoc($result);
+
+$question_row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $result_id, $tid, $pos), TRUE);
 
 if (!$result || !$question_row) {
 	echo '<p>'._AT('no_questions').'</p>';
@@ -256,10 +255,9 @@ if (!$result || !$question_row) {
 	
 	<?php
 	// retrieve the answer to re-populate the form (so we can edit our answer)
-	$sql = "SELECT answer FROM ".TABLE_PREFIX."tests_answers WHERE result_id=$result_id AND question_id=$question_row[question_id]";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
-	
+	$sql = "SELECT answer FROM %stests_answers WHERE result_id=%d AND question_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $result_id, $question_row['question_id']), TRUE);
+
 	$obj = TestQuestions::getQuestion($question_row['type']);
 	$obj->display($question_row, $row['answer']);
 
