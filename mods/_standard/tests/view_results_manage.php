@@ -81,11 +81,9 @@ if ($_POST['cancel']) {
 
     }
 
-  if($result > 0){
 	$msg->addFeedback('RESULTS_UPDATED');
 	header('Location: results.php?tid='.$tid);
 	exit;
-    }
 }
 
 if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
