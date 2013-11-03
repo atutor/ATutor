@@ -51,7 +51,7 @@ $passscore    = $row['passscore'];
 $passpercent    = $row['passpercent'];
 $is_random  = $row['random'];
 
-$mark_right = ' <img src="'.$_base_path.'images/checkmark.gif" alt="'._AT('correct_answer').'" title="'._AT('correct_answer').'" />';
+$mark_right = ' <img src="'.$_base_path.'images/check.gif" alt="'._AT('correct_answer').'" title="'._AT('correct_answer').'" />';
 $mark_wrong = ' <img src="'.$_base_path.'images/x.gif" alt="'._AT('wrong_answer').'" title="'._AT('wrong_answer').'" />';
 
 $sql    = "SELECT * FROM %stests_results WHERE result_id=%d";

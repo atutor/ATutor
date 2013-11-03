@@ -7,7 +7,7 @@
 	<?php for ($i=0; $i<$this->num_choices; $i++): ?>
 		<?php $this->row['choice_'.$i] = validate_length($this->row['choice_'.$i], 15, VALIDATE_LENGTH_FOR_DISPLAY); ?>
 		<?php if ($this->row['answer_'.$i]): ?>
-			<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i]); ?><img src="images/checkmark.gif" alt="" /></th>
+			<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i]); ?><img src="images/check.gif" alt="" /></th>
 		<?php else: ?>
 			<th scope="col"><?php echo htmlspecialchars($this->row['choice_'.$i], ENT_COMPAT, "UTF-8"); ?></th>
 		<?php endif; ?>

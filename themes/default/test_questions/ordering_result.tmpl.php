@@ -4,7 +4,7 @@
 	<?php for ($i=0; $i < $this->num_choices; $i++): ?>
 		<li style="padding: 4px; list-style: none">
 			<?php if ($this->right_answers[$i] == $this->answers[$i]): ?>
-				<img src="<?php echo $this->base_path; ?>images/checkmark.gif" alt="<?php echo _AT('correct_answer'); ?>" title="<?php echo _AT('correct_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
+				<img src="<?php echo $this->base_path; ?>images/check.gif" alt="<?php echo _AT('correct_answer'); ?>" title="<?php echo _AT('correct_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
 			<?php else: ?>
 				<img src="<?php echo $this->base_path; ?>images/x.gif" alt="<?php echo _AT('wrong_answer'); ?>" title="<?php echo _AT('wrong_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
 			<?php endif; ?>
