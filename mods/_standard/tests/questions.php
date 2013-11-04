@@ -27,13 +27,13 @@ $_pages['mods/_standard/tests/add_test_questions.php?tid='.$_GET['tid']]['parent
 
 $_pages['mods/_standard/tests/questions.php']['guide']    = 'instructor/?p=add_questions.php';
 
-
 $tid = intval($_REQUEST['tid']);
 
 if (isset($_POST['submit'])) {
-	$sql    = "SELECT test_id, random, num_questions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-	if (!($row = mysql_fetch_assoc($result))) { exit; }
+	
+	$sql    = "SELECT test_id, random, num_questions FROM %stests WHERE test_id=%d AND course_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+	if (count($row) == 0) { exit; }
 
 	// #1760
 	// for each question that isn't required
@@ -86,12 +86,17 @@ if (isset($_POST['submit'])) {
 					$orders[$k] = intval($id);
 					
 				$orders = array_flip($orders);
-				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=".($orders[$qid]+1)." WHERE question_id=$qid AND test_id=".$tid;
+				$next_qid = ($orders[$qid]+1);
+				
+				$sql	= "UPDATE %stests_questions_assoc SET weight=%d, required=%d, ordering=%d WHERE question_id=%d AND test_id=%d";
+    		    $result	= queryDB($sql,array(TABLE_PREFIX, $weight, $required, $next_qid, $qid, $tid));
+
 			} else {
-				$sql	= "UPDATE ".TABLE_PREFIX."tests_questions_assoc SET weight=$weight, required=$required, ordering=$count WHERE question_id=$qid AND test_id=".$tid;
+				$sql	= "UPDATE %stests_questions_assoc SET weight=%d, required=%d, ordering=%d WHERE question_id=%d AND test_id=%d";
+		        $result	= queryDB($sql, array(TABLE_PREFIX, $weight, $required, $count, $qid, $tid));
+
 			}
 
-			$result	= mysql_query($sql, $db);
 			$count++;
 		}
 
@@ -106,10 +111,9 @@ if (isset($_POST['submit'])) {
 				$num_questions_sql = ', num_questions='.$total_required_num;
 			}
 		}
-
-
-		$sql	= "UPDATE ".TABLE_PREFIX."tests SET out_of='$total_weight' $num_questions_sql WHERE test_id=$tid";
-		$result	= mysql_query($sql, $db);
+		
+		$sql	= "UPDATE %stests SET out_of='%s' %s WHERE test_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $total_weight, $num_questions_sql, $tid));
 
 		$total_weight = 0;
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -120,23 +124,24 @@ if (isset($_POST['submit'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT title, random FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db);
-$row	= mysql_fetch_assoc($result);
+$sql	= "SELECT title, random FROM %stests WHERE test_id=%d";
+$row	= queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
+
+
 echo '<h3>'._AT('questions_for').' '.AT_print($row['title'], 'tests.title').'</h3>';
 $random = $row['random'];
 
-$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_questions_assoc QA, ".TABLE_PREFIX."tests_questions Q WHERE QA.test_id=$tid AND QA.weight=0 AND QA.question_id=Q.question_id AND Q.type<>4";
-$result	= mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
+$sql	= "SELECT count(*) as cnt FROM %stests_questions_assoc QA, %stests_questions Q WHERE QA.test_id=%d AND QA.weight=0 AND QA.question_id=Q.question_id AND Q.type<>4";
+$row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+
 if ($row['cnt']) {
 	$msg->printWarnings('QUESTION_WEIGHT');
 }
 
 $msg->printAll();
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions Q, ".TABLE_PREFIX."tests_questions_assoc TQ WHERE Q.course_id=$_SESSION[course_id] AND Q.question_id=TQ.question_id AND TQ.test_id=$tid ORDER BY TQ.ordering";
-$result	= mysql_query($sql, $db);
+$sql	= "SELECT * FROM %stests_questions Q, %stests_questions_assoc TQ WHERE Q.course_id=%d AND Q.question_id=TQ.question_id AND TQ.test_id=%d ORDER BY TQ.ordering";
+$rows_questions	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $tid));
 
 ?>
 <script type="text/javascript">
@@ -183,16 +188,19 @@ function setAllWeights() {
 </tr>
 </thead>
 <?php
-if ($row = mysql_fetch_assoc($result)) {
-	$sql	= "SELECT title, category_id FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=".$_SESSION['course_id'];
-	$cat_result	= mysql_query($sql, $db);
+
+if(count($rows_questions) > 0){
+
+	$sql	= "SELECT title, category_id FROM %stests_questions_categories WHERE course_id=%d";
+	$cats_rows	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+	
 	$cats    = array();
 	$cats[0] = _AT('cats_uncategorized');
-	while ($cat_row = mysql_fetch_assoc($cat_result)) {
+	foreach($cats_rows as $cat_row){
 		$cats[$cat_row['category_id']] = $cat_row['title'];
 	}
+    foreach($rows_questions as $row){
 
-	do {
 		$count++;
 		echo '<tr>';
 		echo '<td class="row1" align="center"><strong>'.$count.'</strong></td>';
@@ -244,7 +252,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		echo '</td>';
 
 		echo '</tr>';
-	} while ($row = mysql_fetch_assoc($result));
+	} 
 
 	//total weight
 	echo '<tfoot>';
