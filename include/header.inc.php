@@ -209,6 +209,9 @@ if (isset($_pages[$current_page]['title'])) {
 * and the title of that page, and hold in the SESSION for as long as that tool
 * is being used. Allows return via a student page or the Manage page.
 ****/
+global $_base_path, $_pages;
+$mod_path = str_replace($_base_path, '', $_SERVER['PHP_SELF']);
+
 if(!isset($_SESSION['tool_origin'])){
     $_SESSION['origin_title'] = $_page_title;
 }
@@ -216,7 +219,10 @@ if(isset($_SESSION['tool_origin'])){
     if($_SESSION['tool_origin']['url'] == $_base_href.$current_page){
         unset($_SESSION['tool_origin']);
         unset($back_to_page);
-    }else{
+    }else if($_pages[$mod_path]['parent'] != 'tools/index.php'){
+        $back_to_page['title'] = _AT($_pages[$_pages[$mod_path]['parent']]['title_var']);
+        $back_to_page['url'] = $_pages[$mod_path]['parent'];
+    } else{
         $back_to_page = $_SESSION['tool_origin'];
     }
 } else if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
