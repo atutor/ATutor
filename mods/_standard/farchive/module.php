@@ -25,8 +25,8 @@ $this->_pages['mods/_standard/farchive/index_instructor.php']['guide']    = 'ins
 $this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_standard/farchive/index_instructor.php');
 
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FARCHIVE, TRUE)){	
-$this->_pages['mods/_standard/farchive/index_instructor.php']['title_var'] = 'farchive_export';
-$this->_pages['mods/_standard/farchive/index_instructor.php']['other_parent']    = 'mods/_standard/forums/forum/list.php';
-    $this->_pages['mods/_standard/forums/forum/list.php']['children']  = array('mods/_standard/farchive/index_instructor.php');
+$this->_pages_i['mods/_standard/farchive/index_instructor.php']['title_var'] = 'farchive_export';
+$this->_pages_i['mods/_standard/farchive/index_instructor.php']['other_parent']    = 'mods/_standard/forums/forum/list.php';
+$this->_pages_i['mods/_standard/forums/forum/list.php']['children']  = array('mods/_standard/farchive/index_instructor.php');
 }
 ?>

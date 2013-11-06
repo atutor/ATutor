@@ -160,6 +160,7 @@ class Module {
 	var $_admin_privilege; // priv bit(s) | 0 (in dec form)
 	var $_display_defaults; // bit(s)
 	var $_pages;
+	var $_pages_i; // instructor course admin tools
 	var $_type; // core, standard, extra
 	var $_module_path; // module path is different for core/standard module and extra module
 	var $_properties; // array from xml
@@ -249,14 +250,16 @@ class Module {
 
 	function load() {
 		if (is_file($this->_module_path . $this->_directoryName.'/module.php')) {
-			global $_modules, $_pages, $_stacks, $_list, $_tool, $_content_tools, $_callbacks;  // $_list is for sublinks on "detail view"
+			global $_modules, $_pages, $_pages_i, $_stacks, $_list, $_tool, $_content_tools, $_callbacks;  // $_list is for sublinks on "detail view"
 
 			require($this->_module_path . $this->_directoryName.'/module.php');
 
 			if (isset($this->_pages)) {
 				$_pages = array_merge_recursive((array) $_pages, $this->_pages);
 			}
-
+			if (isset($this->_pages_i)) {
+				$_pages_i = array_merge_recursive((array) $_pages_i, $this->_pages_i);
+			}
 			//side menu items
 			if (isset($this->_stacks)) {
 				$count = 0;

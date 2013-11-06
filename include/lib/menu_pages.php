@@ -406,7 +406,37 @@ function get_sub_navigation($current_page) {
 
     return $_sub_level_pages;
 }
+/**
+ *  Get tools for the instructors admin tool bar
+ *  gatheres the $_pages_i array of instrtor tools
+ *  @param	$current_page - string, the page location used as a key in $_pages_i 
+ */
+function get_sub_navigation_i($current_page) {
+    global $_pages_i, $_base_path;
+    $_sub_level_pages_i = '';
+    if (isset($current_page) && defined($current_page)) {
+    // reached the top
+        return array();
+    } else if (isset($_pages_i[$current_page]['children']) && page_available($current_page)) {
 
+            foreach ($_pages_i[$current_page]['children'] as $child) {
+            	if (!page_available($child)) continue;
+            	
+            	if (isset($_pages_i[$child]['title']) && $_pages_i[$child]['title'] != '') {
+                    $_page_title = $_pages_i[$child]['title'];
+                } else {
+                    $_page_title = _AT($_pages_i[$child]['title_var']);
+                }
+                    $_sub_level_pages_i[] = array('url' => AT_print($_base_path, 'url.page') . $child, 'title' => $_page_title, 'has_children' => isset($_pages_i[$child]['children']));
+
+            }
+        } else if (isset($_pages_i[$current_page]['parent'])) {
+            // no children
+                $parent_page = $_pages_i[$current_page]['parent'];
+                return get_sub_navigation_i($parent_page);
+            }
+    return $_sub_level_pages_i;
+}
 function get_current_sub_navigation_page($current_page) {
     global $_pages, $_base_path;
     
@@ -420,7 +450,19 @@ function get_current_sub_navigation_page($current_page) {
         return AT_print($_base_path, 'url.page') . $current_page;
     }
 }
+function get_current_sub_navigation_page_i($current_page) {
+    global $_pages_i, $_base_path;
+    
+    if (!page_available($current_page)) return;
+    
+    $parent_page = $_pages_i[$current_page]['parent'];
 
+    if (isset($parent_page) && defined($parent_page)) {
+        return AT_print($_base_path, 'url.page') . $current_page;
+    } else {
+        return AT_print($_base_path, 'url.page') . $current_page;
+    }
+}
 function get_path($current_page) {
     global $_pages, $_base_path, $_base_href;
 

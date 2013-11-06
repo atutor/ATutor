@@ -2022,53 +2022,64 @@ div.toolcontainer{
 	border-radius:.5em;
 	-moz-border-radius: .5em .5em .5em .5em;
 }
-
+ul#subnavlist_i {
+	font-family: Verdana,Helvetica,Arial,serif;
+    float:right;
+    margin-top: -2.2em;
+    background-image:url("images/wand.png");
+    background-position: 1em .3em;
+    background-repeat:no-repeat;
+}
 ul#subnavlist {
     border-bottom:1px solid #DED29E;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
-
-/*font-size:1.0em;*/
-
-
 }
-
+ul#subnavlist_i li {
+	list-style: none;
+	display: inline-block;
+	font-weight:700;
+	text-align:center;
+	border-top:1px solid #DED29E;
+	border-left:1px solid #DED29E;
+	border-right:1px solid #DED29E;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: .4em .5em .2em .5em ;
+	border-bottom: 3px solid blue;
+}
 ul#subnavlist li {
 	list-style: none;
 	display: inline-block;
 	font-weight:700;
 	text-align:center;
 	border-bottom:3px solid transparent;
-/*	border-top:1px solid #685642;
-	border-left:1px solid #685642;
-	border-right:1px solid #685642;*/
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.3em;	
-/*	-moz-box-shadow:.1em .0em .1em #999999;
-	box-shadow: .1em .0em .1em #999999;*/
 	padding: .4em .5em .2em .5em ;
 }
 
-ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li:hover{
+ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li:hover,
+ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li:hover{
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
-
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li a:focus{
+ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li a:focus,
+ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li a:focus  {
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-ul#subnavlist li a {
+ul#subnavlist li a, ul#subnavlist_i li a {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
-    padding:.2em;
+   	padding: .4em .4em .2em .4em ;
    	text-decoration:underline;
 	font-weight:500;
 }
