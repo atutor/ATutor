@@ -36,12 +36,14 @@ $this->_pages['mods/_standard/faq/index_instructor.php']['guide']     = 'instruc
 	$this->_pages['mods/_standard/faq/edit_question.php']['parent']    = 'mods/_standard/faq/index_instructor.php';
 	
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FAQ, TRUE)){	
-	$this->_pages['mods/_standard/faq/add_topic.php']['title_var'] = 'add_topic';
-	$this->_pages['mods/_standard/faq/add_topic.php']['other_parent']    = 'mods/_standard/faq/index.php';
- 	$this->_pages['mods/_standard/faq/add_question.php']['title_var'] = 'add_question';
-	$this->_pages['mods/_standard/faq/add_question.php']['other_parent']    = 'mods/_standard/faq/index.php';
-    $this->_pages['mods/_standard/faq/index.php']['children']  = array('mods/_standard/faq/add_question.php','mods/_standard/faq/add_topic.php');
+	$this->_pages_i['mods/_standard/faq/add_topic.php']['title_var'] = 'add_topic';
+	$this->_pages_i['mods/_standard/faq/add_topic.php']['other_parent']    = 'mods/_standard/faq/index.php';
+ 	$this->_pages_i['mods/_standard/faq/add_question.php']['title_var'] = 'add_question';
+	$this->_pages_i['mods/_standard/faq/add_question.php']['other_parent']    = 'mods/_standard/faq/index.php';
+    $this->_pages_i['mods/_standard/faq/index.php']['children']  = array('mods/_standard/faq/add_question.php','mods/_standard/faq/add_topic.php');
+ $this->_pages['mods/_standard/faq/index.php']['children']  = array();
 }
+
 // student page:
 $this->_pages['mods/_standard/faq/index.php']['title_var'] = 'faq';
 $this->_pages['mods/_standard/faq/index.php']['img']       = 'images/home-faq.png';

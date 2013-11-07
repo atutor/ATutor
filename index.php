@@ -121,7 +121,7 @@ if (!$module->isEnabled()) {
 	$sql	= "SELECT COUNT(*) AS cnt FROM %snews WHERE course_id=%d";
 	$row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
 }
-//debug($row);
+
 if ($row['cnt'] > 0) {
 
 	$num_results = $row['cnt'];

@@ -31,9 +31,10 @@ $this->_pages['mods/_standard/chat/manage/index.php']['guide']     = 'instructor
 	$this->_pages['mods/_standard/chat/manage/start_transcript.php']['parent'] = 'mods/_standard/chat/manage/index.php';
 	
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CHAT, TRUE)){	
-	$this->_pages['mods/_standard/chat/manage/start_transcript.php']['title_var'] = 'chat_transcript';
-	$this->_pages['mods/_standard/chat/manage/start_transcript.php']['other_parent']    = 'mods/_standard/chat/index.php';
-    $this->_pages['mods/_standard/chat/index.php']['children']  = array('mods/_standard/chat/manage/start_transcript.php');
+	$this->_pages_i['mods/_standard/chat/manage/start_transcript.php']['title_var'] = 'chat_transcript';
+	$this->_pages_i['mods/_standard/chat/manage/start_transcript.php']['other_parent']    = 'mods/_standard/chat/index.php';
+    $this->_pages_i['mods/_standard/chat/index.php']['children']  = array('mods/_standard/chat/manage/start_transcript.php');
+    $this->_pages['mods/_standard/chat/index.php']['children']  = array();
 }
 	$this->_pages['mods/_standard/chat/manage/delete_transcript.php']['title_var']  = 'chat_delete_transcript';
 	$this->_pages['mods/_standard/chat/manage/delete_transcript.php']['parent'] = 'mods/_standard/chat/manage/index.php';

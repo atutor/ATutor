@@ -91,13 +91,13 @@ $this->_pages['mods/_standard/reading_list/index_instructor.php']['avail_in_mobi
 
 
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_READING_LIST, TRUE)){	
-	$this->_pages['mods/_standard/reading_list/display_resources.php']['title_var'] = 'rl_create_resources';
-	$this->_pages['mods/_standard/reading_list/display_resources.php']['other_parent']    = 'mods/_standard/reading_list/index.php';
-    $this->_pages['mods/_standard/reading_list/index_instructor.php']['title_var'] = 'reading_list';
-    $this->_pages['mods/_standard/reading_list/index_instructor.php']['other_parent']   = 'mods/_standard/reading_list/index.php';
-	$this->_pages['mods/_standard/reading_list/index.php']['children']  = array('mods/_standard/reading_list/index_instructor.php','mods/_standard/reading_list/display_resources.php');
-    $this->_pages['mods/_standard/reading_list/index.php']['children'] = array_merge($this->_pages['mods/_standard/reading_list/index.php']['children'], array('mods/_standard/reading_list/reading_details.php'));
-
+	$this->_pages_i['mods/_standard/reading_list/display_resources.php']['title_var'] = 'rl_create_resources';
+	$this->_pages_i['mods/_standard/reading_list/display_resources.php']['other_parent']    = 'mods/_standard/reading_list/index.php';
+    $this->_pages_i['mods/_standard/reading_list/index_instructor.php']['title_var'] = 'reading_list';
+    $this->_pages_i['mods/_standard/reading_list/index_instructor.php']['other_parent']   = 'mods/_standard/reading_list/index.php';
+	$this->_pages_i['mods/_standard/reading_list/index.php']['children']  = array('mods/_standard/reading_list/index_instructor.php','mods/_standard/reading_list/display_resources.php');
+    //$this->_pages_i['mods/_standard/reading_list/index.php']['children'] = array_merge($this->_pages['mods/_standard/reading_list/index.php']['children'], array('mods/_standard/reading_list/reading_details.php'));
+ $this->_pages['mods/_standard/reading_list/index.php']['children']  = array();
     } else {
     $this->_pages['mods/_standard/reading_list/index.php']['children'] = array('mods/_standard/reading_list/reading_details.php');
 

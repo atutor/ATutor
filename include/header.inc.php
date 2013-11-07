@@ -297,11 +297,14 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$section_title = _AT('my_start_page');
 }
 
+if($_current_sub_level_page_i){
+    $savant->assign('current_sub_level_page', $_current_sub_level_page_i);
+} else{
+    $savant->assign('current_sub_level_page', $_current_sub_level_page);
+}
 $savant->assign('current_top_level_page', $_current_top_level_page);
 $savant->assign('sub_level_pages', $_sub_level_pages);
 $savant->assign('sub_level_pages_i', $_sub_level_pages_i);
-$savant->assign('current_sub_level_page', $_current_sub_level_page);
-$savant->assign('current_sub_level_page_i', $_current_sub_level_page_i);
 $savant->assign('path', $_path);
 $savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));

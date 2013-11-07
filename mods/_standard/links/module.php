@@ -45,6 +45,16 @@ $this->_pages['mods/_standard/links/index.php']['icon'] = 'images/home-links_sm.
 
 $this->_pages['mods/_standard/links/add.php']['title_var'] = 'suggest_link';
 $this->_pages['mods/_standard/links/add.php']['parent'] = 'mods/_standard/links/index.php';
+/*
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_LINKS, TRUE)){	
+$this->_pages_i['mods/_standard/links/tools/index.php']['title_var'] = 'manage_links';
+$this->_pages_i['mods/_standard/links/tools/index.php']['parent'] = 'mods/_standard/links/index.php';
+$this->_pages_i['mods/_standard/links/tools/index.php']['children'] = array('mods/_standard/links/tools/add.php', 'mods/_standard/links/tools/categories.php', 'mods/_standard/links/tools/categories_create.php');
+$this->_pages['mods/_standard/links/tools/index.php']['guide'] = 'instructor/?p=links.php';
+
+    //$this->_pages['mods/_standard/chat/index.php']['children']  = array();
+}
+*/
 
 function links_get_group_url($group_id) {
     // Adding queryDB to what might be a broken SQL query. This query might return multiple rows and only the first one is selected.

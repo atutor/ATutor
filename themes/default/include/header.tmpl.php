@@ -35,8 +35,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * $this->top_level_pages	associative array of the top level navigation
  * $this->current_top_level_page	the full path to the current top level page with file name
  * $this->sub_level_pages			associate array of sub level navigation
+ * $this->sub_level_pages_i			associate array of sub level navigation tools for instructors
  * $this->back_to_page				if set, the path and file name to the part of this page (if parent is not a top level nav)
  * $this->current_sub_level_page	the full path to the current sub level page with file name
+ * $this->current_sub_level_page_i	the full path to the current sub level page with file name for sub navigation intructor tools
  * $this->guide				the full path and file name to the guide page
  * $this->shortcuts         the array of tools' shortcuts to display at top right corner. Used by content.php and edit_content_folder.php
  * ======================================
@@ -367,7 +369,9 @@ global $system_courses, $_custom_css, $db;
     </div>
     
 
-	<?php if (count($this->sub_level_pages) > 0): ?>
+	<?php 
+
+	if (count($this->sub_level_pages) > 0): ?>
 		<div id="subnavlistcontainer" role="navigation"  aria-live="rude">
 		<a name="admin_tools" id="admin_tools" title="admin tools"></a>
 			<div id="subnavbacktopage">
@@ -378,7 +382,9 @@ global $system_courses, $_custom_css, $db;
 			</div>
 
 			<ul id="subnavlist">
-			<?php $num_pages = count($this->sub_level_pages); 
+			<?php 
+
+			$num_pages = count($this->sub_level_pages); 
 
 ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
@@ -393,6 +399,28 @@ global $system_courses, $_custom_css, $db;
 				<?php endif; ?>
 			<?php endfor; ?>
 			</ul>
+			
+
+			<?php 
+			$num_pages_i = count($this->sub_level_pages_i); 
+			if(is_array($this->sub_level_pages_i)){
+			    $num_pages_i = count($this->sub_level_pages_i); 
+			 ?>
+			<ul id="subnavlist_i">
+
+			<?php for ($i=0; $i<$num_pages_i; $i++): ?>
+
+				<?php if ($this->sub_level_pages_i[$i]['url'] == $this->current_sub_level_page): ?>
+				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></li>
+				<?php else: ?>
+					<li><a href="<?php echo $this->sub_level_pages_i[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></a></li>
+				<?php endif; ?>
+				<?php if ($i < $num_pages-1): 
+					echo " ";?>
+				<?php endif; ?>
+			<?php endfor; ?>
+			</ul>
+			<?php } ?>
 		</div>
 	<?php endif; ?>
 

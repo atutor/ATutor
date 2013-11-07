@@ -26,7 +26,7 @@ if (isset($_GET['edit'])) {
 	exit;
 } else if (isset($_GET['submissions'])){
 	$_GET['assignment'] = intval($_GET['assignment']);
-	header('Location: '.url_rewrite('mods/_standard/file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment'], AT_PRETTY_URL_IS_HEADER));
+	//header('Location: '.url_rewrite('mods/_standard/file_storage/index.php?ot='.WORKSPACE_ASSIGNMENT.SEP.'oid='.$_GET['assignment'], AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 $msg->addInfo('ASSIGNMENT_FS_SUBMISSIONS'); 
