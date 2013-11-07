@@ -466,7 +466,7 @@ function get_current_sub_navigation_page_i($current_page) {
     }
 }
 function get_path($current_page) {
-    global $_pages, $_pages, $_base_path, $_base_href;
+    global $_pages, $_pages_i, $_base_path, $_base_href;
 
     $path = array();
     
