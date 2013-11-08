@@ -44,9 +44,14 @@ $this->_pages['mods/_standard/forums/forum/list.php']['icon']		  = 'images/pin.p
 
 // The instructor course admin tools
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FORUMS, TRUE)){	
+$fid = intval($_GET['fid']);
+
 $this->_pages_i['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
-$this->_pages_i['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/forum/list.php';
+$this->_pages_i['mods/_standard/forums/add_forum.php']['other_parent'] = 'mods/_standard/forums/forum/list.php';
 $this->_pages_i['mods/_standard/forums/forum/list.php']['children']        = array('mods/_standard/forums/add_forum.php');
+$this->_pages_i['mods/_standard/forums/edit_forum.php']['title_var'] = 'edit_forum';
+$this->_pages_i['mods/_standard/forums/edit_forum.php']['other_parent']    = 'mods/_standard/forums/forum/index.php';
+$this->_pages_i['mods/_standard/forums/forum/index.php']['children'] = array('mods/_standard/forums/edit_forum.php');
 
 }
 $this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums');

@@ -2070,8 +2070,8 @@ ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
 ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li a:focus,
-ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li a:focus,  {
-ul#navlist li.active, ul#navlist li:hover, ul#navlist li a:focus
+ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li a:focus,  
+ul#navlist li.active, ul#navlist li:hover, ul#navlist li a:focus {
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;

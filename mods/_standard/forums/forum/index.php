@@ -15,7 +15,7 @@
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 $fid = intval($_GET['fid']);
-
+tool_origin('off');
 if (!isset($_GET['fid']) || !$fid) {
 	header('Location: list.php');
 	exit;
@@ -39,9 +39,7 @@ $_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['parent']    = '
 $_pages['search.php?search_within[]=forums']['title_var'] = 'search';
 $_pages['search.php?search_within[]=forums']['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
 
-$_pages['mods/_standard/forums/edit_forum.php?fid='.$fid]['title_var'] = 'edit_forum';
-$_pages['mods/_standard/forums/edit_forum.php?fid='.$fid]['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
-$_pages['mods/_standard/forums/forum/index.php']['children'] = array_merge(array('mods/_standard/forums/edit_forum.php?fid='.$fid), $_pages['mods/_standard/forums/forum/index.php']['children']);
+
 
 /* the last accessed field */
 $last_accessed = array();

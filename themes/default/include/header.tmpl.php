@@ -405,7 +405,16 @@ global $system_courses, $_custom_css, $db;
 			$num_pages_i = count($this->sub_level_pages_i); 
 			if(is_array($this->sub_level_pages_i)){
 			    $num_pages_i = count($this->sub_level_pages_i); 
+			    if(intval($_GET['fid'])){
+			        $fcid = "?fid=".$_GET['fid'];
+			    }
+			    if(intval($_GET['cid'])){
+			        $fcid = "?cid=".$_GET['cid'];
+			    }			 
+			 
+			 
 			 ?>
+
 			<ul id="subnavlist_i">
 
 			<?php for ($i=0; $i<$num_pages_i; $i++): ?>
@@ -413,7 +422,7 @@ global $system_courses, $_custom_css, $db;
 				<?php if ($this->sub_level_pages_i[$i]['url'] == $this->current_sub_level_page): ?>
 				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></li>
 				<?php else: ?>
-					<li><a href="<?php echo $this->sub_level_pages_i[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></a></li>
+					<li><a href="<?php echo $this->sub_level_pages_i[$i]['url'].$fcid; ?>"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></a></li>
 				<?php endif; ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>
