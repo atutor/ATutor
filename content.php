@@ -164,17 +164,7 @@ if (isset($top_num) && $top_num != (int) $top_num) {
 }
 // used by header.inc.php
 $_tool_shortcuts = $contentManager->getToolShortcuts($content_row);
-if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CONTENT, TRUE)){	
-    $_pages['mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid']]['title_var'] = 'edit_content';
-    $_pages['mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid']]['other_parent']   = 'content.php';
-	$_pages['mods/_core/editor/add_content.php']['title_var'] = 'add_content';
-	$_pages['mods/_core/editor/add_content.php']['other_parent']    = 'content.php';
-    $_pages['mods/_core/editor/arrange_content.php']['title_var'] = 'arrange_content';
-    $_pages['mods/_core/editor/arrange_content.php']['other_parent']   = 'content.php';
-    $_pages['mods/_core/imscp/index.php']['title_var'] = 'export_content';
-    $_pages['mods/_core/imscp/index.php']['other_parent']   = 'content.php';
-    $_pages['content.php']['children']  = array('mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid'],'mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'mods/_core/imscp/index.php');
-}
+
 /* if i'm an admin then let me see content, otherwise only if released */
 $released_status = $contentManager->isReleased($cid);
 

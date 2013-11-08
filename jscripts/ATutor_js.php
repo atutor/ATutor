@@ -42,6 +42,7 @@ ATutor.course = ATutor.course || {};
                 //Handle the hide admin tool switch
                 var initialStatus = ($.cookie('showSubNav') === "on") ? "1" : "0";
                 if(initialStatus === "0"){
+                    $("ul#subnavlist").css("border-bottom", "none");
                     $("#subnavlist_i").toggleClass("hidden").hide('slow');
                     $(".menuedit").toggleClass("hidden").hide('slow');
                     $("#shortcuts").toggleClass("hidden").hide('slow');
@@ -51,6 +52,7 @@ ATutor.course = ATutor.course || {};
                 }
                 ATutor.switchView = function (viewFlag) {
                     if(viewFlag === "0"){
+                        $("ul#subnavlist").css("border-bottom", "1px solid #DED29E");
                         $("#subnavlist_i").toggleClass("show").show('slow');
                         $(".menuedit").toggleClass("show").show('slow');
                         $("#shortcuts").toggleClass("show").show('slow');
@@ -61,6 +63,7 @@ ATutor.course = ATutor.course || {};
                         console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
                         console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
                     } else if(viewFlag === "1") {
+                        $("ul#subnavlist").css("border-bottom", "none");
                         $("#subnavlist_i").toggleClass("hidden").hide('slow');
                         $(".menuedit").toggleClass("hidden").hide('slow');
                         $("#shortcuts").toggleClass("hidden").hide('slow');

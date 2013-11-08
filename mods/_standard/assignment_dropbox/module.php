@@ -45,10 +45,11 @@ $this->_pages['mods/_standard/assignments/index_instructor.php']['children'] =
 }
 
 if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ASSIGNMENTS, TRUE)){	
-	$this->_pages['mods/_standard/assignments/add_assignment.php']['title_var'] = 'add_assignment';
-	$this->_pages['mods/_standard/assignments/add_assignment.php']['other_parent']    = 'mods/_standard/assignment_dropbox/index.php';
-    $this->_pages['mods/_standard/assignments/index_instructor.php']['title_var'] = 'assignments';
-    $this->_pages['mods/_standard/assignments/index_instructor.php']['other_parent']   = 'mods/_standard/assignment_dropbox/index.php';
-    $this->_pages['mods/_standard/assignment_dropbox/index.php']['children']  = array('mods/_standard/assignments/index_instructor.php','mods/_standard/assignments/add_assignment.php');
+	$this->_pages_i['mods/_standard/assignments/add_assignment.php']['title_var'] = 'add_assignment';
+	$this->_pages_i['mods/_standard/assignments/add_assignment.php']['other_parent']    = 'mods/_standard/assignment_dropbox/index.php';
+    $this->_pages_i['mods/_standard/assignments/index_instructor.php']['title_var'] = 'assignments';
+    $this->_pages_i['mods/_standard/assignments/index_instructor.php']['other_parent']   = 'mods/_standard/assignment_dropbox/index.php';
+    $this->_pages_i['mods/_standard/assignment_dropbox/index.php']['children']  = array('mods/_standard/assignments/index_instructor.php','mods/_standard/assignments/add_assignment.php');
+    $this->_pages['mods/_standard/assignment_dropbox/index.php']['children']  = array('');
 }
 ?>

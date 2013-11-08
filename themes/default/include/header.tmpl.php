@@ -389,11 +389,11 @@ global $system_courses, $_custom_css, $db;
 ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 
-				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
+				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page && $num_pages > 1){ ?>
 				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></li>
-				<?php else: ?>
-					<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></a></li>
-				<?php endif; ?>
+				<?php } else if($num_pages > 1) { ?>
+					  <li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></a></li>
+				<?php } ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>
 				<?php endif; ?>

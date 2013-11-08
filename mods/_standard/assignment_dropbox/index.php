@@ -16,7 +16,7 @@ require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php'); 
 require_once(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php'); // for get_human_size()
 require('assignment_dropbox.inc.php');
 $owner_type = WORKSPACE_ASSIGNMENT;
-
+tool_origin('off');
 if (isset($_REQUEST['owner_id']) && !($has_priv = ad_authenticate($_REQUEST['owner_id']))) {
 	$msg->addError('ACCESS_DENIED');
 	header('Location: index.php');

@@ -547,7 +547,7 @@ div#breadcrumbs {
 }
 h2.page-title {
 	clear:right;
-	margin-bottom: 10px;
+	margin-bottom: 1.3em;
 	padding:0px;
 }
 
@@ -2026,11 +2026,12 @@ ul#subnavlist_i {
 	font-family: Verdana,Helvetica,Arial,serif;
     float:right;
     margin-top: -2.2em;
-    background-image:url("images/wand.png");
+    margin-right:2em;
+   /* background-image:url("images/wand.png");*/
     background-position: 1em .3em;
     background-repeat:no-repeat;
 }
-ul#subnavlist {
+ul#subnavlist, ul#navlist {
     border-bottom:1px solid #DED29E;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
@@ -2048,7 +2049,7 @@ ul#subnavlist_i li {
 	padding: .4em .5em .2em .5em ;
 	border-bottom: 3px solid blue;
 }
-ul#subnavlist li {
+ul#subnavlist li, ul#navlist li{
 	list-style: none;
 	display: inline-block;
 	font-weight:700;
@@ -2061,21 +2062,23 @@ ul#subnavlist li {
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li:hover,
-ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li:hover{
+ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li:hover,
+ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
 ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li a:focus,
-ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li a:focus  {
+ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li a:focus,  {
+ul#navlist li.active, ul#navlist li:hover, ul#navlist li a:focus
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-ul#subnavlist li a, ul#subnavlist_i li a {
+ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
@@ -3624,6 +3627,7 @@ font-weight:700;
     div#subnavlistcontainer {
         clear:left;
     }
+
 }
 /********** for 640px or less *********/
 @media screen and (max-device-width: 640px) {
@@ -3837,6 +3841,21 @@ font-weight:700;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
     }
+ul#subnavlist_i {
+	font-family: Verdana,Helvetica,Arial,serif;
+    float:left;
+    clear:both;
+}
+
+ul#subnavlist_i li {
+        float:left;
+        display: block;
+        width:90%;
+        text-align:left;
+        padding: .5em 0em .5em 0em;
+        background-color: #F3F3F3;
+    	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+}
     ul#subnavlist li a {
         background-color:transparent;
         width:90%

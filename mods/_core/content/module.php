@@ -57,10 +57,17 @@ if (!isset($_GET['cid']) && !isset($_POST['cid'])) {
 } else {
 	$this->_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'edit_content_folder';
 }
-if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_ANNOUNCEMENTS, TRUE)){	
-    $this->_pages_i['mods/_core/editor/add_content.php']['title_var']    = 'add_content';
-    $this->_pages_i['mods/_core/editor/add_content.php']['other_parent']   = 'index.php'; 
-    $this->_pages_i['index.php']['children']  = array('mods/_core/editor/add_content.php');
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CONTENT, TRUE)){	
+    $_pages_i['mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid']]['title_var'] = 'edit_content';
+    $_pages_i['mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid']]['other_parent']   = 'content.php';
+	$_pages_i['mods/_core/editor/add_content.php']['title_var'] = 'add_content';
+	$_pages_i['mods/_core/editor/add_content.php']['other_parent']    = 'content.php';
+    $_pages_i['mods/_core/editor/arrange_content.php']['title_var'] = 'arrange_content';
+    $_pages_i['mods/_core/editor/arrange_content.php']['other_parent']   = 'content.php';
+    $_pages_i['mods/_core/imscp/index.php']['title_var'] = 'export_content';
+    $_pages_i['mods/_core/imscp/index.php']['other_parent']   = 'content.php';
+    $_pages_i['content.php']['children']  = array('mods/_core/editor/edit_content.php?cid='.$_SESSION['s_cid'],'mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'mods/_core/imscp/index.php');
+    $_pages['content.php']['children']  = array();
 }
 $this->_pages['mods/_core/editor/edit_content_folder.php']['parent']    = 'mods/_core/content/index.php';
 
