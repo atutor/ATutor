@@ -793,7 +793,7 @@ ul.browse-list {
 /* feedback /errors */
 div#error {
 	width: 100%;
-	padding: 15px;
+	padding: 1em;
 	background-color: #E49E7A;
 	color:  #000000;
 	background-color: #f9a5a5;	
@@ -821,6 +821,9 @@ div#error ul, div#feedback ul, div#help ul {
 #message{
 /*    display:none;  */
     width:100%;
+    float:left;
+    clear:both;
+
 }
 
 .message_link{
@@ -837,8 +840,8 @@ div#error ul li{
 
 div#feedback {
 	width: 100%;
-	margin-bottom: 15px;
-	padding: 15px;
+	margin-bottom: 2.8em;
+	padding: 1em;
     background-color: #93E2D5;
 	/*background-color: #B7C68B;*/
 	color: #000000;
@@ -846,7 +849,7 @@ div#feedback {
 }
 
 div#help {
-	width: 85%;
+	width: 100%;
 	border: 1px solid #ACCFCC;
 	padding: 15px;
 	background-color: #E9F4F3;
@@ -2676,6 +2679,33 @@ width:3.5em;
 /*font-size:100%;*/
 }
 
+/* Chat styles */
+#chat_launch{
+    border:1px solid #DED29E;
+    width:10em; 
+    text-align:center;
+    padding:1em; 
+    border-radius: 1em; 
+    background-color:#cccccc; 
+    background-image:linear-gradient(#FAFAFA, #EAEAEA);
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:1em;
+    box-shadow:2px 2px #cccccc;
+}
+#chat_launch:hover, #chat_launch:focus{
+    background-image:linear-gradient(#EAEAEA, #FAFAFA);
+    box-shadow:0 2px 2px #cccccc;
+}
+#chat_launch a{
+    text-decoration:none;
+
+}
+#chat_launch a:hover{
+    text-decoration:underline;
+    background-image:linear-gradient(#EAEAEA, #FAFAFA);
+    color:#555555;
+}
 
 /*  Photo Album Styles 
  * 
