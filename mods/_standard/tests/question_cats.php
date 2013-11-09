@@ -31,19 +31,21 @@ if (isset($_POST['edit'], $_POST['category'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
-$result	= mysql_query($sql, $db);
+$rows_test_cats	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 
-if ($row = mysql_fetch_assoc($result)) {
+if(count($rows_test_cats) > 0){
 ?>
 	<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('question_categories'); ?></legend>
-<?php	do { ?>
+<?php	
+        foreach($rows_test_cats as $row){
+         ?>
 			<div class="row">
 				<input type="radio" id="cat_<?php echo $row['category_id']; ?>" name="category" value="<?php echo $row['category_id']; ?>" />	<label for="cat_<?php echo $row['category_id']; ?>"><?php echo AT_print($row['title'], 'tests_questions_categories.title'); ?></label>
 			</div>
 <?php 
-		} while ($row = mysql_fetch_assoc($result));
+		} 
 ?>
 
 		<div class="row buttons">
