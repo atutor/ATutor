@@ -14,6 +14,8 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+
+tool_origin('off');
 require (AT_INCLUDE_PATH.'header.inc.php');
 
 $sql	= "SELECT word_id, related_word_id FROM %sglossary WHERE related_word_id>0 AND course_id=%d ORDER BY related_word_id";
