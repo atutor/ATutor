@@ -415,7 +415,7 @@ global $system_courses, $_custom_css, $db;
 			 
 			 ?>
 
-		test	<ul id="subnavlist_i">
+			<ul id="subnavlist_i">
 
 			<?php for ($i=0; $i<$num_pages_i; $i++): ?>
 
