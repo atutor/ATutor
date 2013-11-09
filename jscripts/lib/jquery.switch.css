@@ -30,7 +30,6 @@ margin-top:-.5em;
   position: relative;
   margin-top: -34px;
   z-index: 100;
-  
   -moz-border-radius: 17px;
   -webkit-border-radius: 17px;
   border-radius: 17px;
@@ -57,11 +56,11 @@ margin-top:-.5em;
 
 .ui-switch-handle {
   display: block;
-  height: 25px; width: 25px;
+  height: 30px; width: 30px;
   position: absolute;
-  top: -2px; left: -12px;
+  top: -4px; left: -12px;
   background: url(../../images/jquery.switch.png);
-  background-size: 25px 25px;
+  background-size: 30px 30px;
   
   -moz-border-radius: 15px;
   -webkit-border-radius: 15px;
@@ -103,11 +102,10 @@ margin-top:-.5em;
   display: block;
   float: left;
   line-height: 18px;
-  font-size: 12px;
+  font-size: 11px;
   color: white;
   background: green;
   padding: 0 10px;
-  border: solid 1px black;
   text-align: center;
   font-weight: bold;
   text-decoration: none;

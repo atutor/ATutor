@@ -3348,7 +3348,9 @@ border-radius: 0em .3em .3em 0em ;
 background-color:#C5C9C8;
 }
 
-
+#detail_switch{
+    margin-top:.3em;
+}
 /******* Responsive elements *******/
 @media screen and (max-width: 1600px) {
 
