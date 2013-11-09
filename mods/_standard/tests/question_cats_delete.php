@@ -18,17 +18,18 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 authenticate(AT_PRIV_TESTS);
 if (isset($_POST['submit_yes'])) {
-	$_POST['catid'] = intval($_POST['catid']);
-
 	//remove cat
-	$sql = "DELETE FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=".$_POST['catid'];
-	$result = mysql_query($sql, $db);
+	$sql = "DELETE FROM %stests_questions_categories WHERE course_id=%d AND category_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['catid']));
+	
+    if($result > 0){
+        $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+    }
 
 	//set all q's that use this cat to have cat=0
-	$sql = "UPDATE ".TABLE_PREFIX."tests_questions SET category_id=0 WHERE course_id=$_SESSION[course_id] AND category_id=".$_POST['catid'];
-	$result = mysql_query($sql, $db);
+	$sql = "UPDATE %stests_questions SET category_id=0 WHERE course_id=%d AND category_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['catid']));
 
-	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: '.AT_BASE_HREF.'mods/_standard/tests/question_cats.php');
 	exit;
 
@@ -46,11 +47,8 @@ if (isset($_POST['submit_yes'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$_GET['catid'] = intval($_GET['catid']);
-
-$sql	= "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_GET[catid]";
-$result	= mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
+$sql	= "SELECT title FROM %stests_questions_categories WHERE course_id=%d AND category_id=%d";
+$row	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_GET['catid']), TRUE);
 
 $hidden_vars['catid'] = $_GET['catid'];
 
