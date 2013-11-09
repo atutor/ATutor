@@ -53,7 +53,6 @@ if ($row_test['random']) {
 	$rows_questions	= queryDB($sql, array(TABLE_PREFIX, $tid)); 
 
 	$i = 0;
-	$row2 = mysql_fetch_assoc($result);
 	/* Store all related question in cr_questions */
 	foreach($rows_questions as $row2){
 		$cr_questions[$i] = $row2['question_id'];
