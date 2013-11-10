@@ -19,9 +19,10 @@ authenticate(AT_PRIV_TESTS);
 $tid = intval($_GET['tid']);
 
 /* Retrieve the content_id of this test */
-$sql = "SELECT title, random, num_questions, instructions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db); 
-if (!($test_row = mysql_fetch_assoc($result))) {
+$sql = "SELECT title, random, num_questions, instructions FROM %stests WHERE test_id=%d";
+$test_row	= queryDB($sql, array(TABLE_PREFIX, $tid), TRUE); 
+
+if(count($test_row) == 0){
 	$msg->addError('ITEM_NOT_FOUND');
 	header(url_rewrite('mods/_standard/tests/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
