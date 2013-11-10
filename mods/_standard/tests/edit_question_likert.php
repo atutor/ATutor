@@ -63,35 +63,64 @@ if (isset($_POST['cancel'])) {
 				/* an empty option can't be correct */
 				$_POST['answer'][$i] = 0;
 			}
-		}		
-		$sql	= "UPDATE ".TABLE_PREFIX."tests_questions SET
-			category_id=$_POST[category_id],
-			feedback='',
-			question='$_POST[question]',
-			choice_0='{$_POST[choice][0]}',
-			choice_1='{$_POST[choice][1]}',
-			choice_2='{$_POST[choice][2]}',
-			choice_3='{$_POST[choice][3]}',
-			choice_4='{$_POST[choice][4]}',
-			choice_5='{$_POST[choice][5]}',
-			choice_6='{$_POST[choice][6]}',
-			choice_7='{$_POST[choice][7]}',
-			choice_8='{$_POST[choice][8]}',
-			choice_9='{$_POST[choice][9]}',
-			answer_0={$_POST[answer][0]},
-			answer_1={$_POST[answer][1]},
-			answer_2={$_POST[answer][2]},
-			answer_3={$_POST[answer][3]},
-			answer_4={$_POST[answer][4]},
-			answer_5={$_POST[answer][5]},
-			answer_6={$_POST[answer][6]},
-			answer_7={$_POST[answer][7]},
-			answer_8={$_POST[answer][8]},
-			answer_9={$_POST[answer][9]}
+		}	
 
-			WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
+        $sql    = "UPDATE %stests_questions SET
+            category_id=%d,
+            feedback='%s',
+            question='%s',
+            choice_0='%s',
+            choice_1='%s',
+            choice_2='%s',
+            choice_3='%s',
+            choice_4='%s',
+            choice_5='%s',
+            choice_6='%s',
+            choice_7='%s',
+            choice_8='%s',
+            choice_9='%s',
+            answer_0=%d,
+            answer_1=%d,
+            answer_2=%d,
+            answer_3=%d,
+            answer_4=%d,
+            answer_5=%d,
+            answer_6=%d,
+            answer_7=%d,
+            answer_8=%d,
+            answer_9=%d,
+            remedial_content='%s'
+            WHERE question_id=%d AND course_id=%d";
 
+        $result    = queryDB($sql, array(
+                        TABLE_PREFIX,
+                        $_POST['category_id'],
+                        $_POST['feedback'],
+                        $_POST['question'],
+                        $_POST['choice']['0'],
+                        $_POST['choice']['1'],
+                        $_POST['choice']['2'],
+                        $_POST['choice']['3'],
+                        $_POST['choice']['4'],
+                        $_POST['choice']['5'],
+                        $_POST['choice']['6'],
+                        $_POST['choice']['7'],
+                        $_POST['choice']['8'],
+                        $_POST['choice']['9'],
+                        $_POST['answer']['0'],
+                        $_POST['answer']['1'],
+                        $_POST['answer']['2'],
+                        $_POST['answer']['3'],
+                        $_POST['answer']['4'],
+                        $_POST['answer']['5'],
+                        $_POST['answer']['6'],
+                        $_POST['answer']['7'],
+                        $_POST['answer']['8'],
+                        $_POST['answer']['9'],
+                        $_POST['remedial_content'],
+                        $_POST['qid'],
+                        $_SESSION['course_id'] ));
+        
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		if ($_POST['tid']) {
 			header('Location: questions.php?tid='.$_POST['tid']);			
@@ -107,20 +136,21 @@ if (isset($_POST['cancel'])) {
 	if (isset($_likert_preset[$_POST['preset_num']])) {
 		$_POST['choice'] = $_likert_preset[$_POST['preset_num']];
 	} else if ($_POST['preset_num']) {
-		$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_POST[preset_num] AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)){
+
+		$sql	= "SELECT * FROM %stests_questions WHERE question_id=%d AND course_id=%d";
+		$rows_questions	= queryDB($sql, array(TABLE_PREFIX, $_POST['preset_num'], $_SESSION['course_id']));
+		
+		if(count($rows_questions) > 0){
 			for ($i=0; $i<10; $i++) {
-				$_POST['choice'][$i] = $row['choice_' . $i];
+				$_POST['choice'][$i] = $rows_questions['choice_' . $i];
 			}
 		}
 	}
 
 } else {
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=4";
-	$result	= mysql_query($sql, $db);
-
-	if (!($row = mysql_fetch_array($result))){
+	$sql	= "SELECT * FROM %stests_questions WHERE question_id=%d AND course_id=%d AND type=4";
+	$row	= queryDB($sql, array(TABLE_PREFIX, $qid, $_SESSION['course_id']), TRUE);
+    if(count($row) == 0){
 		require(AT_INCLUDE_PATH.'header.inc.php');
 		$msg->printErrors('ITEM_NOT_FOUND');
 		require (AT_INCLUDE_PATH.'footer.inc.php');
@@ -159,12 +189,13 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			//previously used
 			echo '</optgroup>';
 
-			$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
-			$result = mysql_query($sql, $db);
-			if ($row = mysql_fetch_assoc($result)) {
+			$sql = "SELECT * FROM %stests_questions WHERE course_id=%d AND type=4";
+			$rows_questions = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+			
+			if(count($rows_questions) > 0){
 				echo '<optgroup label="'. _AT('prev_used').'">';
 				$used_choices = array();
-				do {
+				foreach($rows_questions as $row){
 					$choices = array_slice($row, 9, 10);
 					if (in_array($choices, $used_choices)) {
 						continue;
@@ -179,7 +210,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 						}
 					}
 					echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
-				} while ($row = mysql_fetch_assoc($result));
+				} 
 				echo '</optgroup>';
 			}
 		?>
