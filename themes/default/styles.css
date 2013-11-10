@@ -816,6 +816,7 @@ div#error ul, div#feedback ul, div#help ul {
 	margin-left: 0px;
 	padding-left: 0px;
 	list-style-type:none;
+	width:90%;
 }
 
 #message{
@@ -825,14 +826,17 @@ div#error ul, div#feedback ul, div#help ul {
     clear:both;
 
 }
-
 .message_link{
     float:right;
     margin-right:1em;
+    margin-left:1em;
 }
 #message img{
     float:right;
     margin-right:1em;
+}
+#message img:focus{
+   background-color:#cccccc;
 }
 div#error ul li{
 	margin-top: 5px;

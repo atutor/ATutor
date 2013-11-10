@@ -93,7 +93,7 @@ ATutor.course = ATutor.course || {};
     */
         
     /* To hide feedback div when clicked */
-        $("#message").click(function() {
+        $(".message_link").click(function() {
          $("#message").hide('blind', {}, 500), 8000;
          return false;
         });  
