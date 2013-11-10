@@ -189,9 +189,8 @@ if (!$overwrite){
 	error_reporting(AT_ERROR_REPORTING);
 }
 /* get the course's max_quota */
-$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$q_row	= mysql_fetch_assoc($result);
+$sql	= "SELECT max_quota FROM %scourses WHERE course_id=%d";
+$q_row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
 
 if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 
@@ -282,12 +281,10 @@ $xml_items = array();
 
 //Check if the files exist, if so, warn the user.
 $existing_files = isQTIFileExist($attributes);
-//debug($existing_files);
+
 if (!$overwrite && !empty($existing_files)){
 	$existing_files = implode('<br/>', $existing_files);
 	require(AT_INCLUDE_PATH.'header.inc.php');
-//	$msg->addConfirm(array('MEDIA_FILE_EXISTED', $existing_files));
-//	$msg->printConfirm();
 	echo '<form action="" method="POST">';
 	echo '<div class="input-form">';
 	echo '<div class="row">';
@@ -321,12 +318,14 @@ foreach ($qids as $order=>$qid){
 		$weight = 0;
 	}
 	$new_order = $order + 1;
-	$sql = "INSERT INTO " . TABLE_PREFIX . "tests_questions_assoc" . 
+
+	$sql = "INSERT INTO %stests_questions_assoc" . 
 			"(test_id, question_id, weight, ordering, required) " .
-			"VALUES ($tid, $qid, $weight, $new_order, 0)";
-	$result = mysql_query($sql, $db);
+			"VALUES (%d, %d, %d, %d, 0)";
+	$result = queryDB($sql, array(TABLE_PREFIX, $tid, $qid, $weight, $new_order));
+
 }
-//debug('imported test');
+
 if (!$msg->containsErrors()) {
 	$msg->addFeedback('IMPORT_SUCCEEDED');
 }
