@@ -69,6 +69,11 @@ if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CONTENT, TRUE)){
     $_pages_i['mods/_core/imscp/index.php']['other_parent']   = 'content.php';
     $_pages_i['content.php']['children']  = array('mods/_core/editor/edit_content.php','mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'mods/_core/imscp/index.php');
     $_pages['content.php']['children']  = array();
+    $_pages_i['mods/_core/editor/add_content.php']['title_var'] = 'add_content';
+	$_pages_i['mods/_core/editor/add_content.php']['parent']    = 'index.php';
+    $_pages_i['index.php']['children']  = array('mods/_core/editor/add_content.php', 'mods/_core/properties/course_properties.php');
+    $_pages['index.php']['children']  = array();
+
 }
 $this->_pages['mods/_core/editor/edit_content_folder.php']['parent']    = 'mods/_core/content/index.php';
 
