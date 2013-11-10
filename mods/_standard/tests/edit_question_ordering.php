@@ -53,9 +53,8 @@ if (isset($_POST['cancel'])) {
         $msg->addError(array('EMPTY_FIELDS', $missing_fields));
     }
     if (!$msg->containsErrors()) {
-        $_POST['question']            = $addslashes($_POST['question']);
-        $_POST['feedback']            = $addslashes($_POST['feedback']);
-        $_POST['remedial_content']    = $addslashes(trim($_POST['remedial_content']));
+
+        $_POST['remedial_content']    = trim($_POST['remedial_content']);
 
         $choice_new = array(); // stores the non-blank choices
         $answer_new = array(); // stores the non-blank answers
@@ -66,7 +65,7 @@ if (isset($_POST['cancel'])) {
              * @harris
              */
             $_POST['choice'][$i] = validate_length($_POST['choice'][$i], 255);
-            $_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
+            $_POST['choice'][$i] = trim($_POST['choice'][$i]);
 
             if ($_POST['choice'][$i] != '') {
                 /* filter out empty choices/ remove gaps */
@@ -78,35 +77,62 @@ if (isset($_POST['cancel'])) {
         $_POST['choice']   = array_pad($choice_new, 10, '');
         $answer_new        = array_pad($answer_new, 10, 0);
 
-        $sql    = "UPDATE ".TABLE_PREFIX."tests_questions SET
-            category_id=$_POST[category_id],
-            feedback='$_POST[feedback]',
-            question='$_POST[question]',
-            remedial_content='$_POST[remedial_content]',
-            choice_0='{$_POST[choice][0]}',
-            choice_1='{$_POST[choice][1]}',
-            choice_2='{$_POST[choice][2]}',
-            choice_3='{$_POST[choice][3]}',
-            choice_4='{$_POST[choice][4]}',
-            choice_5='{$_POST[choice][5]}',
-            choice_6='{$_POST[choice][6]}',
-            choice_7='{$_POST[choice][7]}',
-            choice_8='{$_POST[choice][8]}',
-            choice_9='{$_POST[choice][9]}',
-            answer_0=$answer_new[0],
-            answer_1=$answer_new[1],
-            answer_2=$answer_new[2],
-            answer_3=$answer_new[3],
-            answer_4=$answer_new[4],
-            answer_5=$answer_new[5],
-            answer_6=$answer_new[6],
-            answer_7=$answer_new[7],
-            answer_8=$answer_new[8],
-            answer_9=$answer_new[9]
+        $sql    = "UPDATE %stests_questions SET
+            category_id=%d,
+            feedback='%s',
+            question='%s',
+            remedial_content='%s',
+            choice_0='%s',
+            choice_1='%s',
+            choice_2='%s',
+            choice_3='%s',
+            choice_4='%s',
+            choice_5='%s',
+            choice_6='%s',
+            choice_7='%s',
+            choice_8='%s',
+            choice_9='%s',
+            answer_0=%d,
+            answer_1=%d,
+            answer_2=%d,
+            answer_3=%d,
+            answer_4=%d,
+            answer_5=%d,
+            answer_6=%d,
+            answer_7=%d,
+            answer_8=%d,
+            answer_9=%d
 
-            WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
-        $result    = mysql_query($sql, $db);
-
+            WHERE question_id=%d AND course_id=%d";
+        $result    = queryDB($sql, array(
+                        TABLE_PREFIX,
+                        $_POST['category_id'],
+                        $_POST['feedback'],
+                        $_POST['question'],
+                        $_POST['remedial_content'],
+                        $_POST['choice']['0'],
+                        $_POST['choice']['1'],
+                        $_POST['choice']['2'],
+                        $_POST['choice']['3'],
+                        $_POST['choice']['4'],
+                        $_POST['choice']['5'],
+                        $_POST['choice']['6'],
+                        $_POST['choice']['7'],
+                        $_POST['choice']['8'],
+                        $_POST['choice']['9'],
+                        $answer_new['0'],
+                        $answer_new['1'],
+                        $answer_new['2'],
+                        $answer_new['3'],
+                        $answer_new['4'],
+                        $answer_new['5'],
+                        $answer_new['6'],
+                        $answer_new['7'],
+                        $answer_new['8'],
+                        $answer_new['8'],
+                        $_POST['qid'],
+                        $_SESSION['course_id']));
+        
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
         if ($_POST['tid']) {
             header('Location: questions.php?tid='.$_POST['tid']);
@@ -116,10 +142,11 @@ if (isset($_POST['cancel'])) {
         exit;
     }
 } else {
-    $sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=6";
-    $result    = mysql_query($sql, $db);
 
-    if (!($row = mysql_fetch_assoc($result))){
+    $sql    = "SELECT * FROM %stests_questions WHERE question_id=%d AND course_id=%d AND type=6";
+    $row    = queryDB($sql, array(TABLE_PREFIX, $qid, $_SESSION['course_id']), TRUE);
+    
+    if(count($row) == 0){
         require(AT_INCLUDE_PATH.'header.inc.php');
         $msg->printErrors('ITEM_NOT_FOUND');
         require (AT_INCLUDE_PATH.'footer.inc.php');
