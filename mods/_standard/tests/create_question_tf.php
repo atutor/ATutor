@@ -36,6 +36,10 @@ if (isset($_POST['cancel'])) {
     }
 
     if (!$msg->containsErrors()) {
+        $_POST['feedback']            = $addslashes($_POST['feedback']);
+        $_POST['question']            = $addslashes($_POST['question']);
+        $_POST['remedial_content']    = $addslashes($_POST['remedial_content']);
+
         $sql_params = array(    $_POST['category_id'], 
                                 $_SESSION['course_id'],
                                 $_POST['feedback'], 
@@ -43,7 +47,7 @@ if (isset($_POST['cancel'])) {
                                 $_POST['answer'],
                                 $_POST['remedial_content']);
 
-        $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);
+        $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);  
         $result    = queryDB($sql, array());
         
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
