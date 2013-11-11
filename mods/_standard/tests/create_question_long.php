@@ -47,7 +47,7 @@ if (isset($_POST['cancel'])) {
                                 $_POST['remedial_content']);
 
         $sql = vsprintf(AT_SQL_QUESTION_LONG, $sql_params);
-        $result    = mysql_query($sql, $db);
+        $result    = queryDB($sql, array());
 
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
         header('Location: question_db.php');
