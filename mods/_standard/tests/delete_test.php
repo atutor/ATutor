@@ -16,8 +16,6 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_TESTS);
 
-
-	
 	if (isset($_POST['submit_no'])) {
 		$msg->addFeedback('CANCELLED');
 		header('Location: index.php');
@@ -26,36 +24,41 @@ authenticate(AT_PRIV_TESTS);
 		
 		$tid = intval($_POST['tid']);
 
-		$sql	= "DELETE FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-		$result	= mysql_query($sql, $db);
-
-		if (mysql_affected_rows($db) == 1) {
-			$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-			$result	= mysql_query($sql, $db);
-
+		$sql	= "DELETE FROM %stests WHERE test_id=%d AND course_id=%d";
+		$result	= queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']));
+		
+        if($result == 1){
+			$sql	= "DELETE FROM %stests_questions_assoc WHERE test_id=%d";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $tid));
+			
 			//delete test content association as well
-			$sql	= "DELETE FROM ".TABLE_PREFIX."content_tests_assoc WHERE test_id=$tid";
-			$result = mysql_query($sql, $db);
+			$sql	= "DELETE FROM %scontent_tests_assoc WHERE test_id=%d";
+			$result	= queryDB($sql, array(TABLE_PREFIX, $tid));
 
 			/* it has to delete the results as well... */
-			$sql	= "SELECT result_id FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
-			$result	= mysql_query($sql, $db);
-			if ($row = mysql_fetch_array($result)) {
-				$result_list = '('.$row['result_id'];
-
-				while ($row = mysql_fetch_array($result)) {
-					$result_list .= ','.$row['result_id'];
+			$sql	= "SELECT result_id FROM %stests_results WHERE test_id=%d";
+			$rows_results	= queryDB($sql, array(TABLE_PREFIX, $tid));
+			
+			$count_results = count($rows_results);
+            if($count_results > 0){
+				$result_list = '(';
+                foreach($rows_results as $row){
+                     $result_count++;           
+				    if($result_count > $count_results){
+					    $result_list .= $row['result_id'].',';
+					}else{
+					    $result_list .= $row['result_id'];
+					}
 				}
 				$result_list .= ')';
 			}
 
 			if ($result_list != '') {
-				$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE result_id IN $result_list";
-				$result	= mysql_query($sql, $db);
+				$sql	= "DELETE FROM %stests_answers WHERE result_id IN %s";
+				$result	= queryDB($sql, array(TABLE_PREFIX, $result_list));
 
-
-				$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE test_id=$tid";
-				$result	= mysql_query($sql, $db);
+				$sql	= "DELETE FROM %stests_results WHERE test_id=%d";
+				$result	= queryDB($sql, array(TABLE_PREFIX, $tid));
 			}
 		}
 
@@ -69,10 +72,9 @@ authenticate(AT_PRIV_TESTS);
 
 	$_GET['tid'] = intval($_GET['tid']);
 
-	$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$_GET[tid] AND course_id=$_SESSION[course_id]";
-	$result	= mysql_query($sql, $db);
-	$row	= mysql_fetch_array($result);
-
+	$sql	= "SELECT title FROM %stests WHERE test_id=%d AND course_id=%d";
+	$row	= queryDB($sql, array(TABLE_PREFIX, $_GET['tid'], $_SESSION['course_id']), TRUE);
+	
 	unset($hidden_vars);
 	$hidden_vars['tid'] = $_GET['tid'];
 
