@@ -54,16 +54,15 @@ if($_POST['submit']){
 	}		
 
 	if (!$msg->containsErrors()) {
-		$_POST['transformable_uri'] = $addslashes($_POST['transformable_uri']);
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('transformable_uri', '".$_POST['transformable_uri']."')";
-		mysql_query($sql, $db);
 
-		$_POST['transformable_web_service_id'] = $addslashes($_POST['transformable_web_service_id']);
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('transformable_web_service_id', '".$_POST['transformable_web_service_id']."')";
-		mysql_query($sql, $db);
+		$sql = "REPLACE INTO %sconfig VALUES ('transformable_uri', '%s')";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['transformable_uri']));
 		
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('transformable_oauth_expire', '".$_POST['transformable_oauth_expire']."')";
-		mysql_query($sql, $db);
+		$sql = "REPLACE INTO %sconfig VALUES ('transformable_web_service_id', '%s')";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['transformable_web_service_id']));	
+			
+		$sql = "REPLACE INTO %sconfig VALUES ('transformable_oauth_expire', '%s')";
+		queryDB($sql, array(TABLE_PREFIX, $_POST['transformable_oauth_expire'], ));		
 		
 		$msg->addFeedback('TRANSFORMABLE_CONFIG_SAVED');
 	
