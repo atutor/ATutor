@@ -24,10 +24,9 @@ foreach ($rids as $k => $id) {
 $rid = implode(',', $rids);
 
 // Check that the user deletes submissions in his own test; if not, exit like authenticate()
-$sql	= "SELECT count(*) AS cnt FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."tests USING (test_id) WHERE result_id IN ($rid) AND course_id = $_SESSION[course_id] AND R.test_id = $tid";
+$sql	= "SELECT count(*) AS cnt FROM %stests_results R LEFT JOIN %stests USING (test_id) WHERE result_id IN (%s) AND course_id = %d AND R.test_id = %d";
+$row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $rid, $_SESSION['course_id'], $tid), TRUE);
 
-$result	= mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
 if ($row['cnt'] < count($rids)) {
 	exit;
 }
@@ -38,12 +37,13 @@ if (isset($_POST['submit_no'])) {
 	exit;
 
 } else if (isset($_POST['submit_yes'])) {
-	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_answers WHERE result_id IN ($rid)";
-	$result	= mysql_query($sql, $db);
 
-	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_results WHERE result_id IN ($rid)";
-	$result	= mysql_query($sql, $db);
-		
+	$sql	= "DELETE FROM %stests_answers WHERE result_id IN (%s)";
+	$result	= queryDB($sql, array(TABLE_PREFIX, $rid));
+
+	$sql	= "DELETE FROM %stests_results WHERE result_id IN (%s)";
+	$result	= queryDB($sql, array(TABLE_PREFIX, $rid));
+			
 	$msg->addFeedback('RESULT_DELETED');
 	header('Location: '.AT_BASE_HREF.'mods/_standard/tests/results.php?tid='.$tid);
 	exit;
