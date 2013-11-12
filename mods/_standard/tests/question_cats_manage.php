@@ -54,9 +54,8 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_GET['catid'])) {
-	$sql = "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id=$_GET[catid]";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$sql = "SELECT title FROM %stests_questions_categories WHERE category_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_GET['catid']), TRUE);
 
 	$_POST['title'] = $row['title'];
 }
