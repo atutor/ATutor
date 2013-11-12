@@ -97,12 +97,9 @@ if (isset($_POST['cancel'])) {
 	if (isset($_likert_preset[$_POST['preset_num']])) {
 		$_POST['choice'] = $_likert_preset[$_POST['preset_num']];
 	} else if ($_POST['preset_num']) {
-		//$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_POST[preset_num] AND course_id=$_SESSION[course_id]";
-		//$result	= mysql_query($sql, $db);
 		$sql	= "SELECT * FROM %d=stests_questions WHERE question_id=%d AND course_id=%d";
 		$row	= queryDB($sql, array(TABLE_PREFIX, $_POST['preset_num'], $_SESSION['course_id']), TRUE);
         if(count($row) > 0){
-		//if ($row = mysql_fetch_assoc($result)){
 			for ($i=0; $i<10; $i++) {
 				$_POST['choice'][$i] = $row['choice_' . $i];
 			}
@@ -132,13 +129,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 			}
 			echo '</optgroup>';
 			//previously used
-
-			//$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND type=4";
-			//$result = mysql_query($sql, $db);
 			$sql = "SELECT * FROM %stests_questions WHERE course_id=%d AND type=4";
 			$rows_questions = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+			
             if(count($rows_questions) > 0){
-			//if ($row = mysql_fetch_assoc($result)) {
 				echo '<optgroup label="'. _AT('prev_used').'">';
 				$used_choices = array();
 				foreach($rows_questions as $row){
@@ -157,7 +151,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 						}
 					}
 					echo '<option value="'.$row['question_id'].'">'.$row['choice_0'].' - '.$row['choice_'.$i].'</option>';
-				} //while ($row = mysql_fetch_assoc($result));
+				} 
 				echo '</optgroup>';
 			}
 		?>
