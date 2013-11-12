@@ -220,13 +220,15 @@ if(!isset($_SESSION['tool_origin'])){
 if(isset($_SESSION['tool_origin'])){
     if($_SESSION['tool_origin']['url'] == $_base_href.$current_page){
         unset($_SESSION['tool_origin']);
-        unset($back_to_page);
+        unset($back_to_page);      
     }else if($_pages[$mod_path]['parent'] != 'tools/index.php'){
         $back_to_page['title'] = _AT($_pages[$_pages[$mod_path]['parent']]['title_var']);
-        $back_to_page['url'] = $_pages[$mod_path]['parent'];
+        $back_to_page['url'] = $_base_href.$_pages[$mod_path]['parent'];
     } else{
         $back_to_page = $_SESSION['tool_origin'];
+        
     }
+
 } else if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
 } else if (isset($_path[1]['url'], $_sub_level_pages[0]['url']) && $_path[1]['url'] == $_sub_level_pages[0]['url']) {
