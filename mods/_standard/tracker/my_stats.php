@@ -27,12 +27,15 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 </thead>
 <tbody>
 <?php
-	$sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, SEC_TO_TIME(SUM(duration)) AS total_duration, last_accessed FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] AND member_id=$_SESSION[member_id] GROUP BY content_id ORDER BY total_hits DESC";
-
-	$result = mysql_query($sql, $db);
-
-	if (mysql_num_rows($result) > 0) {
-		while ($row = mysql_fetch_assoc($result)) {
+	$sql = "SELECT content_id, COUNT(*) AS unique_hits, 
+	            SUM(counter) AS total_hits, 
+	            SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, 
+	            SEC_TO_TIME(SUM(duration)) AS total_duration, last_accessed 
+	        FROM %smember_track 
+	        WHERE course_id=%d AND member_id=%d GROUP BY content_id ORDER BY total_hits DESC";
+	$rows_hits = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_SESSION['member_id']));
+    if(count($rows_hits) > 0){
+	    foreach($rows_hits as $row){
 			if ($row['total'] == '') {
 				$row['total'] = _AT('na');
 			}
@@ -52,8 +55,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		echo '</tbody>';
 
 	} else {
+	    if($_SESSION['is_admin'] == 1){
+            $msg->printInfos('TRACKING_NO');
+        } 
 		echo '<tr><td colspan="4">' . _AT('none_found') . '</td></tr>';
 		echo '</tbody>';
+
 	}
 	?>
 </tbody>
