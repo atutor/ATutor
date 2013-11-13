@@ -13,6 +13,13 @@
 /////////////////////////////
 //Display the g_data bar chart for the member selected
 //get the translations to the gdata numbers first
+
+// UNUSED FILE
+exit;
+//////
+
+
+
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // NOTE: this script should not be altered. its use will soon be deprecated.

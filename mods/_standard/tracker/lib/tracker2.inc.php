@@ -13,7 +13,9 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // NOTE: this script should not be altered. its use will soon be deprecated.
-
+// UNUSED FILE
+exit;
+//////
 
 //how many content pages are in this course
 $sql25 = "SELECT content_id from ".TABLE_PREFIX."content where course_id = $_SESSION[course_id]";

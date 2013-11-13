@@ -15,7 +15,9 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 // NOTE: this script should not be altered. its use will soon be deprecated.
-
+// UNUSED FILE
+exit;
+//////
 
 //get the summary data for all pages
 

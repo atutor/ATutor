@@ -13,6 +13,9 @@
 // $Id$
 
 // NOTE: this script should not be altered. its use will soon be deprecated.
+// UNUSED FILE
+exit;
+//////
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
