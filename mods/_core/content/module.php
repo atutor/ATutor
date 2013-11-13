@@ -72,6 +72,7 @@ if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CONTENT, TRUE)){
     $_pages_i['mods/_core/editor/add_content.php']['title_var'] = 'add_content';
 	$_pages_i['mods/_core/editor/add_content.php']['parent']    = 'index.php';
     $_pages_i['index.php']['children']  = array('mods/_core/editor/add_content.php', 'mods/_core/properties/course_properties.php');
+    $_pages_i['mods/_core/editor/add_content.php']['children'] = array();
     $_pages['index.php']['children']  = array();
 
 }
