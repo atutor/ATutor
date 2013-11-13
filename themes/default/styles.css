@@ -678,20 +678,27 @@ table.data {
 	margin-left: auto; 
 	margin-right: auto;
 	margin-bottom:1em;
-	border-radius:.5em;
-	-moz-border-radius: .5em .5em .5em .5em;
-	padding:.2em
 	overflow:scroll;
+	padding:0;
+	border-left:1px solid #DED29E;
+	border-right:1px solid #DED29E;
+	border-bottom:1px solid #DED29E
+	border-radius:.1em .1em .1em. 1em;
 } 
 
 table.data th {
 	/*background-color: #DED29E;*/
 	background-color: #F3F3F3;   
-background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
 	padding: 3px;
 	white-space: nowrap;
+    border-right: 1px solid #DED29E;
+	border-bottom: 1px solid #DED29E;
 }
+table.data th:first-child, table.data td:first-child {
+    border-left: 1px solid #DED29E;
 
+}
 table.data th a {
 	color: #595241;
 	padding-right: 15px;
@@ -700,20 +707,23 @@ table.data th a {
 	background-repeat: no-repeat;
 	background-position: right;
 }
-
+table.data td:last-child{ border-right:0; }
 table.data tbody {
-	border-top: 1px solid #B8AE9C;
-	border-bottom: 1px solid #B8AE9C;
+	border-top: 1px solid #DED29E;
+	border-bottom: 1px solid #DED29E;
 }
 
 table.data tbody th {
 	text-align: left;
 	background-color: #F3F3F3;
 	cursor: auto;
+	border-bottom: 1px solid #DED29E;
 }
 
 table.data td {
 	padding: 3px;
+    border-right: 1px solid #DED29E;
+    border-bottom: 1px solid #DED29E;
 }
 
 table.data tbody tr:hover {
@@ -740,17 +750,16 @@ table.data tfoot tr:first-child td {
 }
 
 table.data.static tfoot td, table.data.static tfoot tr:first-child td {
-	border-top: 1px solid #B8AE9C;
+	border-top: 1px solid #DED29E;
 	padding: 5px;
 	background-image: none;
-	padding-left: 0px;
 
 }
 
 /*buttons*/
 table.data tfoot input {
 	font-weight: normal;
-	border:  #685642  solid 1px;
+	border:  #AAAAAA  solid 1px;
 }
 table.data tfoot input:focus, table.data tfoot input:hover {
 	color:#685642;
@@ -2009,6 +2018,7 @@ div#subnavlistcontainer {
 	margin:auto;
 	height:auto;
 
+
 }
 
 .show_hide {
@@ -2021,9 +2031,9 @@ div#subnavbacktopage {
 }
 
 div.toolcontainer{
-	width:95%;
+	width:100%;
 	margin:auto;
-	border:1px solid #685642;
+	/*border:1px solid #DED29E; */
 	padding-top:1em;
 	padding-bottom:1em;
 	border-radius:.5em;
@@ -2039,9 +2049,11 @@ ul#subnavlist_i {
     background-repeat:no-repeat;
 }
 ul#subnavlist, ul#navlist {
+
     border-bottom:1px solid #DED29E;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
+	margin-bottom: 1px;
 }
 ul#subnavlist_i li {
 	list-style: none;
