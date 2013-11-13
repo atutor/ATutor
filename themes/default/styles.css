@@ -862,7 +862,6 @@ div#feedback {
 }
 
 div#help {
-	width: 100%;
 	border: 1px solid #ACCFCC;
 	padding: 15px;
 	background-color: #E9F4F3;
@@ -870,7 +869,7 @@ div#help {
 }
 
 div#info {
-	width: 100%;
+
 	padding: 15px;
 	background-color: #E4EDF7;
 	color:  #000000;
