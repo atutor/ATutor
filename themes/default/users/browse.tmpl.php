@@ -47,7 +47,7 @@
 </fieldset>
 </div>
 <div class="container" style="width:95%; margin:auto;">
-<table class="data">
+<table class="data" rules="cols">
 <tr>
 <th class="hidecol700">&nbsp;</th>
 <th><?php echo _AT('title'); ?></th>
