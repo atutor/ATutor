@@ -46,7 +46,7 @@
 	</form>
 </fieldset>
 </div>
-<div class="container" margin:auto;">
+<div class="container">
 <table class="data" rules="cols">
 <tr>
 <th class="hidecol700">&nbsp;</th>
