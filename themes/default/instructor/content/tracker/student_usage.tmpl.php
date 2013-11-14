@@ -36,7 +36,6 @@
 	<tbody>
 	<?php 
 	if(count($this->rows_list) > 0):
-	//if ($row = mysql_fetch_assoc($this->result_list)): 
 	?>
 		<?php 
 		foreach($this->rows_list as $row){
