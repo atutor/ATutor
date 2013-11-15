@@ -41,7 +41,7 @@ div.input-form p {
 
 div.input-form input {
 	z-index: 2;
-	border:1px solid #DED29E;
+	border:1px solid #DADADA;
 }
 div.input-form input:focus {
 	background-color:#FAF6D7;
