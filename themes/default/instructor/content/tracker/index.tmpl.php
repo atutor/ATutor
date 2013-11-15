@@ -37,25 +37,25 @@
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('page'); ?></th>
-	<th scope="col"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=total_hits"><?php echo _AT('visits');             ?></a></th>
-	<th scope="col"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=unique_hits"><?php echo _AT('unique_visits');     ?></a></th>
-	<th scope="col"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=average_duration"><?php echo _AT('avg_duration'); ?></a></th>
-	<th scope="col"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=total_duration"><?php echo _AT('duration');       ?></a></th>
+	<th scope="col"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=total_hits"><?php echo _AT('visits'); ?></a></th>
+	<th scope="col"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=unique_hits"><?php echo _AT('unique_visits'); ?></a></th>
+	<th scope="col"  class="hidecol700"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=average_duration"><?php echo _AT('avg_duration'); ?></a></th>
+	<th scope="col"  class="hidecol700"><a href="mods/_standard/tracker/tools/index.php?<?php echo $orders[$order]; ?>=total_duration"><?php echo _AT('duration'); ?></a></th>
 	<th scope="col"><?php echo _AT('details');       ?></th>
 </tr>
 </thead>
 <tbody>
-<?php if ($row = mysql_fetch_assoc($this->result)): ?>
-	<?php do { ?>
+<?php if(count($this->rows_hits) > 0): ?>
+	<?php  foreach($this->rows_hits as $row){ ?>
 		<tr onmousedown="document.location='<?php echo AT_BASE_HREF; ?>mods/_standard/tracker/tools/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>'" title="<?php echo _AT('details'); ?>">
 			<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
-			<td><?php echo $row['total_hits'];       ?></td>
-			<td><?php echo $row['unique_hits'];      ?></td>
-			<td><?php echo $row['average_duration']; ?></td>
-			<td><?php echo $row['total_duration'];   ?></td>
+			<td><?php echo $row['total_hits']; ?></td>
+			<td><?php echo $row['unique_hits']; ?></td>
+			<td class="hidecol700"><?php echo $row['average_duration']; ?></td>
+			<td class="hidecol700"><?php echo $row['total_duration'];   ?></td>
 			<td><a href="mods/_standard/tracker/tools/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>"><?php echo _AT('details'); ?></a></td>
 		</tr>
-	<?php } while ($row = mysql_fetch_assoc($this->result)); ?>
+	<?php }  ?>
 <?php else: ?>
 	<tr>
 		<td colspan="6"><?php echo _AT('none_found'); ?></td>
