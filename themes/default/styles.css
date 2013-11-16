@@ -899,6 +899,7 @@ div.news span.date {
 }
 
 /* home page links */
+
 div.home-link {
 	padding: 2px;
 	float: left;
@@ -922,6 +923,35 @@ div.home-link a {
 
 div.home-link img {
 	border: 0px;
+}
+/*div#icon_view{
+    display:none;
+}
+div.detail_switch_back{
+    display:none;
+}
+div.detail_switch{
+    display:none;
+}*/
+div.detail_switch{
+background-image:url('../../images/detail_view.png');
+height:2em;
+width:2em;
+background-repeat:no-repeat;
+background-position: center;
+
+}
+div.detail_switch a, div.detail_switch_back a{
+text-decoration:none;
+font-size:0;
+}
+div.detail_switch_back{
+background-image:url('../../images/icon_view.png');
+height:2em;
+width:2em;
+background-repeat:no-repeat;
+background-position: center;
+
 }
 
 /* sequence links */
@@ -2649,10 +2679,10 @@ height:1px;
 float:left;
 }
 div.bypass a{
-font-size:0px;
+    font-size:0px; 
 }
 div.bypass a:focus{
-font-size:1em;
+    font-size:.8em;
 }
 div#bypass-links{
 	width:3px;
@@ -3661,6 +3691,12 @@ font-weight:700;
     .hidecol700{
         display:none;
     } 
+    div.admin_switch, #admin_switch, div.ui-switch{
+        display:none;
+    }
+    a.pref_wiz_launcher{
+    display:none;
+    }
 }
 /********** for 640px or less *********/
 @media screen and (max-device-width: 1000px) {
@@ -3767,7 +3803,8 @@ font-weight:700;
         font-size:1.2em !important;
     }
     #top-bar{
-        height:auto;
+    /* height:auto; */
+        
     }
     .site-name{
         margin-top:0;
@@ -3777,11 +3814,13 @@ font-weight:700;
     }
     div#top-links-jump{
          float:left;
-         margin-top:1em;
+         margin-top:1.3em;
          margin-left:1em;
     }
     div#top-links-text{
+    display:none;
         float:left;
+        clear:both;
          margin-top:.2em;
          margin-bottom:1em;
          margin-left:1em;
@@ -3868,6 +3907,7 @@ font-weight:700;
         font-weight:700;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+
     } 
 
     div#subnavlistcontainer {
@@ -4016,4 +4056,11 @@ ul#subnavlist_i li {
     #my_courses_container{
         min-width:0;
     }
+    div.admin_switch, #admin_switch, div.ui-switch{
+        display:none;
+    }
+    a.pref_wiz_launcher{
+        display:none;
+    }
 }
+

@@ -47,7 +47,7 @@ ATutor.course = ATutor.course || {};
                     $(".menuedit").toggleClass("hidden").hide('slow');
                     $("#shortcuts").toggleClass("hidden").hide('slow');
                     $(".del-content-icon").toggleClass("hidden").hide('slow'); 
-                    $(".detail_switch").toggleClass("hidden").hide('slow');  
+                   // $(".detail_switch").toggleClass("hidden").hide('slow');  
                     $(".buttonbox").toggleClass("hidden").hide('slow'); 
                 }
                 ATutor.switchView = function (viewFlag) {
@@ -57,22 +57,22 @@ ATutor.course = ATutor.course || {};
                         $(".menuedit").toggleClass("show").show('slow');
                         $("#shortcuts").toggleClass("show").show('slow');
                         $(".del-content-icon").toggleClass("show").show('slow');  
-                        $(".detail_switch").toggleClass("show").show('slow');  
+                       // $(".detail_switch").toggleClass("show").show('slow');  
                         $(".buttonbox").toggleClass("show").show('slow');    
                         $.cookie('showSubNav', "on", { expires: 30, path: '/' });
-                        console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
-                        console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
+                        //console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
+                        //console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
                     } else if(viewFlag === "1") {
                         $("ul#subnavlist").css("border-bottom", "none");
                         $("#subnavlist_i").toggleClass("hidden").hide('slow');
                         $(".menuedit").toggleClass("hidden").hide('slow');
                         $("#shortcuts").toggleClass("hidden").hide('slow');
                         $(".del-content-icon").toggleClass("hidden").hide('slow');
-                        $(".detail_switch").toggleClass("hidden").hide('slow');  
+                       // $(".detail_switch").toggleClass("hidden").hide('slow');  
                         $(".buttonbox").toggleClass("hidden").hide('slow');
                         $.cookie('showSubNav', "off", { expires: 30, path: '/' });
-                       console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
-                       console.log("switchval=" + $('#admin_switch').val() + ' initial=' + initialStatus);
+                       //console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
+                       //console.log("switchval=" + $('#admin_switch').val() + ' initial=' + initialStatus);
                     }
                     return false;     
                 };
@@ -97,6 +97,49 @@ ATutor.course = ATutor.course || {};
          $("#message").hide('blind', {}, 500), 8000;
          return false;
         });  
+        
+    /*****
+    ** Switch between detailed and icon views on course home page
+    *****/
+        var initialStatusDetails = ($.cookie('showDetails') === "on") ? "1" : "0";
+        if(initialStatusDetails === "0"){
+                $("#icon_view").show();
+                $("#details_view").hide();
+                $('#detail_switch').removeClass('detail_switch_back');
+                $('#detail_switch').addClass('detail_switch');
+        } else{
+                $("#icon_view").hide();
+                $("#details_view").show();
+                $('#detail_switch').removeClass('detail_switch');
+                $('#detail_switch').addClass('detail_switch_back');    
+        }
+       ATutor.switchDetails = function (viewFlag) {
+            if(viewFlag === "1"){
+                    $("#details_view").hide('blind', {}, 500), 8000;
+                    $("#icon_view").show('blind', {}, 500), 8000;   
+                $('#detail_switch').removeClass('detail_switch_back');
+                $('#detail_switch').addClass('detail_switch');
+                    $.cookie('showDetails', "off", { expires: 30, path: '/' });
+                    $('#detail_switch').val('0');
+             } else if(viewFlag === "0") {
+                    $("#details_view").show('blind', {}, 500), 8000;
+                    $("#icon_view").hide('blind', {}, 500), 8000;
+                $('#detail_switch').removeClass('detail_switch');
+                $('#detail_switch').addClass('detail_switch_back');
+                    $.cookie('showDetails', "on", { expires: 30, path: '/' });
+                    $('#detail_switch').val('1')
+            }
+            return false;
+        }
+        $('#detail_switch').val(($.cookie('showDetails') === "on") ? "1" : "0");
+
+        $("#detail_switch").bind("click keypress", function(){
+            ATutor.switchDetails($('#detail_switch').val());
+            
+        });
+    /*********/ 
+        
+        
     /* Show/Hide Advanced Admin System Preferecnes, set cookie */
      /*   $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
             $("div.adv_toggle").click(function() {
