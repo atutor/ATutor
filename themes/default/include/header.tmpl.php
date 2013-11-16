@@ -110,6 +110,7 @@ global $system_courses, $_custom_css, $db;
     <?php echo $this->rtl_css; ?>
 <!-- switch scripts -->  
 	<script type='text/javascript' src="<?php echo $this->base_path; ?>jscripts/lib/jquery.switch.min.js"></script>
+	<script type='text/javascript' src="<?php echo $this->base_path; ?>jscripts/lib/jquery-scrolltofixed-min.js"></script>
     <link rel="stylesheet" type="text/css" href="<?php echo $this->base_path; ?>jscripts/lib/jquery.switch.css">
 
     <style id="pref_style" type="text/css"></style> 

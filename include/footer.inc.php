@@ -20,6 +20,7 @@ global $system_courses;
 $side_menu = array();
 $stack_files = array();
 
+
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
 
@@ -80,7 +81,6 @@ $footerName = 'footer';
 if ($framed || $popup) {
     $footerName = (isset($tool_flag) && ($tool_flag)) ? 'tm_footer' : 'fm_footer';
 }
-$savant->display(sprintf('include/%s.tmpl.php', $footerName));
 
 //Harris Timer
   $mtime = microtime(); 
@@ -98,4 +98,7 @@ if (defined('AT_DEVEL') && AT_DEVEL) {
 	debug($_SESSION, 'SESSION:');
 	debug($_config, 'CONFIGURATION');
 }
+
+$savant->display(sprintf('include/%s.tmpl.php', $footerName));
+
 ?>

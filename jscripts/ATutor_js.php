@@ -39,7 +39,38 @@ ATutor.course = ATutor.course || {};
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
-                //Handle the hide admin tool switch
+                // Floating topnavlist bar
+                $('#lrg_topnav').scrollToFixed({
+                    marginTop: 0,
+                    dontSetWidth: true,
+                    preFixed: function() { 
+                        $(this).find('div').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
+                        $(this).find('div').css('padding', '8');
+                        $(this).find('div').css('margin-left', '200');
+                        $(this).find('div').css('width', '100%');
+                        $(".active").css('border-top', 'thin solid white');
+                        $(".active").css('border-left', 'thin solid white');
+                        $(".active").css('border-right', 'thin solid white');
+                        $("#topnavlistcontainer").css('padding-left', '3.3em');
+                        $("#topnavlistcontainer").css('padding-bottom', '.3em');
+                        $("#topnavlistcontainer").css('margin-left', '-2.3em');
+                        $(this).find('ul').css('padding-left', '200');
+                        },
+                    postFixed: function() { 
+                        $(this).find('div').css('background-image', ''); 
+                        $(this).find('div').css('padding', '');
+                        $("#topnavlistcontainer").css('padding-left', '');
+                        $("#topnavlistcontainer").css('margin-left', '');
+                        }
+                });
+                // Fixed Footer
+                $('#footer').scrollToFixed( {
+                    bottom: 0,
+                    limit: $('#footer').offset().top,
+                    preFixed: function() { $(this).find('h1').css('color', 'blue'); },
+                    postFixed: function() { $(this).find('h1').css('color', ''); }
+                });
+                // Hide/Show instructor course admin tools 
                 var initialStatus = ($.cookie('showSubNav') === "on") ? "1" : "0";
                 if(initialStatus === "0"){
                     $("ul#subnavlist").css("border-bottom", "none");
