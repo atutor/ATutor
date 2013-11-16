@@ -7,8 +7,6 @@
 				<img src="<?php echo $this->img; ?>goup.png" alt="<?php echo _AT('goto_top'); ?>" title="<?php echo _AT('goto_top'); ?>"/></a>
 			</div>  
 		<?php endif; ?> 
-
-	</div>
 			<div class="sequence-links">
 		<?php if (isset($_SESSION["prefs"]["PREF_SHOW_NEXT_PREVIOUS_BUTTONS"])) { ?>
 			<?php if (isset($this->sequence_links['resume'])): ?>
@@ -24,7 +22,8 @@
 		<?php } ?>
 			&nbsp;
 		</div>
-	
+	</div>
+
 </div>
 
 </div> <!-- end page wrapper --> 
