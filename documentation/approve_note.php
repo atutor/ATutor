@@ -1,4 +1,6 @@
 <?php
+// FILE NO LONGER IN USE
+exit;
 require(dirname(__FILE__) .'/common/vitals.inc.php');
 
 if (!isset($_SESSION['handbook_admin']) || !$_SESSION['handbook_admin'] || !isset($_GET['id'])) {

@@ -1,7 +1,8 @@
 <?php
 require(dirname(__FILE__) .'/../common/vitals.inc.php');
-
+//require(dirname(__FILE__) .'/../common/db_connect.inc.php');
 // using 401 authentication
+/*
 if (isset($_GET['login'])) {
 	if (!isset($_SERVER['PHP_AUTH_USER'])) {
 		header('WWW-Authenticate: Basic realm="Administrator Login"');
@@ -20,39 +21,45 @@ if (isset($_GET['login'])) {
 $config_location = '../../include/config.inc.php';
 if (is_file($config_location) && is_readable($config_location)) {
 	require($config_location);
-	$db = mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
-	mysql_select_db(DB_NAME, $db);
+
+	//$db = mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);
+	//  mysql_select_db(DB_NAME, $db);
 
 	// check atutor config table to see if handbook notes is enabled.
-	$sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='user_notes'";
-	$result = @mysql_query($sql, $db);
-	if (($row = mysql_fetch_assoc($result)) && $row['value']) {
-		define('AT_HANDBOOK_ENABLE', true);
-		$enable_user_notes = true;
-	}
-	define('AT_HANDBOOK_DB_TABLE_PREFIX', TABLE_PREFIX);
+	//$sql    = "SELECT value FROM ".TABLE_PREFIX."config WHERE name='user_notes'";
+	//$result = @mysql_query($sql, $db);
 
-	if (isset($_POST['submit'])) {
+	//$sql    = "SELECT value FROM %sconfig WHERE name='user_notes'";
+	//$rows_usernotes = queryDB($sql, array(TABLE_PREFIX), TRUE);
+	
+	//if(count($rows_usernotes) > 0){
+	//if (($row = mysql_fetch_assoc($result)) && $row['value']) {
+	//	define('AT_HANDBOOK_ENABLE', true);
+	//	$enable_user_notes = true;
+	//}
+	//define('AT_HANDBOOK_DB_TABLE_PREFIX', TABLE_PREFIX);
+
+	//if (isset($_POST['submit'])) {
 		// try to validate $_POST
 		// authenticate against the ATutor database if a connection can be made
-		$_POST['username'] = addslashes($_POST['username']);
-		$_POST['password'] = addslashes($_POST['password']);
+	//	$_POST['username'] = addslashes($_POST['username']);
+	//	$_POST['password'] = addslashes($_POST['password']);
 			
-		if (!$db) {
-			$db = @mysql_connect(AT_HANDBOOK_DB_HOST . ':' . AT_HANDBOOK_DB_PORT, AT_HANDBOOK_DB_USER, AT_HANDBOOK_DB_PASSWORD);
-			if (@mysql_select_db(AT_HANDBOOK_DB_DATABASE, $db)) {
-				$enable_user_notes = true;
-			}
-		}
+		//if (!$db) {
+		//	$db = @mysql_connect(AT_HANDBOOK_DB_HOST . ':' . AT_HANDBOOK_DB_PORT, AT_HANDBOOK_DB_USER, AT_HANDBOOK_DB_PASSWORD);
+		//	if (@mysql_select_db(AT_HANDBOOK_DB_DATABASE, $db)) {
+		//		$enable_user_notes = true;
+		//	}
+		//}
 			
 		// check if it's an admin login.
-		$sql = "SELECT login, `privileges` FROM ".TABLE_PREFIX."admins WHERE login='$_POST[username]' AND PASSWORD(password)=PASSWORD('$_POST[password]') AND `privileges`>0";
-		$result = mysql_query($sql, $db);
-		if ($row = mysql_fetch_assoc($result)) {
-			$_SESSION['handbook_admin'] = true;
-			header('Location: '.$_SERVER['PHP_SELF']);
-			exit;
-		}
+	//	$sql = "SELECT login, `privileges` FROM ".TABLE_PREFIX."admins WHERE login='$_POST[username]' AND PASSWORD(password)=PASSWORD('$_POST[password]') AND `privileges`>0";
+	//	$result = mysql_query($sql, $db);
+	//	if ($row = mysql_fetch_assoc($result)) {
+	//		$_SESSION['handbook_admin'] = true;
+	//		header('Location: '.$_SERVER['PHP_SELF']);
+	//		exit;
+	//	}
 	} else if (isset($_GET['logout'])) {
 		header('WWW-Authenticate: Basic realm="Administrator Login"');
 		header('HTTP/1.0 401 Unauthorized');
@@ -95,6 +102,7 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 	@mysql_select_db(AT_HANDBOOK_DB_DATABASE, $db);
 	$enable_user_notes = true;
 }
+*/
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html lang="<?php if ($req_lang) { echo $req_lang; } else { echo 'dp'; } ?>">
 <head>
@@ -136,14 +144,16 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 	<p><?php get_text('doc_logged_in'); ?></p>
 
 	<?php
-		$sql = "SELECT note_id, date, section, page, email, note FROM ".AT_HANDBOOK_DB_TABLE_PREFIX."handbook_notes WHERE approved=0 ORDER BY date DESC";
-		$result = mysql_query($sql, $db);
+	//	$sql = "SELECT note_id, date, section, page, email, note FROM ".AT_HANDBOOK_DB_TABLE_PREFIX."handbook_notes WHERE approved=0 ORDER BY date DESC";
+	//	$result = mysql_query($sql, $db);
 	?>
 	<div class="add-note">
 		<h3><?php get_text('doc_unapproved_notes'); ?></h3>
 	</div>
 
-	<?php if ($result && (mysql_num_rows($result) > 0)): ?>
+	<?php
+	/*
+	 if ($result && (mysql_num_rows($result) > 0)): ?>
 		<?php while ($row = mysql_fetch_assoc($result)): ?>
 			<div class="note">
 				<h5><?php echo $row['date']; ?>
@@ -156,9 +166,13 @@ if (!$db && defined('AT_HANDBOOK_ENABLE') && AT_HANDBOOK_ENABLE) {
 		<?php endwhile; ?>
 	<?php else: ?>
 		<div class="note"><?php get_text('doc_no_notes'); ?></div>
-	<?php endif; ?>
+	<?php endif; 
+	
+	*/ ?>
 
-<?php endif; ?>
+<?php endif; 
+
+?>
 
 </body>
 </html>

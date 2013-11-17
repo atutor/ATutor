@@ -4,7 +4,7 @@
 	// if ATutor config.inc is available, then:
 	// read it for DB info and comments_enabling option.
 	// else: use local configuration option for DB/comments option
-
+/*
 	$enable_user_notes = false;
 
 	$config_location = dirname(__FILE__) . '/../../include/config.inc.php';
@@ -43,9 +43,12 @@
 			$result = mysql_query($sql, $db);
 		}
 	}
+	*/
 ?>
 
-<?php if ($enable_user_notes): ?>
+<?php
+/*
+ if ($enable_user_notes): ?>
 	<div class="add-note">
 		<a href="../add_note.php?<?php echo $section . SEP . 'p='.$this_page; ?>" style="float: right;">+ <?php get_text('add_note'); ?> +</a>
 		<h3><?php get_text('user_contributed_notes'); ?></h3>
@@ -66,7 +69,9 @@
 	<?php else: ?>
 		<div class="note"><?php get_text('no_notes_on_page'); ?></div>
 	<?php endif; ?>
-<?php endif; ?>
+<?php endif; 
+*/
+?>
 
 <div class="seq">
 	<?php if (isset($previous_page)): ?>
