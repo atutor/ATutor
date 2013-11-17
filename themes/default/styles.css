@@ -1046,12 +1046,13 @@ div.paging li a:hover, div.paging li a.current {
 }
 
 #header{
-	/* background-image: url('images/pencil_top_ds.png'); */
+	background-image: url('images/mesh-pattern.jpg'); 
+	background-repeat: repeat-x;
 /*	background-position: 99% 99%;*/
-	/*background-image: linear-gradient(to right, #FAFAFA, #EAEAEA); */
-	height:4em;
-	margin-bottom:-2em;
-	padding-bottom: 2em;
+/*	background-image: linear-gradient(to right, #FAFAFA, #EAEAEA); */
+	height:3.5em;
+	margin-bottom:-3em;
+	padding-bottom: 2.2em;
 }
 
 #header a{
