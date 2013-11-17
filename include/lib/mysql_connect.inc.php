@@ -185,7 +185,10 @@ function at_insert_id(){
     global $db;
     return mysql_insert_id($db);
 }
-
+function at_db_errno(){
+    global $db;
+    return mysql_errno($db);
+}
 function at_db_error(){
     global $db;
     return mysql_error($db);
