@@ -27,17 +27,18 @@
 </div>
 
 </div> <!-- end page wrapper --> 
+<p>&nbsp;</p>
 <div id="footer">
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
-<script language="javascript" type="text/javascript">
-//<!--
-    <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
-//-->
-</script>
-<div class="logo">
-      <a href="http://www.atutor.ca/"><img src="<?php echo $this->base_path; ?>images/AT_Logo_1_sm.png"  alt="ATutor Logo" style="border:none;" /></a>
-</div>
+    <script language="javascript" type="text/javascript">
+    //<!--
+        <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
+    //-->
+    </script>
+    <div class="logo">
+          <a href="http://www.atutor.ca/"><img src="<?php echo $this->base_path; ?>images/AT_Logo_1_sm.png"  alt="ATutor Logo" style="border:none;" /></a>
+    </div>
 </div>
 </body>
 </html>
