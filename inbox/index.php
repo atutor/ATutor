@@ -26,8 +26,6 @@ if (!$_SESSION['valid_user']) {
 $_GET['view'] = intval($_GET['view']);
 
 if ($_GET['view']) {
-	//$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET new=0, date_sent=date_sent WHERE to_member_id=$_SESSION[member_id] AND message_id=$_GET[view]",$db);
-	
 	$sql = "UPDATE %smessages SET new=0, date_sent=date_sent WHERE to_member_id=%d AND message_id=%s";
 	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $_GET['view']));
 }
@@ -68,8 +66,7 @@ if (isset($_GET['delete'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_GET['view']) && $_GET['view']) {
-	//$sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE message_id=$_GET[view] AND to_member_id=$_SESSION[member_id]";
-	//$result_messages = mysql_query($sql, $db);
+
 	$sql	= "SELECT * FROM %smessages WHERE message_id=%d AND to_member_id=%d";
 	$row_messages = queryDB($sql, array(TABLE_PREFIX, $_GET['view'], $_SESSION['member_id']), TRUE);
 	
@@ -80,17 +77,14 @@ if (isset($_GET['view']) && $_GET['view']) {
 	$msg->printConfirm();
 }
 
-//$sql	= "SELECT * FROM ".TABLE_PREFIX."messages WHERE to_member_id=$_SESSION[member_id] ORDER BY date_sent DESC";
-//$result = mysql_query($sql,$db);
+
 $sql	= "SELECT * FROM %smessages WHERE to_member_id=%d ORDER BY date_sent DESC";
 $row_sent = queryDB($sql,array(TABLE_PREFIX, $_SESSION['member_id']));
 
 // since Inbox isn't a module, it can't have a cron job.
 // so, we delete the expires sent messages with P =  1/7.
 if (!rand(0, 6)) {
-	//$sql = "DELETE FROM ".TABLE_PREFIX."messages_sent WHERE from_member_id=$_SESSION[member_id] AND TO_DAYS(date_sent) < (TO_DAYS(NOW()) - {$_config['sent_msgs_ttl']}) LIMIT 100";
-	//mysql_query($sql, $db);
-	
+
 	$sql = "DELETE FROM %smessages_sent WHERE from_member_id=%d AND TO_DAYS(date_sent) < (TO_DAYS(NOW()) - {$_config['sent_msgs_ttl']}) LIMIT 100";
 	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 }
