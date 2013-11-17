@@ -3350,55 +3350,55 @@ div.input-form.remedialContent {
 select#admin_switch { 
     /* display: inline !important;  */
 }
-#admin_switch{
+#mobile_switch{
 margin-left:-3em;
 float:left;
 margin-top:.3em;
 font-weight:700;
 
 }
-#admin_switch li{
+#mobile_switch li{
 display:inline;
 padding:.3em;
 }
-#admin_switch a:hover{
+#mobile_switch a:hover{
 background-color:#ADF7D8;
 padding:.3em;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-#admin_switch a{
+#mobile_switch a{
 padding:.3em;
 color:black;
 }
-#admin_switch li.disabled a{ 
+#mobile_switch li.disabled a{ 
 opacity:0.4;
 color:#555555;
 }
-#admin_switch li.disabled a:hover{ 
+#mobile_switch li.disabled a:hover{ 
 opacity:1;
 color:#555555;
 }
-#admin_switch .left{
+#mobile_switch .left{
 margin-right:-0.1em;
 border-top: 1px solid #DED29E;
 border-left: 1px solid #DED29E;
 border-bottom: 1px solid #DED29E;
 border-radius: .3em  0em 0em .3em ;
 }
-#admin_switch .right{
+#mobile_switch .right{
 margin-left:-.3em;
 border-top: 1px solid #DED29E;
 border-right: 1px solid #DED29E;
 border-bottom: 1px solid #DED29E;
 border-radius: 0em .3em .3em 0em ;
 }
-#admin_switch li.active{
+#mobile_switch li.active{
 /*background-color:#ADF7D8;*/
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-#admin_switch li.disabled{
+#mobile_switch li.disabled{
 background-color:#C5C9C8;
 }
 
