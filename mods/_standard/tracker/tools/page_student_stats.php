@@ -25,9 +25,9 @@ $_pages['mods/_standard/tracker/tools/page_student_stats.php']['parent'] = 'mods
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql = "SELECT counter, content_id, member_id, SEC_TO_TIME(duration) AS total, SEC_TO_TIME(duration/counter) AS average FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] AND content_id=$content_id ORDER BY total DESC";
-$result = mysql_query($sql, $db);
+$sql = "SELECT counter, content_id, member_id, SEC_TO_TIME(duration) AS total, SEC_TO_TIME(duration/counter) AS average FROM %smember_track WHERE course_id=%d AND content_id=%d ORDER BY total DESC";
+$rows_page_stats = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], $content_id));
 
-$savant->assign('result', $result); 
+$savant->assign('rows_page_stats', $rows_page_stats); 
 $savant->display('instructor/content/page_student_stats.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); ?>
