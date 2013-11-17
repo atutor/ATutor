@@ -100,12 +100,14 @@ if(isset($_SESSION['valid_user'])){
     $session_warning = 300 * 1000;                      // 5 minutes
 
     $custom_head .= '
-        <link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js" type="text/javascript"></script>
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>';
-    
+        <link rel="stylesheet"  type="text/css" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js"></script>
+    	<script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.switch.min.js"></script>
+	    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
+        <link rel="stylesheet" type="text/css" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.switch.css">';
     if(isset($_SESSION['member_id'])){
         $custom_head .= "\n".'    <script type="text/javascript">
         $(document).ready(function() {
@@ -391,7 +393,7 @@ function admin_switch(){
 <?php } 
 function mobile_switch(){ 
 	if(is_mobile_device() > 0) {?>
-		<ul id="admin_switch">
+		<ul id="mobile_switch">
 			 <?php if($_SESSION['prefs']['PREF_RESPONSIVE'] > 0){ ?>
 				<li class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"><?php echo _AT('mobile'); ?></a></li>
 			<?php }else{ ?>
