@@ -40,13 +40,13 @@ authenticate(AT_PRIV_CONTENT);
 	$file_row .= "\n";
 
 	$sql = "SELECT C.title, M.login, MT.counter, SEC_TO_TIME(MT.duration) AS time, MT.last_accessed
-			FROM ".TABLE_PREFIX."content C, ".TABLE_PREFIX."members M, ".TABLE_PREFIX."member_track MT
-			WHERE M.member_id=MT.member_id AND C.content_id=MT.content_id AND C.course_id=$_SESSION[course_id]
+			FROM %scontent C, %smembers M, %smember_track MT
+			WHERE M.member_id=MT.member_id AND C.content_id=MT.content_id AND C.course_id=%d
 			ORDER BY C.title, M.login ASC";
 
-	$result = mysql_query($sql, $db);
+	$rows_tracking = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id']));	
 	
-	while ($row = mysql_fetch_assoc($result)) {
+	foreach($rows_tracking as $row){
 		$file_row .= quote_csv($row['title'])   .",";
 		$file_row .= quote_csv($row['login'])  .",";
 		$file_row .= quote_csv($row['counter']) .",";
