@@ -25,9 +25,8 @@
 	</div>
 
 </div>
-
+<p><br /><br />&nbsp;</p>
 </div> <!-- end page wrapper --> 
-<p>&nbsp;</p>
 <div id="footer">
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
