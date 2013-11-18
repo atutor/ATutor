@@ -41,7 +41,7 @@ ATutor.course = ATutor.course || {};
     jQuery(document).ready( function () {
                 // Floating topnavlist bar
                 $('#lrg_topnav').scrollToFixed({
-                    marginTop: 0,
+                    marginTop: 18,
                     dontSetWidth: true,
                     preFixed: function() { 
                         $(this).find('div').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 

@@ -1050,9 +1050,10 @@ div.paging li a:hover, div.paging li a.current {
 	background-repeat: repeat-x;
 /*	background-position: 99% 99%;*/
 /*	background-image: linear-gradient(to right, #FAFAFA, #EAEAEA); */
-	height:3.5em;
+	height:4.5em;
 	margin-bottom:-3em;
 	padding-bottom: 2.2em;
+	background-size:165px 153px;
 }
 
 #header a{
@@ -1663,6 +1664,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
 	height:auto;
+	margin-top:-1.8em;
 	padding-top:1em;
 	margin-left:1em;
 	clear:both;
