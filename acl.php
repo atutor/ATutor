@@ -13,5 +13,4 @@
 // $Id: login.php 6575 2006-08-22 18:12:30Z joel $
 
 require('bounce.php');
-
 ?>
