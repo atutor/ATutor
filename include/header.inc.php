@@ -35,6 +35,7 @@ global $_stacks;
 global $framed, $popup;
 global $_custom_css;
 global $_custom_head;
+global $_custom_script;
 global $substr, $strlen, $_course_id;
 global $_tool_shortcuts;
 global $content_description;
@@ -86,7 +87,10 @@ if (isset($_custom_head)) {
 	$custom_head .= '
 ' . $_custom_head;
 }
-
+if (isset($_custom_script)) {
+	$custom_head .= '
+' . $_custom_script;
+}
 // Set session timeout warning if user is logged in
 if(isset($_SESSION['valid_user'])){
     // Setup the timeout warning when a user logs in
