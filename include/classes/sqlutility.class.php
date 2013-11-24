@@ -30,7 +30,7 @@ class SqlUtility
 	public static function splitSqlFile(&$ret, $sql)
 	{
 
-	    $sql               = preg_replace('/%/','/%%/',trim($sql));
+	    $sql               = preg_replace('|\%|','%%',trim($sql));
 		$sql_len           = strlen($sql);
 		$char              = '';
     	$string_start      = '';
@@ -191,7 +191,7 @@ class SqlUtility
 				$table = $table_prefix.$prefixed_query[4];
 				if($prefixed_query[1] == 'CREATE TABLE')
 				{
-                    $result = queryDB($prefixed_query[0], array());
+				    $result = at_create_table($prefixed_query[0]);
                     if($result > 0){
 						if ($in_plain_msg) {
 							$progress[] = 'Table <b>'.$table . '</b> created successfully.';
@@ -201,6 +201,7 @@ class SqlUtility
 					}
 					else
 					{
+					
 						if(at_db_errno() == 1050){
 						//// NOTE STATIC ERRNO --- if (mysql_errno($db) == 1050) {
 							if ($in_plain_msg) {
@@ -218,9 +219,9 @@ class SqlUtility
 					}
 				}
 				elseif($prefixed_query[1] == 'INSERT INTO') {
-					queryDB($prefixed_query[0], array());
+					queryDB($prefixed_query[0], array(), FALSE, FALSE);
 				} elseif($prefixed_query[1] == 'REPLACE INTO') {
-					queryDB($prefixed_query[0], array());
+					queryDB($prefixed_query[0], array(), FALSE, FALSE);
 				} elseif($prefixed_query[1] == 'ALTER TABLE') {
 				    $result = queryDB($prefixed_query[0], array());
 					if($result > 0){
