@@ -113,14 +113,15 @@ if (isset($errors)) {
 		if (($_POST['step1']['header_img'] != '' || $_POST['step1']['header_logo'] != '') 
 			&& $new_version == '1.5' && $_POST['step1']['old_version'] == '1.4.3')
 			{
-				$db = mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
-				mysql_select_db($_POST['step1']['db_name'], $db);
 
-				$sql = "INSERT INTO ".$_POST['step1']['tb_prefix']."themes VALUES ('ATutor_alt', '1.5', 'default_oldheader', NOW() , 'Backwards compatible default theme', 2)";
-				@mysql_query($sql, $db);
+				//$db = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+				//at_db_select($_POST['step1']['db_name'], $db);
 
-				$sql = "UPDATE ".$_POST['step1']['tb_prefix']."themes SET status=0, version='1.5' WHERE dir_name = 'default'";
-				@mysql_query($sql, $db);
+				$sql = "INSERT INTO %sthemes VALUES ('ATutor_alt', '1.5', 'default_oldheader', NOW() , 'Backwards compatible default theme', 2)";
+				queryDB($sql, array($_POST['step1']['tb_prefix']));
+
+				$sql = "UPDATE %sthemes SET status=0, version='1.5' WHERE dir_name = 'default'";
+				queryDB($sql, array($_POST['step1']['tb_prefix']));
 			}
 
 		echo '<input type="hidden" name="step" value="'.$step.'" />';

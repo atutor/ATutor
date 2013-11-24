@@ -30,7 +30,10 @@ if (isset($_POST['submit']) && (trim($_POST['old_path']) != '')) {
 			if (!version_compare(VERSION, $new_version, '<')) {
 				$errors[] = 'The version upgrading (<kbd><b>'.VERSION.'</b></kbd>) is not older than the new version (<kbd><b>'.$new_version.'</b></kbd>).';
 			}
-
+            if(VERSION < 1.6){
+            		$errors[] = 'Unfortunately the version you are upgrading (<kbd><b>'.VERSION.'</b></kbd>) is too old to be upgraded to version (<kbd><b>'.$new_version.'</b></kbd>). You will need to first upgrade to a version between 1.6.1 and 2.1.1 before upgrading to <kbd><b>'.$new_version.'</b></kbd>. Visit the <a href="http://sourceforge.net/projects/atutor/files/ATutor%202/">Sourceforge distribution site</a> to find older versions of ATutor. </kbd>';
+		
+            }
 			if (!$errors) {
 				$progress[] = 'Will be upgrading from version <kbd><b>'.VERSION.'</b></kbd> to version <kbd><b>'.$new_version.'</b></kbd>.';
 				print_feedback($progress);

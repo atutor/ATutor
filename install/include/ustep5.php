@@ -91,7 +91,7 @@ if (isset($errors)) {
 				$_POST['step1']['db_name'],
 				$_POST['step1']['tb_prefix'],
 				$comments,
-				$_POST['step5']['content_dir'],
+				$_POST['step4']['content_dir'],
 				$_POST['step1']['smtp'],
 				$_POST['step1']['get_file']
 			);

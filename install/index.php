@@ -90,12 +90,11 @@ $not_as_good = FALSE;
 			<th scope="col">Status</th>
 		</tr>
 		<tr>
-			<td>PHP 4.3.0+ (Recommended 5.0.2+)</td>
+			<td>PHP 5.0.2+</td>
 			<td><?php echo phpversion(); ?></td>
-			<td align="center"><?php	if (version_compare(phpversion(), '4.3.0', '>=') && version_compare(phpversion(), '5.0.2', '<')) {
-												echo $warning;
-						} else if (version_compare(phpversion(), '5.0.2', '>=')){
-												echo $good;
+			<td align="center"><?php
+			            if (version_compare(phpversion(), '5.0.2', '>=')){
+							echo $good;
 						} else {
 							echo $bad;
 							$no_good = TRUE;
@@ -323,7 +322,7 @@ $not_as_good = FALSE;
 		</tbody>
 		<tbody>
 		<tr>
-			<th scope="col">MySQL Options</th>
+			<th scope="col">Database Options</th>
 			<th scope="col">Detected</th>
 			<th scope="col">Status</th>
 		</tr>

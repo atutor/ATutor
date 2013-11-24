@@ -56,34 +56,35 @@ if (isset($_POST['submit'])) {
 
 		if ($_POST['step1']['old_path'] != '') {
 			// get some usage data from this upgrade:
-			$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
-			@mysql_select_db($_POST['step1']['db_name'], $db);
+			$db = at_db_connect($_POST['step1']['db_host'] , $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+			at_db_select($_POST['step1']['db_name'], $db);
 
 			$db_size = 0; // db size in bytes
+
 			$sql = 'SHOW TABLE STATUS';
-			$result = mysql_query($sql, $db);
-			while ($row = mysql_fetch_assoc($result)) {
+			$rows_tables = queryDB($sql, array());
+			foreach($rows_tables as $row){
 				$db_size += $row['Data_length']+$row['Index_length'];
 			}
 
-			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['step1']['tb_prefix']."courses";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+			$sql = "SELECT COUNT(*) AS cnt FROM %scourses";
+			$row = queryDB($sql, array($_POST['step1']['tb_prefix']), TRUE);
+
 			$num_courses = $row['cnt'];
 
-			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['step1']['tb_prefix']."members";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+			$sql = "SELECT COUNT(*) AS cnt FROM %smembers";
+			$row = queryDB($sql, array($_POST['step1']['tb_prefix']), TRUE);
+
 			$num_users = $row['cnt'];
 
-			$sql = "SELECT COUNT(*) AS cnt FROM ".$_POST['step1']['tb_prefix']."admins";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+			$sql = "SELECT COUNT(*) AS cnt FROM %sadmins";
+			$row = queryDB($sql,array($_POST['step1']['tb_prefix']), TRUE);
+
 			$num_users += $row['cnt'];
 
-			$sql = "SELECT GROUP_CONCAT(language_code) AS langs FROM ".$_POST['step1']['tb_prefix']."languages";
-			$result = mysql_query($sql, $db);
-			$row = mysql_fetch_assoc($result);
+			$sql = "SELECT GROUP_CONCAT(language_code) AS langs FROM %slanguages";
+			$row = queryDB($sql, array($_POST['step1']['tb_prefix']), TRUE);
+
 			$languages = $row['langs'];
 
 			$request .= '&db='      . $db_size;     // db size in bytes
@@ -152,14 +153,12 @@ print_progress($step);
 		<td class="row1"><?php
 
 			if ($_POST['step1']['old_path'] != '') {
-				$db     = @mysql_connect($_POST['step1']['db_host'] . ':' . $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+				$db     = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
 			} else {
-				$db     = @mysql_connect($_POST['step2']['db_host'] . ':' . $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+				$db     = at_db_connect($_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
 			}
 
-			$sql    = 'SELECT VERSION() AS version';
-			$result = @mysql_query($sql, $db);
-			$row    = @mysql_fetch_assoc($result);
+			$row = at_db_version($db);
 			echo $row['version'];
 			?> <input type="hidden" name="log_mysql" value="<?php echo $row['version']; ?>" /></td>
 	</tr>
@@ -170,13 +169,6 @@ print_progress($step);
 			echo $url; ?><input type="hidden" name="log_url" value="<?php echo $url; ?>" /><br />
 		<input type="checkbox" name="log_url_yes" value="1" id="url_yes" checked="checked"/><label for="url_yes">Include this URL as well.</label></td>
 	</tr>
-	<!--tr>
-		<td class="row1" colspan="2">
-
-<div class="optional" title="Optional Field">?</div><input type="checkbox" name="log_yes" value="1" checked="checked" id="yes_send" /><label for="yes_send">Yes, send this information to atutor.ca.</label>
-<input type="hidden" name="log_yes" value="1" />
-</td>
-	</tr -->
 	</table>
 <input type="hidden" name="log_yes" value="1" />
 <br />

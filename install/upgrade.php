@@ -56,37 +56,36 @@ if ($step == 2) {
 	// out: -
 	require('include/ustep2.php');
 }
+
 if ($step == 3) {
-	// in:  database info
-	// out: convert database from <encoding> to UTF-8
-	require('include/ustep7.php');
-}
-if ($step == 4) {
 	// in:  display version specific notices
 	// out: update database with new options
 	require('include/ustep3.php');
 }
-if ($step == 5) {
+
+if ($step == 4) {
 	// in:  determine where the old content dir is and if it has to be copied
 	// out: try to create the directory and set permissions
 	require('include/step4.php');
 }
-if ($step == 6) {
+
+if ($step == 5) {
 	// in:  copy the content if needed
 	// out: -
 	require('include/ustep4.php');
 }
-if ($step == 7) {
+
+if ($step == 6) {
 	// in:  copy the config file
 	// out: -
 	require('include/ustep5.php');
 }
-/* anonymous data collection */
-if ($step == 8) {	
+/* anonymous data collection */	
+if ($step == 7) {
 	require('include/step6.php');
 }
 
-if ($step == 9) {
+if ($step == 8) {
 	require('include/ustep6.php');
 }
 
