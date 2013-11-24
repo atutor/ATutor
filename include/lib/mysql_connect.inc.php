@@ -10,25 +10,88 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
-if (AT_INCLUDE_PATH !== 'NULL') {
-	$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);	
+if (AT_INCLUDE_PATH == 'NULL') {
+    echo "Something went wrong.";
+    exit;
+}
 
+//require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
+
+function at_db_connect($db_host, $db_port, $db_user, $db_password){
+    global $msg;
+	$db = @mysql_connect($db_host . ':' . $db_port, $db_user, $db_password);	
+	if(!db){
+	    $db = force_db_connect();
+	}
 	if (!$db) {
 		/* AT_ERROR_NO_DB_CONNECT */
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 		$err = new ErrorHandler();
 		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
 		exit;
+	} else {
+	    return $db;
 	}
-	if (!@mysql_select_db(DB_NAME, $db)) {
-		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
-		$err = new ErrorHandler();
-		trigger_error('VITAL#DB connection established, but database "'.DB_NAME.'" cannot be selected.',
-						E_USER_ERROR);
-		exit;
-	}
+}
+function force_db_connect(){
+    // Used during instllation only
+    if(!$db && isset($_POST['db_host'])){
+        $db = mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], $_POST['db_password']);
+        mysql_select_db($_POST['db_name'], $db);
+    }
+    //install
+    else if(!$db && isset($_POST['step2']['db_host'])){
+            $db = mysql_connect($_POST['step2']['db_host']. ':' .$_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+	        mysql_select_db($_POST['step2']['db_name'], $db);
+    }
+    //upgrade
+    else if(!$db && isset($_POST['step1']['db_host'])){
+            $db = mysql_connect($_POST['step1']['db_host']. ':' .$_POST['step1']['db_port'], $_POST['step1']['db_login'], $_POST['step1']['db_password']);
+	        mysql_select_db($_POST['step1']['db_name'], $db);
+    }
+    return $db;
+}
+function at_is_db($db_name, $db){
+    // see if a databas exists
+	$sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db_name'";
+	$result = mysql_query($sql, $db);
+	$exists = mysql_num_rows($result);
+	return $exists;
+}
+function at_create_db($db_name, $db){
+    $sql = "CREATE DATABASE `$db_name` CHARACTER SET utf8 COLLATE utf8_general_ci";
+	$result = mysql_query($sql, $db);
+	return $result;
+}
+function at_create_table($sql){
+    if(!isset($db)){
+        $db = force_db_connect();	
+    }
+	$result = mysql_query($sql, $db);
+	return $result;
+}
+function at_db_version($db){
+    $sql = "SELECT VERSION() AS version";
+	$result = mysql_query($sql, $db);
+	$row = mysql_fetch_assoc($result);
+    return $row;
+}
+function at_db_select($db_name, $db){
+    global $msg;
+    if(at_is_db($db_name, $db) > 0){
+      if(!@mysql_select_db($db_name, $db)) {
+            $err = new ErrorHandler();
+            trigger_error('VITAL#DB connection established, but database "'.$db_name.'" cannot be selected.',
+                            E_USER_ERROR);
+            exit;
+        }
+        return $db;
+    }
+}
 	
 	//get set_utf8 config
+function at_set_utf8($db){
+    global $msg;
 	$sql = 'SELECT * FROM '.TABLE_PREFIX."config WHERE name='set_utf8'";
 	$result = mysql_query($sql, $db);
 	if ($result){
@@ -77,7 +140,6 @@ if ( get_magic_quotes_gpc() == 1 ) {
  * @author  Alexey Novak, Cindy Li, Greg Gay
  */
 function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows", $array_type = MYSQL_ASSOC) {
-
     $sql = create_sql($query, $params, $sanitize);
     return execute_sql($sql, $oneRow, $callback_func, $array_type);
 
@@ -102,27 +164,32 @@ function create_sql($query, $params=array(), $sanitize = true){
     return $sql;
 }
 function execute_sql($sql, $oneRow, $callback_func, $array_type){
-    global $db, $msg;
-    
+    global  $msg;
+ 
+    if(!isset($db) && (isset($_POST['db_host']) || isset($_POST['step2']['db_host']) || isset($_POST['step1']['db_host']))){
+        $db = force_db_connect();
+    } else {
+        $db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
+        $db = at_db_select(DB_NAME, $db);
+    }
+
     $oneRowErrorMessage = 'Query "%s" which should returned only 1 row has returned more rows.';
     $displayErrorMessage = array('DB_QUERY', date('m/d/Y h:i:s a', time()));
-    
+   
     try {
         sqlout($sql);
         $oneRowErrorMessage = sprintf($oneRowErrorMessage, $sql);
         
         // The line below must be commented out on production instance of ATutor
-       //error_log(print_r($sql, true), 0);    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY
+       error_log(print_r($sql, true), 0);    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY
         
         // Query DB and if something goes wrong then log the problem
         if(defined('MSQLI_ENABLED')){
                $result = mysqli_query($sql, $db) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage)); 
-               
+            
         }else{
                $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
-        }
-
-        //$result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
+         }
         
         // If the query was of the type which does not suppose to return rows e.g. UPDATE/SELECT/INSERT
         // is_bool is for mysql compatibility
@@ -138,7 +205,7 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
                 return array();
             }
         }
-        
+   
         // If we need only one row then just grab it otherwise get all the results
         if ($oneRow) {
             $row = mysql_fetch_array($result, $array_type);
@@ -146,7 +213,6 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
             if (mysql_fetch_array($result, $array_type)) {
                 error_log(print_r($oneRowErrorMessage, true), 0);
                 $msg->addError($displayErrorMessage);
-                //return array();
                 return at_affected_rows($db);
             }
             unset($result);
@@ -165,7 +231,10 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
     }
 }
 function queryDBresult($sql, $params = array(), $sanitize = true){
-        global $db;
+
+        $db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
+        $db = at_db_select(DB_NAME, $db);
+
         $sql = create_sql($sql, $params, $sanitize);
 
         if(defined('MSQLI_ENABLED')){
