@@ -5,7 +5,12 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 // set the default timezone to avoid the warning of "cannot rely on system timezone"
 @date_default_timezone_set(@date_default_timezone_get());
+require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 
+if(!isset($msg)){
+    require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+    $msg = new Message($savant);
+}
 /* atutor default configuration options */
 /* used on: ustep1.php, step3.php, step5.php */
 $_defaults['admin_username'] = ($_POST['old_path'] ? 'admin' : '');
@@ -35,21 +40,6 @@ $_defaults['course_backups'] = 5;
 
 require_once(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
 
-function my_add_null_slashes( $string ) {
-	return @mysql_real_escape_string(stripslashes($string));
-}
-function my_null_slashes($string) {
-	return $string;
-}
-
-if ( get_magic_quotes_gpc() == 1 ) {
-	$addslashes   = 'my_add_null_slashes';
-	$stripslashes = 'stripslashes';
-} else {
-	$addslashes   = 'mysql_real_escape_string';
-	$stripslashes = 'my_null_slashes';
-}
-
 	function queryFromFile($sql_file_path){
 		global $db, $progress, $errors;
 		
@@ -67,7 +57,6 @@ if ( get_magic_quotes_gpc() == 1 ) {
 			// [0] contains the prefixed query
 			// [4] contains unprefixed table name
 
-
 			if ($_POST['tb_prefix'] || ($_POST['tb_prefix'] == '')) {
 				$prefixed_query = SqlUtility::prefixQuery($piece, $_POST['tb_prefix']);
 			} else {
@@ -77,35 +66,37 @@ if ( get_magic_quotes_gpc() == 1 ) {
 			if ($prefixed_query != false ) {
 				$table = $_POST['tb_prefix'].$prefixed_query[4];
 				if($prefixed_query[1] == 'CREATE TABLE'){
-					if (mysql_query($prefixed_query[0],$db) !== false) {
+				    $result = queryDB($prefixed_query[0], array());
+				    if($result > 0){
 						$progress[] = 'Table <strong>'.$table . '</strong> created successfully.';
 					} else {
-						if (mysql_errno($db) == 1050) {
+						if (at_db_errno($db) == 1050) {
 							$progress[] = 'Table <strong>'.$table . '</strong> already exists. Skipping.';
 						} else {
 							$errors[] = 'Table <strong>' . $table . '</strong> creation failed.';
 						}
 					}
 				} elseif($prefixed_query[1] == 'INSERT INTO'){
-					mysql_query($prefixed_query[0],$db);
+					queryDB($prefixed_query[0], array());
 				} elseif($prefixed_query[1] == 'REPLACE INTO'){
-					mysql_query($prefixed_query[0],$db);
+					queryDB($prefixed_query[0], array());
 				} elseif($prefixed_query[1] == 'ALTER TABLE'){
-					if (mysql_query($prefixed_query[0],$db) !== false) {
+				    $result = queryDB($prefixed_query[0], array());
+				    if($result > 0){
 						$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 					} else {
-						if (mysql_errno($db) == 1060) 
+					    if (at_db_errno($db) == 1060) 
 							$progress[] = 'Table <strong>'.$table . '</strong> fields already exists. Skipping.';
-						elseif (mysql_errno($db) == 1091) 
+						elseif (at_db_errno($db) == 1091) 
 							$progress[] = 'Table <strong>'.$table . '</strong> fields already dropped. Skipping.';
 						else
 							$errors[] = 'Table <strong>'.$table.'</strong> alteration failed.';
 					}
 
 				} elseif($prefixed_query[1] == 'DROP TABLE'){
-					mysql_query($prefixed_query[1] . ' ' .$table,$db);
+					queryDB($prefixed_query[1] . ' ' .$table, array());
 				} elseif($prefixed_query[1] == 'UPDATE'){
-					mysql_query($prefixed_query[0],$db);
+					queryDB($prefixed_query[0], array());
 				}
 			}
 		}
