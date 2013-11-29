@@ -18,8 +18,8 @@ require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.p
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_date) AS ue, COUNT(Q.weight) AS numquestions FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_questions_assoc Q WHERE Q.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY T.test_id ORDER BY T.start_date, T.title";
-$result	= mysql_query($sql, $db);
+$sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_date) AS ue, COUNT(Q.weight) AS numquestions FROM %stests T, %stests_questions_assoc Q WHERE Q.test_id=T.test_id AND T.course_id=%d GROUP BY T.test_id ORDER BY T.start_date, T.title";
+$rows_tests	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id']));
 
 ?>
 <table class="data static" summary="" rules="cols">
@@ -36,7 +36,7 @@ $result	= mysql_query($sql, $db);
 
 <?php
 $count = 0;
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_tests as $row){
 	// this code hides tests from the user if they are not enrolled.
 	if (!$row['guests'] && !authenticate_test($row['test_id'])) {
 		continue;
@@ -45,10 +45,10 @@ while ($row = mysql_fetch_assoc($result)) {
 	$count++;
 	echo '<tr>';
 	echo '<td>';
-	$sql = "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$row['test_id']." AND member_id='".$_SESSION['member_id']."'";
 
-	$takes_result= mysql_query($sql, $db);
-	$takes = mysql_fetch_assoc($takes_result);
+	$sql = "SELECT COUNT(test_id) AS cnt FROM %stests_results WHERE status=1 AND test_id=%d AND member_id=%d";
+	$takes= queryDB($sql, array(TABLE_PREFIX, $row['test_id'], $_SESSION['member_id']), TRUE);
+
 	if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
 	   ( ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] < $row['num_takes']) )  ) {
 		echo '<strong><a href="'.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$row['test_id']).'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
@@ -118,16 +118,13 @@ if (!$count) {
 <tbody>
 <?php
 
+$sql	= "SELECT T.*, R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS diff FROM %stests T, %stests_results R, %stests_questions_assoc Q WHERE R.status=1 AND Q.test_id=T.test_id AND R.member_id=%d AND R.test_id=T.test_id AND T.course_id=%d GROUP BY R.result_id ORDER BY R.date_taken DESC";
+$rows_results	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id'], $_SESSION['course_id']));
+$num_results = count($rows_results);
 
-$sql	= "SELECT T.*, R.*, (UNIX_TIMESTAMP(R.end_time) - UNIX_TIMESTAMP(R.date_taken)) AS diff FROM ".TABLE_PREFIX."tests T, ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."tests_questions_assoc Q WHERE R.status=1 AND Q.test_id=T.test_id AND R.member_id=$_SESSION[member_id] AND R.test_id=T.test_id AND T.course_id=$_SESSION[course_id] GROUP BY R.result_id ORDER BY R.date_taken DESC";
-
-$result	= mysql_query($sql, $db);
-$num_results = mysql_num_rows($result);
-
-if ($row = mysql_fetch_assoc($result)) {
+if($num_results > 0){
 	$this_course_id=0;
-
-	do {
+    foreach($rows_results as $row){
 		echo '<tr>';
 		echo '<td><strong>'.AT_print($row['title'], 'tests.title').'</strong></td>';
 		echo '<td>'.AT_date($startend_date_long_format, $row['date_taken']).'</td>';
@@ -161,7 +158,7 @@ if ($row = mysql_fetch_assoc($result)) {
 		
 		echo '</td>';
 		echo '</tr>';
-	} while ($row = mysql_fetch_assoc($result));
+	} 
 } else {
 	echo '<tr><td colspan="4">'._AT('none_found').'</td></tr>';
 }

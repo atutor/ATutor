@@ -20,9 +20,9 @@
  //exit;
  
 function reading_list_news() {
-global $db, $enrolled_courses, $system_courses;
+global $enrolled_courses, $system_courses;
 	$news = array();
-
+    if(isset($enrolled_courses)){
 	$sql = "SELECT * FROM %sreading_list R INNER JOIN %sexternal_resources E ON E.resource_id = R.resource_id WHERE R.course_id in %s ORDER BY R.reading_id DESC";
 	$rows_resources = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $enrolled_courses));
 
@@ -39,5 +39,6 @@ global $db, $enrolled_courses, $system_courses;
 		}	
 	}
 	return $news;
+	}
 }
 ?>

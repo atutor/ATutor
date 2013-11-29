@@ -10,7 +10,7 @@
 // header
 ?>
 <div id="error" role="alert">
-    <a href="<?php echo $_SERVER['PHP_SELF']; ?>" class="message_link"><img src="<?php echo $this->img; ?>close_icon.png" alt="<?php echo _AT('close'); ?>"/></a>
+    <a href="#" class="message_link" onclick="return false;"><img src="<?php echo $this->img; ?>close_icon.png" alt="<?php echo _AT('close'); ?>"/></a>
 	<h4><?php echo _AT('the_follow_errors_occurred'); ?></h4>
 	<?php if (is_array($this->item)) : ?>
 		<ul>

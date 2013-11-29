@@ -40,12 +40,6 @@ if (isset($_POST['cancel'])) {
         $_POST['question']            = $addslashes($_POST['question']);
         $_POST['remedial_content']    = $addslashes($_POST['remedial_content']);
 
-        /*
-        $sql = 'SELECT content_id FROM '.TABLE_PREFIX."tests WHERE test_id=$_POST[tid]";
-        $result = mysql_query($sql, $db);            
-        $row = mysql_fetch_assoc($result);
-        */
-
         $sql_params = array(    $_POST['category_id'], 
                                 $_SESSION['course_id'],
                                 $_POST['feedback'], 
@@ -53,8 +47,8 @@ if (isset($_POST['cancel'])) {
                                 $_POST['answer'],
                                 $_POST['remedial_content']);
 
-        $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);
-        $result    = mysql_query($sql, $db);
+        $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);  
+        $result    = queryDB($sql, array());
         
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
         header('Location: question_db.php');

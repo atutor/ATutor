@@ -46,17 +46,18 @@ require(AT_INCLUDE_PATH.'../mods/_standard/tests/lib/test_result_functions.inc.p
 
 $cats = array();
 if ($_GET['category_id'] >= 0) {
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] AND category_id=$_GET[category_id] ORDER BY title";
+	$sql    = "SELECT * FROM %stests_questions_categories WHERE course_id=%d AND category_id=%d ORDER BY title";
+    $rows_categories	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_GET['category_id']));
 } else {
-	$sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions_categories WHERE course_id=$_SESSION[course_id] ORDER BY title";
+	$sql    = "SELECT * FROM %stests_questions_categories WHERE course_id=%d ORDER BY title";
+    $rows_categories	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 }
 
-$result	= mysql_query($sql, $db);
 if ($_GET['category_id'] <= 0) {
 	$cats[] = array('title' => _AT('cats_uncategorized'), 'category_id' => 0);
 }
 
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_categories as $row){
 	$cats[] = $row;
 }
 
@@ -108,9 +109,11 @@ $question_flag = FALSE;
 //output categories
 foreach ($cats as $cat) {
 	//ouput questions
-	$sql	= "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE course_id=$_SESSION[course_id] AND category_id=".$cat['category_id']." ORDER BY question";
-	$result	= mysql_query($sql, $db);
-	if ($row = mysql_fetch_assoc($result)) {
+
+	$sql	= "SELECT * FROM %stests_questions WHERE course_id=%d AND category_id=%d ORDER BY question";
+	$rows_questions	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $cat['category_id']));
+	
+	if (count($rows_questions) > 0) {
 		$question_flag = TRUE;
 		echo '<tr>';
 		echo '<th colspan="'.$cols.'">';
@@ -118,8 +121,7 @@ foreach ($cats as $cat) {
 		echo '<input type="checkbox" name="cat'.$cat['category_id'].'" id="cat'.$cat['category_id'].'" onclick="javascript:selectCat('.$cat['category_id'].', this);" /><label for="cat'.$cat['category_id'].'">'.$cat['title'].'</label>';
 		echo '</th>';
 		echo '</tr>';
-
-		do {
+        foreach($rows_questions as $row){
 			echo '<tr onmousedown="document.form[\'q' . $row['question_id'] . '\'].checked = !document.form[\'q' . $row['question_id'] . '\'].checked; togglerowhighlight(this, \'q'.$row['question_id'].'\');" id="rq'.$row['question_id'].'">';
 			echo '<td>';
 			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
@@ -136,7 +138,7 @@ foreach ($cats as $cat) {
 			
 			echo '</tr>';
 
-		} while ($row = mysql_fetch_assoc($result));
+		} 
 	} 
 }  
 if (!$question_flag) {

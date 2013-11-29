@@ -51,7 +51,6 @@ if (isset($_POST['add_news'])&& isset($_POST['submit'])) {
 
 		$_POST['formatting']  = intval($_POST['formatting']);
 		$_POST['title']  = $addslashes($_POST['title']);
-		$_POST['body_text']  = $addslashes($_POST['body_text']);
 
 		//The following checks if title length exceed 100, defined by DB structure
 		$_POST['title'] = validate_length($_POST['title'], 100);

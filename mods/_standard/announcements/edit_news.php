@@ -32,8 +32,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors() && isset($_POST['submit'])) {
-		$_POST['title']  = $addslashes($_POST['title']);
-		$_POST['body_text']  = $addslashes($_POST['body_text']);
+
 		//Check if the title has exceeded the DB length, 100
 		$_POST['title'] = validate_length($_POST['title'], 100);
 

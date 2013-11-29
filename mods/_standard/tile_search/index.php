@@ -36,8 +36,7 @@ if ($_REQUEST['submit'] || isset($_REQUEST['p']))
 	// Remove all % chars to prevent unnecessary execution of the SQL query
 	$_REQUEST['keywords']	= str_replace('%', '', $_REQUEST['keywords']);
 	// Escapes special characters in a string for use in an SQL statement
-	$_REQUEST['keywords']	= mysql_real_escape_string($_REQUEST['keywords']);
-	
+	$_REQUEST['keywords']	= $addslashes($_REQUEST['keywords']);
 
 	$keywords = trim($_REQUEST['keywords']);
 

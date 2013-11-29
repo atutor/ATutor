@@ -110,7 +110,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
                                     $_POST['remedial_content']);
             $sql = vsprintf(AT_SQL_QUESTION_MULTIANSWER, $sql_params);
 
-            $result    = mysql_query($sql, $db);
+        $result    = queryDB($sql, array());
 
             $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
             header('Location: question_db.php');

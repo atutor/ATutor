@@ -39,6 +39,83 @@ ATutor.course = ATutor.course || {};
 
     //everything in the document.ready block executes after the page is fully loaded
     jQuery(document).ready( function () {
+                // Floating topnavlist bar
+                $('#lrg_topnav').scrollToFixed({
+                    marginTop: 18,
+                    dontSetWidth: true,
+                    preFixed: function() { 
+                        $(this).find('div').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
+                        $(this).find('div').css('padding', '8');
+                        $(this).find('div').css('margin-left', '200');
+                        $(this).find('div').css('width', '100%');
+                        $(".active").css('border-top', 'thin solid white');
+                        $(".active").css('border-left', 'thin solid white');
+                        $(".active").css('border-right', 'thin solid white');
+                        $("#topnavlistcontainer").css('padding-left', '3.3em');
+                        $("#topnavlistcontainer").css('padding-bottom', '.3em');
+                        $("#topnavlistcontainer").css('margin-left', '-2.3em');
+                        $(this).find('ul').css('padding-left', '200');
+                        },
+                    postFixed: function() { 
+                        $(this).find('div').css('background-image', ''); 
+                        $(this).find('div').css('padding', '');
+                        $("#topnavlistcontainer").css('padding-left', '');
+                        $("#topnavlistcontainer").css('margin-left', '');
+                        }
+                });
+                // Fixed Footer
+                $('#footer').scrollToFixed( {
+                    bottom: 0,
+                    limit: $('#footer').offset().top,
+                    preFixed: function() { $(this).find('h1').css('color', 'blue'); },
+                    postFixed: function() { $(this).find('h1').css('color', ''); }
+                });
+                // Hide/Show instructor course admin tools 
+                var initialStatus = ($.cookie('showSubNav') === "on") ? "1" : "0";
+                if(initialStatus === "0"){
+                    $("ul#subnavlist").css("border-bottom", "none");
+                    $("#subnavlist_i").toggleClass("hidden").hide('slow');
+                    $(".menuedit").toggleClass("hidden").hide('slow');
+                    $("#shortcuts").toggleClass("hidden").hide('slow');
+                    $(".del-content-icon").toggleClass("hidden").hide('slow'); 
+                   // $(".detail_switch").toggleClass("hidden").hide('slow');  
+                    $(".buttonbox").toggleClass("hidden").hide('slow'); 
+                }
+                ATutor.switchView = function (viewFlag) {
+                    if(viewFlag === "0"){
+                        $("ul#subnavlist").css("border-bottom", "1px solid #DED29E");
+                        $("#subnavlist_i").toggleClass("show").show('slow');
+                        $(".menuedit").toggleClass("show").show('slow');
+                        $("#shortcuts").toggleClass("show").show('slow');
+                        $(".del-content-icon").toggleClass("show").show('slow');  
+                       // $(".detail_switch").toggleClass("show").show('slow');  
+                        $(".buttonbox").toggleClass("show").show('slow');    
+                        $.cookie('showSubNav', "on", { expires: 30, path: '/' });
+                        //console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
+                        //console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
+                    } else if(viewFlag === "1") {
+                        $("ul#subnavlist").css("border-bottom", "none");
+                        $("#subnavlist_i").toggleClass("hidden").hide('slow');
+                        $(".menuedit").toggleClass("hidden").hide('slow');
+                        $("#shortcuts").toggleClass("hidden").hide('slow');
+                        $(".del-content-icon").toggleClass("hidden").hide('slow');
+                       // $(".detail_switch").toggleClass("hidden").hide('slow');  
+                        $(".buttonbox").toggleClass("hidden").hide('slow');
+                        $.cookie('showSubNav', "off", { expires: 30, path: '/' });
+                       //console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
+                       //console.log("switchval=" + $('#admin_switch').val() + ' initial=' + initialStatus);
+                    }
+                    return false;     
+                };
+                // Initialize the switch based on previously saved cookie value    
+                $('#admin_switch option[value="' + initialStatus + '"]').attr("selected", true);
+                $('#admin_switch').switchify();
+                $('#admin_switch').val(($.cookie('showSubNav') === "on") ? "1" : "0");
+                
+                $(".ui-switch").bind("click keypress", function(){
+                    ATutor.switchView($('#admin_switch').val());
+                });
+
     /* To automatically hide feedback message, uncomment */
   	/* $('#message').css('display', 'block').slideDown("slow");
             setTimeout(function() {
@@ -47,17 +124,61 @@ ATutor.course = ATutor.course || {};
     */
         
     /* To hide feedback div when clicked */
-        $("#message").click(function() {
+        $(".message_link").click(function() {
          $("#message").hide('blind', {}, 500), 8000;
          return false;
         });  
+        
+    /*****
+    ** Switch between detailed and icon views on course home page
+    *****/
+        var initialStatusDetails = ($.cookie('showDetails') === "on") ? "1" : "0";
+        if(initialStatusDetails === "0"){
+                $("#icon_view").show();
+                $("#details_view").hide();
+                $('#detail_switch').removeClass('detail_switch_back');
+                $('#detail_switch').addClass('detail_switch');
+        } else{
+                $("#icon_view").hide();
+                $("#details_view").show();
+                $('#detail_switch').removeClass('detail_switch');
+                $('#detail_switch').addClass('detail_switch_back');    
+        }
+       ATutor.switchDetails = function (viewFlag) {
+            if(viewFlag === "1"){
+                    $("#details_view").hide('blind', {}, 500), 8000;
+                    $("#icon_view").show('blind', {}, 500), 8000;   
+                $('#detail_switch').removeClass('detail_switch_back');
+                $('#detail_switch').addClass('detail_switch');
+                    $.cookie('showDetails', "off", { expires: 30, path: '/' });
+                    $('#detail_switch').val('0');
+             } else if(viewFlag === "0") {
+                    $("#details_view").show('blind', {}, 500), 8000;
+                    $("#icon_view").hide('blind', {}, 500), 8000;
+                $('#detail_switch').removeClass('detail_switch');
+                $('#detail_switch').addClass('detail_switch_back');
+                    $.cookie('showDetails', "on", { expires: 30, path: '/' });
+                    $('#detail_switch').val('1')
+            }
+            return false;
+        }
+        $('#detail_switch').val(($.cookie('showDetails') === "on") ? "1" : "0");
+
+        $("#detail_switch").bind("click keypress", function(){
+            ATutor.switchDetails($('#detail_switch').val());
+            
+        });
+    /*********/ 
+        
+        
     /* Show/Hide Advanced Admin System Preferecnes, set cookie */
-        $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
+     /*   $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
             $("div.adv_toggle").click(function() {
             $(this).toggleClass("active").next().toggle();
             var new_value = $(".adv_opts").is(":visible") ? 'expanded' : 'collapsed';
             $.cookie('showTop', new_value);
         });
+        */
         ATutor.users.preferences.setStyles(
                      '<?php if(isset($_SESSION["prefs"]["PREF_BG_COLOUR"])){echo $_SESSION["prefs"]["PREF_BG_COLOUR"];} ?>',
                      '<?php if(isset($_SESSION["prefs"]["PREF_FG_COLOUR"])){ echo $_SESSION["prefs"]["PREF_FG_COLOUR"];} ?>',

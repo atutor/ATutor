@@ -81,15 +81,11 @@ function rebuild($tree, $node=''){
  * @return	null (nothing to return, it updates the db only)
  */
 function reconstruct($tree, $order, $content_parent_id, $table_prefix){
-	global $db;
-
 	//a content page.
 	if (!is_array($tree)){
 		$sql = 'UPDATE '.$table_prefix."content SET ordering=$order, content_parent_id=$content_parent_id WHERE content_id=$tree";
-		if (!mysql_query($sql, $db)){
-			//throw error
-			echo mysql_error();
-		}
+
+        queryDB($sql, array())
 		return;
 	}
 	foreach ($tree as $k=>$v){
@@ -98,9 +94,9 @@ function reconstruct($tree, $order, $content_parent_id, $table_prefix){
 			reconstruct($v, $match[1], $content_parent_id, $table_prefix);	//inherit the previous layer id
 		} else {
 			//content folder layer
-			$sql = 'SELECT * FROM '.$table_prefix."content WHERE content_id=$k";
-			$result = mysql_query($sql, $db);
-			$old_content_row = mysql_fetch_assoc($result);
+			$sql = "SELECT * FROM %scontent WHERE content_id=%d";
+			$old_content_row  = queryDB($sql, array($table_prefix, $k), TRUE);
+
 			$sql = 'INSERT INTO '.$table_prefix.'content (course_id, content_parent_id, ordering, last_modified, revision, formatting, release_date, keywords, content_path, title, use_customized_head, allow_test_export, content_type) VALUES ('
 				.$old_content_row['course_id'] . ', '
 				.$content_parent_id . ', '
@@ -109,19 +105,20 @@ function reconstruct($tree, $order, $content_parent_id, $table_prefix){
 				.$old_content_row['revision'] . ', '
 				.$old_content_row['formatting'] . ', '
 				.'\''. $old_content_row['release_date'] . '\', '
-				.'\''. mysql_real_escape_string($old_content_row['keywords']) . '\', '
-				.'\''. mysql_real_escape_string($old_content_row['content_path']) . '\', '
-				.'\''. mysql_real_escape_string($old_content_row['title']) . '\', '
+				.'\''. my_add_null_slashes($old_content_row['keywords']) . '\', '
+				.'\''. my_add_null_slashes($old_content_row['content_path']) . '\', '
+				.'\''. my_add_null_slashes($old_content_row['title']) . '\', '
 				.$old_content_row['use_customized_head'] . ', '
 				.$old_content_row['allow_test_export'] . ', '
-				. '1)';
-			
-			if (mysql_query($sql, $db)){
-				$folder_id = mysql_insert_id();
+				. '1)';	
+			$result = queryDB($sql, array());	
+
+			if($result > 0)	
+				$folder_id = at_insert_id();
 				reconstruct($v, '', $folder_id, $table_prefix);
 			} else {
 				//throw error
-				echo mysql_error();
+				echo at_db_error();
 			}
 		}
 	}

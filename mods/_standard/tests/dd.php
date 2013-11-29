@@ -31,9 +31,9 @@ if (count($_SESSION['dd_question_ids']) == 0) {
 }
 session_write_close();
 $_GET['qid'] = intval($_GET['qid']);
-$sql = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$_GET[qid]";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+
+$sql = "SELECT * FROM %stests_questions WHERE question_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_GET['qid']), TRUE);
 
 $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _AT('G'), _AT('H'), _AT('I'), _AT('J'));
 $_colours = array('#FF9900', '#00FF00', '#0000FF', '#F23AA3', '#9999CC', '#990026', '#0099CC', '#22C921', '#007D48', '#00248F');

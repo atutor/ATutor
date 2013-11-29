@@ -1,4 +1,4 @@
-<?php exit; // this template does not seem to be use. ?>
+<?php //exit; // this template does not seem to be use. ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="id" value="<?php echo $this->id ?>" />
 <div class="input-form">	
@@ -17,9 +17,8 @@
 				if ($this->assign_to == '0'){ 
 					echo _AT('all_students'); 
 				} else { // name of group goes here
-					
-					$type_row = mysql_fetch_assoc($this->result_group);
-					echo $type_row['title'];
+					echo $this->type_row['title'];
+                    echo '<input type="hidden" name="assign_to" value="'.$this->assign_to.'" />';
 				}
 				?>
 			<?php } else { // creating a new assignment
@@ -28,8 +27,7 @@
 					<option value="0" <?php if ($this->assign_to == '0'){ echo 'selected="selected"'; } ?> label="<?php  echo _AT('all_students'); ?>"><?php  echo _AT('all_students'); ?></option>
 					<optgroup label="<?php  echo _AT('specific_groups'); ?>">
 						<?php
-							
-							while ($type_row = mysql_fetch_assoc($result_assign)) {
+                            foreach($this->rows_group_types as $type_row){
 								echo '<option value="'.$type_row['type_id'].'" ';
 								if ($this->assign_to == $type_row['type_id']) {
 									echo 'selected="selected"';
@@ -53,11 +51,11 @@
 		<label for="hasduedate"  title="<?php echo _AT('due_date') ?>"><?php  echo _AT('date'); ?></label>
 
 		<?php
-			$today_day  = $dueday;
-			$today_mon  = $duemonth;
-			$today_year = $dueyear;
-			$today_hour = $duehour;
-			$today_min  = $dueminute;
+			$today_day  = $this->dueday;
+			$today_mon  = $this->duemonth;
+			$today_year = $this->dueyear;
+			$today_hour = $this->duehour;
+			$today_min  = $this->dueminute;
 			
 			$name = '_due';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');
@@ -82,11 +80,11 @@
 		<label for="until" title="<?php echo _AT('accept_late_submissions'). ': '. _AT('until');  ?>"><?php  echo _AT('until'); ?></label>
 
 		<?php
-			$today_day  = $cutoffday;
-			$today_mon  = $cutoffmonth;
-			$today_year = $cutoffyear;
-			$today_hour = $cutoffhour;
-			$today_min  = $cutoffminute;
+			$today_day  = $this->cutoffday;
+			$today_mon  = $this->cutoffmonth;
+			$today_year = $this->cutoffyear;
+			$today_hour = $this->cutoffhour;
+			$today_min  = $this->cutoffminute;
 			
 			$name = '_cutoff';
 			require(AT_INCLUDE_PATH.'html/release_date.inc.php');

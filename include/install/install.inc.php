@@ -159,54 +159,45 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
 	if (isset($errors)) {
 		return;
 	}
-	
-	$db = @mysql_connect($db_host . ':' . $db_port, $db_login, urldecode($db_pwd));
-	@mysql_select_db($db_name, $db);
-
-	$account_email = $addslashes($account_email);
-	$account_fname = $addslashes($account_fname);
-	$account_lname = $addslashes($account_lname);
 
 	$status = 3; // for instructor account
 
-	$sql = "INSERT INTO ".$tb_prefix."admins (login, password, real_name, email, language, privileges, last_login) ".
-	       "VALUES ('$admin_username', '$admin_pwd_hidden', '', '$admin_email', 'en', 1, NOW())";
-	$result= mysql_query($sql, $db);
+	$sql = "INSERT INTO %sadmins (login, password, real_name, email, language, privileges, last_login) 
+	        VALUES ('%s', '%s', '', '%s', 'en', 1, NOW())";
+	$result= queryDB($sql, array($tb_prefix, $admin_username, $admin_pwd_hidden, $admin_email));
 
-	$sql = "INSERT INTO ".$tb_prefix."members (member_id, login, password, email, website, first_name, ".
+	$sql = "INSERT INTO %smembers (member_id, login, password, email, website, first_name, ".
 	       "second_name, last_name, dob, gender, address, postal, city, province, country, phone, status,".
 	       "preferences, creation_date, language, inbox_notify, private_email, last_login) ". 
-	       "VALUES (NULL,'$account_username','$account_pwd_hidden','$account_email','','$account_fname','','$account_lname','0000-00-00','n', '','','','','', '',$status,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
-	$result = mysql_query($sql ,$db);
+	       "VALUES (NULL,'%s','%s','%s','','%s','','%s','0000-00-00','n', '','','','','', '',%d,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
+	$result = queryDB($sql , array($tb_prefix, $account_username, $account_pwd_hidden, $account_email, $account_fname, $account_lname, $status));
 
-	$site_name = $addslashes($site_name);
-	$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('site_name', '$site_name')";
-	$result = mysql_query($sql ,$db);
+	$sql = "INSERT INTO %sconfig (name, value) VALUES ('site_name', '%s')";
+	$result = queryDB($sql, array($tb_prefix, $site_name));
 
-	$email = $addslashes($email);
-	$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('contact_email', '$email')";
-	$result = mysql_query($sql ,$db);
-
+	$sql = "INSERT INTO %sconfig (name, value) VALUES ('contact_email', '%s')";
+	$result = queryDB($sql, array($tb_prefix, $email));
+	
 	$home_url = $addslashes($home_url);
 	if ($home_url != '') {
-		$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('home_url', '$home_url')";
-		$result = mysql_query($sql ,$db);
+		$sql = "INSERT INTO %sconfig (name, value) VALUES ('home_url', '%s')";
+		$result = queryDB($sql, array($tb_prefix, $home_url));
 	}
 
 	$just_social = intval($just_social);
 	if ($just_social > 0){
-		$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('just_social', '1')";
-		$result = mysql_query($sql ,$db);
+		$sql = "INSERT INTO %sconfig (name, value) VALUES ('just_social', '1')";
+		$result = queryDB($sql, array($tb_prefix));
 	}
 
 	//if fresh install, use SET NAME to set the mysql connection to UTF8
-	$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('set_utf8', '1')";
-	mysql_query($sql ,$db);
-
+	$sql = "INSERT INTO %sconfig (name, value) VALUES ('set_utf8', '1')";
+	$result = queryDB($sql, array($tb_prefix));
+	
 	// Calculate the ATutor installation path and save into database for the usage of
 	// session associated path @ include/vitals.inc.php
-	$sql = "INSERT INTO ".$tb_prefix."config (name, value) VALUES ('session_path', '".$session_path."')";
-	mysql_query($sql ,$db);
+	$sql = "INSERT INTO %sconfig (name, value) VALUES ('session_path', '%s')";
+	$result = queryDB($sql, array($tb_prefix, $session_path));
 }
 
 /**
@@ -408,11 +399,11 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
  * @return An array of progress/error information or the same message in $msg depending on the flag $in_plain_msg.
  */
 function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix, $db_name, $in_plain_msg = false) {
+	
 	global $addslashes;
 	global $errors, $progress, $msg;
-	
-	$db = @mysql_connect($db_host . ':' . $db_port, $db_login, $db_pwd);
-	
+	$db = at_db_connect($db_host, $db_port, $db_login, $db_pwd);
+
 	if (!$db) {
 		if ($in_plain_msg) {
 			$errors[] = 'Unable to connect to database server.';
@@ -425,9 +416,8 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 	$db_name = $addslashes($db_name);
 	
 	// check mysql version number
-	$sql = "SELECT VERSION() AS version";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$row = at_db_version($db);
+
 	$row['version'] = str_replace (array('-community-nt', '-max', '-standard'), '', strtolower($row['version']));
 	if (version_compare($row['version'], '4.1.10', '>=') === FALSE) {
 		if ($in_plain_msg) {
@@ -436,11 +426,14 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 			$msg->addError(array('LOW_MYSQL_VERSION', $row['version']));
 		}
 	}
+    if(isset($db)){
+	    $result = at_is_db($db_name, $db);
+    }
+	if($result == 0){
+		$sql = "CREATE DATABASE `%s` CHARACTER SET utf8 COLLATE utf8_general_ci";
+		$result = queryDB($sql, array($db_name));
 
-	if (!mysql_select_db($db_name, $db)) {
-		$sql = "CREATE DATABASE `$db_name` CHARACTER SET utf8 COLLATE utf8_general_ci";
-		$result = mysql_query($sql, $db);
-		if (!$result) {
+		if ($result == 0) {
 			if ($in_plain_msg) {
 				$errors[] = 'Unable to select or create database <b>'.$db_name.'</b>.';
 			} else {
@@ -452,18 +445,18 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 			} else {
 				$msg->addFeedback(array('DB_CREATED', $db_name));
 			}
-			mysql_select_db($db_name, $db);
+			at_db_select($db_name, $db);
 		}
 	} else {
 		/* Check if the database that existed is in UTF-8, if not, ask for retry */
-		$sql = "SHOW CREATE DATABASE `$db_name`";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+		at_db_select($db_name, $db);
+		$sql = "SHOW CREATE DATABASE `%s`";
+		$row = queryDB($sql, array($db_name));
 		
 		if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
-			$sql2 = 'ALTER DATABASE `'.$db_name.'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
-			$result2 = mysql_query($sql2);
-			if (!$result2){
+			$sql2 = 'ALTER DATABASE `%s` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
+			$result2 = queryDB($sql2, array($db_name));
+			if ($result2 == 0){
 				if ($in_plain_msg) {
 					$errors[] = 'Database <b>'.$db_name.'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: <br /> ALTER DATABASE `'.$db_name.'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  <br />To use ALTER DATABASE, you need the ALTER privilege on the database.  You can also check the MySQL manual <a href="http://dev.mysql.com/doc/refman/4.1/en/alter-database.html" target="mysql_window">here</a>.';
 				} else {

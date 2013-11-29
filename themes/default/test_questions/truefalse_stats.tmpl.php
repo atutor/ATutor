@@ -5,11 +5,11 @@
 	<th scope="col" width="40%"><?php echo _AT('question'); ?></th>
 	<th scope="col" nowrap="nowrap"><?php echo _AT('left_blank'); ?></th>
 <?php if ($this->row['answer_0'] == 1): ?>
-	<th scope="col"><?php echo _AT('true'); ?><img src="images/checkmark.gif" alt="Correct checkmark" /></th>
+	<th scope="col"><?php echo _AT('true'); ?><img src="images/check.gif" alt="Correct checkmark" /></th>
 	<th scope="col"><?php echo _AT('false'); ?></th>
 <?php elseif ($this->row['answer_0'] == 2): ?>
 	<th scope="col"><?php echo _AT('true'); ?></th>
-	<th scope="col"><?php echo _AT('false'); ?><img src="images/checkmark.gif" alt="Correct checkmark" /></th>
+	<th scope="col"><?php echo _AT('false'); ?><img src="images/check.gif" alt="Correct checkmark" /></th>
 <?php else: ?>
 	<th scope="col"><?php echo _AT('true'); ?></th>
 	<th scope="col"><?php echo _AT('false'); ?></th>

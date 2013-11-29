@@ -72,9 +72,9 @@ if (isset($_REQUEST['in_cid']))
 }
 
 // make sure max attempts not reached, and still on going
-$sql        = "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date2, UNIX_TIMESTAMP(end_date) AS end_date2 FROM ".TABLE_PREFIX."tests WHERE test_id=".$tid." AND course_id=".$_SESSION['course_id'];
-$result = mysql_query($sql, $db);
-$test_row = mysql_fetch_assoc($result);
+$sql        = "SELECT *, UNIX_TIMESTAMP(start_date) AS start_date2, UNIX_TIMESTAMP(end_date) AS end_date2 FROM %stests WHERE test_id=%d AND course_id=%d";
+$test_row = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+
 /* check to make sure we can access this test: */
 if (!$test_row['guests'] && ($_SESSION['enroll'] == AT_ENROLL_NO || $_SESSION['enroll'] == AT_ENROLL_ALUMNUS)) {
     require(AT_INCLUDE_PATH.'header.inc.php');
@@ -119,12 +119,12 @@ else if (isset($_POST['submit']))
     
     if ($guest_name <> "" || $organization <> "" || $location <> "" || $role <> "" || $focus <> "")
     {
-        $guest_id = get_next_guest_id();
-
-        $sql    = "INSERT INTO ".TABLE_PREFIX."guests (guest_id, name, organization, location, role, focus)
-                         VALUES ('$guest_id', '$guest_name', '$organization', '$location', '$role', '$focus')";
-        $result = mysql_query($sql, $db);
-        $result_id = mysql_insert_id($db);
+        $guest_id = get_next_guest_id();   
+          
+        $sql    = "INSERT INTO %sguests (guest_id, name, organization, location, role, focus)
+                         VALUES ('%s', '%s', '%s', '%s', '%s', '%s')";
+        $result = queryDB($sql, array(TABLE_PREFIX, $guest_id, $guest_name, $organization, $location, $role, $focus));
+        $result_id = at_insert_id();
     }
     $gid_str = (isset($guest_id)) ? SEP."gid=".$guest_id : "";
     if (isset($cid)) $gid_str .= SEP.'cid='.$cid;
@@ -141,9 +141,10 @@ else if (isset($_POST['submit']))
  * If max attempted reached, then stop it.
  * @3300
  */
-$sql = "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=".$tid." AND member_id='".$_SESSION['member_id']."'";
-$takes_result = mysql_query($sql, $db);
-$takes = mysql_fetch_assoc($takes_result);
+
+$sql = "SELECT COUNT(*) AS cnt FROM %stests_results WHERE status=1 AND test_id=%d AND member_id=%d";
+$takes = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['member_id']), TRUE);
+
 if ( (($test_row['start_date2'] > time()) || ($test_row['end_date2'] < time())) || 
    ( ($test_row['num_takes'] != AT_TESTS_TAKE_UNLIMITED) && ($takes['cnt'] >= $test_row['num_takes']) )  ) {
     require(AT_INCLUDE_PATH.'header.inc.php');
@@ -156,17 +157,18 @@ if ( (($test_row['start_date2'] > time()) || ($test_row['end_date2'] < time())) 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 // get number of attempts
-$sql    = "SELECT COUNT(test_id) AS cnt FROM ".TABLE_PREFIX."tests_results WHERE status=1 AND test_id=$tid AND member_id='".$_SESSION['member_id']."'";
-$result = mysql_query($sql, $db);
-if ($row = mysql_fetch_assoc($result)) {
+$sql    = "SELECT COUNT(test_id) AS cnt FROM %stests_results WHERE status=1 AND test_id=%d AND member_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['member_id']), TRUE);
+
+if(count($row) > 0){
     $num_takes = $row['cnt'];
 } else {
     $num_takes = 0;
 }
 
-$sql    = "SELECT COUNT(*) AS num_questions FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_assoc($result);
+$sql    = "SELECT COUNT(*) AS num_questions FROM %stests_questions_assoc WHERE test_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
+
 if (!$test_row['random'] || $test_row['num_questions'] > $row['num_questions']) {
     $test_row['num_questions'] = $row['num_questions'];
 }

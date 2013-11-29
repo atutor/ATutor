@@ -28,8 +28,11 @@ if (isset($_POST['cancel'])) {
     exit;
 } else if (isset($_POST['submit'])) {
     $missing_fields             = array();
-    $_POST['title']                = $addslashes(trim($_POST['title']));
-    $_POST['description']  = $addslashes(trim($_POST['description']));
+    $_POST['title']                = trim($_POST['title']);
+    $_POST['description']  = trim($_POST['description']);
+    $_POST['passfeedback']  = trim($_POST['passfeedback']);
+    $_POST['failfeedback']  = trim($_POST['failfeedback']);
+/*    
     $_POST['format']            = intval($_POST['format']);
     $_POST['randomize_order']    = intval($_POST['randomize_order']);
     $_POST['num_questions']        = intval($_POST['num_questions']);
@@ -45,7 +48,7 @@ if (isset($_POST['cancel'])) {
     $_POST['instructions']      = $addslashes($_POST['instructions']);
     $_POST['result_release']    = intval($_POST['result_release']);
     $_POST['remedial_content']    = intval($_POST['remedial_content']);
-
+*/
     /* this doesn't actually get used: */
     $_POST['difficulty'] = intval($_POST['difficulty']);
     if ($_POST['difficulty'] == '') {
@@ -83,11 +86,12 @@ if (isset($_POST['cancel'])) {
      * TODO:    Add an extra column in test_results to remember the state of anonymous submissions.
      *            make changes accordingly on line 255 as well.
      */
-    $sql = "SELECT t.test_id, anonymous FROM ".TABLE_PREFIX."tests_results r NATURAL JOIN ".TABLE_PREFIX."tests t WHERE r.test_id = t.test_id AND r.test_id=$tid";
-    $result    = mysql_query($sql, $db);
-    if ($row = mysql_fetch_assoc($result)) {
+    $sql = "SELECT t.test_id, anonymous FROM %stests_results r NATURAL JOIN %stests t WHERE r.test_id = t.test_id AND r.test_id=%d";
+    $row_anonymous    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+
+    if(count($row_anonymous) > 0){
         //If there are submission(s) for this test, anonymous field will not be altered.
-        $_POST['anonymous'] = $row['anonymous'];
+        $_POST['anonymous'] = $row_anonymous['anonymous'];
     }
 
     if ($missing_fields) {
@@ -96,7 +100,7 @@ if (isset($_POST['cancel'])) {
     }
 
     $day_start    = intval($_POST['day_start']);
-    $month_start= intval($_POST['month_start']);
+    $month_start = intval($_POST['month_start']);
     $year_start    = intval($_POST['year_start']);
     $hour_start    = intval($_POST['hour_start']);
     $min_start    = intval($_POST['min_start']);
@@ -150,10 +154,10 @@ if (isset($_POST['cancel'])) {
 
     if (!$msg->containsErrors()) {
         // just to make sure we own this test:
-        $sql    = "SELECT * FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-        $result    = mysql_query($sql, $db);
-
-        if ($row = mysql_fetch_assoc($result)) {
+        $sql    = "SELECT * FROM %stests WHERE test_id=%d AND course_id=%d";
+        $row_tests    = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+        
+        if(count($row_tests) > 0){
             if ($_POST['random']) {
                 $total_weight = get_total_weight($tid, $_POST['num_questions']);
             } else {
@@ -161,47 +165,73 @@ if (isset($_POST['cancel'])) {
             }
             //If title exceeded database defined length, truncate it.
             $_POST['title'] = validate_length($_POST['title'], 100);
-            
-            $sql = "UPDATE ".TABLE_PREFIX."tests " . 
-                   "SET title='$_POST[title]', 
-                        description='$_POST[description]', 
-                        format=$_POST[format], 
-                        start_date='$start_date', 
-                        end_date='$end_date', 
-                        randomize_order=$_POST[randomize_order], 
-                        num_questions=$_POST[num_questions], 
-                        instructions='$_POST[instructions]', 
-                        content_id=$_POST[content_id],  
-                        passscore=$_POST[passscore], 
-                      passpercent=$_POST[passpercent], 
-                      passfeedback='$_POST[passfeedback]', 
-                      failfeedback='$_POST[failfeedback]', 
-                        result_release=$_POST[result_release], 
-                        random=$_POST[random], 
-                        difficulty=$_POST[difficulty], 
-                        num_takes=$_POST[num_takes], 
-                        anonymous=$_POST[anonymous], 
-                        guests=$_POST[allow_guests], 
-                        show_guest_form=$_POST[show_guest_form],
-                        out_of=$total_weight, 
-                        display=$_POST[display],
-                        remedial_content=$_POST[remedial_content]
-                    WHERE test_id=$tid 
-                    AND course_id=$_SESSION[course_id]";
-                    
-            $result = mysql_query($sql, $db);
 
-            $sql = "DELETE FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
-            $result = mysql_query($sql, $db);    
+            $sql = "UPDATE %stests " . 
+                   "SET title='%s', 
+                        description='%s', 
+                        format=%d, 
+                        start_date='%s', 
+                        end_date='%s', 
+                        randomize_order=%d, 
+                        num_questions=%d, 
+                        instructions='%s', 
+                        content_id=%d,  
+                        passscore=%d, 
+                      passpercent=%d, 
+                      passfeedback='%s', 
+                      failfeedback='%s', 
+                        result_release=%d, 
+                        random=%d, 
+                        difficulty=%d, 
+                        num_takes=%d, 
+                        anonymous=%d, 
+                        guests=%d, 
+                        show_guest_form=%d,
+                        out_of=%d, 
+                        display=%d,
+                        remedial_content=%d
+                    WHERE test_id=%d 
+                    AND course_id=%d";
+                    
+            $result = queryDB($sql, array(
+                        TABLE_PREFIX,
+                        $_POST['title'],
+                        $_POST['description'],
+                        $_POST['format'],
+                        $start_date,
+                        $end_date,
+                        $_POST['randomize_order'],
+                        $_POST['num_questions'],
+                        $_POST['instructions'],
+                        $_POST['content_id'],
+                        $_POST['passscore'],
+                        $_POST['passpercent'],
+                        $_POST['passfeedback'],
+                        $_POST['failfeedback'],
+                        $_POST['result_release'],
+                        $_POST['random'],
+                        $_POST['difficulty'],
+                        $_POST['num_takes'],
+                        $_POST['anonymous'],
+                        $_POST['allow_guests'],
+                        $_POST['show_guest_form'],
+                        $total_weight,
+                        $_POST['display'],
+                        $_POST['remedial_content'],
+                        $tid,
+                        $_SESSION['course_id']));
+                
+            $sql = "DELETE FROM %stests_groups WHERE test_id=%d";
+            $result = queryDB($sql, array(TABLE_PREFIX, $tid));    
             
             if (isset($_POST['groups'])) {
-                $sql = "INSERT INTO ".TABLE_PREFIX."tests_groups VALUES ";
+                $sql = "INSERT INTO %stests_groups VALUES ";
                 foreach ($_POST['groups'] as $group) {
                     $group = intval($group);
                     $sql .= "($tid, $group),";
                 }
                 $sql = substr($sql, 0, -1);
-                $result = mysql_query($sql, $db);
+                $result = queryDB($sql, array(TABLE_PREFIX));
             }
         }
         
@@ -217,10 +247,10 @@ $onload = 'document.form.title.focus();';
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!isset($_POST['submit'])) {
-    $sql    = "SELECT *, DATE_FORMAT(start_date, '%Y-%m-%d %H:%i:00') AS start_date, DATE_FORMAT(end_date, '%Y-%m-%d %H:%i:00') AS end_date FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-    $result    = mysql_query($sql, $db);
-
-    if (!($row = mysql_fetch_assoc($result))){
+    $sql    = "SELECT *, DATE_FORMAT(start_date, '%%Y-%%m-%%d %%H:%%i:00') AS start_date, DATE_FORMAT(end_date, '%%Y-%%m-%%d %%H:%%i:00') AS end_date FROM %stests WHERE test_id=%d AND course_id=%d";
+    $row    = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+    
+    if(count($row) == 0){
         $msg->printErrors('ITEM_NOT_FOUND');
         require (AT_INCLUDE_PATH.'footer.inc.php');
         exit;
@@ -276,10 +306,11 @@ $msg->printErrors();
 
         // This addresses the following issue: http://www.atutor.ca/atutor/mantis/view.php?id=3268
         // Ref: line 64
-        $sql = "SELECT t.test_id, anonymous FROM ".TABLE_PREFIX."tests_results r NATURAL JOIN ".TABLE_PREFIX."tests t WHERE r.test_id = t.test_id AND r.test_id=$tid";
-        $result    = mysql_query($sql, $db);
+        $sql = "SELECT t.test_id, anonymous FROM %stests_results r NATURAL JOIN %stests t WHERE r.test_id = t.test_id AND r.test_id=%d";
+        $row_anon    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+
         $anonymous_disabled = FALSE;
-        if ($row = mysql_fetch_assoc($result)) {
+        if(count($row_anon) > 0){
             //If there are submission(s) for this test, anonymous field will not be altered.
             $anonymous_disabled = TRUE;
         }
@@ -415,22 +446,26 @@ $msg->printErrors();
             //show groups
             //get groups currently allowed
             $current_groups = array();
-            $sql    = "SELECT group_id FROM ".TABLE_PREFIX."tests_groups WHERE test_id=$tid";
-            $result    = mysql_query($sql, $db);
-            while ($row = mysql_fetch_assoc($result)) {
+
+            $sql    = "SELECT group_id FROM %stests_groups WHERE test_id=%d";
+            $rows_tgroups    = queryDB($sql, array(TABLE_PREFIX, $tid));
+            
+            foreach($rows_tgroups as $row){
                 $current_groups[] = $row['group_id'];
             }
 
             //show groups
-            $sql    = "SELECT * FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
-            $result = mysql_query($sql, $db);
-            if (mysql_num_rows($result)) {
-                while ($row = mysql_fetch_assoc($result)) {
+            $sql    = "SELECT * FROM %sgroups_types WHERE course_id=%d ORDER BY title";
+            $rows_gtypes = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+            
+            if(count($rows_gtypes) > 0){
+                foreach($rows_gtypes as $row){
                     echo '<strong>'.$row['title'].'</strong><br />';
 
-                    $sql    = "SELECT * FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
-                    $g_result = mysql_query($sql, $db);
-                    while ($grow = mysql_fetch_assoc($g_result)) {
+                    $sql    = "SELECT * FROM %sgroups WHERE type_id=%d ORDER BY title";
+                    $rows_groups = queryDB($sql, array(TABLE_PREFIX, $row['type_id']));
+                    
+                    foreach($rows_groups as $grow){
                         echo '&nbsp;<label><input type="checkbox" value="'.$grow['group_id'].'" name="groups['.$grow['group_id'].']" '; 
                         if (is_array($current_groups) && in_array($grow['group_id'], $current_groups)) {
                             echo 'checked="checked"';

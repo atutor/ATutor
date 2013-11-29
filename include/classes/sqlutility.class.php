@@ -19,7 +19,8 @@ class SqlUtility
 	*
  	* Removes comment and splits large sql files into individual queries
  	*
-	* Last revision: September 23, 2001 - gandon
+	* Last revision: November 17, 2013 - greg
+ 	* Updated for ATutor queryDB()
  	*
  	* @param   array    the splitted sql commands
  	* @param   string   the sql commands
@@ -28,7 +29,8 @@ class SqlUtility
  	*/
 	public static function splitSqlFile(&$ret, $sql)
 	{
-		$sql               = trim($sql);
+
+	    $sql               = preg_replace('|\%|','%%',trim($sql));
 		$sql_len           = strlen($sql);
 		$char              = '';
     	$string_start      = '';
@@ -163,7 +165,7 @@ class SqlUtility
 
 	public static function queryFromFile($sql_file_path, $table_prefix = null, $in_plain_msg = true)
 	{
-		global $db, $progress, $errors, $msg;
+		global $progress, $errors, $msg;
 
 		$tables = array();
 
@@ -189,7 +191,8 @@ class SqlUtility
 				$table = $table_prefix.$prefixed_query[4];
 				if($prefixed_query[1] == 'CREATE TABLE')
 				{
-					if (mysql_query($prefixed_query[0],$db) !== false) {
+				    $result = at_create_table($prefixed_query[0]);
+                    if($result > 0){
 						if ($in_plain_msg) {
 							$progress[] = 'Table <b>'.$table . '</b> created successfully.';
 						} else {
@@ -198,7 +201,9 @@ class SqlUtility
 					}
 					else
 					{
-						if (mysql_errno($db) == 1050) {
+					
+						if(at_db_errno() == 1050){
+						//// NOTE STATIC ERRNO --- if (mysql_errno($db) == 1050) {
 							if ($in_plain_msg) {
 								$progress[] = 'Table <b>'.$table . '</b> already exists. Skipping.';
 							} else {
@@ -214,24 +219,27 @@ class SqlUtility
 					}
 				}
 				elseif($prefixed_query[1] == 'INSERT INTO') {
-					mysql_query($prefixed_query[0],$db);
+					queryDB($prefixed_query[0], array(), FALSE, FALSE);
 				} elseif($prefixed_query[1] == 'REPLACE INTO') {
-					mysql_query($prefixed_query[0],$db);
+					queryDB($prefixed_query[0], array(), FALSE, FALSE);
 				} elseif($prefixed_query[1] == 'ALTER TABLE') {
-					if (mysql_query($prefixed_query[0],$db) !== false) {
+				    $result = queryDB($prefixed_query[0], array());
+					if($result > 0){
 						if ($in_plain_msg) {
 							$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 						} else {
 							$msg->addFeedback(array('TABLE_ALTERED', $table));
 						}
 					} else {
-						if (mysql_errno($db) == 1060) {
+						if (at_db_errno() == 1060) {
+						////// NOTE STATIC ERRNO --- if (mysql_errno($db) == 1060) {  
 							if ($in_plain_msg) {
 								$progress[] = 'Table <strong>'.$table . '</strong> fields already exists. Skipping.';
 							} else {
 								$msg->addFeedback(array('TABLE_FIELD_EXIST', $table));
 							}
-						} elseif (mysql_errno($db) == 1091) {
+						////// NOTE STATIC ERRNO --- } elseif (mysql_errno($db) == 1091) {
+						} elseif (at_db_errno() == 1091) {
 							if ($in_plain_msg) {
 								$progress[] = 'Table <strong>'.$table . '</strong> fields already dropped. Skipping.';
 							} else {
@@ -246,9 +254,9 @@ class SqlUtility
 						}
 					}
 				} elseif($prefixed_query[1] == 'DROP TABLE') {
-					mysql_query($prefixed_query[1] . ' ' .$table,$db);
+					queryDB($prefixed_query[1] . ' ' .$table, array());
 				} elseif($prefixed_query[1] == 'UPDATE'){
-					mysql_query($prefixed_query[0],$db);
+					queryDB($prefixed_query[0], array());
 				}
 			}
 		}
@@ -259,7 +267,7 @@ class SqlUtility
 	// This function only revert queries on "CREATE TABLE" and "INSERT INTO language_text"
 	public static function revertQueryFromFile($sql_file_path, $table_prefix)
 	{
-		global $db, $progress, $errors;
+		global $progress, $errors;
 
 		$tables = array();
 
@@ -277,14 +285,14 @@ class SqlUtility
 			if (preg_match($pattern_create_table, $piece, $matches))
 			{
 				$sql = 'DROP TABLE '. $table_prefix . $matches[2];
-				mysql_query($sql, $db);
+				queryDB($sql, array());
 			}
 			
 			$pattern_insert_lang = "/^INSERT INTO\s+([`]?)language_text\\1\s+.*VALUES.*'.*'.*'(.*)'.*'(.*)'/siU";
 			if (preg_match($pattern_insert_lang, $piece, $matches))
 			{
 				$sql = "DELETE FROM ".$table_prefix."language_text WHERE variable='".$matches[2]."' AND term='".$matches[3]."'";
-				mysql_query($sql, $db);
+				queryDB($sql, array());
 			}
 		}
 

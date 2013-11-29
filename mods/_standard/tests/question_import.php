@@ -182,9 +182,8 @@ if (!$overwrite){
 }
 
 /* get the course's max_quota */
-$sql	= "SELECT max_quota FROM ".TABLE_PREFIX."courses WHERE course_id=$_SESSION[course_id]";
-$result = mysql_query($sql, $db);
-$q_row	= mysql_fetch_assoc($result);
+$sql	= "SELECT max_quota FROM %scourses WHERE course_id=%d";
+$q_row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
 
 if ($q_row['max_quota'] != AT_COURSESIZE_UNLIMITED) {
 

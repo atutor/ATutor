@@ -150,7 +150,7 @@ if (isset($this_login, $this_password)) {
             $_SESSION['first_login'] = true;
         }
 
-        queryDB("UPDATE %smembers SET creation_date=creation_date, last_login='%s' WHERE member_id=%d", array(TABLE_PREFIX, $now, $_SESSION[member_id]));
+        queryDB("UPDATE %smembers SET creation_date=creation_date, last_login='%s' WHERE member_id=%d", array(TABLE_PREFIX, $now, $_SESSION['member_id']));
         
         //clear login attempt on successful login
         queryDB("DELETE FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login));
@@ -166,7 +166,7 @@ if (isset($this_login, $this_password)) {
         exit;
     } else {
         // check if it's an admin login.
-        $rows = queryDB("SELECT login, `privileges`, language FROM %sadmins WHERE login='%s' AND SHA1(CONCAT(password, '%s'))='%s' AND `privileges`>0", array(TABLE_PREFIX, $this_login, $_SESSION[token], $this_password));
+        $rows = queryDB("SELECT login, `privileges`, language FROM %sadmins WHERE login='%s' AND SHA1(CONCAT(password, '%s'))='%s' AND `privileges`>0", array(TABLE_PREFIX, $this_login, $_SESSION['token'], $this_password));
         
         if ($row = $rows[0]) {
             $sql = "UPDATE %sadmins SET last_login=NOW() WHERE login='%s'";
@@ -213,7 +213,7 @@ if (isset($this_login, $this_password)) {
 }
 
 if (isset($_SESSION['member_id'])) {
-    queryDB("DELETE FROM %susers_online WHERE member_id=%d", array(TABLE_PREFIX, $_SESSION[member_id]));
+    queryDB("DELETE FROM %susers_online WHERE member_id=%d", array(TABLE_PREFIX, $_SESSION['member_id']));
 }
 
 unset($_SESSION['login']);

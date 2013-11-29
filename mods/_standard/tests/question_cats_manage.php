@@ -28,16 +28,24 @@ if (isset($_POST['cancel'])) {
 
 	if (!empty($_POST['title']) && !isset($_POST['catid'])) {
 		$_POST['title'] = $addslashes($_POST['title']);
-		$sql	= "INSERT INTO ".TABLE_PREFIX."tests_questions_categories VALUES (NULL, $_SESSION[course_id], '$_POST[title]')";
-		$result = mysql_query($sql, $db);
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+
+		$sql	= "INSERT INTO %stests_questions_categories VALUES (NULL, %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['title']));
+		
+		if($result > 0){
+		    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		}
 		header('Location: question_cats.php');
 		exit;
 	} else if (!empty($_POST['title']) && isset($_POST['catid']))  {
 		$_POST['title'] = $addslashes($_POST['title']);
-		$sql	= "REPLACE INTO ".TABLE_PREFIX."tests_questions_categories VALUES ($_POST[catid], $_SESSION[course_id], '$_POST[title]')";
-		$result = mysql_query($sql, $db);
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+
+		$sql	= "REPLACE INTO %stests_questions_categories VALUES (%d, %d, '%s')";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['catid'], $_SESSION['course_id'], $_POST['title']));
+		
+        if($result > 0){
+		    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+		}
 		header('Location: question_cats.php');
 		exit;
 	} else {
@@ -46,9 +54,8 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_GET['catid'])) {
-	$sql = "SELECT title FROM ".TABLE_PREFIX."tests_questions_categories WHERE category_id=$_GET[catid]";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$sql = "SELECT title FROM %stests_questions_categories WHERE category_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_GET['catid']), TRUE);
 
 	$_POST['title'] = $row['title'];
 }

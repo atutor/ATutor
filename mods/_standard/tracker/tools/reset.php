@@ -25,9 +25,9 @@ if (isset($_POST['submit_no'])) {
 
 else if (isset($_POST['submit_yes'])) {
 	//clean up the db
-	$sql    = "DELETE FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-
+	$sql    = "DELETE FROM %smember_track WHERE course_id=%d";
+	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id]));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: ./index.php');
 	exit;

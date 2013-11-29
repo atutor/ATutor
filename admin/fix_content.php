@@ -14,6 +14,7 @@
 
 ///////////////////
 // This file is no longer in use
+exit;
 ///////////////////
 define('AT_INCLUDE_PATH', '../include/');
 

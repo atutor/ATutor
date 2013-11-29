@@ -141,8 +141,8 @@ if(!$service_installed){
 		<input type="text" size="10" name="max_login" id="maximum_login_attempt" value="<?php if (!empty($_POST['max_login'])) { echo $stripslashes(htmlspecialchars($_POST['max_login'])); } else { echo $_config['max_login']; } ?>"  /> <?php echo _AT('times'); ?>
 	</div>
 	<div class="row">	
-<div class="adv_toggle" role="toggle"><a href="javascript: return:false;">Advanced</a></div>
-<div style="display:none;" class="adv_opts" >
+<!-- <div class="adv_toggle" role="toggle"><a href="javascript: return:false;">Advanced</a></div> -->
+<div style="" class="adv_opts" >
 	<div class="row">
 	<fieldset>
 		<legend><?php echo _AT('display_name_format'); ?> </legend>

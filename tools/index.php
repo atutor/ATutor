@@ -14,7 +14,7 @@
 
 define('AT_INCLUDE_PATH', '../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-
+tool_origin('off');
 require(AT_INCLUDE_PATH.'header.inc.php');
 $module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 $keys = array_keys($module_list);

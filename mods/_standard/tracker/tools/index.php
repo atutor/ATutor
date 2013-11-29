@@ -18,7 +18,6 @@ authenticate(AT_PRIV_CONTENT);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-
 $orders = array('asc' => 'desc', 'desc' => 'asc');
 $cols   = array('total_hits' => 1, 'unique_hits' => 1, 'average_duration' => 1, 'total_duration' => 1);
 
@@ -37,9 +36,8 @@ if (isset($_GET['asc'])) {
 $page_string = SEP.$order.'='.$col;
 
 if (!isset($_GET['cnt'])) {
-	$sql	= "SELECT COUNT(DISTINCT content_id) AS cnt FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id]";
-	$result = mysql_query($sql, $db);
-	$row = mysql_fetch_assoc($result);
+	$sql	= "SELECT COUNT(DISTINCT content_id) AS cnt FROM %smember_track WHERE course_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
 	$cnt = $row['cnt'];
 } else {
 	$cnt = intval($_GET['cnt']);
@@ -57,9 +55,10 @@ $count = (($page-1) * $results_per_page) + 1;
 $offset = ($page-1)*$results_per_page;
 
 /*create a table that lists all the content pages and the number of time they were viewed*/
-$sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, SEC_TO_TIME(SUM(duration)) AS total_duration FROM ".TABLE_PREFIX."member_track WHERE course_id=$_SESSION[course_id] GROUP BY content_id ORDER BY $col $order LIMIT $offset, $results_per_page";
-$result = mysql_query($sql, $db);
-$savant->assign('result', $result);
+$sql = "SELECT content_id, COUNT(*) AS unique_hits, SUM(counter) AS total_hits, SEC_TO_TIME(SUM(duration)/SUM(counter)) AS average_duration, SEC_TO_TIME(SUM(duration)) AS total_duration FROM %smember_track WHERE course_id=%d GROUP BY content_id ORDER BY %s %s LIMIT %d, %d";
+$rows_hits = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $col, $order, $offset, $results_per_page));
+
+$savant->assign('rows_hits', $rows_hits);
 $savant->assign('col', $col);
 $savant->assign('page_string', $page_string);
 $savant->assign('page', $page);

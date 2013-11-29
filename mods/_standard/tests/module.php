@@ -143,16 +143,17 @@ $this->_pages['mods/_standard/tests/take_test_q.php']['parent']    = 'mods/_stan
 $this->_pages['mods/_standard/tests/test_intro.php']['title_var'] = 'take_test';
 $this->_pages['mods/_standard/tests/test_intro.php']['parent']    = 'mods/_standard/tests/my_tests.php';
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_TESTS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
-    $this->_pages['mods/_standard/tests/index.php']['title_var'] = 'tests';
-    $this->_pages['mods/_standard/tests/index.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
-    $this->_pages['mods/_standard/tests/question_db.php']['title_var'] = 'question_database';
-    $this->_pages['mods/_standard/tests/question_db.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
-    $this->_pages['mods/_standard/tests/question_cats.php']['title_var'] = 'question_categories';
-    $this->_pages['mods/_standard/tests/question_cats.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
-    $this->_pages['mods/_standard/tests/create_test.php']['title_var'] = 'create_test';
-    $this->_pages['mods/_standard/tests/create_test.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
-    $this->_pages['mods/_standard/tests/my_tests.php']['children']  = array('mods/_standard/tests/index.php','mods/_standard/tests/question_db.php','mods/_standard/tests/create_test.php', 'mods/_standard/tests/question_cats.php');
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_TESTS, TRUE)){	
+    $this->_pages_i['mods/_standard/tests/index.php']['title_var'] = 'tests';
+    $this->_pages_i['mods/_standard/tests/index.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
+    $this->_pages_i['mods/_standard/tests/question_db.php']['title_var'] = 'question_database';
+    $this->_pages_i['mods/_standard/tests/question_db.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
+    $this->_pages_i['mods/_standard/tests/question_cats.php']['title_var'] = 'question_categories';
+    $this->_pages_i['mods/_standard/tests/question_cats.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
+    $this->_pages_i['mods/_standard/tests/create_test.php']['title_var'] = 'create_test';
+    $this->_pages_i['mods/_standard/tests/create_test.php']['other_parent']    = 'mods/_standard/tests/my_tests.php';
+    $this->_pages_i['mods/_standard/tests/my_tests.php']['children']  = array('mods/_standard/tests/index.php','mods/_standard/tests/question_db.php','mods/_standard/tests/create_test.php', 'mods/_standard/tests/question_cats.php');
+    $this->_pages['mods/_standard/tests/my_tests.php']['children']  = array();
 }
 
 

@@ -57,7 +57,25 @@ if (!isset($_GET['cid']) && !isset($_POST['cid'])) {
 } else {
 	$this->_pages['mods/_core/editor/edit_content_folder.php']['title_var'] = 'edit_content_folder';
 }
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_CONTENT, TRUE)){	
+    $cid = intval($_GET['cid']);
+    $_pages_i['mods/_core/editor/edit_content.php']['title_var'] = 'edit_content';
+    $_pages_i['mods/_core/editor/edit_content.php']['other_parent']   = 'content.php';
+	$_pages_i['mods/_core/editor/add_content.php']['title_var'] = 'add_content';
+	$_pages_i['mods/_core/editor/add_content.php']['other_parent']    = 'content.php';
+    $_pages_i['mods/_core/editor/arrange_content.php']['title_var'] = 'arrange_content';
+    $_pages_i['mods/_core/editor/arrange_content.php']['other_parent']   = 'content.php';
+    $_pages_i['mods/_core/imscp/index.php']['title_var'] = 'export_content';
+    $_pages_i['mods/_core/imscp/index.php']['other_parent']   = 'content.php';
+    $_pages_i['content.php']['children']  = array('mods/_core/editor/edit_content.php','mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'mods/_core/imscp/index.php');
+    $_pages['content.php']['children']  = array();
+    $_pages_i['mods/_core/editor/add_content.php']['title_var'] = 'add_content';
+	$_pages_i['mods/_core/editor/add_content.php']['parent']    = 'index.php';
+    $_pages_i['index.php']['children']  = array('mods/_core/editor/add_content.php', 'mods/_core/properties/course_properties.php');
+    $_pages_i['mods/_core/editor/add_content.php']['children'] = array();
+    $_pages['index.php']['children']  = array();
 
+}
 $this->_pages['mods/_core/editor/edit_content_folder.php']['parent']    = 'mods/_core/content/index.php';
 
 $this->_pages['mods/_core/editor/delete_content.php']['title_var'] = 'delete_content';

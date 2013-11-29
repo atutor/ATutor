@@ -9,7 +9,7 @@
 /* modify it under the terms of the GNU General Public License          */
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
-// $Id: header.tmpl.php 3825 2005-03-11 15:35:51 joel $
+// $Id:$
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 /* available header.tmpl.php variables:
  * $this->lang_code			the ISO language code
@@ -35,8 +35,10 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
  * $this->top_level_pages	associative array of the top level navigation
  * $this->current_top_level_page	the full path to the current top level page with file name
  * $this->sub_level_pages			associate array of sub level navigation
+ * $this->sub_level_pages_i			associate array of sub level navigation tools for instructors
  * $this->back_to_page				if set, the path and file name to the part of this page (if parent is not a top level nav)
  * $this->current_sub_level_page	the full path to the current sub level page with file name
+ * $this->current_sub_level_page_i	the full path to the current sub level page with file name for sub navigation intructor tools
  * $this->guide				the full path and file name to the guide page
  * $this->shortcuts         the array of tools' shortcuts to display at top right corner. Used by content.php and edit_content_folder.php
  * ======================================
@@ -74,8 +76,7 @@ global $system_courses, $_custom_css, $db;
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->theme_path; ?>favicon.ico" type="image/x-icon" />
 	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/print.css" type="text/css" media="print" />
-    <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/jquery_mobile.css" type="text/css" media="print" />
-	<link rel="stylesheet" href="<?php echo $this->theme_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
+  	<link rel="stylesheet" href="<?php echo $this->theme_path.'jscripts/infusion/framework/fss/css/fss-layout.css'; ?>" type="text/css" />
 	<link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/styles.css" type="text/css" />
 	    <link rel="stylesheet" href="<?php echo $this->theme_path.'themes/'.$this->theme; ?>/forms.css" type="text/css" />
 	<!--[if IE]>
@@ -107,27 +108,7 @@ global $system_courses, $_custom_css, $db;
     <script src="<?php echo $this->base_path; ?>jscripts/ATutor.js" type="text/javascript"></script>   
     <?php echo $this->custom_css; ?>
     <?php echo $this->rtl_css; ?>
-<!-- switch scripts -->  
-	<script type='text/javascript' src="http://localhost/atutorgit/themes/default/jquery.switch.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="http://localhost/atutorgit/themes/default/jquery.switch.css">   
-<script type='text/javascript'>//<![CDATA[ 
-    $(function(){
-    $('#admin_switch').switchify({ on: "1", off: "0" });
-    $('#admin_switch').data('switch').bind('slide', function(e, type) {
-       $('ul').append('<li>Switching ' + type); 
-    });
 
-    // available options:
-    // 
-    // .switchify()
-    // => default (builds new switch widget)
-    // .switchify('update')
-    // => update the cached position of the widget
-    // .switchify({ on: "1", off: "0" })
-    // => specify the vals for "on" and "off"
-    });//]]>  
-
-</script>
     <style id="pref_style" type="text/css"></style> 
 </head>
 <body onload="<?php if(isset($this->onload)){echo $this->onload;} ?>">
@@ -289,7 +270,7 @@ global $system_courses, $_custom_css, $db;
 		<?php $path_parts = explode("/", $this->current_top_level_page); 
 		      $last_path_part = $path_parts[sizeof($path_parts) - 1];
                if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
-		    <a class="pref_wiz_launcher"><img alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" title="<?php echo _AT('preferences').' - '._AT('new_window'); ?>"  src="<?php echo $this->img; ?>wand.png" class="img1616"/></a> |
+		    <a class="pref_wiz_launcher"><img alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" title="<?php echo _AT('preferences').' - '._AT('new_window'); ?>"  src="<?php echo $this->img; ?>wand.png" class="img1616" style="margin-bottom:-.5em;"/></a> |
 		    <?php } ?> 
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | 
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>
@@ -315,7 +296,7 @@ global $system_courses, $_custom_css, $db;
 			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
       </div>
 		  <?php endif; ?>
-      <?php if (isset($this->shortcuts) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1): ?>
+      <?php if (isset($this->shortcuts)): ?>
       <div id="shortcuts">
 	      <ul>
 		      <?php foreach ($this->shortcuts as $link): ?>
@@ -385,8 +366,11 @@ global $system_courses, $_custom_css, $db;
     </div>
     
 
-	<?php if (count($this->sub_level_pages) > 0): ?>
-		<div id="subnavlistcontainer" role="navigation">
+	<?php 
+
+	if (count($this->sub_level_pages) > 0): ?>
+		<div id="subnavlistcontainer" role="navigation"  aria-live="rude">
+		<a name="admin_tools" id="admin_tools" title="admin tools"></a>
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">
@@ -395,21 +379,54 @@ global $system_courses, $_custom_css, $db;
 			</div>
 
 			<ul id="subnavlist">
-			<?php $num_pages = count($this->sub_level_pages); 
+			<?php 
+
+			$num_pages = count($this->sub_level_pages); 
 
 ?>
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 
-				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page): ?>
+				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page && $num_pages > 1){ ?>
 				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></li>
+				<?php } else if($num_pages > 1) { ?>
+					  <li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></a></li>
+				<?php } ?>
+				<?php if ($i < $num_pages-1): 
+					echo " ";?>
+				<?php endif; ?>
+			<?php endfor; ?>
+			</ul>
+			
+
+			<?php 
+			$num_pages_i = count($this->sub_level_pages_i); 
+			if(is_array($this->sub_level_pages_i)){
+			    $num_pages_i = count($this->sub_level_pages_i); 
+			    if(intval($_GET['fid'])){
+			        $fcid = "?fid=".$_GET['fid'];
+			    }
+			    if(intval($_GET['cid'])){
+			        $fcid = "?cid=".$_GET['cid'];
+			    }			 
+			 
+			 
+			 ?>
+
+			<ul id="subnavlist_i">
+
+			<?php for ($i=0; $i<$num_pages_i; $i++): ?>
+
+				<?php if ($this->sub_level_pages_i[$i]['url'] == $this->current_sub_level_page): ?>
+				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></li>
 				<?php else: ?>
-					<li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></a></li>
+					<li><a href="<?php echo $this->sub_level_pages_i[$i]['url'].$fcid; ?>"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></a></li>
 				<?php endif; ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>
 				<?php endif; ?>
 			<?php endfor; ?>
 			</ul>
+			<?php } ?>
 		</div>
 	<?php endif; ?>
 

@@ -2314,18 +2314,18 @@ div.input-form.remedialContent {
 Styles for the mobile to responsive switch
 ******/
 
-#admin_switch{
+#mobile_switch{
 float:left;
 margin-top:.6em;
 font-weight:700;
 margin-bottom:-.7em;
 
 }
-#admin_switch li{
+#mobile_switch li{
 display:inline;
 padding:.2em;
 }
-#admin_switch li.hover, #admin_switch li a:hover{
+#mobile_switch li.hover, #mobile_switch li a:hover{
 /*background-color:#ADF7D8;
 padding:.3em;
 background-color: #F3F3F3;
@@ -2337,13 +2337,13 @@ background-image: linear-gradient(#FAFAFA, #EAEAEA);*/
 	 -moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
     background-color: #354D68;
 }
-#admin_switch a{
+#mobile_switch a{
 color:black;
 }
-#admin_switch li.disabled a{ 
+#mobile_switch li.disabled a{ 
 /* opacity:0.4; */
 }
-#admin_switch .left,#admin_switch .left:hover, #admin_switch .left:focus{
+#mobile_switch .left,#mobile_switch .left:hover, #mobile_switch .left:focus{
 margin-right:-0.1em;
 border-top: 2px solid #354D68;
 border-left: 2px solid #354D68;
@@ -2351,14 +2351,14 @@ border-bottom: 2px solid #354D68;
 border-radius: .3em  0em 0em .3em ;
 
 }
-#admin_switch .right{
+#mobile_switch .right{
 margin-left:-.3em;
 border-top: 2px solid #354D68;
 border-right: 2px solid #354D68;
 border-bottom: 2px solid #354D68;
 border-radius: 0em .3em .3em 0em ;
 }
-#admin_switch li.active{
+#mobile_switch li.active{
 /*background-color:#ADF7D8;*/
    /*     background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);*/
@@ -2369,10 +2369,10 @@ border-radius: 0em .3em .3em 0em ;
 	 -moz-border-image: url("images/navbar_normal_button_insetShadow.png") 5 5 5 5 stretch;
     background-color: #354D68;
 }
-#admin_switch li.disabled{
+#mobile_switch li.disabled{
  background-color:#B6C0C6;
 }
-#admin_switch li.disabled:hover, #admin_switch li.disabled a:hover{
+#mobile_switch li.disabled:hover, #mobile_switch li.disabled a:hover{
 	color: white;
 	text-decoration: none;
 	font-weight: bold;

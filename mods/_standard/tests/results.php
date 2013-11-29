@@ -65,9 +65,10 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] != 2)) {
 	if ($_GET['status'] == 0) {
-		$status = " AND R.final_score=''";
+		//$status = " AND R.final_score=''";
+		$status = "AND (R.final_score='' OR R.final_score='0')";
 	} else {
-		$status = " AND R.final_score<>''";
+		$status = " AND R.final_score<>'' AND R.final_score<>'0'";
 	}
 	$page_string .= SEP.'status='.$_GET['status'];
 } else {
@@ -76,17 +77,17 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] != 2))
 
 if ($_GET['user_type'] == 1 || $_GET['user_type'] == 2) {
 	if ($_GET['user_type'] == 1) {
-		$status = " AND R.member_id not like 'G_%' AND R.member_id > 0 ";
+		$status = " AND R.member_id not like 'G_%%' AND R.member_id > 0 ".$status;
 	} else {
-		$status = " AND (R.member_id like 'G_%' OR R.member_id = 0) ";
+		$status = " AND (R.member_id like 'G_%%' OR R.member_id = 0) ".$status;
 	}
 	$page_string .= SEP.'user_type='.$_GET['user_type'];
 }
-
 //get test info
-$sql	= "SELECT out_of, anonymous, random, title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid AND course_id=$_SESSION[course_id]";
-$result	= mysql_query($sql, $db);
-if (!($row = mysql_fetch_array($result))){
+$sql	= "SELECT out_of, anonymous, random, title FROM %stests WHERE test_id=%d AND course_id=%d";
+$row	= queryDB($sql,array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
+
+if(count($row) == 0){
 	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
@@ -97,9 +98,9 @@ $random = $row['random'];
 $title = $row['title'];
 
 //count total
-$sql	= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.test_id=$tid AND R.status=1";
-$result	= mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
+$sql	= "SELECT count(*) as cnt FROM %stests_results R LEFT JOIN %smembers M USING (member_id) WHERE R.test_id=%d AND R.status=1";
+$row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+
 $num_sub = $row['cnt'];
 
 //get results based on filtre and sorting
@@ -123,14 +124,14 @@ if ($anonymous <> 1)
 		$sql .= " ORDER BY R.final_score $order";
 }
 
-$result = mysql_query($sql, $db);
+$rows_results = queryDB($sql, array());
 
 if ($anonymous == 1) {
 	$guest_text = '<strong>'._AT('anonymous').'</strong>';
 } else {
 	$guest_text = '- '._AT('guest').' -';
 }
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_results as $row){
 	$full_name = AT_print(get_display_name($row['member_id']), 'members.full_name');
 	$row['full_name'] = $full_name ? $full_name : $guest_text;
 	$row['login']     = $row['login']     ? $row['login']     : $guest_text;
@@ -139,15 +140,17 @@ while ($row = mysql_fetch_assoc($result)) {
 
 if ($col == "full_name") usort($rows, "sortByFullName");
 
-$num_results = mysql_num_rows($result);
-
+$num_results = count($rows_results);
 //count unmarked: no need to do this query if filtre is already getting unmarked
 if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0)) {
+
 	$num_unmarked = $num_results;
+	
 } else {
-	$sql		= "SELECT count(*) as cnt FROM ".TABLE_PREFIX."tests_results R, ".TABLE_PREFIX."members M WHERE R.test_id=$tid AND R.status=1 AND R.member_id=M.member_id AND R.final_score=''";
-	$result	= mysql_query($sql, $db);
-	$row = mysql_fetch_array($result);
+
+	$sql	= "SELECT count(*) as cnt FROM %stests_results R, %smembers M WHERE R.test_id=%d AND R.status=1 AND R.member_id=M.member_id AND (R.final_score='' OR R.final_score='0')";
+	$row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+
 	$num_unmarked = $row['cnt'];
 }
 

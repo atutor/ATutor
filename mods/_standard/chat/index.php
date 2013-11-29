@@ -23,7 +23,7 @@ $admin = getAdminSettings();
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
-<p align="center"><a href="mods/_standard/chat/chat.php?firstLoginFlag=1"><strong> <?php echo _AT('enter_chat');  ?></strong></a></p><br />
+<div id="chat_launch"><a href="mods/_standard/chat/chat.php?firstLoginFlag=1"><strong> <?php echo _AT('enter_chat');  ?></strong></a></div><br />
 <?php
 
 $orders = array('asc' => 'desc', 'desc' => 'asc');

@@ -16,56 +16,53 @@ global $_base_path;
 if ($this->banner): ?><?php echo $this->banner; ?><br /><?php endif;
 
 // positioning switch of home ONLY FOR INSTRUCTORS. two icons will be used for identification to distinguish the two different views of the home.
-if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && count($this->home_links) > 0){
-    
-	if($this->view_mode==0)
-		echo '<div class="detail_switch"><a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/detail_view.png" title ="'._AT('detail_view').'"  alt ="'._AT('detail_view').'" border="0" class="img1616"/></a><br /></div>';
-	else
-		echo '<div class="detail_switch"><a href ="'.AT_BASE_HREF.'switch_view.php?swid='.$this->view_mode.'" style="background-color:#FFFFFF;"><img src="'.AT_BASE_HREF.'images/icon_view.png"  title ="'._AT('icon_view').'" alt ="'._AT('icon_view').'" border="0" class="img1616"/></a><br /></div>';
-}	
-
-// Icon View, $this->view_mode = 0. course will be made changes to the icons to restore the classic icons.
-if($this->view_mode==0){
+if(count($this->home_links) > 0){
+    echo '<div class="detail_switch" id="detail_switch"  title="'._AT('icon_view').'"><a  href ="javascript:void(0)"  style="background-color:#FFFFFF;" title="'._AT('icon_view').'">&nbsp;.<br /></div>';
+}
 ?>
-	<div style="width: 98%; margin-top: -5px; float:left;">
-		<ul id="home-links">
-		<?php if (is_array($this->home_links)): ?>
-		<?php foreach ($this->home_links as $link): ?>
-			<li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" border="0" /><?php echo $link['title']; ?></a></li>
-		<?php endforeach; ?>
-		<?php endif; ?>
-		</ul>
-	</div> <?php
-} else { ?>
+
+<div id="icon_view" style="width: 98%; margin-top: -5px; float:left;">
+    <ul id="home-links">
+    <?php if (is_array($this->home_links)): ?>
+    <?php foreach ($this->home_links as $link): ?>
+        <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" border="0" /><?php echo $link['title']; ?></a></li>
+    <?php endforeach; ?>
+    <?php endif; ?>
+    </ul>
+</div>
 	
-	<div id="details_view" class="fluid-horizontal-order" style="width: 98%; margin-top: -5px; float: left; ">
-<?php 				// create table container divided into two columns for the placement of modules
-	if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && is_array($this->home_links)){		// display enabled course tool
+<div id="details_view" class="fluid-horizontal-order" style="width: 98%; margin-top: -5px; float: left; ">
+
+<?php 				
+    // create table container divided into two columns for the placement of modules
+	if(authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN) && is_array($this->home_links)){		
+	    // display enabled course tool
 		foreach ($this->home_links as $link){ 
 ?>
 		<div class="home_box" id="<?php echo str_replace('/', '-', substr($link['url'], strlen($_base_path))); ?>"> 
-<?php print_sublinks($link); 						// display each module ?>
+        <?php 
+            // display each module
+            print_sublinks($link); 						 
+        ?>
 		</div>
 <?php
-		} // end of foreach 
-	}  // end of inner if 
-	else {
+		}  
+	} else { 
 		if (is_array($this->home_links)) {
 			foreach ($this->home_links as $link){?>
-		<div class="home_box">
-<?php print_sublinks($link); ?>
-		</div>
-<?php			}  // end of foreach
-		}// end of inner inner if
+		        <div class="home_box">
+                <?php print_sublinks($link); ?>
+		        </div>
+<?php		}  
+		}
 	} ?>
-
 	</div> 
 	<br style="clear:both;" />&nbsp;
+	
 <?php
-} // end of if
-
 if ($this->announcements): 
-	global $system_courses; ?>
+	global $system_courses; 
+?>
 
 <?php if ($system_courses[$this->course_id]['rss']): ?>
 <div style="float:right;">

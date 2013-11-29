@@ -20,7 +20,7 @@ if ($cid == 0) {
 	header('Location: '.$_base_href.'index.php');
 	exit;
 }
-
+tool_origin('off');
 /* show the content page */
 $rows_content = $contentManager->getContentPage($cid);
 

@@ -26,12 +26,14 @@ if (isset($_POST['submit_no'])) {
 	header('Location: questions.php?tid=' . $tid);
 	exit;
 } else if (isset($_POST['submit_yes'])) {
-	$sql	= "DELETE FROM ".TABLE_PREFIX."tests_questions_assoc WHERE question_id=$qid AND test_id=$tid";
-	$result	= mysql_query($sql, $db);
-		
-	$msg->addFeedback('QUESTION_REMOVED');
-	header('Location: questions.php?tid=' . $tid);
-	exit;
+
+	$sql	= "DELETE FROM %stests_questions_assoc WHERE question_id=%d AND test_id=%d";
+	$result	= queryDB($sql, array(TABLE_PREFIX, $qid, $tid));	
+	if($result > 0){
+        $msg->addFeedback('QUESTION_REMOVED');
+        header('Location: questions.php?tid=' . $tid);
+        exit;
+	}
 
 } /* else: */
 

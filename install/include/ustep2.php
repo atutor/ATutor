@@ -17,40 +17,16 @@ if (!defined('AT_INCLUDE_PATH') || !defined('AT_UPGRADE_INCLUDE_PATH')) { exit; 
 
 include(AT_INCLUDE_PATH . 'install/upgrade.inc.php');
 
-/*function update_one_ver($up_file, $tb_prefix) {
-	global $progress;
-	$update_file = implode('_',$up_file);
-	
-	$sqlUtility = new SqlUtility();
-	$sqlUtility->queryFromFile(AT_INCLUDE_PATH . 'install/db/'.$update_file.'sql', $tb_prefix);
-
-	return $up_file[4];
-}
-*/
 $_POST['db_login'] = urldecode($_POST['db_login']);
 $_POST['db_password'] = urldecode($_POST['db_password']);
 
 	unset($errors);
 
 	//check DB & table connection
+	$db = at_db_connect($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
+    at_db_select($_POST['db_name'], $db);
 
-	$db = @mysql_connect($_POST['db_host'] . ':' . $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
-
-	if (!$db) {
-		$error_no = mysql_errno();
-		if ($error_no == 2005) {
-			$errors[] = 'Unable to connect to database server. Database with hostname '.$_POST['db_host'].' not found.';
-		} else {
-			$errors[] = 'Unable to connect to database server. Wrong username/password combination.';
-		}
-	} else {
-		if (!mysql_select_db($_POST['db_name'], $db)) {
-			$errors[] = 'Unable to connect to database <b>'.$_POST['db_name'].'</b>.';
-		}
-
-		$sql = "SELECT VERSION() AS version";
-		$result = mysql_query($sql, $db);
-		$row = mysql_fetch_assoc($result);
+		$row = at_db_version($db);
 		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
 			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.0.2 or later.';
 		}
@@ -61,51 +37,34 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 
 			//Save all the course primary language into session variables iff it has not been set. 
 			if (!isset($_SESSION['course_info'])){
-				$sql = "SELECT a.course_id, a.title, l.language_code, l.char_set FROM ".$_POST['tb_prefix']."courses a left join ".$_POST['tb_prefix']."languages l ON l.language_code = a.primary_language";
-				$result = mysql_query($sql, $db);
-				while ($row = mysql_fetch_assoc($result)){
+				$sql = "SELECT a.course_id, a.title, l.language_code, l.char_set FROM %scourses a left join %slanguages l ON l.language_code = a.primary_language";
+				$rows_courselang = queryDB($sql, array($_POST['tb_prefix'], $_POST['tb_prefix']));
+				
+				foreach($rows_courselang as $row){
 					$_SESSION['course_info'][$row['course_id']] = array('char_set'=>$row['char_set'], 'language_code'=>$row['language_code']);
 				}
 			}
 
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."language_text WHERE `variable`<>'_c_template' AND `variable`<>'_c_msgs'";
-			@mysql_query($sql, $db);
+			$sql = "DELETE FROM %slanguage_text WHERE `variable`<>'_c_template' AND `variable`<>'_c_msgs'";
+			queryDB($sql, array($_POST['tb_prefix']));
 
-			$sql = "DELETE FROM ".$_POST['tb_prefix']."languages WHERE language_code<>'en'";
-			@mysql_query($sql, $db);
+			$sql = "DELETE FROM %slanguages WHERE language_code<>'en'";
+			queryDB($sql, array($_POST['tb_prefix']));			
 			
 			// make sure English exists in the language table when upgrading
-			$sql = "INSERT INTO `".$_POST['tb_prefix']."languages` VALUES ('en', 'utf-8', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3)";
-			@mysql_query($sql, $db);
-
+			$sql = "REPLACE INTO `%slanguages` VALUES ('en', 'utf-8', 'ltr', 'en([-_][[:alpha:]]{2})?|english', 'English', 'English', 3)";
+			queryDB($sql,array($_POST['tb_prefix']));
+			
 			run_upgrade_sql(AT_INCLUDE_PATH . 'install/db', $_POST['old_version'], $_POST['tb_prefix']);
 
-			//get list of all update scripts minus sql extension
-			/*
-			 $files = scandir(AT_INCLUDE_PATH . 'install/db'); 
-			foreach ($files as $file) {
-				if(count($file = explode('_',$file))==5) {
-					$file[4] = substr($file[4],0,-3);
-					$update_files[$file[2]] = $file;
-				}
-			}
-			
-			$curr_ver = $_POST['old_version'];
-			ksort($update_files);
-			foreach ($update_files as $up_file) {
-				if(version_compare($curr_ver, $up_file[4], '<')) {
-					update_one_ver($up_file, $_POST['tb_prefix']);
-				}
-			}
-			*/
 			/* reset all the accounts to English */
-			$sql = "UPDATE ".$_POST['tb_prefix']."members SET language='en', creation_date=creation_date, last_login=last_login";
-			@mysql_query($sql, $db);
-
+			$sql = "UPDATE %smembers SET language='en', creation_date=creation_date, last_login=last_login";
+			queryDB($sql, array($_POST['tb_prefix']));
+			
 			/* set all the courses to 'en' as primary language if empty. added 1.4.1 */
-			$sql = "UPDATE ".$_POST['tb_prefix']."courses SET primary_language='en' WHERE primary_language=''";
-			@mysql_query($sql, $db);
-
+			$sql = "UPDATE %scourses SET primary_language='en' WHERE primary_language=''";
+			queryDB($sql, array($_POST['tb_prefix']));
+			
 			$sqlUtility = new SqlUtility();
 			$sqlUtility->queryFromFile(AT_INCLUDE_PATH . 'install/db/atutor_language_text.sql', $_POST['tb_prefix']);
 
@@ -132,7 +91,6 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 				return;
 			}
 		}
-	}
 
 	print_progress($step);
 

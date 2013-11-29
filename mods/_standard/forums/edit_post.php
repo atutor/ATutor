@@ -115,43 +115,14 @@ $_pages['mods/_standard/forums/edit_post.php']['children']  = array();
 $onload = 'document.form.subject.focus();';
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-
+$savant->assign('pid', $pid);
+$savant->assign('ppid', $post_row['parent_id']);
+$savant->assign('forumid', $post_row['forum_id']);
+$savant->assign('subject', $post_row['subject']);
+$savant->assign('body', $post_row['body']);
+$savant->display('instructor/forums/edit_post.tmpl.php');
 ?>
 
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<input type="hidden" name="edit_post" value="true" />
-<input type="hidden" name="pid" value="<?php echo $pid; ?>" />
-<input type="hidden" name="ppid" value="<?php echo $post_row['parent_id']; ?>" />
-<input type="hidden" name="fid" value="<?php echo $post_row['forum_id']; ?>" />
 
-<div class="input-form">
-	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input type="text" maxlength="80" name="subject" size="36" value="<?php echo stripslashes(htmlspecialchars($post_row['subject'])); ?>" id="subject" />
-	</div>
-
-	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="65" name="body" rows="10" id="body"><?php echo AT_print($post_row['body'], 'text.input'); ?></textarea>
-	</div>
-	
-	<div class="row">
-		<small class="spacer"><br />&middot; <?php echo _AT('forum_links'); ?><br />
-		&middot; <?php echo _AT('forum_email_links'); ?><br />
-		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
-	</div>
-
-    <div class="row">	
-		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
-
-		<a name="jumpcodes"></a>
-    </div>
-
-	<div class="row buttons">
-		<input name="submit" type="submit" value="  <?php echo _AT('save'); ?>" accesskey="s" />
-		<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
-	</div>
-</div>
-</form>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

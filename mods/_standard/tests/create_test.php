@@ -29,20 +29,20 @@ if (isset($_POST['cancel'])) {
 		exit;
 } else if (isset($_POST['submit'])) {
     $missing_fields                = array();
-    $_POST['title']                = $addslashes(trim($_POST['title']));
-    $_POST['description']        = $addslashes(trim($_POST['description']));
+    $_POST['title']                = trim($_POST['title']);
+    $_POST['description']        = trim($_POST['description']);
     $_POST['num_questions']        = intval($_POST['num_questions']);
     $_POST['num_takes']            = intval($_POST['num_takes']);
     $_POST['content_id']        = intval($_POST['content_id']);
     $_POST['passpercent']        = intval($_POST['passpercent']);
     $_POST['passscore']            = intval($_POST['passscore']);
-    $_POST['passfeedback']        = $addslashes(trim($_POST['passfeedback']));
-    $_POST['failfeedback']        = $addslashes(trim($_POST['failfeedback']));
+    $_POST['passfeedback']        = trim($_POST['passfeedback']);
+    $_POST['failfeedback']        = trim($_POST['failfeedback']);
     $_POST['num_takes']            = intval($_POST['num_takes']);
     $_POST['anonymous']            = intval($_POST['anonymous']);
     $_POST['allow_guests']        = $_POST['allow_guests'] ? 1 : 0;
     $_POST['show_guest_form']    = $_POST['show_guest_form'] ? 1 : 0;
-    $_POST['instructions']        = $addslashes($_POST['instructions']);
+    $_POST['instructions']        = $_POST['instructions'];
     $_POST['display']            = intval($_POST['display']);
     $_POST['remedial_content']    = intval($_POST['remedial_content']);
 
@@ -131,7 +131,7 @@ if (isset($_POST['cancel'])) {
         //If title exceeded database defined length, truncate it.
         $_POST['title'] = validate_length($_POST['title'], 100);
 
-        $sql = "INSERT INTO ".TABLE_PREFIX."tests " .
+        $sql = "INSERT INTO %stests " .
                "(test_id,
              course_id,
              title,
@@ -157,50 +157,51 @@ if (isset($_POST['cancel'])) {
              display,
              show_guest_form,
              remedial_content)" .
-               "VALUES 
-                (NULL, 
-                 $_SESSION[course_id], 
-                 '$_POST[title]', 
-                 '$_POST[description]', 
-                 $_POST[format], 
-                 '$start_date', 
-                 '$end_date', 
-                 $_POST[order], 
-                 $_POST[num_questions], 
-                 '$_POST[instructions]', 
-                 $_POST[content_id], 
-                 $_POST[passscore], 
-                 $_POST[passpercent], 
-                 '$_POST[passfeedback]', 
-                 '$_POST[failfeedback]', 
-                 $_POST[result_release], 
-                 $_POST[random], 
-                 $_POST[difficulty], 
-                 $_POST[num_takes], 
-                 $_POST[anonymous], 
-                 '', 
-                 $_POST[allow_guests], 
-                 $_POST[display],
-                 $_POST[show_guest_form],
-                 $_POST[remedial_content])";
+        "VALUES 
+            (NULL, %d, '%s', '%s', %d, '%s', '%s', %d, %d, '%s', %d, %d, %d, '%s', '%s', %d, %d, %d, %d, %d, '', %d, %d, %d, %d)";
 
-        $result = mysql_query($sql, $db);
-        $tid = mysql_insert_id($db);
+        $result = queryDB($sql, array(
+                    TABLE_PREFIX,
+                    $_SESSION[course_id],
+                    $_POST['title'],
+                    $_POST['description'],
+                    $_POST['format'],
+                    $start_date,
+                    $end_date,
+                    $_POST['order'],
+                    $_POST['num_questions'],
+                    $_POST['instructions'],
+                    $_POST['content_id'],
+                    $_POST['passscore'],
+                    $_POST['passpercent'],
+                    $_POST['passfeedback'],
+                    $_POST['failfeedback'],
+                    $_POST['result_release'],
+                    $_POST['random'],
+                    $_POST['difficulty'],
+                    $_POST['num_takes'],
+                    $_POST['anonymous'],
+                    $_POST['allow_guests'],
+                    $_POST['display'],
+                    $_POST['show_guest_form'],
+                    $_POST['remedial_content']));
+        $tid = at_insert_id();
         
         if (isset($_POST['groups']) && $tid) {
-            $sql = "INSERT INTO ".TABLE_PREFIX."tests_groups VALUES ";
+
+            $sql = "INSERT INTO %stests_groups VALUES ";
+            
             foreach ($_POST['groups'] as $group) {
                 $group = intval($group);
                 $sql .= "($tid, $group),";
             }
             $sql = substr($sql, 0, -1);
-            $result = mysql_query($sql, $db);
+
+            $result = queryDB($sql, array(TABLE_PREFIX));
         }
 
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-        $return_url = $_SESSION['tool_origin']['url'];
-        tool_origin('off');
-		header('Location: '.$return_url);
+		header('Location: index.php');
 		exit;
     }
 }
@@ -399,15 +400,17 @@ $msg->printErrors();
         <?php echo _AT('limit_to_group'); ?><br />
         <?php
             //show groups
-            $sql    = "SELECT * FROM ".TABLE_PREFIX."groups_types WHERE course_id=$_SESSION[course_id] ORDER BY title";
-            $result = mysql_query($sql, $db);
-            if (mysql_num_rows($result)) {
-                while ($row = mysql_fetch_assoc($result)) {
+            $sql    = "SELECT * FROM %sgroups_types WHERE course_id=%d ORDER BY title";
+            $rows_groups = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+            
+            if(count($rows_groups) > 0){
+                foreach($rows_groups as $row){
                     echo '<strong>'.$row['title'].'</strong><br />';
 
-                    $sql    = "SELECT * FROM ".TABLE_PREFIX."groups WHERE type_id=$row[type_id] ORDER BY title";
-                    $g_result = mysql_query($sql, $db);
-                    while ($grow = mysql_fetch_assoc($g_result)) {
+                    $sql    = "SELECT * FROM %sgroups WHERE type_id=%d ORDER BY title";
+                    $g_result = queryDB($sql, array(TABLE_PREFIX, $row['type_id']));
+                    
+                    foreach($g_result as $grow){
                         echo '&nbsp;<label><input type="checkbox" value="'.$grow['group_id'].'" name="groups['.$grow['group_id'].']" '; 
                         if (is_array($current_groups) && in_array($grow['group_id'], $current_groups)) {
                             echo 'checked="checked"';

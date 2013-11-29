@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+//THIS FILE IS NOT USED?
+exit;
 $page = 'tests';
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
@@ -37,9 +39,8 @@ if ($_POST['back']) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$sql	= "SELECT title FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result = mysql_query($sql, $db);
-$row = mysql_fetch_array($result);
+$sql	= "SELECT title FROM %stests WHERE test_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
 
 echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'">';
 echo '<input type="hidden" name="tid" value="'.$tid.'">';
@@ -50,15 +51,16 @@ echo '<h2>'.AT_print($row['title'], 'tests.title').'</h2>';
 echo '<br /><p>'._AT('response_text').' <strong>'.AT_print(urldecode($_GET['q']), 'tests_questions.question').'</strong></p>';
 
 //get the answers
+
 $sql = "SELECT count(*), A.answer
-		FROM ".TABLE_PREFIX."tests_answers A, ".TABLE_PREFIX."tests_results R
-		WHERE A.question_id=$qid AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=$tid
+		FROM %stests_answers A, %stests_results R
+		WHERE A.question_id=%d AND R.result_id=A.result_id AND R.final_score<>'' AND R.test_id=%d
 		GROUP BY A.answer
 		ORDER BY A.answer";
 
-$result = mysql_query($sql, $db);
+$rows_answers = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $qid, $tid));
 
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_answers as $row){
 	if ($row['answer'] != -1 && $row['answer'] != '') {
 		echo '<div class="row">';
 		echo '-'.AT_print($row['answer'], 'tests_answers.answer');

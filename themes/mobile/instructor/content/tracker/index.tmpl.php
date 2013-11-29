@@ -44,8 +44,8 @@
 </tr>
 </thead>
 <tbody>
-<?php if ($row = mysql_fetch_assoc($this->result)): ?>
-	<?php do { ?>
+<?php if(count($this->rows_hits) > 0): ?>
+	<?php foreach($this->rows_hits as $row){ ?>
 		<tr onmousedown="document.location='<?php echo AT_BASE_HREF; ?>mods/_standard/tracker/tools/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>'" title="<?php echo _AT('details'); ?>">
 			<td><?php echo $contentManager->_menu_info[$row['content_id']]['title']; ?></td>
 			<td><?php echo $row['total_hits'];       ?></td>
@@ -54,7 +54,7 @@
 			<!-- REMOVED FOR MOBILE<td><?php echo $row['total_duration'];   ?></td> -->
 			<td><a href="mods/_standard/tracker/tools/page_student_stats.php?content_id=<?php echo $row['content_id']; ?>"><?php echo _AT('details'); ?></a></td>
 		</tr>
-	<?php } while ($row = mysql_fetch_assoc($this->result)); ?>
+	<?php } ?>
 <?php else: ?>
 	<tr>
 		<td colspan="6"><?php echo _AT('none_found'); ?></td>

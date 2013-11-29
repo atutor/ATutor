@@ -42,15 +42,19 @@ $this->_pages['mods/_standard/forums/forum/list.php']['img']        = 'images/ho
 $this->_pages['mods/_standard/forums/forum/list.php']['icon']		  = 'images/pin.png';		//added favicon
 //$this->_pages['forum/list.php']['text']		  = 'Sezione Forum';				//added text
 
-if(($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FORUMS, TRUE)) && $_SESSION['prefs']['PREF_HIDE_ADMIN'] == 1){	
-$this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
-$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/forum/list.php';
-$this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums', 'mods/_standard/forums/add_forum.php');
+// The instructor course admin tools
+if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_FORUMS, TRUE)){	
+$fid = intval($_GET['fid']);
 
-}else{
-$this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums');
+$this->_pages_i['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
+$this->_pages_i['mods/_standard/forums/add_forum.php']['other_parent'] = 'mods/_standard/forums/forum/list.php';
+$this->_pages_i['mods/_standard/forums/forum/list.php']['children']        = array('mods/_standard/forums/add_forum.php');
+$this->_pages_i['mods/_standard/forums/edit_forum.php']['title_var'] = 'edit_forum';
+$this->_pages_i['mods/_standard/forums/edit_forum.php']['other_parent']    = 'mods/_standard/forums/forum/index.php';
+$this->_pages_i['mods/_standard/forums/forum/index.php']['children'] = array('mods/_standard/forums/edit_forum.php');
 
 }
+$this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums');
 
 	//list.php's children
 	$this->_pages['search.php?search_within[]=forums']['title_var'] = 'search';

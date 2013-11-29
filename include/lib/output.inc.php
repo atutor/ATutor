@@ -283,7 +283,7 @@ function _AT() {
 
         if (!($lang_et = cache($cache_life, 'lang', $lang.'_'.$name))) {
             /* get $_template from the DB */
-            $rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.term=P.term AND P.page="%s"', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url));
+            $rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.term=P.term AND P.page="%s"', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url), FALSE);
             
             foreach($rows as $row) {
                 $row_term = $row['term'];
@@ -315,8 +315,9 @@ function _AT() {
         
         if(isset($row['term']) && isset($row['text'])){
             $row_term = $row['term'];
-        
-            $outString = $_template[$row_term] = stripslashes($row['text']);
+            // with queryDB() language replacement vars must go into the db with %%sd and a%%1 etc.
+            // and then when displayed have the extra % removed 
+            $outString = $_template[$row_term] = preg_replace('/\%\%/','%',stripslashes($row['text']));
         }
 
 

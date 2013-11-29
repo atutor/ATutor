@@ -10,7 +10,7 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
-
+// TEST GIT PULL CRON
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 //header('Cache-Control: private, pre-check=0, post-check=0, max-age=0');
@@ -35,6 +35,7 @@ global $_stacks;
 global $framed, $popup;
 global $_custom_css;
 global $_custom_head;
+global $_custom_script;
 global $substr, $strlen, $_course_id;
 global $_tool_shortcuts;
 global $content_description;
@@ -86,7 +87,10 @@ if (isset($_custom_head)) {
 	$custom_head .= '
 ' . $_custom_head;
 }
-
+if (isset($_custom_script)) {
+	$custom_head .= '
+' . $_custom_script;
+}
 // Set session timeout warning if user is logged in
 if(isset($_SESSION['valid_user'])){
     // Setup the timeout warning when a user logs in
@@ -100,12 +104,14 @@ if(isset($_SESSION['valid_user'])){
     $session_warning = 300 * 1000;                      // 5 minutes
 
     $custom_head .= '
-        <link rel="stylesheet" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js" type="text/javascript"></script>
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js" type="text/javascript"></script>
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js" type="text/javascript"></script>
-        <script src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js" type="text/javascript"></script>';
-    
+        <link rel="stylesheet"  type="text/css" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js"></script>
+    	<script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.switch.min.js"></script>
+	    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
+        <link rel="stylesheet" type="text/css" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.switch.css">';
     if(isset($_SESSION['member_id'])){
         $custom_head .= "\n".'    <script type="text/javascript">
         $(document).ready(function() {
@@ -164,41 +170,7 @@ if (empty($_top_level_pages)) {
 	}
 }
 
-/****
-Toggle the hide_admin Session variable to turn admin tools on or off
-****/
 
-if($_GET['hide_admin'] == '2'){
-	global $msg;
-	//unset($_SESSION['hide_admin']);
-	if(isset($_GET['cid'])){
-		$tcid ="?cid=".intval($_GET['cid']).SEP;
-		$cid = intval($_GET['cid']);
-	} else if(isset($_GET['tcid'])){
-		$tcid ="?cid=".intval($_GET['tcid']).SEP;
-		$cid = intval($_GET['cid']);
-	}
-	unset($_SESSION['prefs']['PREF_HIDE_ADMIN']);
-	save_prefs();
-	$msg->addFeedback('TOOLS_OFF');
-	header('Location:'.$_SERVER['PHP_SELF'].$tcid);
-	exit;
-} else if($_GET['hide_admin'] == '1') {
-	global $msg;
-	if(isset($_GET['cid'])){
-		$tcid ="?cid=".intval($_GET['cid']).SEP;
-		$cid = intval($_GET['cid']);
-	} else if(isset($_GET['tcid'])){
-		$tcid ="?cid=".intval($_GET['tcid']).SEP;
-		$cid = intval($_GET['cid']);
-	}
-	//$_SESSION['hide_admin'] = 1;
-	$_SESSION['prefs']['PREF_HIDE_ADMIN'] = 1;
-	save_prefs();
-	$msg->addFeedback('TOOLS_ON');
-	header('Location:'.$_SERVER['PHP_SELF'].$tcid);
-	exit;
-}
 /****
 Toggle to switch between mobile and responsive themes
 ****/
@@ -227,8 +199,10 @@ if($_GET['mobile'] == '2'){
 	exit;
 }
 $_sub_level_pages        = get_sub_navigation($current_page);
+$_sub_level_pages_i        = get_sub_navigation_i($current_page);
 
 $_current_sub_level_page = get_current_sub_navigation_page($current_page);
+$_current_sub_level_page_i = get_current_sub_navigation_page_i($current_page);
 
 $_path = get_path($current_page);
 unset($_path[0]);
@@ -243,19 +217,31 @@ if (isset($_pages[$current_page]['title'])) {
 * and the title of that page, and hold in the SESSION for as long as that tool
 * is being used. Allows return via a student page or the Manage page.
 ****/
+global $_base_path, $_pages;
+$mod_path = str_replace($_base_path, '', $_SERVER['PHP_SELF']);
+
 if(!isset($_SESSION['tool_origin'])){
     $_SESSION['origin_title'] = $_page_title;
 }
 if(isset($_SESSION['tool_origin'])){
     if($_SESSION['tool_origin']['url'] == $_base_href.$current_page){
         unset($_SESSION['tool_origin']);
-        unset($back_to_page);
-    }else{
+        unset($back_to_page);      
+    }else if($_pages[$mod_path]['parent'] != 'tools/index.php'){
+        $back_to_page['title'] = _AT($_pages[$_pages[$mod_path]['parent']]['title_var']);
+        $back_to_page['url'] = $_base_href.$_pages[$mod_path]['parent'];
+    } else{
         $back_to_page = $_SESSION['tool_origin'];
+        
     }
+
 } else if (isset($_path[2]['url'], $_sub_level_pages[0]['url']) && $_path[2]['url'] == $_sub_level_pages[0]['url']) {
 	$back_to_page = $_path[3];
 } else if (isset($_path[1]['url'], $_sub_level_pages[0]['url']) && $_path[1]['url'] == $_sub_level_pages[0]['url']) {
+	$back_to_page = isset($_path[2]) ? $_path[2] : null;
+} else if (isset($_path[2]['url'], $_sub_level_pages_i[0]['url']) && $_path[2]['url'] == $_sub_level_pages_i[0]['url']) {
+	$back_to_page = $_path[3];
+} else if (isset($_path[1]['url'], $_sub_level_pages_i[0]['url']) && $_path[1]['url'] == $_sub_level_pages_i[0]['url']) {
 	$back_to_page = isset($_path[2]) ? $_path[2] : null;
 } else if (isset($_path[1])) {
 	$back_to_page = $_path[1];
@@ -319,10 +305,14 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$section_title = _AT('my_start_page');
 }
 
+if($_current_sub_level_page_i){
+    $savant->assign('current_sub_level_page', $_current_sub_level_page_i);
+} else{
+    $savant->assign('current_sub_level_page', $_current_sub_level_page);
+}
 $savant->assign('current_top_level_page', $_current_top_level_page);
 $savant->assign('sub_level_pages', $_sub_level_pages);
-$savant->assign('current_sub_level_page', $_current_sub_level_page);
-
+$savant->assign('sub_level_pages_i', $_sub_level_pages_i);
 $savant->assign('path', $_path);
 $savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
 $savant->assign('page_title', htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8"));
@@ -390,40 +380,24 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > -1) {
 
 function admin_switch(){ 
 	if($_SESSION['is_admin'] > 0) {?>
-<div class="admin_switch">	
-    <form>
-      <select id="admin_switch" name="hide_admin">
-      <option value="1">Manage</option>
-      <option value="0">Manage</option>
-        </select>
-    </form>
-    <ul></ul>
-</div>
+        <div class="admin_switch">	
+            <form>
+              <select id="admin_switch" name="hide_admin" title="switch">
+              <option value="1">Manage on</option>
+              <option value="0">Manage off</option>
+                </select>
+            </form>
+            <ul></ul>
 
-<!--		<ul id="admin_switch">
-			<?php
-			if(isset($_GET['cid'])){
-			 	$tcid ="cid=".intval($_GET['cid']).SEP;
-			} else if(isset($_GET['tcid'])){
-				$tcid ="cid=".intval($_GET['tcid']).SEP;
-			}
-			?>
-			<?php if($_SESSION['prefs']['PREF_HIDE_ADMIN'] > 0){ ?>
-				<li  class="active left"><?php echo _AT('manage'); ?></li>
-			<?php }else{ ?>
-				<li  class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $tcid; ?>hide_admin=1"><?php echo _AT('manage'); ?></a></li>
-			<?php } ?>
-			 <?php if($_SESSION['prefs']['PREF_HIDE_ADMIN']> 0){ ?>
-				<li class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $tcid; ?>hide_admin=2"><?php echo _AT('off'); ?></a></li>
-			<?php }else{ ?>
-				<li class="active right"><?php echo _AT('off'); ?></li>
-			<?php } ?>   
-		</ul> -->
+        </div>
+        <div class="bypass">
+            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">jump to admin tools</a>
+        </div>
     <?php } ?>
 <?php } 
 function mobile_switch(){ 
 	if(is_mobile_device() > 0) {?>
-		<ul id="admin_switch">
+		<ul id="mobile_switch">
 			 <?php if($_SESSION['prefs']['PREF_RESPONSIVE'] > 0){ ?>
 				<li class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"><?php echo _AT('mobile'); ?></a></li>
 			<?php }else{ ?>

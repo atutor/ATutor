@@ -1,5 +1,5 @@
 <?php require(AT_INCLUDE_PATH.'header.inc.php'); ?>
-<div class="input-form" style="width:90%;">
+<div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('filter'); ?></legend>
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		
@@ -46,8 +46,8 @@
 	</form>
 </fieldset>
 </div>
-<div class="container" style="width:95%; margin:auto;">
-<table class="data">
+<div class="container">
+<table class="data" rules="cols">
 <tr>
 <th class="hidecol700">&nbsp;</th>
 <th><?php echo _AT('title'); ?></th>

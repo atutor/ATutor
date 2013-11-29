@@ -89,9 +89,10 @@ acronym {
 
 </style>
 </head>
-<body><h1>Module Development Documentation</h1>
+<body><h1>Module Development Documentation ATutor 2.2+</h1>
 <ul>
 <li><a href="#intro">Introduction</a></li>
+<li><a href="#differences">Difference from Pre ATutor 2.2 modules</a></li>
 <li><a href="#structure">Structure</a></li>
 	<ul>
 	<li><a href="#dirname">Directory Name</a></li>
@@ -141,7 +142,31 @@ acronym {
 	<p>The intent is to allow for the development and distribution of modules independent of the ongoing development and release of ATutor. The module structure does allow for the creation of modules that run software that is not distributed under the <acronym title="GNU Not Unix">GNU</acronym> General Public License, but distributed separately under their own, perhaps commercial licenses.</p>
 
 	<p>The <em>Hello World</em> example module is included with each ATutor distribution for developers who want to investigate how modules work. The module is found in the <kbd>mods/hello_world</kbd> directory. A copy of the Hello World module works well as a starting point for creating a new module, since it implements (in a simple way) just about all the features found in modules. Also see the files from <a href="http://www.atutor.ca/atutor/modules.php">other modules</a> that operate like you expect your module to operate.</p>
+<a name="differences"></a>
+<h2>Differences from pre ATutor 2.2</h2>
+	<p>The primary difference in creating module for versions after, and including ATutor 2.2, is the addition of the <kbd>queryDB()</kbd> function. It is a database abstraction layer based of PHP's <kbd>sprintf()</kbd> function that replaces all previous mysql related functions. This accommodates for the use of <kbd>mysql or mysqli</kbd> related database queries, as well as the use of databases other than MySQL. The following simple example shows how <kbd>queryDB()</kbd> is used to create a database call that is equivalent to a mysql call. The output from <kbd>queryDB()</kbd> is an array of values equivalent to an array that would be output from mysql_fetch_assoc(). For more about using queryDB(), refer to the <a href="guidelines.html#querydb">queryDB() section of the Developer Documentation</a>.</p>
+<pre>
+///////
+// A mysql database query
 
+$sql = "SELECT member_id, country from ".TABLE_PREFIX."members WHERE country = '$_GET[country]'":
+$result = mysql_query($sql, $db);
+
+while($row = mysql_fetch_assoc($result)){
+    $member_country[$row['member_id']] = $row['country'] 
+}
+
+///////
+// The equivalent queryDB() query. Use %s for string and %d for integer replacement variables
+
+$sql = "SELECT member_id, country from %smembers WHERE country = '%s'":
+$rows_countries = queryDB($sql, array(TABLE_PREFIX, $_GET['country']));
+
+foreach($rows_countries as $row)
+    $member_country[$row['member_id']] = $row['country']; 
+}
+
+</pre>
 <a name="structure"></a>
 <h2>Structure</h2>
 	<p>Modules are stored under ATutor's <kbd>mods</kbd> directory. <em>Core</em> modules are stored in the <kbd>mods/_core</kbd> subdirectory and are made available with every release of ATutor. These modules cannot be disabled by the administrator as they are vital to ATutor's functionality. <em>Standard</em> modules are stored in the <kbd>mods/_standard</kbd> subdirectory and are also made available with every release of ATutor. Standard modules can be disabled by the administrator. <em>Extra</em> modules are stored in the <kbd>mods</kbd> directory and are installed and distributed independently of ATutor. Although the process of developing modules is the same for each type of module, only <em>extra</em> modules can be distributed separately, while <em>core</em> and <em>standard</em> modules are added to the ATutor code repository (i.e. <acronym title="GitHub">GitHub</acronym> trunk).</p>
@@ -654,8 +679,8 @@ if (isset($_POST['submit'])) {
 	// if no errors, insert the key "example_maker" and value "$_POST['uri']" into the config table	
 	if (!$msg->containsErrors()) {
 		$_POST['uri'] = $addslashes($_POST['uri']);
-		$sql = "REPLACE INTO ".TABLE_PREFIX."config VALUES ('example_maker', '$_POST[uri]')";
-		mysql_query($sql, $db);
+		$sql = "REPLACE INTO %sconfig VALUES ('example_maker', '%s')";
+		queryDB($sql, array(TABLE_PREFIX, $_POST[uri]));
 		$msg->addFeedback('EXAMPLE_MAKER_URL_SAVED');
 
 		header('Location: '.$_SERVER['PHP_SELF']);
@@ -749,15 +774,14 @@ $savant->display('include/box.tmpl.php');
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path, $include_all, $include_one;
 global $savant;
-global $db;
 
 $tests_limit = 3;		//Maximum number of items to display on the course homepage
 
-$sql = "SELECT test_id, title, UNIX_TIMESTAMP(start_date) AS sd, UNIX_TIMESTAMP(end_date) AS ed FROM ".TABLE_PREFIX."tests WHERE course_id=$_SESSION[course_id] ORDER BY end_date DESC LIMIT $tests_limit";
-$result = mysql_query($sql, $db);
+$sql = "SELECT test_id, title, UNIX_TIMESTAMP(start_date) AS sd, UNIX_TIMESTAMP(end_date) AS ed FROM %stests WHERE course_id=%d ORDER BY end_date DESC LIMIT %d";
+$rows_tests = queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], $tests_limit));
 
-if (mysql_num_rows($result) > 0) {
-	while ($row = mysql_fetch_assoc($result)) {
+if(count($rows_tests) > 0){
+    foreach($rows_tests as $row){
 		if ( ($row['sd'] <= time()) && ($row['ed'] >= time() ))		
 			$tests_list[] = array('sub_url' => $_base_path.url_rewrite('tools/test_intro.php?tid=' . $row['test_id']) , 'sub_text' => $row['title']); 
 	}
@@ -834,7 +858,6 @@ $_module_pages[$path . 'inst_index.php']['parent']    = 'tools/index.php';
 <pre>
 &lt;?php
 function example_maker_delete($course) {
-    global $db;
 
     // delete directory
     $path = AT_CONTENT_DIR . 'example_maker/' . $course . '/';
@@ -842,9 +865,9 @@ function example_maker_delete($course) {
 
     // delete from database
     $sql = "DELETE 
-            FROM ".TABLE_PREFIX."example_content 
-            WHERE course_id=$course";
-    mysql_query($sql, $db);
+            FROM %sexample_content 
+            WHERE course_id=%d";
+    queryDB($sql, array(TABLE_PREFIX, $course));
 }
 ?>
 </pre>
@@ -852,7 +875,7 @@ function example_maker_delete($course) {
 <a name="news"></a>
 
 <h2>Module News <kbd>module_news.php</kbd></h2>
-<p>In ATutor 2.0 the <strong>Things Current</strong> area of My Start Page was added. It collects changing information from modules and displays it for users so it is one of the first things they see when they login, allowing them to quickly access things like recent forum messages, new news items, or recently added files for download. Things Current scans through all the <kbd>module_news.php</kbd> files, and outputs current activity relevant to each user, and each course. The example below is typical of the type of information that might be output to Things Current, but it can be virtually any data generated by a module. See the Forum module <a href="https://github.com/atutor/ATutor/tree/master/mods/_standard/forums/module_news.php">module_news.php</a> for another more complex example where the latest forum messages are output. </p>
+<p>In ATutor 2.0 the <strong>Current Activity</strong> area of My Start Page was added. It collects changing information from modules and displays it for users so it is one of the first things they see when they login, allowing them to quickly access things like recent forum messages, new news items, or recently added files for download. Things Current scans through all the <kbd>module_news.php</kbd> files, and outputs current activity relevant to each user, and each course. The example below is typical of the type of information that might be output to Things Current, but it can be virtually any data generated by a module. See the Forum module <a href="https://github.com/atutor/ATutor/tree/master/mods/_standard/forums/module_news.php">module_news.php</a> for another more complex example where the latest forum messages are output. </p>
 
 <pre>
 &lt;?php
@@ -862,25 +885,21 @@ function example_maker_delete($course) {
 */
 
 function mymod_news() {
+
 	$sql = "SELECT something FROM a table WHERE date &lt; NOW() LIMIT 3";
-	if($result = mysql_query($sql, $db){
-	    while($row = mysql_fetch_assoc($result)){
+	$rows_news = queryDB($sql, array());
+	if(count($rows_news) > 0){
+	    foreach($rows_news as $row){
 		$news[] = $row['something'];
 	     }
 	}
+
 	return $news;
 }
 
 
 ?&gt;
 </pre>
-
-
-
-
-
-
-
 
 
 

@@ -34,29 +34,28 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $tid = intval($_GET['tid']);
 
 /* Retrieve the content_id of this test */
-$sql = "SELECT title, random, num_questions, instructions FROM ".TABLE_PREFIX."tests WHERE test_id=$tid";
-$result	= mysql_query($sql, $db); 
-if (!($test_row = mysql_fetch_assoc($result))) {
+$sql = "SELECT title, random, num_questions, instructions FROM %stests WHERE test_id=%d";
+$row_test	= queryDB($sql, array(TABLE_PREFIX, $tid), TRUE); 
+
+if(count($row_test) == 0){
 	$msg->printErrors('ITEM_NOT_FOUND');
 	require (AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
-$num_questions = $test_row['num_questions'];
+$num_questions = $row_test['num_questions'];
 $rand_err = false;
 
-if ($row['random']) {
+if ($row_test['random']) {
 	/* !NOTE! this is a really awful way of randomizing questions !NOTE! */
-
 	/* Retrieve 'num_questions' question_id randomly choosed from  
 	those who are related to this content_id*/
-	$sql	= "SELECT question_id FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=$tid";
-	$result	= mysql_query($sql, $db); 
+	$sql	= "SELECT question_id FROM %stests_questions_assoc WHERE test_id=%d";
+	$rows_questions	= queryDB($sql, array(TABLE_PREFIX, $tid)); 
+
 	$i = 0;
-	$row2 = mysql_fetch_assoc($result);
 	/* Store all related question in cr_questions */
-	while ($row2['question_id'] != '') {
+	foreach($rows_questions as $row2){
 		$cr_questions[$i] = $row2['question_id'];
-		$row2 = mysql_fetch_assoc($result);
 		$i++;
 	}
 	if ($i < $num_questions) {
@@ -90,33 +89,35 @@ if ($row['random']) {
 			$random_id_string = $random_id_string.','.$cr_questions[$random_idx];
 			$num_questions--;
 		}
-		$sql = "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid AND TQA.question_id IN ($random_id_string) ORDER BY TQA.ordering, TQA.question_id";
+		$sql = "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d AND TQA.question_id IN (%s) ORDER BY TQA.ordering, TQA.question_id";
+        $rows_questions	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $tid, $random_id_string));
 	}
 } else {
-	$sql	= "SELECT TQ.*, TQA.* FROM ".TABLE_PREFIX."tests_questions TQ INNER JOIN ".TABLE_PREFIX."tests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=$_SESSION[course_id] AND TQA.test_id=$tid ORDER BY TQA.ordering, TQA.question_id";
+	$sql	= "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+    $rows_questions	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id'], $tid));
 }
-$result	= mysql_query($sql, $db);
+
 $count = 1;
 echo '<form method="post" action="'.$_SERVER['PHP_SELF'].'" name="preview">';
 
-if (($row = mysql_fetch_assoc($result)) && !$rand_err) {
+if(count($rows_questions) > 0){
 	?>
 	<div class="input-form" style="width:95%">
-	<div class="row"><h2><?php echo $test_row['title']; ?></h2></div>
+	<div class="row"><h2><?php echo $row_test['title']; ?></h2></div>
 
 
-	<?php if ($test_row['instructions'] != ''): ?>
+	<?php if ($row_test['instructions'] != ''): ?>
 		<div class="test_instruction">
 			<strong><?php echo _AT('instructions'); ?></strong>
 		</div>
-		<div class="row" style="padding-bottom: 20px"><?php echo $test_row['instructions']; ?></div>
+		<div class="row" style="padding-bottom: 20px"><?php echo $row_test['instructions']; ?></div>
 	<?php endif; ?>
 	
 	<?php
-	do {
+	foreach($rows_questions as $row){
 		$o = TestQuestions::getQuestion($row['type']);
 		$o->display($row);
-	} while ($row = mysql_fetch_assoc($result));
+	} 
 	?>
 	<div class="row buttons">
 		<input type="submit" value="<?php echo _AT('back'); ?>" name="back" />

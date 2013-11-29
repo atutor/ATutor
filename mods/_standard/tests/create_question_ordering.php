@@ -98,9 +98,7 @@ if (isset($_POST['cancel'])) {
                                 $answer_new[9],
                                 $_POST['remedial_content']);
         $sql = vsprintf(AT_SQL_QUESTION_ORDERING, $sql_params);
-
-        $result    = mysql_query($sql, $db);
-
+        $result    = queryDB($sql, array());
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
         header('Location: question_db.php');
         exit;

@@ -35,20 +35,20 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit_yes'])) {
 	//get order
-	$sql = "SELECT MAX(ordering) AS max_ordering FROM ".TABLE_PREFIX."tests_questions_assoc WHERE test_id=".$tid;
-	$result = mysql_query($sql, $db);
-	$order	= mysql_fetch_assoc($result);
+	$sql = "SELECT MAX(ordering) AS max_ordering FROM %stests_questions_assoc WHERE test_id=%d";
+	$order = queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
+
 	$order = $order['max_ordering'];
 
-	$sql = "REPLACE INTO ".TABLE_PREFIX."tests_questions_assoc VALUES ";
+	$sql = "REPLACE INTO %stests_questions_assoc VALUES ";
 	foreach ($_POST['questions'] as $question) {
 		$order++;
 		$question = intval($question);
 		$sql .= '('.$tid.', '.$question.', 0, '.$order.', 0),';
 	}
 	$sql = substr($sql, 0, -1);
-	$result = mysql_query($sql, $db);
-
+	$result = queryDB($sql, array(TABLE_PREFIX));
+	
 	$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	header('Location: questions.php?tid='.$tid);
 	exit;
@@ -78,11 +78,11 @@ foreach ($_POST['questions'] as $cat_array) {
 
 $questions = substr($questions, 0, -1);
 
-$sql = "SELECT question, question_id FROM ".TABLE_PREFIX."tests_questions WHERE question_id IN ($questions) AND course_id=$_SESSION[course_id] ORDER BY question";
-$result = mysql_query($sql, $db);
+$sql = "SELECT question, question_id FROM %stests_questions WHERE question_id IN (%s) AND course_id=%d ORDER BY question";
+$rows_questions = queryDB($sql, array(TABLE_PREFIX, $questions, $_SESSION['course_id']));
 
 $questions = '';
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_questions as $row){
 	$questions .= '<li>'.htmlspecialchars($row['question']).'</li>';
 	$questions_array['questions['.$row['question_id'].']'] = $row['question_id'];
 }

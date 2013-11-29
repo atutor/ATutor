@@ -53,22 +53,14 @@ if (isset($_POST['cancel'])) {
 		$_POST['message'] = $addslashes($_POST['message']);
 		$_POST['to'] = intval($_POST['to']);
 
-		//$sql = "INSERT INTO ".TABLE_PREFIX."messages VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), 1, 0, '$_POST[subject]', '$_POST[message]')";
-		//$result = mysql_query($sql,$db);
 		$sql = "INSERT INTO %smessages VALUES (NULL, %d, %d, %d, NOW(), 1, 0, '%s', '%s')";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_SESSION['member_id'], $_POST['to'], $_POST['subject'], $_POST['message']));
 	
 		// sent message box:
-		//$sql = "INSERT INTO ".TABLE_PREFIX."messages_sent VALUES (NULL, $_SESSION[course_id], $_SESSION[member_id], $_POST[to], NOW(), '$_POST[subject]', '$_POST[message]')";
-		//$result = mysql_query($sql,$db);
 		$sql = "INSERT INTO %smessages_sent VALUES (NULL, %d, %d, %d, NOW(), '%s', '%s')";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_SESSION['member_id'], $_POST['to'], $_POST['subject'], $_POST['message']));
 	
 		//send email notification if recipient has message notification enabled
-		//$sql_notify = "SELECT first_name, last_name, email, inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_POST[to]";
-		//$result_notify = mysql_query($sql_notify, $db);
-		//$row_notify = mysql_fetch_assoc($result_notify);
-		
 		$sql_notify = "SELECT first_name, last_name, email, inbox_notify FROM %smembers WHERE member_id=%d";
         $row_notify = queryDB($sql_notify, array(TABLE_PREFIX, $_POST['to']), TRUE);
         
@@ -91,12 +83,10 @@ if (isset($_POST['cancel'])) {
 		}
 
 		if ($_POST['submit_delete']) {
-			//$result = mysql_query("DELETE FROM ".TABLE_PREFIX."messages WHERE message_id=$_POST[replied] AND to_member_id=$_SESSION[member_id]",$db);
 		    $sql = "DELETE FROM %smessages WHERE message_id=%d AND to_member_id=%d";
 			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['replied'], $_SESSION['member_id']));
 		} else if ($_POST['replied'] != '') {
-			//$result = mysql_query("UPDATE ".TABLE_PREFIX."messages SET replied=1, date_sent=date_sent WHERE message_id=$_POST[replied]",$db);
-            $sql = "UPDATE %smessages SET replied=1, date_sent=date_sent WHERE message_id=%d";
+			$sql = "UPDATE %smessages SET replied=1, date_sent=date_sent WHERE message_id=%d";
 			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['replied']));
 		}
 
@@ -111,11 +101,7 @@ if (isset($_POST['cancel'])) {
 		exit;
 	}
 }
-/*
-$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND (approved='y' OR approved='a')";
-$result = mysql_query($sql, $db);
-$row	= mysql_fetch_array($result);
-*/
+
 $sql	= "SELECT COUNT(*) AS cnt FROM %scourse_enrollment WHERE member_id=%d AND (approved='y' OR approved='a')";
 $row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 
@@ -144,16 +130,20 @@ $_GET['forward'] = intval($_GET['forward']);
 
 if ($_GET['reply']) {
 	// get the member_id of the sender
-	$result = mysql_query("SELECT from_member_id,subject,body FROM ".TABLE_PREFIX."messages WHERE message_id=$_GET[reply] AND to_member_id=$_SESSION[member_id]",$db);
-	if ($myinfo = mysql_fetch_assoc($result)) {
+	$sql = "SELECT from_member_id,subject,body FROM %smessages WHERE message_id=%d AND to_member_id=%d";
+	$myinfo = queryDB($sql, array(TABLE_PREFIX, $_GET['reply'], $_SESSION['member_id']), TRUE);
+	
+	if(count($myinfo) > 0){
 		$reply_to	= $myinfo['from_member_id'];
 		$subject	= $myinfo['subject'];
 		$body		= $myinfo['body'];
 	}
 } else if ($_GET['forward']) {
 	// get the member_id of the sender
-	$result = mysql_query("SELECT subject, body FROM ".TABLE_PREFIX."messages_sent WHERE message_id=$_GET[forward] AND from_member_id=$_SESSION[member_id]",$db);
-	if ($myinfo = mysql_fetch_assoc($result)) {
+	$sql = "SELECT subject, body FROM %smessages_sent WHERE message_id=%d AND from_member_id=%d";
+	$myinfo = queryDB($sql,array(TABLE_PREFIX, $_GET['forward'], $_SESSION['member_id']), TRUE);
+	
+    if(count($myinfo) > 0){
 		$reply_to	= 0;
 		$subject	= $myinfo['subject'];
 		$body		= $myinfo['body'];
@@ -165,18 +155,17 @@ if (isset($_GET['id'])) {
 
 /* check to make sure we're in the same course */
 if ($reply_to) {
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E1.member_id=$_SESSION[member_id] AND E2.member_id=$reply_to AND E1.course_id=E2.course_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a')";
-	$result = mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
+	$sql	= "SELECT COUNT(*) AS cnt FROM %scourse_enrollment E1, %scourse_enrollment E2 WHERE E1.member_id=%d AND E2.member_id=%d AND E1.course_id=E2.course_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a')";
+	$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id'], $reply_to), TRUE);
+
 	$num_of_classmates = $row['cnt'];
 
-	$sql	= "SELECT COUNT(*) AS cnt FROM ".TABLE_PREFIX."social_friends SC 
-	           WHERE SC.member_id = ".$_SESSION[member_id]." 
-	           AND SC.friend_id = ".$reply_to." 
-	           OR SC.member_id = ".$reply_to." 
-	           AND SC.friend_id = ".$_SESSION[member_id];
-	$result = mysql_query($sql, $db);
-	$row	= mysql_fetch_assoc($result);
+	$sql	= "SELECT COUNT(*) AS cnt FROM %ssocial_friends SC 
+	           WHERE SC.member_id = %d 
+	           AND SC.friend_id = %d 
+	           OR SC.member_id = %d 
+	           AND SC.friend_id = %d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $reply_to, $reply_to, $_SESSION['member_id']), TRUE);
 	$num_of_contacts = $row['cnt'];
 
 	if ($num_of_classmates+$num_of_contacts == 0) {
@@ -195,12 +184,11 @@ if ($reply_to) {
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="to"><?php echo _AT('to'); ?></label><br />
 		<?php
 			if (!$reply_to) {
-				$sql	= "SELECT DISTINCT M.first_name, M.second_name, M.last_name, M.login, M.member_id FROM ".TABLE_PREFIX."members M, ".TABLE_PREFIX."course_enrollment E1, ".TABLE_PREFIX."course_enrollment E2 WHERE E2.member_id=$_SESSION[member_id] AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.first_name, M.second_name, M.last_name, M.login";
+				$sql	= "SELECT DISTINCT M.first_name, M.second_name, M.last_name, M.login, M.member_id FROM %smembers M, %scourse_enrollment E1, %scourse_enrollment E2 WHERE E2.member_id=%d AND E2.course_id=E1.course_id AND M.member_id=E1.member_id AND (E1.approved='y' OR E1.approved='a') AND (E2.approved='y' OR E2.approved='a') ORDER BY M.first_name, M.second_name, M.last_name, M.login";
+                $rows_replyto = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id']));
 
-				$result = mysql_query($sql, $db);
-				$row	= mysql_fetch_assoc($result);
 				echo '<select name="to" size="1" id="to">';
-				do {
+				foreach($rows_replyto as $row){
 					echo '<option value="'.$row['member_id'].'"';
 					if ($reply_to == $row['member_id']){
 						echo ' selected="selected"';
@@ -210,7 +198,7 @@ if ($reply_to) {
 					echo '>';
 					echo get_display_name($row['member_id']);
 					echo '</option>';
-				} while ($row = mysql_fetch_assoc($result));
+				} 
 				echo '</select>';
 			} else {
 				echo '<strong>'.get_display_name($reply_to).'</strong>';

@@ -11,20 +11,21 @@
 /************************************************************************/
 // $Id: get_profile_img.php 6979 2007-06-20 17:35:02Z greg$
 define('AT_INCLUDE_PATH', 'include/');
+
 @ob_end_clean();
 header("Content-Encoding: none");
 
 $_user_location	= 'public';
 
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
-
-
 require(AT_INCLUDE_PATH . 'lib/mime.inc.php');
 
 $id = intval($_GET['id']);
-$sql="SELECT icon from ".TABLE_PREFIX."courses WHERE course_id='$id'";
-$result = mysql_query($sql, $db);
-while($row=mysql_fetch_assoc($result)){
+
+$sql="SELECT icon from %scourses WHERE course_id=%d";
+$rows_icon = queryDB($sql, array(TABLE_PREFIX, $id));
+
+foreach($rows_icon as $row){
 	$filename = $row['icon'];
 }
 

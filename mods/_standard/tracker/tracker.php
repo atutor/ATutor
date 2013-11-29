@@ -10,6 +10,10 @@
 /* as published by the Free Software Foundation.                        */
 /************************************************************************/
 // $Id$
+/////
+// UNUSED FILE
+exit;
+//////
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');

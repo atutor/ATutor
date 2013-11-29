@@ -1,4 +1,6 @@
 <?php
+// FILE NO LONGER IN USE
+exit;
 require(dirname(__FILE__) .'/common/vitals.inc.php');
 function my_add_null_slashes( $string ) {
     return ( $string );

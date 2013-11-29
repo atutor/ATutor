@@ -43,19 +43,24 @@ if (isset($_POST['cancel'])) {
     }
 
     if (!$msg->containsErrors()) {
-        $_POST['question']            = $addslashes($_POST['question']);
-        $_POST['feedback']            = $addslashes($_POST['feedback']);
-        $_POST['remedial_content']    = $addslashes($_POST['remedial_content']);
 
-        $sql = "UPDATE ".TABLE_PREFIX."tests_questions SET    category_id=$_POST[category_id],
-            feedback='$_POST[feedback]',
-            question='$_POST[question]',
-            properties=$_POST[properties],
-            remedial_content='$_POST[remedial_content]'
-        WHERE question_id=$_POST[qid] AND course_id=$_SESSION[course_id]";
+        $sql = "UPDATE %stests_questions SET category_id=%d,
+            feedback='%s',
+            question='%s',
+            properties=%d,
+            remedial_content='%s'
+        WHERE question_id=%d AND course_id=%d";
         
-        $result    = mysql_query($sql, $db);
-
+        $result    = queryDB($sql, array(
+                            TABLE_PREFIX,
+                            $_POST['category_id'], 
+                            $_POST['feedback'], 
+                            $_POST['question'], 
+                            $_POST['properties'], 
+                            $_POST['remedial_content'],
+                            $_POST['qid'],
+                            $_SESSION['course_id']));
+                            
         $msg->addFeedback('QUESTION_UPDATED');
         if ($_POST['tid']) {
             header('Location: questions.php?tid='.$_POST['tid']);
@@ -69,9 +74,11 @@ if (isset($_POST['cancel'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 if (!isset($_POST['submit'])) {
-    $sql    = "SELECT * FROM ".TABLE_PREFIX."tests_questions WHERE question_id=$qid AND course_id=$_SESSION[course_id] AND type=3";
-    $result    = mysql_query($sql, $db);
-    if (!($row = mysql_fetch_assoc($result))){
+
+    $sql    = "SELECT * FROM %stests_questions WHERE question_id=%d AND course_id=%d AND type=3";
+    $row    = queryDB($sql, array(TABLE_PREFIX, $qid, $_SESSION['course_id']), TRUE);
+    
+    if(count($row) == 0){
         $msg->printErrors('ITEM_NOT_FOUND');
         require (AT_INCLUDE_PATH.'footer.inc.php');
         exit;
