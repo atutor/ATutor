@@ -7,8 +7,8 @@ error_reporting(E_ALL ^ E_NOTICE);
 @date_default_timezone_set(@date_default_timezone_get());
 require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 
-if(!isset($msg)){
-    require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+if(!is_object($msg)){
+    require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
     $msg = new Message($savant);
 }
 /* atutor default configuration options */

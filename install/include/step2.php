@@ -15,7 +15,9 @@ if (!defined('AT_INSTALLER_INCLUDE_PATH') || !defined('AT_INCLUDE_PATH')) { exit
 include(AT_INCLUDE_PATH . 'install/install.inc.php');
 if(isset($_POST['submit'])) {
 	//check DB & table connection
+
 	$db = create_and_switch_db($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], $_POST['db_password'], $_POST['tb_prefix'], $_POST['db_name'], true);
+	
 	if (!isset($errors)) {
 	
 		$sqlUtility = new SqlUtility();

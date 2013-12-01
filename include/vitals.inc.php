@@ -34,8 +34,7 @@ if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.') !== FALSE){
 // check if the subsite is enabled
 if (defined('IS_SUBSITE') && IS_SUBSITE) {
 	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
-	//mysql_select_db(DB_NAME_MULTISITE, $db_multisite);
-	at_db_select(DB_NAME_MULTISITE, $db_multisite);
+	mysql_select_db(DB_NAME_MULTISITE, $db_multisite);
 	$site_url = $_SERVER['HTTP_HOST'];
 	$row = queryDB('SELECT * from %ssubsites where site_url = %s', array(TABLE_PREFIX_MULTISITE, $siteurl), true);
 	if (!$row['enabled']) {
@@ -82,27 +81,22 @@ if (!defined('AT_REDIRECT_LOADED')){
 
 if (!defined('AT_REDIRECT_LOADED')){
 	require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
-	
-	$db = at_db_connect(DB_HOST,DB_PORT, DB_USER, DB_PASSWORD);
-	$db = at_db_select(DB_NAME, $db);
-
+	$db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
+	at_db_select(DB_NAME, $db);
 }
 
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
 
 $rows = queryDB("SELECT * FROM %sconfig", array(TABLE_PREFIX));
-
 foreach ($rows as $row) {
 	$_config[$row['name']] = $row['value'];
 }
 
 /***** 3. start session initilization block *****/
-
-
 if (headers_sent()) {
 	require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 	$err = new ErrorHandler();
-	trigger_error('VITAL#<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).' . '</strong></code><br /><br /><br />', E_USER_ERROR);
+	trigger_error('VITAL#<br /><br /><code><strong>An error occurred. Output sent before it should have. Please correct the above error(s).' . '</strong></code><br /><hr /><br />', E_USER_ERROR);
 }
 
 @set_time_limit(0);
@@ -116,7 +110,6 @@ if($_config['session_timeout']){
 @session_cache_limiter('private, must-revalidate');
 session_name('ATutorID');
 error_reporting(AT_ERROR_REPORTING);
-headers_list();
 
 if (headers_sent()) {
 	require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
@@ -529,5 +522,4 @@ if (isset($_GET['submit_language']) && $_SESSION['valid_user'] === true) {
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$_custom_head .= '    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorCourse.js"></script>';
 }
-
 ?>

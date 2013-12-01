@@ -426,13 +426,16 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 			$msg->addError(array('LOW_MYSQL_VERSION', $row['version']));
 		}
 	}
-    if(isset($db)){
-	    $result = at_is_db($db_name, $db);
+    //if(isset($db)){
+	//    $result = at_is_db($db_name, $db);
+    //}
+    if(at_db_select($db_name, $db)){
+        $isdb = 1;
     }
-	if($result == 0){
-		$sql = "CREATE DATABASE `%s` CHARACTER SET utf8 COLLATE utf8_general_ci";
-		$result = queryDB($sql, array($db_name));
-
+	if($isdb == 0){
+		$sql = "CREATE DATABASE `".$db_name."` CHARACTER SET utf8 COLLATE utf8_general_ci";
+		//$result = queryDB($sql, array($db_name));
+        $result = at_db_create($sql, $db);
 		if ($result == 0) {
 			if ($in_plain_msg) {
 				$errors[] = 'Unable to select or create database <b>'.$db_name.'</b>.';

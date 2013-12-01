@@ -143,7 +143,7 @@ class SqlUtility
 	 */
 	public static function prefixQuery($query, $prefix)
 	{
-		$pattern = "/^(REPLACE INTO|INSERT INTO|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
+		$pattern = "/^(REPLACE INTO|INSERT INTO|CREATE TABLE IF NOT EXISTS|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
 			$replace = "\\1 ".$prefix."\\4\\5";
@@ -189,10 +189,10 @@ class SqlUtility
 			if ($prefixed_query != false )
 			{
 				$table = $table_prefix.$prefixed_query[4];
-				if($prefixed_query[1] == 'CREATE TABLE')
+				if($prefixed_query[1] == 'CREATE TABLE' || $prefixed_query[1] == 'CREATE TABLE IF NOT EXISTS')
 				{
-				    $result = at_create_table($prefixed_query[0]);
-                    if($result > 0){
+				    $result = queryDB($prefixed_query[0], array(), FALSE, FALSE);
+                    if(count($result) > 0){
 						if ($in_plain_msg) {
 							$progress[] = 'Table <b>'.$table . '</b> created successfully.';
 						} else {
