@@ -63,6 +63,64 @@ ATutor.course = ATutor.course || {};
                         $("#topnavlistcontainer").css('margin-left', '');
                         }
                 });
+                
+                // Floating subnavlist bar
+                $('#lrg_subnav').scrollToFixed({
+                    marginTop: 33,
+                    dontSetWidth: false,
+                    preFixed: function() { 
+                        $(this).find('div').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
+                        $(this).find('div').css('background-color', '#FAFAFA'); 
+                        $(this).find('div').css('padding', '8');
+                        $(this).find('div').css('margin-left', '0');
+                        $(this).find('div').css('width', '100%');
+                        $(this).find('div').css('float', '');
+                        $(this).find('div').css('position','');
+                         $(this).find('div').css('height','2.5em');
+                         
+                        $("#subnavlistcontainer").css('margin-top', '-2.7em;');
+                        //$("#subnavlistcontainer").css('margin-left', '.3em');
+                        //$("#subnavlistcontainer").css('float', 'right');
+                        //$("#subnavlistcontainer").css('clear', 'both');
+                        //$("#subnavlistcontainer").css('width', '70%');
+                         $("ul#subnavlist_i li").css('background-color', '#FFFFFF'); 
+                         $("ul#subnavlist li").css('padding-bottom', '.2em'); 
+                          $("ul#subnavlist li").css('padding', '.4em');
+                          $("ul#subnavlist_i").css('float', 'right');                     
+                          $("ul#subnavlist_i").css('clear', 'right'); 
+                          $("ul#subnavlist").css('margin-top', '-2.5em'); 
+                          $("#subnavlist").css('border-bottom', '0'); 
+                          $("#subnavlist").css('float', 'left'); 
+                          $("#subnavlist").css('clear', 'left');
+                    },
+                    postFixed: function() { 
+                        $(this).find('div').css('background-image', ''); 
+                        $(this).find('div').css('background-color', ''); 
+                        $(this).find('div').css('padding', '');
+                        $(this).find('div').css('right','');
+                        $(this).find('div').css('width', '100%');
+                        $(this).find('div').css('position','');
+                        $(this).find('div').css('height','');
+                        $(this).find('div').css('padding', '0');
+                        $("ul#subnavlist li").css('padding', '.5em');
+                          $("ul#subnavlist_i").css('float', '');                     
+                          $("ul#subnavlist_i").css('clear', ''); 
+                          $("ul#subnavlist").css('float', ''); 
+                          $("ul#subnavlist").css('clear', '');
+                        $("ul#subnavlist li").css('margin-bottom', '0');
+                          $("ul#subnavlist").css('margin-top', '0'); 
+                           $("#subnavbacktopage").css('width', ''); 
+                         $("img.imggoback").css('margin', '0');
+                         
+                         
+                        $("#subnavlistcontainer").css('margin-top', '0em');
+                        $("#subnavlistcontainer").css('border-bottom', '0');
+                        $("ul#subnavlist").css('border-bottom', '1px solid #DED29E');   
+                
+                     //$("#subnavlistcontainer").css('padding-left', '');
+                        //$("#subnavlistcontainer").css('margin-left', '');
+                    }
+                });
                 // Fixed Footer
                 $('#footer').scrollToFixed( {
                     bottom: 0,
