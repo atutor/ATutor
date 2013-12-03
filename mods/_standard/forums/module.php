@@ -34,7 +34,7 @@ $this->_pages['mods/_standard/forums/edit_forum.php']['title_var']  = 'edit_foru
 $this->_pages['mods/_standard/forums/edit_forum.php']['parent'] = 'mods/_standard/forums/index.php';
 
 $this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
-$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/forum/list';
+$this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/forum/list.php';
 
 //student pages
 $this->_pages['mods/_standard/forums/forum/list.php']['title_var']  = 'forums';
