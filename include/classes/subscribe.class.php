@@ -29,17 +29,13 @@ class subscription {
 	public function is_subscribed($entity_type, $member_id, $entity_id) {
 		
 		// Get appropriate sql parameters and write sql query
-		
-		////
-		// 5299 how to covert this to queryDB()
-		///
 		$ent_param = $this->entity_switch($entity_type);
-		$sql = ($ent_param) ? "SELECT COUNT(*) FROM $ent_param[sub_table] WHERE member_id = '$member_id' AND $ent_param[sub_id] = '$entity_id'" : false;
+		$sql = ($ent_param) ? "SELECT COUNT(*) as count FROM $ent_param[sub_table] WHERE member_id = $member_id AND $ent_param[sub_id] = '$entity_id'" : false;
 				
 		// Run SQL and check if table is populated for given member id and entity id
 		if ($sql){
-			$result = mysql_fetch_array(mysql_query($sql));
-			return (empty($result[0]))?false:true;
+		    $result = queryDB($sql, array(), TRUE);
+			return (empty($result['count']))?false:true;
 		}	else {
 			return false;
 		}
@@ -55,22 +51,22 @@ class subscription {
 		
 		$gid = (is_array($oid))?$oid[0]:$oid;
 		if (!empty($gid)){
-			$sql = "SELECT title FROM ".TABLE_PREFIX."groups WHERE group_id='$gid'";
-			$result = mysql_fetch_row(mysql_query($sql));
-			return $result[0];
+			$sql = "SELECT title FROM %sgroups WHERE group_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $gid), TRUE);
+
 		} else {
 			return false;
 		}
 	}
 	
 	// Gets email and site name
-	private function get_system_email (){
-		$sql = "SELECT * FROM ".TABLE_PREFIX."config WHERE name = 'site_name' OR name = 'contact_email'";
-		$result = mysql_query($sql);
-		while($row = mysql_fetch_row($result)){
-			if ($row[0] == 'site_name'){
+	private function get_system_email(){
+		$sql = "SELECT * FROM %sconfig WHERE name = 'site_name' OR name = 'contact_email'";
+		$rows_config = queryDB($sql, array(TABLE_PREFIX));
+		foreach($rows_config as $row){
+			if ($row['name'] == 'site_name'){
 				$sysinfo['site_name'] = $row[1];
-			} elseif ($row[0] == 'contact_email'){
+			} elseif ($row['name'] == 'contact_email'){
 				$sysinfo['contact_email'] = $row[1];
 			}
 		}
@@ -78,7 +74,6 @@ class subscription {
 	}
 	// Subscribes user to feed
 	public function set_subscription($entity_type, $member_id, $entity_id){
-		
 		//Checks subscribability (only for blogs)
 		if ($entity_type == 'blog' && !$this->check_blog_subscribability($entity_id,$member_id)){
 			return false;
@@ -86,14 +81,16 @@ class subscription {
 		
 		$ent_param = $this->entity_switch($entity_type);
 		$sql = ($ent_param) ? "INSERT INTO $ent_param[sub_table] (member_id, $ent_param[sub_id]) VALUES('$member_id','$entity_id')" : false;
-		return (mysql_query($sql))?true:false;
+        $result = queryDB($sql, array());
+        return ($result > 0)?true:false;
 	}
 	
 	// Unsubscribes user to feed
 	public function unset_subscription($entity_type, $member_id, $entity_id){
 		$ent_param = $this->entity_switch($entity_type);
 		$sql = ($ent_param) ? "DELETE FROM $ent_param[sub_table] WHERE member_id = '$member_id' AND $ent_param[sub_id] = '$entity_id'" : false;
-		return (mysql_query($sql))?true:false;
+		$result = queryDB($sql, array());
+        return ($result > 0)?true:false;
 	}
 	
 	// Sends mail to all subscribed users
@@ -107,17 +104,16 @@ class subscription {
 		// Now, what are we going to send?
 		$fetch = (!empty($ent_param[content_head]))?$ent_param[content_head].",".$ent_param[content_body]:$ent_param[content_body];
 		$sql = "SELECT $fetch FROM $ent_param[content_table] WHERE $ent_param[content_id] = '$post_id'";
-		$post = mysql_fetch_array(mysql_query($sql));
-		
+		$post = queryDB($sql, array());	
+			
 		//Get all subscribers
 		$sql = "SELECT t1.email, t1.member_id FROM ".TABLE_PREFIX."members t1, $ent_param[sub_table] t2 WHERE t2.$ent_param[sub_id] = '$entity_id' AND t1.member_id=t2.member_id";
-		$result = mysql_query($sql);
-		
+		$rows_subscribers = queryDB($sql, array());		
 		//get system email
 		$sysinfo = $this->get_system_email();
-		
+
 		//Send lots of mails
-		while ($subscriber = mysql_fetch_array($result)){
+		foreach($rows_subscribers as $subscriber){
 			$mail = new ATutorMailer;
 			$mail->AddAddress($subscriber['email'], get_display_name($subscriber['member_id']));
 			$body = $ent_param[mail_header];
@@ -131,7 +127,6 @@ class subscription {
 			$mail->From     = $sysinfo['contact_email'];
 			$mail->Subject = $ent_param[mail_subject];
 			$mail->Body    = $body;
-
 			if(!$mail->Send()) {
 				$msg->addError('SENDING_ERROR');
 			}
@@ -183,8 +178,8 @@ class subscription {
 	}
 
 	private function check_blog_subscribability($group_id,$member_id){
-		$sql="SELECT COUNT(*) FROM ".TABLE_PREFIX."groups t1 LEFT JOIN ".TABLE_PREFIX."groups_types t2 ON t1.type_id=t2.type_id LEFT JOIN ".TABLE_PREFIX."course_enrollment t3 ON t2.course_id=t3.course_id WHERE group_id='".$group_id."' AND member_id='".$member_id."'";
-		$result = mysql_fetch_row(mysql_query($sql));
+		$sql="SELECT COUNT(*) FROM %sgroups t1 LEFT JOIN %sgroups_types t2 ON t1.type_id=t2.type_id LEFT JOIN %scourse_enrollment t3 ON t2.course_id=t3.course_id WHERE group_id=%d AND member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $group_id, $member_id));
 		return (empty($result[0]))?false:true;
 	}
 }
