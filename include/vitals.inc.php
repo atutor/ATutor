@@ -34,7 +34,7 @@ if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.') !== FALSE){
 // check if the subsite is enabled
 if (defined('IS_SUBSITE') && IS_SUBSITE) {
 	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
-	mysql_select_db(DB_NAME_MULTISITE, $db_multisite);
+	at_db_select(DB_NAME_MULTISITE, $db_multisite);
 	$site_url = $_SERVER['HTTP_HOST'];
 	$row = queryDB('SELECT * from %ssubsites where site_url = %s', array(TABLE_PREFIX_MULTISITE, $siteurl), true);
 	if (!$row['enabled']) {
