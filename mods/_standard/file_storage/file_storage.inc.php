@@ -525,7 +525,7 @@ function fs_revisions_sort_compare($a, $b) {
  * copies a directory to another workspace.
  * not currently used anywhere.
  */
-/***
+/******
 function fs_copy_folder($folder_id, $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $dest_parent_folder_id) {
 	global $db;
 
@@ -534,13 +534,14 @@ function fs_copy_folder($folder_id, $src_owner_type, $src_owner_id, $dest_owner_
 		return false;
 	}
 
-	$sql = "INSERT INTO ".TABLE_PREFIX."folders VALUES (0, $dest_parent_folder_id, $dest_owner_type, $dest_owner_id, '$folder[title]')";
-	$result = mysql_query($sql, $db);
-	$id = mysql_insert_id($db);
+	$sql = "INSERT INTO %sfolders VALUES (0, %d, %d, %d, '%s')";
+	$result = queryDB($sql, array(TABLE_PREFIX, $dest_parent_folder_id, $dest_owner_type, $dest_owner_id, $folder['title']));
+	$id = at_insert_id($db);
 
-	$sql = "SELECT file_id FROM ".TABLE_PREFIX."files WHERE folder_id=$folder_id AND owner_type=$src_owner_type AND owner_id=$src_owner_id";
-	$result = mysql_query($sql, $db);
-	while ($row = mysql_fetch_assoc($result)) {
+	$sql = "SELECT file_id FROM %sfiles WHERE folder_id=%d AND owner_type=%d AND owner_id=%d";
+	$rows_files = queryDB($sql, array(TABLE_PREFIX, $folder_id, $src_owner_type, $src_owner_id));
+	
+	foreach($rows_files as $row){
 		fs_copy_file($row['file_id'], $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $id);
 	}
 
@@ -549,5 +550,5 @@ function fs_copy_folder($folder_id, $src_owner_type, $src_owner_id, $dest_owner_
 		fs_copy_folder($folder['folder_id'], $src_owner_type, $src_owner_id, $dest_owner_type, $dest_owner_id, $id);
 	}
 }
-*/
+*****/
 ?>
