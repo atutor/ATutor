@@ -79,10 +79,6 @@ $num_results = count($rows_courses_cats);
 foreach($rows_courses_cats  as $row){
 	if (in_array($row['course_id'], $existing_courses)) $num_results--;
 }
-// THIS LINE COMMENTED WHEN queryDB() WAS ADDED
-// NOT SURE OF ITS PURPOSE
-//if ($num_results > 0) mysql_data_seek($courses_result, 0);
-
 // get the categories <select>, if there are any.
 // we need ob_start/ob_clean, because select_categories() outputs directly.
 // we do this so that if there are no categories, then the option doesn't appear.
