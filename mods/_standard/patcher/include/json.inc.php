@@ -61,14 +61,7 @@ function php2js_sqlresult($phpsql) {
 	
 	/// WITH queryDB() returned is always an array
 	// This function should no longer be necessary
-	/*
-	$rows = array();
-	while ($line = mysql_fetch_assoc($phpsql)) {
-		$rows[] = $line;
-	}
-	mysql_free_result($phpsql);
-	return php2js_array($rows);
-	*/
+
 	return;
 	//return "php2js_sqlresult failed";
 }
