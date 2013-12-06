@@ -89,13 +89,13 @@
 		</td>
 		<td class="hidecol700">
 			<?php if ($row['description']): ?>
-				<div style="height:6.4em;" title="<?php echo htmlentities_utf8($row['description']);?>"><?php echo substr(htmlentities_utf8($row['description'], true),0,150); 
+				<div title="<?php echo htmlentities_utf8($row['description']);?>"><?php echo substr(htmlentities_utf8($row['description'], true),0,150); 
 				if(strlen($row['description']) > 150){
 				echo "...";
 				}
 				?>&nbsp;</div>
 			<?php else: ?>
-				<div style="height:6.4em;clear:right;" title="<?php echo htmlentities_utf8($row['description']);?>">&nbsp;</div>
+				<div title="<?php echo htmlentities_utf8($row['description']);?>">&nbsp;</div>
 			<?php endif; ?>
 		</td>
 		<td class="hidecol700">
