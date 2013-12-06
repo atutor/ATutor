@@ -133,7 +133,7 @@ if (isset($_POST['cancel'])) {
 		// set some user specific variables for the body (
 		// Added by Thomas Taennier (ipool)
 		foreach ($mail_list as $recip) {
-            $recipient_list.= "<li>".$recip."</li><br/>";
+        $recipient_list.= "<li>".$recip."</li><br/>";
 			$subject = $_POST['subject'];
 			$body = $_POST['body'];
 			$mail = new ATutorMailer;
