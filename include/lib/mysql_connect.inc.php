@@ -12,16 +12,9 @@
 // $Id$
 if (AT_INCLUDE_PATH !== 'NULL') {
 function at_db_connect($db_host, $db_port, $db_login, $db_password){
-	//$db = @mysql_connect(DB_HOST . ':' . DB_PORT, DB_USER, DB_PASSWORD);	
-    $db = @mysql_connect($db_host . ':' . $db_port, $db_login,$db_password);
-    return $db;
-}
 
-function at_db_select($db_name, $db){
-    //global $db;
-    mysql_select_db($db_name, $db);
-}
-/*
+    $db = @mysql_connect($db_host . ':' . $db_port, $db_login,$db_password);
+    
 	if (!$db) {
 		// AT_ERROR_NO_DB_CONNECT 
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
@@ -29,15 +22,21 @@ function at_db_select($db_name, $db){
 		trigger_error('VITAL#Unable to connect to db.', E_USER_ERROR);
 		exit;
 	}
-	if (!@mysql_select_db(DB_NAME, $db)) {
+    return $db;
+}
+
+function at_db_select($db_name, $db){
+
+    if (!@mysql_select_db($db_name, $db)) {
 		require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
 		$err = new ErrorHandler();
 		trigger_error('VITAL#DB connection established, but database "'.DB_NAME.'" cannot be selected.',
 						E_USER_ERROR);
 		exit;
 	}
-	
-	//get set_utf8 config
+}
+/*
+		//get set_utf8 config
 	$sql = 'SELECT * FROM '.TABLE_PREFIX."config WHERE name='set_utf8'";
 	$result = mysql_query($sql, $db);
 	if ($result){
@@ -120,9 +119,11 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
     try {
         sqlout($sql);
         $oneRowErrorMessage = sprintf($oneRowErrorMessage, $sql);
+        // NOTE ! Uncomment the error_log() line below to start logging database queries to your php_error.log. 
+        // BUT  ! Use for debugging purposes ONLY. Creates very large logs if left running.
         
-        // The line below must be commented out on production instance of ATutor
-       //error_log(print_r($sql, true), 0);    // NOTE ! Uncomment this line to start logging every single called query. Use for debugging purposes ONLY
+    //error_log(print_r($sql, true), 0);    
+
         // Query DB and if something goes wrong then log the problem
         if(defined('MSQLI_ENABLED')){
                $result = mysqli_query($sql, $db) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage)); 
@@ -130,7 +131,6 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
         }else{
                $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
         }
-        //$result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
         
         // If the query was of the type which does not suppose to return rows e.g. UPDATE/SELECT/INSERT
         // is_bool is for mysql compatibility
@@ -173,7 +173,7 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
     }
 }
 function queryDBresult($sql, $params = array(), $sanitize = true){
-        global $db;
+        global $db, $msg;
         $sql = create_sql($sql, $params, $sanitize);
 
         if(defined('MSQLI_ENABLED')){
