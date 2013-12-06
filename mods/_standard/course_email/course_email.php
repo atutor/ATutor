@@ -128,10 +128,12 @@ if (isset($_POST['cancel'])) {
 		$sql = "SELECT email, first_name, last_name,login,password FROM %smembers WHERE member_id=%d";
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		$mail_list[] = $row['email'];
+    $recipient_list = "";
 	// Prep the mailer.
 		// set some user specific variables for the body (
 		// Added by Thomas Taennier (ipool)
 		foreach ($mail_list as $recip) {
+      $recipient_list.= "<li>".$recip."</li><br/>";
 			$subject = $_POST['subject'];
 			$body = $_POST['body'];
 			$mail = new ATutorMailer;
@@ -155,7 +157,8 @@ if (isset($_POST['cancel'])) {
 			unset($mail);
 		}
 
-		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+    $list_feedback = array('COURSE_EMAIL_RECIPIENT_LIST', $recipient_list);
+    $msg->addFeedback($list_feedback);
 		header('Location: '.$_base_href.'tools/index.php');
 		exit;
 	}
