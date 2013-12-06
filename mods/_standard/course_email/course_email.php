@@ -128,7 +128,7 @@ if (isset($_POST['cancel'])) {
 		$sql = "SELECT email, first_name, last_name,login,password FROM %smembers WHERE member_id=%d";
 		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 		$mail_list[] = $row['email'];
-            $recipient_list = "";
+        $recipient_list = "";
 	// Prep the mailer.
 		// set some user specific variables for the body (
 		// Added by Thomas Taennier (ipool)
