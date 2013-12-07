@@ -2109,6 +2109,9 @@ ul#subnavlist li, ul#navlist li{
 	display: inline-block;
 	font-weight:700;
 	text-align:center;
+	border-top: 1px solid transparent;
+	border-left:1px solid transparent;
+	border-right:1px solid transparent;
 	border-bottom:3px solid transparent;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
@@ -2116,20 +2119,24 @@ ul#subnavlist li, ul#navlist li{
 	padding: .4em .5em .2em .5em ;
 }
 
-ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li:hover,
-ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li:hover,
+ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li a:hover,
+ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li a:hover,
 ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
   	color: black;
 	text-decoration:none;
+	
 	background-color: #F3F3F3;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
 ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li a:focus,
-ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li a:focus,  
-ul#navlist li.active, ul#navlist li:hover, ul#navlist li a:focus {
+ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li:focus,  
+ul#navlist li.active, ul#navlist li:hover, ul#navlist li:focus {
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
+	border-top: 1px solid white;
+	border-left:1px solid white;
+	border-right:1px solid white;
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
