@@ -46,27 +46,24 @@ class OAuthUtility {
 	 */
 	public static function getUnexpiredAccessToken()
 	{
-		global $db;
-		
 		$sql = "SELECT token, 
 		               unix_timestamp(now()) now_timestamp, 
 		               ocs.expire_threshold,
 		               unix_timestamp(addtime(oct.assign_date, sec_to_time(ocs.expire_threshold))) expire_timestamp
-		          FROM ".TABLE_PREFIX."oauth_client_servers ocs, ".TABLE_PREFIX."oauth_client_tokens oct
+		          FROM %soauth_client_servers ocs, %soauth_client_tokens oct
 		         WHERE ocs.oauth_server_id=oct.oauth_server_id
-		           AND oct.member_id=".$_SESSION['member_id']."
+		           AND oct.member_id=%d
 		           AND oct.token_type='access'
 		         ORDER BY oct.assign_date DESC";
 		
-		$result = mysql_query($sql, $db);
-		
-		if (mysql_num_rows($result) == 0) {
+		$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id']));		
+
+		if (count($row) == 0) {
 			return '';
 		}
 		else
 		{
-			$row = mysql_fetch_assoc($result);
-			
+
 			if ($row['expire_threshold'] == 0 || $row['now_timestamp'] < $row['expire_timestamp']) {
 				return $row['token'];
 			} else {

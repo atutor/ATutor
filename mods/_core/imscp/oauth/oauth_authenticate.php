@@ -56,18 +56,13 @@ if ($access_token_key == '')
 	if (!isset($_GET['oauth_token'])) // before oauth server authentication, get request token from oauth server
 	{
 		// 1. register consumer
-		$sql = "SELECT * FROM ".TABLE_PREFIX."oauth_client_servers 
-		         WHERE oauth_server='".mysql_real_escape_string($_config['transformable_uri'])."'";
-		$result = mysql_query($sql, $db);
-	
-		if (mysql_num_rows($result) == 0)
-		{
+		$sql = "SELECT * FROM %soauth_client_servers WHERE oauth_server='%s'";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_config['transformable_uri']), TRUE);	
+		
+		if(count($row) == 0){
 			$register_consumer_url = AT_TILE_OAUTH_REGISTER_CONSUMER_URL.'?consumer='.urlencode(AT_BASE_HREF).'&expire='.$_config['transformable_oauth_expire'];
 			$oauth_server_response = file_get_contents($register_consumer_url);
 		
-//			debug('register consumer - request: '.$register_consumer_url);
-//			debug('register consumer - OAUTH response: '.$oauth_server_response);
-			
 			// handle OAUTH response on register consumer
 			foreach (explode('&', $oauth_server_response) as $rtn)
 			{
@@ -87,17 +82,17 @@ if ($access_token_key == '')
 			}
 			else
 			{
-				$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_servers
+
+				$sql = "INSERT INTO %soauth_client_servers
 					    (oauth_server, consumer_key, consumer_secret, expire_threshold, create_date)
-					    VALUES ('".mysql_real_escape_string($_config['transformable_uri'])."', '".$consumer_key."',
-					    '".$consumer_secret."', ".$expire_threshold.", now())";
-				$result = mysql_query($sql, $db);
-				$oauth_server_id = mysql_insert_id();
+					    VALUES ('%s', '%s',
+					    '%s', %d, now())";
+				$result = queryDB($sql, array(TABLE_PREFIX, $_config['transformable_uri'], $consumer_key, $consumer_secret, $expire_threshold));
+				$oauth_server_id = at_insert_id();
 			}
 		}
 		else
 		{
-			$row = mysql_fetch_assoc($result);
 			$oauth_server_id = $row['oauth_server_id'];
 			$consumer_key = $row['consumer_key'];
 			$consumer_secret = $row['consumer_secret'];
@@ -105,18 +100,12 @@ if ($access_token_key == '')
 		}
 		$consumer = new OAuthConsumer($consumer_key, $consumer_secret, $client_callback_url);
 		
-	//	debug('consumer: '.$consumer);
-	//	debug('--- END OF REGISTERING CONSUMER ---');
-	
 		// 2. get request token
 		$req_req = OAuthRequest::from_consumer_and_token($consumer, NULL, "GET", AT_TILE_OAUTH_REQUEST_TOKEN_URL);
 		$req_req->sign_request($sig_method, $consumer, NULL);
 
 		$oauth_server_response = file_get_contents($req_req);
-		
-	//	debug('request token - request: '."\n".$req_req);
-	//	debug('request token - response: '."\n".$oauth_server_response);
-		
+
 		// handle OAUTH request token response
 		foreach (explode('&', $oauth_server_response) as $rtn)
 		{
@@ -129,11 +118,11 @@ if ($access_token_key == '')
 		
 		if ($error == '' && strlen($request_token_key) > 0 && strlen($request_token_secret) > 0)
 		{
-			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_tokens
+
+			$sql = "INSERT INTO %soauth_client_tokens
 					(oauth_server_id, token, token_type, token_secret, member_id, assign_date)
-					VALUES (".$oauth_server_id.", '".$request_token_key."', 'request',
-					'".$request_token_secret."', ".$_SESSION['member_id'].", now())";
-			$result = mysql_query($sql, $db);
+					VALUES (%d, '%s', 'request', '%s', %d, now())";
+			$result = queryDB($sql, array(TABLE_PREFIX, $oauth_server_id, $request_token_key, $request_token_secret, $_SESSION['member_id']));
 		}
 		else
 		{
@@ -143,9 +132,7 @@ if ($access_token_key == '')
 		}
 		
 		$request_token = new OAuthToken($request_token_key, $request_token_secret);
-		
-	//	debug('--- END OF REQESTING REQUEST TOKEN ---');
-		
+
 		// 3. authorization
 		$auth_req = AT_TILE_OAUTH_AUTHORIZATION_URL.'?oauth_token='.$request_token_key.'&oauth_callback='.urlencode($client_callback_url);
 		
@@ -157,21 +144,19 @@ if ($access_token_key == '')
 		// get consumer id by request token
 		$sql = "SELECT ocs.oauth_server_id, ocs.consumer_key, ocs.consumer_secret, 
 		               ocs.expire_threshold, oct.member_id, oct.token_secret
-		          FROM ".TABLE_PREFIX."oauth_client_servers ocs, ".TABLE_PREFIX."oauth_client_tokens oct  
+		          FROM %soauth_client_servers ocs, %soauth_client_tokens oct  
 		         WHERE ocs.oauth_server_id = oct.oauth_server_id
-		           AND oct.token = '".$_GET['oauth_token']."'
-		           AND token_type='request'";
+		           AND oct.token = '%s'
+		           AND token_type='request'";		
+		$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_GET['oauth_token']), TRUE);
 		
-		$result = mysql_query($sql, $db);
-		if (mysql_num_rows($result)==0)
-		{
+		if(count($row) == 0){
 			$msg->addError(array('TILE_AUTHENTICATION_FAIL', _AT('wrong_request_token')));
 			header('Location: '.AT_BASE_HREF.'mods/_core/imscp/index.php');
 			exit;
 		}
 		
-		$row = mysql_fetch_assoc($result); 
-		
+
 		$consumer = new OAuthConsumer($row['consumer_key'], $row['consumer_secret'], $client_callback_url);
 		$request_token = new OAuthToken($_GET['oauth_token'], $row['token_secret']);
 		
@@ -180,10 +165,7 @@ if ($access_token_key == '')
 		$access_req->sign_request($sig_method, $consumer, NULL);
 		
 		$oauth_server_response = file_get_contents($access_req);
-		
-	//	debug('access token - request: '."\n".$access_req);
-	//	debug('access token - response: '."\n".$oauth_server_response);
-		
+			
 		// handle OAUTH response on access token
 		foreach (explode('&', $oauth_server_response) as $rtn)
 		{
@@ -197,17 +179,14 @@ if ($access_token_key == '')
 		if ($error == '' && strlen($access_token_key) > 0 && strlen($access_token_secret) > 0)
 		{
 			// insert access token
-			$sql = "INSERT INTO ".TABLE_PREFIX."oauth_client_tokens
+			$sql = "INSERT INTO %soauth_client_tokens
 					(oauth_server_id, token, token_type, token_secret, member_id, assign_date)
-					VALUES (".$row['oauth_server_id'].", '".$access_token_key."', 'access',
-					'".$access_token_secret."', ".$row['member_id'].", now())";
-			$result = mysql_query($sql, $db);
-			
+					VALUES (%d, '%s', 'access', '%s', %d, now())";
+			$result = queryDB($sql, array(TABLE_PREFIX, $row['oauth_server_id'], $access_token_key, $access_token_secret, $row['member_id']));
+						
 			// delete request_token
-			$sql = "DELETE FROM ".TABLE_PREFIX."oauth_client_tokens
-					 WHERE token = '".$_GET['oauth_token']."'
-					   AND token_type='request'";
-			$result = mysql_query($sql, $db);
+			$sql = "DELETE FROM %soauth_client_tokens WHERE token = '%s' AND token_type='request'";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_GET['oauth_token']));
 		}
 		else
 		{
@@ -217,7 +196,5 @@ if ($access_token_key == '')
 		}
 	}
 }
-//debug('access token key: '.$access_token_key);
-//	debug('--- END OF REQESTING ACCESS TOKEN ---');
-//	exit;
+
 ?>
