@@ -44,7 +44,6 @@ if (isset($_REQUEST['to_tile']) && !isset($_POST['cancel'])) {
 	$tile_import_url = AT_TILE_IMPORT_URL. '?oauth_token='.$access_token_key.'&url='.urlencode($export_url);
 
 	$oauth_server_response = @file_get_contents($tile_import_url);
-
 	// handle OAUTH import response
 	foreach (explode('&', $oauth_server_response) as $rtn)
 	{
@@ -127,6 +126,7 @@ require(AT_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 require(AT_INCLUDE_PATH.'classes/ContentOutputParser.class.php');   /* to retrieve content resources/medias from at_content[text] */
 require(AT_INCLUDE_PATH.'../mods/_core/imscc/include/ims_template.inc.php');	/* for ims templates + print_organizations() */
+require_once(AT_INCLUDE_PATH.'classes/ContentManager.class.php');   /* to retrieve content resources/medias from at_content[text] */
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('EXPORT_CANCELLED');
@@ -141,7 +141,7 @@ $zipfile->create_dir('resources/');
 $content = array();
 $paths	 = array();
 $top_content_parent_id = 0;
-
+$contentManager = new ContentManager($db, $course_id);
 $handler=new ContentOutputParser();
 $parser = new XML_HTMLSax();
 $parser->set_object($handler);
@@ -156,7 +156,6 @@ if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
 }
 $cid = $_REQUEST['cid'];  //takes care of some system which lost the REQUEST[cid]
 
-// THIS IS WHERE EXPORT TO ACONTENT FAILS 5136 
 foreach($rows_content as $row){
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
 		$content[$row['content_parent_id']][] = $row;
@@ -259,7 +258,7 @@ if(count($row_member) > 0){
 }
 
 /* save the imsmanifest.xml file */
-//debug($imsmanifest_xml);exit;
+
 $zipfile->add_file($imsmanifest_xml, 'imsmanifest.xml');
 
 if ($glossary_xml) {

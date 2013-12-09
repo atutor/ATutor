@@ -123,6 +123,8 @@ require(AT_INCLUDE_PATH.'classes/zipfile.class.php');				/* for zipfile */
 require(AT_INCLUDE_PATH.'classes/vcard.php');						/* for vcard */
 require(AT_INCLUDE_PATH.'classes/XML/XML_HTMLSax/XML_HTMLSax.php');	/* for XML_HTMLSax */
 require(AT_INCLUDE_PATH.'../mods/_core/imscp/include/ims_template.inc.php');				/* for ims templates + print_organizations() */
+require_once(AT_INCLUDE_PATH.'classes/ContentManager.class.php');   /* to retrieve content resources/medias from at_content[text] */
+$contentManager = new ContentManager($db, $course_id);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('EXPORT_CANCELLED');
@@ -249,37 +251,11 @@ if ($cid) {
 $imsmanifest_xml = str_replace(array('{COURSE_TITLE}', '{COURSE_DESCRIPTION}', '{COURSE_PRIMARY_LANGUAGE_CHARSET}', '{COURSE_PRIMARY_LANGUAGE_CODE}'), 
 							  array($ims_course_title, $course_desc, $course_language_charset, $course_language_code),
 							  $ims_template_xml['header']);
-//debug($imsmanifest_xml);
-//exit;
 
 /* get the first content page to default the body frame to */
 $first = $content[$top_content_parent_id][0];
 
 $test_ids = array();	//global array to store all the test ids
-//if ($my_files == null) 
-//$my_files = array();
-
-/* generate the IMS QTI resource and files */
-/*
-/* in print_organizations
-foreach ($content[0] as $content_box){
-	$content_test_rs = $contentManager->getContentTestsAssoc($content_box['content_id']);	
-	while ($content_test_row = mysql_fetch_assoc($content_test_rs)){
-		//export
-		$test_ids[] = $content_test_row['test_id'];
-		//the 'added_files' is for adding into the manifest file in this zip
-		$added_files = test_qti_export($content_test_row['test_id'], '', $zipfile);
-
-		//Save all the xml files in this array, and then print_organizations will add it to the manifest file.
-		foreach($added_files as $filename=>$file_array){
-			$my_files[] = $filename;
-			foreach ($file_array as $garbage=>$filename2){
-				$my_files[] = $filename2;
-			}
-		}
-	}
-}
-*/
 
 /* generate the resources and save the HTML files */
 $used_glossary_terms = array();
