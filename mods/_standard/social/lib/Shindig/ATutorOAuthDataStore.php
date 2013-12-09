@@ -198,7 +198,7 @@ class ATutorOAuthDataStore extends OAuthDataStore {
 	//$sql = "SELECT user_id FROM ".TABLE_PREFIX."oauth_token WHERE token_key = '$token_key'";
 	//$res = mysql_query($sql, $this->db);
 	$sql = "SELECT user_id FROM %soauth_token WHERE token_key = '%s'";
-	$ret = query($sql, array(TABLE_PREFIX, $token_key), TRUE);
+	$ret = queryDB($sql, array(TABLE_PREFIX, $token_key), TRUE);
 
    // if (mysql_num_rows($res)) {
    //   list($user_id) = mysql_fetch_row($res);
