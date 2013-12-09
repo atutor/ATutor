@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 //define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
@@ -27,10 +27,11 @@ define('AT_SUBSITE_THEME_DIR', realpath(AT_SITE_PATH . "themes") . "/");
 define('AT_MULTISITE_CONFIG_FILE', AT_INCLUDE_PATH . 'config_multisite.inc.php');
 
 // Inform IE6 Users They must upgrade
-if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.') !== FALSE){
-    header("Location: ie6.html");
+if(isset($_SERVER['HTTP_USER_AGENT'])){
+    if(strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE 6.') !== FALSE){
+        header("Location: ie6.html");
+    }
 }
-
 // check if the subsite is enabled
 if (defined('IS_SUBSITE') && IS_SUBSITE) {
 	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
