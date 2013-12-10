@@ -122,7 +122,7 @@ class Patch {
 		
 		if (!$this->pingDomain($this->github_tag_folder) || !$this->pingDomain($this->github_fetch_tags_url)) 
 		{
-			$msg->addInfo('CANNOT_CONNEC_GITHUB_SERVER');
+			$msg->addInfo('CANNOT_CONNECT_GITHUB_SERVER');
 			$msg->printInfos();
 			$this->github_server_connected = false;
 		}
