@@ -128,13 +128,9 @@ else
 		for ($i=0; $i < $num_of_modules; $i++)
 		{
 			$installed = false;
-			
-			// check if the module has been installed
-			$sql = "SELECT * FROM ".TABLE_PREFIX."modules WHERE dir_name = '" . $this->module_list_array[$i]["history"][0]["install_folder"] . "'";
-			$result = mysql_query($sql, $db) or die(mysql_error());
-
-			if (mysql_num_rows($result) == 0) $installed = false;
-			else $installed = true;
+			if(in_array($this->module_list_array[$i]["history"][0]["install_folder"],  $this->installed_mods)){
+			    $installed = true;
+			} 
 
 ?>
 	<tr onmousedown="document.form['m<?php echo $i; ?>'].checked = true; rowselect(this);"  id="r_<?php echo $i; ?>">

@@ -236,10 +236,20 @@ function validate_filename() {
 </script>
 
 <?php 
+// Create a list of install modules
+$installed_mods = array();
+$sql = "SELECT dir_name FROM %smodules";
+$rows_installed_mods = queryDB($sql, array(TABLE_PREFIX));
+	foreach($rows_installed_mods as $installed){
+	    array_push($installed_mods, $installed['dir_name']);
+	}
+
+
 $savant->assign('enable_upload', $enable_upload);
 $savant->assign('enable_remote_installation', $enable_remote_installtion);
 $savant->assign('keys', $keys);
 $savant->assign('module_list', $module_list);
+$savant->assign('installed_mods', $installed_mods);
 $savant->assign('module_list_array', $module_list_array);
 $savant->display('admin/modules/install_modules.tmpl.php');
 require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
