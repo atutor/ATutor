@@ -81,12 +81,7 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	</div>
     <?php
     // disable this setting on ATutorSpaces
-    global $db;
-    $sql = "SELECT * from ".TABLE_PREFIX."modules WHERE dir_name = '_core/services' && status ='2'";
-    if($result = @mysql_query($sql, $db)){
-        $service_installed = mysql_num_rows($result);
-    }
-    if(!$service_installed){
+    if(!$this->service_installed){
     ?>
         <div class="row">
             <?php

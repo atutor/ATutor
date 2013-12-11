@@ -190,6 +190,12 @@ function toggleform(id) {
 
 
 <?php 
+// used to disable the session timeout setting on ATutorSpaces
+$sql = "SELECT * from %smodules WHERE dir_name = '_core/services' && status ='2'";
+$service_installed = queryDB($sql, array(TABLE_PREFIX));
+///////
+
+$savant->assign('service_installed', $service_installed);
 $savant->assign('display_name_formats', $display_name_formats);
 $savant->display('admin/system_preferences/config_edit.tmpl.php');
 require(AT_INCLUDE_PATH.'footer.inc.php'); 
