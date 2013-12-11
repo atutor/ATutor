@@ -221,15 +221,6 @@ if (version_compare(phpversion(), '4.3.0') < 0) {
 
 		return $content;
 	}
-    if(defined('MYSQLI_ENABLED')){
-        function mysqli_real_escape_string($input) {
-            return mysqli_escape_string($input);
-        }
-    }else{
-        function mysql_real_escape_string($input) {
-            return mysql_escape_string($input);
-        }
-    }
 }
 
 
