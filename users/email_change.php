@@ -43,10 +43,12 @@ if (isset($_POST['submit'])) {
 	// password check
 	if (!empty($this_password)) {
 		//check if old password entered is correct
-		$sql	= "SELECT password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql,$db);
-		if ($row = mysql_fetch_assoc($result)) {
-			if ($row['password'] != $this_password) {
+
+		$sql	= "SELECT password FROM %smembers WHERE member_id=%d";
+		$row_pwd = queryDB($sql,array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+		
+		if(count($row_pwd) >0){
+			if ($row_pwd['password'] != $this_password) {
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: email_change.php');
 				exit;
@@ -65,8 +67,11 @@ if (isset($_POST['submit'])) {
 		if(!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['email'])) {
 			$msg->addError('EMAIL_INVALID');
 		}
-		$result = mysql_query("SELECT * FROM ".TABLE_PREFIX."members WHERE email='$_POST[email]' AND member_id<>$_SESSION[member_id]",$db);
-		if(mysql_num_rows($result) != 0) {
+
+		$sql = "SELECT * FROM %smembers WHERE email='%s' AND member_id<>%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['email'], $_SESSION['member_id']));
+		
+		if(count($result) > 0){
 			$msg->addError('EMAIL_EXISTS');
 		}
 	}
@@ -74,9 +79,8 @@ if (isset($_POST['submit'])) {
 	if (!$msg->containsErrors()) {			
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
 			//send confirmation email
-			$sql	= "SELECT email, creation_date FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-			$result = mysql_query($sql, $db);
-			$row    = mysql_fetch_assoc($result);
+			$sql	= "SELECT email, creation_date FROM %smembers WHERE member_id=%d";
+			$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 
 			if ($row['email'] != $_POST['email']) {
 				$code = substr(md5($_POST['email'] . $row['creation_date'] . $_SESSION['member_id']), 0, 10);
@@ -100,23 +104,23 @@ if (isset($_POST['submit'])) {
 		} else {
 
 			//insert into database
-			$sql = "UPDATE ".TABLE_PREFIX."members SET email='$_POST[email]', creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
-			$result = mysql_query($sql,$db);
-			if (!$result) {
-				$msg->printErrors('DB_NOT_UPDATED');
-				exit;
+			$sql = "UPDATE %smembers SET email='%s', creation_date=creation_date, last_login=last_login WHERE member_id=%d";
+			$result = queryDB($sql, array(TABLE_PREFIX, $_POST['email'], $_SESSION['member_id']));
+			if ($result > 0 ) {
+				$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+			} else{
+			    $msg->addFeedback('CANCELLED');
 			}
 
-			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
+			
 		}
 		header('Location: ./profile.php');
 		exit;
 	}
 }
 
-$sql	= 'SELECT email FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-$result = mysql_query($sql,$db);
-$row = mysql_fetch_assoc($result);
+$sql	= 'SELECT email FROM %smembers WHERE member_id=%d';
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
