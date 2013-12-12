@@ -203,7 +203,7 @@
 </tfoot>
 <tbody>
 <?php if ($this->num_rows): ?>
-	<?php while ($row = mysql_fetch_assoc($this->result)): ?>
+	<?php foreach($this->rows_course_list as $row){ ?>
 		<tr onkeydown="document.form['m<?php echo $row['course_id']; ?>'].checked = true; rowselect(this);" onmousedown="document.form['m<?php echo $row['course_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['course_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 			<td><label for="m<?php echo $row['course_id']; ?>"><?php echo AT_print($row['title'], 'courses.title'); ?></label></td>
@@ -214,7 +214,7 @@
 			<td><?php echo ($this->enrolled[$row['course_id']]['y'] ? $this->enrolled[$row['course_id']]['y'] : 0); ?></td>
 		<!-- 	<td><?php //echo ($this->enrolled[$row['course_id']]['a'] ? $this->enrolled[$row['course_id']]['a'] : 0); ?></td> -->
 		</tr>
-	<?php endwhile; ?>
+	<?php } ?>
 <?php else: ?>
 	<tr>
 		<td colspan="8"><?php echo _AT('none_found'); ?></td>
