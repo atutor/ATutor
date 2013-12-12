@@ -243,22 +243,16 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 			<option value="0"><?php echo _AT('empty'); ?></option>
 			<option value="1" selected="selected"><?php echo _AT('create_basic'); ?></option>
 			<?php 
-			
-			if ($course_row = mysql_fetch_assoc($result)) {
-				do {
-					$Backup->setCourseID($course_row['course_id']);
-					$list = $Backup->getAvailableList();
-
-					if (!empty($list)) { 
-						echo '<optgroup label="'. _AT('restore').': '.$course_row['title'].'">';
-						foreach ($list as $list_item) {
-							echo '<option value="'.$list_item['backup_id'].'_'.$list_item['course_id'].'">'.$list_item['file_name'].' - '.get_human_size($list_item['file_size']).'</option>';
-						}
-						echo '</optgroup>';
+			if (count($this->backup_list) > 0) {
+				foreach ($this->backup_list as $course_title => $list) {
+					echo '			<optgroup label="'. _AT('restore').': '.$course_title.'">';
+					foreach ($list as $list_item) {
+						echo '				<option value="'.$list_item['backup_id'].'_'.$list_item['course_id'].'">'.$list_item['file_name'].' - '.get_human_size($list_item['file_size']).'</option>';
 					}
-				} while ($course_row = mysql_fetch_assoc($result));
+					echo '			</optgroup>';
+				}
 			}
-			?>
+?>
 			</select>
 	</div>
 <?php endif; // !$course_id ?>
