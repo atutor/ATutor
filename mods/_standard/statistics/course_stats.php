@@ -117,7 +117,6 @@ $savant->assign('avg_total_logins', $avg_total_logins);
 $savant->assign('multiplyer_height', $multiplyer_height);
 $savant->assign('block_height', $block_height);
 $savant->assign('days', $days);
-$savant->assign('result', $result);
 $savant->assign('short_name', $short_name);
 $savant->display('instructor/statistics/course_stats.tmpl.php');
 require_once(AT_INCLUDE_PATH.'footer.inc.php'); 

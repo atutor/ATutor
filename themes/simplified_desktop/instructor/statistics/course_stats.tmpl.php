@@ -37,7 +37,7 @@
 	<tr><td height="1" class="row2" colspan="2"></td></tr>
 
 	<tr>
-		<td class="row1" valign="top" align="right" <strong><?php   echo _AT('graph'); ?>:</strong></td>
+		<td class="row1" valign="top" align="right" ><strong><?php   echo _AT('graph'); ?>:</strong></td>
 		<td class="row1">
 			<table border="0" cellspacing="0" cellpadding="0">
 			<tr>
@@ -48,7 +48,8 @@
 			$dd++;
 				echo '<td valign="bottom" class="graph"><img src="images/clr.gif" height="'.(($this->max_total_logins*$this->multiplyer_height) % $this->block_height + $this->block_height).'" width="10" alt="" /><br /><img src="images/blue.gif" height="'.($logins[0]*$this->multiplyer_height).'" width="9" alt="'.$logins[0].' '._AT('guests').' ('.($logins[0]+$logins[1]).' '._AT('total').')" /><br /><img src="images/red.gif" height="'.($logins[1]*$this->multiplyer_height).'" width="9" alt="'.$logins[1].' '._AT('members').' ('.($logins[1]+$logins[0]).' '._AT('total').')" /><br /><small>'.$dd.'&nbsp;</small></td>';
 
-			} while ($row = mysql_fetch_array($this->result));
+			} 
+			
 ?>
 
 			</tr>
