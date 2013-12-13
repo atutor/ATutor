@@ -99,12 +99,11 @@ else {
 	
 	$languages = $languageManager->getAvailableLanguages();
 	$savant->assign('languages', $languages);
+
+	$sql	= "SELECT inbox_notify FROM %smembers WHERE member_id=%d";
+	$row_notify = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 	
-	$sql	= "SELECT inbox_notify FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-	$result = mysql_query($sql, $db);
-	$row_notify = mysql_fetch_assoc($result);
 	$savant->assign('notify', $row_notify['inbox_notify']);
-	
 	$savant->assign('is_auto_login', $is_auto_login);
 	
 	if (isset($_POST['next'])) $pref_index = $last_pref_index + 1;
