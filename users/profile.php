@@ -47,22 +47,6 @@ if (isset($_POST['submit'])) {
 	$_POST['second_name'] = str_replace('<', '', $_POST['second_name']);
 	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
 
-	// check if first+last is unique
-	/*
-	 * http://www.atutor.ca/atutor/mantis/view.php?id=3760
-	if ($_POST['first_name'] && $_POST['last_name']) {
-		$first_name_sql  = $addslashes($_POST['first_name']);
-		$last_name_sql   = $addslashes($_POST['last_name']);
-		$second_name_sql = $addslashes($_POST['second_name']);
-
-		$sql = "SELECT member_id FROM ".TABLE_PREFIX."members WHERE first_name='$first_name_sql' AND second_name='$second_name_sql' AND last_name='$last_name_sql' AND member_id<>$_SESSION[member_id] LIMIT 1";
-		$result = mysql_query($sql, $db);
-		if (mysql_fetch_assoc($result)) {
-			$msg->addError('FIRST_LAST_NAME_UNIQUE');
-		}
-	}
-	 */
-
 	//check date of birth
 	$mo = intval($_POST['month']);
 	$day = intval($_POST['day']);
@@ -105,23 +89,46 @@ if (isset($_POST['submit'])) {
 		}
 
 		// insert into the db.
-		$_POST['website']    = $addslashes($_POST['website']);
-		$_POST['first_name'] = $addslashes($_POST['first_name']);
-		$_POST['second_name']= $addslashes($_POST['second_name']);
-		$_POST['last_name']  = $addslashes($_POST['last_name']);
-		$_POST['address']    = $addslashes($_POST['address']);
-		$_POST['postal']     = $addslashes($_POST['postal']);
-		$_POST['city']       = $addslashes($_POST['city']);
-		$_POST['province']   = $addslashes($_POST['province']);
-		$_POST['country']    = $addslashes($_POST['country']);
-		$_POST['phone']      = $addslashes($_POST['phone']);
+		$sql = "UPDATE %smembers SET 
+		            website='%s', 
+		            first_name='%s', 
+		            second_name='%s', 
+		            last_name='%s', 
+		            dob='%s', 
+		            gender='%s', 
+		            address='%s', 
+		            postal='%s', 
+		            city='%s', 
+		            province='%s', 
+		            country='%s', 
+		            phone='%s', 
+		            language='%s', 
+		            private_email=%d, 
+		            creation_date=creation_date, 
+		            last_login=last_login 
+		            WHERE 
+		            member_id=%d";
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET website='$_POST[website]', first_name='$_POST[first_name]', second_name='$_POST[second_name]', last_name='$_POST[last_name]', dob='$dob', gender='$_POST[gender]', address='$_POST[address]', postal='$_POST[postal]', city='$_POST[city]', province='$_POST[province]', country='$_POST[country]', phone='$_POST[phone]', language='$_SESSION[lang]', private_email=$_POST[private_email], creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
-
-		$result = mysql_query($sql,$db);
-		if (!$result) {
-			$msg->printErrors('DB_NOT_UPDATED');
-			exit;
+		$result = queryDB($sql,array(TABLE_PREFIX,
+		            $_POST['website'],
+		            $_POST['first_name'],
+		            $_POST['second_name'],
+		            $_POST['last_name'],
+		            $dob,
+		            $_POST['gender'],
+		            $_POST['address'],
+		            $_POST['postal'],
+		            $_POST['city'],
+		            $_POST['province'],
+		            $_POST['country'],
+		            $_POST['phone'],
+		            $_SESSION['lang'],
+		            $_POST['private_email'],
+		            $_SESSION['member_id']));	
+		if ($result == 0) {
+			$msg->addError('DB_NOT_UPDATED');
+		    header('Location: '. $_SERVER['PHP_SELF']);
+		    exit;
 		}
 
 		$msg->addFeedback('PROFILE_UPDATED');
@@ -131,9 +138,8 @@ if (isset($_POST['submit'])) {
 	}
 }
 
-$sql	= 'SELECT * FROM '.TABLE_PREFIX.'members WHERE member_id='.$_SESSION['member_id'];
-$result = mysql_query($sql,$db);
-$row = mysql_fetch_assoc($result);
+$sql	= 'SELECT * FROM %smembers WHERE member_id=%d';
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
 
 if (!isset($_POST['submit'])) {
 	$_POST = $row;
