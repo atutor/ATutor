@@ -10,7 +10,6 @@
 				<select name="course_id" id="course">
 				<?php
 				foreach($this->rows_courses as $courses_row){ 
-				//while ($courses_row = mysql_fetch_assoc($this->result)) {
 					if ($courses_row['course_id'] == $this->course_id) {
 						echo '<option value="'.$courses_row['course_id'].'" selected="selected">'.validate_length($courses_row['title'], 45,VALIDATE_LENGTH_FOR_DISPLAY).'</option>';
 					} else {
