@@ -85,9 +85,7 @@
 </tr>
 </tfoot>
 <tbody>
-	<?php 
-	foreach($this->rows_master as $row){
-	//while($row = mysql_fetch_assoc($this->result)): ?>
+	<?php foreach($this->rows_master as $row){ ?>
 		<tr onmousedown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" onkeydown="document.form['m<?php echo $row['public_field']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['public_field']; ?>">
 			<td><input type="radio" name="id" value="<?php 
 				if ($row['member_id']) {
@@ -126,7 +124,7 @@
 				}
 				?></td>
 		</tr>
-	<?php } //endwhile; ?>
+	<?php }  ?>
 </tbody>
 <?php else: ?>
 	<tr>
