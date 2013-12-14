@@ -30,46 +30,29 @@ if ($_SESSION['valid_user'] !== true) {
 
 $title = _AT('home'); 
 
-// Get the course catagories
-$sql = "SELECT * FROM ".TABLE_PREFIX."course_cats ORDER BY cat_name";
-$result = mysql_query($sql,$db);
-if(mysql_num_rows($result) != 0){
-	while($row = mysql_fetch_assoc($result)){
-		$current_cats[$row['cat_id']] = $row['cat_name'];
-		$parent_cats[$row['cat_id']] =  $row['cat_parent'];
-		$cat_cats[$row['cat_id']] = $row['cat_id'];
-	}
-}
-
 //get courses
-$sql = "SELECT E.approved, E.last_cid, C.* FROM ".TABLE_PREFIX."course_enrollment E, ".TABLE_PREFIX."courses C WHERE E.member_id=$_SESSION[member_id] AND E.course_id=C.course_id ORDER BY C.title";
-$result = mysql_query($sql,$db);
+$sql = "SELECT E.approved, E.last_cid, C.* FROM %scourse_enrollment E, %scourses C WHERE E.member_id=%d AND E.course_id=C.course_id ORDER BY C.title";
+$rows_courses = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id']));
 
 $courses = array();
-while ($row = mysql_fetch_assoc($result)) {
+foreach($rows_courses as $row){
 	/* get tests for these courses: */
 	$tests['tests'] = array();
-	$sql3	= "SELECT test_id, title FROM ".TABLE_PREFIX."tests WHERE course_id=$row[course_id] AND (TO_DAYS(start_date) <= TO_DAYS(NOW()) AND TO_DAYS(end_date) >= TO_DAYS(NOW())) AND format=1";
-	$result3 = mysql_query($sql3,$db);
-	while ($row3 = mysql_fetch_assoc($result3)) {
+
+	$sql3	= "SELECT test_id, title FROM %stests WHERE course_id=%d AND (TO_DAYS(start_date) <= TO_DAYS(NOW()) AND TO_DAYS(end_date) >= TO_DAYS(NOW())) AND format=1";
+	$rows_tests = queryDB($sql3, array(TABLE_PREFIX, $row['course_id']));
+	
+	foreach($rows_tests as $row3){
 		$tests['tests'][] = $row3;
 	}
 
 	$courses[] = array_merge($row, (array) $tests);
 }
 
-//Get a list of custom course icons
-$sql2="SELECT icon, course_id from ".TABLE_PREFIX."courses ";
-$result2 = mysql_query($sql2, $db);
-while($row2=mysql_fetch_assoc($result2)){
-    $filename[$row2{'course_id'}] = $row2['icon'];
-}
-
 function get_category_name($cat_id) {
-	global $db;
-	$sql	= "SELECT cat_name FROM ".TABLE_PREFIX."course_cats WHERE cat_id=".$cat_id;
-	$result = mysql_query($sql,$db);
-	$row = mysql_fetch_assoc($result);
+
+	$sql	= "SELECT cat_name FROM %scourse_cats WHERE cat_id=%d";
+	$row = queryDB($sql, array(TABLE_PREFIX, $cat_id), TRUE);
 
 	if ($row['cat_name'] == '') {
 		$row['cat_name'] = _AT('cats_uncategorized');
@@ -77,8 +60,6 @@ function get_category_name($cat_id) {
 	return $row['cat_name'];
 }
 
-//LAW
-//$_SESSION['first_login'] = true; //for testing
 if ($_SESSION['first_login']) {
     $msg->addInfo(array('FIRST_PREFS', $_base_path.'users/pref_wizard/index.php'));
 }
@@ -115,10 +96,8 @@ foreach($module_list as $key=>$obj) {
 }
 
 usort($all_news, 'all_news_cmp');
-$savant->assign('icons', $filename);
 $savant->assign('all_news', $all_news);
 $savant->assign('courses', $courses);
-
 
 $savant->display('users/index.tmpl.php');
 ?>
