@@ -34,9 +34,10 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['submit'])) {
 	if (!empty($_POST['form_old_password_hidden'])) {
 		//check if old password entered is correct
-		$sql	= "SELECT password FROM ".TABLE_PREFIX."members WHERE member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql,$db);
-		if ($row = mysql_fetch_assoc($result)) {
+		$sql	= "SELECT password FROM %smembers WHERE member_id=%d";
+		$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']), TRUE);
+		
+        if(count($row) > 0){
 			if ($row['password'] != $_POST['form_old_password_hidden']) {
 				$msg->addError('WRONG_PASSWORD');
 				Header('Location: password_change.php');
@@ -67,12 +68,12 @@ if (isset($_POST['submit'])) {
 		// insert into the db.
 		$password   = $addslashes($_POST['form_password_hidden']);
 
-		$sql = "UPDATE ".TABLE_PREFIX."members SET password='$password', creation_date=creation_date, last_login=last_login WHERE member_id=$_SESSION[member_id]";
-		$result = mysql_query($sql,$db);
-		if (!$result) {
-			require(AT_INCLUDE_PATH.'header.inc.php');
-			$msg->printErrors('DB_NOT_UPDATED');
-			require(AT_INCLUDE_PATH.'footer.inc.php');
+		$sql = "UPDATE %smembers SET password='%s', creation_date=creation_date, last_login=last_login WHERE member_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $password, $_SESSION['member_id']));
+		
+		if ($result == 0) {
+			$msg->addError('DB_NOT_UPDATED');\
+			header('Location:'. $_SERVER['PHP_SELF']);
 			exit;
 		}
 
