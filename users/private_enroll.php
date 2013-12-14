@@ -28,26 +28,27 @@ if ($course == 0) {
 	exit;
 }
 
-$sql	= "SELECT access, member_id FROM ".TABLE_PREFIX."courses WHERE course_id=$course";
-$result = mysql_query($sql, $db);
-$course_info = mysql_fetch_assoc($result);
+$sql	= "SELECT access, member_id FROM %scourses WHERE course_id=%d";
+$course_info = queryDB($sql, array(TABLE_PREFIX, $course), TRUE);
 
 if ($_POST['submit']) {
 	$_SESSION['enroll'] = AT_ENROLL_YES;
 
 	if ($course_info['access'] == 'private') {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $course, 'n', 0, '"._AT('student')."', 0)";
-		$result = mysql_query($sql, $db);
-
+		$sql	= "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'n', 0, '%s', 0)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course, _AT('student')));
+		
 		// send the email - if needed
 		if ($system_courses[$course]['notify'] == 1) {
 			$mail_list = array();	//initialize an array to store all the pending emails
 
 			//Get the list of students with enrollment privilege
 			$module =& $moduleFactory->getModule('_core/enrolment');
-			$sql	= "SELECT email, first_name, last_name, `privileges` FROM ".TABLE_PREFIX."members m INNER JOIN ".TABLE_PREFIX."course_enrollment ce ON m.member_id=ce.member_id WHERE ce.privileges > 0 AND ce.course_id=$course";
-			$result = mysql_query($sql, $db);
-			while ($row	= mysql_fetch_assoc($result)){
+			
+			$sql	= "SELECT email, first_name, last_name, `privileges` FROM %smembers m INNER JOIN %scourse_enrollment ce ON m.member_id=ce.member_id WHERE ce.privileges > 0 AND ce.course_id=%d";
+			$rows_members = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course));
+            
+            foreach($rows_members as $row){
 				if (query_bit($row['privileges'], $module->getPrivilege())){
 					unset($row['privileges']);	//we don't need the privilege to flow around
 					$mail_list[] = $row;
@@ -56,9 +57,10 @@ if ($_POST['submit']) {
 			
 			//Get instructor information
 			$ins_id = $system_courses[$course]['member_id'];
-			$sql	= "SELECT email, first_name, last_name FROM ".TABLE_PREFIX."members WHERE member_id=$ins_id";
-			$result = mysql_query($sql, $db);
-			$row	= mysql_fetch_assoc($result);
+
+			$sql	= "SELECT email, first_name, last_name FROM %smembers WHERE member_id=%d";
+			$row = queryDB($sql, array(TABLE_PREFIX, $ins_id));
+
 			$mail_list[] = $row;
 
 			//Send email notification to both assistants with privileges & Instructor
@@ -90,14 +92,15 @@ if ($_POST['submit']) {
 		header('Location: index.php');
 		exit;
 	} else {
-		$sql	= "INSERT INTO ".TABLE_PREFIX."course_enrollment VALUES ($_SESSION[member_id], $course, 'y', 0, '"._AT('student')."', 0)";
-		$result = mysql_query($sql, $db);
+
+		$sql	= "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '%s', 0)";
+		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course, _AT('student')));
+
 	}
 }
 
-$sql	= "SELECT * FROM ".TABLE_PREFIX."course_enrollment WHERE member_id=$_SESSION[member_id] AND course_id=$course";
-$result = mysql_query($sql, $db);
-$row_in = mysql_fetch_assoc($result);
+$sql	= "SELECT * FROM %scourse_enrollment WHERE member_id=%d AND course_id=%d";
+$row_in = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course), TRUE);
 
 // request has already been made
 if ($row_in['member_id'] == $_SESSION['member_id'] ) {
