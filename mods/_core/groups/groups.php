@@ -15,10 +15,14 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-require(AT_INCLUDE_PATH.'header.inc.php');
-
 if (!$_SESSION['groups']) {
-	$msg->printErrors('NOT_IN_ANY_GROUPS');
+	$msg->addInfo('NOT_IN_ANY_GROUPS');
+	$error = 1;
+
+}
+
+require(AT_INCLUDE_PATH.'header.inc.php');
+if(isset($error)){
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
