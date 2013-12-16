@@ -309,7 +309,10 @@ if (isset($_POST['cancel'])) {
 			$sql = "UPDATE %smembers 
 			           SET last_login=now(), creation_date=creation_date 
 			         WHERE member_id=%d";
-			queryDB($sql, array(TABLE_PREFIX, $member_id));			
+			queryDB($sql, array(TABLE_PREFIX, $member_id));	
+            
+        $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
+            
 			// auto login
 			$_SESSION['valid_user'] = true;
 			$_SESSION['member_id']	= $m_id;
