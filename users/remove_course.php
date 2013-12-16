@@ -28,7 +28,7 @@ if (isset($_POST['submit_no'])) {
 		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $course));
 		
 		// Unsubscribe from forums and threads of the course
-		// 5417 NEED TO DELETE FROM forums_groups FOR THAT COURSE HERE AS WELL
+		
 		$sql	= "DELETE FROM %sforums_subscriptions 
 		         WHERE forum_id IN (SELECT forum_id FROM %sforums_courses WHERE course_id=%d)
 		           AND member_id=%d";
@@ -40,7 +40,22 @@ if (isset($_POST['submit_no'])) {
 		         WHERE post_id IN (SELECT distinct t.post_id FROM %sforums_courses c, %sforums_threads t WHERE c.course_id=$course)
 		           AND member_id=%d";
 		$result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $_SESSION['member_id']));
+        
+    // Unsubscribe from group forums and threads of the group forums
+    $group_list = implode(',', $_SESSION['groups']);
+    if(!empty($group_list)) {
+        $sql	= "DELETE FROM %sforums_subscriptions 
+		     WHERE forum_id IN (SELECT forum_id FROM %sforums_groups WHERE group_id IN (%s))
+		       AND member_id=%d";
 
+        $result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $group_list, $_SESSION['member_id'] ));
+        
+        $sql	= "UPDATE %sforums_accessed 
+		       SET subscribe = 0
+		     WHERE post_id IN (SELECT distinct t.post_id FROM %sforums_groups g, %sforums_threads t WHERE g.group_id IN (%s))
+		       AND member_id=%d";
+        $result = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $group_list, $_SESSION['member_id']));
+    }
 		$msg->addFeedback('COURSE_REMOVED');
 	}
 	header("Location: ".AT_BASE_HREF."users/index.php");
