@@ -73,7 +73,14 @@ echo '<div id="container"><br />';
 			echo '	<input type="hidden" name="use_jump_redirect" value="'.$_POST['use_jump_redirect'].'" />'."\n\r";
 		else if (isset($_SESSION['prefs']['PREF_JUMP_REDIRECT']))
 			echo '	<input type="hidden" name="use_jump_redirect" value="'.$_SESSION['prefs']['PREF_JUMP_REDIRECT'].'" />'."\n\r";
-		
+        
+        if (isset($_POST['hide_feedback'])) {
+			echo '	<input type="hidden" name="hide_feedback" value="'.$_POST['hide_feedback'].'" />'."\n\r";
+            echo '	<input type="hidden" name="hide_auto_duration" value="'.$_POST['hide_auto_duration'].'" />'."\n\r";
+        }
+		else if (isset($_SESSION['prefs']['PREF_HIDE_FEEDBACK']))
+			echo '	<input type="hidden" name="hide_feedback" value="'.$_SESSION['prefs']['PREF_HIDE_FEEDBACK'].'" />'."\n\r";
+        
 		if (isset($_POST['auto']))
 			echo '	<input type="hidden" name="auto" value="'.$_POST['auto'].'" />'."\n\r";
 		else if (isset($this->is_auto_login))
