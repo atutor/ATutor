@@ -75,10 +75,10 @@ echo '<div id="container"><br />';
 		else if (isset($_SESSION['prefs']['PREF_JUMP_REDIRECT']))
 			echo '	<input type="hidden" name="use_jump_redirect" value="'.$_SESSION['prefs']['PREF_JUMP_REDIRECT'].'" />'."\n\r";
 		
-        if (isset($_POST['hide_feedback'])) {
+    if (isset($_POST['hide_feedback'])) {
 			echo '	<input type="hidden" name="hide_feedback" value="'.$_POST['hide_feedback'].'" />'."\n\r";
-            echo '	<input type="hidden" name="hide_auto_duration" value="'.$_POST['hide_auto_duration'].'" />'."\n\r";
-        }
+        echo '	<input type="hidden" name="hide_auto_duration" value="'.$_POST['hide_auto_duration'].'" />'."\n\r";
+    }
 		else if (isset($_SESSION['prefs']['PREF_HIDE_FEEDBACK']))
 			echo '	<input type="hidden" name="hide_feedback" value="'.$_SESSION['prefs']['PREF_HIDE_FEEDBACK'].'" />'."\n\r";
         

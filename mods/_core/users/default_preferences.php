@@ -42,7 +42,7 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 		}
 		$pref_defaults['PREF_TIMEZONE']	     = $addslashes($_POST['time_zone']);
 		$pref_defaults['PREF_JUMP_REDIRECT']  = intval($_POST['use_jump_redirect']);
-        $pref_defaults['PREF_HIDE_FEEDBACK']  = intval($_POST['hide_feedback']);
+    $pref_defaults['PREF_HIDE_FEEDBACK']  = intval($_POST['hide_feedback']);
 		$pref_defaults['PREF_FORM_FOCUS']     = intval($_POST['form_focus']);
 		$pref_defaults['PREF_CONTENT_EDITOR'] = intval($_POST['content_editor']);
 		$pref_defaults['PREF_SHOW_GUIDE']     = intval($_POST['show_guide']);

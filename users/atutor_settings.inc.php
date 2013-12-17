@@ -128,17 +128,17 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 			<input type="radio" name ="use_jump_redirect" id="jump_dis" value="0" <?php echo $num2; ?> /><label for="jump_dis"><?php echo _AT('disable');  ?></label>
 	</div>
 
-    <script>
-        $(document).ready(function(){
-            $('#hide_auto').val($('#hide_auto_duration').val());
-        })
-        function set_hide_duration() {
-            hide_auto_duration = $('#hide_auto_duration').val();
+  <script>
+      $(document).ready(function(){
+          $('#hide_auto').val($('#hide_auto_duration').val());
+      })
+      function set_hide_duration() {
+          hide_auto_duration = $('#hide_auto_duration').val();
             
-            $('#hide_auto_duration').val(hide_auto_duration);
-            $('#hide_auto').val(hide_auto_duration);
-        }
-    </script>
+          $('#hide_auto_duration').val(hide_auto_duration);
+          $('#hide_auto').val(hide_auto_duration);
+      }
+  </script>
     
 	<div class="row">
 		<?php echo _AT('hide_feedback'); ?><br />
@@ -149,19 +149,19 @@ function print_theme_selectbox($theme_list, $selected_theme, $type) {
 				$selected_numbering = $_SESSION['prefs']['PREF_HIDE_FEEDBACK'];
 			
 			$manual = $autohide = '';
-            $autohide_duration = 12;
+        $autohide_duration = 12;
 			if ($selected_numbering == 0) {
 				$manual = ' checked="checked"';
 			} else {
 				$autohide = ' checked="checked"';
-                if(isset($_POST['hide_auto_duration']))
-                    $autohide_duration = $_POST['hide_auto_duration'];
-                else
-                    $autohide_duration = $_SESSION['prefs']['PREF_HIDE_FEEDBACK'];
+        if(isset($_POST['hide_auto_duration']))
+            $autohide_duration = $_POST['hide_auto_duration'];
+        else
+            $autohide_duration = $_SESSION['prefs']['PREF_HIDE_FEEDBACK'];
 			}
 			?><input type="radio" name ="hide_feedback" id="hide_manual" value="0" <?php echo $manual; ?> /><label for="hide_manual"><?php echo _AT('feedback_manual');  ?></label> 
 			<input type="radio" name ="hide_feedback" id="hide_auto" value="$('#hide_auto_duration').val();" <?php echo $autohide; ?> /><label for="hide_auto"><?php echo _AT('feedback_autohide');  ?></label>
-            <input type="text" name ="hide_auto_duration" value="<?php echo $autohide_duration; ?>" id="hide_auto_duration" onchange="set_hide_duration();"/>seconds
+        <input type="text" name ="hide_auto_duration" value="<?php echo $autohide_duration; ?>" id="hide_auto_duration" onchange="set_hide_duration();"/>seconds
 	</div>
 
 	<div class="row">
