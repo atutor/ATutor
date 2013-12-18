@@ -64,34 +64,70 @@ ATutor.course = ATutor.course || {};
                         }
                 });
                 
+                // Float Navigation tab in 640 mode
+                $('#sm_topnav').scrollToFixed({
+                    marginTop: 32,
+                    dontSetWidth: true,
+                    preFixed: function() { 
+                        $(this).find('li').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
+                        $(this).find('li').css('margin-top', '-.2em');
+                         $(this).find('li').css('padding-right', '2em');
+                         $(this).find('li').css('border', '0');
+                        $(this).find('div').css('padding', '8');
+                        $(this).find('div').css('width', '100%');
+                        $(this).find('div').css('float', 'left');
+                        },
+                    postFixed: function() { 
+                        $(this).find('div').css('background-image', ''); 
+                        $(this).find('div').css('padding', '');
+                        }
+                });    
+                // Float Content tab in 640 mode
+                $('#sm_content').scrollToFixed({
+                    marginTop: 0,
+                    dontSetWidth: true,
+                    preFixed: function() {  
+                        $("a.content_link").css('margin-top', '0em');
+                        $("a.content_link").css('margin-left', '1.8em');
+                        },
+                    postFixed: function() { 
+                        $("a.content_link").css('margin-left', '0em');
+                        }
+                });      
+                
+                
+                // Float Content tab in 640 mode
+            /*    $('#lrg_content').scrollToFixed({
+                    marginTop: 38,
+                    dontSetWidth: true,
+                    preFixed: function() {  
+                        
+                        },
+                    postFixed: function() { 
+                        $('#leftcolumn').css('margin-left','0em');
+                        $('#leftcolumn').css('background-color:','#cccccc');
+                        }
+                });  
+            */        
                 // Floating subnavlist bar
                 $('#lrg_subnav').scrollToFixed({
-                    marginTop: 33,
+                    marginTop: 34,
                     dontSetWidth: false,
                     preFixed: function() { 
-                        $(this).find('div').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
-                        $(this).find('div').css('background-color', '#FAFAFA'); 
                         $(this).find('div').css('padding', '8');
                         $(this).find('div').css('margin-left', '0');
                         $(this).find('div').css('width', '100%');
                         $(this).find('div').css('float', '');
                         $(this).find('div').css('position','');
-                         $(this).find('div').css('height','2.5em');
-                         
-                        $("#subnavlistcontainer").css('margin-top', '-2.7em;');
-                        //$("#subnavlistcontainer").css('margin-left', '.3em');
-                        //$("#subnavlistcontainer").css('float', 'right');
-                        //$("#subnavlistcontainer").css('clear', 'both');
-                        //$("#subnavlistcontainer").css('width', '70%');
-                         $("ul#subnavlist_i li").css('background-color', '#FFFFFF'); 
-                         $("ul#subnavlist li").css('padding-bottom', '.2em'); 
-                          $("ul#subnavlist li").css('padding', '.4em');
-                          $("ul#subnavlist_i").css('float', 'right');                     
-                          $("ul#subnavlist_i").css('clear', 'right'); 
-                          $("ul#subnavlist").css('margin-top', '-2.5em'); 
-                          $("#subnavlist").css('border-bottom', '0'); 
-                          $("#subnavlist").css('float', 'left'); 
-                          $("#subnavlist").css('clear', 'left');
+                        $("#subnavlistcontainer").css('background-color', '#eeeeee'); 
+                        $(this).find('div').css('height', '2.5em')
+                        $("ul#subnavlist_i li").css('background-color', '#FFFFFF'); 
+                        $("ul#subnavlist li").css('padding-bottom', '.4em'); 
+                        $("ul#subnavlist li").css('padding', '.4em'); 
+                        $("ul#subnavlist").css('margin-top', '-2.5em'); 
+                        $("#subnavlist").css('border-bottom', '0'); 
+                        $("#subnavlist").css('float', 'left'); 
+                        $("#subnavlist").css('clear', 'left');
                     },
                     postFixed: function() { 
                         $(this).find('div').css('background-image', ''); 
@@ -103,30 +139,29 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('height','');
                         $(this).find('div').css('padding', '0');
                         $("ul#subnavlist li").css('padding', '.5em');
-                          $("ul#subnavlist_i").css('float', '');                     
-                          $("ul#subnavlist_i").css('clear', ''); 
-                          $("ul#subnavlist").css('float', ''); 
-                          $("ul#subnavlist").css('clear', '');
+                        $("ul#subnavlist_i").css('float', '');                     
+                        $("ul#subnavlist_i").css('clear', ''); 
+                        $("ul#subnavlist").css('float', ''); 
+                        $("ul#subnavlist").css('clear', '');
                         $("ul#subnavlist li").css('margin-bottom', '0');
-                          $("ul#subnavlist").css('margin-top', '0'); 
-                           $("#subnavbacktopage").css('width', ''); 
-                         $("img.imggoback").css('margin', '0');
-                         
-                         
+                        $("ul#subnavlist").css('margin-top', '0'); 
+                        $("#subnavbacktopage").css('width', ''); 
+                        $("img.imggoback").css('margin', '0');
                         $("#subnavlistcontainer").css('margin-top', '0em');
                         $("#subnavlistcontainer").css('border-bottom', '0');
                         $("ul#subnavlist").css('border-bottom', '1px solid #DED29E');   
-                
-                     //$("#subnavlistcontainer").css('padding-left', '');
-                        //$("#subnavlistcontainer").css('margin-left', '');
                     }
                 });
                 // Fixed Footer
                 $('#footer').scrollToFixed( {
                     bottom: 0,
                     limit: $('#footer').offset().top,
-                    preFixed: function() { $(this).find('h1').css('color', 'blue'); },
-                    postFixed: function() { $(this).find('h1').css('color', ''); }
+                    preFixed: function() { 
+                        $("#footer").css('background-color', '#F3F3F3'); 
+                        },
+                    postFixed: function() {
+                         $("#footer").css('background-color', '#F3F3F3');
+                         }
                 });
                 // Hide/Show instructor course admin tools 
                 var initialStatus = ($.cookie('showSubNav') === "on") ? "1" : "0";
@@ -135,10 +170,10 @@ ATutor.course = ATutor.course || {};
                     $("#subnavlist_i").toggleClass("hidden").hide('slow');
                     $(".menuedit").toggleClass("hidden").hide('slow');
                     $("#shortcuts").toggleClass("hidden").hide('slow');
-                    $(".del-content-icon").toggleClass("hidden").hide('slow'); 
-                   // $(".detail_switch").toggleClass("hidden").hide('slow');  
+                    $(".del-content-icon").toggleClass("hidden").hide('slow');  
                     $(".buttonbox").toggleClass("hidden").hide('slow'); 
                 }
+
                 ATutor.switchView = function (viewFlag) {
                     if(viewFlag === "0"){
                         $("ul#subnavlist").css("border-bottom", "1px solid #DED29E");
@@ -169,7 +204,7 @@ ATutor.course = ATutor.course || {};
                 $('#admin_switch option[value="' + initialStatus + '"]').attr("selected", true);
                 $('#admin_switch').switchify();
                 $('#admin_switch').val(($.cookie('showSubNav') === "on") ? "1" : "0");
-                
+                $("#subnavlistcontainer").css("background", "transparent");
                 $(".ui-switch").bind("click keypress", function(){
                     ATutor.switchView($('#admin_switch').val());
                 });
@@ -177,7 +212,7 @@ ATutor.course = ATutor.course || {};
     /* To automatically hide feedback message, uncomment */
   	/* $('#message').css('display', 'block').slideDown("slow");
             setTimeout(function() {
-        $("#message").hide('blind', {}, 500)
+            $("#message").hide('blind', {}, 500)
         }, 8000);
     */
         
@@ -186,7 +221,7 @@ ATutor.course = ATutor.course || {};
          $("#message").hide('blind', {}, 500), 8000;
          return false;
         });  
-        
+      
     /*****
     ** Switch between detailed and icon views on course home page
     *****/
