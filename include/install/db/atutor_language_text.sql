@@ -378,6 +378,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LANG_UPDATED', '
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LEFT_GROUP_SUCCESSFULLY', 'Successfully removed from group.', '2009-05-27 12:01:11', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LINK_ADDED', 'Link added successfully.  Link will become visible if approved.', '2005-02-23 12:07:59', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LOGIN_SUCCESS', 'You have logged in successfully.', '2012-08-20 10:38:28', '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LOGIN_SUCCESS_AUTO_ENROLL', 'You have successfully logged in and have been successfully enrolled to the following courses: <ul> %s </ul>', '2013-12-16 10:39:43', '')
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_LOGOUT', 'You have successfully been logged out.', '2003-10-29 10:00:12', 'after logging out');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MASTER_LIST_NO_CHANGES', 'No changes were done to the Master Student List.', '2005-06-16 12:32:19', 'When action to master list yields no changes');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_FEEDBACK_MASTER_LIST_UPLOADED', 'Master Student List has been updated successfully.', '2005-04-04 16:12:52', '');

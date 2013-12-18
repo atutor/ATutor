@@ -20,17 +20,21 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 
 	$associate_string = validate_enid($_REQUEST["en_id"]);
 
-	$sql_courses = "SELECT aec.course_id
+	$sql_courses = "SELECT aec.course_id, c.title
 	                  FROM %sauto_enroll a, 
-	                  %sauto_enroll_courses aec 
+	                  %sauto_enroll_courses aec,
+                    %scourses c
 	                  where a.associate_string='%s'
-	                  and a.auto_enroll_id = aec.auto_enroll_id";
+	                  and a.auto_enroll_id = aec.auto_enroll_id
+                    and aec.course_id = c.course_id";
 
-	$rows_courses = queryDB($sql_courses, array(TABLE_PREFIX, TABLE_PREFIX, $associate_string));
+	$rows_courses = queryDB($sql_courses, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $associate_string));
 		
 	if (count($rows_courses) > 0)  $_SESSION['enroll'] = AT_ENROLL_YES;
-	
+    
+  $course_names="";
 	foreach($rows_courses as $row_courses){
+    $course_names.='<li>'.$row_courses["title"].'</li>';
 		$course = $row_courses["course_id"];
 		$sql	= "SELECT access, member_id FROM %scourses WHERE course_id=%d";
 		$course_info = queryDB($sql, array(TABLE_PREFIX, $course), TRUE);	
