@@ -84,11 +84,11 @@
 
 	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=first_name<?php echo $this->page_string_w_tab;?>"><?php echo _AT('first_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=second_name<?php echo $this->page_string_w_tab;?>"><?php echo _AT('second_name'); ?></a></th>
+	<th scope="col" class="hidecol480"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=second_name<?php echo $this->page_string_w_tab;?>"><?php echo _AT('second_name'); ?></a></th>
 
 	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=last_name<?php echo $this->page_string_w_tab;?>"><?php echo _AT('last_name'); ?></a></th>
 
-	<th scope="col"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=email<?php echo $this->page_string_w_tab;?>"><?php echo _AT('email'); ?></a></th>
+	<th scope="col" class="hidecol480"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?<?php echo $this->orders[$this->order]; ?>=email<?php echo $this->page_string_w_tab;?>"><?php echo _AT('email'); ?></a></th>
 </tr>
 </thead>
 <tfoot>
@@ -125,9 +125,9 @@
 			<td><input type="checkbox" name="id[]" value="<?php echo $row['member_id']; ?>" id="m<?php echo $row['member_id']; ?>" onmouseup="this.checked=!this.checked" title="<?php echo AT_print($row['login'], 'members.login'); ?>" /></td>
 			<td><?php echo AT_print($row['login'], 'members.login'); ?></td>
 			<td><?php echo AT_print($row['first_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['second_name'], 'members.name'); ?></td>
+			<td class="hidecol480"><?php echo AT_print($row['second_name'], 'members.name'); ?></td>
 			<td><?php echo AT_print($row['last_name'], 'members.name'); ?></td>
-			<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
+			<td class="hidecol480"><?php echo AT_print($row['email'], 'members.email'); ?></td>
 		</tr>
 	<?php } ?>
 <?php else: ?>

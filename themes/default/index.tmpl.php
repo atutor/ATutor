@@ -15,9 +15,8 @@ global $_base_path;
 
 if ($this->banner): ?><?php echo $this->banner; ?><br /><?php endif;
 
-// positioning switch of home ONLY FOR INSTRUCTORS. two icons will be used for identification to distinguish the two different views of the home.
 if(count($this->home_links) > 0){
-    echo '<div class="detail_switch" id="detail_switch"  title="'._AT('icon_view').'"><a  href ="javascript:void(0)"  style="background-color:#FFFFFF;" title="'._AT('icon_view').'">&nbsp;.<br /></div>';
+    echo '<div class="detail_switch" id="detail_switch"  title="'._AT('icon_view').'"><a  href ="javascript:void(0)"  title="'._AT('icon_view').'">&nbsp;.<br /></div>';
 }
 ?>
 

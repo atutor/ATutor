@@ -79,11 +79,11 @@ $cols=6;
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('title');          ?></th>
-	<th scope="col"><?php echo _AT('status');         ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('status');         ?></th>
 	<th scope="col"><?php echo _AT('availability');   ?></th>
-	<th scope="col"><?php echo _AT('result_release'); ?></th>
+	<th scope="col"class="hidecol700"><?php echo _AT('result_release'); ?></th>
 	<th scope="col"><?php echo _AT('submissions');	  ?></th>
-	<th scope="col"><?php echo _AT('assigned_to');	  ?></th>
+	<th scope="col"class="hidecol480"><?php echo _AT('assigned_to');	  ?></th>
 </tr>
 </thead>
 
@@ -113,7 +113,7 @@ $cols=6;
 		<tr onmousedown="document.form['t<?php echo $row['test_id']; ?>'].checked = true;rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
 			<td><input type="radio" name="id" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" /></td>
 			<td><label for="t<?php echo $row['test_id']; ?>"><?php echo $row['title']; ?></label></td>
-			<td><?php
+			<td  class="hidecol700"><?php
 				if ( ($row['us'] <= time()) && ($row['ue'] >= time() ) ) {
 					echo '<strong>'._AT('ongoing').'</strong>';
 				} else if ($row['ue'] < time() ) {
@@ -126,7 +126,7 @@ $cols=6;
 				echo AT_date($startend_date_format, $row['start_date'], AT_DATE_MYSQL_DATETIME). ' ' ._AT('to_2').' ';
 				echo AT_date($startend_date_format, $row['end_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 
-			<td><?php 
+			<td  class="hidecol700"><?php 
 				if ($row['result_release'] == AT_RELEASE_IMMEDIATE) {
 					echo _AT('release_immediate');
 				} else if ($row['result_release'] == AT_RELEASE_MARKED) {
@@ -149,7 +149,7 @@ $cols=6;
 				echo $row_sub['marked_cnt'].' '._AT('unmarked');
 				?>
 			</td>
-			<td><?php
+			<td  class="hidecol480"><?php
 				//get assigned groups
 				$sql_sub = "SELECT G.title FROM %sgroups G INNER JOIN %stests_groups T USING (group_id) WHERE T.test_id=%d";
 				$rows_groups	= queryDB($sql_sub, array(TABLE_PREFIX, TABLE_PREFIX, $row['test_id']));

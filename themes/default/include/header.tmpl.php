@@ -214,34 +214,7 @@ global $system_courses, $_custom_css, $db;
 
 </div>
 
-
-<div id="sm_topnav">
-    <?php if ($this->current_sub_level_page): ?>
-    <div id="topnavlistcontainer_sm" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" style="height:auto;">
-    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);"><?php echo _AT('navigation'); ?></a>
-    <br />
-        <div id="navigation-column">
-        <?php if ($this->current_sub_level_page): ?>
-        <ul id="topnavlist_sm"  class="fl-list-menu" role="menu">
-            <?php $accesscounter = 0; //initialize ?>
-            <?php foreach ($this->top_level_pages as $page): ?>
-                <?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
-                <?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
-                <?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
-                <?php if ($page['url'] == $this->current_top_level_page): ?>
-                    <!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
-                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
-                <?php else: ?>
-                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
-                <?php endif; ?>
-                <?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
-            <?php endforeach; ?>
-        </ul>
-        <?php endif; ?>
-    </div>
-    </div>
-    <?php endif; ?>	
-</div>		
+	
 				
 <!-- the main navigation. in our case, tabs -->
 <div id="lrg_topnav">
@@ -280,7 +253,37 @@ global $system_courses, $_custom_css, $db;
 	</div>
 </div>
 
-	  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
+<div id="sm_topnav">
+    <?php if ($this->current_sub_level_page): ?>
+    <div id="topnavlistcontainer_sm" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" style="height:auto;">
+    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);"><?php echo _AT('navigation'); ?></a>
+    <br />
+        <div id="navigation-column">
+        <?php if ($this->current_sub_level_page): ?>
+        <ul id="topnavlist_sm"  class="fl-list-menu" role="menu">
+            <?php $accesscounter = 0; //initialize ?>
+            <?php foreach ($this->top_level_pages as $page): ?>
+                <?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
+                <?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
+                <?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
+                <?php if ($page['url'] == $this->current_top_level_page): ?>
+                    <!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
+                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+                <?php else: ?>
+                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+                <?php endif; ?>
+                <?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
+            <?php endforeach; ?>
+        </ul>
+        <?php endif; ?>
+    </div>
+
+    <?php endif; ?>	
+    
+    </div>
+
+</div>	
+  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 		  <!-- the bread crumbs -->
 		<div class="crumbcontainer" role="navigation">
 		  <div id="breadcrumbs">
@@ -305,9 +308,7 @@ global $system_courses, $_custom_css, $db;
 	      </ul>
       </div>
       <?php endif; ?>
-      <div style="font-size:.8em;margin-left:-.5em;">
-      <?php mobile_switch(); ?>
-      </div>
+
       </div>
 
 <div id="contentwrapper" 
@@ -315,20 +316,25 @@ global $system_courses, $_custom_css, $db;
 			$style.='margin-top:-2em;';
 			echo 'style="'.$style.'"';
 		endif; ?>>
+		      <div style="font-size:.8em;margin-left:-.5em;">
+      <?php mobile_switch(); ?>
+      </div>
 	<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
-<div id="sm_content">
+	
+	
+    <div id="sm_content">
 		<div id="content_link" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
 				<a class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo  _AT("content"); ?></a>	
 		</div>	
-</div>
-<div id="lrg_content">
+    </div>		
+    <div id="lrg_content">
 		<div id="leftcolumn" role="complementary">
 		  <a id="menu"></a>
 		     <div id="side-menu">
 		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
 		    </div>
 		</div>
-</div>		
+    </div>		
 		
 
 	<?php endif; ?>
@@ -394,8 +400,7 @@ global $system_courses, $_custom_css, $db;
 					echo " ";?>
 				<?php endif; ?>
 			<?php endfor; ?>
-			</ul>
-			
+			</ul>		
 
 			<?php 
 			$num_pages_i = count($this->sub_level_pages_i); 

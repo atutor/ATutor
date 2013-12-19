@@ -22,8 +22,8 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('forum');        ?></th>
-	<th scope="col"><?php echo _AT('num_threads'); ?></th>
-	<th scope="col"><?php echo _AT('num_posts');    ?></th>
+	<th scope="col" class="hidecol360"><?php echo _AT('num_threads'); ?></th>
+	<th scope="col" class="hidecol360"><?php echo _AT('num_posts');    ?></th>
 	<th scope="col"><?php echo _AT('last_post');    ?></th>
 </tr>
 </thead>
@@ -73,8 +73,8 @@ if ($num_shared || $num_nonshared || $num_groups) {
 					} ?>
 					<p><?php echo AT_print($row['description'], 'forums.description'); ?></p>
 				</td>
-				<td align="center" valign="top"><?php echo $row['num_topics']; ?></td>
-				<td align="center" valign="top"><?php echo $row['num_posts']; ?></td>
+				<td align="center" valign="top" class="hidecol360"><?php echo $row['num_topics']; ?></td>
+				<td align="center" valign="top" class="hidecol360"><?php echo $row['num_posts']; ?></td>
 				<td align="right" valign="top"><?php
 
 					if ($row['last_post'] == '0000-00-00 00:00:00') {
