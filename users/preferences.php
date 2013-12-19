@@ -31,6 +31,13 @@ $is_auto_login = checkAutoLoginCookie();
 if (isset($_POST['submit']) || isset($_POST['set_default'])) {
 	$current_tab = $_POST['current_tab'];
 	if (isset($_POST['submit'])) {
+        
+    if(isset($_POST['hide_feedback']) && ($_POST['hide_feedback']<0)) {
+        $msg->addError("FEEDBACK_AUTOHIDE_NEGATIVE_VALUE");
+        header('Location: preferences.php?current_tab='.$current_tab);
+        exit;
+    }
+        
 	    //copy posted variables to a temporary array
 		$temp_prefs = assignPostVars();
 		//email notification and auto-login settings are handled

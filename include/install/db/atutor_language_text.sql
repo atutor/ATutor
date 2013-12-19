@@ -140,6 +140,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_EMPTY_ZIP_FILE', 'D
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_END_DATE_INVALID', 'That end date is not valid.', '2003-05-16 13:42:17', 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_ENROLLMENT_NONE_FOUND', 'There is no one to export.', '2006-06-27 11:53:26', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FEED_NO_CONTENT', 'The feed either cannot be found at that URL or is not valid.', '2005-11-23 10:59:56', '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FEEDBACK_AUTOHIDE_NEGATIVE_VALUE', 'The value for autohide feedback was set to negative. Please enter a positive value', '2005-11-23 10:59:56', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_EMPTY', 'You did not select a file to import or the file was empty.', '2004-12-09 14:44:43', 'enrollment manager');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_ILLEGAL', '%s files are not allowed.', '2003-05-22 11:52:08', 'error msg');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_FILE_MAX_SIZE', 'The file exceeded the maximum allowable size limit of %s.', '2004-05-06 13:18:19', '');
@@ -1369,6 +1370,8 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'farchive', 'Forum Archiv
 INSERT INTO `language_text` VALUES ('en', '_template', 'farchive_export', 'Export Forum', '2008-11-07 10:42:18', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'farchive_select_forum', 'Select Forum to Export:', '2008-11-07 10:42:50', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'feedback', 'Feedback', '2003-05-20 09:09:40', 'global feedback label');
+INSERT INTO `language_text` VALUES ('en', '_template', 'feedback_autohide', 'AutoHide', '2013-12-17 10:42:41', 'feedback preference label');
+INSERT INTO `language_text` VALUES ('en', '_template', 'feedback_manual', 'Manual', '2013-12-17 10:42:41', 'feedback preference label');
 INSERT INTO `language_text` VALUES ('en', '_template', 'feedback_placeholder', 'Enter information to present to students after correctly answering this question.', '2013-01-23 14:13:44', 'remedial content');
 INSERT INTO `language_text` VALUES ('en', '_template', 'female', 'Female', '2003-05-20 09:18:03', 'registration, profile');
 INSERT INTO `language_text` VALUES ('en', '_template', 'fg_colour', 'Foreground Colour', '2008-09-09 09:01:13', '');
@@ -1525,6 +1528,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'hidden', 'Hidden', '2003
 INSERT INTO `language_text` VALUES ('en', '_template', 'hide', 'Hide', '2005-03-15 11:37:50', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'hide_all_remedial', 'Hide All Remedial Content', '2013-01-23 14:19:48', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'hide_course', 'Hide this course from the Browse Courses list', '2003-05-20 10:42:41', 'create course screen');
+INSERT INTO `language_text` VALUES ('en', '_template', 'hide_feedback', 'Hide Feedback', '2013-12-17 10:42:41', 'preferences');
 INSERT INTO `language_text` VALUES ('en', '_template', 'history', 'History', '2003-05-25 08:36:00', 'context (removed after v1.1)');
 INSERT INTO `language_text` VALUES ('en', '_template', 'hits', 'Hits', '2003-05-20 10:44:14', 'links database link hit count');
 INSERT INTO `language_text` VALUES ('en', '_template', 'hit_count', 'Hit Count', '2003-05-20 10:45:17', 'tracker');
@@ -1624,7 +1628,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'japanese-jsl', 'Japanese
 INSERT INTO `language_text` VALUES ('en', '_template', 'join_group', 'Join Group', '2009-06-12 10:06:28', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'jump', 'Jump', '2003-05-20 12:28:03', 'jump menu submit button text');
 INSERT INTO `language_text` VALUES ('en', '_template', 'jump_codes', 'Jump over the code picker', '2003-05-20 12:29:53', 'alt text for bypass link to jump over the code picker');
-INSERT INTO `language_text` VALUES ('en', '_template', 'jump_redirect', 'Direct Jump', '2004-11-30 10:03:55', 'preferecnes');
+INSERT INTO `language_text` VALUES ('en', '_template', 'jump_redirect', 'Direct Jump', '2004-11-30 10:03:55', 'preferences');
 INSERT INTO `language_text` VALUES ('en', '_template', 'just_social', 'Use just ATutor Social', '2009-07-17 14:11:50', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'kb', '<acronym title="Kilobytes">KB</acronym>', '2007-12-09 12:56:24', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'keep_email_private', 'Keep email hidden from others.', '2006-03-28 11:29:07', '');

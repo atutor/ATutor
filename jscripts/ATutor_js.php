@@ -209,17 +209,20 @@ ATutor.course = ATutor.course || {};
                     ATutor.switchView($('#admin_switch').val());
                 });
 
-    /* To automatically hide feedback message, uncomment */
-  	/* $('#message').css('display', 'block').slideDown("slow");
+ <?php
+    if(isset($_SESSION['prefs']['PREF_HIDE_FEEDBACK']) && $_SESSION['prefs']['PREF_HIDE_FEEDBACK'] != 0) {
+    ?>
+         $('#message').css('display', 'block').slideDown("slow");
             setTimeout(function() {
             $("#message").hide('blind', {}, 500)
-        }, 8000);
-    */
+    }, 
+        <?php echo $_SESSION['prefs']['PREF_HIDE_FEEDBACK']*1000;?>);
         
+        <?php } ?>
     /* To hide feedback div when clicked */
         $(".message_link").click(function() {
-         $("#message").hide('blind', {}, 500), 8000;
-         return false;
+            $("#message").hide('blind', {}, 500), 8000;
+            return false;
         });  
       
     /*****
