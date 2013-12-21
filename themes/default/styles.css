@@ -1162,8 +1162,9 @@ h2.box {
 	border-left:1px solid #B7C68B;
 	border-right:1px solid #B7C68B;
 	*/
-
+    margin-bottom:-.3em;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	background-color: #EAEAEA; 
 	border-bottom:1px solid #F4F0CB;
 /*	-moz-box-shadow:.1em .1em .1em #999999;
 	box-shadow: .1em .1em .1em #999999;*/
@@ -1664,7 +1665,7 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 /* Top navigation tabs / list */
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:auto;
+	height:1.8em;
 	margin-top:-1.8em;
 	padding-top:1em;
 	margin-left:1em;
@@ -1678,6 +1679,7 @@ ul#topnavlist {
 	margin-left: auto;
 	margin-bottom: -2px;
 	margin-top: -.3em;
+	height:1.8em;
  }
 
 ul#topnavlist li {
@@ -2090,7 +2092,6 @@ ul#subnavlist_i {
     background-repeat:no-repeat;
 }
 ul#subnavlist, ul#navlist {
-
     border-bottom:1px solid #DED29E;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
@@ -3349,6 +3350,7 @@ div.input-form.remedialContent {
     padding-bottom:0em;
     display:inline;
     width:100%;
+    height:auto;
     float:left;
 }  
 #lrg_subnav{
@@ -3912,6 +3914,7 @@ Responsive elements
         margin-left:-1em;
         margin-top:-73px !important;
         background:0 !important;
+        border-bottom:none;
     }
     ul#subnavlist li{
         padding:.4em;
@@ -3919,6 +3922,7 @@ Responsive elements
         margin-bottom:1em;
         display:inline-block;
         margin: 0 -1px;
+        
     }
 
     fieldset.group_form{
@@ -4010,9 +4014,7 @@ Responsive elements
         margin-top:2em;
         width:100%;
     }
-    h2.box{
-        margin-bottom:-.8em;
-    }
+
     .sequence-links{
     }
     .site-name{
@@ -4130,6 +4132,10 @@ Responsive elements
         display:none;
         visibility:hidden;
     }
+    #lrg_subnav{
+        display:none;
+        visibility:hidden;
+    }
     #topnavlist-link{
         border:thin solid #DED29E;
         border-bottom: 3px solid #DED29E;
@@ -4160,6 +4166,7 @@ Responsive elements
     ul#subnavlist{
         display:inline;
         margin-left:2em;
+        border-bottom:none;
     }
     ul#subnavlist li{
         text-align:left;

@@ -243,7 +243,7 @@ global $system_courses, $_custom_css, $db;
 		<?php $path_parts = explode("/", $this->current_top_level_page); 
 		      $last_path_part = $path_parts[sizeof($path_parts) - 1];
                if (!admin_authenticate(AT_ADMIN_PRIV_ADMIN, AT_PRIV_RETURN) && $last_path_part != 'preferences.php') {?>
-		    <a class="pref_wiz_launcher"><img alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" title="<?php echo _AT('preferences').' - '._AT('new_window'); ?>"  src="<?php echo $this->img; ?>wand.png" class="img1616" style="margin-bottom:-.5em;"/></a> |
+		    <a href="" class="pref_wiz_launcher"><img alt="<?php echo _AT('preferences').' - '._AT('new_window'); ?>" title="<?php echo _AT('preferences').' - '._AT('new_window'); ?>"  src="<?php echo $this->img; ?>wand.png" class="img1616" style="margin-bottom:-.5em;"/></a> |
 		    <?php } ?> 
 			<strong><?php echo get_display_name($_SESSION['member_id']); ?></strong> | 
 			<a href="<?php echo $this->base_path; ?>logout.php"><?php echo _AT('logout'); ?></a>

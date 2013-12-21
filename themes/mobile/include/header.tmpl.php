@@ -56,11 +56,11 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 // 1. any click on the page closes the content menu but the link "content_link" itself
 // 2. the click on link "content_link" opens the content menu
 
-require ('TeraWurflRemoteClient.php');
-$wurflObj = new TeraWurflRemoteClient('http://wurfl.thesedays.com/webservice.php');
-$capabilities = array("product_info");
-$data_format = TeraWurflRemoteClient::$FORMAT_JSON;
-$wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
+//require ('TeraWurflRemoteClient.php');
+///$wurflObj = new TeraWurflRemoteClient('http://wurfl.thesedays.com/webservice.php');
+//$capabilities = array("product_info");
+//$data_format = TeraWurflRemoteClient::$FORMAT_JSON;
+//$wurflObj->getCapabilitiesFromAgent(null, $capabilities, $data_format);
 ?>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">

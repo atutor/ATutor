@@ -45,6 +45,7 @@ ATutor.course = ATutor.course || {};
                     dontSetWidth: true,
                     preFixed: function() { 
                         $(this).find('div').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
+                        $(this).find('div').css('background-color', '#EAEAEA'); 
                         $(this).find('div').css('padding', '8');
                         $(this).find('div').css('margin-left', '200');
                         $(this).find('div').css('width', '100%');
@@ -125,7 +126,7 @@ ATutor.course = ATutor.course || {};
                         $("ul#subnavlist li").css('padding-bottom', '.4em'); 
                         $("ul#subnavlist li").css('padding', '.4em'); 
                         $("ul#subnavlist").css('margin-top', '-2.5em'); 
-                        $("#subnavlist").css('border-bottom', '0'); 
+                        $("ul#subnavlist").css('border-bottom', 'none'); 
                         $("#subnavlist").css('float', 'left'); 
                         $("#subnavlist").css('clear', 'left');
                     },
