@@ -84,8 +84,6 @@ if (isset($this_login, $this_password)) {
     } else {
         $_POST['form_course_id'] = intval($_POST['form_course_id']);
     }
-    $this_login    = $addslashes($this_login);
-    $this_password = $addslashes($this_password);
 
     //Check if this account has exceeded maximum attempts
     $rows = queryDB("SELECT login, attempt, expiry FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login));

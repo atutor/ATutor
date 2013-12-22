@@ -14,11 +14,10 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* test for mysqli presence */
-/*
 if(function_exists('mysqli_connect')){
 	define('MYSQLI_ENABLED',	1);
 } 
-*/
+
 
 // Emulate register_globals off. src: http://php.net/manual/en/faq.misc.php#faq.misc.registerglobals
 function unregister_GLOBALS() {
