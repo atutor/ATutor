@@ -24,6 +24,7 @@ $this->_list['chat'] = array('title_var'=>'chat','file'=>'mods/_standard/chat/su
 
 $this->_pages['mods/_standard/chat/manage/index.php']['title_var'] = 'chat';
 $this->_pages['mods/_standard/chat/manage/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_standard/chat/manage/index.php']['img']       = 'images/home-chat.png';
 $this->_pages['mods/_standard/chat/manage/index.php']['children']  = array('mods/_standard/chat/manage/start_transcript.php');
 $this->_pages['mods/_standard/chat/manage/index.php']['guide']     = 'instructor/?p=chat.php';
 

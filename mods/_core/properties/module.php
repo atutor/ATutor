@@ -33,6 +33,7 @@ $this->_pages['mods/_core/properties/admin/delete_course.php']['parent']    = 'm
 //instructor pages
 $this->_pages['mods/_core/properties/course_properties.php']['title_var'] = 'properties';
 $this->_pages['mods/_core/properties/course_properties.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_core/properties/course_properties.php']['img']       = 'mods/_core/properties/home-properties.png';
 $this->_pages['mods/_core/properties/course_properties.php']['children']  = array('mods/_core/properties/delete_course.php', 'mods/_core/properties/access.php');
 $this->_pages['mods/_core/properties/course_properties.php']['guide']     = 'instructor/?p=properties.php';
 

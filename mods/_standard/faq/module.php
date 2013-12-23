@@ -13,6 +13,7 @@ $this->_list['faq'] = array('title_var'=>'faq','file'=>'mods/_standard/faq/subli
 // instructor Manage section:
 $this->_pages['mods/_standard/faq/index_instructor.php']['title_var'] = 'faq';
 $this->_pages['mods/_standard/faq/index_instructor.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_standard/faq/index_instructor.php']['img']       = 'images/home-faq.png';
 $this->_pages['mods/_standard/faq/index_instructor.php']['children']  = array('mods/_standard/faq/add_topic.php', 'mods/_standard/faq/add_question.php');
 $this->_pages['mods/_standard/faq/index_instructor.php']['guide']     = 'instructor/?p=faq.php';
 

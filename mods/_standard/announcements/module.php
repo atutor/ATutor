@@ -8,6 +8,8 @@ define('AT_PRIV_ANNOUNCEMENTS', $this->getPrivilege());
 $this->_pages['mods/_standard/announcements/index.php']['title_var'] = 'announcements';
 $this->_pages['mods/_standard/announcements/index.php']['guide']     = 'instructor/?p=announcements.php';
 $this->_pages['mods/_standard/announcements/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_standard/announcements/index.php']['img']       = 'mods/_standard/announcements/home-announce.png';
+
 $this->_pages['mods/_standard/announcements/index.php']['children']  = array('mods/_standard/announcements/add_news.php');
 
 	$this->_pages['mods/_standard/announcements/add_news.php']['title_var']  = 'add_announcement';

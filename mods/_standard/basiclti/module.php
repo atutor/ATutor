@@ -54,6 +54,7 @@ if ( authenticate(AT_PRIV_BASICLTI, TRUE) ) {
 
 	$this->_pages['mods/_standard/basiclti/index_instructor.php']['title_var'] = 'basiclti';
 	$this->_pages['mods/_standard/basiclti/index_instructor.php']['parent']   = 'tools/index.php';
+	$this->_pages['mods/_standard/basiclti/index_instructor.php']['img']       = 'mods/_standard/basiclti/home-external_tools.png';
 	$this->_pages['mods/_standard/basiclti/index_instructor.php']['children'] = array('mods/_standard/basiclti/tool/instructor_create.php');
 	$this->_pages['mods/_standard/basiclti/tool/instructor_create.php']['title_var'] = 'bl_create';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_create.php']['parent'] = 'mods/_standard/basiclti/index_instructor.php';

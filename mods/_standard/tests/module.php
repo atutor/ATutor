@@ -13,6 +13,7 @@ $_student_tool = 'mods/_standard/tests/my_tests.php';
 $this->_pages['mods/_standard/tests/index.php']['title_var'] = 'tests';
 $this->_pages['mods/_standard/tests/index.php']['parent']    = 'tools/index.php';
 $this->_pages['mods/_standard/tests/index.php']['guide']     = 'instructor/?p=tests_surveys.php';
+$this->_pages['mods/_standard/tests/index.php']['img']       = 'images/home-tests.png';
 $this->_pages['mods/_standard/tests/index.php']['children']  = array('mods/_standard/tests/create_test.php', 'mods/_standard/tests/question_db.php', 'mods/_standard/tests/question_cats.php');
 
 $this->_pages['mods/_standard/tests/create_test.php']['title_var'] = 'create_test';

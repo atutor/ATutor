@@ -21,6 +21,7 @@ $this->_tool['forums'] = array('title_var'=>'forums','file'=>'mods/_core/tool_ma
 $this->_pages['mods/_standard/forums/index.php']['title_var'] = 'forums';
 $this->_pages['mods/_standard/forums/index.php']['parent']    = 'tools/index.php';
 $this->_pages['mods/_standard/forums/index.php']['guide']     = 'instructor/?p=forums.php';
+$this->_pages['mods/_standard/forums/index.php']['img']        = 'images/home-forums.png';
 $this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_standard/forums/add_forum.php');
 
 $this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';

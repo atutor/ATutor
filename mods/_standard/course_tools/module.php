@@ -6,6 +6,7 @@ define('AT_PRIV_STYLES', $this->getPrivilege());
 
 $this->_pages['mods/_standard/course_tools/modules.php']['title_var'] = 'course_tools';
 $this->_pages['mods/_standard/course_tools/modules.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_standard/course_tools/modules.php']['img']       = 'mods/_standard/course_tools/home-tools.png';
 $this->_pages['mods/_standard/course_tools/modules.php']['children']  = array('mods/_standard/course_tools/side_menu.php');
 $this->_pages['mods/_standard/course_tools/modules.php']['guide']     = 'instructor/?p=student_tools.php';
 $this->_pages['mods/_standard/course_tools/modules.php']['avail_in_mobile']   = true;

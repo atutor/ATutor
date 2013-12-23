@@ -19,6 +19,7 @@ $this->_pages['search.php']['title_var']      = 'search';
 
 $this->_pages['mods/_core/content/index.php']['title_var'] = 'content';
 $this->_pages['mods/_core/content/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_core/content/index.php']['img']       = 'mods/_core/content/home-content.png';
 $this->_pages['mods/_core/content/index.php']['guide']     = 'instructor/?p=content.php';
 $this->_pages['mods/_core/content/index.php']['children']  = array('mods/_core/editor/add_content.php', 'mods/_core/editor/arrange_content.php', 'mods/_core/imscp/index.php');
 

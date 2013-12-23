@@ -19,6 +19,7 @@ $this->_pages['mods/_standard/polls/index.php']['icon']       = 'images/home-pol
 
 $this->_pages['mods/_standard/polls/tools/index.php']['title_var'] = 'polls';
 $this->_pages['mods/_standard/polls/tools/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_standard/polls/tools/index.php']['img']       = 'images/home-polls.png';
 $this->_pages['mods/_standard/polls/tools/index.php']['children']  = array('mods/_standard/polls/tools/add.php');
 $this->_pages['mods/_standard/polls/tools/index.php']['guide']     = 'instructor/?p=polls.php';
 

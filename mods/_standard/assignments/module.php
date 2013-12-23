@@ -19,6 +19,8 @@ define('AT_PRIV_ASSIGNMENTS', $this->getPrivilege());
  */
 $this->_pages['mods/_standard/assignments/index_instructor.php']['title_var'] = 'assignments';
 $this->_pages['mods/_standard/assignments/index_instructor.php']['parent']   = 'tools/index.php';
+$this->_pages['mods/_standard/assignments/index_instructor.php']['img']       = 'mods/_standard/assignments/home-assignments.png';
+
 $this->_pages['mods/_standard/assignments/index_instructor.php']['children'] = array('mods/_standard/assignments/add_assignment.php');
 $this->_pages['mods/_standard/assignments/index_instructor.php']['guide']     = 'instructor/?p=assignments.php';
 

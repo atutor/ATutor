@@ -27,6 +27,7 @@ $_student_tool = 'mods/_core/glossary/index.php';
 
 $this->_pages['mods/_core/glossary/tools/index.php']['title_var'] = 'glossary';
 $this->_pages['mods/_core/glossary/tools/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_core/glossary/tools/index.php']['img']       = 'images/home-glossary.png';
 $this->_pages['mods/_core/glossary/tools/index.php']['children']  = array('mods/_core/glossary/tools/add.php');
 $this->_pages['mods/_core/glossary/tools/index.php']['avail_in_mobile']   = false;
 

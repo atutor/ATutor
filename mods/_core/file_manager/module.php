@@ -6,6 +6,7 @@ define('AT_PRIV_FILES', $this->getPrivilege());
 
 $this->_pages['mods/_core/file_manager/index.php']['title_var'] = 'file_manager';
 $this->_pages['mods/_core/file_manager/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_core/file_manager/index.php']['img']       = 'mods/_core/file_manager/home-files.png';
 $this->_pages['mods/_core/file_manager/index.php']['guide']     = 'instructor/?p=file_manager.php';
 $this->_pages['mods/_core/file_manager/index.php']['children']  = array('mods/_core/file_manager/new.php');
 $this->_pages['mods/_core/file_manager/index.php']['avail_in_mobile']   = false;

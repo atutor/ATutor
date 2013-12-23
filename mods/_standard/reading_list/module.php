@@ -28,6 +28,7 @@ $this->_list['reading_list'] = array('title_var'=>'reading_list','file'=>'mods/_
  */
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['title_var'] = 'reading_list';
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['parent']   = 'tools/index.php';
+$this->_pages['mods/_standard/reading_list/index_instructor.php']['img']       = 'images/home-reading_list.png';
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['children'] = array('mods/_standard/reading_list/display_resources.php');
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['guide'] = 'instructor/?p=reading_list.php';
 $this->_pages['mods/_standard/reading_list/index_instructor.php']['avail_in_mobile']   = false;

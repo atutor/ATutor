@@ -37,6 +37,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_BACKUPS, TRUE) || admin_authenticate(AT_ADM
 	$this->_pages['mods/_core/backups/index.php']['title_var'] = 'backups';
 	$this->_pages['mods/_core/backups/index.php']['guide']     = 'instructor/?p=backups.php';
 	$this->_pages['mods/_core/backups/index.php']['parent']    = 'tools/index.php';
+	$this->_pages['mods/_core/backups/index.php']['img']       = 'mods/_core/backups/home-backup.png';
 	$this->_pages['mods/_core/backups/index.php']['children']  = array('mods/_core/backups/create.php', 'mods/_core/backups/upload.php');
 
 	$this->_pages['mods/_core/backups/create.php']['title_var'] = 'create';

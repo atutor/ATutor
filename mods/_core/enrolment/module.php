@@ -31,6 +31,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_ENROLLMENT, TRUE) || admin_authenticate(AT_
 
 $this->_pages['mods/_core/enrolment/index.php']['title_var'] = 'enrollment';
 $this->_pages['mods/_core/enrolment/index.php']['parent']    = 'tools/index.php';
+$this->_pages['mods/_core/enrolment/index.php']['img']       = 'mods/_core/enrolment/home-enrolment.png';
 $this->_pages['mods/_core/enrolment/index.php']['guide']     = 'instructor/?p=enrollment.php';
 $this->_pages['mods/_core/enrolment/index.php']['children'] = array('mods/_core/enrolment/export_course_list.php', 'mods/_core/enrolment/import_course_list.php', 'mods/_core/enrolment/create_course_list.php');
 
