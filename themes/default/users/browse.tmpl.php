@@ -7,7 +7,7 @@
 				<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
 			</div>
 			<div class="row">
-				<?php echo _AT('access'); ?><br />
+				<?php echo _AT('access'); ?>:
 				<input type="radio" name="access" value="private" id="s1" <?php if ($_GET['access'] == 'private') { echo 'checked="checked"'; } ?> /><label for="s1"><?php echo _AT('private'); ?></label> 
 
 				<input type="radio" name="access" value="protected" id="s2" <?php if ($_GET['access'] == 'protected') { echo 'checked="checked"'; } ?> /><label for="s2"><?php echo _AT('protected'); ?></label>
@@ -19,7 +19,7 @@
 
 		<?php if ($this->has_categories): ?>
 			<div class="row">
-				<label for="category"><?php echo _AT('category'); ?></label><br/>
+				<label for="category"><?php echo _AT('category'); ?>:</label>
 				<select name="category" id="category">
 					<option value="-1">- - - <?php echo _AT('cats_all'); ?> - - -</option>
 					<option value="0" <?php if ($_GET['category'] == 0) { echo 'selected="selected"'; } ?>>- - - <?php echo _AT('cats_uncategorized'); ?> - - -</option>

@@ -18,12 +18,12 @@ tool_origin('off');
 require(AT_INCLUDE_PATH.'header.inc.php');
 $module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
 $keys = array_keys($module_list);
-
+    
 echo '<ol id="tools">';
 foreach ($keys as $module_name) {
 	$module = $module_list[$module_name];
 	if ($module->getPrivilege() && authenticate($module->getPrivilege(), AT_PRIV_RETURN) && ($parent = $module->getChildPage('tools/index.php')) && page_available($parent)) {
-		echo '<li class="top-tool"><a href="' . $parent . '">' . $module->getName() . '</a>  ';
+		echo '<li class="top-tool"><a href="' . $parent . '"><img src="'.$_pages[$parent]["img"].'" alt=""/>'. $module->getName() . '</a>  ';
 		if (isset($_pages[$parent]['children'])) {
 			echo '<ul class="child-top-tool">';
 			foreach ($_pages[$parent]['children'] as $child) {

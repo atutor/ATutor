@@ -59,6 +59,7 @@ ATutor.course = ATutor.course || {};
                         },
                     postFixed: function() { 
                         $(this).find('div').css('background-image', ''); 
+                        $(this).find('div').css('background-color', ''); 
                         $(this).find('div').css('padding', '');
                         $("#topnavlistcontainer").css('padding-left', '');
                         $("#topnavlistcontainer").css('margin-left', '');
