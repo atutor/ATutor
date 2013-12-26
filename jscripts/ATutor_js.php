@@ -38,7 +38,7 @@ ATutor.course = ATutor.course || {};
     ATutor.course.expand_icon = "<?php echo AT_print($tree_expand_icon,  'url.tree'); ?>";
 
     //everything in the document.ready block executes after the page is fully loaded
-    jQuery(document).ready( function () {
+    jQuery(document).ready( function () {  
                 // Floating topnavlist bar
                 $('#lrg_topnav').scrollToFixed({
                     marginTop: 18,
@@ -73,11 +73,11 @@ ATutor.course = ATutor.course || {};
                     preFixed: function() { 
                         $(this).find('li').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
                         $(this).find('li').css('margin-top', '-.2em');
-                         $(this).find('li').css('padding-right', '2em');
-                         $(this).find('li').css('border', '0');
+                        $(this).find('li').css('padding-right', '2em');
+                        $(this).find('li').css('border', '0');
                         $(this).find('div').css('padding', '8');
                         $(this).find('div').css('width', '100%');
-                        $(this).find('div').css('float', 'left');
+                        $(this).find('div').css('float', 'left');                        
                         },
                     postFixed: function() { 
                         $(this).find('div').css('background-image', ''); 
@@ -165,7 +165,9 @@ ATutor.course = ATutor.course || {};
                          $("#footer").css('background-color', '#F3F3F3');
                          }
                 });
-                // Hide/Show instructor course admin tools 
+                /********
+                **  Hide/Show instructor course admin tools 
+                *******/
                 var initialStatus = ($.cookie('showSubNav') === "on") ? "1" : "0";
                 if(initialStatus === "0"){
                     $("ul#subnavlist").css("border-bottom", "none");
@@ -268,15 +270,75 @@ ATutor.course = ATutor.course || {};
         });
     /*********/ 
         
-        
-    /* Show/Hide Advanced Admin System Preferecnes, set cookie */
-     /*   $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
+    /*****
+    ** Switch between hide and show submenu
+    *****/
+   // $('#showsubnav').css('display', 'inline');
+     var initialSubNav = ($.cookie('showSubNav') === "collapsed") ? "expanded" : "collapsed";
+     console.log(initialSubNav);
+        if(initialSubNav === 'collapsed'){
+            $('#showsubnav').css('display', 'inline');
+            $('#hidesubnav').css('display', 'none');
+            $('#subnavlist li:not(.active)').css('display', 'none');
+        }else{
+            $('#showsubnav').css('display', 'none');
+            $('#hidesubnav').css('display', 'inline');
+            $('#subnavlist li:not(.active)').css('display', 'inline');
+        }
+
+        $("#showsubnav").click(function() {
+            $('#showsubnav').css('display', 'none');
+            $('#hidesubnav').css('display', 'inline');
+            $('#subnavlist li:not(.active)').show("1200");
+            var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
+            $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
+        });
+        $("#hidesubnav").click(function() {
+            $('#showsubnav').css('display', 'inline');
+            $('#hidesubnav').css('display', 'none');
+            $('#subnavlist li:not(.active)').hide("1200");
+            var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
+            $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
+        });
+        $("#subnavlist li.active").keypress(function(e) {
+            var code = e.keyCode || e.which;
+            console.log(code);
+            if(code == 13 || code == 32) { 
+            $('#showsubnav').css('display', 'none');
+            $('#hidesubnav').css('display', 'inline');
+                if($.cookie('showSubNav') === 'expanded'){
+                    $('#subnavlist li:not(.active)').show("1200");
+                    var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
+                    $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
+                }else{
+                    $('#subnavlist li:not(.active)').hide("1200");
+                    var new_value = $("#showsubnav").is(":visible") ? 'collapsed' : 'expanded';
+                    $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
+                }
+            }
+        });
+        /*
+        $("#subnavlist li.active").keypress(function(e) {
+        var code = e.keyCode || e.which;
+        console.log(code);
+        if(code == 13 || code == 32) { 
+            $('#showsubnav').css('display', 'inline');
+            $('#hidesubnav').css('display', 'none');
+            $('#subnavlist li:not(.active)').hide("1200");
+            var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
+            $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
+        }
+        }); 
+        */
+           
+    /* Show/Hide Advanced Admin System Preferences, set cookie */
+    /*   $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
             $("div.adv_toggle").click(function() {
             $(this).toggleClass("active").next().toggle();
             var new_value = $(".adv_opts").is(":visible") ? 'expanded' : 'collapsed';
             $.cookie('showTop', new_value);
         });
-        */
+    */
         ATutor.users.preferences.setStyles(
                      '<?php if(isset($_SESSION["prefs"]["PREF_BG_COLOUR"])){echo $_SESSION["prefs"]["PREF_BG_COLOUR"];} ?>',
                      '<?php if(isset($_SESSION["prefs"]["PREF_FG_COLOUR"])){ echo $_SESSION["prefs"]["PREF_FG_COLOUR"];} ?>',
