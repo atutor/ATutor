@@ -392,7 +392,7 @@ global $system_courses, $_custom_css, $db;
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 
 				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page && $num_pages > 1){ ?>
-				      <li class="active" tabindex="0"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?><span class="subnav_toggle" id="hidesubnav">&nbsp;&nbsp;&nbsp;</span><span class="subnav_toggle" id="showsubnav">&nbsp;&nbsp;&nbsp;</span></li>
+				      <li class="active" tabindex="0"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?><span class="subnav_toggle" id="hidesubnav"  title="<?php echo _AT("hide_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span><span class="subnav_toggle" id="showsubnav" title="<?php echo _AT("open_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span></li>
 
 				
 				<?php } else if($num_pages > 1) { ?>
