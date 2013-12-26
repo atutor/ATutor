@@ -4250,10 +4250,12 @@ ol#tools{
     }
     div#subnavlistcontainer {
         height:auto;
+        float:left;
+        clear:both;
         margin: 0;
         width: 100%;
         padding:0 0 0 0;
-        background-color: 0;
+        background-color: #eeeeee;
     	background-image: 0 !important;
     	background:0 !important;
     }
@@ -4261,17 +4263,17 @@ ol#tools{
         margin-left:2em;
         border-bottom:none;
         width:80% !important;
+        display:inline-block;
     }
     ul#subnavlist li{
         text-align:left;
-        display:list-item;
-        background-color:#eeeeee;
+        height:2.1em
+        background:transparent;
         border-bottom:3px solid #DED29E;
-        width:80% !important;
         border-radius:0;
     }
     ul#subnavlist li.active{
-        width:80%;
+
     }
     ul#subnavlist_i {
         display:none;
