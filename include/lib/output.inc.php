@@ -381,7 +381,7 @@ function _AT() {
         }
         if (query_bit($_field_formatting[$name], AT_FORMAT_QUOTES)) {
             $input = str_replace('"', '&quot;', $input);
-            $input = str_replace('\'', '&apos;', $input);
+            $input = str_replace('\\\'', '&apos;', $input);
         }
 
         if (query_bit($_field_formatting[$name], AT_FORMAT_CONTENT_DIR)) {

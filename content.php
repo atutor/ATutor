@@ -229,7 +229,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			}
 			
 			$savant->assign('content_table', $content_array[0]);
-			$savant->assign('body', $content_array[1]);
+			$savant->assign('body', stripslashes($content_array[1]));
 			$savant->assign('cid', $cid);
 			$savant->assign('alt_infos', $alt_infos);
 			
@@ -305,7 +305,7 @@ if(strstr($fp, 'AContentXX')){
 	$content	= $dom->saveXML($node, LIBXML_NOEMPTYTAG);
 
 	// overwrite the original content with the filtered one
-	$savant->assign('body', $content);
+	$savant->assign('body', stripslashes($content));
 	$savant->assign('module_contents', '');
 }
 

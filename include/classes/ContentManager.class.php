@@ -88,11 +88,11 @@ class ContentManager
 			$num_sections++;
 			$_menu[$row['content_parent_id']][] = array('content_id'=> $row['content_id'],
 														'ordering'	=> $row['ordering'], 
-														'title'		=> htmlspecialchars($row['title']),
+														'title'		=> ContentManager::cleanOutput($row['title']),
 														'content_type' => $row['content_type']);
 
 			$_menu_info[$row['content_id']] = array('content_parent_id' => $row['content_parent_id'],
-													'title'				=> htmlspecialchars($row['title']),
+													'title'				=> ContentManager::cleanOutput($row['title']),
 													'ordering'			=> $row['ordering'],
 													'u_release_date'    => $row['u_release_date'],
 													'content_type' => $row['content_type']);
@@ -105,7 +105,7 @@ class ContentManager
 			$test_rs = $this->getContentTestsAssoc($row['content_id']);
 			foreach($test_rs as $test_row){
 		        $_menu[$row['content_id']][] = array(	'test_id'	=> $test_row['test_id'],
-														'title'		=> htmlspecialchars($test_row['title']),
+														'title'		=> ContentManager::cleanOutput($test_row['title']),
 														'content_type' => CONTENT_TYPE_CONTENT);
 			}
 
@@ -274,24 +274,38 @@ class ContentManager
 						test_message,
 						allow_test_export,
 						content_type)
-		        VALUES ($course_id, 
-		                $content_parent_id, 
-		                $ordering, 
+		        VALUES (
+		                %d, 
+		                %d, 
+		                %d, 
 		                NOW(), 
 		                0, 
-		                $formatting, 
-		                '$release_date', 
-		                '$head',
-		                $use_customized_head,
-		                '$keywords', 
+		                %d, 
+		                '%s', 
+		                '%s',
+		                %d,
+		                '%s', 
 		                '', 
-		                '$title',
-		                '$text',
-						'$test_message',
-						$allow_test_export,
-						$content_type)";
+		                '%s',
+		                '%s',
+						'%s',
+						%d,
+						%d)";
 
-        $err = queryDB($sql, array(TABLE_PREFIX));
+        $err = queryDB($sql, array(TABLE_PREFIX, 
+                        $course_id,
+                        $content_parent_id,
+                        $ordering,
+                        $formatting,
+                        $release_date,
+                        $head,
+                        $use_customized_head,
+                        $keywords,
+                        $title,
+                        $text,
+                        $test_message,
+                        $allow_test_export,
+                        $content_type));
         
 		/* insert the related content */
 		$sql = "SELECT LAST_INSERT_ID() AS insert_id";
@@ -330,18 +344,37 @@ class ContentManager
 
 		/* update the title, text of the newly moved (or not) content */
 		$sql	= "UPDATE %scontent 
-		              SET title='$title', head='$head', use_customized_head=$use_customized_head, 
-		                  text='$text', keywords='$keywords', formatting=$formatting, 
-		                  revision=revision+1, last_modified=NOW(), release_date='$release_date', 
-		                  test_message='$test_message', allow_test_export=$allow_test_export, 
-                          content_type=$content_type
-		            WHERE content_id=$content_id AND course_id=$_SESSION[course_id]";
+		              SET title='%s', 
+		                  head='%s', 
+		                  use_customized_head=%d, 
+		                  text='%s', 
+		                  keywords='%s', 
+		                  formatting=%d, 
+		                  revision=revision+1, 
+		                  last_modified=NOW(), 
+		                  release_date='%s', 
+		                  test_message='%s', 
+		                  allow_test_export=%d, 
+                          content_type=%d
+		            WHERE content_id=%d AND course_id=%d";
 
-        $result = queryDB($sql, array(TABLE_PREFIX));
+        $result = queryDB($sql, array(TABLE_PREFIX,
+                                    $title,
+                                    $head,
+                                    $use_customized_head,
+                                    $text,
+                                    $keywords,
+                                    $formatting,
+                                    $release_date,
+                                    $test_message,
+                                    $allow_test_export,
+                                    $content_type,
+                                    $content_id,
+                                    $_SESSION['course_id']));
         
 		/* update the related content */
 		$sql = "DELETE FROM %srelated_content WHERE content_id=%d OR related_content_id=%d";
-		$result	= queryDB($sql, array(TABLE_PREFIX,$content_id, $content_id));
+		$result	= queryDB($sql, array(TABLE_PREFIX,$content_id, $content_id),'',false);
 		
 		$sql = '';
 		if (is_array($related)) {
@@ -953,7 +986,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 					//content test extension  @harris
 					//if this is a test link.
 					if (isset($content['test_id'])){
-						$title_n_alt =  $content['title'];
+						$title_n_alt =  ContentManager::cleanOutput($content['title']);
 						$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].SEP.'in_cid='.$content['parent_content_id'];
 						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
 					} else {
@@ -961,7 +994,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 						$img_link = '';
 					}
 					
-					$full_title = $content['title'];
+					$full_title = ContentManager::cleanOutput($content['title']);
 					$link .= $img_link . ' <a href="'.$_base_path.htmlentities_utf8(url_rewrite($in_link)).'" title="';
 					$base_title_length = 29;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
@@ -971,17 +1004,17 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 					$link .= $content['title'].'">';
 
 					if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-						$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
+						$content['title'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
 					}
 					
 					if (isset($content['test_id'])) {
-						$link .= $content['title'];
+						$link .= ContentManager::cleanOutput($content['title']);
 					} else {
-						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">';
+						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.ContentManager::cleanOutput($full_title).'">';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						$link .= '&nbsp;'.$content['title'].'</span>';
+						$link .= '&nbsp;'.ContentManager::cleanOutput($content['title']).'</span>';
 					}
 					
 					$link .= '</a>';
@@ -1021,7 +1054,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						$link .= $content['title'].'</span></strong>';
+						$link .= ContentManager::cleanOutput($content['title']).'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
@@ -1030,25 +1063,25 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
-						$full_title = $content['title'];
+						$full_title = ContentManager::cleanOutput($content['title']);
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
-							$link .= '<a href="'.$_base_path."mods/_core/editor/edit_content_folder.php?cid=".$content['content_id'].'" title="'.$full_title. _AT('click_edit').'">'."\n";
+							$link .= '<a href="'.$_base_path."mods/_core/editor/edit_content_folder.php?cid=".$content['content_id'].'" title="'.ContentManager::cleanOutput($full_title). _AT('click_edit').'">'."\n";
 						}
 						else {
 							$link .= '<span style="cursor:pointer" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); ">'."\n";
 						}
 						
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
+							$content['title'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
 						}
 						if (isset($content['test_id']))
-							$link .= $content['title'];
+							$link .= ContentManager::cleanOutput($content['title']);
 						else
-							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">';
+							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.ContentManager::cleanOutput($full_title).'">';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						  $link .= '&nbsp;'.$content['title'].'</span>';
+						  $link .= '&nbsp;'.ContentManager::cleanOutput($content['title']).'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
 							$link .= '</a>'."\n";
@@ -1107,7 +1140,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							echo '<img src="'.AT_BASE_HREF.$this->tree_collapse_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
+							echo '<img src="'.AT_BASE_HREF.$this->tree_collapse_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'" border="0" width="16" height="16" title="'._AT('collapse').' '.ContentManager::cleanOutput($content['title']).'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
 							echo '</a>'."\n";
 						}
 					} else {
@@ -1116,7 +1149,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 							
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							echo '<img src="'.AT_BASE_HREF.$this->tree_expand_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
+							echo '<img src="'.AT_BASE_HREF.$this->tree_expand_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" border="0" width="16" height="16" 	title="'._AT('expand').' '.ContentManager::cleanOutput($content['title']).'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
 							echo '</a>'."\n";
 						}
 					}
@@ -1209,17 +1242,17 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 				
 					$buttons = '<td>'."\n".
 					           '   <small>'."\n".
-					           '      <input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', $content['title']).'" title="'._AT('before_topic', $content['title']).'" style="height:1.5em; width:1.9em;" />'."\n";
+					           '      <input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', ContentManager::cleanOutput($content['title'])).'" title="'._AT('before_topic', ContentManager::cleanOutput($content['title'])).'" style="height:1.5em; width:1.9em;" />'."\n";
 
 					if ($current_num + 1 == count($top_level))
-						$buttons .= '      <input type="image" name="move['.$parent_id.'_'.($content['ordering']+1).']" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', $content['title']).'" title="'._AT('after_topic', $content['title']).'" style="height:1.5em; width:1.9em;" />'."\n";
+						$buttons .= '      <input type="image" name="move['.$parent_id.'_'.($content['ordering']+1).']" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', ContentManager::cleanOutput($content['title'])).'" title="'._AT('after_topic', ContentManager::cleanOutput($content['title'])).'" style="height:1.5em; width:1.9em;" />'."\n";
 					
 					$buttons .= '   </small>'."\n".
 					           '</td>'."\n".
 					           '<td>';
 					
 					if ($content['content_type'] == CONTENT_TYPE_FOLDER)
-						$buttons .= '<input type="image" name="move['.$content['content_id'].'_1]" src="'.$_base_path.'images/child_of.gif" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', $content['title']).'" title="'._AT('child_of', $content['title']).'" />';
+						$buttons .= '<input type="image" name="move['.$content['content_id'].'_1]" src="'.$_base_path.'images/child_of.gif" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', ContentManager::cleanOutput($content['title'])).'" title="'._AT('child_of', ContentManager::cleanOutput($content['title'])).'" />';
 					else
 						$buttons .= '&nbsp;';
 						
@@ -1244,7 +1277,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 				{
 					$link .= '<img src="'.$_base_path.'images/folder.gif" />';
 				}
-				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'</label>'."\n";
+				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.ContentManager::cleanOutput($content['title']).'</label>'."\n";
 
 				if ( is_array($menu[$content['content_id']]) && !empty($menu[$content['content_id']]) ) {
 					/* has children */

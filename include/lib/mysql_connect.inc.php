@@ -81,7 +81,10 @@ if ( get_magic_quotes_gpc() == 1 ) {
     $stripslashes = 'stripslashes';
 } else {
     if(defined('MYSQLI_ENABLED')){
-        $addslashes   = 'mysqli_real_escape_string';
+        // mysqli_real_escape_string requires 2 params, breaking wherever
+        // current $addslashes with 1 param exists. So hack with trim and 
+        // manually run mysqli_real_escape_string requires during sanitization below
+        $addslashes   = 'trim';
     }else{
         $addslashes   = 'mysql_real_escape_string';
     }
@@ -121,8 +124,9 @@ function create_sql($query, $params=array(), $sanitize = true){
     // Prevent sql injections through string parameters passed into the query
     if ($sanitize) {
         foreach($params as $i=>$value) {
-         if(defined('MYSQLI_ENABLED')){       
-             $params[$i] = $addslashes($db, $value);
+         if(defined('MYSQLI_ENABLED')){  
+             $value = addslashes($addslashes($value));     
+             $params[$i] = mysqli_real_escape_string($db, $value);
             }else {
              $params[$i] = $addslashes($value);           
             }
@@ -143,7 +147,7 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
         // NOTE ! Uncomment the error_log() line below to start logging database queries to your php_error.log. 
         // BUT  ! Use for debugging purposes ONLY. Creates very large logs if left running.
         
-    //error_log(print_r($sql, true), 0);    
+    error_log(print_r($sql, true), 0);    
 
         // Query DB and if something goes wrong then log the problem
         if(defined('MYSQLI_ENABLED')){

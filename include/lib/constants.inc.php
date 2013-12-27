@@ -225,7 +225,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'2.2');
+define('VERSION',		'2.1.1');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
@@ -341,7 +341,7 @@ $_field_formatting['blog_posts_comments.comment'] = AT_FORMAT_ALL & ~AT_FORMAT_H
 
 $_field_formatting['content.keywords']			= AT_FORMAT_NONE;
 $_field_formatting['content.title']				= AT_FORMAT_ALL & ~AT_FORMAT_HTML | AT_FORMAT_QUOTES;
-$_field_formatting['content.text']				= AT_FORMAT_ALL;
+$_field_formatting['content.text']				= AT_FORMAT_ALL & AT_FORMAT_QUOTES;
 
 $_field_formatting['course_cats.cat_name']		= AT_FORMAT_NONE;
 

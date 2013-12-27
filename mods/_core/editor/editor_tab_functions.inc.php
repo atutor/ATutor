@@ -214,20 +214,28 @@ function save_changes($redir, $current_tab) {
 		
 	if (!$msg->containsErrors()) {
 		$orig_body_text = $_POST['body_text'];  // used to populate a4a tables
-		
+	/*	
 		$_POST['title']			= $addslashes($_POST['title']);
 		$_POST['body_text']		= $addslashes($_POST['body_text']);
 		$_POST['head']  		= $addslashes($_POST['head']);
 		$_POST['keywords']		= $addslashes($_POST['keywords']);
 		$_POST['test_message']	= $addslashes($_POST['test_message']);		
-
+*/
 		// add or edit content
 		if ($_POST['cid']) {
 			/* editing an existing page */
-			$err = $contentManager->editContent($_POST['cid'], $_POST['title'], $_POST['body_text'], 
-			                                    $_POST['keywords'], $_POST['related'], $_POST['formatting'], 
-			                                    $release_date, $_POST['head'], $_POST['use_customized_head'], 
-			                                    $_POST['test_message'], $_POST['allow_test_export'], $content_type_pref);
+			$err = $contentManager->editContent($_POST['cid'], 
+			                                    $_POST['title'],
+			                                    $_POST['body_text'], 
+			                                    $_POST['keywords'], 
+			                                    $_POST['related'], 
+			                                    $_POST['formatting'], 
+			                                    $release_date, 
+			                                    $_POST['head'], 
+			                                    $_POST['use_customized_head'], 
+			                                    $_POST['test_message'], 
+			                                    $_POST['allow_test_export'], 
+			                                    $content_type_pref);
 			$cid = $_POST['cid'];
 		} else {
 			/* insert new */

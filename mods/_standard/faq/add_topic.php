@@ -36,10 +36,15 @@ if (isset($_POST['cancel'])) {
 		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['name']));
 				
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
-        $return_url = $_SESSION['tool_origin']['url'];
-        tool_origin('off');
-		header('Location: '.$return_url);
-		exit;
+		if($_SESSION['tool_origin']['url']){
+            $return_url = $_SESSION['tool_origin']['url'];
+            tool_origin('off');
+            header('Location: '.$return_url);
+            exit;
+		} else{    
+            header('Location: index.php');
+            exit;
+		}
 	}
 }
 
