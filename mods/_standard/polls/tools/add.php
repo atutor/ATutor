@@ -34,14 +34,13 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['question'] = $addslashes($_POST['question']);
 		//Check if the question has exceeded the words amount - 100, decided in the db
 		if ($strlen($_POST['question']) > 100){
 			$_POST['question'] = $substr($_POST['question'], 0, 100);
 		}
 
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
-			$trimmed_word = $addslashes($_POST['c' . $i]);
+			$trimmed_word = $_POST['c' . $i];
 			if ($strlen($trimmed_word) > 100){
 				$trimmed_word = $substr($trimmed_word, 0, 100);
 			}

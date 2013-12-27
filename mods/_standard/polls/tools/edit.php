@@ -39,13 +39,13 @@ if ($_POST['edit_poll']) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['question'] = $addslashes($_POST['question']);
+		//$_POST['question'] = $addslashes($_POST['question']);
 		//Check if the question has exceeded the words amount - 100, decided in the db
 		$_POST['question'] = validate_length($_POST['question'], 100);
 
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 			$trimmed_word = validate_length($_POST['c' . $i], 100);			
-			$trimmed_word = $addslashes($trimmed_word);
+			//$trimmed_word = $addslashes($trimmed_word);
 			$choices .= "choice$i = '" . $trimmed_word . "',";
 		}
 		$choices = substr($choices, 0, -1);
