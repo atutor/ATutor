@@ -46,23 +46,30 @@ if (isset($_POST['cancel'])) {
 
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = $addslashes(validate_length($_POST['title'], 255));
-		$_POST['author'] = $addslashes(validate_length($_POST['author'], 150));
-		$_POST['date']     = $addslashes($_POST['date']);
-		$_POST['comments'] = $addslashes(validate_length($_POST['comments'], 255));
+		$_POST['title'] = validate_length($_POST['title'], 255);
+		$_POST['author'] = validate_length($_POST['author'], 150);
+		$_POST['date']     = $_POST['date'];
+		$_POST['comments'] = validate_length($_POST['comments'], 255);
 		
 		if ($id == '0'){ // creating a new handout resource
 
 			$sql = "INSERT INTO %sexternal_resources VALUES (NULL, %d,
 				%d, 
-				'$_POST[title]', 
-				'$_POST[author]', 
+				'%s', 
+				'%s', 
 				'', 
-				'$_POST[date]', 
-				'$_POST[comments]',
+				'%s', 
+				'%s',
 				'',
 				'')";
-			$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_HANDOUT));
+			$result = queryDB($sql, array(
+			    TABLE_PREFIX, 
+			    $_SESSION['course_id'], 
+			    RL_TYPE_HANDOUT,
+			    $_POST['title'],
+			    $_POST['author'],
+			    $_POST['date'],
+			    $_POST['comments']));
 			
 			// index to new handout resource
 			$id_new = at_insert_id();

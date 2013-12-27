@@ -46,23 +46,30 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = $addslashes(validate_length($_POST['title'], 255));
-		$_POST['author'] = $addslashes(validate_length($_POST['author'], 150));
-		$_POST['url'] = $addslashes($_POST['url']);
-		$_POST['comments'] = $addslashes(validate_length($_POST['comments'], 255));
+		$_POST['title'] = validate_length($_POST['title'], 255);
+		$_POST['author'] = validate_length($_POST['author'], 150);
+		$_POST['url'] = $_POST['url'];
+		$_POST['comments'] = validate_length($_POST['comments'], 255);
 		
 		if ($id == '0'){ // creating a new URL resource
 
 			$sql = "INSERT INTO %sexternal_resources VALUES (NULL, %d,
 				%d, 
-				'$_POST[title]', 
-				'$_POST[author]', 
+				'%s', 
+				'%s', 
 				'', 
 				'', 
-				'$_POST[comments]',
+				'%s',
 				'',
-				'$_POST[url]')";
-			$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_URL));
+				'%s')";
+			$result = queryDB($sql, array(
+			    TABLE_PREFIX, 
+			    $_SESSION['course_id'], 
+			    RL_TYPE_URL,
+			    $_POST['title'],
+			    $_POST['author'],
+			    $_POST['comments'],
+			    $_POST['url']));
 			
 			// index to new URL resource
 			$id_new = at_insert_id();

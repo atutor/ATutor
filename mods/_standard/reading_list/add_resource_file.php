@@ -48,25 +48,34 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = $addslashes(validate_length($_POST['title'], 255));
-		$_POST['author'] = $addslashes(validate_length($_POST['author'], 150));
-		$_POST['publisher'] = $addslashes(validate_length($_POST['publisher'], 150));
-		$_POST['date']      = $addslashes($_POST['date']);
-		$_POST['comments'] = $addslashes(validate_length($_POST['comments'], 255));
-		$_POST['isbn']      = $addslashes($_POST['isbn']);
+		$_POST['title'] = validate_length($_POST['title'], 255);
+		$_POST['author'] = validate_length($_POST['author'], 150);
+		$_POST['publisher'] = validate_length($_POST['publisher'], 150);
+		$_POST['date']      = $_POST['date'];
+		$_POST['comments'] = validate_length($_POST['comments'], 255);
+		$_POST['isbn']      = $_POST['isbn'];
 		
 		if ($id == '0'){ // creating a new file resource
 
 			$sql = "INSERT INTO %sexternal_resources VALUES (NULL, %d,
 				%d, 
-				'$_POST[title]', 
-				'$_POST[author]', 
-				'$_POST[publisher]', 
-				'$_POST[date]', 
-				'$_POST[comments]',
-				'$_POST[isbn]',
+				'%s', 
+				'%s', 
+				'%s', 
+				'%s', 
+				'%s',
+				'%s',
 				'')";
-			$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_FILE));
+			$result = queryDB($sql, array(
+			    TABLE_PREFIX, 
+			    $_SESSION['course_id'], 
+			    RL_TYPE_FILE,
+			    $_POST['title'],
+			    $_POST['author'],
+			    $_POST['publisher'],
+			    $_POST['date'],
+			    $_POST['comments'],
+			    $_POST['isbn']));
 			
 			// index to new file resource
 			$id_new = at_insert_id();

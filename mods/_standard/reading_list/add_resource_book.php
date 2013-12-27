@@ -49,25 +49,34 @@ if (isset($_POST['cancel'])) {
 
 
 	if (!$msg->containsErrors()) {
-		$_POST['title'] = $addslashes(validate_length($_POST['title'], 255));
+/*		$_POST['title'] = $addslashes(validate_length($_POST['title'], 255));
 		$_POST['author'] = $addslashes(validate_length($_POST['author'], 150));
 		$_POST['publisher'] = $addslashes(validate_length($_POST['publisher'], 150));
 		$_POST['date']      = $addslashes($_POST['date']);
 		$_POST['comments'] = $addslashes(validate_length($_POST['comments'], 255));
 		$_POST['isbn']      = $addslashes($_POST['isbn']);
-		
+*/		
 		if ($id == 0){ // creating a new book resource
 
 			$sql = "INSERT INTO %sexternal_resources VALUES (NULL, %d,
 				%d, 
-				'$_POST[title]', 
-				'$_POST[author]', 
-				'$_POST[publisher]', 
-				'$_POST[date]', 
-				'$_POST[comments]',
-				'$_POST[isbn]',
+				'%s', 
+				'%s', 
+				'%s', 
+				'%s', 
+				'%s',
+				'%s',
 				'')";
-			$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], RL_TYPE_BOOK));
+			$result = queryDB($sql, array(
+			    TABLE_PREFIX, 
+			    $_SESSION['course_id'], 
+			    RL_TYPE_BOOK,
+			    $_POST['title'],
+			    $_POST['author'],
+			    $_POST['publisher'],
+			    $_POST['date'],
+			    $_POST['comments'],
+			    $_POST['isbn']));
 			
 			// index to new book resource
 			$id_new = at_insert_id();
