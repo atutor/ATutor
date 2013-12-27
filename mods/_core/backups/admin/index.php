@@ -57,8 +57,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<tr>
 		<th><?php echo _AT('file_name');    ?></th>
 		<th><?php echo _AT('date_created'); ?></th>
-		<th><?php echo _AT('file_size');    ?></th>
-		<th><?php echo _AT('description');  ?></th>
+		<th class="hidecol480"><?php echo _AT('file_size');    ?></th>
+		<th class="hidecol480"><?php echo _AT('description');  ?></th>
 	</tr>
 </thead>
 <tfoot>
@@ -102,8 +102,8 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				echo '<tr onmousedown="document.form1[\'c'.$row['backup_id'].'_'.$row['course_id'].'\'].checked = true; rowselect(this);" id="r_'.$row['backup_id'].'"><td><input type="radio" value="'.$row['backup_id'].'_'.$row['course_id'].'" name="backup_id" id="c'.$row['backup_id'].'_'.$row['course_id'].'" />';
 				echo '<label for="c'.$row['backup_id'].'_'.$row['course_id'].'">'.$row['file_name'].'</label></td>';
 				echo '<td>'.AT_date(_AT('filemanager_date_format'), $row['date_timestamp'], AT_DATE_UNIX_TIMESTAMP).'</td>';
-				echo '<td align="right">'.get_human_size($row['file_size']).'</td>';
-				echo '<td>'.AT_print($row['description'], 'backups.description').'</td>';
+				echo '<td align="right" class="hidecol480">'.get_human_size($row['file_size']).'</td>';
+				echo '<td class="hidecol480">'.AT_print($row['description'], 'backups.description').'</td>';
 				echo '</tr>';
 				$num_backups ++;
 			}

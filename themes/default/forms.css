@@ -1,5 +1,7 @@
 div.input-form {
 	width: 100%; 
+	float:left;
+	clear:left;
 	margin-left:auto; 
 	margin-right:auto;
 	background-color:#FCFCFC;
@@ -24,7 +26,6 @@ div.input-form div.row h3 {
 div.input-form div.row {
 /*	background-color: #F4F0CB;*/
 	padding:8px;
-	white-space:nowrap;
 }
 
 /*<img> and <a> tags: on mouse hover the color of the background will keep the same!*/

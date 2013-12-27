@@ -631,11 +631,11 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 <tr>
 	<th align="left" width="10"><input type="checkbox" value="<?php echo _AT('select_all'); ?>" id="all" title="<?php echo _AT('select_all'); ?>" name="selectall" onclick="CheckAll();" /></th>
 	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order].'=file_name'); ?>"><?php echo _AT('file');      ?></a></th>
-	<th scope="col"><?php echo _AT('author');    ?></th>
-	<th scope="col"><?php if ($_config['fs_versioning']): ?><?php echo _AT('revisions'); ?><?php endif; ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('author');    ?></th>
+	<th scope="col" class="hidecol480"><?php if ($_config['fs_versioning']): ?><?php echo _AT('revisions'); ?><?php endif; ?></th>
 	<th scope="col"><?php echo _AT('comments');  ?></th>
 	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order].'=file_size'); ?>"><?php echo _AT('size'); ?></a></th>
-	<th scope="col"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order].'=date'); ?>"><?php echo _AT('date'); ?></a></th>
+	<th scope="col" class="hidecol480"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'] . $owner_arg_prefix . 'folder='.$folder_id.SEP.$orders[$order].'=date'); ?>"><?php echo _AT('date'); ?></a></th>
 </tr>
 
 </thead>
@@ -666,11 +666,11 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 			<td width="10"><input type="checkbox" name="folders[]" value="<?php echo $folder_info['folder_id']; ?>" id="f<?php echo $folder_info['folder_id']; ?>" onmouseup="this.checked=!this.checked" /></td>
 			<td><img src="images/folder.gif" height="18" width="20" alt="" /> <label for="f<?php echo $folder_info['folder_id']; ?>"><a href="<?php echo url_rewrite($_SERVER['PHP_SELF'].$owner_arg_prefix.'folder='.
 			$folder_info['folder_id']); ?>"><?php echo AT_print($folder_info['title'], 'input.text'); ?></a></label></td>
+			<td  class="hidecol480">&nbsp;</td>
+			<td class="hidecol480">&nbsp;</td>
 			<td>&nbsp;</td>
 			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
-			<td>&nbsp;</td>
+			<td class="hidecol480">&nbsp;</td>
 		</tr>
 	<?php endforeach; ?>
 	<?php foreach ($files as $file_info): ?>
@@ -682,8 +682,8 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 					<p class="fm-desc"><?php echo htmlspecialchars($file_info['description']); ?></p>
 				<?php endif; ?>
 			</td>
-			<td valign="top"><?php echo get_display_name($file_info['member_id']); ?></td>
-			<td valign="top">
+			<td valign="top" class="hidecol480"><?php echo get_display_name($file_info['member_id']); ?></td>
+			<td valign="top" class="hidecol480">
 				<?php if ($_config['fs_versioning']): ?>
 					<?php if ($file_info['num_revisions']): 
 						if ($file_info['num_revisions'] == 1) {
@@ -709,7 +709,7 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 			?>
 			<a href="<?php echo url_rewrite('mods/_standard/file_storage/comments.php'.$owner_arg_prefix.'id='.$file_info['file_id']); ?>"><?php echo _AT($lang_var, $file_info['num_comments']); ?></a></td>
 			<td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
-			<td align="right" valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file_info['date'], AT_DATE_MYSQL_DATETIME); ?></td>
+			<td align="right" valign="top" class="hidecol480"><?php echo AT_date(_AT('filemanager_date_format'), $file_info['date'], AT_DATE_MYSQL_DATETIME); ?></td>
 		</tr>
 	<?php endforeach; ?>
 <?php else: ?>

@@ -103,6 +103,7 @@ h2.box{
 }
 h3 {
 	font-size: 130%;
+	float:left;
 }
 
 h4 {
@@ -673,7 +674,9 @@ a#editor-link.on {
 table.data {
 /*	border: 1px solid #685642; */
 	width: 100%; 
-	margin-left: auto; 
+	float:left;
+	clear:both;
+	margin-left:1em;
 	margin-right: auto;
 	margin-bottom:1em;
 	overflow:scroll;
@@ -2075,8 +2078,6 @@ div#subnavlistcontainer {
 	width:100%;
 	margin:auto;
 	height:auto;
-
-
 }
 
 .show_hide {
@@ -3395,6 +3396,7 @@ div.input-form.remedialContent {
 }  
 #lrg_subnav{
     background:0 !important;
+    padding-top:1em;
 }
 .scroll-to-fixed-fixed{
     background:0 !important;
@@ -4268,7 +4270,7 @@ Responsive elements
     ul#subnavlist li{
         text-align:left;
         height:2.1em
-        background:transparent;
+        background-color:transparent;
         border-bottom:3px solid #DED29E;
         border-radius:0;
     }

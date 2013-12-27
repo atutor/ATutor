@@ -5,7 +5,7 @@
 <tr>
 	<th scope="cols"><?php echo _AT('section'); ?></th>
 	<th><?php echo _AT('location'); ?></th>
-	<th><?php echo _AT('order'); ?></th>
+	<th class="hidecol480"><?php echo _AT('order'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -43,7 +43,7 @@ foreach ($this->current_modules as $tool) :
 				<input type="checkbox" name="home[]" value="<?php echo $tool; ?>" id="h<?php echo $tool; ?>" /><label for="h<?php echo $tool; ?>"><?php echo _AT('home'); ?></label>
 			<?php endif; ?>
 		</td>
-		<td align="right">
+		<td align="right" class="hidecol480">
 			<?php if (!in_array($tool, $this->home_defaults) && !in_array($tool, $this->main_defaults)): ?>
 				&nbsp;
 			<?php else: ?>

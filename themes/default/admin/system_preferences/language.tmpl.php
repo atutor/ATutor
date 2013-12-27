@@ -10,10 +10,10 @@
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
-	<th scope="col"><?php echo _AT('name_in_language'); ?></th>
+	<th scope="col"  class="hidecol700"><?php echo _AT('name_in_language'); ?></th>
 	<th scope="col"><?php echo _AT('name_in_english'); ?></th>
 	<th scope="col"><?php echo _AT('lang_code'); ?></th>
-	<th scope="col"><?php echo _AT('charset'); ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('charset'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -36,10 +36,10 @@
 		<?php $language = current($codes); ?>
 		<tr onmousedown="document.form['m<?php echo $language->getCode(); ?>'].checked = true; rowselect(this);" id="r_<?php echo $language->getCode(); ?>">
 			<td><input type="radio" name="id" value="<?php echo $language->getCode(); ?>" id="m<?php echo $language->getCode(); ?>" /></td>
-			<td><label for="m<?php echo $language->getCode(); ?>"><?php echo $language->getNativeName(); ?></label></td>
+			<td class="hidecol700"><label for="m<?php echo $language->getCode(); ?>"><?php echo $language->getNativeName(); ?></label></td>
 			<td><?php echo $language->getEnglishName(); ?></td>
 			<td><?php echo strtolower($language->getCode()); ?></td>
-			<td><?php echo strtolower($language->getCharacterSet()); ?></td>
+			<td class="hidecol700"><?php echo strtolower($language->getCharacterSet()); ?></td>
 		</tr>
 	<?php endforeach; ?>
 </tbody>

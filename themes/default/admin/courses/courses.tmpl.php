@@ -62,11 +62,11 @@
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=title<?php echo $page_string; ?>"><?php echo _AT('title');               ?></a></th>
 	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=login<?php echo $page_string; ?>"><?php echo _AT('Instructor');          ?></a></th>
-	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=access<?php echo $page_string; ?>"><?php echo _AT('access');             ?></a></th>
-	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=created_date<?php echo $page_string; ?>"><?php echo _AT('created_date'); ?></a></th>
-	<th scope="col"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=cat_name<?php echo $page_string; ?>"><?php echo _AT('category'); ?></a></th>
-	<th scope="col"><?php echo _AT('enrolled'); ?></th>
-	<th scope="col"><?php echo _AT('alumni'); ?></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=access<?php echo $page_string; ?>"><?php echo _AT('access');             ?></a></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=created_date<?php echo $page_string; ?>"><?php echo _AT('created_date'); ?></a></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/courses/admin/courses.php?<?php echo $this->orders[$this->order]; ?>=cat_name<?php echo $page_string; ?>"><?php echo _AT('category'); ?></a></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('enrolled'); ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('alumni'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -84,11 +84,11 @@
 			<td><input type="radio" name="id" value="<?php echo $row['course_id']; ?>" id="m<?php echo $row['course_id']; ?>" /></td>
 			<td><label for="m<?php echo $row['course_id']; ?>"><?php echo AT_print($row['title'], 'courses.title'); ?></label></td>
 			<td><?php echo AT_print($row['login'],'members.login'); ?></td>
-			<td><?php echo _AT($row['access']); ?></td>
-			<td><?php  echo AT_date(_AT('startend_date_longs_format'), $row['created_date']); ?></td>
-			<td><?php echo ($row['cat_name'] ? $row['cat_name'] : '-')?></td>
-			<td><?php echo ($this->enrolled[$row['course_id']]['y'] ? $this->enrolled[$row['course_id']]['y'] : 0); ?></td>
-			<td><?php echo ($this->enrolled[$row['course_id']]['a'] ? $this->enrolled[$row['course_id']]['a'] : 0); ?></td>
+			<td class="hidecol700"><?php echo _AT($row['access']); ?></td>
+			<td class="hidecol700"><?php  echo AT_date(_AT('startend_date_longs_format'), $row['created_date']); ?></td>
+			<td class="hidecol700"><?php echo ($row['cat_name'] ? $row['cat_name'] : '-')?></td>
+			<td class="hidecol700"><?php echo ($this->enrolled[$row['course_id']]['y'] ? $this->enrolled[$row['course_id']]['y'] : 0); ?></td>
+			<td class="hidecol700"><?php echo ($this->enrolled[$row['course_id']]['a'] ? $this->enrolled[$row['course_id']]['a'] : 0); ?></td>
 		</tr>
 	<?php } ?>
 <?php else: ?>

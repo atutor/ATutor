@@ -14,9 +14,9 @@
 			<th>&nbsp;</th>
 			<th><?php echo _AT('pa_album_name'); ?></th>
 			<th><?php echo _AT('pa_album_type'); ?></th>
-			<th><?php echo _AT('pa_album_description'); ?></th>
+			<th class="hidecol700"><?php echo _AT('pa_album_description'); ?></th>
 			<th><?php echo _AT('created_by'); ?></th>
-			<th><?php echo _AT('pa_last_updated'); ?></th>
+			<th class="hidecol700"><?php echo _AT('pa_last_updated'); ?></th>
 		</tr>		
 		</thead>
 		<tbody>
@@ -26,9 +26,9 @@
 			<td><input type="radio" id="album_<?php echo $aid; ?>" name="aid" value="<?php echo $aid; ?>" /></td>
 			<td><a href="<?php echo AT_PA_BASENAME."admin/edit_photos.php?aid=$aid"; ?>"><?php echo AT_print($row['name'], 'input.text'); ?></a></td>
 			<td><?php echo $pa->getAlbumTypeName($row['type_id']); ?></td>
-			<td><?php echo AT_print($row['description'], 'photo_albums.description'); ?></td>
+			<td class="hidecol700"><?php echo AT_print($row['description'], 'photo_albums.description'); ?></td>
 			<td><?php echo AT_print(get_display_name($row['member_id']), 'members.full_name'); ?></td>
-			<td><?php echo AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME); ?></td>
+			<td class="hidecol700"><?php echo AT_date(_AT('forum_date_format'), $row['last_updated'], AT_DATE_MYSQL_DATETIME); ?></td>
 		</tr>
 		<?php endforeach; ?>
 

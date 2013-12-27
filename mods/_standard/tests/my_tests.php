@@ -28,8 +28,8 @@ $rows_tests	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_
 	<th scope="col"><?php echo _AT('title');      ?></th>
 	<th scope="col"><?php echo _AT('status');     ?></th>
 	<th scope="col"><?php echo _AT('start_date'); ?></th>
-	<th scope="col"><?php echo _AT('end_date');   ?></th>
-	<th scope="col"><?php echo _AT('attempts');   ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('end_date');   ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('attempts');   ?></th>
 </tr>
 </thead>
 <tbody>
@@ -68,12 +68,12 @@ foreach($rows_tests as $row){
 	echo '</td>';
 
 	echo '<td>'.AT_date($startend_date_long_format, $row['start_date']).'</td>';
-	echo '<td>'.AT_date($startend_date_long_format, $row['end_date']).'</td>';
+	echo '<td class="hidecol480">'.AT_date($startend_date_long_format, $row['end_date']).'</td>';
 
 	if ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) {
-		echo '<td>'.$takes['cnt'].'/'._AT('unlimited').'</td>';
+		echo '<td class="hidecol480">'.$takes['cnt'].'/'._AT('unlimited').'</td>';
 	} else  {
-		echo '<td>'.$takes['cnt'].'/'.$row['num_takes'].'</td>';
+		echo '<td class="hidecol480">'.$takes['cnt'].'/'.$row['num_takes'].'</td>';
 	}
 
 /*
@@ -110,9 +110,9 @@ if (!$count) {
 <tr>
 	<th scope="col"><?php echo _AT('title');      ?></th>
 	<th scope="col"><?php echo _AT('date_taken'); ?></th>
-	<th scope="col"><?php echo _AT('time_spent'); ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('time_spent'); ?></th>
 	<th scope="col"><?php echo _AT('mark');       ?></th>
-	<th scope="col"><?php echo _AT('submission'); ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('submission'); ?></th>
 </tr>
 </thead>
 <tbody>
@@ -128,7 +128,7 @@ if($num_results > 0){
 		echo '<tr>';
 		echo '<td><strong>'.AT_print($row['title'], 'tests.title').'</strong></td>';
 		echo '<td>'.AT_date($startend_date_long_format, $row['date_taken']).'</td>';
-		echo '<td>'.get_human_time($row['diff']).'</td>';
+		echo '<td class="hidecol480">'.get_human_time($row['diff']).'</td>';
 		echo '<td>';
 
 		if ($row['out_of'] == 0) {
@@ -148,7 +148,7 @@ if($num_results > 0){
 		}
 		echo '</td>';
 
-		echo '<td>';
+		echo '<td class="hidecol480">';
 
 		if ( ($row['result_release']==AT_RELEASE_IMMEDIATE) || (($row['final_score'] != '') && ($row['result_release']==AT_RELEASE_MARKED)) ) {
 			echo '<a href="mods/_standard/tests/view_results.php?tid='.$row['test_id'].SEP.'rid='.$row['result_id'].'">'._AT('view_results').'</a>';

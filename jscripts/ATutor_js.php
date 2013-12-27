@@ -100,7 +100,7 @@ ATutor.course = ATutor.course || {};
                       
                 // Floating subnavlist bar
                 $('#lrg_subnav').scrollToFixed({
-                    marginTop: 34,
+                    marginTop: 22,
                     dontSetWidth: false,
                     preFixed: function() { 
                         $(this).find('div').css('padding', '8');
@@ -196,8 +196,14 @@ ATutor.course = ATutor.course || {};
                 $('#admin_switch').switchify();
                 $('#admin_switch').val(($.cookie('showSubNav_i') === "on") ? "1" : "0");
                 $("#subnavlistcontainer").css("background", "transparent");
-                $(".ui-switch").bind("click keypress", function(){
+                $(".ui-switch").click(function(e){
                     ATutor.switchView($('#admin_switch').val());
+                });
+                $(".ui-switch").keypress(function(e){
+                    var code = e.keyCode || e.which;
+                    if(code == 13 || code == 32) { 
+                    ATutor.switchView($('#admin_switch').val());
+                    }
                 });
 
  <?php
@@ -251,9 +257,16 @@ ATutor.course = ATutor.course || {};
         }
         $('#detail_switch').val(($.cookie('showDetails') === "on") ? "1" : "0");
 
-        $("#detail_switch").bind("click keypress", function(){
-            ATutor.switchDetails($('#detail_switch').val());
-            
+        $("#detail_switch").click( function(){
+            ATutor.switchDetails($('#detail_switch').val());                    
+        });
+        $("#detail_switch").keypress(function(e){
+            $(".ui-switch").click(function(e){
+                var code = e.keyCode || e.which;
+                if(code == 13 || code == 32) { 
+                    ATutor.switchDetails($('#detail_switch').val());
+                }
+            });
         });
     /*********/ 
         

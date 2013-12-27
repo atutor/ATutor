@@ -40,9 +40,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <tr>
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('atutor_patch_id'); ?></th>
-	<th scope="col"><?php echo _AT('atutor_version_to_apply'); ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('atutor_version_to_apply'); ?></th>
 	<th scope="col"><?php echo _AT('description'); ?></th>
-	<th scope="col"><?php echo _AT('last_modified'); ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('last_modified'); ?></th>
 </tr>
 </thead>
 <tfoot>
@@ -79,9 +79,9 @@ else
 		<tr onmousedown="document.form['m<?php echo $row['myown_patch_id']; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row['myown_patch_id']; ?>">
 			<td width="10"><input type="radio" name="myown_patch_id" value="<?php echo $row['myown_patch_id']; ?>" id="m<?php echo $row['myown_patch_id']; ?>" <?php if ($row['myown_patch_id']==$_POST['myown_patch_id']) echo 'checked'; ?> /></td>
 			<td><label for="m<?php echo $row['myown_patch_id']; ?>"><?php echo $row['atutor_patch_id']; ?></label></td>
-			<td><?php echo $row['applied_version']; ?></td>
+			<td class="hidecol700"><?php echo $row['applied_version']; ?></td>
 			<td><?php echo $row['description']; ?></td>
-			<td><?php echo $row['last_modified']; ?></td>
+			<td class="hidecol700"><?php echo $row['last_modified']; ?></td>
 		</tr>
 <?php 
 	}

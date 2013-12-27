@@ -35,13 +35,13 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 ?>
 	<tr <?php if ($enable_radiotton) echo 'onmousedown="document.form[\'m'. $row_id.'\'].checked = true; rowselect(this);" id="r_'. $row_id .'"'; ?>>
 		<td><input type="radio" name="id" value="<?php echo $row_id; ?>"<?php if ($enable_radiotton) echo 'id="m'. $row_id.'"'; ?> <?php if (!$enable_radiotton) echo 'disabled="disabled" '; if (strcmp($row_id, $id) == 0 || strcmp($row_id, $patch_id) == 0) echo "checked "?> /></td>
-		<td><label <?php if ($enable_radiotton) echo 'for="m'.$row_id.'"'; ?>><?php echo $patch_row["atutor_patch_id"]; ?></label></td>
+		<td class="hidecol700"><label <?php if ($enable_radiotton) echo 'for="m'.$row_id.'"'; ?>><?php echo $patch_row["atutor_patch_id"]; ?></label></td>
 		<td><?php echo $description; ?></td>
 		<td><?php if (!isset($patch_row['status'])) echo _AT("not_installed"); else echo $patch_row["status"]; ?></td>
-		<td><?php echo $patch_row["available_to"]; ?></td>
-		<td><?php echo $patch_row["author"]; ?></td>
-		<td><?php if (isset($patch_row['status'])) echo ($patch_row["installed_date"]=='0000-00-00 00:00:00')?_AT('na'):$patch_row["installed_date"]; ?></td>
-		<td>
+		<td class="hidecol700"><?php echo $patch_row["available_to"]; ?></td>
+		<td class="hidecol700"><?php echo $patch_row["author"]; ?></td>
+		<td class="hidecol700"><?php if (isset($patch_row['status'])) echo ($patch_row["installed_date"]=='0000-00-00 00:00:00')?_AT('na'):$patch_row["installed_date"]; ?></td>
+		<td class="hidecol700">
 		<?php 
 		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>"" || $patch_row["patch_files"]<> ""))
 			echo '
@@ -315,13 +315,13 @@ $msg->printAll();
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>
-		<th scope="col"><?php echo _AT('atutor_patch_id');?></th>
+		<th scope="col" class="hidecol700"><?php echo _AT('atutor_patch_id');?></th>
 		<th scope="col"><?php echo _AT('description');?></th>
 		<th scope="col"><?php echo _AT('status');?></th>
-		<th scope="col"><?php echo _AT('available_to');?></th>
-		<th scope="col"><?php echo _AT('author');?></th>
-		<th scope="col"><?php echo _AT('installed_date');?></th>
-		<th scope="col"><?php echo _AT('view_message');?></th>
+		<th scope="col" class="hidecol700"><?php echo _AT('available_to');?></th>
+		<th scope="col" class="hidecol700"><?php echo _AT('author');?></th>
+		<th scope="col" class="hidecol700"><?php echo _AT('installed_date');?></th>
+		<th scope="col" class="hidecol700"><?php echo _AT('view_message');?></th>
 	</tr>
 </thead>
 	

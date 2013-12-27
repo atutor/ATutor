@@ -31,9 +31,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	<th scope="col"><?php echo _AT('title'); ?></th>
 	<th scope="col"><?php echo _AT('your_mark'); ?></th>
 	<th scope="col"><?php echo _AT('class_avg'); ?></th>
-	<th scope="col"><?php echo _AT('due_date'); ?></th>
-	<th scope="col"><?php echo _AT('completed_date'); ?></th>
-	<th scope="col"><?php echo _AT('time_spent'); ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('due_date'); ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('completed_date'); ?></th>
+	<th scope="col" class="hidecol480"><?php echo _AT('time_spent'); ?></th>
 </tr>
 </thead>
 
@@ -99,9 +99,9 @@ else
 ?>
 			<td><?php echo ($grade=="") ? _AT("na") : $grade; ?></td>
 			<td><?php echo get_class_avg($row["gradebook_test_id"]); ?></td>
-			<td><?php echo $row["due_date"]; ?></td>
-			<td><?php echo ($grade=="") ? _AT("na") : $row_tr["date_taken"]; ?></td>
-			<td><?php echo ($grade=="") ? _AT("na") : get_human_time($row_tr['diff']); ?></td>
+			<td class="hidecol480"><?php echo $row["due_date"]; ?></td>
+			<td class="hidecol480"><?php echo ($grade=="") ? _AT("na") : $row_tr["date_taken"]; ?></td>
+			<td class="hidecol480"><?php echo ($grade=="") ? _AT("na") : get_human_time($row_tr['diff']); ?></td>
 		</tr>
 <?php 
 		}

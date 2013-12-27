@@ -105,12 +105,12 @@
 		<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=public_field<?php echo $page_string; ?>"><?php echo _AT('student_id'); ?></a></th>
 	<?php endif; ?>
 	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=first_name<?php echo $page_string; ?>"><?php echo _AT('first_name'); ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=second_name<?php echo $page_string; ?>"><?php echo _AT('second_name'); ?></a></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=second_name<?php echo $page_string; ?>"><?php echo _AT('second_name'); ?></a></th>
 	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=last_name<?php echo $page_string; ?>"><?php echo _AT('last_name');   ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>
-	<th scope="col"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=creation_date<?php echo $page_string; ?>"><?php echo _AT('creation_date'); ?></a></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=email<?php echo $page_string; ?>"><?php echo _AT('email');           ?></a></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=status<?php echo $page_string; ?>"><?php echo _AT('account_status'); ?></a></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=last_login<?php echo $page_string; ?>"><?php echo _AT('last_login'); ?></a></th>
+	<th scope="col" class="hidecol700"><a href="mods/_core/users/users.php?<?php echo $this->orders[$this->order]; ?>=creation_date<?php echo $page_string; ?>"><?php echo _AT('creation_date'); ?></a></th>
 </tr>
 
 </thead>
@@ -154,11 +154,11 @@
 				<?php endif; ?>
 				<?php $startend_date_longs_format=_AT('startend_date_longs_format'); ?>
 				<td><?php echo AT_print($row['first_name'], 'members.first_name'); ?></td>
-				<td><?php echo AT_print($row['second_name'], 'members.second_name'); ?></td>
+				<td class="hidecol700"><?php echo AT_print($row['second_name'], 'members.second_name'); ?></td>
 				<td><?php echo AT_print($row['last_name'], 'members.last_name'); ?></td>
-				<td><?php echo AT_print($row['email'], 'members.email'); ?></td>
-				<td><?php echo get_status_name($row['status']); ?></td>
-				<td nowrap="nowrap">
+				<td class="hidecol700"><?php echo AT_print($row['email'], 'members.email'); ?></td>
+				<td class="hidecol700"><?php echo get_status_name($row['status']); ?></td>
+				<td nowrap="nowrap"  class="hidecol700">
 					<?php if ($row['last_login'] == 0): ?>
 						<?php echo _AT('never'); ?>
 					<?php else: ?>
@@ -168,7 +168,7 @@
 					?>
 					<?php endif; ?>
 				</td>
-				<td><?php echo AT_date($startend_date_longs_format, $row['creation_date'], AT_DATE_MYSQL_DATETIME); ?></td>
+				<td class="hidecol700"><?php echo AT_date($startend_date_longs_format, $row['creation_date'], AT_DATE_MYSQL_DATETIME); ?></td>
 			</tr>
 		<?php } ?>
 	</tbody>

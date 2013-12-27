@@ -1,6 +1,33 @@
 <?php global $_config; $_config_defaults;?>
-<div class="container" style="width: 40%; float: right; padding-top: 4px; padding-left: 10px;">
-	<div class="input-form" style="width: 98%;">
+
+
+<div class="admin_container"> 
+	<?php 
+	$this->path_length = strlen($this->base_path);
+
+	echo '<ol id="tools">';
+	foreach ($this->top_level_pages as $page_info) {
+		echo '<li class="top-tool"><a href="' . $page_info['url'] . '">' . $page_info['title'] . '</a>  ';
+
+		$page_info['url'] = substr($page_info['url'], $this->path_length);
+
+		if ($this->pages[$page_info['url']]['children']) {
+			echo '<ul class="child-top-tool">';
+			foreach ($this->pages[$page_info['url']]['children'] as $child) {
+				echo ' <li class="child-tool"><a href="'.$child.'">'._AT($this->pages[$child]['title_var']).'</a></li>';
+			}
+			echo '</ul>';
+		}
+		echo '</li>'; //end top-tool
+	}
+	echo '</ol>';
+	
+?>
+
+</div>  <!-- end "container" -->
+
+<div class="admin_container_r">
+	<div class="input-form">
 			<div class="row">
 				<h3><?php echo _AT('social_switch'); ?></h3>
 				<p><?php echo _AT('social_switch_text'); ?></p>
@@ -19,18 +46,7 @@
 			</form>
 
 	</div>
-	<!--<div class="input-form" style="width: 98%;">
-			<div class="row">
-				<h3><?php echo _AT('donate'); ?></h3>
-				<p><?php echo _AT('donate_text'); ?></p>
-			</div>
-
-			<div style="text-align:center;">
-				<a href="http://www.atutor.ca/payment/index.php?project=ATutor-Donation"><img src="<?php echo $this->base_href; ?>/images/donate.gif" height="28" width="136" border="0" alt="<?php echo _AT('donate'); ?>" /></a><br /><br />
-			</div>
-	</div> -->
-
-	<div class="input-form" style="width: 98%;">
+	<div class="input-form">
 	
 		<form method="get" action="mods/_core/users/instructor_requests.php">
 			<div class="row">
@@ -54,7 +70,7 @@
 	</div>
 
 	<?php if(!defined('IS_SUBSITE')){ ?>
-	<div class="input-form" style="width: 98%;">
+	<div class="input-form">
 		<form method="get" action="mods/_standard/patcher/index_admin.php">
 			<div class="row">
 				<h3><?php echo _AT('available_patches'); ?></h3>
@@ -68,7 +84,7 @@
 	</div>
 	<?php } ?>
 	
-	<div class="input-form" style="width: 98%">
+	<div class="input-form">
 		<div class="row">
 			<h3><?php echo _AT('statistics_information'); ?></h3>
 
@@ -127,30 +143,3 @@
 	</div>
 
 </div> 
-
-
-<div class="admin_container" style="width: 55%;"> 
-	<?php 
-	$this->path_length = strlen($this->base_path);
-
-	echo '<ol id="tools" style="margin-right: 0px;">';
-	foreach ($this->top_level_pages as $page_info) {
-		echo '<li class="top-tool"><a href="' . $page_info['url'] . '">' . $page_info['title'] . '</a>  ';
-
-		$page_info['url'] = substr($page_info['url'], $this->path_length);
-
-		if ($this->pages[$page_info['url']]['children']) {
-			echo '<ul class="child-top-tool">';
-			foreach ($this->pages[$page_info['url']]['children'] as $child) {
-				echo ' <li class="child-tool"><a href="'.$child.'">'._AT($this->pages[$child]['title_var']).'</a></li>';
-			}
-			echo '</ul>';
-		}
-		echo '</li>'; //end top-tool
-	}
-	echo '</ol>';
-	
-?>
-
-</div>  <!-- end "container" -->
-

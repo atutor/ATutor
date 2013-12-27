@@ -125,9 +125,9 @@ print_data_table($rows_mobile, MOBILE_DEVICE);
 	<th scope="col">&nbsp;</th>
 	<th scope="col"><?php echo _AT('title'); ?></th>
 	<th scope="col"><?php echo _AT('status'); ?></th>
-	<th scope="col"><?php echo _AT('version'); ?></th>
-	<th scope="col"><?php echo _AT('directory_name'); ?></th>
-	<th scope="col"><?php echo _AT('description'); ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('version'); ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('directory_name'); ?></th>
+	<th scope="col" class="hidecol700"><?php echo _AT('description'); ?></th>
 	<th scope="col"><?php echo _AT('theme_screenshot'); ?></th>
 </tr>
 </thead>
@@ -162,7 +162,7 @@ foreach($rows_themes as $row){
 			<input type="radio" name="theme_dir" value="<?php echo $row['dir_name']; ?>" />
 			<input type="hidden" name="<?php echo $row['dir_name']; ?>_version" value="<?php echo $row['version']; ?>" />
 		</td>
-		<td nowrap="nowrap" valign="top"><label for="AT_t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
+		<td nowrap="nowrap" valign="top" ><label for="AT_t_<?php echo $row['dir_name']; ?>"><?php echo AT_print($row['title'], 'themes.title'); ?></label></td>
 		<td valign="top"><?php
 			if ($row['status'] == 0) {
 				echo _AT('disabled');
@@ -173,9 +173,9 @@ foreach($rows_themes as $row){
 			}
 			?>
 		</td>
-		<td valign="top"><?php echo $row['version']; ?></td>
-		<td valign="top"><code><?php echo $row['dir_name']; ?>/</code></td>
-		<td valign="top"><?php echo $row['extra_info']; ?></td>
+		<td valign="top" class="hidecol700"><?php echo $row['version']; ?></td>
+		<td valign="top" class="hidecol700"><code><?php echo $row['dir_name']; ?>/</code></td>
+		<td valign="top" class="hidecol700"><?php echo $row['extra_info']; ?></td>
 		<td valign="top">
 			   <?php if($customized == '1'){ ?>
                    <?php if (file_exists($main_theme_dir . $row['dir_name'] . '/screenshot.jpg')) { ?>
