@@ -4071,21 +4071,21 @@ Responsive elements
 
 }
 @media screen and (max-width: 640px) {
-.admin_container{
-    width: 100%; 
-    float: left;
-    padding-top: 4px; 
-    padding-left: 2px;
-}
-.admin_container_r{
-    width: 90%; 
-    float: left; 
-    padding-top: 4px; 
-    padding-left: 10px;
-}
-ol#tools{
-    width: 90%;
-}
+    .admin_container{
+        width: 100%; 
+        float: left;
+        padding-top: 4px; 
+        padding-left: 2px;
+    }
+    .admin_container_r{
+        width: 90%; 
+        float: left; 
+        padding-top: 4px; 
+        padding-left: 10px;
+    }
+    ol#tools{
+        width: 90%;
+    }
     .page_wrapper{
         width:100%;
     }
@@ -4196,7 +4196,7 @@ ol#tools{
         height:2em;
         background-color: #F3F3F3;
         background: url("images/listmenu_arrow.png") no-repeat scroll right 5px top 2px rgba(0, 0, 0, 0);
-    border-bottom:  1px solid #DED29E;  
+        border-bottom:  1px solid #DED29E;  
     }
     ul#topnavlist_sm li a {
         margin-left:.5em;
@@ -4224,11 +4224,10 @@ ol#tools{
     }
     #lrg_topnav{
         display:none;
-        visibility:hidden;
     }
     #lrg_subnav{
-/*        display:none;
-        visibility:hidden; */
+        display:inline;
+
     }
     #topnavlist-link{
         border:thin solid #DED29E;
@@ -4242,7 +4241,7 @@ ol#tools{
     } 
     
    #topnavlist-link:hover, #topnavlist-link:focus{
-        	background-image: linear-gradient(#EAEAEA, #FAFAFA);    
+        background-image: linear-gradient(#EAEAEA, #FAFAFA);    
         
     }
     #topnavlistcontainer_sm{
@@ -4250,8 +4249,9 @@ ol#tools{
     }
     div#subnavlistcontainer {
         height:auto;
-        float:left;
+   /*     float:left;
         clear:both;
+        */
         margin: 0;
         width: 100%;
         padding:0 0 0 0;
@@ -4327,7 +4327,7 @@ ol#tools{
 
 
     a.content_link:hover, a.content_link:focus{
-        	background-image: linear-gradient(#EAEAEA, #FAFAFA);    
+        background-image: linear-gradient(#EAEAEA, #FAFAFA);    
     }
     #content{
 	    display:none;
@@ -4337,7 +4337,7 @@ ol#tools{
         background-color: white;
 	}
     #contentwrapper{
-     margin-top:-2em;
+        margin-top:-2em;
     }
 	#navigation-column{
 	    display:none;

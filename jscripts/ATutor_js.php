@@ -84,6 +84,7 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('padding', '');
                         }
                 });    
+                
                 // Float Content tab in 640 mode
                 $('#sm_content').scrollToFixed({
                     marginTop: 0,
@@ -96,21 +97,7 @@ ATutor.course = ATutor.course || {};
                         $("a.content_link").css('margin-left', '0em');
                         }
                 });      
-                
-                
-                // Float Content tab in 640 mode
-            /*    $('#lrg_content').scrollToFixed({
-                    marginTop: 38,
-                    dontSetWidth: true,
-                    preFixed: function() {  
-                        
-                        },
-                    postFixed: function() { 
-                        $('#leftcolumn').css('margin-left','0em');
-                        $('#leftcolumn').css('background-color:','#cccccc');
-                        }
-                });  
-            */        
+                      
                 // Floating subnavlist bar
                 $('#lrg_subnav').scrollToFixed({
                     marginTop: 34,
@@ -168,7 +155,7 @@ ATutor.course = ATutor.course || {};
                 /********
                 **  Hide/Show instructor course admin tools 
                 *******/
-                var initialStatus = ($.cookie('showSubNav') === "on") ? "1" : "0";
+                var initialStatus = ($.cookie('showSubNav_i') === "on") ? "1" : "0";
                 if(initialStatus === "0"){
                     $("ul#subnavlist").css("border-bottom", "none");
                     $("#subnavlist_i").toggleClass("hidden").hide('slow');
@@ -187,7 +174,7 @@ ATutor.course = ATutor.course || {};
                         $(".del-content-icon").toggleClass("show").show('slow');  
                        // $(".detail_switch").toggleClass("show").show('slow');  
                         $(".buttonbox").toggleClass("show").show('slow');    
-                        $.cookie('showSubNav', "on", { expires: 30, path: '/' });
+                        $.cookie('showSubNav_i', "on", { expires: 30, path: '/' });
                         //console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
                         //console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
                     } else if(viewFlag === "1") {
@@ -198,7 +185,7 @@ ATutor.course = ATutor.course || {};
                         $(".del-content-icon").toggleClass("hidden").hide('slow');
                        // $(".detail_switch").toggleClass("hidden").hide('slow');  
                         $(".buttonbox").toggleClass("hidden").hide('slow');
-                        $.cookie('showSubNav', "off", { expires: 30, path: '/' });
+                        $.cookie('showSubNav_i', "off", { expires: 30, path: '/' });
                        //console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
                        //console.log("switchval=" + $('#admin_switch').val() + ' initial=' + initialStatus);
                     }
@@ -207,7 +194,7 @@ ATutor.course = ATutor.course || {};
                 // Initialize the switch based on previously saved cookie value    
                 $('#admin_switch option[value="' + initialStatus + '"]').attr("selected", true);
                 $('#admin_switch').switchify();
-                $('#admin_switch').val(($.cookie('showSubNav') === "on") ? "1" : "0");
+                $('#admin_switch').val(($.cookie('showSubNav_i') === "on") ? "1" : "0");
                 $("#subnavlistcontainer").css("background", "transparent");
                 $(".ui-switch").bind("click keypress", function(){
                     ATutor.switchView($('#admin_switch').val());
@@ -273,19 +260,19 @@ ATutor.course = ATutor.course || {};
     /*****
     ** Switch between hide and show submenu
     *****/
-   // $('#showsubnav').css('display', 'inline');
-     var initialSubNav = ($.cookie('showSubNav') === "collapsed") ? "expanded" : "collapsed";
-     console.log(initialSubNav);
+        // Get initial subnavbar toggle state
+        var initialSubNav = ($.cookie('showSubNav') === "expanded") ? "expanded" : "collapsed";
+        console.log(initialSubNav);
         if(initialSubNav === 'collapsed'){
-            $('#showsubnav').css('display', 'inline');
-            $('#hidesubnav').css('display', 'none');
-            $('#subnavlist li:not(.active)').css('display', 'none');
-        }else{
             $('#showsubnav').css('display', 'none');
             $('#hidesubnav').css('display', 'inline');
             $('#subnavlist li:not(.active)').css('display', 'inline');
+        }else{
+            $('#showsubnav').css('display', 'inline');
+            $('#hidesubnav').css('display', 'none');
+            $('#subnavlist li:not(.active)').css('display', 'none');
         }
-
+        // Enable subnavtoggle mouse access
         $("#showsubnav").click(function() {
             $('#showsubnav').css('display', 'none');
             $('#hidesubnav').css('display', 'inline');
@@ -300,37 +287,27 @@ ATutor.course = ATutor.course || {};
             var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
             $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
         });
+        
+        //Enable subnav toggle keyboard access
         $("#subnavlist li.active").keypress(function(e) {
             var code = e.keyCode || e.which;
-            console.log(code);
             if(code == 13 || code == 32) { 
-            $('#showsubnav').css('display', 'none');
-            $('#hidesubnav').css('display', 'inline');
-                if($.cookie('showSubNav') === 'expanded'){
+                if($.cookie('showSubNav') === 'collapsed'){
                     $('#subnavlist li:not(.active)').show("1200");
-                    var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
+                    $('#showsubnav').css('display', 'none');
+                    $('#hidesubnav').css('display', 'inline');
+                    var new_value = $("#subnavlist li:not(.active)").is(":visible") ? 'expanded' : 'collapsed';
                     $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
                 }else{
                     $('#subnavlist li:not(.active)').hide("1200");
-                    var new_value = $("#showsubnav").is(":visible") ? 'collapsed' : 'expanded';
+                    $('#showsubnav').css('display', 'inline');
+                    $('#hidesubnav').css('display', 'none');
+                    var new_value = $("#subnavlist li:not(.active)").is(":visible") ? 'expanded' : 'collapsed';
                     $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
                 }
             }
         });
-        /*
-        $("#subnavlist li.active").keypress(function(e) {
-        var code = e.keyCode || e.which;
-        console.log(code);
-        if(code == 13 || code == 32) { 
-            $('#showsubnav').css('display', 'inline');
-            $('#hidesubnav').css('display', 'none');
-            $('#subnavlist li:not(.active)').hide("1200");
-            var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
-            $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
-        }
-        }); 
-        */
-           
+
     /* Show/Hide Advanced Admin System Preferences, set cookie */
     /*   $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');
             $("div.adv_toggle").click(function() {

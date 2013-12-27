@@ -218,7 +218,7 @@ global $system_courses, $_custom_css, $db;
 				
 <!-- the main navigation. in our case, tabs -->
 <div id="lrg_topnav">
-    <div id="topnavlistcontainer"  role="navigation">
+    <div id="topnavlistcontainer" role="navigation">
         <ul id="topnavlist">
             <?php $accesscounter = 0; //initialize ?>
             <?php foreach ($this->top_level_pages as $page): ?>
@@ -256,7 +256,7 @@ global $system_courses, $_custom_css, $db;
 <div id="sm_topnav">
     <?php if ($this->current_sub_level_page): ?>
     <div id="topnavlistcontainer_sm" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" style="height:auto;">
-    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);"><?php echo _AT('navigation'); ?></a>
+    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);" title="Toggle to open and close main navigation."><?php echo _AT('navigation'); ?><span title="Toggle to open and close main navigation">&nbsp;</span></a>
     <br />
         <div id="navigation-column">
         <?php if ($this->current_sub_level_page): ?>
@@ -374,8 +374,8 @@ global $system_courses, $_custom_css, $db;
 
 	<?php  if (count($this->sub_level_pages) > 1 || $this->sub_level_pages_i > 0): ?>
 	<div id="lrg_subnav">
-		<div id="subnavlistcontainer" role="navigation"  aria-live="rude">
-		<a name="admin_tools" id="admin_tools" title="admin tools"></a>
+		<div id="subnavlistcontainer" role="navigation">
+		<a name="admin_tools" id="admin_tools" title="<?php echo _AT("course_admin_tools"); ?>"></a>
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">
