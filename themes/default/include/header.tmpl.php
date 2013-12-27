@@ -392,11 +392,11 @@ global $system_courses, $_custom_css, $db;
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 
 				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page && $num_pages > 1){ ?>
-				      <li class="active" tabindex="0"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?><span class="subnav_toggle" id="hidesubnav"  title="<?php echo _AT("hide_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span><span class="subnav_toggle" id="showsubnav" title="<?php echo _AT("open_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span></li>
+				      <li class="active" tabindex="0"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?><span class="subnav_toggle" id="hidesubnav"  title="<?php echo _AT("hide_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span><span class="subnav_toggle" id="showsubnav" title="<?php echo _AT("open_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span></li>
 
 				
 				<?php } else if($num_pages > 1) { ?>
-					  <li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo htmlentities_utf8($this->sub_level_pages[$i]['title']); ?></a></li>
+					  <li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?></a></li>
 				<?php } ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>
@@ -423,9 +423,9 @@ global $system_courses, $_custom_css, $db;
 			<?php for ($i=0; $i<$num_pages_i; $i++): ?>
 
 				<?php if ($this->sub_level_pages_i[$i]['url'] == $this->current_sub_level_page): ?>
-				      <li class="active"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></li>
+				      <li class="active"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages_i[$i]['title'])); ?></li>
 				<?php else: ?>
-					<li><a href="<?php echo $this->sub_level_pages_i[$i]['url'].$fcid; ?>"><?php echo htmlentities_utf8($this->sub_level_pages_i[$i]['title']); ?></a></li>
+					<li><a href="<?php echo $this->sub_level_pages_i[$i]['url'].$fcid; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages_i[$i]['title'])); ?></a></li>
 				<?php endif; ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>

@@ -125,14 +125,16 @@ function create_sql($query, $params=array(), $sanitize = true){
     if ($sanitize) {
         foreach($params as $i=>$value) {
          if(defined('MYSQLI_ENABLED')){  
-             $value = addslashes($addslashes($value));     
+             $value = addslashes(htmlspecialchars_decode($value, ENT_QUOTES));  
              $params[$i] = mysqli_real_escape_string($db, $value);
             }else {
              $params[$i] = $addslashes($value);           
             }
         }
     }
+    
     $sql = vsprintf($query, $params);
+    //error_log($sql);
     return $sql;
 }
 function execute_sql($sql, $oneRow, $callback_func, $array_type){
@@ -147,8 +149,8 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
         // NOTE ! Uncomment the error_log() line below to start logging database queries to your php_error.log. 
         // BUT  ! Use for debugging purposes ONLY. Creates very large logs if left running.
         
-    error_log(print_r($sql, true), 0);    
-
+    //error_log(print_r($sql, true), 0);    
+    
         // Query DB and if something goes wrong then log the problem
         if(defined('MYSQLI_ENABLED')){
                $result = mysqli_query($db, $sql) or (error_log(print_r(mysqli_error($db), true), 0) and $msg->addError($displayErrorMessage));                

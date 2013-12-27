@@ -200,7 +200,6 @@ if($_GET['mobile'] == '2'){
 }
 $_sub_level_pages        = get_sub_navigation($current_page);
 $_sub_level_pages_i        = get_sub_navigation_i($current_page);
-
 $_current_sub_level_page = get_current_sub_navigation_page($current_page);
 $_current_sub_level_page_i = get_current_sub_navigation_page_i($current_page);
 
