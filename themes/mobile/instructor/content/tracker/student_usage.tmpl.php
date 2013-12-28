@@ -25,7 +25,7 @@
 
 <?php if ($_GET['id']) : ?>
 <div class="table-surround">
-	<table class="data" summary="View the usage of a specific student">
+	<table class="data" summary="<?php echo _AT('student_page_stats'); ?>">
 	<thead>
 	<tr>
 		<th scope="col"><?php echo _AT('page'); ?></th>

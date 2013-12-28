@@ -316,14 +316,14 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 						if ($this->sequence_links['previous']): ?>
 					
 						<li class="rectangle2 arrow back">
-							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous'); ?> </a>
 						</li>
 						
 					<?php endif;
 						if ($this->sequence_links['next']): ?>
 						
 						<li class=" rectangle2 arrow forward">
-							<a  href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
+							<a  href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next'); ?></a>
 						</li>
 						
 					<?php endif; ?>
@@ -429,12 +429,12 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 						</li>
 				<?php else:
 					if ($this->sequence_links['previous']): ?>
-						<li  class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo "Previous"; ?> </a>
+						<li  class="arrow back"><a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous'); ?> </a>
 						</li>
 					<?php endif;
 					if ($this->sequence_links['next']): ?>
 						<li class="arrow forward">
-						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo "Next"; ?></a>
+						<a href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next'); ?></a>
 						</li>
 					<?php endif; ?>
 				<?php endif; ?>
@@ -447,7 +447,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 		<?php if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0): ?> 	
 		<div id="course-level-navigation" role="navigation" aria-live="assertive">
 			<div id="content-link-container" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
-				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo "Content";//_AT("content_navigation"); ?></a>	
+				<a id="content_link" class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo _AT("content"); ?></a>	
 			</div>	
 				<div id="content">
 					<?php $contentManager->printMainMenu(); ?>

@@ -1,6 +1,6 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="table-surround">
-<table class="data" summary="Course polls listed by question, creation date and votes" >
+<table class="data" summary="<?php echo _AT('course_polls_summary'); ?>" >
 <colgroup>
 	<?php if ($this->col == 'question'): ?>
 		<col />

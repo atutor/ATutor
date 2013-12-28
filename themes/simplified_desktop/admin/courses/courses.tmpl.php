@@ -118,7 +118,7 @@
 		
 			<h3><?php echo _AT('results_found', $this->num_results); ?></h3>
 		<div id="hide-show-container">		
-			<a id="results-hide-show-link" class="content-expand" href="javascript:void(0);" tabindex="1">Refine Results</a>
+			<a id="results-hide-show-link" class="content-expand" href="javascript:void(0);" tabindex="1"><?php echo _AT('refine_results'); ?></a>
 		</div>
 	
 		
@@ -157,7 +157,7 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="table-surround">
-<table class="data" summary="Course title, instructor, and enrollment." >
+<table class="data" summary="<?php echo _AT('course_title_instructor_enrolment'); ?>" >
 <colgroup>
 	<?php if ($col == 'title'): ?>
 		<col />

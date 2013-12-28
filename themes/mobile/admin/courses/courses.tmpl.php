@@ -43,7 +43,7 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="table-surround">
-<table class="data" summary="Course title, instructor, and enrollment." >
+<table class="data" summary="<?php echo _AT('course_title_instructor_enrolment'); ?>" >
 <colgroup>
 	<?php if ($col == 'title'): ?>
 		<col />
