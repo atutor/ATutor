@@ -287,7 +287,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 		<div class="subnavcontain-contain" role="menu" aria-live="assertive">	
 			<div class="subnavcontain">
 				<div class="rectangle">
-				<a id="content_link_phone"  class="content-expand" href="javascript:void(0);" ><?php echo _AT(view_course_content); ?></a> 
+				<a id="content_link_phone"  class="content-expand" href="javascript:void(0);" ><?php echo _AT('view_course_content'); ?></a> 
 				<!-- <a href="#">content</a> -->
 				</div>
 			</div>
@@ -491,7 +491,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 									<?php endif; ?> 
 								<?php endif;?>
 								<?php if($i== 7): ?>
-									<li role="menuitem" class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="More menu items" title="More menu items" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
+									<li role="menuitem" class="more-button-surround" style="font-size: 14px; padding-left: .313em; padding-right: .313em; position: relative; top: .313em;"><a class="more-button" href="javascript:void(0);" tabindex="1"><img id="switch" border="" width="20" height="20" alt="<?php echo _AT('more_menu_items'); ?>" title="<?php echo _AT('more_menu_items'); ?>" src="<?php echo $this->base_href; ?>images/showmenu.gif"/></a></li>
 									<li role="menuitem">
 									<ul class="subnavlist-more">
 									<li role="menuitem" class="more-item" style="font-size: 14px; list-style-type: bullet"><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo $this->sub_level_pages[$i]['title']; ?></a></li>
