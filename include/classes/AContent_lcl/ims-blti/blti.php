@@ -1,5 +1,6 @@
 <?php
-
+// FILE NOT USED
+exit;
 require_once 'OAuth.php';
 require_once 'TrivialOAuthDataStore.php';
 
