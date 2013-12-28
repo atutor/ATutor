@@ -238,6 +238,12 @@ require(AT_INCLUDE_PATH.'classes/Savant2/Savant2.php');       /* for the theme a
 $savant = new Savant2();
 $savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 
+/**************************************************/
+/* load in message handler                        */
+/**************************************************/
+require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
+$msg = new Message($savant);
+
 //if user has requested theme change, make the change here
 if ((isset($_POST['theme']) || isset($_POST['mobile_theme'])) && isset($_POST['submit'])) {
 	//http://atutor.ca/atutor/mantis/view.php?id=4781
@@ -283,10 +289,11 @@ if (isset($_SESSION['prefs']['PREF_THEME']) && isset($_SESSION['valid_user']) &&
 	if ($row['status'] == 0) {
 		// get user defined default theme if the preference theme is disabled
 		$default_theme = get_default_theme();
-		if (!is_dir(AT_SYSTEM_THEME_DIR . $default_theme['dir_name']) && !is_dir(AT_SUBSITE_THEME_DIR . $default_theme['dir_name'])) {
+		if (!is_dir(AT_SYSTEM_THEME_DIR . $default_theme) && !is_dir(AT_SUBSITE_THEME_DIR . $default_theme)) {
 			$default_theme = get_system_default_theme();
 		}
 		$_SESSION['prefs']['PREF_THEME'] = $default_theme;
+    $msg->addError('THEME_PREVIEW_DISABLED');
 	}
 }
 
@@ -306,11 +313,6 @@ if (is_customized_theme($_SESSION['prefs']['PREF_THEME'])) {
 
 define('AT_CUSTOMIZED_DATA_DIR', AT_BASE_HREF . $theme_path);
 
-/**************************************************/
-/* load in message handler                        */
-/**************************************************/
-require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
-$msg = new Message($savant);
 
 /**************************************************/
 /* load in content manager                        */

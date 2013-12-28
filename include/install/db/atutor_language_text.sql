@@ -285,6 +285,7 @@ INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_STUD_INFO_NOT_FOUND
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TERM_EXISTS', 'The term <strong>%s</strong> already exists.', '2004-07-22 16:55:03', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_THEME_NOT_DELETED', 'The theme could not be deleted because it is either the current default theme or the original default theme.', '2005-05-10 09:27:02', 'theme manager deleting theme');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_THEME_NOT_DISABLED', 'Theme cannot be disabled because it is currently the default theme.', '2005-05-09 14:27:23', '');
+INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_THEME_PREVIEW_DISABLED', 'Theme must be enabled before previewing', '2013-12-08 14:27:23', '');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TILE_AUTHENTICATION_FAIL', 'The AContent authentication fails at:<br />%s.', '2010-06-25 12:46:10', 'tile search');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TILE_IMPORT_FAIL', 'AContent lesson import failed at:<br />%s', '2010-06-25 12:46:28', 'tile search');
 INSERT INTO `language_text` VALUES ('en', '_msgs', 'AT_ERROR_TOO_BIG_TO_UPLOAD', 'The file size %1s is too big to be uploaded.', '2012-07-25 11:42:21', '');
