@@ -41,7 +41,7 @@
 			<dd>If enabled, users can self-register. Disable to remove registration functions</dd>
 			<dt>Course Browser</dt>
 			<dd>If enabled, students are able to browse through the available course in ATutor.</dd>
-			<dt>Show Things Current on My Start Page</dt>
+			<dt>Show Current Activity on My Start Page</dt>
 			<dd>If enabled, students and instructors are presented with a list of current changes in their course on My Start Page, such as current announcements, new forum posts, upcoming tests, new files for download, and much more.</dd>
 
 			<dt>Allow Instructors to enroll users from the system registration list.</dt>

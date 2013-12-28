@@ -2381,7 +2381,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'show_all_remedial', 'Sho
 INSERT INTO `language_text` VALUES ('en', '_template', 'show_available_applications', 'Show Available Gadgets', '2009-05-27 12:01:11', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'show_bread_crumbs', 'Show Breadcrumb Link Navigation', '2008-09-24 13:05:06', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'show_contents', 'Show page Table of Contents', '2010-10-07 10:42:22', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'show_current', 'Display Things Current on My Start Page', '2012-07-09 12:37:21', '');
+INSERT INTO `language_text` VALUES ('en', '_template', 'show_current', 'Display Current Activity on My Start Page', '2012-07-09 12:37:21', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'show_guest_form', 'Show Guest Information Collection Form', '2008-10-09 14:13:38', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'show_guide', 'Show Context Sensitive Links to Handbook', '2008-09-24 12:09:33', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'show_next_previous_buttons', 'Show Next/Previous Navigation Buttons', '2008-09-24 13:04:28', '');
@@ -2502,7 +2502,7 @@ INSERT INTO `language_text` VALUES ('en', '_template', 'theme_specific_categorie
 INSERT INTO `language_text` VALUES ('en', '_template', 'there_are_entries', 'There are %s entries.', '2009-05-27 12:01:11', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'thesaurus', 'Thesaurus', '2008-09-09 09:03:56', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'the_follow_errors_occurred', 'The following errors occurred:', '2005-03-07 12:41:09', '');
-INSERT INTO `language_text` VALUES ('en', '_template', 'things_current', 'Things Current', '2010-04-14 12:20:52', 'my start page');
+INSERT INTO `language_text` VALUES ('en', '_template', 'things_current', 'Current Activity', '2010-04-14 12:20:52', 'my start page');
 INSERT INTO `language_text` VALUES ('en', '_template', 'this_course_only', 'This course only', '2004-08-18 12:02:37', '');
 INSERT INTO `language_text` VALUES ('en', '_template', 'this_is_content', 'This is a blank content page. Use Edit this Page in the Content Editor links above to modify this page. As the instructor of this course, you can manage it through the Manage tab above.', '2010-10-19 10:16:29', 'default content insert when a new course is created');
 INSERT INTO `language_text` VALUES ('en', '_template', 'thread', 'Thread', '2012-06-11 16:38:04', 'forums subscription email');
