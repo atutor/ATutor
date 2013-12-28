@@ -25,6 +25,12 @@ include_once(AT_SITE_PATH.'include/config.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/constants.inc.php');
 require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 
+if(defined('MYSQLI_ENABLED')){
+    $db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME);   
+}else{
+    $db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, '');
+    at_db_select(DB_NAME, $db);
+}
 //mimic config variables, vitals.inc.php 135-140
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
 
