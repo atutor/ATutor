@@ -82,8 +82,15 @@ if (!defined('AT_REDIRECT_LOADED')){
 
 if (!defined('AT_REDIRECT_LOADED')){
 	require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
-	$db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
+	     
+    if(defined('MYSQLI_ENABLED')){
+ 	$db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, DB_NAME);   
+    }else{
+	$db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD, '');
 	at_db_select(DB_NAME, $db);
+    }
+	//$db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
+	//at_db_select(DB_NAME, $db);
 }
 
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
