@@ -16,9 +16,15 @@ include(AT_INCLUDE_PATH . 'install/install.inc.php');
 
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 
-    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],$_POST['step2']['db_password']);
-    at_db_select($_POST['step2']['db_name'], $db);
-    
+    //$db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],$_POST['step2']['db_password']);
+    //at_db_select($_POST['step2']['db_name'], $db);
+    if(defined('MYSQLI_ENABLED')){
+ 	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],$_POST['step2']['db_password'], $_POST['step2']['db_name']);   
+    }else{
+	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],$_POST['step2']['db_password']);
+	    at_db_select($_POST['step2']['db_name'], $db);
+    }
+        
 	install_step_accounts($_POST['admin_username'], $_POST['form_admin_password_hidden'], $_POST['admin_email'], $_POST['site_name'],
                                $_POST['email'], $_POST['account_username'], $_POST['form_account_password_hidden'],
                                $_POST['account_fname'], $_POST['account_lname'], $_POST['account_email'],

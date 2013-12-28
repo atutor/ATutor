@@ -5,8 +5,12 @@ error_reporting(E_ALL ^ E_NOTICE);
 
 // set the default timezone to avoid the warning of "cannot rely on system timezone"
 @date_default_timezone_set(@date_default_timezone_get());
-require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 
+if(function_exists('mysqli_connect')){
+	define('MYSQLI_ENABLED',	1);
+} 
+
+require_once(AT_INCLUDE_PATH.'lib/mysql_connect.inc.php');
 if(!is_object($msg)){
     require_once(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
     $msg = new Message($savant);

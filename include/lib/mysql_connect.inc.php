@@ -14,7 +14,11 @@ if (AT_INCLUDE_PATH !== 'NULL') {
 
 function at_db_connect($db_host, $db_port, $db_login, $db_password, $db_name){
      if(defined('MYSQLI_ENABLED')){
-        $db = mysqli_connect($db_host, $db_login,$db_password, $db_name, $db_port);
+        if($db_name == ''){
+            $db = mysqli_connect($db_host, $db_login, $db_password);
+        }else{
+            $db = mysqli_connect($db_host, $db_login,$db_password, $db_name, $db_port);
+        }
      } else{
         $db = @mysql_connect($db_host . ':' . $db_port, $db_login, $db_password);
      }   
@@ -48,6 +52,19 @@ function at_db_select($db_name, $db){
 	}
  }
  
+}
+
+function at_is_db($db_name){
+    global $db;
+     if(defined('MYSQLI_ENABLED')){
+        if(@mysqli_select_db($db, $db_name)){
+            return true; 
+        }
+     }else{
+         if(@mysql_select_db($db_name, $db)){
+            return true; 
+        }
+     }
 }
 /*
 		//get set_utf8 config

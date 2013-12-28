@@ -23,9 +23,15 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 	unset($errors);
 
 	//check DB & table connection
-	$db = at_db_connect($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
-    at_db_select($_POST['db_name'], $db);
-
+	//$db = at_db_connect($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']));
+    //at_db_select($_POST['db_name'], $db);
+    
+    if(defined('MYSQLI_ENABLED')){
+ 	    $db = at_db_connect($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']), $_POST['db_name']);   
+    }else{
+	    $db = at_db_connect($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']), '');
+	    at_db_select($_POST['db_name'], $db);
+    }
 		$row = at_db_version($db);
 		if (version_compare($row['version'], '4.0.2', '>=') === FALSE) {
 			$errors[] = 'MySQL version '.$row['version'].' was detected. ATutor requires version 4.0.2 or later.';

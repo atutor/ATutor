@@ -56,10 +56,17 @@ if (isset($_POST['submit'])) {
 
 		if ($_POST['step1']['old_path'] != '') {
 			// get some usage data from this upgrade:
-			$db = at_db_connect($_POST['step1']['db_host'] , $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
-			at_db_select($_POST['step1']['db_name'], $db);
-
-			$db_size = 0; // db size in bytes
+			//$db = at_db_connect($_POST['step1']['db_host'] , $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+			//at_db_select($_POST['step1']['db_name'], $db);
+			
+            if(defined('MYSQLI_ENABLED')){
+                $db = at_db_connect($_POST['step1']['db_host'],$_POST['step1']['db_port'],$_POST['step1']['db_login'],urldecode($_POST['step1']['db_password']), $_POST['step1']['db_name']);   
+            }else{
+                $db = at_db_connect($_POST['step1']['db_host'] , $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
+                at_db_select($_POST['step1']['db_name'], $db);
+            }
+    
+    			$db_size = 0; // db size in bytes
 
 			$sql = 'SHOW TABLE STATUS';
 			$rows_tables = queryDB($sql, array());
