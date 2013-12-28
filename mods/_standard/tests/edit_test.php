@@ -87,11 +87,11 @@ if (isset($_POST['cancel'])) {
      *            make changes accordingly on line 255 as well.
      */
     $sql = "SELECT t.test_id, anonymous FROM %stests_results r NATURAL JOIN %stests t WHERE r.test_id = t.test_id AND r.test_id=%d";
-    $row_anonymous    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+    $row_anonymous    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid));
 
     if(count($row_anonymous) > 0){
         //If there are submission(s) for this test, anonymous field will not be altered.
-        $_POST['anonymous'] = $row_anonymous['anonymous'];
+        $_POST['anonymous'] = $row_anonymous[0]['anonymous'];
     }
 
     if ($missing_fields) {
@@ -307,7 +307,7 @@ $msg->printErrors();
         // This addresses the following issue: http://www.atutor.ca/atutor/mantis/view.php?id=3268
         // Ref: line 64
         $sql = "SELECT t.test_id, anonymous FROM %stests_results r NATURAL JOIN %stests t WHERE r.test_id = t.test_id AND r.test_id=%d";
-        $row_anon    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid), TRUE);
+        $row_anon    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $tid));
 
         $anonymous_disabled = FALSE;
         if(count($row_anon) > 0){
