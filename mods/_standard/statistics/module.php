@@ -6,5 +6,6 @@ $this->_pages['mods/_standard/statistics/course_stats.php']['title_var'] = 'stat
 $this->_pages['mods/_standard/statistics/course_stats.php']['parent']    = 'tools/index.php';
 $this->_pages['mods/_standard/statistics/course_stats.php']['img']       = 'mods/_standard/statistics/home-statistics.png';
 $this->_pages['mods/_standard/statistics/course_stats.php']['guide']     = 'instructor/?p=statistics.php';
+$this->_pages['mods/_standard/statistics/course_stats.php']['children']     = array('mods/_standard/tracker/tools/index.php','mods/_standard/tracker/tools/student_usage.php');
 
 ?>
