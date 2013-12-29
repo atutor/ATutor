@@ -154,8 +154,8 @@ if(count($row) > 0){
 
     // retrieve the test questions that were saved to `tests_answers`
 
-    $sql = sprintf("SELECT TA.*, TQA.*, TQ.* FROM %stests_answers TA INNER JOIN %stests_questions_assoc TQA USING (question_id) INNER JOIN %stests_questions TQ USING (question_id) WHERE TA.result_id=%d AND TQA.test_id=%d ORDER BY TQ.question_id", TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $result_id, $tid);
-    
+    $sql = "SELECT TA.*, TQA.*, TQ.* FROM %stests_answers TA INNER JOIN %stests_questions_assoc TQA USING (question_id) INNER JOIN %stests_questions TQ USING (question_id) WHERE TA.result_id=%d AND TQA.test_id=%d ORDER BY TQ.question_id";
+    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $result_id, $tid));
 } else if ($test_row['random']) {
     /* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
 
@@ -180,12 +180,15 @@ if(count($row) > 0){
 
     $id_string = implode(',', $required_questions);
 
-    $sql = sprintf('SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d AND TQA.question_id IN (%s) ORDER BY TQ.question_id', TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid, $id_string);
+    $sql = 'SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d AND TQA.question_id IN (%s) ORDER BY TQ.question_id';
+    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid, $id_string));  
+    
 } else {
-    $sql = sprintf("SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id", TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid);
+
+    $sql = "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid));
 }
 
-$rows_questions    = queryDB($sql, array());
 $questions = array();
 
 foreach($rows_questions as $row){
@@ -198,7 +201,7 @@ if ($test_row['random']) {
     shuffle($questions);
 }
 
-if (!$result || !$questions) {
+if (count($rows_questions) == 0 || !$questions) {
     echo '<p>'._AT('no_questions').'</p>';
     require(AT_INCLUDE_PATH.'footer.inc.php');
     exit;
