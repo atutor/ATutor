@@ -50,7 +50,13 @@ if (isset($_GET['edit'], $_GET['id'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
+//Check if any test exists in this course, display help if none.
+$sql = "SELECT count(*) as test_count FROM %stests WHERE course_id=%d";
+$row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
 
+if($row['test_count'] == 0){
+    $msg->printInfos('CREATE_TESTS');
+}
 /* get a list of all the tests we have, and links to create, edit, delete, preview */
 $sql	= "SELECT *, UNIX_TIMESTAMP(start_date) AS us, UNIX_TIMESTAMP(end_date) AS ue FROM %stests WHERE course_id=%d ORDER BY start_date DESC";
 $rows_tests	= queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'] ));
