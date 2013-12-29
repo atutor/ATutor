@@ -18,11 +18,12 @@ authenticate(AT_PRIV_TESTS);
 
 $tid = intval($_REQUEST['tid']);
 $rids = explode(',', $_REQUEST['rid']);
+debug($rids);
 foreach ($rids as $k => $id) {
 	$rids[$k] = intval($id);
 }
 $rid = implode(',', $rids);
-
+debug($rid);
 // Check that the user deletes submissions in his own test; if not, exit like authenticate()
 $sql	= "SELECT count(*) AS cnt FROM %stests_results R LEFT JOIN %stests USING (test_id) WHERE result_id IN (%s) AND course_id = %d AND R.test_id = %d";
 $row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $rid, $_SESSION['course_id'], $tid), TRUE);
@@ -58,9 +59,23 @@ $_pages['mods/_standard/tests/results.php?tid='.$tid]['parent'] = 'mods/_standar
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 unset($hidden_vars);
+
+///// Get the test title and names of those who's tests are being deleted
+$sql = "SELECT title FROM %stests WHERE test_id = %d";
+$test_title = queryDB($sql, array(TABLE_PREFIX, $tid), TRUE);
+
+foreach($rids as $rid_mem){
+    $sql = "SELECT first_name, last_name FROM %smembers WHERE member_id =(SELECT member_id FROM %stests_results WHERE result_id = %d)";
+    $delete_members[$rid_mem] = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $rid_mem), TRUE);
+}
+foreach($delete_members as $delete_member){
+    $delete_list .= "<li><strong>".$delete_member['first_name']." ".$delete_member['last_name']."</strong></li>";
+}
+////
+
 $hidden_vars['tid'] = $tid;
 $hidden_vars['rid'] = $rid;
-$msg->addConfirm(array('DELETE', _AT('submissions') .': <strong>'. count($rids) .'</strong>'), $hidden_vars);
+$msg->addConfirm(array('DELETE', $test_title['title'] .': <ul>'. $delete_list .'</ul>'), $hidden_vars);
 
 $msg->printConfirm();
 
