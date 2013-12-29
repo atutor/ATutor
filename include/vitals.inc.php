@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 //define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
