@@ -368,7 +368,9 @@ class Message {
 		if ($optional != null) // shortcut
 			$this->addAbstract('feedback', $optional); 
 			
-		$this->printAbstract('feedback');
+	    if(!$this->containsErrors()){
+		    $this->printAbstract('feedback');
+		}
 	}
 	
 	/**
@@ -399,7 +401,9 @@ class Message {
 	* @author  Jacek Materna
 	*/
 	function printAll() {
-		$this->printAbstract('feedback');
+	    if(!$this->containsErrors()){
+		    $this->printAbstract('feedback');
+		}
 		$this->printAbstract('error');
 		$this->printAbstract('warning');
 		$this->printAbstract('help');
