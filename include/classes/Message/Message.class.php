@@ -408,6 +408,7 @@ class Message {
 		$this->printAbstract('warning');
 		$this->printAbstract('help');
 		$this->printAbstract('info');
+		unset($_SESSION['message']);
 	}
 	
 	/**
