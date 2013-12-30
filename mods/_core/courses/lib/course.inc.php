@@ -255,7 +255,7 @@ function add_update_course($course_data, $isadmin = FALSE) {
 		echo 'DB Error';
 		exit;
 	}
-	$_SESSION['is_admin'] = true;
+
 	$new_course_id = $_SESSION['course_id'] = at_insert_id();
 	if (isset($isadmin)) {
 	    global $sqlout;	  
