@@ -208,27 +208,46 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 
 	$sql	= "REPLACE INTO %scourses 
 	            SET 
-	            course_id=$course_prop[course], 
-	            member_id='$course_prop[instructor]', 
-	            access='$course_prop[access]', 
-	            title='$course_prop[title]', 
-	            description='$course_prop[description]', 
-	            course_dir_name='$course_prop[course_dir_name]', 
-	            cat_id='$course_prop[category_parent]', 
-	            content_packaging='$course_prop[content_packaging]', 
-	            notify=$course_prop[notify], 
-	            hide=$course_prop[hide], 
+	            course_id=%d, 
+	            member_id='%s', 
+	            access='%s', 
+	            title='%s', 
+	            description='%s', 
+	            course_dir_name='%s', 
+	            cat_id='%s', 
+	            content_packaging='%s', 
+	            notify=%d, 
+	            hide=%d, 
 	            $course_quotas 
-	            primary_language='$course_prop[pri_lang]', 
-	            created_date='$course_prop[created_date]', 
-	            rss=$course_prop[rss], 
-	            copyright='$course_prop[copyright]', 
-	            icon='$course_prop[icon]', 
-	            banner='$course_prop[banner]', 
-	            release_date='$release_date', 
-	            end_date='$end_date' $menu_defaults";
+	            primary_language='%s', 
+	            created_date='%s', 
+	            rss=%d, 
+	            copyright='%s', 
+	            icon='%s', 
+	            banner='%s', 
+	            release_date='%s', 
+	            end_date='%s' $menu_defaults";
 
-	$result = queryDB($sql, array(TABLE_PREFIX));
+	$result = queryDB($sql, array(
+	        TABLE_PREFIX,
+	        $course_prop['course'],
+	        $course_prop['instructor'],
+	        $course_prop['access'],
+	        $course_prop['title'],
+	        $course_prop['description'],
+	        $course_prop['course_dir_name'],
+	        $course_prop['category_parent'],
+	        $course_prop['content_packaging'],
+	        $course_prop['notify'],
+	        $course_prop['hide'],
+	        $course_prop['pri_lang'],
+	        $course_prop['created_date'],
+	        $course_prop['rss'],
+	        $course_prop['copyright'],
+	        $course_prop['icon'],
+	        $course_prop['banner'],
+	        $release_date,
+	        $end_date));
 	
 	$_SESSION['is_admin'] = true;
 	$new_course_id = $_SESSION['course_id'] = at_insert_id();
