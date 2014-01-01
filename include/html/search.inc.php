@@ -195,7 +195,7 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 		$num_found = count($search_totals);
 	}
 
-	echo '<a name="search_results"></a><h3>'.$num_found.' '._AT('search_results').'</h3>';
+	echo '<a name="search_results" tabindex="1"></a><h3 id="search_results">'.$num_found.' '._AT('search_results').'</h3>';
 
 	if (!$num_found) {
 		$msg->printInfos('NO_SEARCH_RESULTS');

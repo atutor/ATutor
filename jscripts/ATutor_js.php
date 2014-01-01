@@ -67,12 +67,12 @@ ATutor.course = ATutor.course || {};
                 });
                 
                 // Float Navigation tab in 640 mode
-                $('#sm_topnav').scrollToFixed({
+         /*       $('#sm_topnav').scrollToFixed({
                     marginTop: 32,
                     dontSetWidth: true,
                     preFixed: function() { 
                         $(this).find('li').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
-                        $(this).find('li').css('margin-top', '-.2em');
+                        $(this).find('li').css('margin-top', '.2em');
                         $(this).find('li').css('padding-right', '2em');
                         $(this).find('li').css('border', '0');
                         $(this).find('div').css('padding', '8');
@@ -84,7 +84,7 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('padding', '');
                         }
                 });    
-                
+            */    
                 // Float Content tab in 640 mode
                 $('#sm_content').scrollToFixed({
                     marginTop: 0,
@@ -349,6 +349,11 @@ ATutor.course = ATutor.course || {};
 <?php   }
 ?>        
      });
+     <?php 
+     // If there are search results, send focus to them
+     if(isset($_GET['search'])){ ?>
+            $( "#search_results" ).focus();
+    <?php } ?>
 })();
 
 ATutor.addJavascript(ATutor.base_href+"jscripts/lib/jquery.autoHeight.js");
