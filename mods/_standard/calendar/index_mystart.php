@@ -114,8 +114,124 @@
 <div style="left:50%; z-index:20000; position:absolute; top:50%" id="loader">
     <img src="mods/_standard/calendar/img/loader.gif" alt="Loading" /> 
 </div>
+
+
+<script language="javascript" type="text/javascript" src="<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/fullcalendar-theme.js">
+</script>
+
+<style type='text/css'>
+    #calendar {
+        width: 75%;
+        margin: 0 auto;
+    }
+</style>
+
+<div id="dialog" class="event-dialog initial-hide" title="<?php echo _AT('calendar_create_event'); ?>">
+    <div id="dialog-inner">
+       <table border="0" cellpadding="5">
+        <tr> 
+            <td>               
+                <label for="name"><?php echo _AT('calendar_form_title'); ?></label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name" 
+                onclick="if(this.value == '<?php echo _AT("calendar_form_title_def"); ?>') { this.value = ''; }" 
+                onfocus="if(this.value == '<?php echo _AT("calendar_form_title_def"); ?>') { this.value = ''; }"/>
+            </td>
+        </tr>                
+        <tr>
+            <td>
+                <label for="date-start"><?php echo _AT('calendar_form_start_d'); ?></label>
+            </td>
+            <td>
+                <label id="lbl-start-time" for ="time-start"><?php echo _AT('calendar_form_start_t'); ?></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" name="date-start" id="date-start" disabled="disabled">
+            </td>
+            <td>
+                <input type="text" name="time" id="time-start" disabled="disabled">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="date-end"><?php echo _AT('calendar_form_end_d'); ?></label>
+            </td>
+            <td>
+                <label id="lbl-end-time" for ="time-end"><?php echo _AT('calendar_form_end_t'); ?></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" name="date" id="date-end">
+            </td>
+            <td>
+                <select name="time" id="time-end">
+                </select>
+            </td>
+        </tr>
+        </table> 
+        <input type="hidden" id="viewname" />
+        <input type="hidden"  id="fc-emode" />
+  </div>
+</div>
+<div id="dialog1" class="event-dialog initial-hide" title="Edit Event">
+    <div id="dialog-inner1">
+        <table border="0" cellpadding="5">
+         <tr> 
+            <td>               
+                <label for="name1"><?php echo _AT('calendar_form_title'); ?></label>
+            </td>
+            <td>
+                <input type="text" name="name" id="name1">
+            </td>
+        </tr>                
+        <tr>
+            <td>
+                <label for="date-start1"><?php echo _AT('calendar_form_start_d'); ?></label>
+            </td>
+            <td>
+                <label id="lbl-start-time1" for ="time-start1"><?php echo _AT('calendar_form_start_t'); ?></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" name="date-start" id="date-start1">
+            </td>
+            <td id="container-fc-tm">
+                <input type="text" name="time" id="time-start1" disabled="disabled">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="date-end1"><?php echo _AT('calendar_form_end_d'); ?></label>
+            </td>
+            <td>
+                <label id="lbl-end-time1" for ="time-end1"><?php echo _AT('calendar_form_end_t'); ?></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <input type="text" name="date" id="date-end1">
+            </td>
+            <td>
+                <select name="time" id="time-end1">
+                </select>
+            </td>
+        </tr>    
+        </table>
+        <input type="hidden" id="viewname1" />
+        <input type="hidden"  id="fc-emode1" /> 
+        <input type="hidden" id="ori-name1" />              
+    </div>
+</div>
+
+<div style="float:left" id="calendar">
+</div>  
 <!-- Right side calendar menu -->
-<div style="float:right;width:20%" class="box">
+<div class="calendar-side">
     <fieldset>
         <legend>
             <h4>
@@ -264,122 +380,7 @@
     <?php
         }
     ?>
-</div>
-
-<script language="javascript" type="text/javascript" src="<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/fullcalendar-theme.js">
-</script>
-
-<style type='text/css'>
-    #calendar {
-        width: 75%;
-        margin: 0 auto;
-    }
-</style>
-
-<div id="dialog" class="event-dialog initial-hide" title="Create Event">
-    <div id="dialog-inner">
-       <table border="0" cellpadding="5">
-        <tr> 
-            <td>               
-                <label for="name"><?php echo _AT('calendar_form_title'); ?></label>
-            </td>
-            <td>
-                <input type="text" name="name" id="name" 
-                onclick="if(this.value == '<?php echo _AT("calendar_form_title_def"); ?>') { this.value = ''; }" 
-                onfocus="if(this.value == '<?php echo _AT("calendar_form_title_def"); ?>') { this.value = ''; }"/>
-            </td>
-        </tr>                
-        <tr>
-            <td>
-                <label for="date-start"><?php echo _AT('calendar_form_start_d'); ?></label>
-            </td>
-            <td>
-                <label id="lbl-start-time" for ="time-start"><?php echo _AT('calendar_form_start_t'); ?></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" name="date-start" id="date-start" disabled="disabled">
-            </td>
-            <td>
-                <input type="text" name="time" id="time-start" disabled="disabled">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="date-end"><?php echo _AT('calendar_form_end_d'); ?></label>
-            </td>
-            <td>
-                <label id="lbl-end-time" for ="time-end"><?php echo _AT('calendar_form_end_t'); ?></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" name="date" id="date-end">
-            </td>
-            <td>
-                <select name="time" id="time-end">
-                </select>
-            </td>
-        </tr>
-        </table> 
-        <input type="hidden" id="viewname" />
-        <input type="hidden"  id="fc-emode" />
-  </div>
-</div>
-<div id="dialog1" class="event-dialog initial-hide" title="Edit Event">
-    <div id="dialog-inner1">
-        <table border="0" cellpadding="5">
-         <tr> 
-            <td>               
-                <label for="name1"><?php echo _AT('calendar_form_title'); ?></label>
-            </td>
-            <td>
-                <input type="text" name="name" id="name1">
-            </td>
-        </tr>                
-        <tr>
-            <td>
-                <label for="date-start1"><?php echo _AT('calendar_form_start_d'); ?></label>
-            </td>
-            <td>
-                <label id="lbl-start-time1" for ="time-start1"><?php echo _AT('calendar_form_start_t'); ?></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" name="date-start" id="date-start1">
-            </td>
-            <td id="container-fc-tm">
-                <input type="text" name="time" id="time-start1" disabled="disabled">
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label for="date-end1"><?php echo _AT('calendar_form_end_d'); ?></label>
-            </td>
-            <td>
-                <label id="lbl-end-time1" for ="time-end1"><?php echo _AT('calendar_form_end_t'); ?></label>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <input type="text" name="date" id="date-end1">
-            </td>
-            <td>
-                <select name="time" id="time-end1">
-                </select>
-            </td>
-        </tr>    
-        </table>
-        <input type="hidden" id="viewname1" />
-        <input type="hidden"  id="fc-emode1" /> 
-        <input type="hidden" id="ori-name1" />              
-    </div>
-</div>
-
-<div style="float:left" id="calendar">
-</div>    
+</div>  
 <?php
     require(AT_INCLUDE_PATH.'footer.inc.php'); 
 ?>

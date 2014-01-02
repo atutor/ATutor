@@ -56,6 +56,8 @@ ATutor.course = ATutor.course || {};
                         $("#topnavlistcontainer").css('padding-bottom', '.3em');
                         $("#topnavlistcontainer").css('margin-left', '-2.3em');
                         $(this).find('ul').css('padding-left', '200');
+                        $("#manage_off").css("display","none");
+                        $("#manage_on").css("display","none");
                         },
                     postFixed: function() { 
                         $(this).find('div').css('background-image', ''); 
@@ -63,6 +65,8 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('padding', '');
                         $("#topnavlistcontainer").css('padding-left', '');
                         $("#topnavlistcontainer").css('margin-left', '');
+                        $("#manage_off").css("display","none");
+                        $("#manage_on").css("display","none");
                         }
                 });
                 
@@ -117,6 +121,10 @@ ATutor.course = ATutor.course || {};
                         $("ul#subnavlist").css('border-bottom', 'none'); 
                         $("#subnavlist").css('float', 'left'); 
                         $("#subnavlist").css('clear', 'left');
+                        if($.cookie('side-menu') === 'none'){
+                            $("#subnavlistcontainer").css('margin-left', '-20.5em');
+                        }
+                        
                     },
                     postFixed: function() { 
                         $(this).find('div').css('background-image', ''); 
@@ -138,7 +146,10 @@ ATutor.course = ATutor.course || {};
                         $("img.imggoback").css('margin', '0');
                         $("#subnavlistcontainer").css('margin-top', '0em');
                         $("#subnavlistcontainer").css('border-bottom', '0');
-                        $("ul#subnavlist").css('border-bottom', '1px solid #DED29E');   
+                        $("ul#subnavlist").css('border-bottom', '1px solid #DED29E'); 
+                        if($.cookie('side-menu') === 'none'){
+                            $("#subnavlistcontainer").css('margin-left', '0');
+                        }  
                     }
                 });
                 // Fixed Footer
@@ -169,25 +180,25 @@ ATutor.course = ATutor.course || {};
                     if(viewFlag === "0"){
                         $("ul#subnavlist").css("border-bottom", "1px solid #DED29E");
                         $("#subnavlist_i").toggleClass("show").show('slow');
+                        $("#manage_off").css("display","none");
+                        $("#manage_on").css("display","inline");
                         $(".menuedit").toggleClass("show").show('slow');
                         $("#shortcuts").toggleClass("show").show('slow');
                         $(".del-content-icon").toggleClass("show").show('slow');  
                        // $(".detail_switch").toggleClass("show").show('slow');  
                         $(".buttonbox").toggleClass("show").show('slow');    
                         $.cookie('showSubNav_i', "on", { expires: 30, path: '/' });
-                        //console.log("viewFlag 1; " + viewFlag + "; " + $.cookie("showSubNav"));
-                        //console.log("switchval=" + $('#admin_switch').val() + '  initial=' + initialStatus);
+
                     } else if(viewFlag === "1") {
                         $("ul#subnavlist").css("border-bottom", "none");
                         $("#subnavlist_i").toggleClass("hidden").hide('slow');
+                        $("#manage_off").css("display","inline");
+                        $("#manage_on").css("display","none");
                         $(".menuedit").toggleClass("hidden").hide('slow');
                         $("#shortcuts").toggleClass("hidden").hide('slow');
-                        $(".del-content-icon").toggleClass("hidden").hide('slow');
-                       // $(".detail_switch").toggleClass("hidden").hide('slow');  
+                        $(".del-content-icon").toggleClass("hidden").hide('slow');  
                         $(".buttonbox").toggleClass("hidden").hide('slow');
                         $.cookie('showSubNav_i', "off", { expires: 30, path: '/' });
-                       //console.log("viewFlag 0; " + viewFlag + "; " + $.cookie("showSubNav"));
-                       //console.log("switchval=" + $('#admin_switch').val() + ' initial=' + initialStatus);
                     }
                     return false;     
                 };
@@ -239,19 +250,23 @@ ATutor.course = ATutor.course || {};
         }
        ATutor.switchDetails = function (viewFlag) {
             if(viewFlag === "1"){
-                    $("#details_view").hide('blind', {}, 500), 8000;
-                    $("#icon_view").show('blind', {}, 500), 8000;   
+                $("#details_view").hide('blind', {}, 500), 8000;
+                $("#icon_view").show('blind', {}, 500), 8000;   
                 $('#detail_switch').removeClass('detail_switch_back');
                 $('#detail_switch').addClass('detail_switch');
-                    $.cookie('showDetails', "off", { expires: 30, path: '/' });
-                    $('#detail_switch').val('0');
+                $('#icon_to_detailed').css("display","none");
+                $('#detailed_to_icon').css("display","inline");
+                $.cookie('showDetails', "off", { expires: 30, path: '/' });
+                $('#detail_switch').val('0');
              } else if(viewFlag === "0") {
-                    $("#details_view").show('blind', {}, 500), 8000;
-                    $("#icon_view").hide('blind', {}, 500), 8000;
+                $("#details_view").show('blind', {}, 500), 8000;
+                $("#icon_view").hide('blind', {}, 500), 8000;
+                $('#icon_to_detailed').css("display","inline");
+                $('#detailed_to_icon').css("display","none");
                 $('#detail_switch').removeClass('detail_switch');
                 $('#detail_switch').addClass('detail_switch_back');
-                    $.cookie('showDetails', "on", { expires: 30, path: '/' });
-                    $('#detail_switch').val('1')
+                $.cookie('showDetails', "on", { expires: 30, path: '/' });
+                $('#detail_switch').val('1')
             }
             return false;
         }
@@ -290,6 +305,8 @@ ATutor.course = ATutor.course || {};
             $('#showsubnav').css('display', 'none');
             $('#hidesubnav').css('display', 'inline');
             $('#subnavlist li:not(.active)').show("1200");
+            $('#subnav-hide').css('display', 'none');
+            $('#subnav-open').css('display', 'inline');
             var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
             $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
         });
@@ -297,6 +314,8 @@ ATutor.course = ATutor.course || {};
             $('#showsubnav').css('display', 'inline');
             $('#hidesubnav').css('display', 'none');
             $('#subnavlist li:not(.active)').hide("1200");
+            $('#subnav-hide').css('display', 'inline');
+            $('#subnav-open').css('display', 'none');
             var new_value = $("#showsubnav").is(":visible") ? 'expanded' : 'collapsed';
             $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
         });
@@ -309,17 +328,35 @@ ATutor.course = ATutor.course || {};
                     $('#subnavlist li:not(.active)').show("1200");
                     $('#showsubnav').css('display', 'none');
                     $('#hidesubnav').css('display', 'inline');
+                    $('#subnav-hide').css('display', 'none');
+                    $('#subnav-open').css('display', 'inline');
                     var new_value = $("#subnavlist li:not(.active)").is(":visible") ? 'expanded' : 'collapsed';
                     $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
                 }else{
                     $('#subnavlist li:not(.active)').hide("1200");
                     $('#showsubnav').css('display', 'inline');
                     $('#hidesubnav').css('display', 'none');
+                    $('#subnav-hide').css('display', 'inline');
+                    $('#subnav-open').css('display', 'none');
                     var new_value = $("#subnavlist li:not(.active)").is(":visible") ? 'expanded' : 'collapsed';
                     $.cookie('showSubNav', new_value, { expires: 30, path: '/' });
                 }
             }
         });
+        
+        
+        // Inject aria-live update when sidebar opened/closed for screen readers
+        $("#menutoggle").click(function() {
+            if($.cookie('side-menu') === 'none'){
+                $('#side_bar_off').show('fast');
+                $('#side_bar_on').css('display','none');
+            }else{
+                $('#side_bar_on').show('fast');  
+                $('#side_bar_off').css('display', 'none');           
+            }
+        });
+
+
 
     /* Show/Hide Advanced Admin System Preferences, set cookie */
     /*   $(".adv_opts").toggle($.cookie('showTop') != 'collapsed');

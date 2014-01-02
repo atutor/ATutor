@@ -375,8 +375,6 @@ td.selected{
 }
 .unsaved input[type="submit"]{
 	border:2px solid red;
- 	background-color: #B3A580;
- 	color: #F4F0CB;
  }
 
 
@@ -1631,12 +1629,12 @@ div.social-search{
 }
 
 #footer{
-
+    font-size:.8em;
     border-top: 1px solid #E5E5E5;
 	width: 100%;
 	text-align: center;
 	padding: 0 0 .5em 0;
-	height:3em;
+	height:3.5em;
 	background-color:#F3F3F3;
 }
 
@@ -2718,7 +2716,7 @@ div.social-wrapper{
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-2.7em;
+margin-top:-4.2em;
 }
 .content-settings{
 	width: 30%;
@@ -3483,6 +3481,69 @@ background-color:#C5C9C8;
     padding-top: 1em; 
     padding-left: .2em;
 }
+
+.ui-widget-header{
+    border: 1px solid #AAAAAA !important;
+    color: #222222 !important;
+    background-image: url("images/mesh-pattern.jpg") !important;
+}
+#calendar{
+float:left;
+clear:left;
+}
+.calendar-side{
+    width:18em;
+    float:left;
+    clear:right;
+	background-color: #F7F3ED;
+	padding: .5em;
+	background-color: #FCFCFC;
+	color: black;
+	font-size:0.85em;
+	font-weight: normal;
+	-moz-border-radius: .0em .0em .5em .5em;
+}
+.calendar-side fieldset legend{
+    height:2em;
+    width:100%;
+    margin-left:.2em;
+}
+.calendar-side legend h4{
+    margin-top:-.5em;
+}
+#topnavlist_sm{
+    display:none;
+}
+#manage_off{
+    display:none;
+}
+#manage_on{
+    display:none;
+}
+#icon_to_detailed{
+    display:none;
+}
+#detailed_to_icon{
+    display:none;
+}
+#langdiv{
+    margin-top:-1.2em;
+}
+#side_bar_on{
+    display:none;
+}
+#side_bar_off{
+    display:none;
+}
+#subnav-hide{
+    display:none;
+    height:1px;
+}
+#subnav-open{
+    display:none;
+    height:1px;
+}
+
 /******* 
 
 Responsive elements 
@@ -3675,8 +3736,8 @@ Responsive elements
         color: #685642;
         font-weight:700;
         text-decoration: none;
-        background-color: #F3F3F3;
-    	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+        background-color: #FFFFFF;
+/*    	background-image: linear-gradient(#FAFAFA, #EAEAEA); */
         margin-left:.5em;
     	float:left:
 
@@ -3788,6 +3849,15 @@ Responsive elements
     .fs_tools .input-form {
         width: 90%;
     }
+    
+    .calendar-side{
+        width:100%;
+        float:left;
+        clear:both;
+    }
+    #calendar{
+    width:100% !important;
+    }
 }
 @media screen and (max-device-width: 820px) {
     .current_box{
@@ -3869,7 +3939,11 @@ Responsive elements
         width:100%;
     }
     div#subnavlistcontainer {
-        clear:left;
+        clear:both;
+    }
+    h2.page-title{
+    clear:both;
+    margin-bottom:2em;
     }
     #topnavlist-link{
         font-size:1.2em;
@@ -3881,6 +3955,9 @@ Responsive elements
 
     #header{
     margin-right:-1em;
+    }
+    #footer{
+        display:none;
     }
     .site-name{
         font-size:1.5em;
@@ -3900,8 +3977,15 @@ Responsive elements
         float:left;
     }    
     #topnavlistcontainer_sm{
-        margin-bottom:-5em;
+        margin-top:3em;
     }
+    
+ul#topnavlist_sm li{
+    background-size:2em 3em;
+    background-color:#eeeeee;
+    border-bottom:1px solid #cccccc;
+
+}
     #navigation-column{
         margin-top:-2em;
         border:0;   
@@ -3933,12 +4017,13 @@ Responsive elements
     
     }
     .site-name{
-    display:none;
+        display:none;
     }  
 
     #breadcrumbs{
         display:none
     }
+    
     div.news{
         width:90%;
     }
@@ -3954,9 +4039,14 @@ Responsive elements
         display:none;
     } 
     .current_box{
-        width:90%;       
-        margin-left:0;
+        width:95%;       
+        margin-left:1em;
+        font-size:.8em;
+        border:thin solid black;
     }  
+    ul.current_list {
+        margin-left: 0;
+    }
     #navigation-bar-button{
         display:inline;
         margin-top:-2em;
@@ -3966,7 +4056,7 @@ Responsive elements
         visibility:hidden;
     }  
     a.topnavlist-link{
-    margin-top:-1.4em;
+        margin-top:-1.4em;
         float:left;
         clear:both;
         border: 1px solid #DED29E !important;
@@ -3975,24 +4065,28 @@ Responsive elements
         padding: .2em .2em .2em .2em;
         color: #685642;
         font-weight:700;
-        background-color: #F3F3F3;
+        background-color:#FFFFFF !important;
+ /*       background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    	*/
     }
 
     #mobile_switch{
-    margin-top:.5em;
+        margin-top:2.6em;
         margin-left:1em;
+        font-size:1.2em;
     }
     div#subnavlistcontainer{
-        margin-top:-1em;
+        margin-top:-2em;
         background:0;
+        width:100%;
     }
+
     ul#subnavlist{
-        display:inline-block;
-        margin-left:-1em;
-        margin-top:-73px !important;
-        background:0 !important;
+        margin-left:2em;
         border-bottom:none;
+        width:80% !important;
+        display:inline-block;
     }
     ul#subnavlist li{
         padding:.4em;
@@ -4002,7 +4096,19 @@ Responsive elements
         margin: 0 -1px;
         
     }
-
+    ul#subnavlist span#hidesubnav {
+        background-size:40px 40px;
+        float:right;
+    }
+    ul#subnavlist span#showsubnav {
+        background-size:40px 40px;
+        float:right;
+    }
+    
+    div#subnavbacktopage {
+       margin-left:1em;
+       margin-bottom:-2em;
+    }
     fieldset.group_form{
         border:0;
         margin:0;
@@ -4018,20 +4124,34 @@ Responsive elements
         height:1.5em;
         width:1.5em;
     }
+    textarea{
+        height:12em;
+        width:98%;
+        font-size:1.2em;
+    }
+    table.data tfoot tr:first-child td {
+        background-size:1.5em 1.5em;
+    }
+    table.data tfoot input {
+        margin-left: .5em;
+    }
+    table.data th a{
+        background-size:1em 1em;
+        margin-right: .2em;
+        padding-right: 1.5em;
+    }
     #header{
         height:4em;
         background-color:#eeeeee;
     }
     h1#section-title{
-    width:auto;
-    margin-left:.5em;
-    margin-right:auto;
-    margin-top:.3em;
-    margin-bottom:.9em;
-    padding-bottom:0em;
-    padding-top:0em;
-
-
+        width:auto;
+        margin-left:.5em;
+        margin-right:auto;
+        margin-top:.3em;
+        margin-bottom:.9em;
+        padding-bottom:0em;
+        padding-top:0em;
     }
     #sm_content {
         display: inline;
@@ -4066,9 +4186,98 @@ Responsive elements
         background-color:#FFFFFF;
         margin-top:-.2em;
     }
+    #contentcolumn{
+        margin-top:1.5em;
+        padding-left:0;
+        padding-right:0;
+        padding-top:0;
+        width:100%;
+    }
     #detail_switch{
         margin-top:-4.3em;
     }
+    #my_courses_container{
+        width:100%;
+        float:0;
+        margin-left:0;
+    } 
+    table.data{
+        width:95%;
+    }
+    li.top-tool img {
+        height:3em;
+        width:3em;
+    }
+    .message_link img{
+        height:1.5em;
+        width:1.5em;
+    }
+    h2.box input{
+        height:1.2em;
+        width:1.2em;
+    }
+    .prefs_tab {
+        clear:both;
+        float:left;
+        display:inline-block;
+    }
+    .prefs_tab_selected {
+        clear:both;
+        float:left;
+        display:inline-block;
+    }
+    .etabbed-list-container {
+        width: 90%;
+        height:5em;
+    }
+    .content-settings {
+        float: left;
+        width: 100%;
+    }
+    div#help {
+        font-size:1.0em;
+    }
+    #previewText {
+        font-size:1em;
+    }
+    #previewArea {
+        float:right;
+        width:80%;
+    }
+    input[type="checkbox"] {
+        size:2em;
+        height:1.8em;
+        width:1.8em;
+    }
+
+    .calendar-side{
+        float:left;
+        width:90%;
+    }
+    .fc-header-center{
+        width:1%;
+    }
+    .fc-header-title{
+        margin-top:-3em;
+        margin-left:-10em;
+        font-size:1.2em;
+    }
+    #calendar{
+        float:0;
+        width:100%;
+    }
+    div.home_box, div.outside_box {
+        width:98%;
+        padding:.5em;
+        font-size:1.2em;
+        margin-bottom:1em;
+    }
+    #details_view{
+        margin-bottom:1em;
+    }
+.bypass{
+    display:none;
+}
 
 }
 @media screen and (max-width: 640px) {

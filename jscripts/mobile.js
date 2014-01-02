@@ -73,6 +73,7 @@ ATutor.mobile = ATutor.mobile || {};
         // open/close header navigational menu - tablets & smartphones
         $('.topnavlist-link').click(function (e) {
             $('#navigation-column').slideToggle("slow");
+            $('#topnavlist_sm').css('display', 'inline');
             $('#topnavlist-link').toggleClass('topnavlist-link-highlight').toggleClass('triangle-isosceles').toggleClass('top').toggleClass('topnavlist-link-highlight-background');
             return false;
         });

@@ -382,30 +382,30 @@ function admin_switch(){
         <div class="admin_switch">	
             <form>
               <select id="admin_switch" name="hide_admin" title="switch">
-              <option value="1">Manage on</option>
-              <option value="0">Manage off</option>
+              <option value="1"><?php echo _AT('manage_on'); ?></option>
+              <option value="0"><?php echo _AT('manage_off'); ?></option>
                 </select>
             </form>
             <ul></ul>
 
         </div>
         <div class="bypass">
-            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content">jump to admin tools</a>
+            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#admin_tools"><?php echo _AT('jump_to_admin_tools'); ?></a>
         </div>
     <?php } ?>
 <?php } 
 function mobile_switch(){ 
 	if(is_mobile_device() > 0) {?>
-		<ul id="mobile_switch">
+		<ul id="mobile_switch" title="<?php echo _AT('mobile_toggle'); ?>">
 			 <?php if($_SESSION['prefs']['PREF_RESPONSIVE'] > 0){ ?>
-				<li class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"><?php echo _AT('mobile'); ?></a></li>
+				<li class="disabled left"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=2"  title="<?php echo _AT("mobile_disabled"); ?>" aria-disabled="true"><?php echo _AT('mobile'); ?></a></li>
 			<?php }else{ ?>
 				<li class="active left"><?php echo _AT('mobile'); ?></li>
 			<?php } ?>
 			<?php if($_SESSION['prefs']['PREF_RESPONSIVE'] > 0){ ?>
 				<li  class="active right"><?php echo _AT('off'); ?></li>
 			<?php }else{ ?>
-				<li  class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=1"><?php echo _AT('off'); ?></a></li>
+				<li  class="disabled right"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?mobile=1"  title="<?php echo _AT("mobile_active"); ?>" aria-disabled="false"><?php echo _AT('off'); ?></a></li>
 			<?php } ?>
    
 		</ul>

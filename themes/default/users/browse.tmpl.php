@@ -55,7 +55,7 @@
 <th class="hidecol700"><?php echo _AT('category'); ?></th>
 <th><?php echo _AT('instructor'); ?></th>
 <th><?php echo _AT('access'); ?></th>
-<th><?php echo _AT('shortcuts'); ?></th>
+<th class="hidecol700"><?php echo _AT('shortcuts'); ?></th>
 </tr>
 <?php if (is_array($this->courses_rows)){ 
         $counter = '';
@@ -109,7 +109,7 @@
 		<td>
 			<?php echo _AT($row['access']); ?>
 		</td>
-		<td>
+		<td class="hidecol700">
 		 <?php
 		    // insert enrolment link if allowed
 		    if (isset($row['enroll_link'])) : ?> 

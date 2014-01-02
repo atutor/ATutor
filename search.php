@@ -17,8 +17,12 @@ $_user_location = 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/search.inc.php');
-$onload = 'document.form.keywords.focus();';
+if(!isset($_GET['search'])){
+    $onload = 'document.form.keywords.focus();';
+}
+
 require(AT_INCLUDE_PATH . 'header.inc.php');
+
 $savant->display('search.tmpl.php');
 require(AT_INCLUDE_PATH . 'footer.inc.php');
 ?>

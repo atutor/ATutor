@@ -80,8 +80,8 @@ ATutor.course = ATutor.course || {};
 	var hideMenu = function (effect) {
 		var menuImage = jQuery("#menutoggle > a > img");
 		menuImage.attr("src", menu_show_icon);
-		menuImage.attr("alt", ATutor.course.show);
-		menuImage.attr("title", ATutor.course.show);
+		menuImage.attr("alt", ATutor.course.show +" side menu");
+		menuImage.attr("title", ATutor.course.show +" side menu");
 
 		if (effect) {
 			jQuery("#side-menu").slideUp("slow");
@@ -95,8 +95,8 @@ ATutor.course = ATutor.course || {};
 	var showMenu = function (effect) {		
 		var menuImage = jQuery("#menutoggle > a > img");
 		menuImage.attr("src", menu_hide_icon);
-		menuImage.attr("alt", ATutor.course.hide);
-		menuImage.attr("title", ATutor.course.hide);
+		menuImage.attr("alt", ATutor.course.hide +" side menu");
+		menuImage.attr("title", ATutor.course.hide+" side menu");
 		
 		if (effect) {
 			jQuery("#side-menu").slideDown("slow");

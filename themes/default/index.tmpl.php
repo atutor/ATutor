@@ -16,11 +16,12 @@ global $_base_path;
 if ($this->banner): ?><?php echo $this->banner; ?><br /><?php endif;
 
 if(count($this->home_links) > 0){
-    echo '<div class="detail_switch" id="detail_switch"  title="'._AT('icon_view').'"><a  href ="javascript:void(0)"  title="'._AT('icon_view').'">&nbsp;.<br /></div>';
+    echo '<div class="detail_switch" id="detail_switch"><a href ="javascript:void(0)"  title="'._AT('switch_icon_view').'">&nbsp;</a></div>';
 }
 ?>
 
 <div id="icon_view" style="width: 98%; margin-top: -5px; float:left;">
+    <span id="detailed_to_icon" title="<?php echo _AT('icon_on'); ?>" aria-live="polite"></span>
     <ul id="home-links">
     <?php if (is_array($this->home_links)): ?>
     <?php foreach ($this->home_links as $link): ?>
@@ -31,6 +32,7 @@ if(count($this->home_links) > 0){
 </div>
 	
 <div id="details_view" class="fluid-horizontal-order" style="width: 98%; margin-top: -5px; float: left; ">
+<span id="icon_to_detailed" title="<?php echo _AT('detailed_on'); ?>" aria-live="polite"></span>
 
 <?php 				
     // create table container divided into two columns for the placement of modules

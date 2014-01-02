@@ -969,7 +969,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
             // when the jquery UI tooltip supports the html display.
             //$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
             $def = htmlspecialchars(strip_tags($v), ENT_QUOTES, 'UTF-8');
-            
+
             if ($simple) {
                 $input = preg_replace
                         ("/(\[\?\])$term(\[\/\?\])/i",

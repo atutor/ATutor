@@ -16,7 +16,7 @@ ob_start();
 
 <input type="hidden" name="search" value="1" />
 
-<input type="text" name="q" class="formfield" size="20" value="<?php echo $stripslashes(htmlspecialchars($_GET['q'])); ?>" /><br /><br />
+<input type="text" name="q" class="formfield" size="20" value="<?php echo $stripslashes(htmlspecialchars($_GET['q'])); ?>" title="<?php echo _AT('enter_search_terms'); ?>"/><br /><br />
 <input type="hidden" name="submit" value="<?php echo _AT('search'); ?>" />
 <input type="submit" class="button" />
 </form>

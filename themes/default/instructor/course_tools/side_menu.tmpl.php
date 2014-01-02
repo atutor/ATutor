@@ -6,13 +6,14 @@
 		<p><?php echo _AT('side_menu_text'); ?></p>
 	</div>
 
-	<div class="row">
+	<div class="row" aria-label="<?php echo _AT('side_menu_text'); ?>" accesskey="0">
+	    
 		<?php
 			$num_stack = count($_stacks);
 			$side_menu = explode("|", $system_courses[$_SESSION['course_id']]['side_menu']);			
 
 			for ($i=0; $i<$num_stack; $i++) {				
-				echo '<select name="stack['.$i.']">';
+				echo '<select name="stack['.$i.']" aria-label="add to sidemenu">';
 				echo '<option value=""></option>';
 				foreach ($_stacks as $name=>$info) {
 					if (isset($info['title'])) {

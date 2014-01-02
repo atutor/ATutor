@@ -117,6 +117,8 @@ global $system_courses, $_custom_css, $db;
 <div class="bypass">
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content" accesskey="c" title="<?php echo _AT('goto_content'); ?> Alt-c">
 	<?php echo _AT('goto_content'); ?></a>
+	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#main-nav" accesskey="n" title="<?php echo _AT('goto_main_nav'); ?> Alt-n">
+	<?php echo _AT('goto_main_nav'); ?></a>
 	<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#menu<?php if(isset($_REQUEST['cid'])){echo htmlentities_utf8($_REQUEST['cid']);}  ?>"  accesskey="m" title="<?php echo _AT('goto_menu'); ?> Alt-m"><?php echo _AT('goto_menu'); ?></a>
 </div>	
 
@@ -219,6 +221,7 @@ global $system_courses, $_custom_css, $db;
 <!-- the main navigation. in our case, tabs -->
 <div id="lrg_topnav">
     <div id="topnavlistcontainer" role="navigation">
+        <a name="main-nav"></a>
         <ul id="topnavlist">
             <?php $accesscounter = 0; //initialize ?>
             <?php foreach ($this->top_level_pages as $page): ?>
@@ -268,9 +271,9 @@ global $system_courses, $_custom_css, $db;
                 <?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
                 <?php if ($page['url'] == $this->current_top_level_page): ?>
                     <!-- note bug http://issues.fluidproject.org/browse/FLUID-4313 makes class "flc-screenNavigator-backButton fl-link-hilight" not work -->
-                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight" title="<?php echo $page['title'];?>"><?php echo $page['title']; ?></a>  </li>
+                    <li><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> class="flc-screenNavigator-backButton fl-link-hilight"><?php echo $page['title']; ?></a>  </li>
                 <?php else: ?>
-                    <li role="menuitem"><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title']; ?>"><?php echo $page['title']; ?></a></li>
+                    <li><a  href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?>><?php echo $page['title']; ?></a></li>
                 <?php endif; ?>
                 <?php $accesscounter = ($accesscounter == 0 ? 11 : $accesscounter); ?>
             <?php endforeach; ?>
@@ -286,7 +289,7 @@ global $system_courses, $_custom_css, $db;
   <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
 		  <!-- the bread crumbs -->
 		<div class="crumbcontainer" role="navigation">
-		  <div id="breadcrumbs">
+		  <div id="breadcrumbs" tabindex="0"  aria-label="<?php echo _AT('breadcrumb_links'); ?>">
 			  <?php foreach ($this->path as $page): ?>
 				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
 			  <?php endforeach; ?> <?php echo $this->page_title; ?>
@@ -383,7 +386,7 @@ global $system_courses, $_custom_css, $db;
 			<?php endif; ?>
 			</div>
 
-			<ul id="subnavlist">
+			<ul id="subnavlist" role="navigation"  aria-label="<?php echo _AT('tools'); ?>">
 			<?php 
 
 			$num_pages = count($this->sub_level_pages); 
@@ -396,7 +399,10 @@ global $system_courses, $_custom_css, $db;
 
 				
 				<?php } else if($num_pages > 1) { ?>
-					  <li><a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?></a></li>
+					  <li>
+					  <span id="subnav-hide" title="<?php echo _AT('sub_nav_hidden'); ?>" aria-live="polite"></span>
+					  <span id="subnav-open" title="<?php echo _AT('sub_nav_opened'); ?>" aria-live="polite"></span>
+					  <a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?></a></li>
 				<?php } ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>
@@ -417,9 +423,10 @@ global $system_courses, $_custom_css, $db;
 			 
 			 
 			 ?>
-
-			<ul id="subnavlist_i">
-
+            <span id="manage_off" title="<?php echo _AT('manage_tools_off'); ?>" aria-live="polite"></span>
+            <a name="admin_tools"></a>
+			<ul id="subnavlist_i" role="navigation"  aria-label="<?php echo _AT('manage_navigation_bar'); ?>">
+            <span id="manage_on" title="<?php echo _AT('manage_tools_on'); ?>" aria-live="polite"></span>
 			<?php for ($i=0; $i<$num_pages_i; $i++): ?>
 
 				<?php if ($this->sub_level_pages_i[$i]['url'] == $this->current_sub_level_page): ?>
