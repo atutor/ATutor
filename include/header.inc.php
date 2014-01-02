@@ -85,7 +85,7 @@ if (isset($_custom_css)) {
 
 if (isset($_custom_head)) {
 	$custom_head .= '
-' . stripslashes($_custom_head);
+' . $_custom_head;
 }
 if (isset($_custom_script)) {
 	$custom_head .= '
