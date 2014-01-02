@@ -1634,7 +1634,7 @@ div.social-search{
 	width: 100%;
 	text-align: center;
 	padding: 0 0 .5em 0;
-	height:3.5em;
+	height:4.5em;
 	background-color:#F3F3F3;
 }
 
@@ -2101,7 +2101,7 @@ div.toolcontainer{
 ul#subnavlist_i {
 	font-family: Verdana,Helvetica,Arial,serif;
     float:right;
-    margin-top: -2.2em;
+    margin-top: -2.4em;
     margin-right:2em;
    /* background-image:url("images/wand.png");*/
     background-position: 1em .3em;

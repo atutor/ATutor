@@ -107,17 +107,17 @@ ATutor.course = ATutor.course || {};
                     marginTop: 22,
                     dontSetWidth: false,
                     preFixed: function() { 
-                        $(this).find('div').css('padding', '8');
+                        $(this).find('div').css('padding', '0');
                         $(this).find('div').css('margin-left', '0');
                         $(this).find('div').css('width', '100%');
                         $(this).find('div').css('float', '');
                         $(this).find('div').css('position','');
                         $("#subnavlistcontainer").css('background-color', '#eeeeee'); 
-                        $(this).find('div').css('height', '2.5em')
+                        $(this).find('div').css('height', '2.6em')
                         $("ul#subnavlist_i li").css('background-color', '#FFFFFF'); 
-                        $("ul#subnavlist li").css('padding-bottom', '.4em'); 
+                        $("ul#subnavlist_i li").css('padding', '.3em'); 
                         $("ul#subnavlist li").css('padding', '.4em'); 
-                        $("ul#subnavlist").css('margin-top', '-2.5em'); 
+                        $("ul#subnavlist").css('margin-top', '-2.6em'); 
                         $("ul#subnavlist").css('border-bottom', 'none'); 
                         $("#subnavlist").css('float', 'left'); 
                         $("#subnavlist").css('clear', 'left');
@@ -127,7 +127,6 @@ ATutor.course = ATutor.course || {};
                         
                     },
                     postFixed: function() { 
-                        $(this).find('div').css('background-image', ''); 
                         $(this).find('div').css('background-color', ''); 
                         $(this).find('div').css('padding', '');
                         $(this).find('div').css('right','');
@@ -135,7 +134,7 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('position','');
                         $(this).find('div').css('height','');
                         $(this).find('div').css('padding', '0');
-                        $("ul#subnavlist li").css('padding', '.5em');
+                        $("ul#subnavlist li").css('padding', '.4em');
                         $("ul#subnavlist_i").css('float', '');                     
                         $("ul#subnavlist_i").css('clear', ''); 
                         $("ul#subnavlist").css('float', ''); 
