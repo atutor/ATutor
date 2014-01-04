@@ -15,9 +15,9 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
 <table border="0" cellspacing="0" cellpadding="0" width="100%">
 <tr>
-	<td colspan="2"><small><?php echo _AT('click_code'); ?></small></td>
+	<td colspan="2"><small>&middot; <?php echo _AT('click_code'); ?></small></td>
 </tr>
-<tr>
+<!--<tr>
 	<td align="right"><small><strong><?php echo _AT('emoticons'); ?>:</strong></small></td>
 	<td><small><?php
 		echo '<a href="javascript:smilie(\':)\')" title=":)">'.smile_replace(':)').'</a> ';
@@ -36,7 +36,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\'::tired::\')" title="::tired::">'.smile_replace('::tired::').'</a> ';
 		echo '<a href="javascript:smilie(\'::muah::\')" title="::muah::">'.smile_replace('::muah::').'</a>';
 	?></small></td>
-</tr>
+</tr>-->
 <tr>
 	<td align="right"><small><strong><?php echo _AT('codes'); ?>:</strong></small></td>
 	<td> <small><a href="javascript:smilie('[b] [/b]')" title="[b] [/b]"><?php echo _AT('bold'); ?></a>,
@@ -52,7 +52,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=true;">',_AT('add_code'), '</a>';
 	} ?></small></td>
 </tr>
-<tr>
+<!-- <tr>
 	<td align="right"><small><strong><?php echo _AT('colors'); ?>:</strong></small></td>
 	<td><table border="0" cellspacing="2" cellpadding="0" summary="">
 	<tr>
@@ -69,7 +69,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<td style="background:gray;"><a href="javascript:smilie('[gray] [/gray]')" title="[gray] [/gray]" style="color:white;margin:.5em;"><?php echo _AT('gray'); ?></a></td>
 	</tr>
 	</table></td>
-</tr>
+</tr> -->
 </table>
 	<script type="text/javascript">
 	//<!--

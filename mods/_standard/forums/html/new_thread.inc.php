@@ -18,19 +18,20 @@ if (!$_SESSION['valid_user']) {
 	$msg->printInfos('LOGIN_TO_POST');
 	return;
 }
-
+global $msg;
 $msg->printErrors();
 
 if (isset($_POST['submit'])) {
 //	$subject	= htmlentities_utf8($_POST['subject']);
 //	$body		= htmlentities_utf8($_POST['body']);
-	$parent_id	= $_POST['parent_id'];
-	$parent_name	= $_POST['parent_name'];
-	//post reply is set when there is an error occuring.
-	if ($_POST['reply']!=''){
-		$saved_post['body'] = $_POST['replytext'];
-		$reply_hidden = '<input name="reply" type="hidden" value="'.AT_print($_REQUEST['reply'], 'input.text').'" />';
-	}
+
+$parent_id	= $_POST['parent_id'];
+$parent_name	= $_POST['parent_name'];
+//post reply is set when there is an error occuring.
+if ($_POST['reply']!=''){
+    $saved_post['body'] = $_POST['replytext'];
+    $reply_hidden = '<input name="reply" type="hidden" value="'.AT_print($_REQUEST['reply'], 'input.text').'" />';
+}
 } else if (isset($_GET['reply']) && $_GET['reply'] != '') {
 	$subject = $saved_post['subject'];
 	$reply_hidden = '<input name="reply" type="hidden" value="'.AT_print($_REQUEST['reply'], 'input.text').'" />';
@@ -43,9 +44,20 @@ if (isset($_POST['submit'])) {
 ?>
 <a name="post"></a>
 <form action="mods/_standard/forums/forum/new_thread.php" method="post" name="form">
-<input name="parent_id" type="hidden" value="<?php echo $parent_id; ?>" />
+<!--<input name="parent_id" type="hidden" value="<?php echo $parent_id; ?>" />
 <input name="fid" type="hidden" value="<?php echo $fid; ?>" />
 <input name="page" type="hidden" value="<?php echo $_GET['page']; ?>" />
+<input name="parent_name" type="hidden" value="<?php echo urlencode($parent_name); ?>" /> -->
+<?php
+if($row['parent_id'] == 0){
+	$parent_id	= $row['post_id'];
+}else{
+	$parent_id	= $row['parent_id'];
+}
+?>
+<input name="parent_id" type="hidden" value="<?php echo $parent_id; ?>" />
+<input name="fid" type="hidden" value="<?php echo intval($_GET['fid']); ?>" />
+<input name="page" type="hidden" value="<?php echo intval($_GET['page']); ?>" />
 <input name="parent_name" type="hidden" value="<?php echo urlencode($parent_name); ?>" />
 <?php echo $reply_hidden; //print hidden reply field if it exists. ?>
 
@@ -66,7 +78,7 @@ if (isset($_POST['submit'])) {
 		&middot; <?php echo _AT('forum_email_links'); ?><br />
 		&middot; <?php echo _AT('forum_html_disabled'); ?></small>
 	</div>
-
+<!--                       
 	<?php if (isset($_REQUEST['reply'])): ?>
 		<div class="row">
 			<label for="body"><?php echo _AT('forum_reply_to'); ?></label><br />
@@ -74,11 +86,9 @@ if (isset($_POST['submit'])) {
 		</div>
 
 	<?php endif; ?>
-
+	-->
 	<div class="row">	
 		<a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#jumpcodes" title="<?php echo _AT('jump_codes'); ?>"><img src="images/clr.gif" height="1" width="1" alt="<?php echo _AT('jump_codes'); ?>" border="0" /></a><?php require(AT_INCLUDE_PATH.'html/code_picker.inc.php'); ?>
-
-
 	</div>
 	<?php if (!$subscribed): ?>
 		<div class="row">

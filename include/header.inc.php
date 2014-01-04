@@ -91,6 +91,9 @@ if (isset($_custom_script)) {
 	$custom_head .= '
 ' . $_custom_script;
 }
+$custom_head .= '
+    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
+    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>';
 // Set session timeout warning if user is logged in
 if(isset($_SESSION['valid_user'])){
     // Setup the timeout warning when a user logs in
@@ -102,15 +105,15 @@ if(isset($_SESSION['valid_user'])){
 
     $session_timeout = intVal($_at_timeout) * 1000;
     $session_warning = 300 * 1000;                      // 5 minutes
-
+    
     $custom_head .= '
         <link rel="stylesheet"  type="text/css" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.css" />
         <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/infusion/lib/jquery/core/js/jquery.js"></script>
         <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>
         <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/ATutorAutoLogout.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>
+        <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
     	<script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.switch.min.js"></script>
-	    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
         <link rel="stylesheet" type="text/css" href="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.switch.css">';
     if(isset($_SESSION['member_id'])){
         $custom_head .= "\n".'    <script type="text/javascript">

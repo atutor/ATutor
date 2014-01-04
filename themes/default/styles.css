@@ -134,6 +134,7 @@ ul {
 	margin-bottom: 0px;
 	margin-top: 0px;
 	margin-right: 0px;
+	padding:0px;
 }
 
 li {
@@ -673,7 +674,7 @@ table.data {
 	width: 100%; 
 	float:left;
 	clear:both;
-	margin-left:1em;
+	margin-left:auto;
 	margin-right: auto;
 	margin-bottom:1em;
 	overflow:scroll;
@@ -1639,20 +1640,23 @@ div.social-search{
 }
 
 /** forum stuff **/
-.forum-thread li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
-.forum-thread li.even { background-color: #F7F3ED; border-top: none;  margin-top:.5em;}
-.forum-thread li.odd { background-color: #fff; margin-top:1em;}
-div.forum-post-author { float:left; width:150px; padding:8px 10px; }
+.forum-thread li { border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
+.forum-thread li.even { background-color: #F5F9FC; border-top: none;}
+.forum-thread li.odd { background-color: #fff; }
+div.forum-post-author { float:left; width:150px; padding:8px 10px;border:none; }
 div.forum-post-author a.title {font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
 div.forum-post-author img.profile-picture { border: 2px solid #F7F3ED; text-align:right;}
 div.forum-post-content { margin-left: 150px; padding: 5px 0px 18px 18px;}
 div.forum-post-content h3 { font-weight: 500; margin-top:-.5em; clear:right;}
-div.forum-post-ctrl { float: right; padding: 2px; margin-top:-.2em;margin-right:.2em;color: #a1a1a1; border:1px solid #DED29E;-moz-border-radius:.3em;border-radius:.3em;font-size:small;}
+div.forum-post-ctrl { float: right; padding: 2px; margin-top:-2em;margin-right:.2em;font-size:small;}
 div.forum-post-ctrl a { text-decoration: none; }
+div.forum-post-ctrl img{ height:1.2em; width:1.2em;}
+div.forum_reply {display:none;}
+div.forum_edit {display:none;}
 div.forum-post-ctrl span { color: black; background-color: #fefdc2; padding: 3px; }
-div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED;font-size:small;}
+div.forum-post-content p.date { color: #a1a1a1; border-bottom: 1px solid #F7F3ED;font-size:small; margin-top:-1em;}
 div.forum-post-content div.body p { margin-bottom:1em; }
-div.forum-paginator{border:1px #DED29E solid; padding:.3em; width:95%;margin:auto;background-color:#F4F0CB;}
+div.forum-paginator{\ padding:.3em; width:95%;margin:auto;}
 span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2em;}
 
 
@@ -2270,7 +2274,7 @@ tr.odd {
 /* 1pxgs current box on My Start */
 .current_box{
 	float:left;
-	margin-left:1em;
+	margin-left:1.5em;
 	margin-bottom:1em;
 	width:30%; 
 	padding-left:.2em;
@@ -2297,7 +2301,7 @@ tr.odd {
 ul.current_list{
       line-height:2em; 
       list-style-type:none;
-      margin-left:-3em;
+
 }
 .current_list img{
       vertical-align:middle;

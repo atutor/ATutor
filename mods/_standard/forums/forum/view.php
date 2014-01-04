@@ -14,11 +14,11 @@
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
-$fid = intval($_GET['fid']);
-$_GET['reply'] = isset($_GET['reply']) ? $_GET['reply'] : '';
+$fid = intval($_REQUEST['fid']);
+$_REQUEST['reply'] = isset($_REQUEST['reply']) ? $_REQUEST['reply'] : '';
 
 
-if (!isset($_GET['fid']) || !$fid) {
+if (!isset($_REQUEST['fid']) || !$fid ) {
 	header('Location: list.php');
 	exit;
 }
@@ -70,7 +70,6 @@ if (!$_GET['page']) {
 $start = ($page-1)*$num_per_page;
 	
 /* get the first thread first */
-
 $sql	= "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H:%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE post_id=%d AND forum_id=%d";
 $post_row	= queryDB($sql, array(TABLE_PREFIX, $pid, $fid), TRUE);
 
@@ -121,7 +120,6 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 	}
 
 	$parent_name = $post_row['subject'];
-
 	echo '<ul class="forum-thread">';
 	print_entry($post_row);
 	$subject = $post_row['subject'];

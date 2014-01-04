@@ -76,12 +76,13 @@ if (isset($_POST['cancel'])) {
 
 		/* use this value instead of NOW(), because we want the parent post to have the exact */
 		/* same date. and not a second off if that may happen */
+		/* this fails however */
 		$now = date('Y-m-d H:i:s');
 
 		$sql_subject = $addslashes($_POST['subject']);
 		$sql_body    = $addslashes($_POST['body']);
 
-		$sql = "INSERT INTO %sforums_threads VALUES (NULL, %d, %d, %d, '%s', 0, '%s', '%s', '%s', 0, 0)";
+		$sql = "INSERT INTO %sforums_threads VALUES (NULL, %d, %d, %d, '%s', 0, '%s', '%s', NOW(), 0, 0)";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['parent_id'], $_SESSION['member_id'], $_POST['fid'], $now, $sql_subject, $sql_body, $now));
 		$this_id = at_insert_id();
 		
@@ -136,9 +137,9 @@ if (isset($_POST['cancel'])) {
 			}
 		}
 
-		$sql = "UPDATE %sforums_threads SET num_comments=num_comments+1, last_comment='$s', date=date WHERE post_id=%d";
+		$sql = "UPDATE %sforums_threads SET num_comments=num_comments+1, last_comment='%s', date=date WHERE post_id=%d";
 		$result = queryDB($sql, array(TABLE_PREFIX, $now, $_POST['parent_id']));
-		
+
 		if ($subscriber_email_list) {
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 

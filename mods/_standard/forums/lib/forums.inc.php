@@ -233,14 +233,47 @@ function print_entry($row) {
 	global $page, $system_courses, $forum_info;
 	static $counter;
 	$counter++;
+	?>
+	<script type="text/javascript">
+	jQuery(document).ready( function () { 
+	        $("a#reply-<?php echo $row['post_id']; ?>").click(function() {
+            $("div#reply-<?php echo $row['post_id']; ?>").toggle('slow');
+            return false;
+            });
+	        $("a#reply-<?php echo $row['post_id']; ?>").keypress(function(e) {
+	            var code = e.keyCode || e.which;
+	            if(code == 13 || code == 32) { 
+                    $("div#reply-<?php echo $row['post_id']; ?>").toggle('slow');
+                    $("div#reply-<?php echo $row['post_id']; ?> #subject" ).focus();
+                    return false;
+                }
 
-	$reply_link = '<a href="mods/_standard/forums/forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
+            });
+	        $("a#edit-<?php echo $row['post_id']; ?>").click(function() {
+            $("div#edit-<?php echo $row['post_id']; ?>").toggle('slow');
+            return false;
+            });
+	        $("a#edit-<?php echo $row['post_id']; ?>").keypress(function(e) {
+	            var code = e.keyCode || e.which;
+	            if(code == 13 || code == 32) { 
+                    $("div#edit-<?php echo $row['post_id']; ?>").toggle('slow');
+                    $("div#edit-<?php echo $row['post_id']; ?> #subject" ).focus();
+                    return false;
+                }
+
+            });
+        }); 
+	</script>
+	<?php
+    $reply_link = '<a href="#" id="reply-'.$row['post_id'].'">';
+	//$reply_link = '<a href="mods/_standard/forums/forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
 	if ($row['parent_id'] == 0) {
-		$reply_link .= $row['post_id'];
+		//$reply_link .= $row['post_id'];
 	} else {
-		$reply_link .= $row['parent_id'];
+		//  $reply_link .= $row['parent_id'];
 	}
-	$reply_link .= SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >'._AT('reply').'</a>';
+	//$reply_link .= SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >
+	$reply_link .='<img src="images/forum/forum_reply.png" alt="'._AT('reply').'" title="'._AT('reply').'"/></a>';
 
 ?>
 
@@ -256,9 +289,12 @@ function print_entry($row) {
 			<div>
 				<div class="forum-post-ctrl">
 					<?php if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)): ?>
-						<?php echo $reply_link; ?> | <a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><?php echo _AT('edit'); ?></a> | <a href="mods/_standard/forums/forum/delete_thread.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP; ?>nest=1"><?php echo _AT('delete'); ?></a>
+						<!--<?php echo $reply_link; ?>  <a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"/></a>  <a href="mods/_standard/forums/forum/delete_thread.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP; ?>nest=1"><img src="images/forum/forum_delete.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>"/></a>-->
+					    <?php echo $reply_link; ?>  <a href="#" id="edit-<?php echo $row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"/></a>  <a href="mods/_standard/forums/forum/delete_thread.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP; ?>nest=1"><img src="images/forum/forum_delete.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>"/></a>
+				
 					<?php elseif (($row['member_id'] == $_SESSION['member_id']) && (($row['udate'] + $forum_info['mins_to_edit'] * 60) > time())): ?>
-						<?php echo $reply_link; ?> | <a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><?php echo _AT('edit'); ?></a> <span>(<?php echo _AT('edit_for_minutes', round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60)); ?>)</span>
+					<!--	<?php echo $reply_link; ?>  <a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"></a> <span>(<?php echo _AT('edit_for_minutes', round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60)); ?>)</span> -->
+						<?php echo $reply_link; ?>  <a href="#" id="edit-<?php echo $row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"></a> <span>(<?php echo _AT('edit_for_minutes', round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60)); ?>)</span>
 					<?php elseif ($_SESSION['valid_user'] == true): ?>
 						<?php echo $reply_link; ?>
 					<?php endif; ?>
@@ -271,6 +307,14 @@ function print_entry($row) {
 				<p><?php echo AT_print($row['body'], 'forums_threads.body'); ?></p>
 			</div>
 		</div>
+	<?php
+	echo '<div class="forum_reply" id="reply-'.$row['post_id'].'">';
+	require(AT_INCLUDE_PATH.'../mods/_standard/forums/html/new_thread.inc.php');
+	echo '</div>';
+	echo '<div class="forum_edit" id="edit-'.$row['post_id'].'">';
+	require(AT_INCLUDE_PATH.'../mods/_standard/forums/edit_post.php');
+	echo '</div>';
+	?>
 	</li>
 <?php
 }
