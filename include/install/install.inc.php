@@ -433,12 +433,10 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 			$msg->addError(array('LOW_MYSQL_VERSION', $row['version']));
 		}
 	}
-    //if(isset($db)){
-	//    $isdb = at_is_db($db_name);
-    //}
-    //if(@at_db_select($db_name, $db)){
-    //    $isdb = 1;
-    //}
+    if(isset($db)){
+	    $isdb = at_is_db($db_name);
+    }
+
 	if($isdb == 0){
 		$sql = "CREATE DATABASE `".$db_name."` CHARACTER SET utf8 COLLATE utf8_general_ci";
 		//$result = queryDB($sql, array($db_name));
