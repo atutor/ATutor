@@ -57,6 +57,19 @@ if (AT_INCLUDE_PATH !== 'NULL') {
     }
 
 }
+function at_is_db($db_name, $db){
+    // see if a database exists
+  if(defined('MYSQLI_ENABLED')){
+    $sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db_name'";
+    $result = $db->query($sql);
+    $exists = $result->num_rows;
+  }else{
+    $sql = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '$db_name'";
+    $result = mysql_query($sql, $db);
+    $exists = mysql_num_rows($result);
+  }
+  return $exists;
+}
 //functions for properly escaping input strings
 function my_add_null_slashes( $string ) {
     global $db;
