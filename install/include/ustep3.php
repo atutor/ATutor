@@ -196,7 +196,17 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	/* if that module does not exist then check the old directory and prompt to have it copied */
 	/* or delete it from the modules table. or maybe disable it instead? */
 	if (version_compare($_POST['step1']['old_version'], '1.5.1', '>')) {
+	//global $db;
 		define('TABLE_PREFIX', $_POST['step1']['tb_prefix']);
+		debug($_POST);
+		if(!isset($db)){
+		    if(defined('MYSQLI_ENABLED')){
+                $db = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']), $_POST['step1']['db_name']);   
+            }else{
+                $db = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']), '');
+                at_db_select($_POST['step1']['db_name'], $db);
+            }
+		}
 		require(AT_INCLUDE_PATH . '../mods/_core/modules/classes/Module.class.php');
 		$moduleFactory = new ModuleFactory(FALSE);
 		$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_DISABLED | AT_MODULE_STATUS_ENABLED);

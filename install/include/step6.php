@@ -158,14 +158,25 @@ print_progress($step);
 	<tr>
 		<td class="row1"><b>MySQL Version:</b></td>
 		<td class="row1"><?php
+        if(defined('MYSQLI_ENABLED')){
+        	if ($_POST['step1']['old_path'] != '') {
+				$db     = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']),'');
+			} else {
+				$db     = at_db_connect($_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password'],'');
+			}
 
+			$row = at_db_version($db);
+        
+        } else {
 			if ($_POST['step1']['old_path'] != '') {
 				$db     = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
 			} else {
 				$db     = at_db_connect($_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
 			}
 
-			$row = at_db_version($db);
+			$row = at_db_version($db);        
+        }
+
 			echo $row['version'];
 			?> <input type="hidden" name="log_mysql" value="<?php echo $row['version']; ?>" /></td>
 	</tr>
