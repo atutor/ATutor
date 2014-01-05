@@ -17,6 +17,13 @@ $_POST['db_password'] = urldecode($_POST['db_password']);
 /* Destory session */
 session_unset();
 $_SESSION= array();
+
+if(defined('MYSQLI_ENABLED')){
+    $db = at_db_connect($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']), $_POST['db_name']);   
+}else{
+    $db = at_db_connect($_POST['db_host'], $_POST['db_port'], $_POST['db_login'], urldecode($_POST['db_password']), '');
+    at_db_select($_POST['db_name'], $db);
+}
 if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	unset($errors);
 	if (version_compare($_POST['step1']['old_version'], '1.5', '<')) {
