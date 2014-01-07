@@ -2333,15 +2333,13 @@ fieldset.group_form legend{
 }
 
 div#subnavlistcontainer {
-	width:95%;
+	width:100%;
 	margin:auto;
 	height:auto;
-	margin-top..6em !important;
 
 
 }
 div#subnavbacktopage {
-	padding-top:5px;
 	padding-left:20px;
 	float:left;
 }
@@ -2361,7 +2359,7 @@ ul#subnavlist {
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
     border-bottom: 1px solid #DED29E;
-    padding-bottom:2.9em;
+
 }
 
 ul#subnavlist li {
@@ -2373,6 +2371,7 @@ ul#subnavlist li {
 	border-top:1px solid #cccccc;
 	border-left:1px solid #cccccc;
 	border-right:1px solid #cccccc;
+	border-bottom:3px solid #cccccc;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.0em;	
@@ -2388,7 +2387,7 @@ ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#
 ul#subnavlist li a {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
-    	height: 1.5em;
+    	height: 1.2em;
    	text-decoration:underline;
 	font-weight:500;
 }
@@ -2398,7 +2397,8 @@ ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
-	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	background-image: linear-gradient(#FAFAFA, #EAEAEA)
+	margin-top:2em;
 }
 ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist lifocus,
 ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li:focus,  
@@ -2409,8 +2409,8 @@ ul#navlist li.active, ul#navlist li:hover, ul#navlist li:focus {
 	border-top: 1px solid white;
 	border-left:1px solid white;
 	border-right:1px solid white;
-	border-bottom: 3px solid #D26911;
-	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	border-bottom: 3px solid white;
+    box-shadow: 0.2em 0 0.2em #999999;
 }
 ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
@@ -2974,7 +2974,8 @@ div#bypass-links{
 ul#subnavlist_i {
 	font-family: Verdana,Helvetica,Arial,serif;
     float:right;
-    margin-top: -2.4em;
+    clear:right;
+    margin-top: -2.2em;
     margin-right:5em;
    /* background-image:url("images/wand.png");*/
     background-position: 1em .3em;
@@ -2991,15 +2992,15 @@ ul#subnavlist_i li {
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: .4em .5em .2em .5em ;
-	border-bottom: 3px solid blue;
+	border-bottom: 3px solid #A50707;
+	
 }
 ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li a:hover,
 ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li a:hover,
 ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
   	color: black;
 	text-decoration:none;
-	background-color: #F3F3F3;
-	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    padding: 0em .8em .2em .8em;
 }
 ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist lifocus,
 ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li:focus,  
@@ -3010,16 +3011,18 @@ ul#navlist li.active, ul#navlist li:hover, ul#navlist li:focus {
 	border-top: 1px solid white;
 	border-left:1px solid white;
 	border-right:1px solid white;
-	border-bottom: 3px solid #D26911;
-	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	border-bottom: 3px solid black;
+	box-shadow: 0.2em 0 0.2em #999999;
+
 }
 ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
-   	padding: .4em .4em .2em .4em ;
+   	padding: .4em .8em .2em .8em;
    	text-decoration:underline;
 	font-weight:500;
+	
 }
 ul#subnavlist span#hidesubnav{
     background-image: url('images/mswitch_minus.gif');
@@ -3911,6 +3914,7 @@ ul#topnavlist_sm li{
         height:1.2em;
         width:1.2em;
     }
+
     .prefs_tab {
         clear:both;
         float:left;
@@ -4011,7 +4015,12 @@ ul#topnavlist_sm li{
         margin-top:2em;
         width:100%;
     }
-
+    h2.box{
+        border-bottom:1px solid grey;
+    }
+    h2.box input{
+        margin-right: 1em;
+    }
     .sequence-links{
     }
     .site-name{
@@ -4019,6 +4028,7 @@ ul#topnavlist_sm li{
         float:left;
         clear:both;
         font-size:1em;
+        display:none;
     }
     .news{
         margin-top:-1em;
@@ -4136,7 +4146,7 @@ ul#topnavlist_sm li{
     }
     #topnavlist-link{
         border:thin solid #DED29E;
-        border-bottom: 3px solid #DED29E;
+        border-bottom: 3px solid black;
         border-radius:.3em .3em 0em 0em;
         padding: .5em .5em .4em .5em;
         color: #685642;
@@ -4221,7 +4231,7 @@ ul#topnavlist_sm li{
   
     a.content_link{
         width:5em;
-        border-bottom: 3px solid #DED29E;
+        border-bottom: 3px solid black;
         padding: .5em .3em .5em .5em;
         background-color: #F3F3F3;
     	background-image: linear-gradient(#FAFAFA, #EAEAEA);

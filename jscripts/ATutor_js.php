@@ -141,9 +141,7 @@ ATutor.course = ATutor.course || {};
                         $("ul#subnavlist").css('clear', '');
                         $("ul#subnavlist li").css('margin-bottom', '0');
                         $("ul#subnavlist").css('margin-top', '0'); 
-                        $("#subnavbacktopage").css('width', ''); 
                         $("img.imggoback").css('margin', '0');
-                        $("#subnavlistcontainer").css('margin-top', '0em');
                         $("#subnavlistcontainer").css('border-bottom', '0');
                         $("ul#subnavlist").css('border-bottom', '1px solid #DED29E'); 
                         if($.cookie('side-menu') === 'none'){

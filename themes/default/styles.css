@@ -1747,7 +1747,6 @@ ul#topnavlist li a.selected {
 }
 
 ol#tools {
-
 	margin-right:1.5em; 
 	margin-left:-.5em;
 	padding:0;
@@ -3373,7 +3372,7 @@ div.onRight {
 div.input-form.remedialContent {
 	overflow: auto;
 }
-
+/* BELOW ARE NEW STYLES INTRODUCED IN ATUTOR 2.2 */
 .fc-state-active, .fc-state-active .fc-button-inner {
     background: none repeat scroll 0 0 #B7C68B !important;
     border-color: #555555;
@@ -3720,20 +3719,6 @@ Responsive elements
             border-bottom: 3px solid #D26911;
     }
     
-    
-    
-    
-    
-/*    #sm_topnav{
-        display:inline;
-        height:1.6em;
-    }
-    .logoutbar{
-        clear:both;
-    }
-    #lrg_topnav{
-        display:none;
-    }*/
     a.topnavlist-link{
         border-bottom: 3px solid #DED29E;
         padding: .5em .5em .5em .5em;
