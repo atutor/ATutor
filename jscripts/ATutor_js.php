@@ -41,20 +41,23 @@ ATutor.course = ATutor.course || {};
     jQuery(document).ready( function () {  
                 // Floating topnavlist bar
                 $('#lrg_topnav').scrollToFixed({
-                    marginTop: 18,
+                    marginTop: 20,
                     dontSetWidth: true,
                     preFixed: function() { 
-                        $(this).find('div').css('background-image', 'linear-gradient(#FAFAFA, #EAEAEA)'); 
                         $(this).find('div').css('background-color', '#EAEAEA'); 
-                        $(this).find('div').css('padding', '8');
-                        $(this).find('div').css('margin-left', '200');
+                        $(this).find('div').css('padding', '');
                         $(this).find('div').css('width', '100%');
+/*                      $(this).find('div').css('margin-top', '-2.2em');
+                        $(this).find('div').css('padding-top', '2em');
+                    */
                         $(".active").css('border-top', 'thin solid white');
                         $(".active").css('border-left', 'thin solid white');
                         $(".active").css('border-right', 'thin solid white');
                         $("#topnavlistcontainer").css('padding-left', '3.3em');
                         $("#topnavlistcontainer").css('padding-bottom', '.3em');
                         $("#topnavlistcontainer").css('margin-left', '-2.3em');
+                        $("#topnavlistcontainer").css('background-image', 'none');
+                        
                         $(this).find('ul').css('padding-left', '200');
                         $("#manage_off").css("display","none");
                         $("#manage_on").css("display","none");
@@ -112,20 +115,27 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('width', '100%');
                         $(this).find('div').css('float', '');
                         $(this).find('div').css('position','');
-                        $("#subnavlistcontainer").css('background-color', '#eeeeee'); 
                         $(this).find('div').css('height', '2.6em')
                         $("ul#subnavlist_i li").css('background-color', '#FFFFFF'); 
                         $("ul#subnavlist_i li").css('padding', '.3em'); 
                         $("ul#subnavlist li").css('padding', '.4em'); 
                         $("ul#subnavlist").css('margin-top', '-2.6em'); 
+                        $("ul#subnavlist").css('margin-left', '2.6em');
                         $("ul#subnavlist").css('border-bottom', 'none'); 
                         $("#subnavlist").css('float', 'left'); 
                         $("#subnavlist").css('clear', 'left');
                         if($.cookie('side-menu') === 'none'){
                             $("#subnavlistcontainer").css('margin-left', '-20.5em');
                         }
-                        
-                    },
+                        if($.cookie('showSubNav_i') === 'on'){
+                            $("#subnavlistcontainer").css('background-color', '#eeeeee');
+                        }   
+                        <?php
+                        $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
+                        if(count(get_sub_navigation($current_page))> 1){ ?>
+                            $("#subnavlistcontainer").css('background-color', '#eeeeee');
+                       <?php }?>
+                        },
                     postFixed: function() { 
                         $(this).find('div').css('background-color', ''); 
                         $(this).find('div').css('padding', '');
@@ -134,11 +144,11 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('position','');
                         $(this).find('div').css('height','');
                         $(this).find('div').css('padding', '0');
-                        $("ul#subnavlist li").css('padding', '.4em');
-                        $("ul#subnavlist_i").css('float', '');                     
-                        $("ul#subnavlist_i").css('clear', ''); 
-                        $("ul#subnavlist").css('float', ''); 
-                        $("ul#subnavlist").css('clear', '');
+                        $("ul#subnavlist li").css('padding', '.4em'); 
+                        $("ul#subnavlist").css('float', 'none'); 
+                        $("ul#subnavlist").css('margin-left', '0');
+                        $("ul#subnavlist").css('padding-left', '2em');
+                        $("ul#subnavlist").css('clear', 'none');
                         $("ul#subnavlist li").css('margin-bottom', '0');
                         $("ul#subnavlist").css('margin-top', '0'); 
                         $("img.imggoback").css('margin', '0');
@@ -293,7 +303,7 @@ ATutor.course = ATutor.course || {};
             $('#showsubnav').css('display', 'none');
             $('#hidesubnav').css('display', 'inline');
         }else{
-            $('#hidesubnav').css('display', 'none');
+            $('#hidesubnav').css('display', 'inline');
             $('#subnavlist li:not(.active)').css('display', 'none');
         }
         // Enable subnavtoggle mouse access
