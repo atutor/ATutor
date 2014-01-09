@@ -1436,7 +1436,7 @@ div#topnavlistcontainer {
 	height:1.7em;
 }
 ul#topnavlist {
-	margin-top: 0px;
+	margin-top: -.5em;
 	margin-left:5px;
 
 }
@@ -1444,7 +1444,8 @@ ul#topnavlist {
 ul#topnavlist li {
 	list-style: none;
 	display: inline-block;
-	margin: 0px;
+		height:auto;
+	margin: .5em 0 0 0;
 
 }
 
@@ -2398,7 +2399,7 @@ ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
 	text-decoration:none;
 	background-color: #F3F3F3;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA)
-	margin-top:2em;
+	margin-top:.2em;
 }
 ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist lifocus,
 ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li:focus,  
