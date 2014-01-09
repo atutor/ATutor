@@ -125,7 +125,7 @@ global $system_courses, $_custom_css, $db;
 	<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): 
 		echo '<div class="site-name">'.stripslashes(SITE_NAME).'</div>'; 
 	else:
-		echo '<br />';	
+		echo '<div class="site-name">&nbsp;</div>';	
 	endif; ?>
 
 	<div id="top-links"  role="navigation"> 
@@ -203,21 +203,13 @@ global $system_courses, $_custom_css, $db;
 		<?php if ((isset($this->course_id) && $this->course_id > 0) && ($_SESSION['enroll'] == AT_ENROLL_NO)) : ?> 
 			- <small><a href="<?php echo $this->base_path; ?>enroll.php?course=<?php echo $this->course_id; ?>"><?php echo _AT('enroll_me'); ?></a></small>
 		<?php endif; ?>
-	</h1>
-	
+    </h1>
 	<?php else: ?>
-	
 	<h1 id="site-name-lrg"><?php echo $this->section_title; ?>
 	</h1>
-	
 	<?php endif; ?>
 	</div>
-
-
 </div>
-
-	
-				
 <!-- the main navigation. in our case, tabs -->
 <div id="lrg_topnav">
     <div id="topnavlistcontainer" role="navigation">
