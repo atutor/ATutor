@@ -35,7 +35,7 @@ function get_tabs() {
 	$tabs[3] = array('alternative_content', 'alternatives.inc.php',  'l');	
 	//Harris: Extended test functionality into content export
 	$tabs[4] = array('tests',				'tests.inc.php',		 't');
-	
+	$tabs[5] = array('accessibility',		'accessibility.php',	 'a');
 	return $tabs;
 }
 
