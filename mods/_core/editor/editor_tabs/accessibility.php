@@ -13,9 +13,6 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 
-//require_once(AT_INCLUDE_PATH.'vitals.inc.php');
-//require(AT_INCLUDE_PATH.'../mods/_core/editor/editor_tab_functions.inc.php');
-
 $cid = intval($_POST['cid']);
 debug($_POST);
 if ($cid == 0) {
@@ -71,7 +68,6 @@ else if (isset($_POST['reverse']))
 	}
 }
 
-//require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>?popup=1" method="post" name="form">
   <div class="row">
@@ -118,6 +114,3 @@ if ($_POST['body_text'] != '') {
 ?>
   </div>
 </form>
-<?php 
-//require(AT_INCLUDE_PATH.'footer.inc.php');
-?>
