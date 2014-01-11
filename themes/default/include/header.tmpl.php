@@ -419,13 +419,17 @@ global $system_courses, $_custom_css, $db;
             <a name="admin_tools"></a>
 			<ul id="subnavlist_i" role="navigation"  aria-label="<?php echo _AT('manage_navigation_bar'); ?>">
             <span id="manage_on" title="<?php echo _AT('manage_tools_on'); ?>" aria-live="polite"></span>
-			<?php for ($i=0; $i<$num_pages_i; $i++): ?>
+			<?php for ($i=0; $i<$num_pages_i; $i++): 
+			?>
 
-				<?php if ($this->sub_level_pages_i[$i]['url'] == $this->current_sub_level_page): ?>
+				<?php if ($this->sub_level_pages_i[$i]['url'] == $this->current_sub_level_page){ ?>
 				      <li class="active"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages_i[$i]['title'])); ?></li>
-				<?php else: ?>
-					<li><a href="<?php echo $this->sub_level_pages_i[$i]['url'].$fcid; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages_i[$i]['title'])); ?></a></li>
-				<?php endif; ?>
+				<?php }else if(preg_match("/add_content.php/", $this->sub_level_pages_i[$i]['url'])){ ?>
+					    <li><a href="<?php echo $this->sub_level_pages_i[$i]['url']; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages_i[$i]['title'])); ?></a></li>
+				
+				<?php } else { ?>
+					    <li><a href="<?php echo $this->sub_level_pages_i[$i]['url'].$fcid; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages_i[$i]['title'])); ?></a></li>
+				<?php } ?>
 				<?php if ($i < $num_pages-1): 
 					echo " ";?>
 				<?php endif; ?>
