@@ -28,7 +28,7 @@ $sql = "SELECT t.id AS id,t.title AS title,t.toolid AS toolid,
 $rows_tools = queryDB($sql, array(TABLE_PREFIX,TABLE_PREFIX));
 ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" summary="" rules="all">
+<table class="data static" summary="" rules="">
         <thead>
                 <th>&nbsp;</th>
                 <th><?php echo _AT('bl_title'); ?></th>

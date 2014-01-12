@@ -33,7 +33,7 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="<?php echo _AT('course_title_instructor_enrolment_long'); ?>" rules="cols">
+<table class="data" summary="<?php echo _AT('course_title_instructor_enrolment_long'); ?>" rules="">
 <colgroup>
 	<?php if ($col == 'title'): ?>
 		<col />

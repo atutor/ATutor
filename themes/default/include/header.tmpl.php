@@ -233,7 +233,7 @@ global $system_courses, $_custom_css, $db;
 
 <div class="logoutbar">
 <?php  admin_switch(); ?>
-	<div>
+	<div id="userlinks">
 		<?php if (isset($_SESSION['valid_user']) && $_SESSION['valid_user']): ?>
 		<?php $path_parts = explode("/", $this->current_top_level_page); 
 		      $last_path_part = $path_parts[sizeof($path_parts) - 1];

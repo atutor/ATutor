@@ -1071,7 +1071,7 @@ height:2.5em;
 }
 #tl_corner{
 
-	background-image:url(images/tl_corner.gif);
+	background-image:url('images/tl_corner.gif');
 	background-position: top left;
 	background-repeat: no-repeat;
 	padding:0;
@@ -2088,7 +2088,7 @@ div#subnavlistcontainer {
 }
 div#subnavbacktopage {
 	padding-top:5px;
-	padding-left:20px;
+	padding-left:25px;
 	float:left;
 }
 
@@ -2768,9 +2768,7 @@ width:.8em;
 img.imggoback{
 height:1.9em;
 width:1.9em;
-margin-top:-.3em;
 margin-right:1em;
-margin-left:-1.5em;
 }
 input[type=image].fl-force-right{
 /*height:.9em;

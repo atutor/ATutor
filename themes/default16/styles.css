@@ -844,13 +844,13 @@ div.home-link img {
 }
 
 /* sequence links */
-div#sequence-links {
+div.sequence-links {
 	float:right;
-	margin-top: 10px;
-	padding-right: 5px;
-	padding-top:7px;
+	clear:right;
+	width:4em;
+	height:2em;
 }
-div#sequence-links a {
+div.sequence-links a {
 	text-decoration: none;
 }
 
@@ -2344,7 +2344,11 @@ div#subnavbacktopage {
 	padding-left:20px;
 	float:left;
 }
-
+img.imggoback{
+height:1.5em;
+width:1.5em;
+margin-right:1em;
+}
 div.toolcontainer{
 	width:95%;
 	margin:auto;
