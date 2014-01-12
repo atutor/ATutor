@@ -80,7 +80,7 @@ global $system_courses, $_custom_css, $_base_path;
 	<link rel="alternate" type="application/rss+xml" title="<?php echo SITE_NAME; ?> - RSS 1.0" href="<?php echo $this->base_href; ?>get_rss.php?<?php echo $this->course_id; ?>-1" />
 	<?php endif; ?>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
     //<!--
     jQuery.noConflict();
     //-->

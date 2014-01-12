@@ -22,7 +22,7 @@
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
     <script src="<?php echo $this->base_path; ?>jscripts/infusion/jquery.autoHeight.js" type="text/javascript"></script>
     <script src="<?php echo $this->base_path; ?>jscripts/jquery-ui-1.7.2/development-bundle/ui/ui.resizable.js" type="text/javascript"></script>
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 	//<!--
 	jQuery.noConflict();
 	//-->

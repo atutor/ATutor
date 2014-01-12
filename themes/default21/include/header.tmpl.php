@@ -377,7 +377,8 @@ global $system_courses, $_custom_css, $db;
 				<img  alt="<?php echo _AT('back_to').' '.htmlentities_utf8($this->back_to_page['title']); ?>" title="<?php echo _AT('back_to').' '.htmlentities_utf8($this->back_to_page['title']); ?>" src="<?php echo $this->base_href; ?>images/goback.png" style="float:left;" class="imggoback"/></a>&nbsp;
 			<?php endif; ?>
 			</div>
-
+			<span id="subnav-hide" title="<?php echo _AT('sub_nav_hidden'); ?>" aria-live="polite"></span>
+			<span id="subnav-open" title="<?php echo _AT('sub_nav_opened'); ?>" aria-live="polite"></span>
 			<ul id="subnavlist" role="navigation"  aria-label="<?php echo _AT('tools'); ?>">
 			<?php 
 
@@ -392,8 +393,6 @@ global $system_courses, $_custom_css, $db;
 				
 				<?php } else if($num_pages > 1) { ?>
 					  <li>
-					  <span id="subnav-hide" title="<?php echo _AT('sub_nav_hidden'); ?>" aria-live="polite"></span>
-					  <span id="subnav-open" title="<?php echo _AT('sub_nav_opened'); ?>" aria-live="polite"></span>
 					  <a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?></a></li>
 				<?php } ?>
 				<?php if ($i < $num_pages-1): 

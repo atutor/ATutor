@@ -21,7 +21,7 @@ $variables = array('_template', '_msgs');
 define('AT_INCLUDE_PATH', '../../../include/');
 ?>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 function openWindow(page) {
 	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
 	newWindow.focus();

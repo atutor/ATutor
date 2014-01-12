@@ -14,7 +14,7 @@
 
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 ?>
-    <script type="text/javascript" language="javascript">
+    <script type="text/javascript">
     //<!--
         ATutor.mods.editor.editor_pref = "<?php if(isset($_SESSION['prefs']['PREF_CONTENT_EDITOR'])) echo $_SESSION['prefs']['PREF_CONTENT_EDITOR'] ?>";
     //-->
@@ -57,7 +57,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 			$_POST['head'] = $stripslashes($_POST['head']);
 		}
 ?>
-    <script type="text/javascript" language="javascript">
+    <script type="text/javascript">
     //<!--
         ATutor.mods.editor.content_path = "<?php if(isset($content_row['content_path'])) echo $content_row['content_path'] ?>";
         ATutor.mods.editor.content_id = "<?php if(isset($cid)) echo $cid ?>";

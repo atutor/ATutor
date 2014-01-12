@@ -224,7 +224,7 @@ if ($current_tab == 0){
     
                 if(isset($main['tool_file'])) {
                   //  echo '<!-- TODO LAW note problem here with one tool_file variable for multiple tools -->'."\n";
-                    echo '  <script type="text/javascript" language="javascript">'."\n";
+                    echo '  <script type="text/javascript">'."\n";
                     echo '  //<!--'."\n";
                     echo '  ATutor.mods.editor.tool_for = "' . urlencode($main['title']) . '";'."\n";
                     echo '  //-->'."\n";

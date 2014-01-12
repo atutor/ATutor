@@ -149,7 +149,7 @@ if (!$question_flag) {
 </table>
 </form>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 // <!--
 	function selectCat(catID, cat) {
 		for (var i=0;i<document.form.elements.length;i++) {

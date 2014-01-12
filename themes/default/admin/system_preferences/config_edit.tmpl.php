@@ -135,9 +135,9 @@ if(!$this->service_installed){
 		<label for="maximum_login_attempt"><?php echo _AT('maximum_login_attempt'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_login']; ?>)<br />
 		<input type="text" size="10" name="max_login" id="maximum_login_attempt" value="<?php if (!empty($_POST['max_login'])) { echo $stripslashes(htmlspecialchars($_POST['max_login'])); } else { echo $_config['max_login']; } ?>"  /> <?php echo _AT('times'); ?>
 	</div>
-	<div class="row">	
-<!-- <div class="adv_toggle" role="toggle"><a href="javascript: return:false;">Advanced</a></div> -->
-<div style="" class="adv_opts" >
+<!-- 	<div class="row">	
+<div class="adv_toggle" role="toggle"><a href="javascript: return:false;">Advanced</a></div>
+<div style="" class="adv_opts" > -->
 	<div class="row">
 	<fieldset>
 		<legend><?php echo _AT('display_name_format'); ?> </legend>
@@ -267,8 +267,8 @@ if(!$this->service_installed){
 	</div>
 	<div class="row">
 	
-		<label for="cache_lif"><?php echo _AT('cache_life'); ?></label> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['cache_life']); ?>)<br />
-		<input type="text" name="cache_life" id="cache" size="8" maxlength="8" value="<?php if (!empty($_POST['cache_life'])) { echo $stripslashes(htmlspecialchars($_POST['cache_life'])); } else { echo $_config['cache_life']; } ?>"  />
+		<label for="cache_life"><?php echo _AT('cache_life'); ?></label> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['cache_life']); ?>)<br />
+		<input type="text" name="cache_life" id="cache_life" size="8" maxlength="8" value="<?php if (!empty($_POST['cache_life'])) { echo $stripslashes(htmlspecialchars($_POST['cache_life'])); } else { echo $_config['cache_life']; } ?>"  />
 	</div>
 	<div class="row">
 		<label for="latex_server"><?php echo _AT('latex_server'); ?></label><br />
@@ -367,7 +367,7 @@ if(!$this->service_installed){
 		<?php endif; ?>
 	</fieldset>
 	</div>
-</div> <!--  end Advanced -->
+<!--</div>  end Advanced -->
 	<div class="row buttons">
 			<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" accesskey="s"  />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>"  />

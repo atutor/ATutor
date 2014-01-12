@@ -5,7 +5,7 @@ var TemplateDialog = {
 		var url = tinyMCEPopup.getParam("template_external_list_url");
 
 		if (url != null)
-			document.write('<sc'+'ript language="javascript" type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></sc'+'ript>');
+			document.write('<sc'+'ript type="text/javascript" src="' + tinyMCEPopup.editor.documentBaseURI.toAbsolute(url) + '"></sc'+'ript>');
 	},
 
 	init : function() {

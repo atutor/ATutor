@@ -26,7 +26,7 @@ global $system_courses;
 	<base href="<?php echo $this->content_base_href; ?>" />
 	<link rel="shortcut icon" href="<?php echo $this->base_path; ?>favicon.ico" type="image/x-icon" />
     <script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>    
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
     //<!--
     jQuery.noConflict();
     //-->

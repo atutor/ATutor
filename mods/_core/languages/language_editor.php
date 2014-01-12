@@ -156,7 +156,7 @@ $num_results = count($rows_text);
 </div>
 </form>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 //<!--
 function showtext(obj) {
 	frames['tran'].location.href = "<?php echo AT_BASE_HREF; ?>mods/_core/languages/language_term.php?type=<?php echo $_variables[$_GET['type']].SEP; ?>term=" + obj.value;

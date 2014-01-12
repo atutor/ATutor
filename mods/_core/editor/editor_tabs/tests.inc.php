@@ -210,7 +210,7 @@ foreach($rows_prereqs as $row){
 	<br />
 <?php }?>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 	function toggleTestSelect(r_id){
 		var row = document.getElementById(r_id);
 		var checkBox = row.cells[0].firstChild;

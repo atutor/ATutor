@@ -118,7 +118,7 @@ if (!isset($_POST['submit'])) {
 
 ?>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 // <!--
 function checkAdmin() {
 	if (document.form.priv_admin.checked == true) {

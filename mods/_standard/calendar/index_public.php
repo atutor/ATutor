@@ -32,8 +32,8 @@
         var cid                     = '" . $_GET['cid'] . "';
     ";
     $_custom_head .= 
-    '<script language="javascript" type="text/javascript">' . $global_js_vars . '</script>
-    <script language="javascript" type="text/javascript" src="' . AT_BASE_HREF .
+    '<script type="text/javascript">' . $global_js_vars . '</script>
+    <script type="text/javascript" src="' . AT_BASE_HREF .
      'mods/_standard/calendar/js/index_public.js"></script>';
 
     //Get member id from request if it is not set then display default message
@@ -165,7 +165,7 @@
 ?>
 <?php $_custom_css = $_base_path . 'mods/_standard/calendar/lib/fullcalendar/fullcalendar-theme.css'; // use a custom stylesheet ?>
 
-<script language="javascript" type="text/javascript" 
+<script type="text/javascript" 
     src="<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/fullcalendar-theme.js">
 </script>
 

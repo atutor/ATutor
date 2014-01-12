@@ -182,7 +182,7 @@ if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && ($_SESSION['packaging'] ==
 </div>
 </form>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 
 var but_src;
 function setClickSource(name) {

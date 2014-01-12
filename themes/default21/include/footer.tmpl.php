@@ -30,7 +30,7 @@
 <div id="footer">
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
     //<!--
         <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
     //-->

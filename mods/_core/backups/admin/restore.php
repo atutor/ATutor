@@ -105,7 +105,7 @@ $row = $Backup->getRow($_REQUEST['backup_id']);
 </div>
 </form>
 <?php $i=0; ?>
-<script language="javascript" type="text/javascript">
+<script  type="text/javascript">
 	
 	function selectAll() {
 		if (document.form.all.checked == true) {

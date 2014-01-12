@@ -213,7 +213,7 @@ $count = 0;
 </table>
 </form>
 
-<script type="text/javascript" language="javascript">
+<script type="text/javascript">
 // <!--
 function hirow(obj, row) {
 	if (obj.value && obj.value == <?php echo $_GET['gid']; ?>) {

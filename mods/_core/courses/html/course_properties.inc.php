@@ -178,7 +178,7 @@ $savant->assign('backup_list', $backup_list);
 $savant->display('admin/courses/edit_course.tmpl.php');
 ?>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 <!--
 function enableNotify() {
 	document.course_form.notify.disabled = false;

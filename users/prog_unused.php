@@ -26,7 +26,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 	<?php } ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
     <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
     //<!--
     jQuery.noConflict();
     //-->

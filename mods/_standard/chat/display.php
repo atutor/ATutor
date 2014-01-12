@@ -42,7 +42,7 @@ require(AT_INCLUDE_PATH.'../mods/_standard/chat/lib/chat.inc.php');
 require('include/html/chat_header.inc.php');
 	if ($myPrefs['refresh'] != 'manual') {
 ?>
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 	<!--
 		setTimeout("reDisplay()", <?php echo $myPrefs['refresh'] * 1000; ?>);
 		function reDisplay() {
@@ -111,7 +111,7 @@ require('include/html/chat_header.inc.php');
 			   <input type="submit" name="submit" value="'._AT('send').'" class="button" title="'._AT('send').'" onfocus="this.className=\'submit highlight\'" onblur="this.className=\'submit\'" />';
 
 		echo '</form></p>';
-		echo '<script language="javascript"><!--
+		echo '<script type="text/javascript"><!--
 			   function checkForm() {
 				   if (document.f1.message.value == "" || !document.f1.message.value) return false;
 				   return true;

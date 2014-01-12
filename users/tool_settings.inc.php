@@ -78,7 +78,7 @@
 		<input id="abac" name="abacus" type="checkbox" <?php echo $abac; ?> onchange="changeVal('abac')" /><label for="abac"><?php echo _AT("abacus"); ?></label><br />
 	</div>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 //<!--
 function changeVal(val_name)
 {

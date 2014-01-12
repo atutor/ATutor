@@ -98,7 +98,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 	<link rel="stylesheet" href="<?php echo $this->base_path.'themes/'.$this->theme; ?>/moz.css" type="text/css" />-->	
 	<!-- Fluid Infusion -->
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 
 	//<!--
 	jQuery.noConflict();
@@ -205,7 +205,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 			</div>	
 			<div id="content">
 				<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript"></script>
+				<script type="text/javascript"></script>
 			</div>
 		</div><!-- course-level navigation -->				
 	</div> <!-- end sequence-links-course-navigation -->
@@ -301,7 +301,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 					
 	<!--	<div id="content">
 			<?php $contentManager->printMainMenu(); ?>
-				<script language="javascript" type="text/javascript"></script>
+				<script type="text/javascript"></script>
 		</div> -->
 
 	</div>

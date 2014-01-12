@@ -78,7 +78,7 @@ global $system_courses, $_custom_css, $db;
 	<script src="http://code.jquery.com/mobile/1.0b1/jquery.mobile-1.0b1.min.js"></script>
 	<script src="http://code.jquery.com/jquery-1.6.1.min.js"></script>
 	<script src="<?php echo $this->base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 	//<!--
 	jQuery.noConflict();
 	//-->

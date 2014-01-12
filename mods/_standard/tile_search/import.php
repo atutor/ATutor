@@ -152,7 +152,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 </div>
 </form>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 function openWindow(page) {
 	newWindow = window.open(page, "progWin", "width=400,height=200,toolbar=no,location=no");
 	newWindow.focus();

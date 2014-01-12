@@ -51,7 +51,7 @@ $savant->assign('side_menu', $stack_files);
 
 // this js is indep of the theme used:
 ?>
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 //<!--z
 var selected;
 function rowselect(obj) {

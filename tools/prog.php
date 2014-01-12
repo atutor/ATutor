@@ -32,7 +32,7 @@ if ($_GET['tile']) {
 	<?php } ?>
 	<meta http-equiv="Content-Type" content="text/html; <?php echo $myLang->getCharacterSet(); ?>" />
     <script src="<?php echo $_base_path; ?>jscripts/infusion/InfusionAll.js" type="text/javascript"></script>
-    <script language="javascript" type="text/javascript">
+    <script type="text/javascript">
     //<!--
     jQuery.noConflict();
     //-->

@@ -39,7 +39,7 @@
  </div>			
 </div>
 
-	<script language="javascript" type="text/javascript">
+	<script type="text/javascript">
 //<!--
     <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
 //-->
@@ -84,7 +84,7 @@
 </ul>			
  </div>			
 </div>
-	<script language="javascript" type="text/javascript">
+	<script  type="text/javascript">
 //<!--
     <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
 //-->

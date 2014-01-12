@@ -35,7 +35,7 @@ $now = time();
 	</td>
 </tr>
 </table>
-<script language="javascript" type="text/javascript"><!--
+<script type="text/javascript"><!--
 	function checkForm() {
 		document.f1.message.value = document.f1.tempField.value;
         if (document.f1.message.value == "" || !document.f1.message.value) return false;

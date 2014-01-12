@@ -1548,6 +1548,7 @@ overflow:auto;
 	width: 100%;
 	text-align: center;
 	padding: 0px 0px;
+	margin-top:1em;
 }
 
 /** forum stuff **/
@@ -1595,6 +1596,7 @@ ul#topnavlist li {
 	height:auto;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
+	margin-top:.5em;
 
 
 }
@@ -1922,7 +1924,7 @@ div.home_box {
 	cursor: move;
 }
 div#subnavlistcontainer {
-	width:90%;
+	width:100%;
 	margin:auto;
 	height:1.8em;
 

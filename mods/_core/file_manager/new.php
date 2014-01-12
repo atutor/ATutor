@@ -204,7 +204,7 @@ if (!$_POST['extension']) {
 	</div>
 	</form>
 
-	<script type="text/javascript" language="javascript">
+	<script type="text/javascript">
 	//<!--
 	function on_load()
 	{

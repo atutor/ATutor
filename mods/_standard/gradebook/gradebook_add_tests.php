@@ -276,7 +276,7 @@ else
 </div>
 </form>
 
-<script language="javascript" type="text/javascript">
+<script type="text/javascript">
 function disable_dates (state, name) {
 	document.form['day' + name].disabled=state;
 	document.form['month' + name].disabled=state;
