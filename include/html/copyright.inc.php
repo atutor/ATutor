@@ -24,12 +24,6 @@ global $_config;
 		echo '<small>' . AT_print($system_courses[$_SESSION['course_id']]['copyright'], 'courses.copyright') . '</small><br />';
 	}
 
-	/****************************************************************************************/
-	/* VERY IMPORTANT
-	   IN KEEPING WITH THE TERMS OF THE ATUTOR LICENCE AGREEMENT (GNU GPL), THE FOLLOWING
-	   COPYRIGHT LINES MAY NOT BE ALTERED WITHOUT EXPRESSED CONSENT FROM ATUTOR OR IDI.
-	*/
-
 ?>
 	<small><?php echo _AT('copyright').'. '; echo '<a href="'.AT_print($_base_path,'url.base').'about.php">'._AT('about_atutor').'</a>.'; ?><br />
 	<?php if($_config['just_social'] != "1"){ ?>
