@@ -24,7 +24,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	} 
 ?>
 </div>
- 
+ <!--
 <?php if ($this->shortcuts): ?>
 <fieldset id="shortcuts"><legend><?php echo _AT('shortcuts'); ?></legend>
 	<ul>
@@ -34,7 +34,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 	</ul>
 </fieldset>
 <?php endif; ?>
-
+-->
 <?php if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") { ?>
 <div id="content-table">
 	<?php echo $this->content_table; ?>
