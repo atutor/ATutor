@@ -17,7 +17,7 @@ global $_base_path;
 global $system_courses;
 global $_config;
 ?>
-<div align="center"><?php
+<div id="copyright"><?php
 
 	if ((isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) && $system_courses[$_SESSION['course_id']]['copyright'] != '') {	
 		$system_courses[$_SESSION['course_id']]['copyright'] = htmlentities($system_courses[$_SESSION['course_id']]['copyright'], ENT_QUOTES, 'UTF-8');
