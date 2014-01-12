@@ -3544,7 +3544,11 @@ clear:left;
     display:none;
     height:1px;
 }
-
+#copyright{
+    width:25em;
+    margin-left:auto;
+    margin-right: auto;
+}
 /******* 
 
 Responsive elements 

@@ -25,7 +25,7 @@ if(count($this->home_links) > 0){
     <ul id="home-links">
     <?php if (is_array($this->home_links)): ?>
     <?php foreach ($this->home_links as $link): ?>
-        <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home" border="0" /><?php echo $link['title']; ?></a></li>
+        <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['img']; ?>" alt="" class="img-size-home"  /><?php echo $link['title']; ?></a></li>
     <?php endforeach; ?>
     <?php endif; ?>
     </ul>
@@ -101,10 +101,10 @@ function print_sublinks($link){
 		<div class="outside_box">
 <?php if (authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN)) {?>
 			<div class="buttonbox">
-			<input type="image" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>');" src="<?php echo AT_BASE_HREF; ?>images/x.gif" alt="<?php echo _AT('close'); ?>" value="<?php echo _AT('close'); ?>" class="img1616"/>
+			<input type="image" onclick="javascript: remove_module('<?php echo htmlentities(substr($link['url'], strlen($_base_path))); ?>');" src="<?php echo AT_BASE_HREF; ?>images/x.gif" alt="<?php echo _AT('close'); ?>" class="img1616"/>
 			</div>
 <?php }?>
-			<img src="<?php echo $link['img']; ?>" alt="" border="0" style="vertical-align:middle;" class="img-size-home"/>
+			<img src="<?php echo $link['img']; ?>" alt="" style="vertical-align:middle;" class="img-size-home"/>
 			<span class="home-title"><a href="<?php echo $link['url']; ?>"><?php echo $link['title']; ?></a></span>
 			<div class="inside_box">
 
@@ -120,7 +120,7 @@ function print_sublinks($link){
 <?php } else { ?>
 				<div class="details-text">
 <?php 	foreach($array as $sublink){ ?>
-					<img src="<?php echo $link['icon']; ?>" border="0" alt="" style="vertical-align:middle;"/> 
+					<img src="<?php echo $link['icon']; ?>" alt="" style="vertical-align:middle;"/> 
 <?php		if ($sublink <> '') echo $sublink."<br />"; } ?>
 				</div> 
 <?php 

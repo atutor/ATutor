@@ -2901,7 +2901,11 @@ div.fs_tools{
     margin-right:auto;
 
 }
-
+#copyright{
+    width:25em;
+    margin-left:auto;
+    margin-right: auto;
+}
 /* 
 Changes to the default/styles.css to upgrade tfrom 2.1 to 2.2 file to apply to other themes
 */

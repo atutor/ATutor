@@ -3039,7 +3039,11 @@ div.onRight {
 div.input-form.remedialContent {
 	overflow: auto;
 }
-
+#copyright{
+    width:25em;
+    margin-left:auto;
+    margin-right: auto;
+}
 /* 
 Changes/additions to the default/styles.css to upgrade from 2.1 to 2.2 file to apply to other themes
 */
