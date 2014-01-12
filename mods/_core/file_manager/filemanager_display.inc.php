@@ -454,7 +454,7 @@ if ($a_type > 0) {
 </div>
 <?php }?>
 
-<table class="data static" summary="" border="0" rules="groups" style="width: 90%">
+<table class="data static" summary="" border="0" style="width: 90%">
 <thead>
 <tr>
 <td colspan="5">

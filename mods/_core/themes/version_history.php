@@ -99,7 +99,7 @@ $msg->printErrors();
 <?php 
 ?>
 <input type="hidden" name="id" value="<?php echo $id; ?>" />
-<table class="data" summary="" style="width: 100%" rules="cols">
+<table class="data" summary="" style="width: 100%">
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>

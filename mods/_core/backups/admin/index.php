@@ -52,7 +52,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
 	
-<table class="data" summary="" rules="groups" style="width: 90%">
+<table class="data" summary="" style="width: 90%">
 <thead>
 	<tr>
 		<th><?php echo _AT('file_name');    ?></th>

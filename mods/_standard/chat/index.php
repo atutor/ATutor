@@ -73,7 +73,7 @@ if (count($tran_files) == 0) {
 	
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-	<table class="data" rules="cols" summary="">
+	<table class="data" summary="">
 	<colgroup>
 		<?php if ($col == 'name'): ?>
 			<col class="sort" />

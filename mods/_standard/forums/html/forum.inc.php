@@ -50,7 +50,7 @@ if(count($rows_comments)== 0){
 	return;
 }
 ?>
-<table class="data static" summary="" rules="rows">
+<table class="data static" summary="">
 <colgroup>
 	<?php if ($col == 'subject'): ?>
 		<col class="sort" />

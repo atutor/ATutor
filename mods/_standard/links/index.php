@@ -160,7 +160,7 @@ $num_results = count($result);
 </form>
 <?php endif; ?>
 
-<table class="data static" summary="" rules="cols">
+<table class="data static" summary="">
 <colgroup>
 	<?php if ($col == 'LinkName'): ?>
 		<col class="sort" />

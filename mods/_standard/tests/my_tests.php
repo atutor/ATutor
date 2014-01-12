@@ -22,7 +22,7 @@ $sql	= "SELECT T.*, UNIX_TIMESTAMP(T.start_date) AS us, UNIX_TIMESTAMP(T.end_dat
 $rows_tests	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $_SESSION['course_id']));
 
 ?>
-<table class="data static" summary="" rules="cols">
+<table class="data static" summary="">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('title');      ?></th>
@@ -105,7 +105,7 @@ if (!$count) {
 	<?php exit; ?>
 <?php endif; ?>
 <h4><?php echo _AT('completed_tests'); ?></h4><br />
-<table class="data static" summary="" rules="cols">
+<table class="data static" summary="">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('title');      ?></th>

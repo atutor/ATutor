@@ -168,7 +168,7 @@ foreach($rows_cats as $row){
 	</div>
 
 	<div class="row">
-		<table summary="" class="data" rules="cols" align="left" style="width: 95%;">
+		<table summary="" class="data" align="left" style="width: 95%;">
 		
 		<thead>
 		<tr>

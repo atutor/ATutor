@@ -49,7 +49,7 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 	</div>
 
 	<div class="row">
-		<table id="dependent_patches" class="data" rules="cols" align="left" style="width: 50%;">
+		<table id="dependent_patches" class="data" align="left" style="width: 50%;">
 		<thead>
 		<tr>
 			<th scope="col"><?php echo _AT('dependent_patch_id'); ?></th>

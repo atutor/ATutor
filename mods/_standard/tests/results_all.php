@@ -201,7 +201,7 @@ if(count($rows_results) > 0){
 	$total_score = 0;
 
 	// generate table/csv header line
-	$table_content .= '<table class="data static" summary="" style="width: 90%" rules="cols">';
+	$table_content .= '<table class="data static" summary="" style="width: 90%">';
 	$table_content .= '<thead>';
 	$table_content .= '<tr>';
 	$table_content .= '<th scope="col">'._AT('login_name').'</th>';

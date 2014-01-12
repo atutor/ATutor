@@ -130,7 +130,7 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) {
 	<input type="hidden" name="solve_conflict" value="<?php echo $_POST["solve_conflict"]; ?>" />
 	<input type="hidden" name="count" value="<?php echo count($students); ?>" />
 		
-	<table class="data static" summary="" rules="cols">
+	<table class="data static" summary="">
 	<thead>
 	<tr>
 		<th scope="col"><?php echo _AT('status');     ?></th>

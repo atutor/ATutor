@@ -136,7 +136,7 @@ if ($categories_select != '<option value="0"></option>') {
 		</div>
 
 		<div class="row">
-		<table summary="" class="data" rules="cols" style="width: 95%; margin:auto;">
+		<table summary="" class="data" style="width: 95%; margin:auto;">
 		
 		<thead>
 		<tr>

@@ -47,7 +47,7 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 		<?php echo $table_title; ?>
 	
 	<div class="row">
-		<table summary="" class="data" rules="cols" align="left" style="width: 100%;">
+		<table summary="" class="data" align="left" style="width: 100%;">
 		
 		<thead>
 		<tr>

@@ -69,7 +69,7 @@ foreach($rows_categories as $row){
 	<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
 <?php endif; ?>
 <br style="clear:both;" />
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

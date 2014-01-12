@@ -26,7 +26,7 @@ if($languageManager->getNumLanguages() < 2){
 		echo ' <input type="submit" name="submit_language" class="button" value="'._AT('translate').'" />';
 		echo '</form>';
 	} else {
-		echo '<small><label for="lang">'._AT('translate_to').' </label></small>';
+		echo '<small>'._AT('translate_to').' </small>';
 		$languageManager->printList($_SESSION['lang'], 'lang', 'lang',AT_print($_my_uri,'url.base'));
 	}
 ?></div>

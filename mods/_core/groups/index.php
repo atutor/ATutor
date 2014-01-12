@@ -59,7 +59,7 @@ $rows_group_type = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 <div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('groups'); ?></legend>
-<table class="data" summary="" rules="cols" style="width: 80%">
+<table class="data" summary="" style="width: 80%">
 <tfoot>
 <tr>
 	<td>

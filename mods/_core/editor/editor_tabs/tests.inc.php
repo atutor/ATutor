@@ -172,7 +172,7 @@ foreach($rows_prereqs as $row){
 
 <?php function print_test_table($results, $post_tids, $id_prefix='') {?>
 	<div>
-	<table class="data" summary="" style="width: 90%" rules="cols">
+	<table class="data" summary="" style="width: 90%">
 	<thead>
 	<tr>
 		<th scope="col">&nbsp;</th>

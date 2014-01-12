@@ -119,7 +119,7 @@ print_data_table($rows_mobile, MOBILE_DEVICE);
 <h3><?php if ($type == DESKTOP_DEVICE) echo _AT('themes_for_desktop'); else echo _AT('themes_for_mobile');?></h3><br />
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form_<?php echo $type; ?>">
 <input type="hidden" name="type" value="<?php echo $type; ?>" />
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

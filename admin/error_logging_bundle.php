@@ -128,7 +128,7 @@ $msg->printAll();
 <p><?php echo _AT('admin_bundle_instructions'); ?></p>
 
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th span="col"><?php echo _AT('profile');   ?></th>

@@ -16,7 +16,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
-<table class="data static" rules="cols" summary="">
+<table class="data static" summary="">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('page'); ?></th>

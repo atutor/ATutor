@@ -96,7 +96,7 @@ $_current_modules = array_merge($fha_student_tools, array_diff($_modules, $fha_s
 $num_modules = count($fha_student_tools);
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" rules="rows" summary="">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('section'); ?></th>

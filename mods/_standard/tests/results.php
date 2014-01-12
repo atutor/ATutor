@@ -193,7 +193,7 @@ if (isset($_GET['status']) && ($_GET['status'] != '') && ($_GET['status'] == 0))
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <input type="hidden" name="tid" value="<?php echo $tid; ?>" />
 
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <colgroup>
 	<?php if ($col == 'login'): ?>
 		<col />

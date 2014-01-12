@@ -20,7 +20,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 ?>
 
 <form name="form" method="post" action="admin/error_logging_details.php">
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th><?php echo _AT('profile');   ?></th>

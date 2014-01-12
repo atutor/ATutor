@@ -225,7 +225,7 @@ if (isset($_POST['cancel'])) {
 	} // end if
 ?>
 
-<table class="data static" summary="" rules="groups">
+<table class="data static" summary="">
 <thead>
 <tr>
 	<th><?php echo _AT('name'); ?></th>

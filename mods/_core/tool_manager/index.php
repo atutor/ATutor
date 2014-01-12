@@ -46,7 +46,7 @@ if ($tool_file) {
 $sql = "SELECT forum_id FROM %scontent_forums_assoc WHERE content_id='%d'";
 if(isset($tool_list)) {?>
 <form name="datagrid" action="<?php AT_INCLUDE_PATH.'../'.$_REQUEST['tool_file'];?>" method="POST">
-    <table class="data" summary="" style="width: 90%" rules="cols">
+    <table class="data" summary="" style="width: 90%">
         <thead>
             <tr>
                 <th scope="col" style="width:5%">&nbsp;</th>

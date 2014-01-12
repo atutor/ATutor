@@ -81,7 +81,7 @@ if (isset($_POST['view'])) {
 
 	<form name="form" method="post" action="<?php echo 'admin/error_logging_view.php'; ?>">
 	
-	<table class="data" summary="" rules="cols">
+	<table class="data" summary="">
 	<thead>
 	<tr>
 		<th scope="col"><?php echo _AT('bug_identifier'); ?></th>

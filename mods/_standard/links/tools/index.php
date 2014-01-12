@@ -105,7 +105,7 @@ if (!empty($categories)) {
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

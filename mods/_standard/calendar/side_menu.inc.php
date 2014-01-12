@@ -25,8 +25,8 @@
 <script type='text/javascript' src="<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/fullcalendar-original.js">
 </script>
 
-<link href= "<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css"/>
-<link href= "<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/miniCal.css" rel="stylesheet" type="text/css"/>
+<link href="<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/fullcalendar.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo AT_BASE_HREF; ?>mods/_standard/calendar/lib/fullcalendar/miniCal.css" rel="stylesheet" type="text/css" />
 
 <script type="text/javascript">
     var path = "<?php echo AT_BASE_HREF; ?>";
