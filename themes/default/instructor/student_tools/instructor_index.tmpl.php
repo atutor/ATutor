@@ -1,6 +1,6 @@
 <?php global $_pages;?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" rules="rows" summary="">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="cols"><?php echo _AT('section'); ?></th>

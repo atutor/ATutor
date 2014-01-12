@@ -58,7 +58,7 @@
 <input type="hidden" name="include" value="<?php echo htmlspecialchars($_GET['include']); ?>" />
 
 <?php if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {  $col_counts = 1; } else { $col_counts = 0; } ?>
-<table summary="" class="data" rules="rows">
+<table summary="" class="data">
 <colgroup>
 	<?php if ($col == 'login'): ?>
 		<col />

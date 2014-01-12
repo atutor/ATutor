@@ -4,7 +4,7 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <div class="input-form">
 <input type="hidden" name="id" value="<?php echo $this->id; ?>" />
-<table class="data" summary="" style="width: 100%" rules="cols">
+<table class="data" summary="" style="width: 100%">
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>

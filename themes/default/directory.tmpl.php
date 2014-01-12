@@ -45,7 +45,7 @@
 </div>
 </form>
 
-<table class="data" rules="cols" summary="">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>

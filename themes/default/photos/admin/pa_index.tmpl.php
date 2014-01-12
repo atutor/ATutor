@@ -8,7 +8,7 @@
 </div>
 <div>
 <form action="" method="post" name="form">
-	<table class="data" rules="cols">
+	<table class="data">
 		<thead>
 		<tr>
 			<th>&nbsp;</th>

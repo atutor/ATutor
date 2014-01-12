@@ -1,4 +1,4 @@
-<table class="data" rules="cols" summary="<?php echo _AT('student_page_stats'); ?>">
+<table class="data" summary="<?php echo _AT('student_page_stats'); ?>">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('login_name'); ?></th>

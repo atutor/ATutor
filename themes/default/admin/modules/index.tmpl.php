@@ -44,7 +44,7 @@
 <input type="hidden" name="missing" value="<?php echo (int) $_GET['missing']; ?>" />
 <input type="hidden" name="partially_uninstalled" value="<?php echo (int) $_GET['partially_uninstalled']; ?>" />
 
-<table class="data" summary="List of modules" rules="cols">
+<table class="data" summary="List of modules">
 <colgroup>
 		<col />
 		<col class="sort" />

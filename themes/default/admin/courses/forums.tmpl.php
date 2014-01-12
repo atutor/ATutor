@@ -1,6 +1,6 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="<?php echo _AT('course_forums'); ?>" rules="groups" style="width: 90%">
+<table class="data" summary="<?php echo _AT('course_forums'); ?>" style="width: 90%">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

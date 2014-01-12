@@ -1,7 +1,7 @@
 
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="List of backups available" rules="cols">
+<table class="data" summary="List of backups available">
 <thead>
 <tr>
 	<th><?php echo _AT('file_name');    ?></th>

@@ -1,6 +1,6 @@
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" rules="rows" summary="Table of default course tools">
+<table class="data static" summary="Table of default course tools">
 <thead>
 <tr>
 	<th scope="cols"><?php echo _AT('section'); ?></th>

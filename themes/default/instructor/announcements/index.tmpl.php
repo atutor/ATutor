@@ -1,5 +1,5 @@
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data" summary="Title and date of annoucements" rules="cols">
+<table class="data" summary="Title and date of annoucements">
 <colgroup>
 	<?php if ($this->col == 'title'): ?>
 		<col />

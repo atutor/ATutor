@@ -1,6 +1,6 @@
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="List of course forums" rules="cols">
+<table class="data" summary="List of course forums">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

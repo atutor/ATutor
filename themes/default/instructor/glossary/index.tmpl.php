@@ -1,6 +1,6 @@
 <form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-<table class="data" summary="" rules="cols" style="width: 90%;">
+<table class="data" summary="" style="width: 90%;">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

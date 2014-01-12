@@ -1,6 +1,6 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table summary="List of administrators" class="data" rules="cols" align="left" style="width: 90%;">
+<table summary="List of administrators" class="data" align="left" style="width: 90%;">
 <colgroup>
 	<?php if ($col == 'login'): ?>
 		<col />

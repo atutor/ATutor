@@ -54,7 +54,7 @@ if ($this->shortcuts):
 	</div>
 
 	<div class="row">
-	<table class="data" summary="" style="width: 98%" rules="cols">
+	<table class="data" summary="" style="width: 98%">
 	<thead>
 	<tr>
 		<th scope="col">&nbsp;</th>

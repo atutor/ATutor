@@ -53,7 +53,7 @@
 </ul>
 
 
-<table class="data" style="width:95%;" summary="List of students enrolled in course" rules="cols" >
+<table class="data" style="width:95%;" summary="List of students enrolled in course" >
 <colgroup>
 	<?php if ($this->col == 'login'): ?>
 		<col />

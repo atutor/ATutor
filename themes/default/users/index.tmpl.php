@@ -2,7 +2,7 @@
 
 require(AT_INCLUDE_PATH.'header.inc.php'); ?>
 <div id="my_courses_container" <?php if($_config['show_current'] != 1){ echo ' class="wide"';} else {echo ' class="narrow"';} ?>>
-<table  class="data" summary="" rules="cols">
+<table  class="data" summary="">
 <tr><th  class="hidecol480"></th>
 <th><?php echo _AT('course'); ?></th>
 <th class="hidecol480"><?php echo _AT('instructor'); ?></th>

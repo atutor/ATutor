@@ -1,7 +1,7 @@
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get" name="form">
 
-<table class="data" summary="Title and URL of News feeds" rules="cols">
+<table class="data" summary="Title and URL of News feeds">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

@@ -3,7 +3,7 @@ global $_pages;
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<table class="data static" rules="rows" summary="">
+<table class="data static" summary="">
 <thead>
 <tr>
 	<th scope="cols"><?php echo _AT('section'); ?></th>

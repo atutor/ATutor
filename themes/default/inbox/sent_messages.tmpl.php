@@ -30,7 +30,7 @@
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<table class="data" summary="" rules="rows">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

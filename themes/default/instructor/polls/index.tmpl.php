@@ -1,5 +1,5 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<table class="data" summary="<?php echo _AT('course_polls_summary'); ?>" rules="cols">
+<table class="data" summary="<?php echo _AT('course_polls_summary'); ?>">
 <colgroup>
 	<?php if ($this->col == 'question'): ?>
 		<col />

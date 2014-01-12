@@ -28,7 +28,7 @@ if (count($this->keys) > 0)
 {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="installform">
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>
@@ -83,7 +83,7 @@ if ($this->enable_remote_installation === true) {
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 
 ?>
-<table class="data" summary="" rules="cols">
+<table class="data" summary="">
 <thead>
 	<tr>
 		<th scope="col">&nbsp;</th>

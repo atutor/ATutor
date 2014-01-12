@@ -68,7 +68,7 @@
 		<td class="row1" valign="top" align="right"><strong><?php echo _AT('raw_data'); ?>:</strong></td>
 		<td class="row1" align="center">
 	
-		<table class="data static" summary="" rules="cols">
+		<table class="data static" summary="">
 		<thead>
 		<tr>
 			<th scope="col"><?php echo _AT('date');    ?></th>

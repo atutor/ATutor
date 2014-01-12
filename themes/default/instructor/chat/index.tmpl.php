@@ -4,7 +4,7 @@
 	
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 
-	<table class="data" rules="cols" summary="List of transcripts for chat">
+	<table class="data" summary="List of transcripts for chat">
 	<colgroup>
 		<?php if ($this->col == 'name'): ?>
 			<col />

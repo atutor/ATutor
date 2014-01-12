@@ -1,5 +1,5 @@
 <br/>
-<table class="data static" summary="" style="width: 95%" rules="cols">
+<table class="data static" summary="" style="width: 95%">
 <thead>
 <tr>
 	<th scope="col"><?php echo _AT('question'); ?></th>
