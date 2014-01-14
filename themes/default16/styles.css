@@ -3080,6 +3080,14 @@ ul#subnavlist span#showsubnav{
     background-image:0 !important;
     background-color:#F3F3F3 !important;
 }
+.scroll-to-fixed-fixed #subnavlistcontainer{
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer{
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
+}
 #sm_content{
     display:none;
 }
@@ -3918,6 +3926,14 @@ ul#topnavlist_sm li{
     .message_link img{
         height:1.5em;
         width:1.5em;
+    }
+    a.message_link {
+        margin-right:1em;
+        margin-left:1em;
+        float:right;
+    }
+    #message ul{
+         width:90%;
     }
     h2.box input{
         height:1.2em;

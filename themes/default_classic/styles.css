@@ -424,6 +424,7 @@ a#back-to {
 div#breadcrumbs {
 	margin-bottom: 0px;
 	margin-left:-.3em;
+	margin-top:.2em;
 	padding-left: 5px;
 	padding-right: 5px;
 	padding-bottom: 15px;
@@ -1258,6 +1259,7 @@ ul#topnavlist li a {
 	-moz-border-radius-topleft: 4px;
 	white-space: nowrap;
 	font-weight: bold;
+	border-bottom: 3px solid #788CB3;
 }
 ul#topnavlist li:first-child a {
 	margin-left: 8px;
@@ -2647,6 +2649,7 @@ div#topnavlistcontainer {
 	width:100%;
 	clear:both;
 	float:left;
+	padding-top:.2em;
 }
 .ui-switch {
     border-radius: 18px;
@@ -2817,6 +2820,12 @@ width:1.5em;
     background-image:0 !important;
     background-color:#F3F3F3 !important;
 }
+.scroll-to-fixed-fixed #subnavlistcontainer{
+    background-color: #788CB3 !important;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer{
+    background-color: #788CB3 !important;
+}
 #sm_content{
     display:none;
 }
@@ -2964,6 +2973,13 @@ clear:left;
 #langdiv{
     margin-top:-1.2em;
 }
+#langdiv{
+width:40%;
+text-align:center;
+margin-left:auto;
+margin-right:auto;
+}
+
 #side_bar_on{
     display:none;
 }
@@ -2999,9 +3015,13 @@ li.top-tool {
     float:right;
     clear:right;
 }
-.message_link a{
+a.message_link {
     margin-right:1em;
     margin-left:1em;
+    float:right;
+}
+#message ul{
+    width:90%;
 }
 /******* 
 

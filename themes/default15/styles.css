@@ -2862,7 +2862,26 @@ table.etabbed-table	{
 	
 }
 
+input.img1616{
+cursor:pointer;
+border:0;
+}
 
+input.img1616, img.img1616{
+height:1.6em;
+width:1.6em;
+border:0;
+}
+
+img.img1111{
+height:.8em;
+width:.8em;
+}
+img.imggoback{
+height:1.9em;
+width:1.9em;
+margin-right:1em;
+}
 /* FROM HERE COPIED FROM THE BOTTOM OF DEFAULT/STYLES.CSS	 */
 
 .fc-state-active, .fc-state-active .fc-button-inner {
@@ -2894,6 +2913,14 @@ table.etabbed-table	{
     background:0 !important;
     background-image:0 !important;
     background-color:#F3F3F3 !important;
+}
+.scroll-to-fixed-fixed #subnavlistcontainer{
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #F4F9FE)!important;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer{
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #F4F9FE)!important;
 }
 #sm_content{
     display:none;
@@ -3099,9 +3126,13 @@ li.top-tool a{
     float:right;
     clear:right;
 }
-.message_link a{
+a.message_link {
     margin-right:1em;
     margin-left:1em;
+    float:right;
+}
+#message ul{
+    width:90%;
 }
 /******* 
 

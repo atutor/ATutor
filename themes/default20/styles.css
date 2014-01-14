@@ -3347,6 +3347,16 @@ table.etabbed-table	{
     background-image:0 !important;
     background-color:#F3F3F3 !important;
 }
+.scroll-to-fixed-fixed #subnavlistcontainer{
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
+    margin-top:.3em;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer{
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
+    height:2.5em;
+}
 #sm_content{
     display:none;
 }
@@ -3526,9 +3536,13 @@ li.top-tool {
     float:right;
     clear:right;
 }
-.message_link a{
+a.message_link {
     margin-right:1em;
     margin-left:1em;
+    float:right;
+}
+#message ul{
+    width:90%;
 }
 /******* 
 

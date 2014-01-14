@@ -1596,7 +1596,7 @@ ul#topnavlist li {
 	height:auto;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	margin-top:.5em;
+
 
 
 }
@@ -3354,7 +3354,13 @@ table.etabbed-table	{
 .scroll-to-fixed-fixed{
     background:0 !important;
     background-image:0 !important;
-    background-color:#F3F3F3 !important;
+    background-color:#B7C68B !important;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer{
+    background-color:#B7C68B !important;
+}
+.scroll-to-fixed-fixed #subnavlistcontainer{
+    background-color:#B7C68B !important;
 }
 #sm_content{
     display:none;
@@ -3541,9 +3547,13 @@ li.top-tool {
     float:right;
     clear:right;
 }
-.message_link a{
+a.message_link {
     margin-right:1em;
     margin-left:1em;
+    float:right;
+}
+#message ul{
+    width:90%;
 }
 #copyright{
 width:26em;
