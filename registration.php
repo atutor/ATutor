@@ -16,6 +16,7 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 include(AT_INCLUDE_PATH."securimage/securimage.php");
+include(AT_INCLUDE_PATH."login_functions.inc.php");
 
 if($_config['allow_registration'] != 1){
 		$msg->addInfo('REG_DISABLED');
@@ -25,9 +26,25 @@ if($_config['allow_registration'] != 1){
 }
 
 if (isset($_POST['cancel'])) {
-	header('Location: ./login.php');
+    if(isset($_SESSION['member_id']) && $_SESSION['login']) {
+        $msg->addFeedback('CANCELLED');
+        header('Location: index.php');
+    }
+    else 
+        header('Location: ./login.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+    if(isset($_SESSION['member_id']) && $_SESSION['login']) {
+        $member_id = $_SESSION['member_id'];
+        require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
+        if($course_registered_names != "")
+        $msg->addInfo(array(AUTO_ENROLL_ALREADY_ENROLLED,$course_registered_names));
+        if($course_names != "")
+        $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
+        header('Location: index.php');
+        exit;
+    }
+    
 	$missing_fields = array();
 
 	/* registration token validation */
@@ -311,7 +328,7 @@ if (isset($_POST['cancel'])) {
 			         WHERE member_id=%d";
 			queryDB($sql, array(TABLE_PREFIX, $member_id));	
             
-        $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
+            $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
             
 			// auto login
 			$_SESSION['valid_user'] = true;
@@ -334,15 +351,6 @@ if (isset($_POST['cancel'])) {
 	$_POST = array();
 }
 
-// This is the quick and dirty fix for http://atutor.ca/atutor/mantis/view.php?id=5150.
-// Strongly suggest to refactor it properly into templates and rethink the session unset down below.
-if (isset($_SESSION['member_id']) && $_SESSION['login']) {
-    require_once(AT_INCLUDE_PATH.'header.inc.php');
-    $msg->addWarning('CANNOT_REGISTER_LOGGEDIN');
-    $msg->printWarnings();
-    require_once(AT_INCLUDE_PATH.'footer.inc.php');
-    exit;
-}
 function validate_enid($en_id){
     if(preg_match("/^[a-zA-Z0-9]{6,10}$/", $en_id)){
         return $en_id;
@@ -350,12 +358,7 @@ function validate_enid($en_id){
         return;
     }
 }
-unset($_SESSION['member_id']);
-unset($_SESSION['valid_user']);
-unset($_SESSION['login']);
-unset($_SESSION['is_admin']);
-unset($_SESSION['course_id']);
-unset($_SESSION['is_guest']);
+
 
 /*****************************/
 /* template starts down here */

@@ -22,7 +22,48 @@ function encrypt_password()
 		document.form.form_password2.value = "";
 	}
 }
+function encrypt_password_login()
+{
+    document.form1.form1_password_hidden.value = hex_sha1(hex_sha1(document.form1.form1_password.value) + "<?php echo $_SESSION['token']; ?>");
+	document.form1.form1_password.value = "";
+	return true;
+}
+function show_login_form()
+{
+    document.getElementById('login_form_div').style.display = "block";
+    document.form1.form1_login.focus();
+}
 </script>
+<?php if(!(isset($_SESSION['member_id']) && $_SESSION['login'])) { ?>
+<div class="column" style="margin-top:0;" >
+    <a href="#" title="<?php echo _AT('already_registered'); ?>" onclick="show_login_form();return false;" >If already registered, click here</a>
+</div>
+<div class="input-form" style="clear: both;margin-top:0;display: none;" id="login_form_div">
+    <form action="<?php $getvars = ''; if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" method="post" name="form1">
+        <input type="hidden" name="form1_login_action" value="true" />
+        <input type="hidden" name="form1_password_hidden" value="" />
+        <input type="hidden" name="p" value="<?php if (isset($_GET['p'])) {
+    echo urlencode($_GET['p']);
+} ?>" />
+
+        <fieldset class="group_form"><legend class="group_form"><?php echo _AT('returning_user'); ?></legend>
+            <p><?php echo _AT('login_text'); ?></p>
+            <div class="row">
+                <label for="login"><?php echo _AT('login_name_or_email'); ?></label><br />
+                <input type="text" name="form1_login" size="30" id="login" /><br />
+            </div>
+            <div class="row">
+                <label for="pass"><?php echo _AT('password'); ?></label><br />
+                <input type="password" class="formfield" size="30" name="form1_password" id="pass" />
+            </div>
+            <br />
+            <div class="row">
+                <input type="submit" name="submit1" value="<?php echo _AT('login'); ?>" class="button" onclick="return encrypt_password_login();" /> 
+            </div>
+        </fieldset>			
+    </form>
+</div>
+<?php } ?>
 
 <form method="post" action="<?php $getvars = ''; if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" name="form">
 <?php global $languageManager, $_config, $moduleFactory; ?>
@@ -59,6 +100,17 @@ function encrypt_password()
 		</div>";
 		
 		require(AT_INCLUDE_PATH.'html/auto_enroll_list_courses.inc.php'); 
+        if (isset($_SESSION['member_id']) && $_SESSION['login']) {
+            require_once(AT_INCLUDE_PATH.'header.inc.php');
+            ?>
+            <div class="row buttons">
+                <input type="submit" name="submit" value=" <?php echo _AT('confirm'); ?> " accesskey="c" class="button"/>
+                <input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> "  class="button" />
+            </div>
+            <?php
+            require_once(AT_INCLUDE_PATH.'footer.inc.php');
+            exit;
+        }
 	?>
 	
 
