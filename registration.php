@@ -328,7 +328,7 @@ if (isset($_POST['cancel'])) {
 			         WHERE member_id=%d";
 			queryDB($sql, array(TABLE_PREFIX, $member_id));	
             
-            $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
+        $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
             
 			// auto login
 			$_SESSION['valid_user'] = true;

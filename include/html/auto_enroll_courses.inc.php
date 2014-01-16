@@ -39,12 +39,12 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 		$sql	= "SELECT access, member_id FROM %scourses WHERE course_id=%d";
 		$course_info = queryDB($sql, array(TABLE_PREFIX, $course), TRUE);	
 		
-        $check_already_registered = "SELECT * FROM %scourse_enrollment WHERE course_id=%d AND member_id=%d";
-        $chk_registered_result = queryDB($check_already_registered, array(TABLE_PREFIX, $course, $member_id));
+    $check_already_registered = "SELECT * FROM %scourse_enrollment WHERE course_id=%d AND member_id=%d";
+    $chk_registered_result = queryDB($check_already_registered, array(TABLE_PREFIX, $course, $member_id));
 	if (count($chk_registered_result) > 0) {
-            $course_registered_names.='<li>' . $row_courses["title"] . '</li>';
-        }
-        if (count($chk_registered_result) == 0) {
+        $course_registered_names.='<li>' . $row_courses["title"] . '</li>';
+    }
+    if (count($chk_registered_result) == 0) {
 		if ($course_info['access'] == 'private') 
 		{
 
@@ -103,7 +103,7 @@ if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 
 			$sql	= "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '"._AT('student')."', 0)";
 			$result = queryDB($sql, array(TABLE_PREFIX,$member_id, $course));
-                        $course_names.='<li>' . $row_courses["title"] . '</li>';
+            $course_names.='<li>' . $row_courses["title"] . '</li>';
 		}
 	}
   }
