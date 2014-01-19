@@ -1,7 +1,75 @@
-/* 
-Changes/additions to the default/styles.css to upgrade from 2.1 to 2.2 file to apply to other themes
-*/
+/******
+1. If your theme has its own header.tmpl.php and footer.tmpl.php template files:
+    A. backup these files and copy the same files from the default theme to your theme, if you want to customize these files. 
+    or
+    B. delete these files, in which case the layout of the header and footer from the default theme will be used
+    or
+    C. you don't have either one of these files in your theme, so skip ahead to styling in #2
+    
+    NOTE: You can keep your old header and footer, if its very customized, and compare the differences between
+        the 2.1.1 and 2.2 header and footer,  in particular note the new admin_switch() and mobile_sitch() functions,
+        that when embedded using <?php admin_switch(); ?> , inserts a switch at wherever it is placed in the markup of the header template
+    
+2. Copy the entire block of CSS below and paste it in at the end of the existing styles.css file for your theme. 
+    These additions include updates as well as controls for new switches and toolbars, and responsive design elements
+    that will allow your theme to adapt more effectively to various screen resolutions. 
+    
+    NOTE: You will probably need to adjust styles for your particular theme, and there will be some
+        duplication  of styles you may or may not care to clean out of the stylesheet.
+        
+3. You may need to copy a few new theme icons from the default theme's image directory, to the image
+     directory in your theme. Or, add your own icons with the same file names. You'll likely notice text
+     in places where an image might be expected, like the word close where the close_icon.png file is missing 
+     
+default/images/wand.png
+default/images/close_icon.png
+ 
+******/
 
+
+
+/* 
+Changes/additions to default/styles.css  to upgrade from 2.0-2.1 to 2.2 
+*/
+.logoutbar{
+float:right;
+clear:right;
+}
+#userlinks{
+float:right;
+clear:right;
+margin-right:2em;
+}
+#leftcolumn{
+float:left;
+clear:left
+width:20em;
+}
+#lrg_content{
+float:left;
+clear:left;
+width:20em;
+}
+#contentcolumn{
+    float:left;
+    clear:right;
+    width:auto;
+}
+
+
+
+#footer{
+	clear: left;
+	width: 100%;
+	text-align: center;
+	padding: 4px 0px;
+	font-size:.8em;
+}
+
+.imggoback{
+height:1.5em;
+width:1.5em;
+}
 
 div.bypass{
 height:1px;
@@ -497,7 +565,7 @@ a.message_link {
     width:90%;
 }
 #copyright{
-width:25em;
+width:35em;
 margin-left:auto;
 margin-right: auto;
 }

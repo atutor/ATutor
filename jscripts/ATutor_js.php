@@ -129,7 +129,6 @@ ATutor.course = ATutor.course || {};
                             $("#subnavlistcontainer").css('background-color', '#eeeeee');
                         }   
                         <?php
-                        
                         $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
                         if(count(get_sub_navigation($current_page))> 1){ ?>
                             $("#subnavlistcontainer").css('background-color', '#eeeeee');
