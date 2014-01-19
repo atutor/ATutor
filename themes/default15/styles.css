@@ -1237,7 +1237,9 @@ ul#topnavlist {
 	margin-top: 0px;
 	display: inline-block;
 	width:100%;
-
+	white-space:nowrap;
+    overflow-y:scroll;
+    overflow-y:hidden;
 }
 
 ul#topnavlist li {

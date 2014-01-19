@@ -1706,7 +1706,8 @@ ul#topnavlist {
 	font-family: 'Varela Round', Arial, Helvetica, sans-serif; 
 	height:2.9em;
     white-space:nowrap;
-    overflow:visible;
+    overflow-y:scroll;
+    overflow-y:hidden;
  }
 
 ul#topnavlist li {

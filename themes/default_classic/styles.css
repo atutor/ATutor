@@ -1240,7 +1240,9 @@ ul#topnavlist {
 	margin-right: auto;
 	margin-left: auto;
 	margin-bottom: 3px;
-	white-space: nowrap;
+	white-space:nowrap;
+    overflow-y:scroll;
+    overflow-y:hidden;
 }
 
 ul#topnavlist li {

@@ -1438,7 +1438,9 @@ div#topnavlistcontainer {
 ul#topnavlist {
 	margin-top: -.5em;
 	margin-left:5px;
-
+	white-space:nowrap;
+    overflow-y:scroll;
+    overflow-y:hidden;
 }
 
 ul#topnavlist li {

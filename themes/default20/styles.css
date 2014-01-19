@@ -1557,6 +1557,9 @@ ul#topnavlist {
 	padding: 0;
 	margin-right: auto;
 	margin-left: auto;
+ 	white-space:nowrap;
+    overflow-y:scroll;
+    overflow-y:hidden;
  }
 
 ul#topnavlist li {
