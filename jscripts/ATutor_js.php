@@ -48,17 +48,13 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('background-color', '#EAEAEA'); 
                         $(this).find('div').css('padding', '');
                         $(this).find('div').css('width', '100%');
-/*                      $(this).find('div').css('margin-top', '-2.2em');
-                        $(this).find('div').css('padding-top', '2em');
-                    */
                         $(".active").css('border-top', 'thin solid white');
                         $(".active").css('border-left', 'thin solid white');
                         $(".active").css('border-right', 'thin solid white');
                         $("#topnavlistcontainer").css('padding-left', '3.3em');
                         $("#topnavlistcontainer").css('padding-bottom', '.3em');
                         $("#topnavlistcontainer").css('margin-left', '-2.3em');
-                        $("#topnavlistcontainer").css('background-image', 'none');
-                        
+                        $("#topnavlistcontainer").css('background-image', 'none');                    
                         $(this).find('ul').css('padding-left', '200');
                         $("#manage_off").css("display","none");
                         $("#manage_on").css("display","none");
@@ -107,6 +103,7 @@ ATutor.course = ATutor.course || {};
                 });      
                       
                 // Floating subnavlist bar
+                //alert(<?php echo count(get_sub_navigation($current_page));?>);
                 $('#lrg_subnav').scrollToFixed({
                     marginTop: 22,
                     dontSetWidth: false,
@@ -130,6 +127,7 @@ ATutor.course = ATutor.course || {};
                         }   
                         <?php
                         $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
+                        
                         if(count(get_sub_navigation($current_page))> 1){ ?>
                             $("#subnavlistcontainer").css('background-color', '#eeeeee');
                        <?php } else {?>
@@ -148,8 +146,7 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('height','');
                         $(this).find('div').css('padding', '0');
                         $("ul#subnavlist li").css('padding', '.4em'); 
-                        $("ul#subnavlist").css('float', 'none'); 
-                       
+                        $("ul#subnavlist").css('float', 'none');                         
                         $("ul#subnavlist").css('padding-left', '2em');
                         $("ul#subnavlist").css('clear', 'none');
                         $("ul#subnavlist li").css('margin-bottom', '0');

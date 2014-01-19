@@ -1343,6 +1343,7 @@ dl#public-profile dd {
 	text-align: center;
 	padding: 4px 0px;
 	font-size:.8em;
+	left:0 !important;
 }
 
 .imggoback{
@@ -1362,15 +1363,16 @@ div#topnavlistcontainer {
     padding: 0.5em 0em 0em 2em;
     clear:left;
     width:100%;
-    margin-left:-1em;
+    margin-left:-2em;
 }
 ul#topnavlist {
 	padding: 0px;
-	margin-right: auto;
-	margin-left: auto;
 	margin-bottom: 3px;
 	margin-top: 0px;
 	margin-bottom:0px;
+	white-space:nowrap;
+    overflow-y:scroll;
+    height:2em;
 }
 
 ul#topnavlist li {
@@ -1930,7 +1932,9 @@ div.bypass{
 
 div#subnavlistcontainer {
 	width:95%;
-	margin:auto;
+	margin-left:auto;
+	margin-right:auto;
+	margin-top:3em;
 	height:auto;
 	border-bottom: 1px solid #f0f0f0 !important;
 }
@@ -2499,7 +2503,7 @@ ul#subnavlist_i {
 	font-family: Verdana,Helvetica,Arial,serif;
     float:right;
     margin-top: -2.1em;
-    margin-right:2em;
+    margin-right:5em;
    /* background-image:url("images/wand.png");*/
     background-position: 1em .3em;
     background-repeat:no-repeat;
@@ -2772,11 +2776,15 @@ table.etabbed-table	{
 .scroll-to-fixed-fixed #subnavlistcontainer{
     margin-top:.7em;
 	  background-color: #DEE7EC;        
-      background-image: linear-gradient(#DEE7EC, #AFCADB);
+      background-image: linear-gradient(#DEE7EC, #AFCADB)!important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
 	  background-color: #DEE7EC !important;        
       background-image: linear-gradient(#DEE7EC, #AFCADB) !important;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer ul{
+    white-space:nowrap;
+    overflow:scroll;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer li a{
 	  background-color: #FFFFFF !important;        
@@ -3007,9 +3015,8 @@ margin-right: auto;
       border-bottom:1px solid #F4F0CB; 
       height:1.5em;
       text-align:right;
-      padding-right:1em;
       padding-top:.7em;
-      padding-bottom:-.7em;
+      padding-right:1em;
       clear:both;
 }
 .pref_wiz_launcher img{

@@ -1366,15 +1366,14 @@ div#topnavlistcontainer {
 }
 ul#topnavlist {
 	padding: 0px;
-	margin-right: auto;
-	margin-left: auto;
-	margin-bottom: 3px;
-	margin-top: 0px;
-	margin-bottom:0px;
+    width:100%;
+	white-space:nowrap;
+    overflow-y:scroll;
+    height:2.1em;
+
 }
 
 ul#topnavlist li {
-
 	list-style: none;
 	display: inline-block;
 	height:auto;
@@ -2774,6 +2773,10 @@ table.etabbed-table	{
 .scroll-to-fixed-fixed div#topnavlistcontainer{
 	background-color: #DEECE2 !important;        
     background-image: linear-gradient(#DEECE2, #80AD66) !important;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer ul{
+    white-space:nowrap;
+    overflow:scroll;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer li a{
 	  background-color: #FFFFFF;        
