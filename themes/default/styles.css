@@ -3405,11 +3405,11 @@ div.input-form.remedialContent {
 }
 .scroll-to-fixed-fixed #subnavlistcontainer{
     background-color: #F3F3F3;
-    background-image: linear-gradient(#FAFAFA, #EAEAEA) !important;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color: #F3F3F3;
-    background-image: linear-gradient(#FAFAFA, #EAEAEA) !important;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
 #sm_content{
     display:none;
@@ -3555,7 +3555,7 @@ clear:left;
     height:1px;
 }
 #copyright{
-    width:25em;
+    width:35em;
     margin-left:auto;
     margin-right: auto;
 }
