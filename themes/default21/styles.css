@@ -1588,18 +1588,18 @@ ul#topnavlist {
 	margin-left: auto;
     overflow-y:scroll;
     overflow-y:hidden;
+    padding-bottom: 0.6em;
+    padding-top: 0.2em;
+    white-space:nowrap;
+    overflow:scroll;   
  }
 
 ul#topnavlist li {
-
 	list-style: none;
-	display: inline-block;
+	display: inline;
 	height:auto;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-
-
-
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
@@ -3359,7 +3359,18 @@ table.etabbed-table	{
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color:#B7C68B !important;
+    white-space:nowrap;
 }
+.scroll-to-fixed-fixed div#topnavlistcontainer ul{
+    white-space:nowrap;
+    overflow:scroll;  
+} 
+.scroll-to-fixed-fixed div#topnavlistcontainer > ul > li > a{
+    border-top: 1px solid #ffffff;
+    border-left: 1px solid #ffffff;
+    border-right: 1px solid #ffffff;
+} 
+ 
 .scroll-to-fixed-fixed #subnavlistcontainer{
     background-color:#B7C68B !important;
 }

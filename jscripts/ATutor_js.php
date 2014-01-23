@@ -48,9 +48,6 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('background-color', '#EAEAEA'); 
                         $(this).find('div').css('padding', '');
                         $(this).find('div').css('width', '100%');
-                        $(".active").css('border-top', 'thin solid white');
-                        $(".active").css('border-left', 'thin solid white');
-                        $(".active").css('border-right', 'thin solid white');
                         $("#topnavlistcontainer").css('padding-left', '3.3em');
                         $("#topnavlistcontainer").css('padding-bottom', '.3em');
                         $("#topnavlistcontainer").css('margin-left', '-2.3em');
@@ -131,8 +128,8 @@ ATutor.course = ATutor.course || {};
                         if(count(get_sub_navigation($current_page))> 1){ ?>
                             $("#subnavlistcontainer").css('background-color', '#eeeeee');
                        <?php } else {?>
-                            $("#subnavlist").css('display', 'none');
-                            $("#subnavlist").css('border-bottom', 'none');
+                         //   $("#subnavlist").css('display', 'none');
+                         //   $("#subnavlist").css('border-bottom', 'none');
                        <?php }
                        
                        ?>

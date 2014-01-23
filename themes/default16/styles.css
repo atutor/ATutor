@@ -1441,6 +1441,7 @@ ul#topnavlist {
 	white-space:nowrap;
     overflow-y:scroll;
     overflow-y:hidden;
+     height: 2.2em;
 }
 
 ul#topnavlist li {
@@ -2908,6 +2909,13 @@ div.fs_tools{
     margin-left:auto;
     margin-right: auto;
 }
+#userlinks{
+float:right;
+margin-top:.5em;
+width:25em;
+
+
+}
 /* 
 Changes to the default/styles.css to upgrade tfrom 2.1 to 2.2 file to apply to other themes
 */
@@ -3090,6 +3098,10 @@ ul#subnavlist span#showsubnav{
     background-color: #F3F3F3;
     background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
 }
+.scroll-to-fixed-fixed div#topnavlistcontainer ul{
+    white-space:nowrap;
+    overflow:scroll;
+} 
 #sm_content{
     display:none;
 }
@@ -3584,7 +3596,7 @@ Responsive elements
     }
     a.pref_wiz_launcher{
     display:none;
-    }
+    }   
    #sm_topnav{
         display:inline;
         height:1.6em;

@@ -1559,11 +1559,12 @@ ul#topnavlist {
 	margin-left: auto;
  	white-space:nowrap;
     overflow-y:scroll;
-    overflow-y:hidden;
+    overflow-y:hidden
+    margin-bottom:-1em;
+    height:2em;
  }
 
 ul#topnavlist li {
-
 	list-style: none;
 	display: inline-block;
 	height:auto;
@@ -1595,7 +1596,7 @@ ul#topnavlist li a {
 	background-color:white;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
-	padding: .1em 1.8em .3em 1.8em;
+	padding: .1em 1.8em .6em 1.8em;
 		margin-bottom:0em;
 
 }
@@ -1920,7 +1921,8 @@ ul#subnavlist {
 	padding-top: 4px;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
-	    border-bottom: 1px solid #DED29E;
+	border-bottom: 1px solid #DED29E;
+	margin-bottom:0;
 /*font-size:1.0em;*/
 
 
@@ -2061,13 +2063,18 @@ ul.current_list{
       background-color: #F2F7F7; 
       font-size:0.85em; 
       border-bottom:1px solid #F2F7F7; 
-      height:2em;
+      height:3em;
       padding-top:0;
       text-align:right;
       padding-right:1em;
       clear:both;
+      margin-top:-.2em;
 }
-
+#userlinks{
+margin-top:.8em;
+width:30em;
+float:right;
+}
 .select {
       margin-left: .2em;
       background-color:#eeeeee; 	
@@ -3193,6 +3200,7 @@ div#top-links a:focus{
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
 	height:auto;
+	width:auto;
 	margin-top:-1.3em;
 
 	margin-left:1em;
@@ -3340,6 +3348,7 @@ table.etabbed-table	{
     float:left;
     padding-top: 2em !important;
     margin-top:-2.0em !important;
+    margin-bottom: -0.2em;
 }  
 #lrg_subnav{
     background:0 !important;
@@ -3358,8 +3367,19 @@ table.etabbed-table	{
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color: #F3F3F3;
     background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
-    height:2.5em;
+    height:2.7em;
+
 }
+.scroll-to-fixed-fixed div#topnavlistcontainer ul{
+    white-space:nowrap;
+    overflow:scroll;
+} 
+.scroll-to-fixed-fixed div#subnavlistcontainer ul{
+    white-space:nowrap;
+    overflow:scroll;
+	border-bottom: 1px solid #DED29E !important;
+}
+
 #sm_content{
     display:none;
 }

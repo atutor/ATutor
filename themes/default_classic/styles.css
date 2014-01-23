@@ -464,7 +464,6 @@ h2.page-title {
 	margin-bottom: 10px;
 	margin-top: 10px;
 	margin-left: 5px;
-	border-bottom: 1px solid #f0f0f0;
 	clear: left;
 }
 
@@ -1071,7 +1070,7 @@ fieldset {
 /* side-menu */
 #side-menu{
 float:left;
-  width:19em;
+  width:21em;
 margin-right:.3em;
 }
 h2.box {
@@ -1243,6 +1242,8 @@ ul#topnavlist {
 	white-space:nowrap;
     overflow-y:scroll;
     overflow-y:hidden;
+    padding-top:.3em;
+    padding-bottom:.5em;
 }
 
 ul#topnavlist li {
@@ -1941,6 +1942,7 @@ div#subnavlistcontainer {
 	width:95%;
 	margin:auto;
 	height:auto;
+	margin-top:.8em;
 
 }
 div#subnavbacktopage {
@@ -1963,7 +1965,8 @@ ul#subnavlist {
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
 	font-size:.8em;
-
+	border-bottom: 1px solid #f0f0f0;
+	margin-bottom:.2em;
 
 }
 
@@ -1974,6 +1977,7 @@ ul#subnavlist li {
 	text-align:center;
     background: none repeat scroll 0 0 #FFF8C8;
     border: 1px solid #9DAB9A;
+    border-bottom: 3px solid #9DAB9A;
     color: #000000;
 	height:1.2em;	
 	padding: 0em .5em .6em .5em ;
@@ -2651,7 +2655,7 @@ div#topnavlistcontainer {
 	width:100%;
 	clear:both;
 	float:left;
-	padding-top:.2em;
+	margin-bottom:-.5em;
 }
 .ui-switch {
     border-radius: 18px;
@@ -2676,7 +2680,8 @@ margin-top:-4.2em;
 }
 #contentcolumn {
 	padding-right: 1.5em;
-	padding-left: 1.5em;
+	padding-left: 1em;
+	margin-top:1em;
 	overflow:auto;
 }
 
@@ -2828,6 +2833,10 @@ width:1.5em;
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color: #788CB3 !important;
 }
+.scroll-to-fixed-fixed div#topnavlistcontainer ul{
+    white-space:nowrap;
+    overflow:scroll;
+} 
 #sm_content{
     display:none;
 }

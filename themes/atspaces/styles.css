@@ -1688,9 +1688,7 @@ div#topnavlistcontainer {
 	float:left;
 
 }
-.scroll-to-fixed-fixed div#topnavlistcontainer{
-    background-color:#F6F4DA !important;
-}
+
 ul#topnavlist {
     margin: 0; 
     padding: 0; 
@@ -1706,17 +1704,17 @@ ul#topnavlist {
 	font-family: 'Varela Round', Arial, Helvetica, sans-serif; 
 	height:2.9em;
     white-space:nowrap;
-    overflow-y:scroll;
-    overflow-y:hidden;
+    overflow-x:scroll;
+
  }
 
 ul#topnavlist li {
-	float:left;
+	display:inline;
 	list-style: none;
-	display: block; 
 	height:2.6em;
     padding: .7em .1em .7em .1em;
 	margin-bottom:-.5em;
+	white-space:nowrap;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus{
@@ -1742,7 +1740,7 @@ ul#topnavlist li a {
 	font-weight:400;
 	text-decoration:none;
 	background-color:transparent;
-    padding: .5em .4em .5em .4em;	
+    padding: 1.8em .4em .8em .4em;	
 }
 ul#topnavlist li a.selected {
     /* The selected tab. There's only one of these */
@@ -3235,7 +3233,7 @@ ul#subnavlist_i li {
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	padding: .4em .5em .2em .5em ;
-	border-bottom: 3px solid blue;
+	border-bottom: 3px solid #555555;
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li a:hover,
@@ -3268,10 +3266,6 @@ ul#subnavlist span#showsubnav{
     width:2em;
     cursor:pointer;
     display:none;
-}
-
-.scroll-to-fixed-fixed #subnavlistcontainer{
-    background-color:#F6F4DA !important;
 }
 
 .site-name{
@@ -3488,6 +3482,17 @@ table.etabbed-table	{
     background-image:0 !important;
     background-color:#575656 !important;
 }
+.scroll-to-fixed-fixed div#topnavlistcontainer{
+    background-color:#F6F4DA !important;
+}
+.scroll-to-fixed-fixed div#topnavlistcontainer > ul{
+    white-space:nowrap;
+    overflow:scroll;
+} 
+.scroll-to-fixed-fixed #subnavlistcontainer{
+    background-color:#F6F4DA !important;
+}
+
 #sm_content{
     display:none;
 }
