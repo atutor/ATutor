@@ -59,7 +59,8 @@ if ($home_view == 1 && authenticate(AT_PRIV_ADMIN,AT_PRIV_RETURN))
 jQuery(document).ready(function () {
 	var reorder_example_grid = fluid.reorderGrid("#details_view",  {
 		selectors : {
-			movables : ".home_box"
+			movables : ".home_box",
+			grabHandle: ".home-title a"
 		},
 	    listeners: {
 			afterMove: function (item, requestedPosition, movables) {
