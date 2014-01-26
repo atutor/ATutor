@@ -63,8 +63,6 @@ if (isset($_POST['submit'])) {
 				$_POST['word'][$i]         = $addslashes($_POST['word'][$i]);
 				$_POST['definition'][$i]   = $addslashes($_POST['definition'][$i]);
 				$_POST['related_term'][$i] = $addslashes($_POST['related_term'][$i]);
-
-				$terms_sql .= "(NULL, $_SESSION[course_id], '{$_POST[word][$i]}', '{$_POST[definition][$i]}', {$_POST[related_term][$i]})";
 			}
 		}
 	}
@@ -76,8 +74,8 @@ if (isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors()) {
 
-		$sql = "INSERT INTO %sglossary VALUES $terms_sql";
-		$result = queryDB($sql, array(TABLE_PREFIX), false, false);
+		$sql = "INSERT INTO %sglossary VALUES (NULL, $_SESSION[course_id], '%s', '%s', %s)";
+		$result = queryDB($sql, array(TABLE_PREFIX, implode("",$_POST['word']), implode("",$_POST['definition']), implode("",$_POST['related_term'])), false, true);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
         $return_url = $_SESSION['tool_origin']['url'];
