@@ -6,6 +6,7 @@ html,body{
 /* main body attributes */
 body {
 	font-family: Verdana, Helevetica, Arial, sans-serif;
+	font-size:.8em;
 	margin:0px;
 	margin-top: -10px;
 	background-color: white;
@@ -14,10 +15,10 @@ body {
 	font-size:small;
 	font-weight:bold;
 	padding-left:1em;
-	color:gray;
+	color: white;
 	white-space:nowrap;
 	margin-left:.8em;
-	margin-top:.5em;
+	margin-top:.8em;
 	float:left;
 	width:50%;
 }
@@ -2905,7 +2906,7 @@ div.fs_tools{
 
 }
 #copyright{
-    width:25em;
+    width:35em;
     margin-left:auto;
     margin-right: auto;
 }

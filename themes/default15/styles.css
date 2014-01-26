@@ -13,6 +13,7 @@ body {
 
 html,body {
 	height: 100%;
+
 }
 .page_wrapper{
     background-color:#ffffff;;
@@ -2718,7 +2719,7 @@ ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
-   	padding: .4em .6em .2em .6em ;
+   	padding: .3em .6em .2em .6em ;
    	text-decoration:underline;
 	font-weight:500;
 }

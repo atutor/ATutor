@@ -35,8 +35,8 @@ function show_login_form()
 }
 </script>
 <?php if(!(isset($_SESSION['member_id']) && $_SESSION['login'])) { ?>
-<div class="column" style="margin-top:0;" >
-    <a href="#" title="<?php echo _AT('already_registered'); ?>" onclick="show_login_form();return false;" >If already registered, click here</a>
+<div class="button" >
+    <h3><a href="#" title="<?php echo _AT('already_registered'); ?>" onclick="show_login_form();return false;" ><?php echo _AT('already_registered'); ?></a></h3>
 </div>
 <div class="input-form" style="clear: both;margin-top:0;display: none;" id="login_form_div">
     <form action="<?php $getvars = ''; if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" method="post" name="form1">

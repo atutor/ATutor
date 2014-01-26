@@ -2686,7 +2686,8 @@ font-size:100%;
 }
 
 .fl-force-right{
-float:right;	
+float:right;
+padding:.1em;	
 	
 }
 img.fl-col{
@@ -3183,13 +3184,14 @@ li.likert-question {
     float:right;
 }
 
-/* a hack added to fix admin switch off invisible in ATutorspaces theme */
+/* a hack added to fix admin switch off, invisible in ATutorspaces theme */
 a.ui-switch-off{
     float: right;
-    margin-top: -1.6em !important;
-    border:thin solid black;
+    margin-top: -1.5em !important;
     margin-right:1.5em;
-    padding-right:1.5em;
+    margin-left:-.5em;
+    padding-right:2.5em;
+    text-align:left;
 }
 a.ui-switch-on{
     float: left;
@@ -3330,7 +3332,6 @@ div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
 	height:1.8em;
 	padding-top:1em;
-	margin-left:1em;
 	clear:both;
 	float:left;
 }
@@ -3348,7 +3349,11 @@ width:15em;
 margin-left:0em;
 margin-top:-4.2em;
 }
-
+#gototop img{
+height:1.5em;
+width:1.5em;
+margin-right:1.5em;
+}
 /** forum stuff **/
 .forum-thread li { border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
 .forum-thread li.even { background-color: #F5F9FC; border-top: none;}

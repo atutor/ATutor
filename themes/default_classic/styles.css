@@ -1034,7 +1034,10 @@ div.course div.shortcuts {
 	clear: left;
 	vertical-align: middle;
 }
-
+div.shortcuts img{
+    height:2em;
+    width:2em;
+}
 fieldset#shortcuts {
 	float: right;
 	background-color: #FAFAFA;
@@ -1428,7 +1431,7 @@ a.tooltip{
 div.home_box {
 	width: 23.5em;
 	height: 150px;	
-	margin-top: 15px;
+margin-top:2em;
 	padding-bottom: 13px;
 	margin-left:1em;
 	float:left;
@@ -1914,7 +1917,7 @@ fieldset.toc {
 
 .fl-force-right{
 	float:right;
-	padding: .2em;
+	padding: .5em;
 }
 .hidden {
 	display: none;
@@ -1980,7 +1983,7 @@ ul#subnavlist li {
     border-bottom: 3px solid #9DAB9A;
     color: #000000;
 	height:1.2em;	
-	padding: 0em .5em .6em .5em ;
+	padding: .3em .5em .6em .5em ;
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus, ul#subnavlist li.active, ul#subnavlist li:hover{
@@ -1996,7 +1999,10 @@ ul#subnavlist li a {
    	text-decoration:underline;
 	font-weight:500;
 }
+.subnav_toggle{
 
+float:right;
+}
 fieldset.group_form{
 	width:97%;
 
@@ -2635,7 +2641,7 @@ div#top-links a:focus{
 }	 
 .crumbcontainer{
 	padding:0;
-	margin-top:0em;
+	margin-top:-1.7em;
 	width:100%;
 	height:1.8em;
 	clear:both;
@@ -2651,11 +2657,12 @@ div#top-links a:focus{
 
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
-	background-color:#F8F8F8;
+	background, transparent;
 	width:100%;
 	clear:both;
 	float:left;
 	margin-bottom:-.5em;
+	margin-top:-2em;
 }
 .ui-switch {
     border-radius: 18px;
@@ -2689,7 +2696,7 @@ margin-top:-4.2em;
 	float: left;
 	width:21em;
 	overflow: hidden;
-	margin: -10px 5px 0;
+	margin: 0 5px 0;
 }
 /** forum stuff **/
 .forum-thread li { border-bottom: 1px solid #F7F3ED; float:left; width: 97%; list-style: none; }
@@ -2832,11 +2839,13 @@ width:1.5em;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color: #788CB3 !important;
+    padding-top:2.5em;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
     white-space:nowrap;
     overflow:scroll;
 } 
+ 
 #sm_content{
     display:none;
 }
@@ -3119,10 +3128,7 @@ Responsive elements
         max-width: 100%;
         width: 100%;
     }
-    #contentwrapper{
-        padding-left:.5em;
-        padding-right:.5em;
-    }
+
     .content_link_tablet content_link{
         margin-left:1em;
     }
@@ -3898,6 +3904,11 @@ ul#topnavlist_sm li{
         background: url("images/listmenu_arrow.png") no-repeat scroll right 5px top 2px rgba(0, 0, 0, 0);
         border-bottom:  1px solid #DED29E;  
     }
+    .fl-listmenu a, .fl-list-menu a {
+        display: inline;
+        outline: medium none;
+        padding: 5px;
+    }
     ul#topnavlist_sm li a {
         margin-left:.5em;
         background-color:transparent;
@@ -4015,14 +4026,15 @@ ul#topnavlist_sm li{
     }
   
     a.content_link{
-        width:5em;
-        border-bottom: 3px solid #DED29E;
-        padding: .5em .3em .5em .5em;
-        background-color: #F3F3F3;
-    	background-image: linear-gradient(#FAFAFA, #EAEAEA);
-    	margin-bottom:.5em;
-    	margin-left 1em;
-    	z-index:999;
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    border-bottom: 3px solid #DED29E;
+    margin-bottom: 0.5em;
+    margin-left: 0.5em !important;
+    padding: 0.5em 0.3em 0.5em 0.5em;
+    text-align: center;
+    width: 5.8em;
+    z-index: 999;
     }
 
 
@@ -4075,7 +4087,7 @@ ul#topnavlist_sm li{
         font-size:1.5em;
     }
     div#side-menu{
-        margin-top:-.5em;
+        margin-top:0em;
         clear:both;
     }
     div#contentwrapper{
@@ -4142,6 +4154,9 @@ ul#topnavlist_sm li{
     ul#subnavlist{
     margin-left:0;
         
+    }
+    #footer{
+        width:100% !important;
     }
     .hidecol360{
         display:none;
