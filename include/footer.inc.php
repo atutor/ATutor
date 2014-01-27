@@ -20,6 +20,26 @@ global $system_courses;
 $side_menu = array();
 $stack_files = array();
 
+function get_custom_logo() {
+    
+    $path = AT_CONTENT_DIR.'logos/';
+    
+    if(is_dir($path)) {
+        if (defined('AT_FORCE_GET_FILE')) {
+            $file = 'get_custom_logo.php';
+        } else {
+            $dir = 'content/logos/custom_logo.';
+            $ext = substr(glob ($file.'{jpg,png,gif}', GLOB_BRACE)[0], -3, 4);
+            $file = $dir.$ext;
+        }
+        $path_to_logo = $file;
+        
+    } else {
+        $path_to_logo = AT_BASE_HREF."images/AT_Logo_1_sm.png";
+    }
+        
+    return $path_to_logo;
+}
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
