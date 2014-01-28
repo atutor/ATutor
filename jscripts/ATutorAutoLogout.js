@@ -53,12 +53,12 @@ var ATutor = ATutor || {};
         };
         
         // Buttons for the sessionTimeout dialog
-        buttonOptions[textButtonLogout] = sessionLogout;
         buttonOptions[textButtonStayConnected] = function() {
             $(this).dialog("close");
             writeCookieTime();
             startCountdown();
         };
+        buttonOptions[textButtonLogout] = sessionLogout;
         
         // Create dialog for the page
         $("body").append("<div title='"+ options.title +"' id='sessionTimeout-dialog'>"+ options.message +"</div>");
