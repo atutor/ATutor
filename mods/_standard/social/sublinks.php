@@ -66,7 +66,7 @@ if (is_array($activities)) {
 		
 		$link_title = printSocialName($activity['member_id']).' '. $activity['title'];
 
-		$list[] = '<span title="'.strip_tags($link_title).'">'.substring($link_title, SUBLINK_TEXT_LEN)."</span>";
+		$list[] = '<span title="'.strip_tags($link_title).'">'.stripslashes(substring($link_title, SUBLINK_TEXT_LEN))."</span>";
 	}
 	return $list;	
 } else {
