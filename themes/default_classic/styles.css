@@ -571,7 +571,7 @@ a#editor-link.on {
 table.data {
 	clear:right;
 	border: 1px solid #f0f0f0;
-	width: 90%; 
+	width: 100%; 
 	margin-left: auto; 
 	margin-right: auto;
 	border-spacing: 0px;
@@ -1077,8 +1077,10 @@ float:left;
 margin-right:.3em;
 }
 h2.box {
-
+margin-left: -0.1em;
     border: 1px solid #788CB3;
+    width:100%;
+    background-color: #788CB3;
 }
 
 h2.box span {
@@ -1919,6 +1921,10 @@ fieldset.toc {
 	float:right;
 	padding: .5em;
 }
+.fl-force-right {
+	background-color:#ffffff;
+	border-bottom: 1pt solid #B8AE9C;
+}
 .hidden {
 	display: none;
 }
@@ -2551,7 +2557,7 @@ ul#subnavlist_i li {
 	border-right:1px solid #DED29E;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .4em .5em .2em .5em ;
+	padding: .2em .2em .4em .2em ;
 	border-bottom: 3px solid blue;
 }
 
@@ -2560,7 +2566,8 @@ ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li a:ho
 ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
   	color: black;
 	text-decoration:none;
-
+	background-color: #FFF8C8;
+	border-bottom: 3px solid #D26911;
 }
 ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li:focus,
 ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li:focus,  
@@ -2577,7 +2584,7 @@ ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
-   	padding: .4em .4em .2em .4em ;
+   	padding: .2em .5em .2em .5em ;
    	text-decoration:underline;
 	font-weight:500;
 }
@@ -2641,11 +2648,12 @@ div#top-links a:focus{
 }	 
 .crumbcontainer{
 	padding:0;
-	margin-top:-1.7em;
+	margin-top:-1.5em;
 	width:100%;
-	height:1.8em;
+	height:1.7em;
 	clear:both;
 	float:left;
+	background-color: #788CB3;
 }	 
 
 #top-links-jump{
@@ -2797,10 +2805,26 @@ table.etabbed-table	{
 	
 }
 .imggoback{
-height:1.5em;
-width:1.5em;
+    height:1.5em;
+    width:1.5em;
 }
-
+h3.already_registered{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: -2em;
+    height:2em;;
+}
+a#already_registered{
+    background-color: #F4F0CB;
+	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    border-radius: 0.3em 0.3em 0 0;
+    padding:.5em 5em .5em 5em;
+    
+}
+a#already_registered:hover, #already_registered:focus{
+	background-image: linear-gradient(#EAEAEA, #FAFAFA);
+}
 /* FROM HERE COPIED FROM THE BOTTOM OF DEFAULT/STYLES.CSS	 */
 
 .fc-state-active, .fc-state-active .fc-button-inner {
@@ -2825,7 +2849,11 @@ width:1.5em;
     float:left;
     clear:left
 
-}  
+} 
+#gototop img{
+height:1.5em;
+width:1.5em;
+} 
 #lrg_subnav{
     background:0 !important;
 }
@@ -2836,6 +2864,10 @@ width:1.5em;
 }
 .scroll-to-fixed-fixed #subnavlistcontainer{
     background-color: #788CB3 !important;
+    margin-right:-2em;
+}
+.scroll-to-fixed-fixed #subnavlistcontainer > ul#subnavlist{
+    border: 0 !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color: #788CB3 !important;
@@ -2854,7 +2886,8 @@ width:1.5em;
     display:none;
 }
 .admin_switch{
-float:right;
+    float:right;
+    margin-top:1em;
 }
 select#admin_switch { 
     /* display: inline !important;  */
