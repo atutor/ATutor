@@ -1867,6 +1867,10 @@ width:95%;
 	background-color:#eeeeee;
 	border:1px solid #cccccc;
 }
+.my-courses-resume img{
+height:1.3em;
+width:1.3em;
+}
 .fl-link-summary{
 	padding-left: 0.875em;
 	padding-bottom: 0.875em;
