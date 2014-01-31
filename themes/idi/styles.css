@@ -3129,6 +3129,23 @@ margin-right: auto;
     height:1.2em;
     width:1.2em;
 }
+h3.already_registered{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: -2em;
+    height:2em;;
+}
+a#already_registered{
+    background-color: #F4F0CB;
+	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    border-radius: 0.3em 0.3em 0 0;
+    padding:.5em 5em .5em 5em;
+    
+}
+a#already_registered:hover, #already_registered:focus{
+	background-image: linear-gradient(#EAEAEA, #FAFAFA);
+}
 /******* 
 
 Responsive elements 

@@ -30,14 +30,14 @@ function encrypt_password_login()
 }
 function show_login_form()
 {
-    document.getElementById('login_form_div').style.display = "block";
+    $("#login_form_div").toggle('slow');
     document.form1.form1_login.focus();
 }
 </script>
 <?php if(!(isset($_SESSION['member_id']) && $_SESSION['login'])) { ?>
-<div class="button" >
-    <h3><a href="#" title="<?php echo _AT('already_registered'); ?>" onclick="show_login_form();return false;" ><?php echo _AT('already_registered'); ?></a></h3>
-</div>
+
+    <h3 class="already_registered"><a href="#" title="<?php echo _AT('already_registered'); ?>" onclick="show_login_form();return false;" id="already_registered"><?php echo _AT('already_registered'); ?></a></h3>
+
 <div class="input-form" style="clear: both;margin-top:0;display: none;" id="login_form_div">
     <form action="<?php $getvars = ''; if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "") $getvars = '?en_id='. $_REQUEST["en_id"]; echo $_SERVER['PHP_SELF'] . $getvars; ?>" method="post" name="form1">
         <input type="hidden" name="form1_login_action" value="true" />

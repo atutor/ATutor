@@ -2914,8 +2914,6 @@ div.fs_tools{
 float:right;
 margin-top:.5em;
 width:25em;
-
-
 }
 /* 
 Changes to the default/styles.css to upgrade tfrom 2.1 to 2.2 file to apply to other themes
@@ -3274,6 +3272,23 @@ clear:left;
 width:15em;
 margin-left:0em;
 margin-top:-4.2em;
+}
+h3.already_registered{
+    width:80%;
+    margin-left:auto;
+    margin-right:auto;
+    margin-top: -2em;
+    height:2em;;
+}
+a#already_registered{
+    background-color: #F4F0CB;
+	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    border-radius: 0.3em 0.3em 0 0;
+    padding:.5em 5em .5em 5em;
+    
+}
+a#already_registered:hover, #already_registered:focus{
+	background-image: linear-gradient(#EAEAEA, #FAFAFA);
 }
 /******* 
 

@@ -288,7 +288,7 @@ global $system_courses, $_custom_css, $db;
 			  <?php endforeach; ?> <?php echo $this->page_title; ?>
 		  </div>
 	  <?php } else { ?>
-	   <div class="crumbcontainer" style="padding-bottom:1.2em;">
+	   <div class="crumbcontainer">
 	  <?php } ?>
 		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
       <div id="guide_box">
