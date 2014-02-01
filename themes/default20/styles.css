@@ -899,7 +899,6 @@ div.sequence-links {
 	float:right;
 	margin-top: 10px;
 	padding-right: 5px;
-	padding-top:7px;
 }
 div.sequence-links a {
 	text-decoration: none;
@@ -3387,8 +3386,9 @@ table.etabbed-table	{
 #content_link{
     display:none;
 }
-select#admin_switch { 
+.admin_switch { 
     /* display: inline !important;  */
+    float:right;
 }
 #mobile_switch{
 float:right;
