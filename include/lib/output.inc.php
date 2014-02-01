@@ -964,7 +964,8 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
             $term = preg_quote($term, "/");
             $term = '(\s*'.$term.'\s*)';
             $term = str_replace(' ','((<br \/>)*\s*)', $term); 
-            
+            $term = html_entity_decode($term, ENT_QUOTES);
+			
             // Uncomment the line below and comment the following line
             // when the jquery UI tooltip supports the html display.
             //$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
@@ -978,13 +979,13 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
             } else {
                 $input = preg_replace
                         ("/(\[\?\])".$term."(\[\/\?\])/i",
-                        '<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.htmlentities_utf8($original_term).': '.$def.'">\\2</a>',$input);
+                        '<a class="tooltip" href="'.$_base_path.'mods/_core/glossary/index.php?g_cid='.$_SESSION['s_cid'].htmlentities(SEP).'w='.urlencode($original_term).'#term" title="'.$original_term.': '.$def.'">\\2</a>',$input);
             }
         }
-    } else if (!$user_glossary) {
+    }  else if (!$user_glossary) {
         $input = str_replace(array('[?]','[/?]'), '', $input);
     }
-        
+	
     $input = str_replace('CONTENT_DIR', '', $input);
 
     if (isset($_config['latex_server']) && $_config['latex_server']) {
