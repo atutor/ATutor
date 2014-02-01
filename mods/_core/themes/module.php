@@ -18,12 +18,14 @@ if (admin_authenticate(AT_ADMIN_PRIV_THEMES, TRUE) || admin_authenticate(AT_ADMI
     if(!defined(IS_SUBSITE)){
         $this->_pages['mods/_core/themes/index.php']['title_var'] = 'themes';
         $this->_pages['mods/_core/themes/index.php']['guide']     = 'admin/?p=themes.php';
-        $this->_pages['mods/_core/themes/index.php']['children']  = array('mods/_core/themes/install_themes.php');
+        $this->_pages['mods/_core/themes/index.php']['children']  = array('mods/_core/themes/install_themes.php', 'mods/_core/themes/custom_logo.php');
 
         $this->_pages['mods/_core/themes/install_themes.php']['guide']   = 'admin/?p=importing_themes.php';	
 
 
-
+        $this->_pages['mods/_core/themes/custom_logo.php']['title_var'] = 'custom_logo';
+        $this->_pages['mods/_core/themes/custom_logo.php']['parent'] = 'mods/_core/themes/index.php';
+        
         $this->_pages['mods/_core/themes/install_themes.php']['title_var'] = 'install_themes';
         $this->_pages['mods/_core/themes/install_themes.php']['parent'] = 'mods/_core/themes/index.php';
 

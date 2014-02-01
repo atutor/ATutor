@@ -36,7 +36,7 @@
     //-->
     </script>
     <div class="logo">
-          <a href="http://www.atutor.ca/"><img src="<?php echo $this->base_path; ?>images/AT_Logo_1_sm.png"  alt="ATutor Logo" style="border:none;" /></a>
+          <a href="http://www.atutor.ca/"><img src="<?php echo get_custom_logo(); ?>"  alt="ATutor Logo" style="border:none;" /></a>
     </div>
 </div>
 </body>
