@@ -3,15 +3,16 @@
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
+	padding-top:.2em;
+    padding-bottom:.1em;
+        overflow-y:hidden;
 }
 
 ul#topnavlist li {
 	zoom:100%;
-	padding:0.3em;
-	padding-bottom:0.3em;
 	margin:0px;
-	margin-bottom:-3px;
 	display:inline;
+	padding-bottom:.1em;
 }
 
 label {
@@ -55,3 +56,7 @@ ul#subnavlist li {
 textarea#body_text{
 	*width:600px;
 }
+.scroll-to-fixed-fixed div#topnavlistcontainer > ul{
+    white-space:nowrap;
+    overflow-y:hidden;
+} 

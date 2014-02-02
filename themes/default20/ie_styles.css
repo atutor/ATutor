@@ -21,41 +21,42 @@ table.data tfoot input {
 }
 
 #topnavlistcontainer {
+    padding-top:.5em;
 	margin-bottom:-1px;
 	border-bottom:0;
 }
 
 ul#topnavlist li {
-	margin-bottom:-3em;
 	*display: inline;
 }
 
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
-	position:absolute;
-	top:5em;
+	height:auto;
+	width:auto;
+	overflow-x:hidden;
+	overflow-y:hidden;
+	margin-top:-1.2em;
+	padding:.0;
+	padding-bottom:.3;
 }
 
 ul#topnavlist li {
 	zoom:100%;
 	padding:0.3em;
-	margin-bottom:-3px;
+	padding-bottom:1em;
 	border-bottom:0;
-	min-height:3.5em;
 
 }
-ul#topnavlist li a {
-	padding: .1em 1.8em .1em 1.8em;
+ul#subnavlist{
+    height:auto;
+	width:auto;
+	overflow-x:hidden;
+	overflow-y:hidden;
 }
-ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
-	margin-bottom:-25px;	
-	padding: .2em 1.8em .1em 1.8em;
-	border-bottom: none;
-}
-
 #header{
-	height: 5.0em;
+	height: 5.2em;
 	margin-bottom:.1em;
 }
 
@@ -66,7 +67,6 @@ div#top-links{
 div#top-links a:active{
 	color:black;
 	background-color:#F6EAD6;
-
 }
 
 .outside_box{
@@ -200,9 +200,6 @@ div#guide_box{
 	overflow:auto;
 }
 
-.logoutbar{
-	margin-top:-2.5em;	
-}
 textarea#body_text{
 	*width:600px;
 }

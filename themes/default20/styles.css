@@ -3053,6 +3053,24 @@ div.input-form.remedialContent {
     margin-left:auto;
     margin-right: auto;
 }
+#gototop img{
+    border:0;
+}
+.top-tool img{
+    border:0;
+}
+.imggoback{
+    border:0;
+}
+.shortcut_icon{
+    border:0;
+}
+.img1616{
+    border:0;
+}
+.img-size-tree{
+    border:0;
+}
 /* 
 Changes/additions to the default/styles.css to upgrade from 2.1 to 2.2 file to apply to other themes
 */

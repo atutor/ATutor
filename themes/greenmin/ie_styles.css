@@ -3,14 +3,12 @@
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
+	padding-top:.3em;
 }
 
 ul#topnavlist li {
 	zoom:100%;
-	padding:0.3em;
-	padding-bottom:0.3em;
-	margin:0px;
-	margin-bottom:-3px;
+
 	display:inline;
 }
 
@@ -55,10 +53,13 @@ ul.current_list{
 .tab-spacer{
 	*width:10px;
 }
-
+ul#subnavlist {
+	margin-bottom:.6em;
+}
 ul#subnavlist li {
 	display:inline;
 	margin-left:.5em;
+
 }
 .fl-force-right{
 	*margin-top:-1.2em;

@@ -2,7 +2,11 @@
 
 ul#topnavlist {
 	zoom:100%;
-	margin:0px;
+	clear:both;	
+	height:auto;
+	width:auto;
+	 overflow-y:hidden;
+    overflow-x:hidden;
 }
 
 ul#topnavlist li {
