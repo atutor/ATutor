@@ -39,16 +39,21 @@ function upload_custom_logo()
     }
     
     if (isset($_POST['custom_logo_enabled']) && $_POST['custom_logo_enabled'] == 1) {
-        
+        $missing_fields = array();
         //custom logo alt text missing
         if (isset($_POST['custom_logo_alt_text']) && $_POST['custom_logo_alt_text'] == '') {
-            $msg->addError('custom_logo_missing_alt_text');
+            $missing_fields[] = _AT('custom_logo_alt_text');
         }
         
         //custom logo url missing
         if(isset($_POST['custom_logo_url']) && $_POST['custom_logo_url'] == '') {
-            $msg->addError('custom_logo_missing_url');
+            $missing_fields[] = _AT('custom_logo_url');
         } 
+        
+        if($missing_fields) {
+            $missing_fields = implode(', ', $missing_fields);
+            $msg->addError(array('EMPTY_FIELDS', $missing_fields));
+        }
         
         //error in the file
         if ($_FILES['file']['error'] == UPLOAD_ERR_FORM_SIZE){
