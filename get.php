@@ -79,8 +79,11 @@ if (substr($file_name, 0, 4) == 'b64:') {
 	$current_file = '/'.$file_name;
 }
 
-
-$file = AT_CONTENT_DIR . $_SESSION['course_id'] . $current_file;
+if($current_file == '/custom_logo.png' || $current_file == '/custom_logo.jpg' || $current_file == '/custom_logo.gif') {
+    $file = AT_CONTENT_DIR . 'logos/' . $current_file;
+} else {
+    $file = AT_CONTENT_DIR . $_SESSION['course_id'] . $current_file;
+}
 
 //send header mime type
 $pathinfo = pathinfo($file);
