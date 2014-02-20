@@ -868,16 +868,16 @@ class ContentManager
 		
 		// javascript for inline editor
 		echo '<script type="text/javascript">
-var ATutor = ATutor || {};
-ATutor.course = ATutor.course || {};
-ATutor.course.contentMenu = ATutor.course.contentMenu || {};
+		var ATutor = ATutor || {};
+		ATutor.course = ATutor.course || {};
+		ATutor.course.contentMenu = ATutor.course.contentMenu || {};
 
-ATutor.course.text_enter_edit_mode = "'._AT("enter_edit_mode").'";
-ATutor.course.text_exit_edit_mode = "'._AT("exit_edit_mode").'";
-ATutor.base_path = "'.$_base_path.'";
-ATutor.course.text_expand = "'._AT("expand").'";
-ATutor.course.text_collapse = "'._AT("collapse").'";
-';
+		ATutor.course.text_enter_edit_mode = "'._AT("enter_edit_mode").'";
+		ATutor.course.text_exit_edit_mode = "'._AT("exit_edit_mode").'";
+		ATutor.base_path = "'.$_base_path.'";
+		ATutor.course.text_expand = "'._AT("expand").'";
+		ATutor.course.text_collapse = "'._AT("collapse").'";
+		';
 
 		// get the javascript to initialize the expand/collapse of the content folders
 		$this->getInitMenuJS();
