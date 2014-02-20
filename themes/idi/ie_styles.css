@@ -3,12 +3,16 @@
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
+	padding-top:.3em;
+	padding-bottom:.5em;
+	overflow:hidden;
+	width:auto;
 }
 
 ul#topnavlist li {
 	zoom:100%;
 	padding:0.3em;
-	padding-bottom:0.3em;
+	padding-bottom:0.5em;
 	margin:0px;
 	margin-bottom:-3px;
 	display:inline;

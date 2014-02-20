@@ -21,15 +21,29 @@ $side_menu = array();
 $stack_files = array();
 
 function get_custom_logo() {
+    global $_config;
+    $path_gif = AT_CONTENT_DIR.'logos/custom_logo.gif';
+    $path_jpg = AT_CONTENT_DIR.'logos/custom_logo.jpg';
+    $path_png = AT_CONTENT_DIR.'logos/custom_logo.png';
     
-    $path = AT_CONTENT_DIR.'logos/';
+    if(file_exists($path_gif))
+        $ext = 'gif';
+    else if(file_exists($path_jpg))
+        $ext = 'jpg';
+    else if(file_exists($path_png))
+        $ext = 'png';
     
-    if(is_dir($path)) {
+    if($_config['custom_logo_enabled'] && isset($ext) && ($ext=='gif' || $ext=='jpg' || $ext=='png')) {
         if (defined('AT_FORCE_GET_FILE')) {
-            $file = 'get_custom_logo.php';
+            if(isset($_REQUEST['cid']) && $_REQUEST['cid']>0) {
+                $file = 'custom_logo.'.$ext;
+            } else if(!isset($_REQUEST['cid']) && isset($_SESSION['course_id']) && $_SESSION['course_id']>0) {
+                $file = 'get.php/custom_logo.'.$ext;
+            } else {
+                $file = 'get_custom_logo.php';
+            }
         } else {
             $dir = 'content/logos/custom_logo.';
-            $ext = substr(glob ($file.'{jpg,png,gif}', GLOB_BRACE)[0], -3, 4);
             $file = $dir.$ext;
         }
         $path_to_logo = $file;

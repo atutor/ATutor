@@ -5,11 +5,15 @@ ul#topnavlist li {
 }
 ul#topnavlist{
 	clear:both;	
-	padding-top:1em;
+	 max-height: none\9; 
+	 overflow:hidden;
+	 overflow-y:hidden;
+    overflow-x:hidden;
+    margin-top:-.2em;
 }
 #topnavlistcontainer{
 	padding-top:.5em;
-	height:2.35em;	
+	height:2.25em;	
 	*height:2.2em;
 }
 
@@ -69,4 +73,10 @@ ul.current_list{
 }
 textarea#body_text{
 	*width:600px;
+}
+.fl-force-right{
+    margin-top:.3em;
+}
+.shortcut_icon{
+    border:0;
 }

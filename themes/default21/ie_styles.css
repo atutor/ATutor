@@ -8,8 +8,6 @@
 
 }
 
-
-
 label {
 	zoom:100%;
 	margin:0px;
@@ -23,6 +21,7 @@ table.data tfoot input {
 #topnavlistcontainer {
 	margin-bottom:-1px;
 	border-bottom:0;
+	margin-top:-1.5em;
 }
 
 ul#topnavlist li {
@@ -33,8 +32,10 @@ ul#topnavlist li {
 ul#topnavlist {
 	zoom:100%;
 	margin:0px;
-	position:absolute;
-	top:5em;
+	width:auto;
+	height:auto;
+	overflow-x:hidden;
+	overflow-y:hidden;
 }
 
 ul#topnavlist li {
@@ -57,6 +58,8 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
 #header{
 	height: 5.0em;
 	margin-bottom:.1em;
+	padding-top:2em;
+	margin-top:-2em;
 }
 
 div#top-links{

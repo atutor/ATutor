@@ -3695,7 +3695,7 @@ a.message_link {
     width:90%;
 }
 #copyright{
-    width:28em;
+    width:25em;
     margin-left:auto;
     margin-right: auto;
     color:white;
@@ -3726,6 +3726,33 @@ a#already_registered{
 a#already_registered:hover, #already_registered:focus{
 	background-image: linear-gradient(#EAEAEA, #FAFAFA);
 }
+#copyright{
+width:35em;
+margin-left:auto;
+margin-right: auto;
+}
+#gototop img{
+    border:0;
+}
+.top-tool img{
+    border:0;
+}
+.imggoback{
+    border:0;
+}
+.shortcut_icon{
+    border:0;
+}
+.img1616{
+    border:0;
+}
+#message img{
+    border:0;
+}
+.img-size-tree{
+    border:0;
+}
+
 /******* 
 
 Responsive elements 

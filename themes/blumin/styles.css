@@ -3038,6 +3038,32 @@ a#already_registered{
 a#already_registered:hover, #already_registered:focus{
 	background-image: linear-gradient(#EAEAEA, #FAFAFA);
 }
+#gototop img{
+    border:0;
+    height:1.3em;
+    width:1.3em;
+    margin-right:1.5em;
+}
+.top-tool img{
+    border:0;
+}
+.imggoback{
+    border:0;
+}
+.shortcut_icon{
+    border:0;
+}
+.img1616{
+    border:0;
+    height:2em;
+    width:2em;
+}
+#message img{
+    border:0;
+}
+.img-size-tree{
+    border:0;
+}
 /******* 
 
 Responsive elements 

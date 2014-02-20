@@ -15,6 +15,10 @@ margin-top:0em;
 margin-top:0em;
 
 }
+ul#topnavlist{
+	overflow-y:hidden;
+	overflow-x:hidden;
+}
 ul#subnavlist li {
 	*display: inline;
 	*padding:.6em;
@@ -60,7 +64,11 @@ div#guide_box{
     padding-left:2em;
     padding-right:2em;
 }
-
+h1#section-title {
+	margin-top:-.5em;
+	margin-bottom:2em;
+	
+}
 /*
 
 label {

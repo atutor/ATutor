@@ -2930,6 +2930,10 @@ height:1.9em;
 width:1.9em;
 margin-right:1em;
 }
+
+shortcut_icon{
+    border:0;
+}
 /* FROM HERE COPIED FROM THE BOTTOM OF DEFAULT/STYLES.CSS	 */
 
 .fc-state-active, .fc-state-active .fc-button-inner {
@@ -3208,6 +3212,15 @@ a#already_registered{
 }
 a#already_registered:hover, #already_registered:focus{
 	background-image: linear-gradient(#EAEAEA, #FAFAFA);
+}
+#gototop img{
+    border:0;
+}
+.top-tool img{
+    border:0;
+}
+.imggoback{
+    border:0;
 }
 /******* 
 

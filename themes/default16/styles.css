@@ -3290,6 +3290,21 @@ a#already_registered{
 a#already_registered:hover, #already_registered:focus{
 	background-image: linear-gradient(#EAEAEA, #FAFAFA);
 }
+#gototop img{
+    border:0;
+}
+.top-tool img{
+    border:0;
+}
+.imggoback{
+    border:0;
+}
+.shorcut_icon{
+    border:0;
+}
+.img1616{
+    border:0;
+}
 /******* 
 
 Responsive elements 

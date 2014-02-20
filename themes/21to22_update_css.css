@@ -585,6 +585,29 @@ width:35em;
 margin-left:auto;
 margin-right: auto;
 }
+#gototop img{
+    border:0;
+    height:1.3em;
+    width:1.3em;
+}
+.top-tool img{
+    border:0;
+}
+.imggoback{
+    border:0;
+}
+.shortcut_icon{
+    border:0;
+}
+.img1616{
+    border:0;
+}
+.message img{
+    border:0;
+}
+.img-size-tree{
+    border:0;
+}
 /******* 
 
 Responsive elements 

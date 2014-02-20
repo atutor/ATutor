@@ -35,8 +35,18 @@
         <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
     //-->
     </script>
+    <?php
+    global $_config_defaults, $_config;
+    $custom_logo_url = $_config_defaults['custom_logo_url'];
+    $custom_logo_alt_text = $_config_defaults['custom_logo_alt_text'];
+    
+    if($_config['custom_logo_enabled']) {
+        $custom_logo_url = $_config['custom_logo_url'];
+        $custom_logo_alt_text = $_config['custom_logo_alt_text'];
+    }
+    ?>
     <div class="logo">
-          <a href="http://www.atutor.ca/"><img src="<?php echo get_custom_logo(); ?>"  alt="ATutor Logo" style="border:none;" /></a>
+          <a href="<?php echo $custom_logo_url; ?>"><img src="<?php echo get_custom_logo(); ?>"  alt="<?php echo $custom_logo_alt_text; ?>" style="border:none;" /></a>
     </div>
 </div>
 </body>

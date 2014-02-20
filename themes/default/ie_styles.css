@@ -20,45 +20,15 @@ table.data tfoot input {
 
 }
 
-#topnavlistcontainer {
-	margin-bottom:-1px;
-	border-bottom:0;
-}
 
-ul#topnavlist li {
-	margin-bottom:-3em;
-	*display: inline;
-}
-
-ul#topnavlist {
-	zoom:100%;
-	margin:0px;
-	position:absolute;
-	top:5em;
-}
-
-ul#topnavlist li {
-	zoom:100%;
-	padding:0.3em;
-	margin-bottom:-3px;
-	border-bottom:0;
-
-
-}
-ul#topnavlist li a {
-	padding: .1em 1.8em .2em 1.8em;
-}
-ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavlist li a.active {
-	margin-bottom:-25px;	
-	padding: .2em 1.8em .2em 1.8em;
-	border-bottom: none;
-}
 
 #header{
 	height: 5.0em;
-	margin-bottom:.1em;
-}
 
+}
+ul#topnavlist{
+margin:0;
+}
 div#top-links{
 	float:right;
 }
@@ -187,6 +157,9 @@ div#guide_box{
 	padding-left:1em;
 	padding-right:2em;
 }
+#section-title{
+    margin-top:.2em;
+}
 /* the * prefix targets IE7, dangerous hack but necessary */
 /* to target IE6 use _ and to target IE8 and below use a trailing \9 before the style's closing semicolon */
 .fl-force-right{
@@ -197,8 +170,16 @@ div#guide_box{
 }
 
 .logoutbar{
-	margin-top:-2.5em;	
+	margin-bottom:-1.5em;	
+	margin-top:1.2em;
 }
 textarea#body_text{
 	*width:600px;
+}
+#lrg_topnav{
+margin-bottom:-1em;
+}
+.ui-switch-handle{
+height:2em !important;
+width:2em !important;
 }

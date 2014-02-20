@@ -80,12 +80,11 @@ ul#subnavlist li{
 input.prefs_buttontab[type=submit]{
 	height:1em;	
 }
-
 .fl-force-right{
+    padding:.3em;
 	*margin-top:-1.2em;
+	
 }
-
-
 h1.section-title {
 	margin-top:-.3em;
 	*margin-top:.3em;
@@ -107,4 +106,22 @@ textarea#body_text{
 }
 #shortcuts{
 	*width:12%;
+}
+#gototop img{
+    border:0;
+}
+.top-tool img{
+    border:0;
+}
+.imggoback{
+    border:0;
+}
+.shorcut_icon{
+    border:0;
+}
+.img1616{
+    border:0;
+}
+#message img{
+    border:0;
 }
