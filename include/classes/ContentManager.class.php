@@ -868,16 +868,16 @@ class ContentManager
 		
 		// javascript for inline editor
 		echo '<script type="text/javascript">
-var ATutor = ATutor || {};
-ATutor.course = ATutor.course || {};
-ATutor.course.contentMenu = ATutor.course.contentMenu || {};
+		var ATutor = ATutor || {};
+		ATutor.course = ATutor.course || {};
+		ATutor.course.contentMenu = ATutor.course.contentMenu || {};
 
-ATutor.course.text_enter_edit_mode = "'._AT("enter_edit_mode").'";
-ATutor.course.text_exit_edit_mode = "'._AT("exit_edit_mode").'";
-ATutor.base_path = "'.$_base_path.'";
-ATutor.course.text_expand = "'._AT("expand").'";
-ATutor.course.text_collapse = "'._AT("collapse").'";
-';
+		ATutor.course.text_enter_edit_mode = "'._AT("enter_edit_mode").'";
+		ATutor.course.text_exit_edit_mode = "'._AT("exit_edit_mode").'";
+		ATutor.base_path = "'.$_base_path.'";
+		ATutor.course.text_expand = "'._AT("expand").'";
+		ATutor.course.text_collapse = "'._AT("collapse").'";
+		';
 
 		// get the javascript to initialize the expand/collapse of the content folders
 		$this->getInitMenuJS();
@@ -1054,7 +1054,7 @@ ATutor.course.text_collapse = "'._AT("collapse").'";
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						$link .= ContentManager::cleanOutput($content['title']).'</span></strong>';
+						$link .= '&nbsp;'.ContentManager::cleanOutput($content['title']).'</span></strong>';
 						
 						// instructors have privilege to delete content
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
