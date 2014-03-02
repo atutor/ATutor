@@ -55,24 +55,23 @@ function upload_custom_logo()
             $msg->addError(array('EMPTY_FIELDS', $missing_fields));
         }
         
-        //error in the file
-        if ($_FILES['file']['error'] == UPLOAD_ERR_FORM_SIZE){
-            // Check if filesize is too large for a POST
-            $msg->addError(array('FILE_MAX_SIZE', $_config['prof_pic_max_file_size'] . ' ' . _AT('bytes')));
-        }
+        if ($_FILES['file']['name'] != ''){
+            
+            //error in the file
+            if ($_FILES['file']['error'] == UPLOAD_ERR_FORM_SIZE){
+                // Check if filesize is too large for a POST
+                $msg->addError(array('FILE_MAX_SIZE', $_config['prof_pic_max_file_size'] . ' ' . _AT('bytes')));
+            }
+            
+            //check if file size is ZERO	
+            if ($_FILES['file']['size'] == 0) {
+                $msg->addError('IMPORTFILE_EMPTY');
+            }
     
-        //If file has no name
-        if (!$_FILES['file']['name']) {
-            $msg->addError('FILE_NOT_SELECTED');
-        }
-
-        //check if file size is ZERO	
-        if ($_FILES['file']['size'] == 0) {
-            $msg->addError('IMPORTFILE_EMPTY');
-        }
-    
-        if ($_FILES['file']['error'] || !is_uploaded_file($_FILES['file']['tmp_name'])) {
-            $msg->addError('FILE_NOT_SAVED');
+            if ($_FILES['file']['error'] || !is_uploaded_file($_FILES['file']['tmp_name'])) {
+                $msg->addError('FILE_NOT_SAVED');
+            }
+            
         }
     
         if (!$msg->containsErrors()) {
@@ -95,79 +94,81 @@ function upload_custom_logo()
                 $sql = "REPLACE INTO %sconfig VALUES ('custom_logo_url','%s')";
                 queryDB($sql, array(TABLE_PREFIX, $_config['custom_logo_url']));
             }
-        
-            if (defined('AT_FORCE_GET_FILE')) {
-                $path = AT_CONTENT_DIR.'logos/';
-            } else {
-                $path = '../logos/';
-            }
             
-            if (!is_dir($path)) {
-                @mkdir($path);
-            }
+            if($_FILES['file']['name'] != '') {
+                if (defined('AT_FORCE_GET_FILE')) {
+                    $path = AT_CONTENT_DIR.'logos/';
+                } else {
+                    $path = '../logos/';
+                }
             
-            //deleting previously existing custom logo
-            $path_gif = $path.'custom_logo.gif';
-            $path_jpg = $path.'custom_logo.jpg';
-            $path_png = $path.'custom_logo.png';
+                if (!is_dir($path)) {
+                    @mkdir($path);
+                }
+            
+                //deleting previously existing custom logo
+                $path_gif = $path.'custom_logo.gif';
+                $path_jpg = $path.'custom_logo.jpg';
+                $path_png = $path.'custom_logo.png';
     
-            if(file_exists($path_gif)) {
-                unlink($path_gif);
-            } else if(file_exists($path_jpg)) {
-                unlink($path_jpg);
-            } else if(file_exists($path_png)) {
-                unlink($path_png);
-            }
+                if(file_exists($path_gif)) {
+                    unlink($path_gif);
+                } else if(file_exists($path_jpg)) {
+                    unlink($path_jpg);
+                } else if(file_exists($path_png)) {
+                    unlink($path_png);
+                }
             
-            $gd_info = gd_info();
-            $supported_images = array();
-            if ($gd_info['GIF Create Support']) {
-                $supported_images[] = 'gif';
-            }
-            if ($gd_info['JPG Support'] || $gd_info['JPEG Support']) {
-                $supported_images[] = 'jpg';
-            }
-            if ($gd_info['PNG Support']) {
-                $supported_images[] = 'png';
-            }
+                $gd_info = gd_info();
+                $supported_images = array();
+                if ($gd_info['GIF Create Support']) {
+                    $supported_images[] = 'gif';
+                }
+                if ($gd_info['JPG Support'] || $gd_info['JPEG Support']) {
+                    $supported_images[] = 'jpg';
+                }
+                if ($gd_info['PNG Support']) {
+                    $supported_images[] = 'png';
+                }
 
-            // check if this is a supported file type
-            $filename   = $stripslashes($_FILES['file']['name']);
-            $path_parts = pathinfo($filename);
-            $extension  = strtolower($path_parts['extension']);
-            $image_attributes = getimagesize($_FILES['file']['tmp_name']);
+                // check if this is a supported file type
+                $filename   = $stripslashes($_FILES['file']['name']);
+                $path_parts = pathinfo($filename);
+                $extension  = strtolower($path_parts['extension']);
+                $image_attributes = getimagesize($_FILES['file']['tmp_name']);
 
-            if ($extension == 'jpeg') {
-                $extension = 'jpg';
-            }
+                if ($extension == 'jpeg') {
+                    $extension = 'jpg';
+                }
 
-            // resize the original but don't backup a copy.
-            $width  = $image_attributes[0];
-            $height = $image_attributes[1];
-            $original_img	= $_FILES['file']['tmp_name'];
-            $thumbnail_img	= $path . "custom_logo.". $extension;
+                // resize the original but don't backup a copy.
+                $width  = $image_attributes[0];
+                $height = $image_attributes[1];
+                $original_img	= $_FILES['file']['tmp_name'];
+                $thumbnail_img	= $path . "custom_logo.". $extension;
             
-            $_FILES['file']['name'] = addslashes($_FILES['file']['name']);
+                $_FILES['file']['name'] = addslashes($_FILES['file']['name']);
             
-            $thumbnail_fixed_height = 46; 
-            $thumbnail_fixed_width = 153; 
+                $thumbnail_fixed_height = 46; 
+                $thumbnail_fixed_width = 153; 
 
-            if ($width > $height && $height > $thumbnail_fixed_height) {
-                $thumbnail_height= $thumbnail_fixed_height;
-                $thumbnail_width = intval($thumbnail_fixed_width * $height / $width);
-                resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
-                //cropping
-                //resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, ($thumbnail_width-$thumbnail_fixed_width)/2);
-            } else if ($width <= $height && $width>$thumbnail_fixed_width) {
-                $thumbnail_height = intval($thumbnail_fixed_width * $height / $width);
-                $thumbnail_width  = $thumbnail_fixed_width;
-                resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
-                //cropping
-                //resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, 0, ($thumbnail_height-$thumbnail_fixed_height)/2);
-            } else {
-                // no resizing, just copy the image.
-                // it's too small to resize.
-                copy($original_img, $thumbnail_img);
+                if ($width > $height && $height > $thumbnail_fixed_height) {
+                    $thumbnail_height= $thumbnail_fixed_height;
+                    $thumbnail_width = intval($thumbnail_fixed_width * $height / $width);
+                    resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
+                    //cropping
+                    //resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, ($thumbnail_width-$thumbnail_fixed_width)/2);
+                } else if ($width <= $height && $width>$thumbnail_fixed_width) {
+                    $thumbnail_height = intval($thumbnail_fixed_width * $height / $width);
+                    $thumbnail_width  = $thumbnail_fixed_width;
+                    resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
+                    //cropping
+                    //resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, 0, ($thumbnail_height-$thumbnail_fixed_height)/2);
+                } else {
+                    // no resizing, just copy the image.
+                    // it's too small to resize.
+                    copy($original_img, $thumbnail_img);
+                }
             }
             
             $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -221,9 +222,9 @@ function upload_custom_logo()
                 $num0 = ' checked="checked"';
             }
             ?>
-            <label for="custom_logo_enabled"><?php echo _AT('custom_logo_enabled'); ?></label><br/>
-            <input type="radio" id="custom_logo_enabled" name="custom_logo_enabled" value="1" <?php echo $num1; ?> onchange="toggle_fields()" /><?php echo _AT('enable'); ?>
-            <input type="radio" id="custom_logo_disabled" name="custom_logo_enabled" value="0" <?php echo $num0; ?> onchange="toggle_fields()"/><?php echo _AT('disable'); ?>
+            <?php echo _AT('custom_logo_enabled'); ?><br/>
+            <input type="radio" id="custom_logo_enabled" name="custom_logo_enabled" value="1" <?php echo $num1; ?> onchange="toggle_fields()" /><label for="custom_logo_enabled"><?php echo _AT('enable'); ?></label>
+            <input type="radio" id="custom_logo_disabled" name="custom_logo_enabled" value="0" <?php echo $num0; ?> onchange="toggle_fields()"/><label for="custom_logo_disabled"><?php echo _AT('disable'); ?></label>
 		</div>
         
         <div class="row">
@@ -242,10 +243,38 @@ function upload_custom_logo()
             <input type="text" id="custom_logo_url" name="custom_logo_url" value="<?php echo $logo_url; ?>" />
 		</div>
         
-		<div class="row">
-			<label for="file"><?php echo _AT('upload_custom_logo'); ?></label><br />
-			<input type="file" name="file" size="40" id="file" />
-		</div>
+        <div class="row">
+            <?php
+            if (defined('AT_FORCE_GET_FILE')) {
+                $path = AT_CONTENT_DIR.'logos/';
+            } else {
+                $path = '../logos/';
+            }
+            
+            $path_gif = $path.'custom_logo.gif';
+            $path_jpg = $path.'custom_logo.jpg';
+            $path_png = $path.'custom_logo.png';
+            
+            if (is_dir($path) && (file_exists($path_jpg) || file_exists($path_gif) || file_exists($path_png)) ) {
+                $logo = "get_custom_logo.php";
+            } else {
+                if($_SESSION['prefs']['PREF_THEME']=='atspaces') {
+                    $logo = AT_BASE_HREF."themes/atspaces/images/atspaces_logo49.jpg";
+                } else {
+                    $logo = AT_BASE_HREF."images/AT_Logo_1_sm.png";
+                }
+            }
+            echo _AT('use_existing_logo');
+            ?>
+            <br/>
+            <img src="<?php echo $logo; ?>" alt="custom_logo" border="1" style="float: left; margin: 2px;">
+			&nbsp;&nbsp;&nbsp; <?php echo _AT('or'); ?>	
+            <div class="row" style="float:right;width:40%;">
+                <label for="file"><?php echo _AT('upload_custom_logo'); ?></label><br />
+                <input type="file" name="file" size="40" id="file" />
+            </div>
+            <br style="clear: left;">
+        </div>
         
         <div class="row buttons">
 			<input type= "submit" name="submit" value="<?php echo _AT('save'); ?>" />

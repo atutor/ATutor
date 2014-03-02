@@ -29,7 +29,7 @@
 </div> <!-- end page wrapper --> 
 <div id="footer">
     <div class="logo">
-          <a href="http://www.atutor.ca/"><img src="<?php echo $this->base_path; ?>images/AT_Logo_1_sm.png"  alt="ATutor Logo" style="border:none;" /></a>
+          <a href="<?php echo $this->custom_logo_url; ?>"><img src="<?php echo get_custom_logo(); ?>"  alt="<?php echo $this->custom_logo_alt_text; ?>" style="border:none;" /></a>
     </div>
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>

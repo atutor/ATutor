@@ -3003,6 +3003,7 @@ INSERT INTO `language_text` VALUES ('en', '_module', 'bbb_admin_setup', 'BigBlue
 ('en', '_template', 'use_captcha', 'Allow the use of CAPTCHA', '2009-06-03 15:33:17', ''),
 ('en', '_template', 'use_customized_head', 'Turn on custom Scripts/CSS', '2010-05-03 10:44:56', ''),
 ('en', '_template', 'use_enrol_button', 'Use the button below to enroll in this course.', '2003-05-22 16:03:37', 'enrol screen instruction'),
+('en', '_template', 'use_existing_logo', 'Use Existing Logo', '2014-02-21 16:03:37', 'admin custom logo'),
 ('en', '_template', 'use_higher_grade', 'Use higher grade', '2008-09-25 16:01:17', 'gradebook'),
 ('en', '_template', 'use_lower_grade', 'Use lower grade', '2008-09-25 16:01:17', 'gradebook'),
 ('en', '_template', 'use_parent_theme', 'Use parent category\'s theme.', '2004-08-04 11:34:41', ''),

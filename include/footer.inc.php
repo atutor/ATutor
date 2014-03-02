@@ -16,6 +16,8 @@ global $next_prev_links;
 global $_base_path, $_my_uri;
 global $_stacks, $db;
 global $system_courses;
+global $_config_defaults;
+global $_config;
 
 $side_menu = array();
 $stack_files = array();
@@ -49,11 +51,28 @@ function get_custom_logo() {
         $path_to_logo = $file;
         
     } else {
-        $path_to_logo = AT_BASE_HREF."images/AT_Logo_1_sm.png";
+        if($_SESSION['prefs']['PREF_THEME']=='atspaces') {
+            $path_to_logo = AT_BASE_HREF."themes/atspaces/images/atspaces_logo49.jpg";
+        } else {
+            $path_to_logo = AT_BASE_HREF."images/AT_Logo_1_sm.png";
+        }
     }
         
     return $path_to_logo;
 }
+ 
+$custom_logo_url = $_config_defaults['custom_logo_url'];
+$custom_logo_alt_text = $_config_defaults['custom_logo_alt_text'];
+if($_SESSION['prefs']['PREF_THEME'] == 'atspaces') {
+    $custom_logo_alt_text = 'ATutorSpaces Logo';
+}
+if($_config['custom_logo_enabled']) {
+    $custom_logo_url = $_config['custom_logo_url'];
+    $custom_logo_alt_text = $_config['custom_logo_alt_text'];
+}
+
+$savant->assign('custom_logo_url', $custom_logo_url);
+$savant->assign('custom_logo_alt_text', $custom_logo_alt_text);
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	$savant->assign('my_uri', $_my_uri);
