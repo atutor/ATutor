@@ -39,18 +39,18 @@ if (AT_INCLUDE_PATH !== 'NULL') {
         if(!$db->select_db($db_name)){
             require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
             $err = new ErrorHandler();
-            trigger_error('VITAL#DB connection established, but database "'.DB_NAME.'" cannot be selected.',
-                            E_USER_ERROR);
-            exit;
+            //trigger_error('VITAL#DB connection established, but database "'.$db_name.'" cannot be selected.',
+            //                E_USER_ERROR);
+            //exit;
         }
 
      }else{
         if (!@mysql_select_db($db_name, $db)) {
             require_once(AT_INCLUDE_PATH . 'classes/ErrorHandler/ErrorHandler.class.php');
             $err = new ErrorHandler();
-            trigger_error('VITAL#DB connection established, but database "'.DB_NAME.'" cannot be selected.',
-                            E_USER_ERROR);
-            exit;
+            //trigger_error('VITAL#DB connection established, but database "'.$db_name.'" cannot be selected.',
+            //                E_USER_ERROR);
+            //exit;
         }
      }
  

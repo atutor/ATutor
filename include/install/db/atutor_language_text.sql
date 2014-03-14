@@ -1,4 +1,4 @@
-DROP TABLE `language_text`;
+#DROP TABLE `language_text`;
 # Table structure for table 'language_text'
 #
 
