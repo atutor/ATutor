@@ -149,7 +149,7 @@ if (count($_SESSION) == 0) {
 		    setcookie('message', '', time() - 3600); // empty value and old timestamp
 	}
 } else {
-	  $valid_session = check_session();
+	$valid_session = check_session();
 }
 
 $str = ob_get_contents();
