@@ -162,7 +162,7 @@ print_progress($step);
         	if ($_POST['step1']['old_path'] != '') {
 				$db     = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']),'');
 			} else {
-				$db     = at_db_connect($_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password'],'');
+				$db     = at_db_connect($_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']),'');
 			}
 
 			$row = at_db_version($db);
@@ -171,7 +171,7 @@ print_progress($step);
 			if ($_POST['step1']['old_path'] != '') {
 				$db     = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']));
 			} else {
-				$db     = at_db_connect($_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], $_POST['step2']['db_password']);
+				$db     = at_db_connect($_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], urldecode($_POST['step2']['db_password']));
 			}
 
 			$row = at_db_version($db);        

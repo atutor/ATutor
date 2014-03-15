@@ -19,9 +19,9 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
     //$db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],$_POST['step2']['db_password']);
     //at_db_select($_POST['step2']['db_name'], $db);
     if(defined('MYSQLI_ENABLED')){
- 	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],$_POST['step2']['db_password'], $_POST['step2']['db_name']);   
+ 	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],urldecode($_POST['step2']['db_password']), $_POST['step2']['db_name']);   
     }else{
-	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],$_POST['step2']['db_password']);
+	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],urldecode($_POST['step2']['db_password']));
 	    at_db_select($_POST['step2']['db_name'], $db);
     }
         
@@ -30,7 +30,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
                                $_POST['account_fname'], $_POST['account_lname'], $_POST['account_email'],
                                $_POST['just_social'], $_POST['home_url'], get_atutor_installation_path(AT_INSTALLER_INCLUDE_PATH),
                                $_POST['step2']['db_host'], $_POST['step2']['db_port'], $_POST['step2']['db_login'], 
-                               $_POST['step2']['db_password'], $_POST['step2']['db_name'], $_POST['step2']['tb_prefix'], true);
+                               urldecode($_POST['step2']['db_password']), $_POST['step2']['db_name'], $_POST['step2']['tb_prefix'], true);
 	
 	if (!isset($errors)) {
 		unset($_POST['admin_username']);
