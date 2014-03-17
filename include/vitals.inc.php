@@ -134,7 +134,6 @@ ob_start();
 session_set_cookie_params(0, $_config["session_path"], "", $isHttps);
 session_start();
 
-//
 // Regenerate session id at every page refresh to prevent CSRF
 $valid_session = true;
 if (count($_SESSION) == 0) {

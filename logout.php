@@ -19,7 +19,6 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 $sql = "DELETE FROM %susers_online WHERE member_id=%d";
 queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 
-//
 // Unset these Session keys at the time of logout.
 /*
 $unset_session = array('login',
@@ -49,4 +48,3 @@ header('Location: login.php');
 exit;
 
 ?>
-
