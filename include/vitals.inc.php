@@ -138,6 +138,15 @@ session_start();
 $valid_session = true;
 if (count($_SESSION) == 0) {
 	regenerate_session();
+	
+	//This is to handle the case to ensure that logout message is not lost while
+	// being redirected to the login page.
+	 
+	$_SESSION['message']=unserialize($_COOKIE['message']);
+	if(isset($_COOKIE['message'])) {
+		  unset($_COOKIE['message']);
+		    setcookie('message', '', time() - 3600); // empty value and old timestamp
+	}
 } else {
 	$valid_session = check_session();
 }
@@ -250,7 +259,6 @@ $savant->addPath('template', AT_INCLUDE_PATH . '../themes/default/');
 /**************************************************/
 require(AT_INCLUDE_PATH.'classes/Message/Message.class.php');
 $msg = new Message($savant);
-
 //if user has requested theme change, make the change here
 if ((isset($_POST['theme']) || isset($_POST['mobile_theme'])) && isset($_POST['submit'])) {
 	//http://atutor.ca/atutor/mantis/view.php?id=4781
