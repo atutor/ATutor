@@ -66,6 +66,19 @@ function regenerate_session($reload = false)
 
 function check_session()
 {
+	if(isset($_SESSION['isLoggedOutRecently'])){
+		// Skip the check_session check for the case of just logged out user, 
+		// as the session by all means doesnot have any extra privileges which 
+		// can be hijacked. And we get to regenerate the session, and do not 
+		// miss out on displaying the feedback messages added by different 
+		// parts of code.
+		// Previously absence of this check for a just logged out user,
+		// triggered a fake possible-CSRF alarm, and hence messages in feedback were
+		// not being rendered
+		regenerate_session();
+		unset($_SESSION['isLoggedOutRecently']);
+		return true;
+	}
 	if(isset($_SESSION['OBSOLETE']) && ($_SESSION['EXPIRES'] < time())) {
 		return false;
 	}
