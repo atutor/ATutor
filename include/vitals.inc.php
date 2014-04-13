@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
-define('AT_DEVEL', 0);
+define('AT_DEVEL', 1);
 define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 //define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
@@ -32,17 +32,7 @@ if(isset($_SERVER['HTTP_USER_AGENT'])){
         header("Location: ie6.html");
     }
 }
-// check if the subsite is enabled
-if (defined('IS_SUBSITE') && IS_SUBSITE) {
-	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
-	at_db_select(DB_NAME_MULTISITE, $db_multisite);
-	$site_url = $_SERVER['HTTP_HOST'];
-	$row = queryDB('SELECT * from %ssubsites where site_url = %s', array(TABLE_PREFIX_MULTISITE, $siteurl), true);
-	if (!$row['enabled']) {
-		echo $site_url . ' has been disabled!';
-		exit;
-	}
-}
+
 /*
  * structure of this document (in order):
  *
@@ -92,7 +82,20 @@ if (!defined('AT_REDIRECT_LOADED')){
 	//$db = at_db_connect(DB_HOST, DB_PORT, DB_USER, DB_PASSWORD);
 	//at_db_select(DB_NAME, $db);
 }
-
+// check if the subsite is enabled
+if (defined('IS_SUBSITE') && IS_SUBSITE) {
+	include_once(AT_INCLUDE_PATH . '../mods/manage_multi/lib/mysql_multisite_connect.inc.php');
+	$db_tmp = $db;
+	$db = $db_multisite;
+	at_db_select(DB_NAME_MULTISITE, $db_multisite);
+	$site_url = $_SERVER['HTTP_HOST'];
+	$row = queryDB("SELECT * from %ssubsites where site_url = '%s'", array(TABLE_PREFIX_MULTISITE, $site_url), true);
+	if (!$row['enabled']) {
+		echo $site_url . ' has been disabled!';
+		exit;
+	}
+	$db = $db_tmp;
+}
 /* get config variables. if they're not in the db then it uses the installation default value in constants.inc.php */
 
 $rows = queryDB("SELECT * FROM %sconfig", array(TABLE_PREFIX));
