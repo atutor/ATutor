@@ -87,17 +87,24 @@ class ModuleFactory {
 		}
 
 		// small performance addition:
-		if ($status & AT_MODULE_STATUS_UNINSTALLED) {
+		if ($status && AT_MODULE_STATUS_UNINSTALLED) {
 			$dir = opendir(AT_SUBSITE_MODULE_PATH);
+			
+			//Hack to show only extra mods
+			if(preg_match('/install_modules\.php/', $_SERVER['SCRIPT_FILENAME'])){
+			    $installed_module = $all_modules;
+			    unset($all_modules);
+			}
 			while (false !== ($dir_name = readdir($dir))) {
 				if (($dir_name == '.') 
 					|| ($dir_name == '..') 
+					|| ($dir_name == '.git') 
+					|| preg_match('/\./', $dir_name) 
 					|| ($dir_name == '.svn') 
 					|| ($dir_name == AT_MODULE_DIR_CORE) 
 					|| ($dir_name == AT_MODULE_DIR_STANDARD)) {
 					continue;
 				}
-
 				if (is_dir(AT_SUBSITE_MODULE_PATH . $dir_name) && !isset($all_modules[$dir_name])) {
 					$module = new Module($dir_name);
 					$all_modules[$dir_name] = $module;
@@ -108,16 +115,19 @@ class ModuleFactory {
 
 		$keys = array_keys($all_modules);
 		foreach ($keys as $dir_name) {
-			$module =$all_modules[$dir_name];
+			$module = $all_modules[$dir_name];
 			if ($module->checkStatus($status) && $module->checkType($type) && $module->checkPrivacy()) {
 				$modules[$dir_name] = $module;
+			} else if (!$module->checkStatus($status) && $module->checkPrivacy() && is_array($installed_module)){
+			    if(!in_array($dir_name, (array_keys($installed_module)))){
+			    $modules[$dir_name] = $module;
+			    }
 			}
 		}
 
 		if ($sort) {
 			uasort($modules, array($this, 'compare'));
 		}
-		
 		return $modules;
 	}
 

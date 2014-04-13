@@ -195,7 +195,7 @@ if (defined('IS_SUBSITE')) {
 	$enable_upload = true;
 	$enable_remote_installtion = true;
 }
-$module_list = $moduleFactory->getModules(AT_MODULE_STATUS_UNINSTALLED | AT_MODULE_STATUS_MISSING | AT_MODULE_STATUS_PARTIALLY_UNINSTALLED, AT_MODULE_TYPE_EXTRA);
+$module_list = $moduleFactory->getModules(AT_MODULE_TYPE_EXTRA);
 $keys = array_keys($module_list);
 natsort($keys);
 
