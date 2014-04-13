@@ -281,7 +281,7 @@ function get_login($id){
 	} else {
 		$id		= intval($id);
 		$sql	= 'SELECT login FROM %smembers WHERE member_id=%d';
-		$row    = queryDB('',array(TABLE_PREFIX, $id));
+		$row    = queryDB($sql, array(TABLE_PREFIX, $id), TRUE);
 		return $row['login'];
 	}
 }
