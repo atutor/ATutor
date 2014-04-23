@@ -87,6 +87,7 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 // disables this setting on ATutorSpaces
 // NOT SURE WHY THIS timeout period setting needs disabled 
 //if(!$this->service_installed){
+
 ?>
 	<div class="row">
 		<?php
