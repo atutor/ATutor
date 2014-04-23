@@ -85,7 +85,8 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 	
 <?php
 // disables this setting on ATutorSpaces
-if(!$this->service_installed){
+// NOT SURE WHY THIS timeout period setting needs disabled 
+//if(!$this->service_installed){
 ?>
 	<div class="row">
 		<?php
@@ -115,7 +116,7 @@ if(!$this->service_installed){
 			
 		<?php echo _AT('timeout_minutes'); ?>
 	</div>
-<?php } ?>
+<?php //} ?>
 	<div class="row">
 		<label for="maxfile"><?php echo _AT('maximum_file_size'); ?></label> (<?php echo _AT('default'); ?>: <?php echo $_config_defaults['max_file_size']; ?>)<br />
 		<input type="text" size="10" name="max_file_size" id="maxfile" value="<?php if (!empty($_POST['max_file_size'])) { echo $stripslashes(htmlspecialchars($_POST['max_file_size'])); } else { echo $_config['max_file_size']; } ?>"  /> <?php echo _AT('bytes'); ?>
