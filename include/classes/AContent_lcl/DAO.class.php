@@ -21,8 +21,8 @@
 class DAO {
 
 	// private
-	static private $db;     // global database connection
-	
+	//static private $db;     // global database connection
+	/*
 	function DAO()
 	{
 		if (!isset($this->db))
@@ -35,7 +35,7 @@ class DAO {
 			at_db_select(DB_NAME, $this->db);
 		}
 	}
-	
+	*/
 	/**
 	* Execute SQL
 	* @access  protected
@@ -47,6 +47,7 @@ class DAO {
 	*/
 	function execute($sql)
 	{
+		global $db;
 		$sql = trim($sql);
 		$rows = queryDB($sql, array());
 		
