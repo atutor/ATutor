@@ -27,7 +27,7 @@ body {
 }
 .page_wrapper{
 /*	border:1px solid #aaaaaa;*/
-	width:96%;
+	width:90%;
 	margin-left:auto;
 	margin-right:auto;
 	background-color: #ffffff;
@@ -1259,7 +1259,6 @@ img.headicon	{
 	border:1px solid white;
 }
 div.course div.shortcuts, a {
-	text-align: right;
 	text-decoration:none;
 	clear: left;
 	vertical-align: middle;
@@ -1567,6 +1566,7 @@ overflow:hidden;
 	text-align: center;
 	padding: 4px 0px;
 	background-color:#575656 !important;
+	height:4.5em;
 }
 
 /** forum stuff **/
@@ -1698,11 +1698,11 @@ ul#topnavlist {
     list-style-type: none; 
     list-style-image: none;
 	padding: 0;
-	margin-top:-1em;
+	margin-top:-.2em;
 	margin-right: auto;
 	margin-left: auto;
 	font-family: 'Varela Round', Arial, Helvetica, sans-serif; 
-	height:2.9em;
+	height:2.7em;
     white-space:nowrap;
     overflow-x:scroll;
 
@@ -1711,10 +1711,11 @@ ul#topnavlist {
 ul#topnavlist li {
 	display:inline;
 	list-style: none;
-	height:2.6em;
-    padding: .7em .1em .7em .1em;
+	height:2.7em;
+    padding: 0;
 	margin-bottom:-.5em;
 	white-space:nowrap;
+	margin-right: -0.3em;
 }
 
 ul#topnavlist li a:hover, ul#topnavlist li a:focus{
@@ -1722,11 +1723,16 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus{
 	background-color:  #F2F1C5;
 	color: black;
 	border-bottom: 3px solid #D26911;
+	background-image: linear-gradient(#F2F1C5, #D1C82E);
 }
 ul#topnavlist li a.active {
 	background-color:  #F2F1C5;
 	color: black;
 	border-bottom: 3px solid #D26911;
+	background-image: linear-gradient(#D1C82E, #F2F1C5);
+}
+ul#topnavlist li a.active:hover, ul#topnavlist li a.active:focus{
+	background-image: linear-gradient(#F2F1C5, #D1C82E);
 }
 ul#topnavlist li a.noticeme {
 	background-color:  #D1C82E;
@@ -1740,7 +1746,10 @@ ul#topnavlist li a {
 	font-weight:400;
 	text-decoration:none;
 	background-color:transparent;
-    padding: 1.8em .4em .8em .4em;	
+	margin:0;
+    padding: 1.9em 1em .8em 1em;
+    border-bottom: 3px solid transparent;
+    	
 }
 ul#topnavlist li a.selected {
     /* The selected tab. There's only one of these */
@@ -2049,9 +2058,15 @@ div#subnavbacktopage {
 	float:left;
 }
 div#subnavbacktopage:hover{
-	background-color: #F6F4DA;
+	/* background-color: #F6F4DA; */
 
 }
+/*
+div#subnavbacktopage:after{
+    background-image: linear-gradient(#FFFFFF, #FFFFFF) !important;
+    opacity: 0.5;
+}
+*/
 
 div#subnavbacktopage a:focus {
 	background-color: #F6F4DA;
@@ -2073,11 +2088,12 @@ div#subnavlistcontainer {
 }
 
 ul#subnavlist {
-
 	margin-top: 0px;
 	font-family:  Varela Round,Helvetica,Arial,serif;
-	border-bottom:1px solid #D1C82E !important;
-	border-top:1px solid #D1C82E !important;    
+
+	/* border-top:1px solid #D1C82E !important;   */
+  	border-bottom: 3px solid transparent;
+	border-bottom: 1px solid #DED29E;
 }
 
 ul#subnavlist li {
@@ -2085,30 +2101,42 @@ ul#subnavlist li {
 	list-style: none;
 	display: inline-block;
 	text-align:center;
-	height:1.5em;
-	padding: .6em .5em .2em .5em;
-	border-bottom: 3px solid transparent;
+	padding: .6em .5em .5em .5em;
 
+		border-radius:.3em .3em 0 0;
+
+}
+ul#subnavlist li a{
+	padding: .6em .5em .2em .5em;
+	border-radius:.3em .3em 0 0;
+	
 }
 ul#subnavlist li a:hover, ul#subnavlist li:hover, ul#subnavlist li a:focus{
-	background-color: #F6F4DA;   
+  
 }
-
-ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li:focus{
+ul#subnavlist li.active{
+    background-image: linear-gradient(#F2F1C5, #D1C82E);
+    border-bottom: 3px solid #D26911;
+}
+ul#subnavlist li.active:hover, ul#subnavlist li.active:focus{
+    background-image: linear-gradient(#D1C82E, #F2F1C5);
+        border-bottom: 3px solid #D26911;
+}
+ul#subnavlist li a:hover, ul#subnavlist li a:focus{
 	background-color: #F6F4DA;
     border-bottom: 3px solid #D26911;
+    background-image: linear-gradient(#F2F1C5, #D1C82E);
+    
 }
 ul#subnavlist span.active{
 	background-color: #F6F4DA;
 	padding: .9em .6em 1.5em .6em;
-	font-size:.9em;
 
 }
 ul#subnavlist li a {
    	color: #555;
    	background-color:transparent;
    	text-decoration:underline;
-   	font-size:.9em;
 	font-weight:500;
 	overflow:hidden;
 	padding: .3em .6em 0em .6em;
@@ -2206,6 +2234,7 @@ tr.odd {
 .current_box{
 	float:left;
 	margin-left:1em;
+	margin-top:.4em;
 	width:30%; 
 	padding:.5em;
 	padding-left:1em;
@@ -3182,6 +3211,7 @@ li.likert-question {
 
 .admin_switch{
     float:right;
+    margin-top:.5em;
 }
 
 /* a hack added to fix admin switch off, invisible in ATutorspaces theme */
@@ -3218,7 +3248,7 @@ div#bypass-links{
 ul#subnavlist_i {
 	font-family: Verdana,Helvetica,Arial,serif;
     float:right;
-    margin-top: -2.4em;
+    margin-top: -2em;
     margin-right:2em;
    /* background-image:url("images/wand.png");*/
     background-position: 1em .3em;
@@ -3229,13 +3259,8 @@ ul#subnavlist_i li {
 	display: inline-block;
 	font-weight:700;
 	text-align:center;
-	border-top:1px solid #DED29E;
-	border-left:1px solid #DED29E;
-	border-right:1px solid #DED29E;
-	border-radius: .3em .3em 0em 0em;
-	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .4em .5em .2em .5em ;
-	border-bottom: 3px solid #555555;
+	background:transparent !important;
+
 }
 
 ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li a:hover,
@@ -3243,16 +3268,28 @@ ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li a:ho
 ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
   	color: black;
 	text-decoration:none;
+    background-color:#F8F8F8;
+    background-image: linear-gradient(#F2F1C5, #D1C82E);
 }
 
 ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
-   	padding: .4em .4em .2em .4em ;
    	text-decoration:underline;
 	font-weight:500;
+	border-top:1px solid #DED29E;
+	border-left:1px solid #DED29E;
+	border-right:1px solid #DED29E;
+	border-bottom: 3px solid #555555;
+	border-radius: .3em .3em 0em 0em;
+	-moz-border-radius: .3em .3em 0em 0em;
+	padding: .5em .5em .5em .5em;
+	margin:0 !important;
 }
+ ul#subnavlist_i li a{
+ 	padding: .3em .5em .3em .5em;
+ }
 ul#subnavlist span#hidesubnav{
     background-image: url('images/mswitch_minus.gif');
     background-position: right center;
@@ -3362,7 +3399,7 @@ div.forum-post-author { float:left; width:150px; padding:8px 10px;border:none; }
 div.forum-post-author a.title {font-size: 1.1em; line-height: 1.2em; font-weight: bold; text-decoration:none; }	
 div.forum-post-author img.profile-picture { border: 2px solid #F7F3ED; text-align:right;}
 div.forum-post-content { margin-left: 150px; padding: 5px 0px 18px 18px;}
-div.forum-post-content h3 { font-weight: 500; margin-top:-.5em; clear:right;}
+div.forum-post-content h3 { font-weight: 500; margin-top:-.3em; margin-bottom:1em;clear:right;}
 div.forum-post-ctrl { float: right; padding: 2px; margin-top:-2em;margin-right:.2em;font-size:small;}
 div.forum-post-ctrl a { text-decoration: none; }
 div.forum-post-ctrl img{ height:1.2em; width:1.2em;}
@@ -3374,6 +3411,33 @@ div.forum-post-content div.body p { margin-bottom:1em; }
 div.forum-paginator{\ padding:.3em; width:95%;margin:auto;}
 span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2em;}
 
+/* Chat styles */
+#chat_launch{
+    border:1px solid #DED29E;
+    width:10em; 
+    text-align:center;
+    padding:1em; 
+    border-radius: 1em; 
+    background-color:#cccccc; 
+    background-image:linear-gradient(#FAFAFA, #EAEAEA);
+    margin-left:auto;
+    margin-right:auto;
+    margin-top:1em;
+    box-shadow:2px 2px #cccccc;
+}
+#chat_launch:hover, #chat_launch:focus{
+    background-image:linear-gradient(#EAEAEA, #FAFAFA);
+    box-shadow:0 2px 2px #cccccc;
+}
+#chat_launch a{
+    text-decoration:none;
+
+}
+#chat_launch a:hover{
+    text-decoration:underline;
+    background-image:linear-gradient(#EAEAEA, #FAFAFA);
+    color:#555555;
+}
 /* Preference Editor tabs */
 /* Preferences tabs */
 
@@ -3486,6 +3550,8 @@ table.etabbed-table	{
     background:0 !important;
     background-image:0 !important;
     background-color:#575656 !important;
+    margin-top: 0.6em;
+    border:0;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color:#F6F4DA !important;
@@ -3495,7 +3561,12 @@ table.etabbed-table	{
     overflow:scroll;
 } 
 .scroll-to-fixed-fixed #subnavlistcontainer{
-    background-color:#F6F4DA !important;
+    background-color: #ffffff;
+    background-image: linear-gradient(#FFFFFF, #FFFFFF) !important;
+    opacity:.8;
+    filter: alpha(opacity=80);
+    border-bottom: 1px solid #DED29E !important;
+    border-top: 0 !important;
 }
 
 #sm_content{
@@ -3669,7 +3740,7 @@ clear:left;
 li.top-tool { 
     padding:.3em;
     display:inline-block;
-	background-color: #F5F9FC; 
+	background-color: #F6F4DA; 
 	border: 1px solid #F4F0CB;
     vertical-align:top;
 	line-height: 200%;	
@@ -3739,6 +3810,7 @@ margin-right: auto;
 }
 .imggoback{
     border:0;
+    margin-top: 0.5em;
 }
 .shortcut_icon{
     border:0;

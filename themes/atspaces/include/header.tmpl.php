@@ -58,7 +58,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $system_courses, $_custom_css, $db;
 ?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
+<html lang="<?php echo $this->lang_code; ?>"> 
 <head>
 	<?php if(isset($this->section_title)){ ?>
 		<title><?php echo $this->section_title; ?>:	 <?php echo $this->page_title; ?></title>
@@ -293,7 +293,7 @@ global $system_courses, $_custom_css, $db;
 	  <?php } ?>
 		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
       <div id="guide_box">
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="new"><?php echo $this->page_title; ?></a>
       </div>
 		  <?php endif; ?>
       <?php if (isset($this->shortcuts)): ?>
@@ -393,13 +393,13 @@ global $system_courses, $_custom_css, $db;
 
 				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page && $num_pages > 1){ ?>
 				      <li class="active" tabindex="0"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?>
+                        <span id="subnav-hide" title="<?php echo _AT('sub_nav_hidden'); ?>" aria-live="polite"></span>
+					  <span id="subnav-open" title="<?php echo _AT('sub_nav_opened'); ?>" aria-live="polite"></span>
                         </li>
 
 				
 				<?php } else if($num_pages > 1) { ?>
 					  <li>
-					  <span id="subnav-hide" title="<?php echo _AT('sub_nav_hidden'); ?>" aria-live="polite"></span>
-					  <span id="subnav-open" title="<?php echo _AT('sub_nav_opened'); ?>" aria-live="polite"></span>
 					  <a href="<?php echo $this->sub_level_pages[$i]['url']; ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?></a></li>
 				<?php } ?>
 				<?php if ($i < $num_pages-1): 
