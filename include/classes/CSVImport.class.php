@@ -28,8 +28,11 @@ class CSVImport {
 		$sql = "SELECT * FROM %s%s WHERE 0";
 		$result = queryDBresult($sql, array(TABLE_PREFIX, $table_name));
 		$num_fields = at_num_fields($result);
-
+		$field = at_field_flags($result, $i);
+		/*
+        debug_to_log("FLAGS".at_field_flags($result, $i));
 		for ($i= 0; $i<$num_fields; $i++) {
+			//$flags = explode(' ', at_field_flags($result, $i));
 			$flags = explode(' ', at_field_flags($result, $i));
 			if (in_array('primary_key', $flags)) {
 				if ($field == false) {
@@ -38,10 +41,16 @@ class CSVImport {
 					// there is more than one primary_key
 					return NULL;
 				}
+				debug_to_log("FIELD".$field);
 			}
 		}
-
-		return $field;
+        */
+        if($field == false){
+            return NULL;
+            //debug_to_log("FIELD".$field);
+        }else{
+		    return $field;
+		}
 	}
 
 
@@ -105,12 +114,12 @@ class CSVImport {
 
 		// get the name of the primary ID field and the next index
 		$next_id = 0;
-		if ($primary_key_field_name) {
+		if ($primary_key_field_name != '') {
 			// get the next primary ID
 
 			$sql     = 'SELECT MAX(%s) AS next_id FROM %s%s';
-			$next_id  = queryDB($sql, array($primary_key_field_name, TABLE_PREFIX, $tableName), TRUE);
-			
+			//$next_id  = queryDB($sql, array($primary_key_field_name, TABLE_PREFIX, $tableName), TRUE);
+			$next_id  = queryDB($sql, array($primary_key_field_name, TABLE_PREFIX, $tableName));
 			$next_id = $next_id['next_id']+1;
 
 		}

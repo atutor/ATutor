@@ -100,7 +100,7 @@ ATutor.course = ATutor.course || {};
                 });      
                       
                 // Floating subnavlist bar
-                //alert(<?php echo count(get_sub_navigation($current_page));?>);
+
                 $('#lrg_subnav').scrollToFixed({
                     marginTop: 22,
                     dontSetWidth: false,
@@ -124,14 +124,14 @@ ATutor.course = ATutor.course || {};
                         }   
                         <?php
                         $current_page = substr($_SERVER['PHP_SELF'], strlen($_base_path));
-                        
+                       /* 
                         if(count(get_sub_navigation($current_page))> 1){ ?>
                             $("#subnavlistcontainer").css('background-color', '#eeeeee');
                        <?php } else {?>
                          //   $("#subnavlist").css('display', 'none');
                          //   $("#subnavlist").css('border-bottom', 'none');
                        <?php }
-                       
+                       */
                        ?>
                         },
                     postFixed: function() { 

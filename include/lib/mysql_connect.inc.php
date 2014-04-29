@@ -320,7 +320,18 @@ function at_free_result($result){
 }
 function at_field_flags($result, $i){
     if(defined('MYSQLI_ENABLED')){   
-        return $result->field_flags($i); 
+        //return $result->field_flags($i); //Original
+        //return $result->fetch_fields();
+        
+        $primary_key = '';
+        while ($meta = $result->fetch_field()) {
+            if ($meta->flags & MYSQLI_PRI_KEY_FLAG) { 
+                $primary_key = $meta->name; 
+            }
+        }    
+        
+        return $primary_key;
+        
     }else{
         return mysql_field_flags($result, $i);   
     }

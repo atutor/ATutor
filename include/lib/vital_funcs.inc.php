@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* test for mysqli presence */
 if(function_exists('mysqli_connect')){
-	define('MYSQLI_ENABLED',	1);
+	//define('MYSQLI_ENABLED',	1);
 } 
 
 
@@ -1086,7 +1086,7 @@ function debug_to_log($var, $log='') {
 	if (!defined('AT_DEVEL') || !AT_DEVEL) {
 		return;
 	}
-	
+	$_SESSION['log'] == 'log';
 	if ($log == '') $log = AT_CONTENT_DIR. 'atutor.log';
 	$handle = fopen($log, 'a');
 	fwrite($handle, "\n\n");
