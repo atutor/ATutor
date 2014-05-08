@@ -405,7 +405,7 @@ class Backup {
 			// restore course properties, ONLY BANNER FOR NOW.
 			if ($module_name == 'properties' && file_exists($this->import_dir . "properties.csv"))
 			{
-				global $db;
+				//global $db;
 				
 				$fp = @fopen($this->import_dir . "properties.csv", 'rb');
 
@@ -413,6 +413,7 @@ class Backup {
 				{
 					//hack for http://www.atutor.ca/atutor/mantis/view.php?id=3839
 					$row[0] = preg_replace('/\\\\r\\\\n/', "\r\n", $row[0]);
+					$row[0] = preg_replace('/\r\n/', "", $row[0]);
 					$sql = "UPDATE %scourses 
 					           SET banner = '%s' 
 					         WHERE course_id = %d";

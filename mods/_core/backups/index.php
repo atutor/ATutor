@@ -39,11 +39,13 @@ if (isset($_POST['restore'], $_POST['backup_id'])) {
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
+/*
 if(defined('MYSQLI_ENABLED')){
     echo "mysqli enabled";
 } else {
     echo "not enabled";
 }
+*/
 $Backup = new Backup($db, $_SESSION['course_id']);
 $list = $Backup->getAvailableList();
 $savant->assign('list', $list);
