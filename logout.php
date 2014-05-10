@@ -16,6 +16,15 @@ $_user_location	= 'public';
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
+if ( isset($_COOKIE['ATLogin'], $_COOKIE['ATPass'])){
+  $parts = parse_url($_base_href);
+  unset($_COOKIE['ATLogin']);
+  unset($_COOKIE['ATPass']);
+
+  ATutor.setcookie('ATLogin','',time()-3600, $parts['path']);
+  ATutor.setcookie('ATPass','',time()-3600, $parts['path']);
+}
+
 $sql = "DELETE FROM %susers_online WHERE member_id=%d";
 queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id']));
 
