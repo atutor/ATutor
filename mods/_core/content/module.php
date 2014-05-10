@@ -31,7 +31,12 @@ $this->_pages['mods/_core/editor/arrange_content.php']['title_var']    = 'arrang
 $this->_pages['mods/_core/editor/arrange_content.php']['parent']   = 'mods/_core/content/index.php';
 $this->_pages['mods/_core/editor/arrange_content.php']['guide']     = 'instructor/?p=arrange_content.php';
 
-$this->_pages['mods/_core/editor/edit_content.php']['title_var'] = 'edit_content';
+if (!isset($_GET['cid']) && !isset($_POST['cid'])) {
+    $this->_pages['mods/_core/editor/edit_content.php']['title_var'] = 'add_content';
+} else {
+    $this->_pages['mods/_core/editor/edit_content.php']['title_var'] = 'edit_content';
+}
+
 $this->_pages['mods/_core/editor/edit_content.php']['parent']    = 'mods/_core/content/index.php';
 $this->_pages['mods/_core/editor/edit_content.php']['guide']     = 'instructor/?p=content_edit.php';
 
