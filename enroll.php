@@ -146,8 +146,8 @@ if ($_SESSION['valid_user'] === true) {
 	}
 
 } else {
-	require(AT_INCLUDE_PATH.'header.inc.php'); 
-	$msg->printErrors('LOGIN_ENROL');	
+	require(AT_INCLUDE_PATH.'header.inc.php'); 	
+    $msg->printInfos('LOGIN_ENROL');		
 	?>
 	<div class="input-form">
 		<div class="row">
