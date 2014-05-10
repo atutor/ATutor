@@ -92,10 +92,10 @@ if (isset($this_login, $this_password)) {
     $this_password = $addslashes($this_password);
 
     //Check if this account has exceeded maximum attempts
-    $rows = queryDB("SELECT login, attempt, expiry FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login));
+    $rows = queryDB("SELECT login, attempt, expiry FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login), TRUE);
     
     if ($rows && count($rows) > 0){
-        list($attempt_login_name, $attempt_login, $attempt_expiry) = $rows[0];
+        list($attempt_login_name, $attempt_login, $attempt_expiry) = $rows;
     } else {
         $attempt_login_name = '';
         $attempt_login = 0;
@@ -110,22 +110,22 @@ if (isset($this_login, $this_password)) {
     
     if ($used_cookie) {
         #4775: password now store with salt
-        $rows = queryDB("SELECT password, last_login FROM %smembers WHERE login='%s'", array(TABLE_PREFIX, $this_login));
-        $cookieRow = $rows[0];
+        $rows = queryDB("SELECT password, last_login FROM %smembers WHERE login='%s'", array(TABLE_PREFIX, $this_login), TRUE);
+        $cookieRow = $rows;
         $saltedPassword = hash('sha512', $cookieRow['password'] . hash('sha512', $cookieRow['last_login']));
-        $rows = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status, last_login FROM %smembers WHERE login='%s' AND '%s'='%s'", array(TABLE_PREFIX, $this_login, $saltedPassword, $this_password));
+        $row = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences,password AS pass, language, status, last_login FROM %smembers WHERE login='%s' AND '%s'='%s'", array(TABLE_PREFIX, $this_login, $saltedPassword, $this_password), TRUE);
     } else {
-        $rows = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass, last_login FROM %smembers WHERE (login='%s' OR email='%s') AND SHA1(CONCAT(password, '%s'))='%s'", array(TABLE_PREFIX, $this_login, $this_login, $_SESSION[token], $this_password));
+        $row = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass, last_login FROM %smembers WHERE (login='%s' OR email='%s') AND SHA1(CONCAT(password, '%s'))='%s'", array(TABLE_PREFIX, $this_login, $this_login, $_SESSION['token'], $this_password), TRUE);
     }
-    $row = $rows[0];
-    
+    //$row = $rows;
+ 
     if($_config['max_login'] > 0 && $attempt_login >= $_config['max_login']){
         $msg->addError('MAX_LOGIN_ATTEMPT');
     } else if ($row['status'] == AT_STATUS_UNCONFIRMED) {
         $msg->addError('NOT_CONFIRMED');
     } else if ($row && $row['status'] == AT_STATUS_DISABLED) {
         $msg->addError('ACCOUNT_DISABLED');
-    } else if ($row) {
+    } else if (count($row) > 0) {
         $_SESSION['valid_user'] = true;
         $_SESSION['member_id']    = intval($row['member_id']);
         $_SESSION['login']        = $row['login'];
