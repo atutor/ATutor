@@ -338,78 +338,14 @@ function at_free_result($result){
     }
 
 }
-function at_field_flags($result, $i){
+function at_is_field_a_primary_key($result, $i){
     if(defined('MYSQLI_ENABLED')){   
-        //return $result->field_flags($i); //Original
-        //return $result->fetch_fields();
-        
-        $flags = '';
-        while ($meta = $result->fetch_field()) {
-      //$flags = '';
-            //if ($meta->flags & MYSQLI_PRI_KEY_FLAG) { 
-            if ($meta->flags & MYSQLI_NOT_NULL_FLAG) { 
-                $flags .= "not_null "; 
-            } 
-            if($meta->flags & MYSQLI_PRI_KEY_FLAG){
-                $flags .= "primary_key ";
-            } 
-            if($meta->flags & MYSQLI_UNIQUE_KEY_FLAG){
-                $flags .= "unique_key ";
-            } 
-            if($meta->flags & MYSQLI_BLOB_FLAG){
-                $flags .= "blob ";
-            } 
-            if($meta->flags & MYSQLI_UNSIGNED_FLAG){
-                $flags .= "unsigned ";
-            }
-            if($meta->flags & MYSQLI_ZEROFILL_FLAG){
-                $flags .= "zerofill ";
-            }
-            if($meta->flags & MYSQLI_BINARY_FLAG){
-                $flags .= "binary ";
-            }
-            if($meta->flags & MYSQLI_ENUM_FLAG){
-                $flags .= "enum ";
-            }
-            if($meta->flags & MYSQLI_AUTO_INCREMENT_FLAG){
-                $flags .= "auto_increment ";
-            }
-            if($meta->flags & MYSQLI_TIMESTAMP_FLAG){
-                $flags .= "timestamp ";
-            }  
-                 
-        }    
-        //debug_to_log($flags);
-        //$primary_key = explode(" ", $primary_key);
-        //$primary_key = trim($primary_key['1']);
-        //return $primary_key;
+        $meta = mysqli_fetch_field_direct($result, $i);
 
-        return $flags;
-/*
-mysql flags
-"not_null", "primary_key", "unique_key", "multiple_key", "blob", "unsigned", "zerofill", "binary", "enum", 
-"auto_increment" and "timestamp". 
-
-mysqli flags
-not_null       NOT_NULL_FLAG = 1                                                                             
-primary_key       PRI_KEY_FLAG = 2                                                                              
-unique_key       UNIQUE_KEY_FLAG = 4                                                                           
-blob       BLOB_FLAG = 16                                                                                
-unsigned       UNSIGNED_FLAG = 32                                                                            
-zerofill       ZEROFILL_FLAG = 64                                                                            
-binary       BINARY_FLAG = 128                                                                             
-enum       ENUM_FLAG = 256                                                                               
-auto_increment       AUTO_INCREMENT_FLAG = 512                                                                     
-timestamp       TIMESTAMP_FLAG = 1024                                                                         
-       SET_FLAG = 2048                                                                               
-       NUM_FLAG = 32768                                                                              
-       PART_KEY_FLAG = 16384                                                                         
-       GROUP_FLAG = 32768                                                                            
-       UNIQUE_FLAG = 65536
-*/
-        
+        return $meta->flags & 2;
     }else{
-        return mysql_field_flags($result, $i);   
+        $flags = explode(' ', mysql_field_flags($result, $i));
+        return in_array('primary_key', $flags);
     }
 
 }

@@ -15,7 +15,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 /* test for mysqli presence */
 if(function_exists('mysqli_connect')){
-	//define('MYSQLI_ENABLED',	1);
+	define('MYSQLI_ENABLED', 1);
 } 
 
 

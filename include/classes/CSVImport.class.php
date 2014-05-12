@@ -28,8 +28,7 @@ class CSVImport {
 		$num_fields = at_num_fields($result);
 		
         for ($i= 0; $i<$num_fields; $i++) {
-            $flags = explode(' ', at_field_flags($result, $i));
-            if (in_array('primary_key', $flags)) {
+        	if (at_is_field_a_primary_key($result, $i)) {
                 if ($field == false) {
                     $field = at_field_name($result, $i);
                 } else {
@@ -169,11 +168,6 @@ class CSVImport {
             //Escape % for compatibility with queryDB()
             $sql = str_replace("%", "%%", $sql );
 			$result = queryDB($sql, array());
-		if($tableName == 'tests_questions_assoc'){
-		    global $sqlout;
-            debug_to_log($sqlout);
-                
-        }
 			$i++;
 			$next_id++;
 		}
