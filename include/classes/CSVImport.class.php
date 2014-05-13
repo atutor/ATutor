@@ -47,7 +47,6 @@ class CSVImport {
 	// given a query result returns an array of field types.
 	// possible field types are int, string, datetime, or blob...
 	function detectFieldTypes($table_name) {
-		global $db;
 
 		$field_types = array();
 
@@ -77,13 +76,11 @@ class CSVImport {
 
 	// public
 	function import($tableName, $path, $course_id, $version) {
-		global $db;
 		static $table_id_map;
 
 		$fn_name = $tableName.'_convert';
 
 		// lock the tables
-		//$lock_sql = 'LOCK TABLES %s%s, %scourses WRITE';
 		$lock_sql = 'LOCK TABLES ' . TABLE_PREFIX . $tableName. ' WRITE, ' . TABLE_PREFIX . 'courses WRITE';
 		$result   = queryDB($lock_sql, array());
 
@@ -134,7 +131,6 @@ class CSVImport {
 			}
 
 			$sql = 'REPLACE INTO '.TABLE_PREFIX.$tableName.' VALUES (';
-            //if(!defined('MYSQLI_ENABLED')){
                 foreach($row as $id => $field) {
                     if (($field_types[$id] != 'int') && ($field_types[$id] != 'real')) {
                         $field = $this->translateWhitespace($field);
@@ -144,24 +140,6 @@ class CSVImport {
                     $sql .= "'" . $field."',";
                 }
 
-			//}
-			/*else{
-
-			    foreach($row as $id => $field) {   
-                    //if (($field_types[$id] != in_array('TINY', 'SHORT', 'LONG', 'LONGLONG', 'INT24', 'FLOAT', 'DOUBLE', 'DECIMAL'))) {
-                    if (!in_array($field_types[$id], array('1', '2', '3', '8', '9', '4', '5', '0'))) {
-                      	$quote_search  = array('""', '\\\n', '\\\r','\n','\r');
-	                    $quote_replace = array('"', '', '', '', '');  
-	                    $field = addslashes($field);
-		                $field = str_replace($quote_search, $quote_replace, $field);
-                    //} else if ($field_types[$id] == 'int') { //TINY, SHORT, LONG, LONGLONG, INT24
-                    } else if (in_array($field_types[$id], array('1','2','3','8','9'))) {
-                        $field = intval($field);
-                    } 
-
-                	$sql .= "'" . $field."',"; 
-			    }
-			}*/
 			$sql = substr($sql, 0, -1);
 			$sql .= ')';
 
