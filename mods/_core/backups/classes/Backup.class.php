@@ -417,7 +417,7 @@ class Backup {
 					$sql = "UPDATE %scourses 
 					           SET banner = '%s' 
 					         WHERE course_id = %d";
-					$result = queryDB($sql, array(TABLE_PREFIX, my_add_null_slashes($row['0']), $this->course_id));
+					$result = queryDB($sql, array(TABLE_PREFIX, $row['0'], $this->course_id));
 				}
 			}
 			
