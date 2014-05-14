@@ -235,7 +235,7 @@ if ($test_row['random']) {
 
 $question_row	= queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $result_id, $tid, $pos), TRUE);
 
-if (!$result || !$question_row) {
+if (count($question_row)==0) {
 	echo '<p>'._AT('no_questions').'</p>';
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
