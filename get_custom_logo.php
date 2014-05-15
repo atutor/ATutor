@@ -21,7 +21,21 @@ require(AT_INCLUDE_PATH . 'vitals.inc.php');
 require(AT_INCLUDE_PATH . 'lib/mime.inc.php');
 
 $file = AT_CONTENT_DIR .'/logos/custom_logo.';
-$ext = substr(glob ($file.'{jpg,png,gif}', GLOB_BRACE)[0], -3, 4);
+
+// The following line fails, returning an error
+// substr() expects parameter 1 to be string, array given in /var/www/ATutor/get_custom_logo.php on line 24
+//$ext = substr(glob($file.'{jpg,png,gif}', GLOB_BRACE), -3, 4);
+
+// So a hack to figure out the file extention
+if(file_exists($file."png")){
+    $ext = "png";
+} else if(file_exists($file."gif")){
+    $ext = "gif";
+} else if(file_exists($file."jpg")){
+    $ext = "jpg";
+}
+
+
 $file = $file.$ext;
 
 $real = realpath($file);
