@@ -141,10 +141,12 @@ if ($framed || $popup) {
   $mtime = $mtime[1] + $mtime[0]; 
   $endtime = $mtime; 
   $totaltime = ($endtime - $starttime); 
-  debug ($totaltime. ' seconds.', "TIME USED"); 
+
 //Harris Timer Ends
 
 if (defined('AT_DEVEL') && AT_DEVEL) {
+    echo '<br /><hr style="clear:both;">';
+    debug ($totaltime. ' seconds.', "TIME USED"); 
 	debug(TABLE_PREFIX, 'TABLE_PREFIX');
 	debug(DB_NAME, 'DB_NAME');
 	debug(VERSION, 'VERSION');
