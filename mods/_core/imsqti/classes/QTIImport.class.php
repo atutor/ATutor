@@ -315,6 +315,7 @@ class QTIImport {
 									$test_obj['display']);
 
 			$sql = vsprintf(AT_SQL_TEST, $sql_params);
+			$sql = str_replace("%", "%%", $sql );
 			$result = queryDB($sql, array());
 			$tid = at_insert_id();			
 		}
