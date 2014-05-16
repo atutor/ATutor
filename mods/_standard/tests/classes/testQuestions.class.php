@@ -770,19 +770,19 @@ class OrderingQuestion extends AbstractTestQuestion {
                  * @harris
                  */
                 $question['choice'][$i] = validate_length($question['choice'][$i], 255);
-                $question['choice'][$i] = trim($question['choice'][$i]);
+                $question['choice'][$i] = escapeSQLValue(trim($question['choice'][$i]));
 
                 if ($question['choice'][$i] != '') {
                     /* filter out empty choices/ remove gaps */
-                    $choice_new[] = $question['choice'][$i];
+                    $choice_new[] = escapeSQLValue($question['choice'][$i]);
                     $answer_new[] = $order++;
                 }
             }
 
             $question['choice']   = array_pad($choice_new, 10, '');
             $answer_new        = array_pad($answer_new, 10, 0);
-//            $question['feedback'] = $addslashes($question['feedback']);
-//            $question['question'] = $addslashes($question['question']);
+           $question['feedback'] = str_replace("'", "\'", escapeSQLValue($question['feedback']));
+           $question['question'] = str_replace("'", "\'", escapeSQLValue($question['question']));
         
             $sql_params = array(    $question['category_id'], 
                                     $_SESSION['course_id'],
@@ -882,8 +882,8 @@ class TruefalseQuestion extends AbstracttestQuestion {
         }
 
         if (!$msg->containsErrors()) {
-//            $question['feedback'] = $addslashes($question['feedback']);
-//            $question['question'] = $addslashes($question['question']);
+           $question['feedback'] = str_replace("'", "\'", escapeSQLValue($question['feedback']));
+           $question['question'] = str_replace("'", "\'", escapeSQLValue($question['question']));
 
 
             $sql_params = array(    $question['category_id'], 
@@ -986,11 +986,11 @@ class LikertQuestion extends AbstracttestQuestion {
         }
 
         if (!$msg->containsErrors()) {
-            $question['feedback']   = '';
-//            $question['question']   = $addslashes($question['question']);
+           $question['feedback']   = '';
+           $question['question']   = str_replace("'", "\'", escapeSQLValue($question['question']));
 
             for ($i=0; $i<10; $i++) {
-                $question['choice'][$i] = trim($question['choice'][$i]);
+                $question['choice'][$i] = escapeSQLValue(trim($question['choice'][$i]));
                 $question['answer'][$i] = intval($question['answer'][$i]);
 
                 if ($question['choice'][$i] == '') {
@@ -1083,8 +1083,8 @@ class LongQuestion extends AbstracttestQuestion {
         }
 
         if (!$msg->containsErrors()) {
-//            $question['feedback'] = $addslashes($question['feedback']);
-//            $question['question'] = $addslashes($question['question']);
+           $question['feedback'] = str_replace("'", "\'", escapeSQLValue($question['feedback']));
+           $question['question'] = str_replace("'", "\'", escapeSQLValue($question['question']));
 
             if ($question['property']==''){
                 $question['property'] = 4;    //essay
@@ -1247,7 +1247,7 @@ class MatchingQuestion extends AbstracttestQuestion {
         for ($i = 0 ; $i < 10; $i++) {
             $question['groups'][$i]        = trim($question['groups'][$i]);
             $question['answer'][$i] = (int) $question['answer'][$i];
-            $question['choice'][$i]          = trim($question['choice'][$i]);
+            $question['choice'][$i]          = escapeSQLValue(trim($question['choice'][$i]));
         }
 
         if (!$question['groups'][0] 
@@ -1258,8 +1258,9 @@ class MatchingQuestion extends AbstracttestQuestion {
         }
 
         if (!$msg->containsErrors()) {
-//            $question['feedback']     = $addslashes($question['feedback']);
-//            $question['instructions'] = $addslashes($question['instructions']);
+           $question['feedback']     = str_replace("'", "\'", escapeSQLValue($question['feedback']));
+           $question['question']     = str_replace("'", "\'", escapeSQLValue($question['question']));
+           $question['instructions'] = str_replace("'", "\'", $question['instructions']);
         
             $sql_params = array(    $question['category_id'], 
                                     $_SESSION['course_id'],
@@ -1410,10 +1411,11 @@ class MultichoiceQuestion extends AbstracttestQuestion {
         }
         
         if (!$msg->containsErrors()) {
-//            $question['question']   = $addslashes($question['question']);
+           $question['feedback']   = str_replace("'", "\'", escapeSQLValue($question['feedback']));
+           $question['question']   = str_replace("'", "\'", escapeSQLValue($question['question']));
 
             for ($i=0; $i<10; $i++) {
-                $question['choice'][$i] = trim($question['choice'][$i]);
+                $question['choice'][$i] = escapeSQLValue(trim($question['choice'][$i]));
             }
 
             $answers = array_fill(0, 10, 0);
@@ -1525,7 +1527,7 @@ class MultianswerQuestion extends MultichoiceQuestion {
 
             foreach ($question['choice'] as $choiceNum=>$choiceOpt) {
                 $choiceOpt = validate_length($choiceOpt, 255);
-                $choiceOpt = trim($choiceOpt);
+                $choiceOpt = escapeSQLValue(trim($choiceOpt));
                 $question['answer'][$choiceNum] = intval($question['answer'][$choiceNum]);
                 if ($choiceOpt == '') {
                     /* an empty option can't be correct */
@@ -1564,8 +1566,8 @@ class MultianswerQuestion extends MultichoiceQuestion {
                 $question['answer'] = array_pad($question['answer'], 10, 0);
                 $question['choice'] = array_pad($question['choice'], 10, '');
             
-//                $question['feedback'] = $addslashes($question['feedback']);
-//                $question['question'] = $addslashes($question['question']);
+               $question['feedback'] = str_replace("'", "\'", escapeSQLValue($question['feedback']));
+               $question['question'] = str_replace("'", "\'", escapeSQLValue($question['question']));
 
                 $sql_params = array(    $question['category_id'], 
                                         $_SESSION['course_id'],

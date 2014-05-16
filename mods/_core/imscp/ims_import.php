@@ -1185,9 +1185,9 @@ foreach ($items as $item_id => $content_info)
 			     1,
 			      "",'
 			     .'"'.$content_info['new_path'].'",'
-			     .'"'.$content_info['title'].'",'
-			     .'"'.$content.'",'
-				 .'"'.$content_info['test_message'].'",'
+			     .'"'.escapeSQLValue($content_info['title']).'",'
+			     .'"'.escapeSQLValue($content).'",'
+				 .'"'.escapeSQLValue($content_info['test_message']).'",'
 				 .$content_folder_type.')';
     $result = queryDB($sql, array(TABLE_PREFIX));
     

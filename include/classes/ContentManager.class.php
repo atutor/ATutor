@@ -300,10 +300,10 @@ class ContentManager
                         $release_date,
                         $head,
                         $use_customized_head,
-                        $keywords,
-                        $title,
-                        $text,
-                        $test_message,
+                        escapeSQLValue($keywords),
+                        escapeSQLValue($title),
+                        escapeSQLValue($text),
+                        escapeSQLValue($test_message),
                         $allow_test_export,
                         $content_type));
         

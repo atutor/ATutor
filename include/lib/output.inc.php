@@ -1446,4 +1446,12 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
     }
 }
 
+/**
+ * Replace '%' with '%%' to get around the special usage of '%' in the vprintf() called by queryDB()
+ * @param string
+ * @return string
+ */
+function escapeSQLValue($input) {
+    return str_replace('%', '%%', $input);
+}
 ?>

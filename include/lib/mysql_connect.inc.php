@@ -164,7 +164,7 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
     
         // Query DB and if something goes wrong then log the problem
         if(defined('MYSQLI_ENABLED')){
-               $result = $db->query($sql) or (error_log(print_r($db->error, true), 0) and $msg->addError($displayErrorMessage));                
+               $result = $db->query($sql) or (error_log(print_r($db->error . "\nSQL: " . $sql, true), 0) and $msg->addError($displayErrorMessage));                
 
         }else{
                $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
