@@ -42,7 +42,7 @@
 <input type="hidden" name="tab" value="<?php echo $this->current_tab; ?>" />
 <input type="hidden" name="course_id" value="<?php echo $this->course_id; ?>"/>
 
-<ul id="subnavlist">
+<ul id="subsubnavlist">
 	<?php for ($i = 0; $i< $this->num_tabs; $i++): ?>
 		<?php if ($this->current_tab == $i): ?>
 			<li class="active"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?tab=<?php echo $i.$this->page_string; ?>" class="active"><strong><?php echo _AT($this->tabs[$i]); ?> - <?php echo $this->tab_counts[$i]; ?></strong></a></li>

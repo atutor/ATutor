@@ -2133,7 +2133,7 @@ ul#subnavlist_i li {
 	padding: .4em .5em .2em .5em ;
 	border-bottom: 3px solid blue;
 }
-ul#subnavlist li, ul#navlist li{
+ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
 	list-style: none;
 	display: inline-block;
 	font-weight:700;
@@ -2148,7 +2148,7 @@ ul#subnavlist li, ul#navlist li{
 	height:1.3em;	
 	padding: .4em .5em .2em .5em ;
 }
-
+ul#subsubnavlist li a:hover, ul#subsubnavlist li a:focus,  ul#subsubnavlist li a:hover,
 ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li a:hover,
 ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li a:hover,
 ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
@@ -2157,7 +2157,8 @@ ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
 	background-color: #F3F3F3;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist lifocus,
+ul#subsubnavlist li.active, ul#subsubnavlist li:hover, ul#subsubnavlist li:focus,
+ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li:focus,
 ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li:focus,  
 ul#navlist li.active, ul#navlist li:hover, ul#navlist li:focus {
   	color: black;
@@ -2169,7 +2170,7 @@ ul#navlist li.active, ul#navlist li:hover, ul#navlist li:focus {
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 }
-ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
+ul#subnavlist li a, ul#subsubnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
