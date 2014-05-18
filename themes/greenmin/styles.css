@@ -1980,6 +1980,38 @@ ul#subnavlist li a {
    	text-decoration:underline;
 	font-weight:500;
 }
+ul#subsubnavlist {
+	margin-top: 0px;
+	font-family:  Varela Round,Helvetica,Arial,serif;
+
+  	border-bottom: 3px solid transparent;
+	border-bottom: 1px solid #DEECE2;
+}
+
+ul#subsubnavlist li{
+  	background-color: transparent;
+	list-style: none;
+	display: inline-block;
+	text-align:center;
+	padding: .6em .5em .5em .5em;
+
+		border-radius:.3em .3em 0 0;
+
+}
+ul#subsubnavlist li a{
+	padding: .6em .5em .2em .5em;
+	border-radius:.3em .3em 0 0;
+	
+}
+ul#subsubnavlist li a:hover, ul#subsubnavlist li a:focus{
+	background-color: #DEECE2;
+
+}
+ul#subsubnavlist a.active{
+	background-color: #DEECE2;
+	padding: .4em .6em .5em .6em;
+
+}
 
 fieldset.group_form{
 	width:97%;
