@@ -15,18 +15,18 @@
 /* This is the default configuration file for the default theme. */
 
 /* The theme's name. */
-	$_theme['name'] = 'simplified-desktop';
+	$_theme['name'] = 'ATutor Default';
 
 /* The theme's version number. */
 	$_theme['version'] = '1.0';
 
 /* Which version of ATutor is this theme intended for. */
-	$_theme['atutor-version'] = '1.6';
+	$_theme['atutor-version'] = '2.2';
 
 /* author information */
 	$_theme['author_name']  = 'ATutor';
 	$_theme['author_url']   = 'http://atutor.ca';
-	$_theme['author_email'] = '';
+	$_theme['author_email'] = 'greg@atutorspaces.com';
 
 /* theme default course banner styles: */
 /*
