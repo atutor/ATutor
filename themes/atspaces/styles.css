@@ -2103,7 +2103,7 @@ ul#subnavlist li, ul#subsubnavlist li{
 	text-align:center;
 	padding: .6em .5em .5em .5em;
 
-		border-radius:.3em .3em 0 0;
+		    border-radius:.3em .3em 0 0;
 
 }
 ul#subnavlist li a, ul#subsubnavlist li a{
@@ -3327,7 +3327,7 @@ ul#subnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
 	border-bottom: 3px solid #555555;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .5em .5em .5em .5em;
+	padding: .46em .5em .46em .5em;
 	margin:0 !important;
 }
  ul#subnavlist_i li a{
