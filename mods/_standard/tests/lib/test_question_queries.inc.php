@@ -86,6 +86,6 @@ define('AT_SQL_TEST', "INSERT INTO ".TABLE_PREFIX."tests " .
                      guests,
                      display) " .
                        "VALUES 
-                        (NULL, %d, '%s', '%s', %d, '%s', '%s', %d, %d, '%s', %d, %d, %d, '%s', '%s', %s, %d, %d, %d, %s, '', %d, %d)");
+                        (NULL, %d, '%s', '%s', %d, '%s', '%s', %d, %d, '%s', %d, %d, %d, '%s', '%s', '%s', %d, %d, %d, %d, '', %d, %d)");
 
 ?>
