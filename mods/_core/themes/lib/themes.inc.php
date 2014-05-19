@@ -217,7 +217,7 @@ function delete_theme ($theme_dir) {
 	
 	//check status
 	$sql    = "SELECT status, customized FROM %sthemes WHERE dir_name='%s'";
-	$result = queryDB($sql, array(TABLE_PREFIX, $theme_dir), TRUE);
+	$row = queryDB($sql, array(TABLE_PREFIX, $theme_dir), TRUE);
 
 	$status = intval($row['status']);
 	$customized = intval($row['customized']);
