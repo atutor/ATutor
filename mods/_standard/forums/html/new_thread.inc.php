@@ -49,7 +49,9 @@ if ($_POST['reply']!=''){
 <input name="page" type="hidden" value="<?php echo $_GET['page']; ?>" />
 <input name="parent_name" type="hidden" value="<?php echo urlencode($parent_name); ?>" /> -->
 <?php
-if($row['parent_id'] == 0){
+if(isset($_REQUEST['pid'])){
+    $parent_id	= $_REQUEST['pid'];
+}else if($row['parent_id'] == 0  || !isset($row['parent_id'])){
 	$parent_id	= $row['post_id'];
 }else{
 	$parent_id	= $row['parent_id'];
