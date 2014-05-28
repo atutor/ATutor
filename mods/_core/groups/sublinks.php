@@ -16,10 +16,11 @@ global $moduleFactory, $_pages, $_top_level_pages;
 $record_limit = 3;	// Number of sublinks to display for this module on course home page -> detail view
 
 $group_list = implode(',', $_SESSION['groups']);
-$sql = "SELECT group_id, title, description, modules FROM %sgroups WHERE group_id IN (%s) ORDER BY title limit %d";
-$sqlParams = array(TABLE_PREFIX, $group_list, $record_limit);
-$rows = queryDB($sql, $sqlParams);
-
+if($group_list != ''){
+	$sql = "SELECT group_id, title, description, modules FROM %sgroups WHERE group_id IN (%s) ORDER BY title limit %d";
+	$sqlParams = array(TABLE_PREFIX, $group_list, $record_limit);
+	$rows = queryDB($sql, $sqlParams);
+}
 if (!$_SESSION['groups']) {
     return 0;
 }
