@@ -58,8 +58,8 @@ if(isset($_REQUEST['pid'])){
 }
 ?>
 <input name="parent_id" type="hidden" value="<?php echo $parent_id; ?>" />
-<input name="fid" type="hidden" value="<?php echo intval($_GET['fid']); ?>" />
-<input name="page" type="hidden" value="<?php echo intval($_GET['page']); ?>" />
+<input name="fid" type="hidden" value="<?php echo intval($_REQUEST['fid']); ?>" />
+<input name="page" type="hidden" value="<?php echo intval($_REQUEST['page']); ?>" />
 <input name="parent_name" type="hidden" value="<?php echo urlencode($parent_name); ?>" />
 <?php echo $reply_hidden; //print hidden reply field if it exists. ?>
 
