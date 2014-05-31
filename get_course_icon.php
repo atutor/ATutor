@@ -2,7 +2,7 @@
 /************************************************************************/
 /* ATutor																*/
 /************************************************************************/
-/* Copyright (c) 2002-2010                                              */
+/* Copyright (c) 2002-2014                                              */
 /* Inclusive Design Institute                                           */
 /* http://atutor.ca                                                     */
 /* This program is free software. You can redistribute it and/or        */
@@ -31,9 +31,15 @@ foreach($rows_icon as $row){
 
 $file = AT_CONTENT_DIR .$id.'/custom_icons/'.$filename;
 
+// Added to accommodate using the stock icons, mantis 5465
+if (!file_exists($file)){
+    $file = AT_INCLUDE_PATH.'../images/courses/'.$filename;
+}
+
 $extensions = array('gif', 'jpg', 'png');
 $pathinfo = pathinfo($file);
 $ext = strtolower($pathinfo['extension']);
+
 if ($ext == '') {
 	$ext = 'application/octet-stream';
 } else {
@@ -41,9 +47,9 @@ if ($ext == '') {
 }
 
 $real = realpath($file);
-
-if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
-
+// How did this ever work when the stock icons are used instead of a custom one, see mantis 5465
+// if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
+if (file_exists($real)) {
 	header('Content-Disposition: inline; filename="'.$size.$id.'.'.$pathinfo['extension'].'"');
 	
 	/**
