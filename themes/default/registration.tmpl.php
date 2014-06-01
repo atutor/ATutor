@@ -34,7 +34,7 @@ function show_login_form()
     document.form1.form1_login.focus();
 }
 </script>
-<?php if(!(isset($_SESSION['member_id']) && $_SESSION['login'])) { ?>
+<?php if(!(isset($_SESSION['valid_user']) && $_SESSION['login'])) { ?>
 
     <h3 class="already_registered"><a href="#" title="<?php echo _AT('already_registered'); ?>" onclick="show_login_form();return false;" id="already_registered"><?php echo _AT('already_registered'); ?></a></h3>
 
