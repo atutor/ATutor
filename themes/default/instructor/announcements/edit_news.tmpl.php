@@ -6,9 +6,8 @@
 <div class="input-form">
 	<div class="row">
 		<label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" value="<?php echo AT_print($this->row['title'], 'input.text'); ?>" size="40">
+		<input type="text" name="title" id="title" value="<?php echo AT_print($this->row['title'], 'news.title'); ?>" size="40">
 	</div>
-
 	<div class="row">
 		<?php echo _AT('formatting'); ?><br />
 		<input type="radio" name="formatting" value="0" id="text" <?php if ($_POST['formatting'] === 0) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisual.disabled=true;" <?php if ($_POST['setvisual'] && !$_POST['settext']) { echo 'disabled="disabled"'; } ?> /><label for="text"><?php echo _AT('plain_text'); ?></label>,
@@ -28,7 +27,7 @@
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
-		<textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($this->row['body'], 'input.text'); ?></textarea>
+		<textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($this->row['body'], 'news.body'); ?></textarea>
 	</div>
 
 	<div class="row buttons">
