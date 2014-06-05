@@ -27,7 +27,15 @@
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
-		<textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($this->row['body'], 'news.body'); ?></textarea>
+		<?php 
+		if($_POST['formatting'] === 0){
+		// if plain text, add line breaks
+		?>
+		    <textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($this->row['body'], 'input.text'); ?></textarea>
+	    <?php }else{ ?>
+	        <textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($this->row['body'], 'news.body'); ?></textarea>
+	    
+	    <?php } ?>
 	</div>
 
 	<div class="row buttons">
