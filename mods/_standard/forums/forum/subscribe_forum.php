@@ -29,7 +29,7 @@ $sql = "SELECT title FROM %sforums WHERE forum_id=%d";
 $row_forum = queryDB($sql, array(TABLE_PREFIX, $fid), TRUE);
 
 if(count($row_forum) > 0){
-	$forum_title = $row['title'];
+	$forum_title = $row_forum['title'];
 } else {
 	$msg->addError('FORUM_NOT_FOUND');
 	header('Location: list.php');
