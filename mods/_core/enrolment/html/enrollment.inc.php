@@ -153,7 +153,7 @@ if ($_GET['search']) {
 		$term = trim($term);
 		$term = str_replace(array('%','_'), array('\%', '\_'), $term);
 		if ($term) {
-			$term = '%'.$term.'%';
+			$term = '%%'.$term.'%%';
 			$sql .= "((M.first_name LIKE '$term') OR (M.second_name LIKE '$term') OR (M.last_name LIKE '$term') OR (M.email LIKE '$term') OR (M.login LIKE '$term')) $predicate";
 		}
 	}
