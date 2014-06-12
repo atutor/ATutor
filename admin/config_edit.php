@@ -82,10 +82,16 @@ if (isset($_POST['cancel'])) {
 	}
 
 	/* email check */
+	// check if email exists
+	$sql = "SELECT email from %smembers WHERE email ='%s'";
+	$row_email= queryDB($sql, array(TABLE_PREFIX, $_POST['contact_email']));
+	
 	if (!$_POST['contact_email']) {
 		$missing_fields[] = _AT('contact_email');
 	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['contact_email'])) {
 		$msg->addError('EMAIL_INVALID');	
+	} else if(count($row_email) > 0){
+	    $msg->addError('EMAIL_EXISTS');
 	}
 
 	if ($_POST['cache_dir']) {
