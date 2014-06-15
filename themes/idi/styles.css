@@ -1197,7 +1197,18 @@ fieldset {
 	list-style-type:  none;
 	padding-left: 0pt; 
 }
-
+div#shortcuts{
+	border-left:thin solid #B7C68B;
+	border-right:thin solid #B7C68B;
+	border-bottom:thin solid #B7C68B;
+	border-radius: 0em 0em .5em .5em;
+	-moz-border-radius: 0em 0em .5em .5em;
+	float:right;
+	margin-right: 1em;
+	margin-top:-1.5em;
+	padding:.2em;
+	
+}
 a#guide {
 	background-image: url('../default/images/help.png'); 
 	background-repeat: no-repeat; 
@@ -1215,6 +1226,7 @@ div#guide_box{
 	height:1.5em;
 	float:right;
 	margin-right:2em;
+	margin-top:-1.5em;
 	padding-left:.1em;
 }
 div#content-text {
@@ -2579,42 +2591,41 @@ Changes/additions to default/styles.css  to upgrade from 2.0-2.1 to 2.2
 
 }
 #userlinks{
-float:right;
-clear:right;
-margin-right:2em;
+    float:right;
+    clear:right;
+    margin-right:2em;
+    margin-top:-.5em;
 }
 #leftcolumn{
-float:left;
-clear:left
-width:20em;
+    float:left;
+    clear:left
+    width:20em;
 }
 #lrg_content{
-float:left;
-clear:left;
+    float:left;
+    clear:left;
 }
 #contentcolumn{
-margin-left:6em;
+    margin-left:1em;
     width:auto;
 }
-
-
 
 #footer{
 	width: 100%;
 	text-align: center;
 	padding: 4px 0px;
 	font-size:.8em;
-	left:0 !important
+	left:0 !important;
 }
 
 .imggoback{
-height:1.5em;
-width:1.5em;
+    height:1.5em;
+    width:1.5em;
 }
 
 div.bypass{
-height:1px;
-float:left;
+    height:1px;
+    float:left;
 }
 div.bypass a{
     font-size:0px; 
@@ -2768,11 +2779,12 @@ div#topnavlistcontainer {
     font-family: Helvetica,Arial,sans-serif;
     margin-top: .5em !important;
     position: relative;
+    margin-right:3em;
 }
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-4.2em;
+margin-top:-3.2em;
 }
 
 /** forum stuff **/
@@ -3190,8 +3202,8 @@ a#already_registered:hover, #already_registered:focus{
 }
 .img1616{
     border:0;
-    height:2em;
-    width:2em;
+    height:1.2em;
+    width:1.2em;
 }
 #message img{
     border:0;
