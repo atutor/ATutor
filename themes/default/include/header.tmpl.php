@@ -213,7 +213,7 @@ global $system_courses, $_custom_css, $db;
 <!-- the main navigation. in our case, tabs -->
 <div id="lrg_topnav">
     <div id="topnavlistcontainer" role="navigation">
-        <a name="main-nav"></a>
+        <a name="main-nav" id="main-nav"></a>
         <ul id="topnavlist">
             <?php $accesscounter = 0; //initialize ?>
             <?php foreach ($this->top_level_pages as $page): ?>
