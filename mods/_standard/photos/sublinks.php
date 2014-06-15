@@ -33,8 +33,23 @@ $cnt = 0;               // count number of returned forums
 
 //grab comments and if new course album/photo
 $pa = new PhotoAlbum();
-$visible_albums = array_merge($pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_COURSE_ALBUM),
-					$pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_MY_ALBUM));
+if(is_array($pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_MY_ALBUM))){
+    if(!is_array($visible_albums)){
+        $visible_albums = array();
+    }
+    $visible_albums = $pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_MY_ALBUM);
+}
+
+if(is_array($pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_COURSE_ALBUM))){
+    if(!is_array($visible_albums)){
+        $visible_albums = array();
+    }
+    $visible_albums = array_merge($visible_albums, $pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_COURSE_ALBUM));
+}
+//$visible_albums = $pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_MY_ALBUM);
+//$visible_albums = array_merge(array($pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_COURSE_ALBUM)),
+//					$pa->getAlbums($_SESSION['member_id'], AT_PA_TYPE_MY_ALBUM));
+
 //check if there are any albums
 if (empty($visible_albums)){
 	return 0;
