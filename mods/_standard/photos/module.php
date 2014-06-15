@@ -152,6 +152,9 @@ $this->_pages[AT_PA_BASENAME.'edit_photos.php']['guide']     = 'general/?p=pa_al
 $this->_pages[AT_PA_BASENAME.'delete_comment.php']['title_var'] = 'pa_delete_comment';
 $this->_pages[AT_PA_BASENAME.'delete_comment.php']['parent'] = AT_PA_BASENAME.'photo.php';
 
+if(isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0){
+	$this->_pages[AT_PA_BASENAME.'index.php']['parent']    = AT_NAV_COURSE;
+}
 function photos_get_group_url() {
     foreach($_SESSION['groups'] as $group_id){
 	$sql = "SELECT album_id FROM %spa_groups WHERE group_id=%d";
