@@ -1379,7 +1379,18 @@ dl#public-profile dd {
 	padding-left: 1em;
 	overflow:auto;
 }
-
+div#alternatives_shortcuts {
+	float: right;
+	margin-top:1em;
+	border-radius: .5em .5em .5em .5em;;
+	-moz-border-radius: .5em .5em .5em .5em;
+/*	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;*/
+	 border:1px solid #F2F7F7;
+	 padding-top: .2em;
+	 padding-left: .2em;
+	 padding-right: .2em;
+}
 #leftcolumn{
 	float: left;
 	width:21em;

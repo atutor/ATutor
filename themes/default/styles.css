@@ -832,7 +832,7 @@ div#error ul, div#feedback ul, div#help ul {
     width:100%;
     float:left;
     clear:both;
-
+    margin-bottom:3em;
 }
 .message_link{
     float:right;
@@ -861,6 +861,7 @@ div#feedback {
 }
 
 div#help {
+	width: 100%;
 	border: 1px solid #ACCFCC;
 	padding: 15px;
 	background-color: #E9F4F3;
@@ -868,11 +869,13 @@ div#help {
 }
 
 div#info {
-
+	width: 100%;
 	padding: 15px;
 	background-color: #E4EDF7;
 	color:  #000000;
 	font-weight: bold;
+	float:left;
+	clear:left;
 }
 div#info a{
 	color:red;
@@ -1302,7 +1305,6 @@ div.course div.shortcuts a {
 
 div#alternatives_shortcuts {
 	float: right;
-	margin: -2em 5pt;
 	border-radius: .5em .5em .5em .5em;;
 	-moz-border-radius: .5em .5em .5em .5em;
 /*	-moz-box-shadow:.1em .1em .2em #999999;
@@ -1311,6 +1313,7 @@ div#alternatives_shortcuts {
 	 padding-top: .2em;
 	 padding-left: .2em;
 	 padding-right: .2em;
+	 margin-top:1em;
 }
 
 fieldset#shortcuts {

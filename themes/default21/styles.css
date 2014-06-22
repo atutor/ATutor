@@ -1250,7 +1250,6 @@ div.course div.shortcuts a {
 
 div#alternatives_shortcuts {
 	float: right;
-	margin: -2em 5pt;
 	border-radius: .5em .5em .5em .5em;;
 	-moz-border-radius: .5em .5em .5em .5em;
 /*	-moz-box-shadow:.1em .1em .2em #999999;

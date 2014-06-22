@@ -842,7 +842,18 @@ div#content-info {
 	color: #cacaca;
 	clear: both;
 }
-
+div#alternatives_shortcuts {
+	float: right;
+	margin-top:1em;
+	border-radius: .5em .5em .5em .5em;;
+	-moz-border-radius: .5em .5em .5em .5em;
+/*	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;*/
+	 border:1px solid #F2F7F7;
+	 padding-top: .2em;
+	 padding-left: .2em;
+	 padding-right: .2em;
+}
 form {
 	clear: none;
 	display:inline;
@@ -3228,7 +3239,8 @@ a.message_link {
     float:right;
 }
 #message ul{
-    width:90%;
+    width:100%;
+    margin-bottom:1em;
 }
 h3.already_registered{
     width:80%;

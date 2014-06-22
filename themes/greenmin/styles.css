@@ -837,7 +837,18 @@ div.required {
 div#content_text {
 	margin-left: 5px;
 }
-
+div#alternatives_shortcuts {
+	float: right;
+	margin-top:1em;
+	border-radius: .5em .5em .5em .5em;;
+	-moz-border-radius: .5em .5em .5em .5em;
+/*	-moz-box-shadow:.1em .1em .2em #999999;
+	 box-shadow: .1em .1em  .2em #999999;*/
+	 border:1px solid #F4F0CB;
+	 padding-top: .2em;
+	 padding-left: .2em;
+	 padding-right: .2em;
+}
 form {
 	clear: none;
 	display:inline;
@@ -3025,6 +3036,9 @@ a.message_link {
     margin-right:1em;
     margin-left:1em;
     float:right;
+}
+#message{
+    margin-bottom:3em;
 }
 #message ul{
     width:90%;
