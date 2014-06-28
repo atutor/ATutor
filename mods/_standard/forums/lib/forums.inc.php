@@ -235,6 +235,8 @@ function print_entry($row) {
 	$counter++;
 	?>
 	<script type="text/javascript">
+	/*
+	// script to control popin reply/edit boxs, disabled for now due to ID conflicts
 	jQuery(document).ready( function () { 
 	        $("a#reply-<?php echo $row['post_id']; ?>").click(function() {
             $("div#reply-<?php echo $row['post_id']; ?>").toggle('slow');
@@ -263,16 +265,18 @@ function print_entry($row) {
 
             });
         }); 
+        */
 	</script>
 	<?php
     $reply_link = '<a href="#" id="reply-'.$row['post_id'].'">';
-	//$reply_link = '<a href="mods/_standard/forums/forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
+	$reply_link = '<a href="mods/_standard/forums/forum/view.php?fid='.$row['forum_id'].SEP.'pid=';
 	if ($row['parent_id'] == 0) {
-		//$reply_link .= $row['post_id'];
+		$reply_link .= $row['post_id'];
 	} else {
-		//  $reply_link .= $row['parent_id'];
+		  $reply_link .= $row['parent_id'];
 	}
-	//$reply_link .= SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >
+	//$reply_link .= SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >';
+	$reply_link .= '#post" >';
 	$reply_link .='<img src="images/forum/forum_reply.png" alt="'._AT('reply').'" title="'._AT('reply').'"/></a>';
 
 ?>
@@ -289,12 +293,13 @@ function print_entry($row) {
 			<div>
 				<div class="forum-post-ctrl">
 					<?php if (authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN)): ?>
-						<!--<?php echo $reply_link; ?>  <a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"/></a>  <a href="mods/_standard/forums/forum/delete_thread.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP; ?>nest=1"><img src="images/forum/forum_delete.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>"/></a>-->
-					    <?php echo $reply_link; ?>  <a href="#" id="edit-<?php echo $row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"/></a>  <a href="mods/_standard/forums/forum/delete_thread.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP; ?>nest=1"><img src="images/forum/forum_delete.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>"/></a>
+						<?php echo $reply_link; ?>  
+						<a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"/></a>  <a href="mods/_standard/forums/forum/delete_thread.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP; ?>nest=1"><img src="images/forum/forum_delete.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>"/></a>
+					    <!-- <?php echo $reply_link; ?>  <a href="#" id="edit-<?php echo $row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"/></a>  <a href="mods/_standard/forums/forum/delete_thread.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id'].SEP.'ppid='.$row['parent_id'].SEP; ?>nest=1"><img src="images/forum/forum_delete.png" alt="<?php echo _AT('delete'); ?>" title="<?php echo _AT('delete'); ?>"/></a> -->
 				
 					<?php elseif (($row['member_id'] == $_SESSION['member_id']) && (($row['udate'] + $forum_info['mins_to_edit'] * 60) > time())): ?>
-					<!--	<?php echo $reply_link; ?>  <a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"></a> <span>(<?php echo _AT('edit_for_minutes', round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60)); ?>)</span> -->
-						<?php echo $reply_link; ?>  <a href="#" id="edit-<?php echo $row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"></a> <span>(<?php echo _AT('edit_for_minutes', round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60)); ?>)</span>
+					<?php echo $reply_link; ?>  <a href="mods/_standard/forums/edit_post.php?fid=<?php echo $row['forum_id'].SEP.'pid='.$row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"></a> <span>(<?php echo _AT('edit_for_minutes', round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60)); ?>)</span> 
+					<!--	<?php echo $reply_link; ?>  <a href="#" id="edit-<?php echo $row['post_id']; ?>"><img src="images/forum/forum_edit.png" alt="<?php echo _AT('edit'); ?>" title="<?php echo _AT('edit'); ?>"></a> <span>(<?php echo _AT('edit_for_minutes', round((($row['udate'] + $forum_info['mins_to_edit'] * 60) - time())/60)); ?>)</span> -->
 					<?php elseif ($_SESSION['valid_user'] == true): ?>
 						<?php echo $reply_link; ?>
 					<?php endif; ?>
@@ -308,12 +313,13 @@ function print_entry($row) {
 			</div>
 		</div>
 	<?php
-	echo '<div class="forum_reply" id="reply-'.$row['post_id'].'">';
-	require(AT_INCLUDE_PATH.'../mods/_standard/forums/html/new_thread.inc.php');
-	echo '</div>';
-	echo '<div class="forum_edit" id="edit-'.$row['post_id'].'">';
-	require(AT_INCLUDE_PATH.'../mods/_standard/forums/edit_post.php');
-	echo '</div>';
+	// popin edit/reply forms / disabled until ID conflict issue can be resolved
+	//echo '<div class="forum_reply" id="reply-'.$row['post_id'].'">';
+	//require(AT_INCLUDE_PATH.'../mods/_standard/forums/html/new_thread.inc.php');
+	//echo '</div>';
+	//echo '<div class="forum_edit" id="edit-'.$row['post_id'].'">';
+	//require(AT_INCLUDE_PATH.'../mods/_standard/forums/edit_post.php');
+	//echo '</div>';
 	?>
 	</li>
 <?php

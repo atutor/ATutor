@@ -11,10 +11,10 @@
 /* as published by the Free Software Foundation.							*/
 /****************************************************************************/
 // $Id$
-if (!defined('AT_INCLUDE_PATH')) { exit; }
-//define('AT_INCLUDE_PATH', '../../../include/');
-//require (AT_INCLUDE_PATH.'vitals.inc.php');
-global $savant, $addslashes;
+
+define('AT_INCLUDE_PATH', '../../../include/');
+require (AT_INCLUDE_PATH.'vitals.inc.php');
+
 require_once(AT_INCLUDE_PATH.'../mods/_standard/forums/lib/forums.inc.php');
 
 $fid = intval($_REQUEST['fid']);
@@ -24,7 +24,7 @@ if (isset($_GET['pid'])) {
 } else {
 	$pid = intval($_POST['pid']);
 }
-$pid = $row['post_id'];
+
 if (!$pid || !$fid || !valid_forum_user($fid)) {
 	$msg->addError('ITEM_NOT_FOUND');
 	header('Location: ../../../forum/list.php');
@@ -32,7 +32,7 @@ if (!$pid || !$fid || !valid_forum_user($fid)) {
 }
 
 $sql = "SELECT *, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE post_id=%d";
-$post_row = queryDB($sql, array(TABLE_PREFIX, $row['post_id']), TRUE);
+$post_row = queryDB($sql, array(TABLE_PREFIX, $pid), TRUE);
 
 if(count($post_row) == 0){
 	$msg->addError('ITEM_NOT_FOUND');
@@ -45,7 +45,7 @@ $forum_info = get_forum($fid, $_SESSION['course_id']);
 $expiry = $post_row['udate'] + $forum_info['mins_to_edit'] * 60;
 
 // check if we're either a) an assistant or, b) own this post and within the time allowed:
-/*if (!(     authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) 
+if (!(     authenticate(AT_PRIV_FORUMS, AT_PRIV_RETURN) 
 		|| ($post_row['member_id'] == $_SESSION['member_id'] && ($expiry > time() || isset($_POST['edit_post']) ) )
 	  ) 
    ) {
@@ -53,7 +53,7 @@ $expiry = $post_row['udate'] + $forum_info['mins_to_edit'] * 60;
 	header('Location: '.url_rewrite('mods/_standard/forums/forum/list.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
-*/
+
 if ($_POST['cancel']) {
 	$msg->addFeedback('CANCELLED');
     Header('Location: '.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['pid'], AT_PRETTY_URL_IS_HEADER));
@@ -112,10 +112,9 @@ $_pages['mods/_standard/forums/edit_post.php']['title_var'] = 'edit_post';
 $_pages['mods/_standard/forums/edit_post.php']['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
 $_pages['mods/_standard/forums/edit_post.php']['children']  = array();
 
-
 $onload = 'document.form.subject.focus();';
 
-//require(AT_INCLUDE_PATH.'header.inc.php');
+require(AT_INCLUDE_PATH.'header.inc.php');
 $savant->assign('pid', $pid);
 $savant->assign('ppid', $post_row['parent_id']);
 $savant->assign('forumid', $post_row['forum_id']);
@@ -126,4 +125,4 @@ $savant->display('instructor/forums/edit_post.tmpl.php');
 
 
 
-<?php //require (AT_INCLUDE_PATH.'footer.inc.php'); ?>
+<?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

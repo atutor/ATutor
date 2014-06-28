@@ -826,13 +826,10 @@ div#error ul, div#feedback ul, div#help ul {
 	list-style-type:none;
 	width:90%;
 }
-
 #message{
-/*    display:none;  */
     width:100%;
     float:left;
     clear:both;
-    margin-bottom:3em;
 }
 .message_link{
     float:right;

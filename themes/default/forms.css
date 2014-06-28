@@ -9,7 +9,7 @@ div.input-form {
 /*	border-top:1px solid #E5E5E5;*/
 	border-bottom:1px solid #E5E5E5; 
 	margin-bottom: 10px;
-	line-height:150%;
+	line-height:120%;
 /*    box-shadow: 0em .1em 0em #cccccc inset;*/
 
 /*    -moz-box-shadow:.1em .1em .2em #999999;
@@ -25,7 +25,7 @@ div.input-form div.row h3 {
 
 div.input-form div.row {
 /*	background-color: #F4F0CB;*/
-	padding:8px;
+	padding:.2em;
 }
 
 /*<img> and <a> tags: on mouse hover the color of the background will keep the same!*/
