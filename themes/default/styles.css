@@ -956,7 +956,6 @@ background-position: center;
 /* sequence links */
 div.sequence-links {
 	float:right;
-    margin-top:-.5em;
     font-size:1.5em;
 }
 div.sequence-links a {
