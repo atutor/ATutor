@@ -52,7 +52,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		echo '<a href="javascript:smilie(\' [code][/code]\')" title="[code][/code]" onclick="document.form.formatting.html.checked=true;">',_AT('add_code'), '</a>';
 	} ?></small></td>
 </tr>
-<!-- <tr>
+<tr>
 	<td align="right"><small><strong><?php echo _AT('colors'); ?>:</strong></small></td>
 	<td><table border="0" cellspacing="2" cellpadding="0" summary="">
 	<tr>
@@ -69,7 +69,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 		<td style="background:gray;"><a href="javascript:smilie('[gray] [/gray]')" title="[gray] [/gray]" style="color:white;margin:.5em;"><?php echo _AT('gray'); ?></a></td>
 	</tr>
 	</table></td>
-</tr> -->
+</tr>
 </table>
 	<script type="text/javascript">
 	//<!--
