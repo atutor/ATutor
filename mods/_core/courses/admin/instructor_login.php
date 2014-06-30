@@ -37,6 +37,7 @@ if (isset($_POST['submit_yes'])) {
 		$_SESSION['is_guest']	= 0;
 		$_SESSION['lang']		= $row_member['language'];
 		$_SESSION['is_super_admin'] = $admin_login;
+		unset($_SESSION['message']['help']);
 		session_write_close();
 
 		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_POST['course']);

@@ -128,7 +128,7 @@ if (isset($_GET['admin']) && isset($_SESSION['is_super_admin'])) {
 		assign_session_prefs(unserialize(stripslashes($_config['pref_defaults'])), 1);
 		unset($_SESSION['member_id']);
 		unset($_SESSION['is_super_admin']);
-
+        unset($_SESSION['message']['help']);
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'admins', $num_rows, $sql);
 
 		$msg->addFeedback('LOGIN_SUCCESS');

@@ -34,10 +34,13 @@ $unset_session = array('login',
                        'EXPIRES',
                        'redirect_to',
                        'token',
-                       'tool_origin');
+                       'tool_origin',
+                       'message');
+//unset($msg);
 foreach ($unset_session as $session_name) {
     unset($_SESSION[$session_name]);
 }
+
 $_SESSION['isLoggedOutRecently'] = true;
 $msg->addFeedback('LOGOUT');
 header('Location: login.php');
