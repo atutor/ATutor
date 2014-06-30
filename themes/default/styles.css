@@ -828,8 +828,6 @@ div#error ul, div#feedback ul, div#help ul {
 }
 #message{
     width:100%;
-    float:left;
-    clear:both;
 }
 .message_link{
     float:right;
