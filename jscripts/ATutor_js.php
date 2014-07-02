@@ -157,16 +157,20 @@ ATutor.course = ATutor.course || {};
                     }
                 });
                 // Fixed Footer
+
                 $('#footer').scrollToFixed( {
-                    bottom: 0,
-                    limit: $('#footer').offset().top,
-                    preFixed: function() { 
-                        $("#footer").css('background-color', '#F3F3F3'); 
+                    bottom:0,
+                    limit: $('#footer').offset().top - ($('#footer').outerHeight()),
+                    preFixed: function() {    
+                       //$('#footer').show("slow");
+                       //console.log("pre");
                         },
                     postFixed: function() {
-                         $("#footer").css('background-color', '#F3F3F3');
-                         }
+                       // $('#footer').hide("slow");
+                       // console.log("post");
+                        }
                 });
+                 
                 /********
                 **  Hide/Show instructor course admin tools 
                 *******/

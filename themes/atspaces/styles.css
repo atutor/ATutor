@@ -1567,6 +1567,7 @@ overflow:hidden;
 	padding: 4px 0px;
 	background-color:#575656 !important;
 	height:4.5em;
+
 }
 
 /** forum stuff **/
@@ -3832,13 +3833,13 @@ h3.already_registered{
 }
 a#already_registered{
     background-color: #F4F0CB;
-	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	background-image: linear-gradient(#F2F1C5, #D1C82E);
     border-radius: 0.3em 0.3em 0 0;
     padding:.5em 5em .5em 5em;
     
 }
 a#already_registered:hover, #already_registered:focus{
-	background-image: linear-gradient(#EAEAEA, #FAFAFA);
+	background-image: linear-gradient(#D1C82E, #F2F1C5);
 }
 #copyright{
 width:35em;
