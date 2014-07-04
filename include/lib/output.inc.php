@@ -331,7 +331,7 @@ function _AT() {
                             $row_term = $lang_row_c['term'];
                         } 
                 }else{
-                    if(preg_match("/_c_/",$row['variable'])){
+                    if(!preg_match("/_c_/",$row['variable'])){
                         $row_term = $row['term'];
                     } 
                 }
