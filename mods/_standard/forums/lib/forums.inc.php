@@ -309,7 +309,7 @@ function print_entry($row) {
 			</div>
 
 			<div class="body">
-				<p><?php echo AT_print($row['body'], 'forums_threads.body'); ?></p>
+				<p><?php echo apply_customized_format(AT_print($row['body'], 'forums_threads.body')); ?></p>
 			</div>
 		</div>
 	<?php
