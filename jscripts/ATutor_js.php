@@ -232,14 +232,17 @@ ATutor.course = ATutor.course || {};
     ?>
          $('#message').css('display', 'block').slideDown("slow");
             setTimeout(function() {
-            $("#message").hide('blind', {}, 500)
-    }, 
-        <?php echo $_SESSION['prefs']['PREF_HIDE_FEEDBACK']*1000;?>);
+            $("#message").hide('blind', {}, 500);
+            }
+        );
         
         <?php } ?>
     /* To hide feedback div when clicked */
         $(".message_link").click(function() {
-            $("#message").hide('blind', {}, 500), 8000;
+            // the following line doesn't work from the login screen
+            // replaced with the line below it for now
+            //$("#message").hide("blind",  {},  500), 8000;
+            $("#message").hide("blind");
             return false;
         });  
       
