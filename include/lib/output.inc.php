@@ -283,20 +283,14 @@ function _AT() {
 
         if (!($lang_et = cache($cache_life, 'lang', $lang.'_'.$name))) {
             /* get $_template from the DB */
-            // Get custom language
-            $lang_row_c = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.variable LIKE "_c_%%" AND L.term="%s" ORDER BY variable DESC LIMIT 1 ', array(TABLE_PREFIX, $lang, $term), TRUE);
-            $rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.term=P.term AND P.page="%s"', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url), FALSE);
-            
+            $rows = queryDB('SELECT L.* FROM %slanguage_text L, %slanguage_pages P WHERE L.language_code="%s" AND L.term=P.term AND P.page="%s" ORDER BY L.variable ASC', array(TABLE_PREFIX, TABLE_PREFIX, $lang, $_rel_url), FALSE);
+
             foreach($rows as $row) {
-                if(in_array($row['term'], $lang_row_c)){
-                    $row_term = $lang_row_c['term'];
-                }else{
-                    $row_term = $row['term'];
-                }
+                $row_term = $row['term'];
                 //Do not overwrite the variable that existed in the cache_template already.
                 //The edited terms (_c_template) will always be at the top of the resultset
                 //0003279
-                if (isset($_cache_template[$row_term])) {
+                if (!isset($_cache_template[$row_term])) {
                     $_cache_template[$row_term] = clean_extra_char(stripslashes($row['text']));
                 } else {
                     continue;
@@ -319,28 +313,12 @@ function _AT() {
         // Using "_template" always has more priority over "_module". This logic should be fixed once we have support for _module terms.
 
         // Get custom language
-        $lang_row_c = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.variable LIKE "_c_%%" AND L.term="%s" ORDER BY variable DESC LIMIT 1 ', array(TABLE_PREFIX, $lang, $term), TRUE);
-        // Get the rest of the language
-        $lang_row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s" ORDER BY variable DESC ', array(TABLE_PREFIX, $lang, $term));
-
-        foreach($lang_row as $row){
-            if(isset($row['term']) && isset($row['text'])){
-                // If custom language exists, use it instead of the default
-                if(in_array($row['term'], $lang_row_c)){
-                        if(preg_match("/_c_/",$row['variable'])){
-                            $row_term = $lang_row_c['term'];
-                        } 
-                }else{
-                    if(!preg_match("/_c_/",$row['variable'])){
-                        $row_term = $row['term'];
-                    } 
-                }
-                
-                $row_term = $row['term'];
-                // with queryDB() language replacement vars must go into the db with %%sd and a%%1 etc.
-                // and then when displayed have the extra % removed 
-                $outString = $_template[$row_term] = preg_replace('/\%\%/','%',stripslashes($row['text']));
-            }
+        $row = queryDB('SELECT L.* FROM %slanguage_text L WHERE L.language_code="%s" AND L.term="%s" ORDER BY variable ASC LIMIT 1', array(TABLE_PREFIX, $lang, $term), true);
+        if(isset($row['term']) && isset($row['text'])){
+            $row_term = $row['term'];
+            // with queryDB() language replacement vars must go into the db with %%sd and a%%1 etc.
+            // and then when displayed have the extra % removed
+            $outString = $_template[$row_term] = preg_replace('/\%\%/','%',stripslashes($row['text']));
         }
 
         $outString = isset($outString) ? (isset($args) && is_array($args) ? vsprintf($outString, $args) : $outString) : '';
