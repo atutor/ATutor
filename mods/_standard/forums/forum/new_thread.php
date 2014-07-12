@@ -200,6 +200,10 @@ if (isset($_POST['cancel'])) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 		header('Location: '.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page'], AT_PRETTY_URL_IS_HEADER));
 		exit;
+	} else if(isset($missing_fields)){
+	$msg->addError(array('EMPTY_FIELDS', $missing_fields));
+			header('Location: '.url_rewrite('mods/_standard/forums/forum/view.php?fid='.$fid.SEP.'pid='.$_POST['parent_id'].SEP.'page='.$_POST['page'], AT_PRETTY_URL_IS_HEADER));
+			exit;
 	}
 }
 
