@@ -27,8 +27,9 @@ global $_config;
 ?>
 	<small><?php echo _AT('copyright').'. '; echo '<a href="'.AT_print($_base_path,'url.base').'about.php">'._AT('about_atutor').'</a>.'; ?><br />
 	<?php if($_config['just_social'] != "1"){ ?>
-		<span id="howto"><?php echo _AT('general_help', AT_print(AT_GUIDES_PATH,'url.base').'index_list.php?lang='.$_SESSION['lang']);
-	?></span>
+		<!-- <span id="howto"><?php echo _AT('general_help', AT_print(AT_GUIDES_PATH,'url.base').'index_list.php?lang='.$_SESSION['lang']);
+	?></span>-->
+	<a href="documentation/index_list.php?lang=<?php echo $_SESSION['lang']; ?>" onclick="ATutor.poptastic('<?php echo AT_BASE_HREF; ?>documentation/index_list.php?lang=<?php echo $_SESSION['lang']; ?>'); return false;" target="_new"><?php echo _AT('atutor_handbook');?></a>
 	<?php } ?>
 	</small>
 </div>
