@@ -37,7 +37,12 @@ function upload_custom_logo()
         $sql = "REPLACE INTO %sconfig VALUES ('custom_logo_enabled','%d')";
         queryDB($sql, array(TABLE_PREFIX, $_config['custom_logo_enabled']));
     }
-    
+    if (isset($_POST['custom_logo_foot_enabled'])) {
+        $_config['custom_logo_foot_enabled'] = $addslashes($_POST['custom_logo_foot_enabled']);
+        
+        $sql = "REPLACE INTO %sconfig VALUES ('custom_logo_foot_enabled','%d')";
+        queryDB($sql, array(TABLE_PREFIX, $_config['custom_logo_foot_enabled']));
+    }    
     if (isset($_POST['custom_logo_enabled']) && $_POST['custom_logo_enabled'] == 1) {
         $missing_fields = array();
         //custom logo alt text missing
@@ -214,6 +219,19 @@ function upload_custom_logo()
         <div class="row">
             <p><?php echo _AT('custom_logo_instructions'); ?></p>
         </div>
+        <div class="row">
+            <?php
+            if($_config['custom_logo_foot_enabled'] == 1) {
+                $num2 = ' checked="checked"';
+            } else {
+                $num3 = ' checked="checked"';
+            }
+            ?>
+            <?php echo _AT('custom_logo_foot_disable'); ?><br/>
+            <input type="radio" id="custom_logo_foot_enabled" name="custom_logo_foot_enabled" value="1" <?php echo $num2; ?> onchange="toggle_fields()" /><label for="custom_logo_foot_enabled"><?php echo _AT('enable'); ?></label>
+            <input type="radio" id="custom_logo_foot_enabled" name="custom_logo_foot_enabled" value="0" <?php echo $num3; ?> onchange="toggle_fields()"/><label for="custom_logo_foot_disabled"><?php echo _AT('disable'); ?></label>
+		</div>
+		
         <div class="row">
             <?php
             if($_config['custom_logo_enabled']) {

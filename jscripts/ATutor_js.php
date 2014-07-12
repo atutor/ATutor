@@ -159,7 +159,7 @@ ATutor.course = ATutor.course || {};
                     }
                 });
                 // Fixed Footer
-
+<?php if($_config['custom_logo_foot_enabled'] == 1){ ?>
                 $('#footer').scrollToFixed( {
                     bottom:0,
                     limit: $('#footer').offset().top - ($('#footer').outerHeight()),
@@ -172,7 +172,7 @@ ATutor.course = ATutor.course || {};
                        // console.log("post");
                         }
                 });
-                 
+<?php } ?>               
                 /********
                 **  Hide/Show instructor course admin tools 
                 *******/

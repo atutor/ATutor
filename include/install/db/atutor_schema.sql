@@ -1636,6 +1636,11 @@ INSERT INTO `config` (`name`,`value`) VALUES ('transformable_oauth_expire','9360
 INSERT INTO `config` (`name`,`value`) VALUES ('home_url','http://www.atutorspaces.com');
 
 ########
+# Set the the intial state of the fixed footer to fixed
+INSERT INTO `config` (`name`,`value`) VALUES ('custom_logo_foot_enabled','1');
+
+
+########
 # sql  for calendar module
 
 CREATE TABLE `calendar_events` (
