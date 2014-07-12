@@ -229,7 +229,7 @@ function upload_custom_logo()
             ?>
             <?php echo _AT('custom_logo_foot_disable'); ?><br/>
             <input type="radio" id="custom_logo_foot_enabled" name="custom_logo_foot_enabled" value="1" <?php echo $num2; ?> onchange="toggle_fields()" /><label for="custom_logo_foot_enabled"><?php echo _AT('enable'); ?></label>
-            <input type="radio" id="custom_logo_foot_enabled" name="custom_logo_foot_enabled" value="0" <?php echo $num3; ?> onchange="toggle_fields()"/><label for="custom_logo_foot_disabled"><?php echo _AT('disable'); ?></label>
+            <input type="radio" id="custom_logo_foot_disabled" name="custom_logo_foot_enabled" value="0" <?php echo $num3; ?> onchange="toggle_fields()"/><label for="custom_logo_foot_disabled"><?php echo _AT('disable'); ?></label>
 		</div>
 		
         <div class="row">
