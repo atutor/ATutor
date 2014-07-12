@@ -276,7 +276,7 @@ function print_entry($row) {
 		  $reply_link .= $row['parent_id'];
 	}
 	//$reply_link .= SEP.'reply='.$row['post_id'].SEP.'page='.$page.'#post" >';
-	$reply_link .= '#post" >';
+	$reply_link .= '#post" onClick="javascript:document.getElementById(\'subject\').value = \'Re: '.$row['subject'].'\'; " >';
 	$reply_link .='<img src="images/forum/forum_reply.png" alt="'._AT('reply').'" title="'._AT('reply').'"/></a>';
 
 ?>
