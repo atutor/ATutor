@@ -159,7 +159,7 @@ if (isset($_POST['cancel'])) {
 				$body .= $_POST['body']."\n";
 				$mail->FromName = $_config['site_name'];
 				$mail->From     = $_config['contact_email'];
-				$mail->Subject = _AT('thread_notify1').':'.$_POST['parent_name'];
+				$mail->Subject = _AT('thread_notify1').': '.$_POST['parent_name'];
 				$mail->Body    = $body;
 
 				if(!$mail->Send()) {
