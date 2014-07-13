@@ -218,7 +218,10 @@ $msg->printErrors();
 	</div>
 </div>
 </form>
+<?php
 
+if(!defined('IS_SUBSITE')){
+?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <?php 
 ?>
@@ -296,7 +299,7 @@ else
 ?>
 </table>
 </form>
-
+<?php } // end test for subsite ?>
 <script language="JavaScript">
 <!--
 
