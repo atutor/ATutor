@@ -234,7 +234,7 @@ ATutor.course = ATutor.course || {};
     ?>
          $('#message').css('display', 'block').slideDown("slow");
             setTimeout(function() {
-            $("#message").hide('blind', {}, 500);
+            $("#message").delay( <?php echo $_SESSION['prefs']['PREF_HIDE_FEEDBACK']; ?>*1000 ).hide('blind', {}, 500);
             }
         );
         
