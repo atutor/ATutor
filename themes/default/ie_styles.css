@@ -183,3 +183,9 @@ margin-bottom:-1em;
 height:2em !important;
 width:2em !important;
 }
+div.search_bar .s_img{	
+	margin-top: -1.4em\9; /* the \9 to accomodate IE 7&8 */
+}
+.fl-reorderer-avatar {
+	filter: alpha(opacity=60);
+}
