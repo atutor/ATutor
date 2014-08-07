@@ -29,7 +29,6 @@ $cid_url = SEP.'cid='.$cid;
 $sql = 'SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM %stests WHERE test_id=%d AND course_id=%d';
 $test_row = queryDB($sql, array(TABLE_PREFIX, $tid, $course_id), TRUE);
 
-
 /* check to make sure we can access this test: */
 if (!$test_row['guests'] && ($enroll == AT_ENROLL_NO || $enroll == AT_ENROLL_ALUMNUS)) {
     require(AT_INCLUDE_PATH.'header.inc.php');
@@ -67,7 +66,7 @@ if (isset($_POST['submit'])) {
     // insert
     if (!isset($post_gid)) {
 
-        $sql = 'SELECT result_id FROM %stests_results WHERE test_id=%d AND member_id=%d AND status=0';
+        $sql = 'SELECT * FROM %stests_results WHERE test_id=%d AND member_id=%d AND status=0';
         $row    = queryDB($sql, array(TABLE_PREFIX, $tid, $member_id), TRUE);
         $result_id = $row['result_id'];
 
@@ -97,8 +96,10 @@ if (isset($_POST['submit'])) {
                 $sql = 'UPDATE %stests_answers SET answer="%s", score="%s" WHERE result_id=%d AND question_id=%d';
                 queryDB($sql, array(TABLE_PREFIX, $answer_question_id, $score, $result_id, $row_question_id));
             } else {
+                if(!isset($_SESSION['started'])){
                 $sql = 'INSERT INTO %stests_answers (result_id, question_id, member_id, answer, score, notes) VALUES (%d, %d, 0, "%s", "%s", "")';
                 queryDB($sql, array(TABLE_PREFIX, $result_id, $row_question_id, $answer_question_id, $score));
+                }
             }
 
             // don't set final score if there is any unmarked answers and release option is set to "after all answers are marked"
@@ -115,7 +116,11 @@ if (isset($_POST['submit'])) {
 
     $sql = 'UPDATE %stests_results SET final_score=%s, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=%d';
     $result    = queryDB($sql, array(TABLE_PREFIX, ($set_empty_final_score) ? 'NULL' : $final_score, $result_id));
-
+    
+    unset($_SESSION['questions']);
+    unset($_SESSION['started']);
+    unset($_SESSION['answers_set']);
+    
     $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
     if ((!$enroll && !isset($cid)) || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
         header('Location: '.url_rewrite('mods/_standard/tests/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
@@ -142,54 +147,64 @@ $_letters = array(_AT('A'), _AT('B'), _AT('C'), _AT('D'), _AT('E'), _AT('F'), _A
 
 // first check if there's an 'in progress' test.
 // this is the only place in the code that makes sure there is only ONE 'in progress' test going on.
-$in_progress = false;
-
-$sql = "SELECT result_id FROM %stests_results WHERE member_id=%d AND test_id=%d AND status=0";
-$row  = queryDB($sql, array(TABLE_PREFIX, $member_id, $tid), TRUE);
-
-if(count($row) > 0){
-
-    $result_id = $row['result_id'];
-    $in_progress = true;
-
-    // retrieve the test questions that were saved to `tests_answers`
-
-    $sql = "SELECT TA.*, TQA.*, TQ.* FROM %stests_answers TA INNER JOIN %stests_questions_assoc TQA USING (question_id) INNER JOIN %stests_questions TQ USING (question_id) WHERE TA.result_id=%d AND TQA.test_id=%d ORDER BY TQ.question_id";
-    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $result_id, $tid));
-} else if ($test_row['random']) {
-    /* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
-
-    $non_required_questions = array();
-    $required_questions     = array();
-
-    $sql = 'SELECT question_id, required FROM %stests_questions_assoc WHERE test_id=%d';
-    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, $tid));
-    
-    foreach($rows_questions as $row){
-        if ($row['required'] == 1) {
-            $required_questions[] = $row['question_id'];
-        } else {
-            $non_required_questions[] = $row['question_id'];
-        }
-    }
-    
-    $num_required = count($required_questions);
-    if ($num_required < max(1, $num_questions)) {
-        $required_questions = array_merge($required_questions, array_slice($non_required_questions, 0, $num_questions - $num_required));
-    }
-
-    $id_string = implode(',', $required_questions);
-
-    $sql = 'SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d AND TQA.question_id IN (%s) ORDER BY TQ.question_id';
-    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid, $id_string));  
-    
-} else {
-
-    $sql = "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
-    $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid));
+if(!isset($in_progress)){
+    $in_progress = false;
 }
 
+// First check to see if questions are in the session, for a random test. If so, use those questions for the test
+// Otherwise generate a new set of questions
+if(!isset($_SESSION['questions']) || empty($_SESSION['questions'])){
+
+    $sql = "SELECT result_id FROM %stests_results WHERE member_id=%d AND test_id=%d AND status=0";
+    $row  = queryDB($sql, array(TABLE_PREFIX, $member_id, $tid), TRUE);
+
+    if(count($row) > 0 && empty($_SESSION['questions'])){
+
+        $result_id = $row['result_id'];
+        $in_progress = true;
+
+        // retrieve the test questions that were saved to `tests_answers`
+
+        $sql = "SELECT TA.*, TQA.*, TQ.* FROM %stests_answers TA INNER JOIN %stests_questions_assoc TQA USING (question_id) INNER JOIN %stests_questions TQ USING (question_id) WHERE TA.result_id=%d AND TQA.test_id=%d ORDER BY TQ.question_id";
+        $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, TABLE_PREFIX, $result_id, $tid));
+    } else if ($test_row['random']) {
+        /* Retrieve 'num_questions' question_id randomly choosed from those who are related to this test_id*/
+        $non_required_questions = array();
+        $required_questions     = array();
+
+        $sql = 'SELECT question_id, required FROM %stests_questions_assoc WHERE test_id=%d';
+        $rows_questions    = queryDB($sql, array(TABLE_PREFIX, $tid));
+    
+        foreach($rows_questions as $row){
+            if ($row['required'] == 1) {
+                $required_questions[] = $row['question_id'];
+            } else {
+                $non_required_questions[] = $row['question_id'];
+            }
+        }
+    
+        $num_required = count($required_questions);
+        if ($num_required < max(1, $num_questions)) {
+            $required_questions = array_merge($required_questions, array_slice($non_required_questions, 0, $num_questions - $num_required));
+        }
+
+        $id_string = implode(',', $required_questions);
+
+        $sql = 'SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d AND TQA.question_id IN (%s) ORDER BY TQ.question_id';
+        $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid, $id_string));  
+    
+    } else {
+
+        $sql = "SELECT TQ.*, TQA.* FROM %stests_questions TQ INNER JOIN %stests_questions_assoc TQA USING (question_id) WHERE TQ.course_id=%d AND TQA.test_id=%d ORDER BY TQA.ordering, TQA.question_id";
+        $rows_questions    = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $course_id, $tid));
+    }
+} // end check SESSION for questions
+
 $questions = array();
+
+if(isset($_SESSION['questions']) && !empty($_SESSION['questions'])){
+    $rows_questions = $_SESSION['questions'];
+}
 
 foreach($rows_questions as $row){
     $questions[] = $row;
@@ -197,8 +212,9 @@ foreach($rows_questions as $row){
 
 // Shuffle questions if the order is set to be random
 // Mantis 5383: THIS CAUSES RESHUFFLE EVERYTIME THE TAKE TEST PAGE RELOADS 
-if ($test_row['random']) {
+if ($test_row['random'] && !isset($_SESSION['questions'])) {
     shuffle($questions);
+    $_SESSION['questions'] = $questions;
 }
 
 if (count($rows_questions) == 0 || !$questions) {
@@ -208,11 +224,12 @@ if (count($rows_questions) == 0 || !$questions) {
 }
 
 // save $questions with no response, and set status to 'in progress' in test_results <---
-if (!$gid && !$in_progress) {
+if (!$gid && !$in_progress && !isset($_SESSION['started'])) {
 
     $sql = 'INSERT INTO %stests_results VALUES (NULL, %d, %d, NOW(), "", 0, NOW(), 0)';
     $result = queryDB($sql, array(TABLE_PREFIX, $tid, $member_id));
     $result_id = at_insert_id();
+    $_SESSION['started'] = true;
 
 }
 ?>
@@ -244,15 +261,21 @@ if (!$gid && !$in_progress) {
     <?php endif; ?>
 
     <?php
+
     foreach ($questions as $row) {
-        if (!isset($post_gid) && !$in_progress) {
+        if (!isset($post_gid) && !$in_progress && !isset($_SESSION['answers_set'])) {
 
             $sql    = "INSERT INTO %stests_answers VALUES (%d, %d, %d, '', '', '')";
             queryDB($sql, array(TABLE_PREFIX, $result_id, $row[question_id], $member_id));
+    
         }
 
         $obj = TestQuestions::getQuestion($row['type']);
         $obj->display($row);
+    }
+        
+    if(!isset($_SESSION['answers_set'])){
+        $_SESSION['answers_set'] = true;
     }
     ?>
     <div class="test_instruction">
