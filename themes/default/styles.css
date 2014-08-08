@@ -3410,6 +3410,10 @@ div.input-form.remedialContent {
     white-space:nowrap;
     overflow-y:hidden;
 }
+.scroll-to-fixed-fixed ul#subnavlist{
+    border:none;
+}
+
 #sm_content{
     display:none;
 }
