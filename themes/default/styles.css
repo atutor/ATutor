@@ -3409,7 +3409,7 @@ div.input-form.remedialContent {
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
     white-space:nowrap;
-    overflow:scroll;
+    overflow-y:hidden;
 }
 #sm_content{
     display:none;

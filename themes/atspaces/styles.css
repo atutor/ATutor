@@ -27,7 +27,7 @@ body {
 }
 .page_wrapper{
 /*	border:1px solid #aaaaaa;*/
-	width:90%;
+	width:95%;
 	margin-left:auto;
 	margin-right:auto;
 	background-color: #ffffff;
@@ -1684,41 +1684,52 @@ div#topnavlistcontainer {
 	min-height:2.5em;
 	clear:both;
 	width:100%;
-    padding-bottom:.4em;
+    padding-bottom:.5em;
 	clear:left;
 	float:left;
-
+    margin-right: -14px !important;
+    overflow-y: hidden;
 }
 
 ul#topnavlist {
     margin: 0; 
     padding: 0; 
     width:100%;
-    border-top: 1px solid #D1C82E;
-    border-bottom: 1px solid #D1C82E;
+ /*   border-top: 1px solid #D1C82E;
+    border-bottom: 1px solid #D1C82E; */
     list-style-type: none; 
     list-style-image: none;
 	padding: 0;
-	margin-top:-.2em;
+
 	margin-right: auto;
 	margin-left: auto;
 	font-family: 'Varela Round', Arial, Helvetica, sans-serif; 
-	height:2.7em;
     white-space:nowrap;
-    overflow-x:scroll;
-
  }
 
 ul#topnavlist li {
 	display:inline;
 	list-style: none;
-	height:2.7em;
     padding: 0;
-	margin-bottom:-.5em;
 	white-space:nowrap;
-	margin-right: -0.3em;
+	margin-right: .1em;
 }
 
+ul#topnavlist li a {
+    /* The normal, unselected tabs. They are all links */
+	color: #555;
+	font-weight:400;
+	text-decoration:none;
+	background-color:white;
+	margin-top: 1em;
+	border-top: 1px solid #F2F1C5;
+	border-left: 1px solid #F2F1C5;
+	border-right: 1px solid #F2F1C5;
+    padding: .5em 1em .5em 1em;
+    border-bottom: 3px solid #F2F1C5;
+    border-radius: .3em .3em 0 0;
+    	
+}
 ul#topnavlist li a:hover, ul#topnavlist li a:focus{
 	text-decoration:underline;
 	background-color:  #F2F1C5;
@@ -1729,6 +1740,7 @@ ul#topnavlist li a:hover, ul#topnavlist li a:focus{
 ul#topnavlist li a.active {
 	background-color:  #F2F1C5;
 	color: black;
+	border:0;
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#D1C82E, #F2F1C5);
 }
@@ -1741,17 +1753,7 @@ ul#topnavlist li a.noticeme {
 	font-weight:900;
 	color:yellow;
 }
-ul#topnavlist li a {
-    /* The normal, unselected tabs. They are all links */
-	color: #555;
-	font-weight:400;
-	text-decoration:none;
-	background-color:transparent;
-	margin:0;
-    padding: 1.9em 1em .8em 1em;
-    border-bottom: 3px solid transparent;
-    	
-}
+
 ul#topnavlist li a.selected {
     /* The selected tab. There's only one of these */
 
@@ -3376,7 +3378,7 @@ div#top-links a:focus{
 
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:1.8em;
+	height:2em;
 	padding-top:1em;
 	clear:both;
 	float:left;
@@ -3559,18 +3561,27 @@ table.etabbed-table	{
     background:none !important;
     background-image:none !important;
     background-color:#575656 !important;
-    margin-top: 0.6em;
+    padding-top: 0em !important;
     border:0;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color:#F6F4DA !important;
+    padding-bottom:1em !important;
+    margin-top:-.9em !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer > ul{
     white-space:nowrap;
     overflow:scroll;
 } 
+.scroll-to-fixed-fixed div#topnavlistcontainer > ul, li {
+    padding-top:1em;
+    padding-bottom:1em;
+    margin-top:0;
+}
+
 .scroll-to-fixed-fixed #subnavlistcontainer{
     background-color: #ffffff;
+    margin-top:1em !important;
     background-image: linear-gradient(#FFFFFF, #FFFFFF) !important;
     opacity:.8;
     border-bottom: 1px solid #DED29E !important;
