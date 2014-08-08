@@ -1,7 +1,7 @@
 ul#topnavlist li a {
-	padding: .7em .8em 1.1em .8em;
+/*	padding: .7em .8em 1.1em .8em; */
 }
-
+/*
 ul#subnavlist li a {
 	padding: .4em .6em .4em .6em;
 }
@@ -11,3 +11,4 @@ ul#subnavlist li a:hover, ul#subnavlist li a:focus{
 ul#subnavlist li span.active {
 	padding: .3em .6em 1.3em .6em;
 }
+*/

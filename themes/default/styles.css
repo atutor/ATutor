@@ -682,7 +682,7 @@ table.data {
 	border-left:1px solid #DED29E;
 	border-right:1px solid #DED29E;
 	border-bottom:1px solid #DED29E;
-	border-radius:.1em .1em .1em 1em;
+	border-radius:.1em .1em .1em .1em;
 } 
 
 table.data th {
@@ -2090,8 +2090,8 @@ div#subnavlistcontainer {
 }
 div#subnavbacktopage {
 	padding-top:5px;
-	padding-left:25px;
 	float:left;
+	clear:left;
 }
 
 div.toolcontainer{
@@ -2113,7 +2113,6 @@ ul#subnavlist_i {
     background-repeat:no-repeat;
 }
 ul#subnavlist, ul#navlist {
-    border-bottom:1px solid #DED29E;
 	margin-top: 0px;
 	font-family: Verdana,Helvetica,Arial,serif;
 	margin-bottom: 1px;
@@ -2140,7 +2139,7 @@ ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
 	border-top: 1px solid transparent;
 	border-left:1px solid transparent;
 	border-right:1px solid transparent;
-	border-bottom:3px solid transparent;
+	/* border-bottom:3px solid transparent; */
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.3em;	
@@ -3322,8 +3321,8 @@ ol.dd-question{
 /* File Storage */
 .fs_tools .input-form {
     float: left;
-    margin-left: 2em;
-    width: 45%;
+    margin-left: 1em;
+    width: 40%;
 }
 div.fs_tools{
     width:95%;
@@ -3621,6 +3620,7 @@ Responsive elements
     .button{
         font-size:.8em !important;
     }  
+
 /*    div#content_link{
         margin-left: 1em;
     }
@@ -3697,6 +3697,7 @@ Responsive elements
      /*   margin-top:1.5em; */
     }
     h2.page-title{
+    clear:none;
    /*     float:left;
         clear:both;
         margin-top:-2em; */
@@ -3729,6 +3730,11 @@ Responsive elements
     }
      div#subnavlist {
     }  
+    div#subnavbacktopage {
+        float: left;
+        padding-left: 0px !important;
+        padding-top: 0px;
+    }
     #subnavlist_i{
         clear:both;
     } 
@@ -3789,21 +3795,7 @@ Responsive elements
     div.box, div.box ul{
         border:none;
     }
-/*
-    #leftcolumn {
-        font-size:.7em;
-        padding-left:.2em;
-        padding-right:.2em;
-        height:auto;
-        float:left;
-        clear:both;
-        width:25em;
-        border:0px solid #E5E5E5;
-        border-radius:.5em;
-        margin-top:-.5em;
 
-    }
-*/
     #leftcolumn br{
         display:none;
         border:1px;

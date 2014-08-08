@@ -1700,7 +1700,8 @@ ul#topnavlist {
     list-style-type: none; 
     list-style-image: none;
 	padding: 0;
-
+height:2.1em;
+    border-bottom: 1px solid #f6f4da;
 	margin-right: auto;
 	margin-left: auto;
 	font-family: 'Varela Round', Arial, Helvetica, sans-serif; 
@@ -2088,31 +2089,33 @@ div.toolcontainer{
 div#subnavlistcontainer {
 	padding-top:.3em;
 	width:100%;
+	border:0 !important;
+	padding-left:1em;
 }
 
 ul#subnavlist {
-	margin-top: 0px;
-	font-family:  Varela Round,Helvetica,Arial,serif;
-
-	/* border-top:1px solid #D1C82E !important;   */
-  	border-bottom: 3px solid transparent;
-	border-bottom: 1px solid #DED29E;
+    font-family: Verdana,Helvetica,Arial,serif;
+    width:100%;
+    clear: none;
+    float: none;
+    margin-top: 0;
+    padding-left: 2em;
+    border:0 !important;
 }
-
 ul#subnavlist li, ul#subsubnavlist li{
   	background-color: transparent;
 	list-style: none;
 	display: inline-block;
 	text-align:center;
-	padding: .6em .5em .5em .5em;
-
-		    border-radius:.3em .3em 0 0;
+	padding: .6em .5em .5em .3em;
+    border-radius:.3em .3em 0 0;
 
 }
 ul#subnavlist li a, ul#subsubnavlist li a{
-	padding: .6em .5em .2em .5em;
+/*	padding: .6em .5em .2em .5em;
 	border-radius:.3em .3em 0 0;
-	
+	margin-bottom:.2em !important;
+	*/
 }
 ul#subnavlist li a:hover, ul#subnavlist li:hover, ul#subnavlist li a:focus{
   
@@ -2299,8 +2302,9 @@ table.etabbed-table	{
 	margin-left:auto;
 	margin-right:auto;
 	padding:0;
-	border-top: 1px solid #D1C82E;
-	border-bottom:1px solid #D1C82E;
+/*	border-top: 1px solid #D1C82E;
+	border-bottom:1px solid #D1C82E; */
+	border:0 !important;
 	padding-bottom:.5em;
 	margin-bottom:.5em;
 
@@ -3259,11 +3263,12 @@ div#bypass-links{
 ul#subnavlist_i {
 	font-family: Verdana,Helvetica,Arial,serif;
     float:right;
-    margin-top: -2em;
+    margin-top: -1.8em;
     margin-right:2em;
    /* background-image:url("images/wand.png");*/
     background-position: 1em .3em;
     background-repeat:no-repeat;
+
 }
 ul#subnavlist_i li {
 	list-style: none;
@@ -3566,28 +3571,40 @@ table.etabbed-table	{
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color:#F6F4DA !important;
-    padding-bottom:1em !important;
-    margin-top:-.9em !important;
+    padding:0;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer > ul{
+margin-top:1em;
     white-space:nowrap;
     overflow:scroll;
 } 
-.scroll-to-fixed-fixed div#topnavlistcontainer > ul, li {
-    padding-top:1em;
+.scroll-to-fixed-fixed div#topnavlistcontainer > ul > li {
+    padding-top:1.5em;
     padding-bottom:1em;
     margin-top:0;
 }
 
 .scroll-to-fixed-fixed #subnavlistcontainer{
     background-color: #ffffff;
-    margin-top:1em !important;
+    margin-top:.6em !important;
     background-image: linear-gradient(#FFFFFF, #FFFFFF) !important;
     opacity:.8;
     border-bottom: 1px solid #DED29E !important;
     border-top: 0 !important;
 }
-
+.scroll-to-fixed-fixed #subnavlist{
+    margin-top:-3.5em !important;
+    padding:.2em !important;
+}
+.scroll-to-fixed-fixed #subnavlist_i{
+    margin-top:-3.2em !important;
+}
+.scroll-to-fixed-fixed ul#subnavlist >  li {
+    margin-top:-.5em;
+}
+.scroll-to-fixed-fixed ul#subnavlist_i >  li {
+    margin-top:-.5em;
+}
 #sm_content{
     display:none;
 }
