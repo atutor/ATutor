@@ -17,7 +17,7 @@ global $_config;
 if (isset($_config['shindig_url'])){
 	define('AT_SHINDIG_URL',		$_config['shindig_url']);
 } else {
-	define('AT_SHINDIG_URL',		'http://social.atutor.ca/shindig/php');
+	define('AT_SHINDIG_URL',		'//social.atutor.ca/shindig/php');
 }
 
 //Social base variables
