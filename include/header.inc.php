@@ -90,6 +90,7 @@ if (isset($_custom_script)) {
 	$custom_head .= '
 ' . $_custom_script;
 }
+$custom_head .= '<meta name="google-site-verification" content="dNU6z27-f4GLPfPishC4RK8HhFdtjvr6-Hca2GFn5to" />';
 $custom_head .= '
     <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
     <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>';
@@ -131,6 +132,19 @@ if(isset($_SESSION['valid_user'])){
         </script>';
     }
 }
+    //////////
+    // Analytics for ATutorSpaces course site usage tracking
+    
+        $custom_head .= "\n"." <!--  // We collect anonymous usage data to help us better understand \n         how ATutor is used, and to improve it to best suit those using it.\n --> <script type=\"text/javascript\">
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-42182978-1', 'auto');
+  ga('send', 'pageview');
+        </script>"; 
+    /////////////    
 // End session timeout warning
 
 $savant->assign('custom_css', $custom_head);

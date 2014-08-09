@@ -1023,7 +1023,7 @@ CREATE TABLE `myown_patches_files` (
 ) ENGINE = MyISAM ;
 
 # insert the default theme
-INSERT INTO `themes` VALUES ('ATutor', '2.2', 'default', 'Desktop', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2, 0);
+INSERT INTO `themes` VALUES ('ATutor', '2.2', 'default', 'Desktop', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 1, 0);
 INSERT INTO `themes` VALUES ('ATutor 2.1', '2.2', 'default21', 'Desktop', NOW(), 'This is the ATutor 2.1 series defailt theme.', 1, 0);
 INSERT INTO `themes` VALUES ('Fluid', '2.2', 'fluid', 'Desktop', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1, 0);
 INSERT INTO `themes` VALUES ('ATutor Classic', '2.2', 'default_classic', 'Desktop', NOW(), 'This is the ATutor Classic theme which makes use of the custom Header and logo images. To customize those images you must edit the <code>theme.cfg.php</code> in this themes directory.', 1,0);
@@ -1036,7 +1036,7 @@ INSERT INTO `themes` VALUES ('ATutor 1.6', '2.2', 'default16', 'Desktop', NOW(),
 INSERT INTO `themes` VALUES ('IDI Theme', '2.2', 'idi', 'Desktop', NOW(), 'The theme created for the IDI course server.', 1, 0);
 INSERT INTO `themes` VALUES ('Mobile', '2.2', 'mobile', 'Mobile', NOW(), 'This is the default theme for mobile devices.', 3, 0);
 INSERT INTO `themes` VALUES('Simple', '2.2', 'simplified_desktop', 'Desktop', NOW(), 'An adapted version of the iPad theme, designed to make a desktop look like an iPad.', 1, 0);
-INSERT INTO `themes` VALUES('ATutorSpaces', '2.2', 'atspaces', 'Desktop', NOW(), 'This is the default theme for the ATutorSpaces.com hosting service.', 1, 0);
+INSERT INTO `themes` VALUES('ATutorSpaces', '2.2', 'atspaces', 'Desktop', NOW(), 'This is the default theme for the ATutorSpaces.com hosting service.', 2, 0);
 
 # --------------------------------------------------------
 # Table structure for table `users_online`
@@ -1633,7 +1633,7 @@ INSERT INTO `config` (`name`,`value`) VALUES ('transformable_oauth_expire','9360
 
 ########
 # Set the default Home URL to atutorspaces.com
-INSERT INTO `config` (`name`,`value`) VALUES ('home_url','http://www.atutorspaces.com');
+INSERT INTO `config` (`name`,`value`) VALUES ('home_url','https://www.atutorspaces.com');
 
 ########
 # Set the the intial state of the fixed footer to fixed
@@ -1672,3 +1672,71 @@ CREATE TABLE `calendar_notification` (
   `memberid` int(11),
   `status` int(8)
 ) ENGINE = MyISAM;
+
+
+#######
+# ATutorSpaces Customizations
+
+#######
+# BigBlueButton
+INSERT INTO `modules` (`dir_name`,`status`,`privilege`,`admin_privilege`,`cron_interval`,`cron_last_run`) 
+SELECT 'bigbluebutton',2,max(privilege)*2,max(admin_privilege)*2,0,0 FROM `AT_modules`;
+
+CREATE TABLE `bigbluebutton` (
+  `meeting_id` tinyint(8) unsigned NOT NULL AUTO_INCREMENT,
+  `course_id` tinyint(8) unsigned NOT NULL,
+  `course_name` varchar(155) NOT NULL,
+  `course_timing` varchar(15) NOT NULL,
+  `message` text NOT NULL,
+  `status` tinyint(1) unsigned NOT NULL,
+  PRIMARY KEY (`meeting_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8;
+
+########
+#  Services
+INSERT INTO `config` VALUES('disable_create','1');
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run)
+SELECT '_core/services', 2, 0, max(admin_privilege)*2, 0, 0 FROM `AT_modules`;
+
+########
+# Payments
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run)
+SELECT 'payments', 2, max(privilege)*2, max(admin_privilege)*2, 0, 0 FROM `AT_modules`; 
+
+
+CREATE TABLE `payments` (
+`payment_id` SMALLINT UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`timestamp` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
+`approved` TINYINT NOT NULL DEFAULT '0',
+`transaction_id` CHAR( 100 ) NOT NULL ,
+`member_id` MEDIUMINT UNSIGNED NOT NULL ,
+`course_id` MEDIUMINT UNSIGNED NOT NULL ,
+`amount` DECIMAL( 7, 2 ) NOT NULL DEFAULT '0'
+) ENGINE=MYISAM ;
+
+CREATE TABLE `ec_course_fees` (
+  `course_id` smallint( 8 )  NOT  NULL ,
+  `course_fee` DECIMAL( 7, 2 ) NOT  NULL DEFAULT '0',
+  `auto_approve` tinyint( 1 )  default NULL ,
+  `auto_email` tinyint( 1 )  default NULL ,
+ PRIMARY  KEY ( `course_id` )
+) ENGINE=MyISAM;
+
+
+# Add the ATutorSpaces theme, set it as the default theme, and 
+# set the usual Default theme just enabled.
+#INSERT INTO `themes` VALUES ('ATutorSpaces', '2.2', 'atspaces', 'Desktop', NOW(), 'This is the default theme for ATutorSpaces.', 2);
+#comment out the default theme in the schema above
+#INSERT INTO `themes` VALUES ('ATutor', '2.2', 'default', 'Desktop', NOW(), 'This is the default ATutor theme.', 1);
+
+#####
+# HELPME
+# sql file for the HelpMe module
+CREATE TABLE `helpme_user` (
+  `user_id` mediumint(8) NOT NULL,
+  `help_id` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+INSERT INTO `modules` (dir_name, status, privilege, admin_privilege, cron_interval, cron_last_run)
+SELECT 'helpme', 2, 0, max(admin_privilege)*2, 0, 0 FROM `AT_modules`;
