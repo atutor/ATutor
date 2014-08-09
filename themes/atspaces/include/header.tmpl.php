@@ -280,7 +280,7 @@ global $system_courses, $_custom_css, $db;
     </div>
 
 </div>	
-  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) { ?>
+  <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] || $_SESSION['course_id'] = -1) { ?>
 		  <!-- the bread crumbs -->
 		<div class="crumbcontainer" role="navigation">
 		  <div id="breadcrumbs" tabindex="0"  aria-label="<?php echo _AT('breadcrumb_links'); ?>">
