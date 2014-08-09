@@ -1237,7 +1237,7 @@ div#guide_box{
 	height:1.5em;
 	float:right;
 	margin-right:2em;
-	margin-top:-1.5em;
+	margin-top:-.26em;
 	padding-left:.1em;
 }
 div#content-text {
@@ -1476,12 +1476,29 @@ div.forum-post-content div.body p { margin-bottom:20px; }
 div#topnavlistcontainer {
     background: transparent;
     border-bottom: 1px solid #8CACBB;
-    padding: 0.5em -2em .2em 2em;
+    padding: 0.5em -2em .3em 2em;
     clear:left;
-	margin-top:.2em;
+	margin-top:1.2em;
 	margin-right:-2em;
-	width:100%;
+	height:1.7em;
+	margin-top:-.7em;
+	margin-right: -14px !important;
+    overflow-y:hidden;
+    overflow-x:none;
+    padding-bottom:.7em;
 }
+
+/*
+div#topnavlistcontainer {
+
+	height:1.7em;
+	margin-top:-1.7em;
+	padding-top:1em;
+	padding-bottom:.3em;
+	clear:both;
+	float:left;
+}
+*/
 ul#topnavlist {
 	padding: 0px;
 	margin-right: auto;
@@ -1490,7 +1507,7 @@ ul#topnavlist {
 	margin-top: 0px;
 	margin-bottom:0px;
 	white-space:nowrap;
-    overflow:scroll;
+
 }
 
 ul#topnavlist li {
@@ -1523,7 +1540,7 @@ ul#topnavlist li a {
     height: 1.2em;
     margin-right: 0.5em
     margin-top:1em;
-    padding: .2em 1.8em .2em 1.8em;
+    padding: .2em 1.8em .6em 1.8em;
     border-radius: .3em .3em 0em 0em;
     -moz-border-radius: .3em .3em 0em 0em;
 }
@@ -2773,15 +2790,6 @@ div#top-links a:focus{
 	padding-right:.5em;
 }
 
-div#topnavlistcontainer {
-	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:1.7em;
-	margin-top:-1.7em;
-	padding-top:1em;
-	padding-bottom:.3em;
-	clear:both;
-	float:left;
-}
 .ui-switch {
     border-radius: 18px;
     cursor: pointer;
@@ -2935,22 +2943,26 @@ width:1.5em;
     background-color:#F4F8FA !important;
 }
 .scroll-to-fixed-fixed #subnavlistcontainer{
-    background-color: #f4f8fa;
+    width:100%;
+    background-color: #f4f8fa !important;
     background-image: linear-gradient(#f9f9f9, #f4f8fa) !important; 
+    overflow:hidden !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
+    margin-top:-1.3em;
+    padding-bottom:1.2em !important;
+    padding-top:.2em;
     background-color: #f4f8fa;
     background-image: linear-gradient(#f9f9f9, #f4f8fa) !important;
     white-space:nowrap;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
     white-space:nowrap;
-    overflow:scroll;
 }
 
 .scroll-to-fixed-fixed #subnavlistcontainer ul{
     white-space:nowrap;
-    overflow:scroll;
+    overflow:hidden !important;    
 }
 
 #sm_content{

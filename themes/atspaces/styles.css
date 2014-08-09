@@ -1681,10 +1681,9 @@ width:1.5em;
 
 /* Top navigation tabs / list */
 div#topnavlistcontainer {
-	min-height:2.5em;
+	min-height:2.9em;
 	clear:both;
 	width:100%;
-    padding-bottom:.5em;
 	clear:left;
 	float:left;
     margin-right: -14px !important;
@@ -1692,18 +1691,13 @@ div#topnavlistcontainer {
 }
 
 ul#topnavlist {
-    margin: 0; 
-    padding: 0; 
-    width:100%;
  /*   border-top: 1px solid #D1C82E;
     border-bottom: 1px solid #D1C82E; */
     list-style-type: none; 
     list-style-image: none;
-	padding: 0;
-height:2.1em;
+	padding-top:.6em;
+    height:1.8em;
     border-bottom: 1px solid #f6f4da;
-	margin-right: auto;
-	margin-left: auto;
 	font-family: 'Varela Round', Arial, Helvetica, sans-serif; 
     white-space:nowrap;
  }
@@ -3381,13 +3375,7 @@ div#top-links a:focus{
 	padding-right:.5em;
 }
 
-div#topnavlistcontainer {
-	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:2em;
-	padding-top:1em;
-	clear:both;
-	float:left;
-}
+
 .ui-switch {
     border-radius: 18px;
     cursor: pointer;
@@ -3400,7 +3388,7 @@ div#topnavlistcontainer {
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-2.6em;
+margin-top:-2em;
 }
 #gototop img{
 height:1.5em;
@@ -3572,11 +3560,13 @@ table.etabbed-table	{
 .scroll-to-fixed-fixed div#topnavlistcontainer{
     background-color:#F6F4DA !important;
     padding:0;
+    padding-top:.3em;
+
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer > ul{
-margin-top:1em;
     white-space:nowrap;
-    overflow:scroll;
+    padding-bottom:.4em;
+
 } 
 .scroll-to-fixed-fixed div#topnavlistcontainer > ul > li {
     padding-top:1.5em;
@@ -3586,14 +3576,15 @@ margin-top:1em;
 
 .scroll-to-fixed-fixed #subnavlistcontainer{
     background-color: #ffffff;
-    margin-top:.6em !important;
+    margin-top:1.3em !important;
     background-image: linear-gradient(#FFFFFF, #FFFFFF) !important;
-    opacity:.8;
+    opacity:.9;
     border-bottom: 1px solid #DED29E !important;
     border-top: 0 !important;
 }
 .scroll-to-fixed-fixed #subnavlist{
-    margin-top:-3.5em !important;
+    margin-top:-3.3em !important;
+    margin-left:2em;
     padding:.2em !important;
 }
 .scroll-to-fixed-fixed #subnavlist_i{

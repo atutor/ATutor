@@ -37,7 +37,6 @@ div.input-form textarea {
 }
 
 div.input-form textarea:focus {
-	border:1px solid blue;
 	background-color: white;
 	padding: 2px;
 }
@@ -50,8 +49,7 @@ div.input-form input[type=text], div.input-form input[type=password] {
 }
 
 div.input-form input:focus {
-	border: 1px solid blue;
-	padding: 2px
+
 }
 
 div.input-form div.buttons {
@@ -68,7 +66,6 @@ div.input-form div.buttons input {
 }
 div.input-form div.buttons input:hover {
 	background-color: #f5f5ff;
-	border: 1px solid blue;
 }
 
 

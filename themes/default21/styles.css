@@ -1327,6 +1327,7 @@ div#guide_box{
 	box-shadow: .1em .1em .2em #999999;*/
 		background-color: #F4F0CB;
 	float:right;
+	margin-top:-.3em;
 	margin-right:2em;
 	padding-left:.1em;
 	width:auto;
@@ -1576,17 +1577,24 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 /* Top navigation tabs / list */
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:1.6em;
+	height:1.8em;
 	margin-left:1em;
 	clear:both;
 }
-
+div#topnavlistcontainer {
+	/*background-image: url('images/pencil_bottom_ds.png'); */
+	margin-left:1em;
+	clear:both;
+	float:left;
+	background-color: transparent !important;
+	overflow-y:scroll;
+    overflow-y:hidden;
+}
 ul#topnavlist {
 	padding: 0;
 	margin-right: auto;
 	margin-left: auto;
-    overflow-y:scroll;
-    overflow-y:hidden;
+
     padding-bottom: 0.6em;
     padding-top: 0.2em;
     white-space:nowrap;
@@ -3282,13 +3290,7 @@ div#top-links a:focus{
 	padding-right:.5em;
 }
 
-div#topnavlistcontainer {
-	/*background-image: url('images/pencil_bottom_ds.png'); */
-	margin-left:1em;
-	clear:both;
-	float:left;
-	background-color: transparent !important;
-}
+
 .ui-switch {
     border-radius: 18px;
     cursor: pointer;
@@ -3301,7 +3303,7 @@ div#topnavlistcontainer {
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-4.2em;
+
 }
 .imggoback{
 height:1.5em;
@@ -3388,6 +3390,8 @@ table.etabbed-table	{
     background-color:#B7C68B !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
+margin-top:-1em;
+padding-bottom:1.5em;
     background-color:#B7C68B !important;
     white-space:nowrap;
 }
@@ -3402,6 +3406,7 @@ table.etabbed-table	{
 } 
  
 .scroll-to-fixed-fixed #subnavlistcontainer{
+    margin-top:-.75em;
     background-color:#B7C68B !important;
 }
 #sm_content{

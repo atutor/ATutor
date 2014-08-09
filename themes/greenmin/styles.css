@@ -1161,6 +1161,7 @@ background-color:#DEECE2;
 	-moz-border-radius: 0em 0em .5em .5em;
 	height:1.5em;
 	float:right;
+	margin-top:-.2em;
 	margin-right:2em;
 	padding-left:.1em;
 }
@@ -1374,13 +1375,16 @@ div#topnavlistcontainer {
     clear:left;
     width:100%;
     margin-left:-1em;
+	margin-right: -14px !important;
+    overflow-y:hidden;
+    overflow-x:none;
 }
+
 ul#topnavlist {
 	padding: 0px;
     width:100%;
 	white-space:nowrap;
-    overflow-y:scroll;
-    height:2.1em;
+    height:1.6em;
 
 }
 
@@ -2651,15 +2655,7 @@ div#top-links a:focus{
 	padding-right:.5em;
 }
 
-div#topnavlistcontainer {
-	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:1.8em;
-	margin-top:-1.8em;
-	padding-top:1.5em;
-	margin-bottom:-.2em;
-	clear:both;
-	float:left;
-}
+
 .ui-switch {
     border-radius: 18px;
     cursor: pointer;
@@ -2672,7 +2668,7 @@ div#topnavlistcontainer {
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-4.2em;
+margin-top:-2em;
 }
 
 /** forum stuff **/
@@ -2809,17 +2805,18 @@ table.etabbed-table	{
     background-color:#DEECE2 !important;
 }
 .scroll-to-fixed-fixed #subnavlistcontainer{
-    margin-top:.7em;
+    margin-top:.1em;
 	background-color: #DEECE2  !important;        
     background-image: linear-gradient(#DEECE2, #80AD66) !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
+    margin-top:-1.2em;
+    padding-bottom:2.2em;
 	background-color: #DEECE2 !important;        
     background-image: linear-gradient(#DEECE2, #80AD66) !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
     white-space:nowrap;
-    overflow:scroll;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer li a{
 	  background-color: #FFFFFF;        

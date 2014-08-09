@@ -940,7 +940,7 @@ div.paging li a:hover, div.paging li a.current {
 	background-image: url(images/pencil_top.gif);
 	background-position: right bottom;
 	background-repeat: no-repeat;
-	height : 6.85em;
+	height : 7.85em;
 }
 
 #header a{
@@ -1433,15 +1433,19 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 #inbox-msg li {border:1px solid #eee; border-bottom: 1px solid #F7F3ED; width: 95%; list-style: none; min-height: 11em;}
 
 div#topnavlistcontainer {
-    background-color: #1D2326;
+background-color:#E6E6E6;
+    background-color: transparent;
 	background-image: url(images/pencil_bottom.gif);
 	background-position:  top right;
 	background-repeat: no-repeat;
 }
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
-	margin-top:-1.6em;
+	margin-top:-2.8em;
 	padding-top:1em;
+	padding-bottom:1.2em;
+	    overflow-y:scroll;
+    overflow-y:hidden;
 	clear:both;
 	float:left;
 	width:100%;
@@ -1451,8 +1455,7 @@ ul#topnavlist {
 	margin-top: -.5em;
 	margin-left:5px;
 	white-space:nowrap;
-    overflow-y:scroll;
-    overflow-y:hidden;
+
      height: 2.2em;
 }
 
@@ -1730,9 +1733,8 @@ ul.current_list{
 .logoutbar{
       background-color:#E6E6E6; 
       font-size:0.85em; 
-      padding-top: 2px; 
       border-bottom:1px solid #cccccc; 
-      height:4em;
+      height:2.5em;
       text-align:right;
       padding-right:1em;
 }
@@ -2956,7 +2958,6 @@ div.fs_tools{
 }
 #userlinks{
 float:right;
-margin-top:.5em;
 width:25em;
 }
 /* 
@@ -3134,16 +3135,21 @@ ul#subnavlist span#showsubnav{
     background-color:#F3F3F3 !important;
 }
 .scroll-to-fixed-fixed #subnavlistcontainer{
-    background-color: #F3F3F3;
+    background-color: #F3F3F3 !important;
     background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
-    background-color: #F3F3F3;
+    background-color: #F3F3F3 !important;
     background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
+    margin-top:-1.8em !important;
+    padding-bottom:1em !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
+    background-color: #F3F3F3 !important;
+    width:100%;
     white-space:nowrap;
     overflow:scroll;
+    padding-bottom:1.7em;
 } 
 #sm_content{
     display:none;
@@ -3315,7 +3321,7 @@ clear:left;
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-4.2em;
+margin-top:-2.2em;
 }
 h3.already_registered{
     width:80%;

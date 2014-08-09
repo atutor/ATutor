@@ -1211,6 +1211,7 @@ background-color:#788CB3;
 	-moz-border-radius: 0em 0em .5em .5em;
 	height:1.8em;
 	float:right;
+	margin-top:1.6em;
 	margin-right:2em;
 	padding-left:.1em;
 }
@@ -2729,7 +2730,7 @@ div#topnavlistcontainer {
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-4.2em;
+margin-top:-2em;
 }
 /* floating layout */
 #contentwrapper{
@@ -2920,7 +2921,7 @@ width:1.5em;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
     white-space:nowrap;
-    overflow:scroll;
+    overflow-y:hidden;
 } 
  
 #sm_content{

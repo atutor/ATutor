@@ -1543,22 +1543,35 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 
 /* Top navigation tabs / list */
+/*
 div#topnavlistcontainer {
-	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:auto;
+	
+	margin-top:-1.8em;
+	padding-bottom:1.2em;
 	margin-left:1em;
 	clear:both;
-	margin-bottom:-.8em;
-	
+	float:left;
+	margin-right: -14px !important;
+    overflow-x:none;
+    overflow-y: scroll;
 }
-
+*/
+div#topnavlistcontainer {
+	margin-top:-1.8em;
+	margin-left:1em;
+	padding-bottom:1em;
+	clear:both;
+	width:100%;
+	clear:left;
+	float:left;
+    margin-right: -14px !important;
+    overflow-y: hidden;
+}
 ul#topnavlist {
 	padding: 0;
 	margin-right: auto;
 	margin-left: auto;
  	white-space:nowrap;
-    overflow-y:scroll;
-    overflow-y:hidden
     margin-bottom:-1em;
     height:2em;
  }
@@ -3245,16 +3258,7 @@ div#top-links a:focus{
 	padding-right:.5em;
 }
 
-div#topnavlistcontainer {
-	/*background-image: url('images/pencil_bottom_ds.png'); */
-	height:auto;
-	width:auto;
-	margin-top:-1.3em;
 
-	margin-left:1em;
-	clear:both;
-	float:left;
-}
 .ui-switch {
     border-radius: 18px;
     cursor: pointer;
@@ -3270,7 +3274,7 @@ div#topnavlistcontainer {
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-4.2em;
+margin-top:-2.2em;
 }
 
 /** forum stuff **/
@@ -3408,23 +3412,33 @@ table.etabbed-table	{
     background-color:#F3F3F3 !important;
 }
 .scroll-to-fixed-fixed #subnavlistcontainer{
-    background-color: #F3F3F3;
+    background-color: #F3F3F3 !important;
     background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
     margin-top:.3em;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
-    background-color: #F3F3F3;
+    background-color: #F3F3F3 !important;
     background-image: linear-gradient(#FAFAFA, #EAEAEA)!important;
     height:2.7em;
 
+
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
+margin-top:.5em;
     white-space:nowrap;
     overflow:scroll;
+    padding-bottom:1.2em;
 } 
+.scroll-to-fixed-fixed div#topnavlistcontainer ul li{
+
+
+} 
+.scroll-to-fixed-fixed div#subnavlistcontainer{
+    margin-top:-.2em;
+}
 .scroll-to-fixed-fixed div#subnavlistcontainer ul{
+    width:100%;
     white-space:nowrap;
-    overflow:scroll;
 	border-bottom: 1px solid #DED29E !important;
 }
 

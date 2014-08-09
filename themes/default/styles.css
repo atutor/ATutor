@@ -1664,16 +1664,28 @@ span.forum-paginator-active{font-weight:700;text-decoration:underline; height:2e
 
 
 /* Top navigation tabs / list */
-div#topnavlistcontainer {
-	/*background-image: url('images/pencil_bottom_ds.png'); */
+/*div#topnavlistcontainer {
 	height:1.8em;
 	margin-top:-1.8em;
 	padding-top:1em;
 	margin-left:1em;
 	clear:both;
 	float:left;
+	    overflow-y:scroll;
 }
-
+*/
+div#topnavlistcontainer {
+    height:1.8em;
+	width:100%;
+	margin-top:-2.8em;
+	padding-top:1.8em;
+	margin-bottom:-.5em;
+	padding-bottom:.5em;
+	float:left;
+    margin-right: -14px !important;
+    overflow-x:none;
+    overflow-y: hidden;
+}
 ul#topnavlist {
 	padding: 0;
 	padding-bottom: 1em;
@@ -1683,7 +1695,7 @@ ul#topnavlist {
 	margin-top: -.4em;
 	height:1.8em;
 	white-space:nowrap;
-    overflow-y:scroll;
+
  }
 
 ul#topnavlist li {
@@ -2716,7 +2728,7 @@ div.social-wrapper{
 .logo{
 width:15em;
 margin-left:0em;
-margin-top:-2.8em;
+margin-top:-2.2em;
 }
 .content-settings{
 	width: 30%;
@@ -3398,12 +3410,12 @@ div.input-form.remedialContent {
     background-color:#F3F3F3 !important;
 }
 .scroll-to-fixed-fixed #subnavlistcontainer{
-    background-color: #F3F3F3;
-    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    background-color: #F3F3F3 !important;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA) !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer{
-    background-color: #F3F3F3;
-    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    background-color: #F3F3F3 !important;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA) !important;
 }
 .scroll-to-fixed-fixed div#topnavlistcontainer ul{
     white-space:nowrap;
