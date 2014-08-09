@@ -1684,7 +1684,6 @@ ul#topnavlist {
 	height:1.8em;
 	white-space:nowrap;
     overflow-y:scroll;
-    overflow-y:hidden;
  }
 
 ul#topnavlist li {
