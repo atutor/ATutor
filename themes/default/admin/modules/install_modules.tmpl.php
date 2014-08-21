@@ -1,6 +1,4 @@
 <?php
-global $db;
- 
 if ($this->enable_upload) {
 ?>
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
@@ -78,11 +76,16 @@ if (count($this->keys) > 0)
 // Disallow subsites to download and install the remote modules from update.atutor.ca
 if ($this->enable_remote_installation === true) {
 ?>
-
-
+<fieldset>
+    <legend><?php echo _AT('filter'); ?></legend>
+    <div class="input-form">
+    <div class="row">
+    <?php echo _AT('old_module_notes'); ?>
+    </div>
+<?php echo select_atversion(); ?>
+</div>
+</fieldset>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<?php 
-?>
 <table class="data" summary="">
 <thead>
 	<tr>
@@ -128,21 +131,24 @@ else
 		for ($i=0; $i < $num_of_modules; $i++)
 		{
 			$installed = false;
-			if(in_array($this->module_list_array[$i]["history"][0]["install_folder"],  $this->installed_mods)){
+			if(in_array($this->module_list_array[$i]["history"][0]["install_folder"],  '')){
 			    $installed = true;
 			} 
+			
+			if((isset($_POST['atversions']) && $_POST['atversions'] == $this->module_list_array[$i]["atutor_version"]) || $_POST['atversions'] == 0){
 ?>
-	<tr onmousedown="document.form['m<?php echo $i; ?>'].checked = true; rowselect(this);"  id="r_<?php echo $i; ?>">
-		<td><input type="radio" name="id" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" <?php if ($installed) echo 'disabled="disabled"'; ?> /></td>
-		<td><label for="m<?php echo $i; ?>"><?php echo $this->module_list_array[$i]["name"]; ?></label></td>
-		<td><?php echo $this->module_list_array[$i]["description"]; ?></td>
-		<td><?php echo $this->module_list_array[$i]["history"][0]["version"]; ?></td>
-		<td><?php echo $this->module_list_array[$i]["atutor_version"]; ?></td>
-		<td><?php echo $this->module_list_array[$i]["history"][0]["maintainer"]; ?></td>
-		<td><?php if ($installed) echo _AT("installed"); else echo _AT("not_installed"); ?></td>
-	</tr>
+            <tr onmousedown="document.form['m<?php echo $i; ?>'].checked = true; rowselect(this);"  id="r_<?php echo $i; ?>">
+                <td><input type="radio" name="id" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" <?php if ($installed) echo 'disabled="disabled"'; ?> /></td>
+                <td><label for="m<?php echo $i; ?>"><?php echo $this->module_list_array[$i]["name"]; ?></label></td>
+                <td style="width:45%;"><?php echo $this->module_list_array[$i]["description"]; ?></td>
+                <td><?php echo $this->module_list_array[$i]["history"][0]["version"]; ?></td>
+                <td><?php echo $this->module_list_array[$i]["atutor_version"]; ?></td>
+                <td><?php echo $this->module_list_array[$i]["history"][0]["maintainer"]; ?></td>
+                <td><?php if ($installed) echo _AT("installed"); else echo _AT("not_installed"); ?></td>
+            </tr>
 
 <?php 
+            } // end if
 		}
 	}
 
