@@ -128,7 +128,7 @@ global $system_courses, $_custom_css, $db;
 		echo '<div class="site-name">&nbsp;</div>';	
 	endif; ?>
 
-	<div id="top-links"  role="navigation"> 
+	<div id="top-links"  role="navigation" aria-label="<?php echo _AT('user'); ?>"> 
 	<!-- top help/search/login links -->
 		<?php if (isset($_SESSION['member_id']) && $_SESSION['member_id']): ?>
 			<?php if(!$this->just_social): ?>
@@ -212,7 +212,7 @@ global $system_courses, $_custom_css, $db;
 </div>
 <!-- the main navigation. in our case, tabs -->
 <div id="lrg_topnav">
-    <div id="topnavlistcontainer" role="navigation">
+    <div id="topnavlistcontainer" role="navigation" aria-label="<?php echo _AT('main'); ?>">
         <a name="main-nav" id="main-nav"></a>
         <ul id="topnavlist">
             <?php $accesscounter = 0; //initialize ?>
@@ -251,11 +251,11 @@ global $system_courses, $_custom_css, $db;
 <div id="sm_topnav">
     <?php if ($this->current_sub_level_page): ?>
     <div id="topnavlistcontainer_sm" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" style="height:auto;">
-    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);" title="Toggle to open and close main navigation."><?php echo _AT('navigation'); ?><span title="Toggle to open and close main navigation">&nbsp;</span></a>
+    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);" title="<?php echo _AT('toggle_main'); ?>"><?php echo _AT('navigation'); ?><span title="<?php echo _AT('toggle_main'); ?>">&nbsp;</span></a>
     <br />
         <div id="navigation-column">
         <?php if ($this->current_sub_level_page): ?>
-        <ul id="topnavlist_sm"  class="fl-list-menu" role="menu">
+        <ul id="topnavlist_sm"  class="fl-list-menu" role="menu" aria-label="<?php echo _AT('left_side'); ?>">
             <?php $accesscounter = 0; //initialize ?>
             <?php foreach ($this->top_level_pages as $page): ?>
                 <?php ++$accesscounter; $accesscounter = ($accesscounter == 10 ? 0 : $accesscounter); ?>
@@ -280,7 +280,7 @@ global $system_courses, $_custom_css, $db;
 </div>	
   <?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] || $_SESSION['course_id'] = -1) { ?>
 		  <!-- the bread crumbs -->
-		<div class="crumbcontainer" role="navigation">
+		<div class="crumbcontainer" role="navigation" aria-label="<?php echo _AT('breadcrumbs_links'); ?>">
 		  <div id="breadcrumbs" tabindex="0"  aria-label="<?php echo _AT('breadcrumb_links'); ?>">
 			  <?php foreach ($this->path as $page): ?>
 				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
@@ -318,12 +318,12 @@ global $system_courses, $_custom_css, $db;
 	
 	
     <div id="sm_content">
-		<div id="content_link" role="navigation" aria-live="assertive" class="flc-screenNavigator-navbar ">
+		<div id="content_link" aria-live="assertive" class="flc-screenNavigator-navbar " aria-label="<?php echo _AT('left_side'); ?>">
 				<a class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo  _AT("content"); ?></a>	
 		</div>	
     </div>		
     <div id="lrg_content">
-		<div id="leftcolumn" role="complementary">
+		<div id="leftcolumn" role="navigation" aria-label="<?php echo _AT('left_side'); ?>">
 		  <a id="menu"></a>
 		     <div id="side-menu">
 		        <?php require(AT_INCLUDE_PATH.'side_menu.inc.php'); ?>
@@ -335,7 +335,7 @@ global $system_courses, $_custom_css, $db;
 	<?php endif; ?>
 
 	
-	<div id="contentcolumn"  role="main">
+	<div id="contentcolumn"  role="main" aria-label="<?php echo _AT('content'); ?>">
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
 		   <a href="javascript:void(0)" accesskey="n"><img src="" title="" alt="" class="img1616"/></a>
@@ -369,7 +369,7 @@ global $system_courses, $_custom_css, $db;
 
 	<?php  if (count($this->sub_level_pages) > 1 || $this->sub_level_pages_i > 0): ?>
 	<div id="lrg_subnav">
-		<div id="subnavlistcontainer" role="navigation">
+		<div id="subnavlistcontainer" role="navigation" aria-label="<?php echo _AT('sub'); ?>">
 		<a name="admin_tools" id="admin_tools" title="<?php echo _AT("course_admin_tools"); ?>"></a>
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
