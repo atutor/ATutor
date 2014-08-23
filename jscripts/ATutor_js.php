@@ -226,6 +226,7 @@ ATutor.course = ATutor.course || {};
                     if(code == 13 || code == 32) { 
                     ATutor.switchView($('#admin_switch').val());
                     }
+                    return false;  
                 });
             <?php } ?>
 
