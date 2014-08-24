@@ -8,6 +8,10 @@
 	src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/prototype.js"></script>
 <script type="text/javascript" src="<?php echo AT_SOCIAL_BASENAME; ?>lib/js/container.js"></script>
 <div class="social-wrapper">
+
+<div id="info">
+<?php echo _AT('opensocial_status_message'); ?>
+</div>
 <div class="search_form">	
 		<div class="headingbox"><h3><?php echo _AT('add_application'); ?></h3></div>
 		<div class="contentbox">
