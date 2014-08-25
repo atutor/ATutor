@@ -82,7 +82,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 				require(AT_INCLUDE_PATH.'header.inc.php');
 				echo "<div class=\"input-form\">";
 				require(AT_INCLUDE_PATH.'html/auto_enroll_list_courses.inc.php');
-				echo '<p style="text-align:center"><a href="'. $_SERVER['PHP_SELF'] . '?auto_login=1&member_id='. $id .'&code=' . $code .'">' . _AT("go_to_my_start_page") . '</a></p>';
+				echo '<p style="text-align:center"><a href="'. $_SERVER['PHP_SELF'] . '?auto_login=1.'SEP'.member_id='. $id .SEP.'code=' . $code .'">' . _AT("go_to_my_start_page") . '</a></p>';
 				echo "</div>";
 				require(AT_INCLUDE_PATH.'footer.inc.php');
 				exit;
