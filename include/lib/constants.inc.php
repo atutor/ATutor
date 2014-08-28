@@ -27,7 +27,7 @@ $_config_defaults['auto_approve_instructors']  = 0; // disabled
 $_config_defaults['max_file_size']             = 10485760;  // 10MB
 $_config_defaults['max_course_size']           = 104857600; // 100 MB
 $_config_defaults['max_course_float']          = 2097152;  // 2MB
-$_config_defaults['max_login']				   = 5; //maximum login attempt 
+$_config_defaults['max_login']				   = 5; //maximum login attempt
 $_config_defaults['illegal_extentions']        = 'exe|asp|php|php3|bat|cgi|pl|com|vbs|reg|pcd|pif|scr|bas|inf|vb|vbe|wsc|wsf|wsh';
 $_config_defaults['site_name']                 = '';
 $_config_defaults['home_url']                  = ''; // empty means disabled
@@ -56,7 +56,7 @@ $_config_defaults['side_defaults']             = 'social|menu_menu|related_topic
 
 $_config_defaults['pref_defaults']          = 'a:37:{s:10:"PREF_THEME";s:7:"default";s:15:"PREF_FORM_FOCUS";i:1;s:17:"PREF_MOBILE_THEME";s:6:"mobile";s:14:"PREF_NUMBERING";i:1;s:13:"PREF_TIMEZONE";s:1:"0";s:19:"PREF_CONTENT_EDITOR";i:0;s:15:"PREF_SHOW_GUIDE";i:1;s:13:"PREF_MODIFIED";i:1;s:18:"PREF_SHOW_CONTENTS";i:1;s:31:"PREF_SHOW_NEXT_PREVIOUS_BUTTONS";i:1;s:22:"PREF_SHOW_BREAD_CRUMBS";i:1;s:28:"PREF_USE_ALTERNATIVE_TO_TEXT";i:0;s:16:"PREF_ALT_TO_TEXT";s:5:"audio";s:34:"PREF_ALT_TO_TEXT_APPEND_OR_REPLACE";s:6:"append";s:25:"PREF_ALT_TEXT_PREFER_LANG";s:2:"en";s:29:"PREF_USE_ALTERNATIVE_TO_AUDIO";i:0;s:17:"PREF_ALT_TO_AUDIO";s:4:"text";s:35:"PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE";s:6:"append";s:26:"PREF_ALT_AUDIO_PREFER_LANG";s:2:"en";s:30:"PREF_USE_ALTERNATIVE_TO_VISUAL";i:0;s:18:"PREF_ALT_TO_VISUAL";s:4:"text";s:36:"PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE";s:6:"append";s:27:"PREF_ALT_VISUAL_PREFER_LANG";s:2:"en";s:15:"PREF_DICTIONARY";i:0;s:14:"PREF_THESAURUS";i:0;s:16:"PREF_NOTE_TAKING";i:0;s:15:"PREF_CALCULATOR";i:0;s:11:"PREF_ABACUS";i:0;s:10:"PREF_ATLAS";i:0;s:17:"PREF_ENCYCLOPEDIA";i:0;s:18:"PREF_JUMP_REDIRECT";i:1;s:14:"PREF_FONT_FACE";s:0:"";s:15:"PREF_FONT_TIMES";s:3:"0.8";s:14:"PREF_FG_COLOUR";s:0:"";s:14:"PREF_BG_COLOUR";s:0:"";s:14:"PREF_HL_COLOUR";s:0:"";s:18:"PREF_HIDE_FEEDBACK";i:1:"12";}';
 
-// Adjust default prefs for ATspaces, 
+// Adjust default prefs for ATspaces,
 //$_config_defaults['pref_defaults']	       = 'a:37:{s:10:"PREF_THEME";s:8:"atspaces";s:15:"PREF_FORM_FOCUS";i:1;s:17:"PREF_MOBILE_THEME";s:6:"mobile";s:14:"PREF_NUMBERING";i:1;s:13:"PREF_TIMEZONE";s:1:"0";s:19:"PREF_CONTENT_EDITOR";i:0;s:15:"PREF_SHOW_GUIDE";i:1;s:13:"PREF_MODIFIED";i:1;s:18:"PREF_SHOW_CONTENTS";i:1;s:31:"PREF_SHOW_NEXT_PREVIOUS_BUTTONS";i:1;s:22:"PREF_SHOW_BREAD_CRUMBS";i:1;s:28:"PREF_USE_ALTERNATIVE_TO_TEXT";i:0;s:16:"PREF_ALT_TO_TEXT";s:5:"audio";s:34:"PREF_ALT_TO_TEXT_APPEND_OR_REPLACE";s:6:"append";s:25:"PREF_ALT_TEXT_PREFER_LANG";s:2:"en";s:29:"PREF_USE_ALTERNATIVE_TO_AUDIO";i:0;s:17:"PREF_ALT_TO_AUDIO";s:4:"text";s:35:"PREF_ALT_TO_AUDIO_APPEND_OR_REPLACE";s:6:"append";s:26:"PREF_ALT_AUDIO_PREFER_LANG";s:2:"en";s:30:"PREF_USE_ALTERNATIVE_TO_VISUAL";i:0;s:18:"PREF_ALT_TO_VISUAL";s:4:"text";s:36:"PREF_ALT_TO_VISUAL_APPEND_OR_REPLACE";s:6:"append";s:27:"PREF_ALT_VISUAL_PREFER_LANG";s:2:"en";s:15:"PREF_DICTIONARY";i:0;s:14:"PREF_THESAURUS";i:0;s:16:"PREF_NOTE_TAKING";i:0;s:15:"PREF_CALCULATOR";i:0;s:11:"PREF_ABACUS";i:0;s:10:"PREF_ATLAS";i:0;s:17:"PREF_ENCYCLOPEDIA";i:0;s:18:"PREF_JUMP_REDIRECT";i:1;s:14:"PREF_FONT_FACE";s:0:"";s:15:"PREF_FONT_TIMES";s:3:"0.8";s:14:"PREF_FG_COLOUR";s:0:"";s:14:"PREF_BG_COLOUR";s:0:"";s:14:"PREF_HL_COLOUR";s:0:"";s:18:"PREF_HIDE_FEEDBACK";i:1:"12";}';
 
 $_config_defaults['pref_inbox_notify']		= 0; // disabled
@@ -202,7 +202,7 @@ if (isset($_SERVER['HTTPS']) && (strtolower($_SERVER['HTTPS']) == 'on')) {
 define('AT_SERVER_PROTOCOL', $server_protocol);
 
 /* Handles pretty url - @author Harris */
-define('AT_PRETTY_URL_HANDLER',		'go.php');	
+define('AT_PRETTY_URL_HANDLER',		'go.php');
 define('AT_PRETTY_URL_NOT_HEADER',	false);
 define('AT_PRETTY_URL_IS_HEADER',	true);
 
@@ -214,7 +214,7 @@ $_base_href	 = $server_protocol . implode('/', $_base_href).'/';
 if (($temp = strpos($_base_href, AT_PRETTY_URL_HANDLER)) > 0){
 	$endpos = $temp;
 } else {
-	$endpos = strlen($_base_href); 
+	$endpos = strlen($_base_href);
 
 }
 $_base_href	= substr($_base_href, 0, $endpos);
@@ -231,6 +231,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
 define('VERSION',		'2.2');
+define('AT_GITHUB_RELEASE_COMMIT', 'ef64e66bd1fcd058a6bb653778ba44202efad589');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
 /* valid date format_types:						*/
@@ -245,7 +246,7 @@ define('AT_ROLE_INSTRUCTOR',			1);
 
 define('AT_KBYTE_SIZE',		         1024);
 
-define('AT_COURSESIZE_UNLIMITED',	   -1); 
+define('AT_COURSESIZE_UNLIMITED',	   -1);
 define('AT_COURSESIZE_DEFAULT',		   -2);  /* can be changed in config.inc.php */
 define('AT_FILESIZE_DEFAULT',		   -3);  /* this too */
 define('AT_FILESIZE_SYSTEM_MAX',	   -4);
@@ -255,7 +256,7 @@ $editable_file_types = array('txt', 'html', 'htm', 'xml', 'css', 'asc', 'csv', '
 define('AT_NUM_POLL_CHOICES',   7);
 
 /* ways of releasing a test */
-define('AT_RELEASE_NEVER',		   0); // do not release 
+define('AT_RELEASE_NEVER',		   0); // do not release
 define('AT_RELEASE_IMMEDIATE',	   1); // release after submitted
 define('AT_RELEASE_MARKED',		   2); // release after all q's marked
 
@@ -325,11 +326,11 @@ define('AT_FORMAT_GLOSSARY',     16);
 define('AT_FORMAT_ATCODES',      32);
 define('AT_FORMAT_CONTENT_DIR', 64); /* remove CONTENT_DIR */
 define('AT_FORMAT_QUOTES',      128); /* remove double quotes (does this get used?) */
-define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS 
-							   + AT_FORMAT_LINKS 
-						       + AT_FORMAT_IMAGES 
-						       + AT_FORMAT_HTML 
-						       + AT_FORMAT_GLOSSARY 
+define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS
+							   + AT_FORMAT_LINKS
+						       + AT_FORMAT_IMAGES
+						       + AT_FORMAT_HTML
+						       + AT_FORMAT_GLOSSARY
 							   + AT_FORMAT_ATCODES
 							   + AT_FORMAT_CONTENT_DIR);
 
@@ -418,7 +419,7 @@ define('GOOGLE_TYPE_SOAP',		0);		//The original soap search with key generated b
 define('GOOGLE_TYPE_AJAX',		1);		//The new AJAX search by google
 
 /* flags for validate_length in vitals. - @author Harris*/
-define('VALIDATE_LENGTH_FOR_DISPLAY',	1);	
+define('VALIDATE_LENGTH_FOR_DISPLAY',	1);
 
 /* the length of sublink text display in the course index page, detail view */
 define('SUBLINK_TEXT_LEN', 38);

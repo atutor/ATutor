@@ -28,10 +28,10 @@ class Patch {
 
 	// all private
 	var $patch_array = array();           // the patch data
-	var $patch_summary_array = array();   // patch summary information 
+	var $patch_summary_array = array();   // patch summary information
 	var $patch_id;                        // current patches.patches_id
 	var $patch_file_id;                   // current patches_files.patches_files_id
-	
+
 	var $need_access_to_folders = array();// folders that need to have write permission
 	var $need_access_to_files = array();  // files that need to have write permission
 	var $backup_files = array();          // backup files
@@ -45,13 +45,13 @@ class Patch {
 	var $module_content_dir;              // content folder used to create patch.sql
 	var $github_server_connected;         // flag indicating if can connect to github server, if not, consider all files manipulated by patch as modified
 
-	// constant, URL of user's ATutor release version in github 
+	// constant, the github URL
 	var $github_tag_folder = 'https://raw.github.com/atutor/ATutor/';
-	var $github_fetch_tags_url = 'https://api.github.com/repos/atutor/ATutor/tags';
+	var $github_connection_check_file = 'include/vitals.inc.php';
 	var $sql_file = 'patch.sql';
 	var $relative_to_atutor_root = '../../../';   // relative path from mods/_standard/patcher to root
-	
-	var $error_title_printed = false;      // a flag only used in constructor when error happens 
+
+	var $error_title_printed = false;      // a flag only used in constructor when error happens
 	                                       // it's to indicate if the title of the error has been printed into $this->errors
 
 	/**
@@ -62,7 +62,7 @@ class Patch {
 	*          $skipFilesModified
 	* @author  Cindy Qi Li
 	*/
-	function Patch($patch_array, $patch_summary_array, $skipFilesModified, $patch_folder) 
+	function Patch($patch_array, $patch_summary_array, $skipFilesModified, $patch_folder)
 	{
 		// add relative path to move to ATutor root folder
 		for ($i = 0; $i < count($patch_array[files]); $i++)
@@ -78,21 +78,21 @@ class Patch {
 			}
 			$patch_array[files][$i]['location'] = $this->relative_to_atutor_root . $patch_array[files][$i]['location'];
 		}
-			
-		$this->patch_array = $patch_array; 
+
+		$this->patch_array = $patch_array;
 		$this->patch_summary_array = $patch_summary_array;
 
 		$this->baseURL = $patch_folder;
 		$this ->backup_suffix = $patch_array['atutor_patch_id'] . ".old";
 		$this ->patch_suffix = $patch_array['atutor_patch_id'];
 		$this->skipFilesModified = $skipFilesModified;
-		
+
 		$this->module_content_dir = AT_CONTENT_DIR . "patcher";
 
 		session_start();
-		
+
 		if (!is_array($_SESSION['remove_permission'])) $_SESSION['remove_permission']=array();
-		
+
 	}
 
 	/**
@@ -102,25 +102,26 @@ class Patch {
 	*          false if failed
 	* @author  Cindy Qi Li
 	*/
-	function applyPatch() 
+	function applyPatch()
 	{
 		global $msg;
-		
+
 		// Checks on
-		// 1. if there's error from class constructor 
+		// 1. if there's error from class constructor
 		// 2. if github server is up. If not, consider all files manipulated by patch as modified
 		// 3. if the local file is customized by user
 		// 4. if script has write priviledge on local file/folder
 		// 5. if dependent patches have been installed
-		
+
 		if (count($this->errors) > 0) {
 			print_errors($this->errors, $notes);
-		
+
 			unset($this->errors);
 			return false;
 		}
-		
-		if (!$this->pingDomain($this->github_tag_folder) || !$this->pingDomain($this->github_fetch_tags_url)) 
+
+		$file_to_check = $this->github_tag_folder . AT_GITHUB_RELEASE_COMMIT . '/' . $this->github_connection_check_file;
+		if (!$this->pingDomain($file_to_check))
 		{
 			$msg->addInfo('CANNOT_CONNECT_GITHUB_SERVER');
 			$msg->printInfos();
@@ -128,13 +129,13 @@ class Patch {
 		}
 		else
 			$this->github_server_connected = true;
-		
+
 		if (!$this->checkDependentPatches()) return false;
 
 		if (!$this->checkAppliedVersion()) return false;
 
 		if (!$this->skipFilesModified && $this->hasFilesModified()) return false;
-		
+
 		if (!$this->checkPriviledge()) return false;
 		// End of check
 
@@ -144,14 +145,14 @@ class Patch {
 		$this->createPatchesRecord($this->patch_summary_array);
 
 		// if no file action defined, update database and return true
-		if (!is_array($this->patch_array[files])) 
+		if (!is_array($this->patch_array[files]))
 		{
 			$updateInfo = array("status"=>"Installed");
 			updatePatchesRecord($this->patch_id, $updateInfo);
-	
+
 			return true;
 		}
-		
+
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
 			$this->createPatchesFilesRecord($this->patch_array['files'][$row_num]);
@@ -173,7 +174,7 @@ class Patch {
 				$this->overwriteFile($row_num);
 			}
 		}
-		
+
 		// if only has backup files info, patch is considered successfully installed
 		// if has permission to remove, considered partly installed
 		$updateInfo = array();
@@ -182,18 +183,18 @@ class Patch {
 		{
 			foreach($this->backup_files as $backup_file)
 				$backup_files .= $backup_file. '|';
-		
+
 			$updateInfo = array("backup_files"=>my_add_null_slashes($backup_files));
-	
+
 		if (count($this->patch_files) > 0)
 		{
 			foreach($this->patch_files as $patch_file)
 				$patch_files .= $patch_file. '|';
-		
-			$updateInfo = array_merge($updateInfo, array("patch_files"=>my_add_null_slashes($patch_files)));			
-			
+
+			$updateInfo = array_merge($updateInfo, array("patch_files"=>my_add_null_slashes($patch_files)));
+
 		}
-	
+
 		if (is_array($_SESSION['remove_permission']) && count($_SESSION['remove_permission']))
 		{
 			foreach($_SESSION['remove_permission'] as $remove_permission_file)
@@ -204,10 +205,10 @@ class Patch {
 		else
 		{
 			$updateInfo = array_merge($updateInfo, array("status"=>"Installed"));
-		} 
+		}
 
 		updatePatchesRecord($this->patch_id, $updateInfo);
-		
+
 		unset($_SESSION['remove_permission']);
 
 		return true;
@@ -219,22 +220,22 @@ class Patch {
 	* @return  patch array
 	* @author  Cindy Qi Li
 	*/
-	function getPatchArray() 
+	function getPatchArray()
 	{
 		return $this->patch_array;
 	}
-	
+
 	/**
 	* return patch id processed by this object
 	* @access  public
 	* @return  patch id
 	* @author  Cindy Qi Li
 	*/
-	function getPatchID() 
+	function getPatchID()
 	{
 		return $this->patch_id;
 	}
-	
+
 	/**
 	* Check if script has write permission to the files and folders that need to be written
 	* if no permission, warn user to give permission
@@ -246,14 +247,14 @@ class Patch {
 	function checkPriviledge()
 	{
 		global $id, $who;
-		
+
 		// no file action is defined, return true;
 		if (!is_array($this->patch_array[files])) return true;
-		
+
 		foreach ($this->patch_array[files] as $row_num => $patch_file)
 		{
 			$real_location = realpath($patch_file['location']);
-			
+
 			if ($real_location <> '' && !is_writable($patch_file['location']) && !in_array($real_location, $this->need_access_to_folders))
 			{ // folder exists. check if has write permission
 				$this->need_access_to_folders[] = $real_location;
@@ -262,7 +263,7 @@ class Patch {
 					$_SESSION['remove_permission'][] = $real_location;
 			} else if ($real_location == '' && $patch_file['action'] != 'delete') {
 				// The folder does not exist. Create it before proceed
-				
+
 				// find the real path for the folder to be created
 				$full_folder_path = realpath($this->relative_to_atutor_root).
 				                    substr($patch_file['location'], strlen($this->relative_to_atutor_root)-1);
@@ -284,11 +285,11 @@ class Patch {
 				}
 			}
 		}
-		
+
 		if (count($this->need_access_to_folders) > 0 || count($this->need_access_to_files) > 0)
 		{
 			$this->errors[] = _AT('grant_write_permission');
-			
+
 			foreach($this->need_access_to_folders as $folder)
 			{
 				$this->errors[0] .= '<strong>'. $folder . "</strong><br />";
@@ -308,16 +309,16 @@ class Patch {
 				<input type="hidden" name="ignore_version" value="' . $_POST['ignore_version'] . '" />
 			</div>
 			</form>';
-			
+
 			print_errors($this->errors, $notes);
-		
+
 			unset($this->errors);
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	* Check if ATutor version is same as "applied version" defined in the patch.
 	* @access  private
@@ -328,11 +329,11 @@ class Patch {
 	function checkAppliedVersion()
 	{
 		global $msg;
-		
+
 		if ($this->patch_summary_array["applied_version"] <> VERSION)
 		{
 			$this->errors[] = _AT("version_not_match", $this->patch_summary_array["applied_version"]);
-				
+
 			$notes = '
 			  <form action="'. $_SERVER['PHP_SELF'].'?id='.$_POST['id'].'&who='. $_POST['who'] .'" method="post" name="skip_files_modified">
 			  <div class="row buttons">
@@ -344,9 +345,9 @@ class Patch {
 				</form>';
 
 			print_errors($this->errors, $notes);
-		
+
 			unset($this->errors);
-			
+
 			return false;
 		}
 
@@ -363,12 +364,12 @@ class Patch {
 	function checkDependentPatches()
 	{
 		global $msg;
-		
+
 		$dependent_patches_installed = true;
-		
+
 		// if no dependent patch defined, return true
 		if (!is_array($this->patch_summary_array["dependent_patches"])) return true;
-		
+
 		foreach($this->patch_summary_array["dependent_patches"] as $num => $dependent_patch)
 		{
 			if (!is_patch_installed($dependent_patch))
@@ -377,19 +378,19 @@ class Patch {
 				$dependent_patches .= $dependent_patch. ", ";
 			}
 		}
-		
+
 		if (!$dependent_patches_installed)
 		{
 			$errors = array('PATCH_DEPENDENCY', substr($dependent_patches, 0, -2));
 			$msg->addError($errors);
 			return false;
 		}
-		
+
 		return true;
 }
-	
+
     /**
-    * Loop thru all the patch files that will be overwitten or altered, 
+    * Loop thru all the patch files that will be overwitten or altered,
     * to find out if they are modified by user. If it's modified, warn user.
     * @access  private
     * @return  true  if there are files being modified
@@ -400,18 +401,18 @@ class Patch {
         $overwrite_modified_files = $alter_modified_files = $has_not_exist_files = false;
         $files = $this->patch_array[files];
         $separator = '<br />';
-        
+
         // no file action is defined, return nothing is modified (false)
         if (!is_array($files)) {
             return false;
         }
-        
+
         foreach ($files as $row_num => $patch_file) {
             $fileName = $patch_file['name'];
             $fileLocation = $patch_file['location'];
             $file = $fileLocation . $fileName;
             $action = $patch_file['action'];
-            
+
             if ($action == 'alter' || $action == 'overwrite') {
                 if (!file_exists($file)) {
                     // If the same message exists then skip it
@@ -461,18 +462,18 @@ class Patch {
 				</form>';
 
 			print_errors($this->errors, $notes);
-		
+
 			unset($this->errors);
 			return true;
 		}
-		
+
 		return false;
 	}
 
 	/**
 	* Compare user's local file with github backup for user's ATutor version,
 	* if different, check table at_patches_files to see if user's local file
-	* was altered by previous patch installation. If it is, return false 
+	* was altered by previous patch installation. If it is, return false
 	* (not modified), otherwise, return true (modified).
 	* @access  private
 	* @param   $folder  folder of the file to be compared
@@ -486,10 +487,10 @@ class Patch {
 		//global $db;
 
 		if (!$this->github_server_connected) return true;
-		
-		$github_file_content = file_get_contents($this->github_tag_folder . $this->getReleaseCommitNum() .
+
+		$github_file_content = file_get_contents($this->github_tag_folder . AT_GITHUB_RELEASE_COMMIT .
 		            str_replace(substr($this->relative_to_atutor_root, 0, -1), '' , $folder) .$file);
-		
+
 		$local_file_content = file_get_contents($folder.$file);
 
 		// if github script does not exist, consider the script is modified
@@ -497,37 +498,20 @@ class Patch {
 
 		// check if the local file has been modified by user. if it is, don't overwrite
 		if (strcasecmp($github_file_content, $local_file_content)) {
-		
+
 			// check if the file was changed by previous installed patches
 			$sql = "SELECT count(*) num_of_updates FROM %spatches patches, %spatches_files patches_files " .
 			       "WHERE patches.applied_version = '%s' ".
 			       "  AND patches.status = 'Installed' " .
 			       "  AND patches.patches_id = patches_files.patches_id " .
-			       "  AND patches_files.name = '%s'";		
+			       "  AND patches_files.name = '%s'";
 			$row = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, VERSION, $file), TRUE);
-		
+
 			if ($row["num_of_updates"] == 0) return true;
 		}
 		return false;
 	}
 
-	/**
-	 * Get the commit hash for the current ATutor release
-	 * @access  private
-	 */
-	function getReleaseCommitNum() {
-		$releases_json = file_get_contents($this->github_fetch_tags_url);
-		$release_tags = json_decode($releases_json);
-		$atutor_tag_name = 'atutor_' . str_replace('.', '_', VERSION);
-
-		foreach ($release_tags as $release_obj) {
-			if ($release_obj->name == $atutor_tag_name) {
-				return $release_obj->commit->sha;
-			}
-		}
-		return false;
-	}
-	
 	/**
 	* Run SQL defined in patch.xml
 	* @access  private
@@ -545,14 +529,14 @@ class Patch {
 
 		require(AT_INCLUDE_PATH . 'classes/sqlutility.class.php');
 		$sqlUtility = new SqlUtility();
-	
+
 		$sqlUtility->queryFromFile($patch_sql_file, TABLE_PREFIX);
-		
+
 		@unlink($patch_sql_file);
-		
+
 		return true;
 	}
-		
+
 	/**
 	* Copy file from update.atutor.ca to user's computer
 	* @access  private
@@ -562,10 +546,10 @@ class Patch {
 	function addFile($row_num)
 	{
 		$this->copyFile($this->baseURL . preg_replace('/.php$/', '.new', $this->patch_array['files'][$row_num]['name']), $this->patch_array['files'][$row_num]['location'].$this->patch_array['files'][$row_num]['name']);
-		
+
 		return true;
 	}
-	
+
 	/**
 	* Delete file, backup before deletion
 	* @access  private
@@ -576,7 +560,7 @@ class Patch {
 	{
 		$local_file = $this->patch_array['files'][$row_num]['location'].$this->patch_array['files'][$row_num]['name'];
 		$backup_file = $local_file . "." . $this->backup_suffix;
-		
+
 		if (file_exists($local_file))
 		{
 			// move file to backup
@@ -584,11 +568,11 @@ class Patch {
 			$this->backup_files[] = realpath($backup_file);
 			@unlink($local_file);
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	/**
 	* Alter file based on <action_detail>
 	* If user's local file is modified and user agrees to proceed with applying patch,
@@ -600,11 +584,11 @@ class Patch {
 	function alterFile($row_num)
 	{
 		$local_file = $this->patch_array['files'][$row_num]['location'].$this->patch_array['files'][$row_num]['name'];
-		
+
 		// backup user's file
 		$backup_file = $local_file . "." . $this->backup_suffix;
-		
-		// Checking existence of $backup_file is to fix the bug when there are multiple alter/delete actions 
+
+		// Checking existence of $backup_file is to fix the bug when there are multiple alter/delete actions
 		// on the same file, the following backups overwrite the first backup which results in the loss of the
 		// original code.
 		if (!file_exists($backup_file))
@@ -612,7 +596,7 @@ class Patch {
 			$this->copyFile($local_file, $backup_file);
 			$this->backup_files[] = realpath($backup_file);
 		}
-		
+
 		$local_file_content = file_get_contents($local_file);
 
 		// Modify user's file
@@ -623,9 +607,9 @@ class Patch {
 
 			if ($alter_file_action['type'] == 'replace')
 				$modified_local_file_content = $this->strReplace($alter_file_action['code_from'], $alter_file_action['code_to'], $local_file_content);
-				
+
 			// when code_from is not found, add in warning
-			if ($modified_local_file_content == $local_file_content)  
+			if ($modified_local_file_content == $local_file_content)
 			{
 				for ($i = 0; $i < count($this->backup_files); $i++)
 					if ($this->backup_files[$i] == realpath($backup_file))
@@ -643,7 +627,7 @@ class Patch {
 
 		return true;
 	}
-	
+
 	/**
 	* Fetch file from update.atutor.ca and overwrite user's local file if the local file is not modified
 	* If user's local file is modified and user agrees to proceed with applying patch,
@@ -656,7 +640,7 @@ class Patch {
 	{
 		$local_file = $this->patch_array['files'][$row_num]['location'].$this->patch_array['files'][$row_num]['name'];
 		$patch_file = $this->baseURL . preg_replace('/.php$/', '.new', $this->patch_array['files'][$row_num]['name']);
-		
+
 		// if local file is modified and user agrees to proceed with applying patch,
 		// copy the new file to user's local for them to merge manually
 		if ($this->skipFilesModified && $this->isFileModified($this->patch_array['files'][$row_num]['location'], $this->patch_array['files'][$row_num]['name']))
@@ -664,24 +648,24 @@ class Patch {
 			$local_patch_file = $local_file . "." . $this->patch_suffix;
 
 			$this->copyFile($patch_file, $local_patch_file);
-			
+
 			$this->patch_files[] = realpath($local_patch_file);
 		}
 		else
 		{
 			$backup_file = $local_file . "." . $this->backup_suffix;
-			
+
 			// backup user's file
 			$this->copyFile($local_file, $backup_file);
 			$this->backup_files[] = realpath($backup_file);
-			
+
 			// overwrite user's file
 			$this->copyFile($patch_file, $local_file);
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	* Copy file $src to $dest. $src can be a local file or a remote file
 	* @access  private
@@ -695,27 +679,27 @@ class Patch {
 		$fp = fopen($dest, 'w');
 		fwrite($fp, $content);
 		fclose($fp);
-		
+
 		return true;
 	}
-	
+
 	/**
-	* Replace single/multiple lines of string. 
+	* Replace single/multiple lines of string.
 	* This function handles different new line character at windows/unix platform
 	* @access  private
 	* @param   $search	String to replace from
 	*          $replace	String to replace to
-	*          $subject Subject to be handled  
+	*          $subject Subject to be handled
 	* @return  return replaced string, if nothing is replaced, return original subject
 	* @author  Cindy Qi Li
 	*/
 	function strReplace($search, $replace, $subject)
 	{
-		// Note: DO NOT change the order of the array elements. 
-		// "\n\r", "\r\n" must come before "\n", "\r" in the array, 
+		// Note: DO NOT change the order of the array elements.
+		// "\n\r", "\r\n" must come before "\n", "\r" in the array,
 		// otherwise, the new line replace underneath would wrongly replace "\n\r" to "\r\r" or "\n\n"
 		$new_line_array = array("\n\r", "\r\n", "\r", "\n");
-		
+
 		foreach ($new_line_array as $new_line)
 		{
 			if (preg_match('/'.preg_quote($new_line).'/', $search) > 0)   $search_new_lines[] = $new_line;
@@ -732,20 +716,20 @@ class Patch {
 				foreach ($search_new_lines as $new_line)
 					if ($new_line <> $new_line_replace_to)
 						$search = preg_replace('/'.preg_quote($new_line).'/', $new_line_replace_to, $search);
-			
+
 			if (count($replace_new_lines) > 0)
 				foreach ($replace_new_lines as $new_line)
 					if ($new_line <> $new_line_replace_to)
 						$replace = preg_replace('/'.preg_quote($new_line).'/', $new_line_replace_to, $replace);
-			
+
 			if (count($subject_new_lines) > 0)
 				foreach ($subject_new_lines as $new_line)
 					$subject = preg_replace('/'.preg_quote($new_line).'/', $new_line_replace_to, $subject);
 		}
-		
+
 		return preg_replace('/'. preg_quote($search, '/') .'/', $replace, $subject);
 	}
-	
+
 	/**
 	* Check if the server is down
 	* @access  private
@@ -755,12 +739,12 @@ class Patch {
 	*/
 	function pingDomain($domain)
 	{
-    $file = @fopen ($domain, 'r');
+	    $file = file_get_contents($domain);
 
-    if (!$file) 
-    	return false;
+	    if (!$file)
+	    	return false;
 
-    return true;
+	    return true;
 	}
 
 	/**
@@ -772,7 +756,7 @@ class Patch {
 	function createPatchesRecord($patch_summary_array)
 	{
 		$sql = "INSERT INTO %spatches " .
-					 "(atutor_patch_id, 
+					 "(atutor_patch_id,
 					   applied_version,
 					   patch_folder,
 					   description,
@@ -794,7 +778,7 @@ class Patch {
 		                            my_add_null_slashes($patch_summary_array["sql"]),
 		                            $patch_summary_array["status"],
 		                            my_add_null_slashes($patch_summary_array["author"])));
-		$this->patch_id = at_insert_id();		
+		$this->patch_id = at_insert_id();
 		return true;
 	}
 
@@ -808,11 +792,11 @@ class Patch {
 	{
 
 		$sql = "INSERT INTO %spatches_files (patches_id, action, name, location) VALUES (%d, '%s', '%s', '%s' )";
-		$result = queryDB($sql, array(TABLE_PREFIX, 
-		                                $this->patch_id, 
-		                                $this->patch_id, $patch_files_array['action'], 
-		                                my_add_null_slashes($patch_files_array['name']), 
-		                                my_add_null_slashes($patch_files_array['location'])));		
+		$result = queryDB($sql, array(TABLE_PREFIX,
+		                                $this->patch_id,
+		                                $this->patch_id, $patch_files_array['action'],
+		                                my_add_null_slashes($patch_files_array['name']),
+		                                my_add_null_slashes($patch_files_array['location'])));
 		$this->patch_file_id = at_insert_id();
 		return true;
 	}
@@ -824,13 +808,13 @@ class Patch {
 	* @author  Cindy Qi Li
 	*/
 	function createPatchesFilesActionsRecord($patch_files_actions_array)
-	{		
+	{
 		$sql = "INSERT INTO %spatches_files_actions(patches_files_id, action, code_from, code_to) VALUES (%d, '%s', '%s', '%s')";
-		$result = queryDB($sql, array(TABLE_PREFIX, 
-		                                intval($this->patch_file_id), 
-		                                $patch_files_actions_array['type'], 
-		                                my_add_null_slashes($patch_files_actions_array['code_from']), 
-		                                my_add_null_slashes($patch_files_actions_array['code_to'])), FALSE, FALSE);	
+		$result = queryDB($sql, array(TABLE_PREFIX,
+		                                intval($this->patch_file_id),
+		                                $patch_files_actions_array['type'],
+		                                my_add_null_slashes($patch_files_actions_array['code_from']),
+		                                my_add_null_slashes($patch_files_actions_array['code_to'])), FALSE, FALSE);
 		return true;
 	}
 }
