@@ -42,6 +42,8 @@ if (isset($_POST['submit_yes'])) {
 	$dest = $_POST['dest'] .'/';
 	$pathext = $_POST['pathext'];
 
+    /// $_POST['listofdirs'] does not appear to be used
+    /// Should this condition be removed
 	if (isset($_POST['listofdirs'])) {
 
 		$_dirs = explode(',',$_POST['listofdirs']);
@@ -73,6 +75,8 @@ if (isset($_POST['submit_yes'])) {
 		}
 		$msg->addFeedback('DIRS_MOVED');
 	}
+	/// END of $_POST['listofdirs'] marked for delete
+	
 	if (isset($_POST['listoffiles'])) {
 
 		$_files = explode(',',$_POST['listoffiles']);
@@ -99,6 +103,10 @@ if (isset($_POST['submit_yes'])) {
 				exit;
 			}	
 			else {
+			// The Home/ directory does not exists, its really /
+                if($dest == _AT('home')."/"){
+                    $dest  = "/";
+                }
 				@rename($current_path.$pathext.$source, $current_path.$dest.$source);
 			}
 		}
@@ -118,6 +126,8 @@ if (isset($_POST['dir_chosen'])) {
 	$hidden_vars['pid'] = $_REQUEST['pid'];
 	$hidden_vars['a_type']    = $_REQUEST['a_type'];
 	
+	require(AT_INCLUDE_PATH.'header.inc.php');	
+	
 	if (isset($_POST['files'])) {
 		$list_of_files = implode(' <br />', $_POST['files']);
 		$hidden_vars['listoffiles'] = $list_of_files;
@@ -128,7 +138,7 @@ if (isset($_POST['dir_chosen'])) {
 		$hidden_vars['listoffiles'] = $list_of_dirs;
 		$msg->addConfirm(array('DIR_MOVE', $list_of_dirs, $_POST['dir_name']), $hidden_vars);
 	}
-	require(AT_INCLUDE_PATH.'header.inc.php');
+
 	$msg->printConfirm();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 } 
