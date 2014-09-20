@@ -223,8 +223,7 @@ class SqlUtility
 				} elseif($prefixed_query[1] == 'REPLACE INTO') {
 					queryDB($prefixed_query[0], array(), FALSE, FALSE);
 				} elseif($prefixed_query[1] == 'ALTER TABLE') {
-				    $result = queryDB($prefixed_query[0], array());
-					if($result > 0){
+					if(queryDB($prefixed_query[0], array()) !== false){ 
 						if ($in_plain_msg) {
 							$progress[] = 'Table <strong>'.$table.'</strong> altered successfully.';
 						} else {
