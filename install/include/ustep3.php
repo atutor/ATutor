@@ -198,7 +198,6 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
 	if (version_compare($_POST['step1']['old_version'], '1.5.1', '>')) {
 	//global $db;
 		define('TABLE_PREFIX', $_POST['step1']['tb_prefix']);
-		debug($_POST);
 		if(!isset($db)){
 		    if(defined('MYSQLI_ENABLED')){
                 $db = at_db_connect($_POST['step1']['db_host'], $_POST['step1']['db_port'], $_POST['step1']['db_login'], urldecode($_POST['step1']['db_password']), $_POST['step1']['db_name']);   
