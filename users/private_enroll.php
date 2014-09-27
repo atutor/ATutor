@@ -59,7 +59,7 @@ if ($_POST['submit']) {
 			$ins_id = $system_courses[$course]['member_id'];
 
 			$sql	= "SELECT email, first_name, last_name FROM %smembers WHERE member_id=%d";
-			$row = queryDB($sql, array(TABLE_PREFIX, $ins_id));
+			$row = queryDB($sql, array(TABLE_PREFIX, $ins_id), TRUE);
 
 			$mail_list[] = $row;
 
