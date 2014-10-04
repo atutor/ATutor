@@ -459,11 +459,12 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 		/* Check if the database that existed is in UTF-8, if not, ask for retry */
 		at_db_select($db_name, $db);
 		$sql = "SHOW CREATE DATABASE `%s`";
-		$row = queryDB($sql, array($db_name));
-		
+		$row = queryDButf8($sql, array($db_name), true, true, $db);
+
 		if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
 			$sql2 = 'ALTER DATABASE `%s` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';
-			$result2 = queryDB($sql2, array($db_name));
+			$result2 = queryDButf8($sql2, array($db_name),false, true, $db);
+
 			if ($result2 == 0){
 				if ($in_plain_msg) {
 					$errors[] = 'Database <b>'.$db_name.'</b> is not in UTF8.  Please set the database character set to UTF8 before continuing by using the following query: <br /> ALTER DATABASE `'.$db_name.'` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci.  <br />To use ALTER DATABASE, you need the ALTER privilege on the database.  You can also check the MySQL manual <a href="http://dev.mysql.com/doc/refman/4.1/en/alter-database.html" target="mysql_window">here</a>.';

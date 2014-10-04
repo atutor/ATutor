@@ -21,7 +21,7 @@ if(isset($_POST['submit']) && ($_POST['action'] == 'process')) {
     if(defined('MYSQLI_ENABLED')){
  	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],urldecode($_POST['step2']['db_password']), $_POST['step2']['db_name']);   
     }else{
-	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],urldecode($_POST['step2']['db_password']));
+	    $db = at_db_connect($_POST['step2']['db_host'],$_POST['step2']['db_port'],$_POST['step2']['db_login'],urldecode($_POST['step2']['db_password']), '');
 	    at_db_select($_POST['step2']['db_name'], $db);
     }
         
