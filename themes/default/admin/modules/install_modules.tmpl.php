@@ -131,7 +131,7 @@ else
 		for ($i=0; $i < $num_of_modules; $i++)
 		{
 			$installed = false;
-			if(in_array($this->module_list_array[$i]["history"][0]["install_folder"],  '')){
+			if(in_array($this->module_list_array[$i]["history"][0]["install_folder"],  $this->keys)){
 			    $installed = true;
 			} 
 			
