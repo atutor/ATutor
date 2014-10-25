@@ -124,7 +124,55 @@ function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $ca
     return execute_sql($sql, $oneRow, $callback_func, $array_type);
 
 }
+function queryDButf8($query, $params=array(), $oneRow = true, $sanitize, $db, $array_type = MYSQL_ASSOC) {
+    global $msg, $addslashes;
 
+    if ($sanitize) {
+        foreach($params as $i=>$value) {
+         if(defined('MYSQLI_ENABLED')){  
+             $value = $addslashes(htmlspecialchars_decode($value, ENT_QUOTES));  
+             $params[$i] = $db->real_escape_string($value);
+            }else {
+             $params[$i] = $addslashes($value);           
+            }
+        }
+    }
+
+    $sql = vsprintf($query, $params);
+
+    if(defined('MYSQLI_ENABLED')){
+           $result = $db->query($sql) or (error_log(print_r($db->error . "\nSQL: " . $sql, true), 0) and $msg->addError($displayErrorMessage));                
+
+    }else{
+           $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
+    }
+    if ($oneRow) {
+          if(defined('MYSQLI_ENABLED')){            
+            $row = $result->fetch_array($array_type);              
+
+          }else {
+            $row = mysql_fetch_array($result, $array_type);              
+          }
+
+        // Check that there are no more than 1 row expected.
+          if(defined('MYSQLI_ENABLED')){
+               if ($result->fetch_array($array_type)) {
+                $msg->addError($displayErrorMessage);
+                return at_affected_rows($db);
+                }           
+          }else{
+              if (mysql_fetch_array($result, $array_type)) {
+                $msg->addError($displayErrorMessage);
+                return at_affected_rows($db);
+                }            
+          }
+
+        unset($result);
+        return ($row) ? $row : array();
+    } else{
+        return $result;
+    }
+}
 function sqlout($sql){
     //output the sql with variable values inserted
     global $sqlout;

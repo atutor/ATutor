@@ -59,7 +59,8 @@ else
 	{
 		$moduleListParser = new ModuleListParser();
 		$moduleListParser->parse($module_list_xml);
-		$module_list_array = $moduleListParser->getParsedArray();
+		$module_list_array = $moduleListParser->getParsedArray();                                   
+
 	}
 	// end of get module list
 	

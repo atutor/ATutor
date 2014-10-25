@@ -93,7 +93,9 @@ class ModuleFactory {
 			//Hack to show only extra mods
 			if(preg_match('/install_modules\.php/', $_SERVER['SCRIPT_FILENAME'])){
 			    $installed_module = $all_modules;
-			    unset($all_modules);
+			    if(defined('IS_SUBSITE')){
+			        unset($all_modules);
+			    }
 			}
 			while (false !== ($dir_name = readdir($dir))) {
 				if (($dir_name == '.') 
