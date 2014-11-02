@@ -94,6 +94,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 				// enable auto login student into "my start page"
 				$_REQUEST["auto_login"] = 1;
 				$_REQUEST["member_id"] = $id;
+ $_REQUEST["code"] = $code;
 				$_REQUEST["code"] = $code;
 			}
 		} else {
@@ -107,6 +108,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 
 	$sql    = "SELECT member_id, email, creation_date, status FROM %smembers WHERE email='%s'";
 	$row = queryDB($sql, array(TABLE_PREFIX, $_POST['email']), TRUE);
+	
 	if ($row['creation_date'] != '') {
 		if ($row['status'] == AT_STATUS_UNCONFIRMED) {
 			$code = substr(md5($row['email'] . $row['creation_date']. $row['member_id']), 0, 10);
