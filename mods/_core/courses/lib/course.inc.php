@@ -78,7 +78,35 @@ function add_update_course($course_data, $isadmin = FALSE) {
 	// Custom icon
 	if ($_FILES['customicon']['name'] != ''){
 		// Use custom icon instead if it exists
-		$course_data['icon']	  = $addslashes($_FILES['customicon']['name']);
+		// Check if image type is supported
+		$gd_info = gd_info();
+	    $supported_images = array();
+	    if ($gd_info['GIF Create Support']) {
+		    $supported_images[] = 'gif';
+	    } 
+	    if ($gd_info['JPG Support'] || $gd_info['JPEG Support']) {
+		    $supported_images[] = 'jpg';
+	    }
+	    if ($gd_info['PNG Support']) {
+	    	$supported_images[] = 'png';
+	    }
+	    $count_extensions = count($supported_images);
+	    
+	    $pattern = "/^.*\.(";
+	    foreach($supported_images as $extension){
+	        $count++;
+	        if($count == $count_extension){
+	         $pattern .= $extension;
+	         }else {
+	         $pattern .= $extension."|";
+	        }
+	    }
+	    $pattern .= ")$/i";
+	    if(preg_match($pattern, $_FILES['customicon']['name'])){
+	    		$course_data['icon']	  = $addslashes($_FILES['customicon']['name']);
+	    } else {
+			    $msg->addError(array('FILE_ILLEGAL', $_FILES['customicon']['name']));
+	    }
 	} 
 	if ($_FILES['customicon']['error'] == UPLOAD_ERR_FORM_SIZE){
 		// Check if filesize is too large for a POST
