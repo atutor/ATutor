@@ -68,7 +68,14 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 //echo $sql;
 //if(!defined('DISABLE_CREATE_COURSE')){
 
-if($_config['disable_create'] != "1"){
+$sql = "SELECT * FROM %smodules WHERE dir_name ='_core/services' && status ='2'";
+$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
+
+if($row['dir_name']){
+    //This is a Service site 
+    $service_site = 1;
+}
+if($_config['disable_create'] != "1" && !isset($service_site)){
 	if (isset($_SESSION['member_id']) && get_instructor_status() === TRUE)	
 	{
 	$this->_pages['mods/_core/courses/users/create_course.php']['title_var'] = 'create_course';
