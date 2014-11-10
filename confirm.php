@@ -143,7 +143,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 if (isset($_REQUEST['auto_login']))
 {
 	
-	$sql = "SELECT M.member_id, M.login, M.preferences, M.language FROM %smembers M WHERE M.member_id=%d";
+	$sql = "SELECT M.member_id, M.login, M.creation_date, M.preferences, M.language FROM %smembers M WHERE M.member_id=%d";
 	$row = queryDB($sql, array(TABLE_PREFIX, $_REQUEST["member_id"]), TRUE);
 
 	$code = substr(md5($e . $row['creation_date'] . $id), 0, 10);
