@@ -2,15 +2,20 @@
 // input string. DO NOT CHANGE.
 global $_input, $_content_base_href;
 
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+	$_content_base_href = 'get.php/';
+} else {
+	$_content_base_href = 'content/' . $_SESSION['course_id'] . '/';
+}
 // Output for flowplayer module.
-// Note: The properly functioning of flowplayer requires flash to be installed. 
+// Note: The properly functioning of flowplayer requires flash to be installed.
 // The conversion performed by this module converts the [media] tag into flowplayer class
-// only when the flash is installed, otherwise, the [media] tag is converted into a plain 
+// only when the flash is installed, otherwise, the [media] tag is converted into a plain
 // <a> link.
 $media_replace = array();
 $media_matches = array();
 $flowplayerholder_class = "atutor.flowplayerholder";  // style class used to play flowplayer medias
-$flowplayerholder_def = '$f("*.'.$flowplayerholder_class.'"';   // javascript definition for atutor.flowplayerholder 
+$flowplayerholder_def = '$f("*.'.$flowplayerholder_class.'"';   // javascript definition for atutor.flowplayerholder
 
 // .flv
 preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+)\.flv\[/media\]#i",$_input,$media_matches[],PREG_SET_ORDER);
@@ -51,7 +56,7 @@ for ($i=0;$i<count($media_replace);$i++){
 	foreach($media_matches[$i] as $media)
 	{
 		//find width and height for each matched media
-		if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
+		if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches))
 		{
 			$width = $matches[1];
 			$height = $matches[2];
@@ -61,7 +66,7 @@ for ($i=0;$i<count($media_replace);$i++){
 			$width = DEFAULT_VIDEO_PLAYER_WIDTH;
 			$height = DEFAULT_VIDEO_PLAYER_HEIGHT;
 		}
-		
+
 		//replace media tags with embedded media for each media tag
 		$media_input = $media_replace[$i];
 		$media_input = str_replace("##WIDTH##","$width",$media_input);
@@ -75,22 +80,22 @@ for ($i=0;$i<count($media_replace);$i++){
 // Include the javascript only if:
 // 1. $flowplayerholder_class is used but not defined
 // 2. exclude from export common cartridge or content package
-if (strpos($_input, $flowplayerholder_class) 
+if (strpos($_input, $flowplayerholder_class)
     && !strpos($_input, $flowplayerholder_def)
     && !strpos($_SERVER['PHP_SELF'], "ims_export.php"))
 {
 	$_input .= '<script type="text/javascript">
-'.$flowplayerholder_def.', "'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.4.swf", { 
-  clip: { 
+'.$flowplayerholder_def.', "'.AT_BASE_HREF.'mods/_standard/flowplayer/flowplayer-3.2.4.swf", {
+  clip: {
   autoPlay: false,
-  baseUrl: \''.AT_BASE_HREF.'get.php/'.$_content_base_href.'\'},
-  plugins:  { 
-    controls: { 
-      buttons:true, 
-      play: true,  
-      scrubber: true, 
+  baseUrl: \''.AT_BASE_HREF.$_content_base_href.'\'},
+  plugins:  {
+    controls: {
+      buttons:true,
+      play: true,
+      scrubber: true,
       autoHide:false
-    }         
+    }
   }
 });
 </script>'."\n";
