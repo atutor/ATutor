@@ -247,7 +247,7 @@ $row_member = queryDB($sql, array(TABLE_PREFIX, $instructor_id), TRUE);
 $vcard = new vCard();
 
 if(count($row_member) > 0){
-	$vcard->setName($row_member['last_name'], $row_member['first_name'], $row['login']);
+	$vcard->setName($row_member['last_name'], $row_member['first_name'], $row_member['login']);
 	$vcard->setEmail($row['email']);
 	$vcard->setNote('Originated from an ATutor at '.AT_BASE_HREF.'. See ATutor.ca for additional information.');
 	$vcard->setURL($row['website']);
