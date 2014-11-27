@@ -1,7 +1,7 @@
 <?php
 // THIS FILE APPEARS TO BE UNUSED, TEST WITH IMS VALIDATOR
 // exit;
-// Needs $content_id and $member_id for the BasicLTI placement 
+// Needs $content_id and $member_id for the BasicLTI placement
 /*$sql = "SELECT * FROM ".TABLE_PREFIX."basiclti_content
                 WHERE content_id=".$content_id;
 $instanceresult = mysql_query($sql, $db);
@@ -79,9 +79,9 @@ $memberresult = mysql_query($sql, $db);
 $atutor_member_row = mysql_fetch_assoc($memberresult);
 */
 $sql = "SELECT * FROM %smembers WHERE member_id= %d";
-$atutor_member_row = queryDB($sql, array(TABLE_PREFIX, $member_id));
+$atutor_member_row = queryDB($sql, array(TABLE_PREFIX, $member_id), TRUE);
 
-if (  $atutor_member_row ) {
+if (  !$atutor_member_row ) {
     loadError("Course definition missing\n");
     exit;
 }
