@@ -26,7 +26,7 @@ require(AT_INCLUDE_PATH . 'lib/mime.inc.php');
 $force_download = false;
 
 //get path to file
-if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE === TRUE) {
 	if ((version_compare(phpversion(), '5.2.0', '<') > 0) && !empty($_SERVER['ORIG_PATH_INFO'])){
 		//http://www.atutor.ca/atutor/mantis/view.php?id=3436
 		$current_file = $_SERVER['ORIG_PATH_INFO'];
@@ -102,16 +102,16 @@ $real = realpath($file);
 if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 	if ($force_download) {
 		header('Content-Type: application/force-download');
-		header('Content-transfer-encoding: binary'); 
+		header('Content-transfer-encoding: binary');
 		header('Content-Disposition: attachment; filename="'.$pathinfo['basename'].'"');
 	} else {
 		header('Content-Disposition: inline; filename="'.$pathinfo['basename'].'"');
 	}
-	
+
 	/**
 	 * although we can check if mod_xsendfile is installed in apache2
 	 * we can't actually check if it's enabled. also, we can't check if
-	 * it's enabled and installed in lighty, so instead we send the 
+	 * it's enabled and installed in lighty, so instead we send the
 	 * header anyway, if it works then the line after it will not
 	 * execute. if it doesn't work, then the line after it will replace
 	 * it so that the full server path is not exposed.

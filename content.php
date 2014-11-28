@@ -37,10 +37,10 @@ foreach($rows_content as $content_row){
 
         require (AT_INCLUDE_PATH.'footer.inc.php');
         exit;
-    } 
+    }
 }/* else: */
 
-if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
+if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE === TRUE) {
 	$course_base_href = 'get.php/';
 } else {
 	$course_base_href = 'content/' . $_SESSION['course_id'] . '/';
@@ -94,18 +94,18 @@ $parent = 0;
 foreach ($path as $i=>$page) {
 	// When login is a student, remove content folder from breadcrumb path as content folders are
 	// just toggles for students. Keep content folder in breadcrumb path for instructors as they
-	// can edit content folder title. 
-	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && 
+	// can edit content folder title.
+	if (!authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) &&
 	    $contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER) {
 		unset($path[$i]);
 		continue;
 	}
-	
+
 	if ($contentManager->_menu_info[$page['content_id']]['content_type'] == CONTENT_TYPE_FOLDER)
 		$content_url = 'mods/_core/editor/edit_content_folder.php?cid='.$page['content_id'];
 	else
 		$content_url = 'content.php?cid='.$page['content_id'];
-		
+
 	if (!$parent) {
 		$_pages[$content_url]['title']    = $page['content_number'] . $page['title'];
 		$_pages[$content_url]['parent']   = 'index.php';
@@ -139,7 +139,7 @@ foreach($content_forum_rs as $content_forum_row){
     $content_forum_ids[] = $content_forum_row;
 }
 
-// use any styles that were part of the imported document, except on the mobile theme. 
+// use any styles that were part of the imported document, except on the mobile theme.
 // $_custom_css = $_base_href.'headstuff.php?cid='.$cid.SEP.'path='.urlEncode($_base_href.$course_base_href.$content_base_href);
 if (is_mobile_device() == false) {
 if ($content_row['use_customized_head'] && strlen($content_row['head']) > 0)
@@ -182,7 +182,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 		}
 
 		$pre_test_id = $contentManager->getPretest($cid);
-		
+
 		if (intval($pre_test_id) > 0)
 		{
 			if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) {
@@ -193,14 +193,14 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 				exit;
 			}
 		}
-		
-		// if one of the prerequisite test(s) has expired, student cannot view the content 
+
+		// if one of the prerequisite test(s) has expired, student cannot view the content
 		if (intval($pre_test_id) != -1 || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN))
 		{
 			// find whether the body has alternatives defined
 			list($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative)
 			= provide_alternatives($cid, $content_row['text'], true);
-			
+
 			// apply alternatives
 			if (intval($_GET['alternative']) > 0) {
 				$content = provide_alternatives($cid, $content_row['text'], false, intval($_GET['alternative']));
@@ -208,13 +208,13 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 				$content = provide_alternatives($cid, $content_row['text']);
 			}
 			$content = format_content($content, $content_row['formatting'], $glossary);
-			
+
 			$content_array = get_content_table($content);
-			
+
 			// Create the array of alternative information for generating the AFA tool bar
 			$alt_infos = array();
 			$pause_image = find_image("pause.png");
-			
+
 			if($has_text_alternative){
 				$alt_infos['has_text_alternative'] = array('3', _AT('apply_text_alternatives'), _AT('stop_apply_text_alternatives'), $pause_image, find_image('text_alternative.png'));
 			}
@@ -227,12 +227,12 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			if($has_sign_lang_alternative){
 				$alt_infos['has_sign_lang_alternative'] = array('2', _AT('apply_sign_lang_alternatives'), _AT('stop_apply_sign_lang_alternatives'), $pause_image, find_image('sign_lang_alternative.png'));
 			}
-			
+
 			$savant->assign('content_table', $content_array[0]);
 			$savant->assign('body', stripslashes($content_array[1]));
 			$savant->assign('cid', $cid);
 			$savant->assign('alt_infos', $alt_infos);
-			
+
 			//assign test pages if there are tests associated with this content page
 			if (!empty($content_test_ids)){
 				$savant->assign('test_message', $content_row['test_message']);
@@ -241,7 +241,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 				$savant->assign('test_message', '');
 				$savant->assign('test_ids', array());
 			}
-	
+
 			/*TODO***************BOLOGNA***************REMOVE ME**********/
 			//assign forum pages if there are forums associated with this content page
 			if (!empty($content_forum_ids)){
@@ -255,7 +255,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 			// get the content that the standard and add-on modules want to display on the content page
 			$module_status_bits = AT_MODULE_STATUS_ENABLED;
 			$module_type_bits = AT_MODULE_TYPE_STANDARD + AT_MODULE_TYPE_EXTRA;
-			
+
 			$module_list = $moduleFactory->getModules($module_status_bits, $module_type_bits, $sort = TRUE);
 			$module_contents = '';
 			foreach($module_list as $key=>$obj) {
@@ -265,7 +265,7 @@ if ($released_status === TRUE || authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN)) 
 				}
 			}
 			if ($module_contents <> '') $savant->assign('module_contents', $module_contents);
-		}	
+		}
 	}
 } else {
 	$infos = array('NOT_RELEASED', AT_date(_AT('announcement_date_format'), $released_status, AT_DATE_UNIX_TIMESTAMP));
@@ -295,10 +295,10 @@ if(strstr($fp, 'AContentXX')){
 	$dom->loadHTML($fp);
 	libxml_use_internal_errors(FALSE);
 	$doc->formatOutput = TRUE;
-	
+
 	//discard white space
 	$dom->preserveWhiteSpace = false;
-	
+
 	$node = $dom->getElementById('content-text');
 	// row commented because of the old version of PHP
 	//$content	= $dom->saveHTML($node);
