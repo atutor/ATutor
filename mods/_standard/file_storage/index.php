@@ -265,7 +265,8 @@ else if (isset($_GET['download']) && (isset($_GET['folders']) || isset($_GET['fi
 }
 // action - Delete Files/Folders (pre-confirmation)
 else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']) && (isset($_GET['folders']) || isset($_GET['files']))) {
-
+	require(AT_INCLUDE_PATH.'header.inc.php');
+	
 	$hidden_vars = array();
 	$hidden_vars['folder'] = $folder_id;
 	$hidden_vars['ot']     = $owner_type;
@@ -295,7 +296,7 @@ else if (query_bit($owner_status, WORKSPACE_AUTH_WRITE) && isset($_GET['delete']
 		$msg->addConfirm(array('DIR_DELETE', $dir_list_to_print), $hidden_vars);
 	}
 
-	require(AT_INCLUDE_PATH.'header.inc.php');
+
 	$msg->printConfirm();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
