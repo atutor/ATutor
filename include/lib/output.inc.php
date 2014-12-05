@@ -928,25 +928,31 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
     //preg_match("/<div id=\"content-text\">(.*?)<\/div>/", $fp, $match);
     //$match = explode('<a name="content" title="Content"></a>', $fp);
 
-        $output = '<iframe width="100%" frameborder="0" id="content_frame" marginheight="0" marginwidth="0" src="'.$input.'"></iframe>';
+        $output = '<iframe width="100%" frameborder="0" id="content_frame" marginheight="0" marginwidth="0" src="'.$input.'" onload="javascript:resizeIframe(this);" ></iframe>';
         $output .= '<script type="text/javascript">
 
                     </script>
         '; 
-
-        $output .=    '<script type="text/javascript">
+		$output .='<script language="javascript" type="text/javascript">
+			function resizeIframe(obj) {
+				obj.style.height = obj.contentWindow.document.body.scrollHeight + \'px\';
+				}
+			</script>';
+   /*   
+   //The above method to resize the iframe, woprks better than the one below
+   $output .=    '<script type="text/javascript">
                     function resizeIframe() {
                         var height = document.documentElement.clientHeight;    
                         // not sure how to get this dynamically
                         height -= 20; // whatever you set your body bottom margin/padding to be
-                        document.getElementById(\'content_frame\').style.height = height +"px";
+                        document.getElementById(\'content_frame\').sty	le.height = height +"px";
                         //document.getElementById(\'content_frame\').style.height = "100px";
                         
                     };
                     document.getElementById(\'content_frame\').onload = resizeIframe;
                     window.onresize = resizeIframe;
                     </script>';
-    
+    */
         return $output;
     }
 
