@@ -62,8 +62,8 @@ if (isset($_POST['submit_no'])) {
 
 		/* Decrement count for number of posts and topics*/
 
-		$sql	= "UPDATE %sforums SET num_posts=num_posts-1-%d, num_topics=num_topics-1, last_post=last_post WHERE forum_id=%d";
-		$result = queryDB($sql, array(TABLE_PREFIX, $row['num_comments'], $fid));
+		$sql	= "UPDATE %sforums SET num_posts=num_posts-(1+%d), num_topics=num_topics-1, last_post=last_post WHERE forum_id=%d";
+		$result = queryDB($sql, array(TABLE_PREFIX, $row_posts['num_comments'], $fid));
 
 		$sql	= "DELETE FROM %sforums_threads WHERE (parent_id=%d OR post_id=%d) AND forum_id=%d";
 		$result = queryDB($sql, array(TABLE_PREFIX, $pid, $pid, $fid));
