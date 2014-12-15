@@ -57,7 +57,7 @@ fwrite($main, "<div class='threadlist'>");
 
 $filearr = array();  // will hold all the files that were created
 
-$sql = "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H-%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE parent_id=0 AND forum_id=%d ORDER BY date ASC LIMIT 0, 125";
+$sql = "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H-%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE parent_id=0 AND forum_id=%d ORDER BY date ASC LIMIT 0, 200";
 $rows_threads = queryDB($sql, array(TABLE_PREFIX, $forum_id));
 
 // Print out each post for each thread
@@ -72,7 +72,7 @@ foreach($rows_threads as $row){
     fwrite($handle, "<div><p><br /><h1>".$row['subject']."</h1></div><br />");
     fwrite($handle, "<div><ul class='forum-thread'>");
 
-    $sql	= "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H-%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE parent_id=%d AND forum_id=%d ORDER BY date ASC LIMIT 0, 125";
+    $sql	= "SELECT *, DATE_FORMAT(date, '%%Y-%%m-%%d %%H-%%i:%%s') AS date, UNIX_TIMESTAMP(date) AS udate FROM %sforums_threads WHERE parent_id=%d AND forum_id=%d ORDER BY date ASC LIMIT 0, 200";
     $rows_posts = queryDB($sql, array(TABLE_PREFIX, $row['post_id'], $forum_id));
     ob_start();
 
