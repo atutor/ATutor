@@ -84,6 +84,9 @@ if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
          * In the best case it stops after the first found link.
          * In the worst case it goes through all the modules and doesn't find a link.
          */
+         // Hack to fix arrange-content privilege failing
+          global $moduleFactory;
+          ////
             $module_list = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED, 0, TRUE);
             $keys = array_keys($module_list);
 
