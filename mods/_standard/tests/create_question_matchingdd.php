@@ -85,7 +85,7 @@ if (isset($_POST['cancel'])) {
                                 $_POST['answer'][9],
                                 $_POST['remedial_content']);
 
-        $sql = vsprintf(AT_SQL_QUESTION_MATCHINGDD, $sql_params);
+        $sql = vsprintf(AT_SQL_QUESTION_MATCHINGDD, preg_replace('#\'#','\\\'',preg_replace('#%#','%%',$sql_params)));
 
         $result    = queryDB($sql, array());
 

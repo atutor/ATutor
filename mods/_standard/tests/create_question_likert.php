@@ -83,7 +83,7 @@ if (isset($_POST['cancel'])) {
 								$_POST['answer'][8], 
 								$_POST['answer'][9]);
 
-		$sql = vsprintf(AT_SQL_QUESTION_LIKERT, $sql_params);
+		$sql = vsprintf(AT_SQL_QUESTION_LIKERT, preg_replace('#\'#','\\\'',preg_replace('#%#','%%',$sql_params)));
         $result    = queryDB($sql, array());
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

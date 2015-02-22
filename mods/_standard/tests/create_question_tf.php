@@ -47,7 +47,7 @@ if (isset($_POST['cancel'])) {
                                 $_POST['answer'],
                                 $_POST['remedial_content']);
 
-        $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, $sql_params);  
+        $sql = vsprintf(AT_SQL_QUESTION_TRUEFALSE, preg_replace('#\'#','\\\'',preg_replace('#%#','%%',$sql_params)));  
         $result    = queryDB($sql, array());
         
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

@@ -72,7 +72,7 @@ if (isset($_POST['cancel']) || isset($_POST['submit_no'])) {
                                 $answers[8], 
                                 $answers[9],
                                 $_POST['remedial_content']);
-        $sql = vsprintf(AT_SQL_QUESTION_MULTI, $sql_params);
+        $sql = vsprintf(AT_SQL_QUESTION_MULTI, preg_replace('#\'#','\\\'',preg_replace('#%#','%%',$sql_params)));
         
         $result    = queryDB($sql, array());
 
