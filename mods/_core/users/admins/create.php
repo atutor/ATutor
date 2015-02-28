@@ -15,6 +15,13 @@
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_ADMIN);
+if($_SERVER['HTTP_REFERER'] != $_SERVER['PHP_SELF']){
+    $referer_script = preg_replace('#'.$_base_href.'#', '', $_SERVER['HTTP_REFERER']);
+    if(!in_array($_pages[$referer_script], $_pages)){
+    echo "not a valid referer";
+    exit;
+    }
+}
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
