@@ -663,7 +663,23 @@ function admin_authenticate($privilege = 0, $check = false) {
 	}
 	return true;
 }
-
+/**
+ * Check if referer is in the $_pages array to prevent CSRF access
+ * @access public
+ * @return error message access denied
+ */
+function check_referer(){
+    global $_pages, $_base_href, $msg;
+    if(isset($_SERVER['HTTP_REFERER']) && $_SERVER['HTTP_REFERER'] !='' && $_SERVER['HTTP_REFERER'] != $_SERVER['PHP_SELF']){
+        $referer_script = preg_replace('#'.$_base_href.'#', '', $_SERVER['HTTP_REFERER']);
+        if( !in_array($_pages[$referer_script], $_pages)){
+			$msg->addError('ACCESS_DENIED');
+			require(AT_INCLUDE_PATH.'header.inc.php'); 
+			require(AT_INCLUDE_PATH.'footer.inc.php'); 
+			exit;
+        }
+    }
+}
 /**
  * Check if the give theme is a subsite customized theme. Return true if it is, otherwise, return false
  * @access public
