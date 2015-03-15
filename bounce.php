@@ -326,7 +326,7 @@ switch ($row['access']){
 			if ($_config['pretty_url'])
 			{
 				if (!strpos($dest, '/p_course/')) $dest .= '/p_course/'.$course;
-				header('Location: '.$dest);
+				header('Location: '.$dest , TRUE, 301);
 				exit;
 			}
 		} else if (!$_SESSION['valid_user']) {
@@ -387,7 +387,7 @@ switch ($row['access']){
 
 		$_SESSION['groups'] = get_groups($course);
 
-		header('Location: '.$dest);
+		header('Location: '.$dest, TRUE, 301);
 		exit;
 
 		break;

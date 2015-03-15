@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
-define('AT_DEVEL', 0);
+//define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 //define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
@@ -357,9 +357,9 @@ if ((isset($_SESSION['course_id']) && isset($_pretty_url_course_id) && $_SESSION
 	(isset($_pretty_url_course_id) && !isset($_SESSION['course_id']) && !isset($_REQUEST['ib']))) {
 
 	if($_config['pretty_url'] == 0){
-		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id.SEP.'pu='.$_SERVER['PATH_INFO'].urlencode('?'.$_SERVER['QUERY_STRING']));
+		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id.SEP.'pu='.$_SERVER['PATH_INFO'].urlencode('?'.$_SERVER['QUERY_STRING']), TRUE, 301);
 	} else {
-		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id.SEP.'pu='.$_SERVER['PATH_INFO']);
+		header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_pretty_url_course_id.SEP.'pu='.$_SERVER['PATH_INFO'], TRUE, 301);
 	}
 	exit;
 }
