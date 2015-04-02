@@ -90,6 +90,7 @@ if (isset($_custom_script)) {
 	$custom_head .= '
 ' . $_custom_script;
 }
+$custom_head .='<meta name="google-site-verification" content="_O0BbIDd98mENDFWCWD5NR8xPQhoEEnKOKaA_DlhqKY" />';
 $custom_head .= '<meta name="google-site-verification" content="dNU6z27-f4GLPfPishC4RK8HhFdtjvr6-Hca2GFn5to" />';
 $custom_head .= '
     <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
