@@ -580,7 +580,7 @@ if ($_SESSION['member_id'] && $_SESSION['enroll']){
 		<select name="ot" id="ot">
 			<option value="1" <?php if ($owner_type == WORKSPACE_COURSE) { echo 'selected="selected"'; } ?>><?php echo _AT('course_files'); ?></option>
 			<?php if ($_SESSION['member_id'] && $_SESSION['enroll']): ?>
-				<!-- <option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option> -->
+				<option value="2" <?php if ($owner_type == WORKSPACE_PERSONAL) { echo 'selected="selected"'; } ?>><?php echo _AT('my_files'); ?></option>
 			<?php endif; ?>
 			<?php if (isset($file_storage_groups)): ?>
 				<optgroup label="<?php echo _AT('groups'); ?>">
