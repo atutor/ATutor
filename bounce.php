@@ -155,11 +155,10 @@ if (!empty($_REQUEST['pu'])) {
 	} else {
 		if ($_config['pretty_url'])
 		{
-			$orig_url = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'];
-			$page = (substr($_REQUEST['pu'], -1) == '/') ? ($orig_url. 'ib/1/') : ($orig_url .'/ib/1/');
+			$page = url_rewrite($_REQUEST['pu'], AT_PRETTY_URL_NOT_HEADER, true) . 'ib/1';
 		}
 		else
-			$page = AT_PRETTY_URL_HANDLER.$_REQUEST['pu'] . SEP .'ib=1';
+			$page = $_REQUEST['pu'] . SEP .'ib=1';
 	}
 } elseif (!empty($_REQUEST['p'])) {
 	//For search
