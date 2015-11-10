@@ -287,7 +287,7 @@ $savant->assign('num_tabs', $num_tabs);
 $savant->assign('tabs', $tabs);
 $savant->assign('enrollment_result', $rows_enrollment_result);
 
-if($_SESSION['is_admin'] === true || $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN || authenticate(AT_PRIV_AT_PRIV_ENROLLMENT)){
+if($_SESSION['is_admin'] === true || $_SESSION['privileges'] == AT_ADMIN_PRIV_ADMIN || authenticate(AT_PRIV_ENROLLMENT)){
 	$savant->display('instructor/enrolment/index.tmpl.php');
 }
 
