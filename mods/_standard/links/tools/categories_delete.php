@@ -44,7 +44,7 @@ if (isset($_POST['submit_no'])) {
 	$result = queryDB('SELECT C.cat_id, L.link_id FROM %slinks_categories C, %slinks L WHERE C.parent_id=%d OR L.cat_id=%d', array(TABLE_PREFIX, TABLE_PREFIX, $cat_id, $cat_id));
 	
 	if (empty($result)) {
-		queryDB("DELETE FROM %slinks_categories WHERE owner_id=%d AND owner_type=%s AND cat_id=%d", array(TABLE_PREFIX, $owner_id, $owner_type, $cat_id));
+		queryDB("DELETE FROM %slinks_categories WHERE owner_id=%d AND owner_type=%d AND cat_id=%d", array(TABLE_PREFIX, $owner_id, $owner_type, $cat_id));
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 		$msg->addError('LINK_CAT_NOT_EMPTY');

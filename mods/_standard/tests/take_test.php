@@ -114,7 +114,7 @@ if (isset($_POST['submit'])) {
     // update the final score
     // update status to complate to fix refresh test issue.
 
-    $sql = 'UPDATE %stests_results SET final_score=%s, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=%d';
+    $sql = 'UPDATE %stests_results SET final_score=%d, date_taken=date_taken, status=1, end_time=NOW() WHERE result_id=%d';
     $result    = queryDB($sql, array(TABLE_PREFIX, ($set_empty_final_score) ? 'NULL' : $final_score, $result_id));
     
     unset($_SESSION['questions']);

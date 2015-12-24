@@ -244,7 +244,7 @@ if ($late_submit != '2'){
 }
 
 if($assign_to != 0) {
-    $sql = "SELECT title FROM %sgroups_types WHERE type_id=%s AND course_id=%d";
+    $sql = "SELECT title FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
     $type_row = queryDB($sql, array(TABLE_PREFIX, $assign_to, $_SESSION['course_id']), TRUE);
 }
 

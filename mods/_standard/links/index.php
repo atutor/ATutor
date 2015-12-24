@@ -78,10 +78,10 @@ $course_id = $_SESSION['course_id'];
 $sql = '';
 $sqlParams = array();
 if (!empty($tmp_groups)) {
-	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s)) AND L.Approved=1';
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%d) OR (owner_id IN (%s) AND owner_type=%d)) AND L.Approved=1';
 	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $tmp_groups, LINK_CAT_GROUP);
 } else {
-	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE (owner_id=%d AND owner_type=%s) AND L.Approved=1';
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE (owner_id=%d AND owner_type=%d) AND L.Approved=1';
 	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE);
 }
 

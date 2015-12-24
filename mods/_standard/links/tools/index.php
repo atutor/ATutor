@@ -51,13 +51,13 @@ $auth = manage_links();
 $sql = '';
 $sqlParams = array();
 if ($auth == LINK_CAT_AUTH_ALL) {
-	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))';
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%d) OR (owner_id IN (%s) AND owner_type=%d))';
 	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_GROUP) {
-	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE owner_id IN (%s) AND owner_type=%s';
+	$sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE owner_id IN (%s) AND owner_type=%d';
 	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $groups, LINK_CAT_GROUP);
 } else if ($auth == LINK_CAT_AUTH_COURSE) {
-	$sql = "SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s))";
+	$sql = "SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE ((owner_id=%d AND owner_type=%d) OR (owner_id IN (%s) AND owner_type=%d))";
 	array_push($sqlParams, TABLE_PREFIX, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 } 
 

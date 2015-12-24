@@ -36,7 +36,7 @@ if (isset($_POST['cancel'])) {
 		//Check if the title has exceeded the DB length, 100
 		$_POST['title'] = validate_length($_POST['title'], 100);
 
-		$sql = "UPDATE %snews SET title='%s', body='%s', formatting=%d, date=date WHERE news_id=%s AND course_id=%d";
+		$sql = "UPDATE %snews SET title='%s', body='%s', formatting=%d, date=date WHERE news_id=%d AND course_id=%d";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['title'], $_POST['body_text'], $_POST['formatting'], $_POST['aid'], $_SESSION['course_id']));
 
 		/* update announcement RSS: */

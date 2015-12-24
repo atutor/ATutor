@@ -85,43 +85,43 @@ function get_link_categories($manage=false, $list=false) {
 	$sqlParams = array();
 	//if suggest a link page
 	if ($_SERVER['PHP_SELF'] == $_base_path.'mods/links/add.php') {
-		$sql = 'SELECT * FROM %slinks_categories WHERE (owner_id=%d AND owner_type=%s) ORDER BY parent_id, name';
+		$sql = 'SELECT * FROM %slinks_categories WHERE (owner_id=%d AND owner_type=%d) ORDER BY parent_id, name';
 		array_push($sqlParams, TABLE_PREFIX, $course_id, LINK_CAT_COURSE);
 	} else if ($manage) {
 		$sql = 'SELECT * FROM %slinks_categories WHERE ';
 		array_push($sqlParams, TABLE_PREFIX);
 		if ( authenticate(AT_PRIV_GROUPS, true) && authenticate(AT_PRIV_COURSE, true) ) {
 			if ($list) {
-				$sql .= '(owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s AND name<>"")';
+				$sql .= '(owner_id=%d AND owner_type=%d) OR (owner_id IN (%s) AND owner_type=%d AND name<>"")';
 				array_push($sqlParams, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 			} else {
-				$sql .= '(owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s)';
+				$sql .= '(owner_id=%d AND owner_type=%d) OR (owner_id IN (%s) AND owner_type=%d)';
 				array_push($sqlParams, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 			}
 
 		} else if ( authenticate(AT_PRIV_LINKS, true) ) {
-			$sql .= '(owner_id=%d AND owner_type=%s)';
+			$sql .= '(owner_id=%d AND owner_type=%d)';
 			array_push($sqlParams, $course_id, LINK_CAT_COURSE);
 			if (!empty($groups)) {
-				$sql .= ' OR (owner_id IN (%s) AND owner_type=%s)';
+				$sql .= ' OR (owner_id IN (%s) AND owner_type=%d)';
 				array_push($sqlParams, $groups, LINK_CAT_GROUP);
 			}
 		} else if ( authenticate(AT_PRIV_GROUPS, true) || !empty($groups) ) { 
 			if ($list) {
-				$sql .= '(owner_id IN (%s) AND owner_type=%s AND name<>"")';
+				$sql .= '(owner_id IN (%s) AND owner_type=%d AND name<>"")';
 				array_push($sqlParams, $groups, LINK_CAT_GROUP);
 			} else {
-				$sql .= '(owner_id IN (%s) AND owner_type=%s)';
+				$sql .= '(owner_id IN (%s) AND owner_type=%d)';
 				array_push($sqlParams, $groups, LINK_CAT_GROUP);
 			}
 		} 	
 		$sql .= ' ORDER BY parent_id, name';
 	} else {
 		if (!empty($groups)) {
-			$sql = 'SELECT * FROM %slinks_categories WHERE (owner_id=%d AND owner_type=%s) OR (owner_id IN (%s) AND owner_type=%s) ORDER BY parent_id, name';
+			$sql = 'SELECT * FROM %slinks_categories WHERE (owner_id=%d AND owner_type=%d) OR (owner_id IN (%s) AND owner_type=%d) ORDER BY parent_id, name';
 			array_push($sqlParams, TABLE_PREFIX, $course_id, LINK_CAT_COURSE, $groups, LINK_CAT_GROUP);
 		} else {
-			$sql = 'SELECT * FROM %slinks_categories WHERE (owner_id=%d AND owner_type=%s) ORDER BY parent_id, name';
+			$sql = 'SELECT * FROM %slinks_categories WHERE (owner_id=%d AND owner_type=%d) ORDER BY parent_id, name';
 			array_push($sqlParams, TABLE_PREFIX, $course_id, LINK_CAT_COURSE);
 		}
 	}

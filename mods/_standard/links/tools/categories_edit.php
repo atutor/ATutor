@@ -47,7 +47,7 @@ if (isset($_POST['submit'])) {
 		//Check length of the post, if it's exceeded 100 as defined in the db. 
 		$cat_name = validate_length($cat_name, 100);
 
-		queryDB('UPDATE %slinks_categories SET parent_id=%d, name="%s", owner_type=%s, owner_id=%d WHERE cat_id=%d',
+		queryDB('UPDATE %slinks_categories SET parent_id=%d, name="%s", owner_type=%d, owner_id=%d WHERE cat_id=%d',
 		              array(TABLE_PREFIX, $parent_id, $cat_name, $owner_type, $owner_id, $cat_id));
 		
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

@@ -61,7 +61,7 @@ if (isset($_POST['cancel'])) {
 
 		//check if new cat is auth? -- shouldn't be a prob. since cat dropdown is already filtered
 
-		queryDB('UPDATE %slinks SET cat_id=%d, Url="%s", LinkName="%s", Description="%s", Approved=%s WHERE link_id=%d', array(TABLE_PREFIX, $_POST['cat'], $_POST['url'], $_POST['title'], $_POST['description'], $_POST['approved'], $link_id));
+		queryDB('UPDATE %slinks SET cat_id=%d, Url="%s", LinkName="%s", Description="%s", Approved=%d WHERE link_id=%d', array(TABLE_PREFIX, $_POST['cat'], $_POST['url'], $_POST['title'], $_POST['description'], $_POST['approved'], $link_id));
 	
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 

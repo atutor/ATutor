@@ -26,7 +26,7 @@ if (!$_SESSION['valid_user']) {
 $_GET['view'] = intval($_GET['view']);
 
 if ($_GET['view']) {
-	$sql = "UPDATE %smessages SET new=0, date_sent=date_sent WHERE to_member_id=%d AND message_id=%s";
+	$sql = "UPDATE %smessages SET new=0, date_sent=date_sent WHERE to_member_id=%d AND message_id=%d";
 	$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $_GET['view']));
 }
 

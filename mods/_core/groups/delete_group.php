@@ -29,7 +29,7 @@ if (isset($_POST['submit_no'])) {
 	$id = intval($_POST['id']);
 	$type_id = intval($_POST['type_id']);
 
-	$sql = "SELECT type_id FROM %sgroups_types WHERE type_id=%s AND course_id=%d";
+	$sql = "SELECT type_id FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
 	$rows_group_types = queryDB($sql, array(TABLE_PREFIX, $type_id, $_SESSION[course_id]));
 
 

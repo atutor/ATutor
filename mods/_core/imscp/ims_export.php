@@ -334,7 +334,7 @@ $imsmanifest_xml .= str_replace(	array('{ORGANIZATIONS}',	'{RESOURCES}', '{COURS
 									$ims_template_xml['final']);
 
 /* generate the vcard for the instructor/author */
-$sql = "SELECT first_name, last_name, email, website, login, phone FROM %smembers WHERE member_id=%s";
+$sql = "SELECT first_name, last_name, email, website, login, phone FROM %smembers WHERE member_id=%d";
 $row_members = queryDB($sql, array(TABLE_PREFIX, $instructor_id), TRUE);
 $vcard = new vCard();
 if(count($row_members) > 0){

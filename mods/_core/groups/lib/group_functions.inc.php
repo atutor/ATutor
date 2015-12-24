@@ -25,7 +25,7 @@ function get_latest_additions($module, $group_id)
             $sqlParams = array(TABLE_PREFIX, BLOGS_GROUP, $group_id, $record_limit);
             break;
         case _AT('links'): 
-            $sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE (owner_id =%s AND owner_type=%s) AND L.Approved=1 ORDER BY SubmitDate DESC LIMIT %d';
+            $sql = 'SELECT * FROM %slinks L INNER JOIN %slinks_categories C USING (cat_id) WHERE (owner_id =%d AND owner_type=%d) AND L.Approved=1 ORDER BY SubmitDate DESC LIMIT %d';
             $sqlParams = array(TABLE_PREFIX, TABLE_PREFIX, $group_id, LINK_CAT_GROUP, $record_limit);
             break;
         default: return 0;
