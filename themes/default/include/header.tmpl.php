@@ -160,9 +160,9 @@ global $system_courses, $_custom_css, $db;
 
 			<?php if ($this->course_id > -1): ?>
 				<?php if (get_num_new_messages()): ?>
-					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> 
+					<a href="<?php echo $this->base_path; ?>inbox/index.php" id="inbox"><?php echo _AT('inbox'); ?> (<?php echo get_num_new_messages(); ?>)</a> 
 				<?php else: ?>
-					<a href="<?php echo $this->base_path; ?>inbox/index.php"><?php echo _AT('inbox'); ?></a>
+					<a href="<?php echo $this->base_path; ?>inbox/index.php" id="inbox"><?php echo _AT('inbox'); ?></a>
 				<?php endif; ?>
 			<?php endif; ?>
 
@@ -251,7 +251,8 @@ global $system_courses, $_custom_css, $db;
 <div id="sm_topnav">
     <?php if ($this->current_sub_level_page): ?>
     <div id="topnavlistcontainer_sm" role="navigation" aria-live="assertive" class="topnavlistcontainer fl-container" style="height:auto;">
-    <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);" title="<?php echo _AT('toggle_main'); ?>"><?php echo _AT('navigation'); ?><span title="<?php echo _AT('toggle_main'); ?>">&nbsp;</span></a>
+     <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);" title="<?php echo _AT('toggle_main'); ?>"><img src="<?php echo $this->base_path; ?>images/menu_stack.png" alt="<?php echo _AT('toggle_main'); ?>" title="<?php echo _AT('toggle_main'); ?>"></a>
+   <!-- <a class="navigation-bar-button topnavlist-link active" id="topnavlist-link" href="javascript:void(0);" title="<?php echo _AT('toggle_main'); ?>"><?php echo _AT('navigation'); ?><span title="<?php echo _AT('toggle_main'); ?>">&nbsp;</span></a> -->
     <br />
         <div id="navigation-column">
         <?php if ($this->current_sub_level_page): ?>
@@ -319,7 +320,8 @@ global $system_courses, $_custom_css, $db;
 	
     <div id="sm_content">
 		<div id="content_link" aria-live="assertive" class="flc-screenNavigator-navbar " aria-label="<?php echo _AT('left_side'); ?>">
-				<a class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo  _AT("content"); ?></a>	
+		<!--		<a class="content_link_tablet content_link"  href="javascript:void(0);"><?php echo  _AT("content"); ?></a>	 -->
+		<a class="content_link_tablet content_link"  href="javascript:void(0);"><img src="<?php echo $this->img; ?>showmenu.gif" alt="<?php echo  _AT("content"); ?>" title="<?php echo  _AT("content"); ?>"/></a>	
 		</div>	
     </div>		
     <div id="lrg_content">
