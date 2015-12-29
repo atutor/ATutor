@@ -33,6 +33,8 @@ if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
 	exit;
 }
 
+$_POST['subject'] = strip_tags($_POST['subject']);
+$_POST['body'] = strip_tags($_POST['body']); 
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
