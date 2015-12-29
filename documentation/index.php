@@ -23,13 +23,8 @@ if (substr($parts['dirname'], -5) == 'admin') {
 	header('Location: index/index.php');
 	exit;
 }
-/*
-if ( get_magic_quotes_gpc() == 1 ) {
-	$addslashes = 'my_add_null_slashes';
-} else {
-	$addslashes = 'mysql_real_escape_string';
-}
-*/
+$_GET = htmlentities($_GET, ENT_QUOTES);
+
 $req_lang = 'en';
 if (!empty($_GET)) {
 	$req_lang = key($_GET);
