@@ -2150,12 +2150,13 @@ ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
 	border-top: 1px solid transparent;
 	border-left:1px solid transparent;
 	border-right:1px solid transparent;
-	/* border-bottom:3px solid transparent; */
+	border-bottom:3px solid transparent;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.3em;	
 	padding: .4em .5em .2em .5em ;
 }
+
 ul#subsubnavlist li a:hover, ul#subsubnavlist li a:focus,  ul#subsubnavlist li a:hover,
 ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li a:hover,
 ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li a:hover,
