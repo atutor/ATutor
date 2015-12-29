@@ -33,7 +33,7 @@
     $iddd      = $_GET["id"];
     $newstartd = $_GET["start"];
     $newend    = $_GET["end"];
-    $newtitle  = $_GET["title"];
+    $newtitle  = strip_tags($_GET["title"]);
     $alld      = $_GET["allday"];
     $command   = $_GET["cmd"];
     
