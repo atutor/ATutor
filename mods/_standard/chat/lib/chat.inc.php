@@ -370,9 +370,9 @@ function showMessageFiltered($msgNum, &$prefs, $chatID) {
 	        $colour = getChatIDColour($sender, $prefs['colours']);
 			
 			if ($msgNum > $prefs['lastRead']) {
-                echo '<tr><td width="75" class="row1" align="right"><b><span style="color: '.$colour.';">'.stripslashes($sender).' : </span></b></td><td class="row1"><b><span style="color: '.$colour.';">'.stripslashes($msg).'</span></b></td></tr>';
+                echo '<tr><td width="75" class="row1" align="right"><b><span style="color: '.$colour.';">'.stripslashes($sender).' : </span></b></td><td class="row1"><b><span style="color: '.$colour.';">'.htmlspecialchars(stripslashes($msg)).'</span></b></td></tr>';
             } else {
-                echo '<tr><td width="75" class="row1" align="right"><span style="color: '.$colour.';">'.stripslashes($sender).' : </span></td><td class="row1"><span style="color: '.$colour.';">'.stripslashes($msg).'</span></td></tr>';
+                echo '<tr><td width="75" class="row1" align="right"><span style="color: '.$colour.';">'.stripslashes($sender).' : </span></td><td class="row1"><span style="color: '.$colour.';">'.htmlspecialchars(stripslashes($msg)).'</span></td></tr>';
             }
         }
     }
