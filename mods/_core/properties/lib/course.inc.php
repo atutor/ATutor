@@ -102,7 +102,12 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 	    }
 	    $pattern .= ")$/i";
 	    if(preg_match($pattern, $_FILES['customicon']['name'])){
-		         $course_prop['icon']	  = $addslashes($_FILES['customicon']['name']);
+		        $course_prop['icon']	  = $addslashes($_FILES['customicon']['name']);
+		        $allowedTypes = array(IMAGETYPE_PNG, IMAGETYPE_JPEG, IMAGETYPE_GIF);
+                $detectedType = exif_imagetype($_FILES['customicon']['tmp_name']);
+                if(!in_array($detectedType, $allowedTypes)){
+                    $msg->addError(array('FILE_ILLEGAL', $_FILES['customicon']['name']));
+                }
 	    } else {
 			    $msg->addError(array('FILE_ILLEGAL', $_FILES['customicon']['name']));
 	    }
