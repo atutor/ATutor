@@ -52,6 +52,7 @@ if (isset($_POST['cancel'])) {
         
         $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
         header('Location: question_db.php');
+        exit;
     }
 }
 
