@@ -86,6 +86,7 @@ class PrivacyController{
             $sql = "SELECT relationship FROM %ssocial_friends WHERE (member_id=%d AND friend_id=%d) OR (member_id=%d AND friend_id=%d)";
             $relationship = queryDB($sql, array(TABLE_PREFIX, $id, $_SESSION['member_id'], $_SESSION['member_id'], $id));
 		}
+		list($relationship) = $relationship;
 // NOT SURE IF THIS IS WORKING WITH QUERYDB
 //		if (isset($result)){
 //			list($relationship) = mysql_fetch_row($result);
