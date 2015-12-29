@@ -48,6 +48,7 @@ if($_SESSION['is_admin'] > 0 || authenticate(AT_PRIV_GROUPS, TRUE)){
 // student stuff
 $this->_pages['mods/_core/groups/groups.php']['title_var'] = 'groups';
 $this->_pages['mods/_core/groups/groups.php']['img']       = 'images/home-acollab.png';
+$this->_pages['mods/_core/groups/groups.php']['icon']       = 'images/home-acollab_sm.png';
 $this->_pages['mods/_core/groups/groups.php']['text']      = _AT('groups_text');
 
 ?>

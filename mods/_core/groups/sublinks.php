@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 
 global $moduleFactory, $_pages, $_top_level_pages;
-$record_limit = 3;	// Number of sublinks to display for this module on course home page -> detail view
+$record_limit = 2;	// Number of sublinks to display for this module on course home page -> detail view
 
 $group_list = implode(',', $_SESSION['groups']);
 if($group_list != ''){
