@@ -42,11 +42,14 @@ if (isset($_POST['submit'])) {
 	if (!$_POST['last_name']) { 
 		$missing_fields[] = _AT('last_name');
 	}
-
+/*
 	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
 	$_POST['second_name'] = str_replace('<', '', $_POST['second_name']);
 	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
-
+*/	
+	$_POST['first_name'] = strip_tags($_POST['first_name']);
+	$_POST['second_name'] = strip_tags($_POST['second_name']);
+	$_POST['last_name'] = strip_tags($_POST['last_name']);
 	//check date of birth
 	$mo = intval($_POST['month']);
 	$day = intval($_POST['day']);
