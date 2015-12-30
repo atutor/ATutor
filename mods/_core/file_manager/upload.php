@@ -54,7 +54,7 @@ if (isset($_POST['submit'])) {
 	if($_FILES['uploadedfile']['name'])	{
 
 		$_FILES['uploadedfile']['name'] = trim($_FILES['uploadedfile']['name']);
-		$_FILES['uploadedfile']['name'] = str_replace(' ', '_', $_FILES['uploadedfile']['name']);
+		$_FILES['uploadedfile']['name'] = strip_tags(str_replace(' ', '_', $_FILES['uploadedfile']['name']));
 
 		$path_parts = pathinfo($_FILES['uploadedfile']['name']);
 		$ext = $path_parts['extension'];
