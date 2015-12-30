@@ -61,7 +61,7 @@ if (isset($_POST['submit'])) {
 
 		/* check if this file extension is allowed: */
 		/* $IllegalExtentions is defined in ./include/config.inc.php */
-		if (in_array($ext, $IllegalExtentions)) {
+		if (in_array($ext, $IllegalExtentions) || $ext=="") {
 			$errors = array('FILE_ILLEGAL', $ext);
 			$msg->addError($errors);
 			handleAjaxUpload(500);
