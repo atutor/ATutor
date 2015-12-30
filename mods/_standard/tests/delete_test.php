@@ -31,6 +31,10 @@ authenticate(AT_PRIV_TESTS);
 			$sql	= "DELETE FROM %stests_questions_assoc WHERE test_id=%d";
 			$result	= queryDB($sql, array(TABLE_PREFIX, $tid));
 			
+			// Delete any prerequisites 
+			$sql	= "DELETE FROM %scontent_prerequisites WHERE type='%s' AND item_id=%d";
+			$result	= queryDB($sql, array(TABLE_PREFIX, "test",$tid));
+			
 			//delete test content association as well
 			$sql	= "DELETE FROM %scontent_tests_assoc WHERE test_id=%d";
 			$result	= queryDB($sql, array(TABLE_PREFIX, $tid));
