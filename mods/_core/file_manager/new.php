@@ -40,6 +40,7 @@ if (isset($_POST['submit_no'])) {
 }
 
 if (isset($_POST['submit_yes'])) {
+   $_POST['filename'] = strip_tags($_POST['filename']);
 	$filename = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
 	$pathext  = $_POST['pathext'];
 
@@ -70,6 +71,7 @@ if (isset($_POST['submit_yes'])) {
 if (isset($_POST['savenewfile'])) {
 
 	if (isset($_POST['filename']) && ($_POST['filename'] != "")) {
+	    $_POST['filename'] = strip_tags($_POST['filename']);
 		$filename     = preg_replace("{[^a-zA-Z0-9_]}","_", trim($_POST['filename']));
 		$pathext      = $_POST['pathext'];
 		$current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
