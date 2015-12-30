@@ -41,7 +41,7 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 	}
 
 	$course_prop['access']		  = $addslashes($course_prop['access']);
-	$course_prop['title']			  = $addslashes($course_prop['title']);
+	$course_prop['title']			  = strip_tags($addslashes($course_prop['title']));
 	$course_prop['description']	  = $addslashes($course_prop['description']);
 	$course_prop['hide']			  = $addslashes($course_prop['hide']);
 	$course_prop['pri_lang']		  = $addslashes($course_prop['pri_lang']);
