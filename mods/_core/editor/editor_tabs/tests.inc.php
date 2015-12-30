@@ -163,9 +163,9 @@ foreach($rows_prereqs as $row){
 
 ?>
 <div class="row">
-	<span style="font-weight:bold"><?php echo _AT('define_pretest'); ?></span><br />
+	<p style="float:left;"><span style="font-weight:bold;"><?php echo _AT('define_pretest'); ?></span><br />
 	<small>&middot; <?php echo _AT('about_pretest'); ?></small><br />
-	<?php echo _AT('applies_to_all_sub_pages');?>
+	<?php echo _AT('applies_to_all_sub_pages');?></p>
 </div>
 
 <?php print_test_table($results, $_POST['pre_tid'], 'pre_');?>
