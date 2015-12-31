@@ -11,6 +11,7 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 define('AT_INCLUDE_PATH', 'include/');
+exit;  // THIS FILE APPEARS TO BE NO LONGER USED
 
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
