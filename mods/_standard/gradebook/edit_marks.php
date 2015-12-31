@@ -185,6 +185,7 @@ foreach ($selected_tests as $selected_test)
 if ((isset($_GET["asc"]) || isset($_GET["desc"])) && $order_col <> "name")
 {
     $sort = '$grades['.$order_col.'], SORT_'.strtoupper($order).', $selected_students, SORT_'.strtoupper($order);
+    $sort = escapeshellarg($sort);
     
     foreach($selected_tests as $test)
     {
