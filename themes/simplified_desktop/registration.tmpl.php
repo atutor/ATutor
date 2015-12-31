@@ -19,7 +19,7 @@ function encrypt_password()
 	{
 		document.form.form_password_hidden.value = hex_sha1(document.form.form_password1.value);
 		document.form.form_password1.value = "";
-		document.form.form_password2.value = "";
+		/*document.form.form_password2.value = "";*/
 	}
 }
 function encrypt_password_login()

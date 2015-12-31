@@ -26,7 +26,8 @@ if (isset($_POST['cancel'])) {
 
 if (isset($_POST['submit'])) {
 	$missing_fields = array();
-        $_POST['password']   = $addslashes($_POST['password']);
+        $_POST['password']   = $addslashes($_POST['form_password1']);
+        $_POST['form_password2']   = htmlspecialchars($_POST['form_password2']);
 		$_POST['website']    = $addslashes($_POST['website']);
 		$_POST['first_name'] = $addslashes($_POST['first_name']);
 		$_POST['second_name']  = $addslashes($_POST['second_name']);
@@ -245,7 +246,7 @@ if (isset($_POST['submit'])) {
 		}
 		$body .= _AT('web_site') .' : '.AT_BASE_HREF."\n";
 		$body .= _AT('login_name') .' : '.$_POST['login'] . "\n";
-//		$body .= _AT('password') .' : '.$_POST['password'] . "\n";
+		$body .= _AT('password') .' : '.$_POST['form_password2'] . "\n";
 		$mail->Body    = $body;
 		$mail->Send();
 

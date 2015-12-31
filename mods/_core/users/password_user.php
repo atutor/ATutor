@@ -53,7 +53,7 @@ if (isset($_POST['cancel'])) {
 			$tmp_message  = _AT('password_change_msg')."\n\n";
 			$tmp_message .= _AT('web_site').' : '.AT_BASE_HREF."\n";
 			$tmp_message .= _AT('login_name').' : '.$r_login."\n";
-
+			$tmp_message .= _AT('password').' : '.$_POST['password2']."\n";
 			require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
 
 			$mail = new ATutorMailer;
@@ -111,7 +111,7 @@ function encrypt_password()
 	{
 		document.form.form_password_hidden.value = hex_sha1(document.form.password.value);
 		document.form.password.value = "";
-		document.form.password2.value = "";
+		/*document.form.password2.value = "";*/
 	}
 }
 </script>
