@@ -231,6 +231,7 @@ class LanguageEditor extends Language {
 	}
 
 	// public
+	// THIS FUNCTION IS NO LONGER IN USE, FLAG FOR DELETION
 	function showMissingTermsFrame(){
 		global $_base_path, $addslashes;
 		//$terms = array_slice($this->missingTerms, 0, 20);
@@ -263,12 +264,13 @@ class LanguageEditor extends Language {
 	}
 
 	// public
+	// THIS FUNCTION IS NO LONGER IN USE, FLAG FOR DELETION
 	function printTerms($terms){
 		global $addslashes, $languageManager; // why won't $addslashes = $this->addslashes; work?
 
 		$counter = 0;
 
-		$terms = unserialize(stripslashes($addslashes($terms)));
+		//$terms = unserialize(stripslashes($addslashes($terms)));
 
 		natcasesort($terms);
 
