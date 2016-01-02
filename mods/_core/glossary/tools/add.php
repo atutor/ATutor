@@ -60,10 +60,10 @@ if (isset($_POST['submit'])) {
 				$errors = array('TERM_EXISTS', $_POST['word'][$i]);
 				$msg->addError($errors);
 			} else {
-				$_POST['word'][$i]         = $addslashes($_POST['word'][$i]);
+				$_POST['word'][$i]         = $addslashes(preg_replace('#\'#','\\\'',$_POST['word'][$i]));
 				$_POST['definition'][$i]   = $addslashes($_POST['definition'][$i]);
 				$_POST['related_term'][$i] = $addslashes($_POST['related_term'][$i]);
-
+				
 				$terms_sql .= "(NULL, $_SESSION[course_id], '{$_POST[word][$i]}', '{$_POST[definition][$i]}', {$_POST[related_term][$i]})";
 			}
 		}
