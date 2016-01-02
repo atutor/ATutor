@@ -295,15 +295,7 @@ global $system_courses, $_custom_css, $db;
 			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
       </div>
 		  <?php endif; ?>
-      <?php if (isset($this->shortcuts)): ?>
-      <div id="shortcuts">
-	      <ul>
-		      <?php foreach ($this->shortcuts as $link): ?>
-			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
-		      <?php endforeach; ?>
-	      </ul>
-      </div>
-      <?php endif; ?>
+
 
       </div>
 
@@ -338,6 +330,15 @@ global $system_courses, $_custom_css, $db;
 
 	
 	<div id="contentcolumn"  role="main" aria-label="<?php echo _AT('content'); ?>">
+	      <?php if (isset($this->shortcuts)): ?>
+      <div id="shortcuts">
+	      <ul>
+		      <?php foreach ($this->shortcuts as $link): ?>
+			      <li><a href="<?php echo $link['url']; ?>"><img src="<?php echo $link['icon']; ?>" alt="<?php echo $link['title']; ?>"  title="<?php echo $link['title']; ?>" class="shortcut_icon"/><!-- <?php echo $link['title']; ?> --></a></li>
+		      <?php endforeach; ?>
+	      </ul>
+      </div>
+      <?php endif; ?>
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
 		   <a href="javascript:void(0)" accesskey="n"><img src="" title="" alt="" class="img1616"/></a>

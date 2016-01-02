@@ -1611,6 +1611,7 @@ div.social-search{
 	float: left;
 	width: 100%;
     overflow:auto;
+    margin-top:-.1em;
 
 }
 #contentcolumn {
@@ -2450,10 +2451,10 @@ a.pref_wiz_launcher{
 .crumbcontainer{
 	padding:0;
 	width:100%;
-	height:1.5em;
+	height:1em;
 		clear:both;
 /*	font-size: 0.85em;*/
-	padding:3px;
+	padding:.1em;
 	float:left;
 
 }
