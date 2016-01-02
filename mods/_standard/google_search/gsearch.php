@@ -12,6 +12,9 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+
+exit; // This file is no longer in use
+
 ?>
 <script src="http://www.google.com/uds/api?file=uds.js<?php echo "&amp;"; ?>hl=<?php echo $_SESSION['lang']; ?><?php echo "&amp;"; ?>v=1.0<?php echo "&amp;"; ?>key=<?php echo $search_key; ?>" type="text/javascript"></script>
 <script type="text/javascript">

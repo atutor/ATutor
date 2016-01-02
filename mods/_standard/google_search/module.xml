@@ -11,13 +11,13 @@
     <url>http://atutor.ca</url> 
     <license>GPL</license> 
 	<release> 
-        <version>0.1</version> 
+        <version>0.2</version> 
 		<privileges>
 			<instructor_privilege></instructor_privilege>
 			<admin_privilege></admin_privilege> 
 		</privileges>
-        <date>2005-10-11</date> 
+        <date>2016-02-01</date> 
         <state>stable</state> 
-        <notes></notes> 
+        <notes>See the developers guide for details https://developers.google.com/web-search/docs/?hl=en.  This serch replaces the previous search that required a Google key to operate. As a result there are no admin config optiions, so the admin google search page has been removed from ATutor.</notes> 
     </release> 
 </module>

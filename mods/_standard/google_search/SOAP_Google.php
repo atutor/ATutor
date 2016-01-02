@@ -1,4 +1,6 @@
 <?php
+
+exit;  // This file is no longer in use
 require(AT_INCLUDE_PATH . 'classes/nusoap.php');
 
 class SOAP_Google { 

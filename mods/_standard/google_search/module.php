@@ -4,6 +4,7 @@ if (!isset($this) || (isset($this) && (strtolower(get_class($this)) != 'module')
 
 $_student_tool = 'mods/_standard/google_search/index.php';
 
+/*
 if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages['admin/config_edit.php']['children'] = array('mods/_standard/google_search/admin/module_prefs.php');
 
@@ -12,7 +13,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
 	$this->_pages['mods/_standard/google_search/admin/module_prefs.php']['guide']     = 'admin/?p=google_key.php';
 
 }
-
+*/
 //modules sub-content
 $this->_list['google_search'] = array('title_var'=>'google_search','file'=>'mods/_standard/google_search/sublinks.php');
 
