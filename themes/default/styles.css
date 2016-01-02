@@ -4626,7 +4626,6 @@ ul#topnavlist_sm li{
         background-image: linear-gradient(#EAEAEA, #FAFAFA);    
     }
     #content{
-	    display:none;
         float:left;
         clear:both;
         padding-top: .313em;
