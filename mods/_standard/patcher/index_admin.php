@@ -445,12 +445,13 @@ function validate_filename() {
   // check file type
   var file = document.frm_upload.patchfile.value;
   if (!file || file.trim()=='') {
-    alert('Please give a zip file!');
+    alert('<?php echo _AT("upload_zip")  ?>');
     return false;
   }
   
   if(file.slice(file.lastIndexOf(".")).toLowerCase() != '.zip') {
-    alert('Please upload ZIP file only!');
+    //alert('Please upload ZIP file only!');
+    alert('<?php echo _AT("upload_zip")  ?>');
     return false;
   }
 }
