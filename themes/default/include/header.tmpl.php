@@ -381,7 +381,7 @@ global $system_courses, $_custom_css, $db;
 			<?php endif; ?>
 			</div>
 
-			<ul id="subnavlist" role="navigation"  aria-label="<?php echo _AT('tools'); ?>">
+			<ul id="subnavlist" role="navigation"  aria-label="<?php echo _AT('tools'); ?>"><br />
 			<?php 
 
 			$num_pages = count($this->sub_level_pages); 
