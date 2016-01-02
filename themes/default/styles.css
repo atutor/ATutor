@@ -1684,7 +1684,7 @@ div#topnavlistcontainer {
 	padding-bottom:.5em;
 	float:left;
     margin-right: -14px !important;
-    overflow-x:none;
+    overflow-x:hidden;
     overflow-y: hidden;
 }
 ul#topnavlist {
