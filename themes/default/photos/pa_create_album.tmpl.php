@@ -1,3 +1,4 @@
+<div class="album_panel">
 <div class="input-form">
 <form action="<?php echo $_SERVER['PHP_SELF'];?>" name="create_album" method="post">
 	<div class="row">
@@ -33,4 +34,5 @@
 		<input name="cancel" type="submit" value="<?php echo _AT('cancel');?>" class="button"/>
 	</div>
 </form>
+</div>
 </div>
