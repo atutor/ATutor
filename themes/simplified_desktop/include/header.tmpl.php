@@ -60,9 +60,9 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 
 <head>
 	<?php if(isset($this->section_title)){ ?>
-		<title><?php echo $this->section_title; ?>:	 <?php echo $this->page_title; ?></title>
+		<title><?php echo $this->page_title; ?> : <?php echo $this->section_title; ?>:</title>
 	<?php }else { ?>
-		<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
+		<title><?php echo $this->page_title; ?> : <?php echo SITE_NAME; ?> </title>
 	<?php } ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
    <?php if(isset($this->content_keywords) && $this->content_keywords != ''){ ?>

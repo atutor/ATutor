@@ -67,7 +67,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="<?php echo $this->lang_code; ?>"> 
 
 <head>
-	<title><?php echo SITE_NAME; ?> : <?php echo $this->page_title; ?></title>
+	<title><?php echo $this->page_title; ?> : <?php echo SITE_NAME; ?> </title>
 	<meta http-equiv="Content-Type" content="text/html; charset=<?php echo $this->lang_charset; ?>" />
 	<meta name="Generator" content="ATutor - Copyright 2005 by http://atutor.ca" />
 	<base href="<?php echo $this->content_base_href; ?>" />
