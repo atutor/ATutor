@@ -63,10 +63,10 @@
         // locale
         isRTL: false,
         firstDay: 0,
-        monthNames: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
-        monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-        dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-        dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        monthNames: [fc_january, fc_february, fc_march, fc_april, fc_may, fc_june, fc_july, fc_august, fc_september,  fc_october, fc_november, fc_december],
+        monthNamesShort: [fc_jan, fc_feb, fc_mar, fc_apr, fc_may_short, fc_jun, fc_jul, fc_aug, fc_sep,  fc_oct, fc_nov, fc_december],
+        dayNames: [fc_sunday, fc_monday, fc_tuesday, fc_wednesday, fc_thursday, fc_friday, fc_saturday],
+        dayNamesShort: [fc_sun, fc_mon, fc_tue, fc_wed, fc_thu, fc_fri, fc_sat],
         buttonText: {
             prev: '&nbsp;&#9668;&nbsp;',
             next: '&nbsp;&#9658;&nbsp;',

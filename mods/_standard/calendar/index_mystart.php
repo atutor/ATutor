@@ -89,6 +89,61 @@
             var fc_date                 = " . $_SESSION['fc-date'] . ";
             ";
         }
+
+         //monthNamesShort: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+        $global_js_vars .= "
+        var fc_jan  = '"._AT('date_jan')."';
+        var fc_feb  = '"._AT('date_feb')."';
+        var fc_mar  = '"._AT('date_mar')."';
+        var fc_apr  = '"._AT('date_apr')."';
+        var fc_may_short  = '"._AT('date_may_short')."';
+        var fc_jun  = '"._AT('date_jun')."';
+        var fc_jul  = '"._AT('date_jul')."';
+        var fc_aug  = '"._AT('date_aug')."';
+        var fc_sep  = '"._AT('date_sep')."';
+        var fc_oct  = '"._AT('date_oct')."';
+        var fc_nov  = '"._AT('date_nov')."';
+        var fc_dec  = '"._AT('date_dec')."';
+        ";
+        // dayNamesShort: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
+        $global_js_vars .= "
+        var fc_sun  = '"._AT('date_sun')."';
+        var fc_mon  = '"._AT('date_mon')."';
+        var fc_tue  = '"._AT('date_tue')."';
+        var fc_wed  = '"._AT('date_wed')."';
+        var fc_thu  = '"._AT('date_thu')."';
+        var fc_fri  = '"._AT('date_fri')."';
+        var fc_sat  = '"._AT('date_sat')."';
+        ";
+        // dayNames: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+        $global_js_vars .= "
+        var fc_sunday  = '"._AT('date_sunday')."';
+        var fc_monday  = '"._AT('date_monday')."';
+        var fc_tuesday  = '"._AT('date_tuesday')."';
+        var fc_wednesday  = '"._AT('date_wednesday')."';
+        var fc_thursday  = '"._AT('date_thursday')."';
+        var fc_friday  = '"._AT('date_friday')."';
+        var fc_saturday  = '"._AT('date_saturday')."';
+        ";   
+
+    // monthNames: 
+    $global_js_vars .= "
+        var fc_january  = '"._AT('date_january')."';
+        var fc_february  = '"._AT('date_february')."';
+        var fc_march  = '"._AT('date_march')."';
+        var fc_april  = '"._AT('date_april')."';
+        var fc_may  = '"._AT('date_may')."';
+        var fc_june  = '"._AT('date_june')."';
+        var fc_july  = '"._AT('date_july')."';
+        var fc_august  = '"._AT('date_august')."';
+        var fc_september  = '"._AT('date_september')."';
+        var fc_october  = '"._AT('date_october')."';
+        var fc_november  = '"._AT('date_november')."';
+        var fc_december  = '"._AT('date_december')."';        
+    ";
+    
+    
+    
     $_custom_head .= 
     '<script type="text/javascript">' . $global_js_vars . '</script>
     <script type="text/javascript" src="' . AT_BASE_HREF .
