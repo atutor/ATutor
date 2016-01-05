@@ -299,12 +299,6 @@ global $system_courses, $_custom_css, $db;
 			$style.='margin-top:-2em;';
 			echo 'style="'.$style.'"';
 		endif; ?>>		  
-		<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : 
-		?>
-      <div id="guide_box">
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
-      </div>
-		  <?php endif; ?>
 		      <div style="font-size:.8em;margin-left:-.5em;">
       <?php mobile_switch(); ?>
       </div>
@@ -340,6 +334,12 @@ global $system_courses, $_custom_css, $db;
 	      </ul>
       </div>
       <?php endif; ?>
+      		<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : 
+		?>
+      <div id="guide_box">
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
+      </div>
+		  <?php endif; ?>
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
 		<div id="menutoggle">
 		   <a href="javascript:void(0)" accesskey="n"><img src="" title="" alt="" class="img1616"/></a>
