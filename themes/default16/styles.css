@@ -1441,15 +1441,14 @@ background-color:#E6E6E6;
 }
 div#topnavlistcontainer {
 	/*background-image: url('images/pencil_bottom_ds.png'); */
-	margin-top:-2.8em;
-	padding-top:1em;
-	padding-bottom:1.2em;
-	    overflow-y:scroll;
-    overflow-y:hidden;
-	clear:both;
-	float:left;
-	width:100%;
-	height:1.7em;
+    clear: both;
+    float: left;
+    height: 1.7em;
+    margin-top: -2.6em;
+    overflow-y: hidden;
+    padding-bottom: 0.4em;
+    padding-top: 1em;
+    width: 100%;
 }
 ul#topnavlist {
 	margin-top: -.5em;
