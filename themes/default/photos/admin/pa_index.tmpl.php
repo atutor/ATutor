@@ -21,10 +21,11 @@
 		</thead>
 		<tbody>
 		<?php if(!empty($this->albums)): ?>
-		<?php foreach ($this->albums as $aid=>$row): ?>
-		<tr id="r_<?php echo $aid; ?>" onmousedown="jQuery('#album_<?php echo $aid; ?>').attr('checked', true); rowselect(this);">
-			<td><input type="radio" id="album_<?php echo $aid; ?>" name="aid" value="<?php echo $aid; ?>" /></td>
-			<td><a href="<?php echo AT_PA_BASENAME."admin/edit_photos.php?aid=$aid"; ?>"><?php echo AT_print($row['name'], 'input.text'); ?></a></td>
+		<?php 
+		foreach ($this->albums as $aid=>$row): ?>
+		<tr id="r_<?php echo $aid; ?>" onmousedown="jQuery('#album_<?php echo $row['id']; ?>').attr('checked', true); rowselect(this);">
+			<td><input type="radio" id="album_<?php echo $aid; ?>" name="aid" value="<?php echo $row['id']; ?>" /></td>
+			<td><a href="<?php echo AT_PA_BASENAME."admin/edit_photos.php?aid=".$row['id']; ?>"><?php echo AT_print($row['name'], 'input.text'); ?></a></td>
 			<td><?php echo $pa->getAlbumTypeName($row['type_id']); ?></td>
 			<td class="hidecol700"><?php echo AT_print($row['description'], 'photo_albums.description'); ?></td>
 			<td><?php echo AT_print(get_display_name($row['member_id']), 'members.full_name'); ?></td>
