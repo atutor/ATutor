@@ -55,7 +55,10 @@ if (isset($_POST['submit_no'])) {
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 $hidden_vars = array('id' => $id, 'ot' => $owner_type, 'oid' => $owner_id, 'file_id' => $_GET['file_id']);
-$msg->addConfirm(array('DELETE'), $hidden_vars);
+$sql = "SELECT comment FROM %sfiles_comments WHERE comment_id = %d";
+$result = queryDB($sql, array(TABLE_PREFIX, $_GET['id']), TRUE);
+
+$msg->addConfirm(array('DELETE', $result['comment']), $hidden_vars);
 $msg->printConfirm();
 
 
