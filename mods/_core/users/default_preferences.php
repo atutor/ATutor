@@ -89,6 +89,7 @@ if (isset($_POST['submit']) || isset($_POST["set_default"])) {
 	}
 	else
 	{
+	print_r("anything");
 		$pref_defaults = $_config_defaults['pref_defaults'];
 		$mnot = $_config_defaults['pref_inbox_notify'];
 		$auto_login = $_config_defaults['pref_is_auto_login'];
