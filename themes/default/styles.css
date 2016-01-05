@@ -802,11 +802,10 @@ ul.browse-list {
 div#error {
 	width: 100%;
 	padding: 1em;
-	background-color: #E49E7A;
+	background-color: #fde3d7;
 	color:  #000000;
-	background-color: #f9a5a5;	
+    border-left:.5em #ee500a solid;	
 /*	background-color: #F69E94; */
-	padding-left: 25px;
 	font-weight: bold;
 }
 div#error h4 {
@@ -849,15 +848,24 @@ div#feedback {
 	width: 100%;
 	margin-bottom: 2.8em;
 	padding: 1em;
-    background-color: #93E2D5;
+    background-color: #e9fbe9;
+	/*background-color: #B7C68B;*/
+	color: #000000;
+	font-weight: bold;
+	border-left: .5em #52e052 solid;
+}
+div#confirm {
+	width: 100%;
+	padding: 1em;
+	background-color: #f1fbbe;
+	border-left:.5em #dbf93f solid;
 	/*background-color: #B7C68B;*/
 	color: #000000;
 	font-weight: bold;
 }
-
 div#help {
 	width: 100%;
-	border: 1px solid #ACCFCC;
+	border-left: .5em solid #ACCFCC;
 	padding: 15px;
 	background-color: #E9F4F3;
 	color:  #000000;
@@ -867,6 +875,7 @@ div#info {
 	width: 100%;
 	padding: 15px;
 	background-color: #E4EDF7;
+	border-left: .5em #4538d0 solid;
 	color:  #000000;
 	font-weight: bold;
 	float:left;
@@ -879,7 +888,8 @@ div#info a{
 div#warning {
 	width: 100%;
 	padding: 15px;
-	background-color: #FFF6ED;
+	background-color: #f1fbbe;
+	border-left:.5em #dbf93f solid;
 	color:  #000000;
 	font-weight: bold;
 }
