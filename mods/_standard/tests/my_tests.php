@@ -51,7 +51,8 @@ foreach($rows_tests as $row){
 
 	if ( ($row['us'] <= time() && $row['ue'] >= time()) && 
 	   ( ($row['num_takes'] == AT_TESTS_TAKE_UNLIMITED) || ($takes['cnt'] < $row['num_takes']) )  ) {
-		echo '<strong><a href="'.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$row['test_id']).'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
+		//echo '<strong><a href="'.url_rewrite('mods/_standard/tests/test_intro.php?tid='.$row['test_id']).'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
+		echo '<strong><a href="mods/_standard/tests/test_intro.php?tid='.$row['test_id'].'">'.AT_print($row['title'], 'tests.title').'</a></strong>';
 	} else {
 		echo '<small class="bigspacer">'.AT_print($row['title'], 'tests.title').'';
 	}

@@ -28,6 +28,7 @@ $cid_url = SEP.'cid='.$cid;
 //make sure max attempts not reached, and still on going
 $sql = 'SELECT *, UNIX_TIMESTAMP(start_date) AS start_date, UNIX_TIMESTAMP(end_date) AS end_date FROM %stests WHERE test_id=%d AND course_id=%d';
 $test_row = queryDB($sql, array(TABLE_PREFIX, $tid, $course_id), TRUE);
+global $_base_href; 
 
 /* check to make sure we can access this test: */
 if (!$test_row['guests'] && ($enroll == AT_ENROLL_NO || $enroll == AT_ENROLL_ALUMNUS)) {
@@ -38,13 +39,15 @@ if (!$test_row['guests'] && ($enroll == AT_ENROLL_NO || $enroll == AT_ENROLL_ALU
 }
 
 if (!$test_row['guests'] && !authenticate_test($tid)) {
-    header('Location: '.url_rewrite('mods/_standard/tests/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+   # header('Location: '.url_rewrite('mods/_standard/tests/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+    header('Location: '.$_base_href.'mods/_standard/tests/my_tests.php');
     exit;
 }
 
 // checks one/all questions per page, and forward user to the correct one
 if ($test_row['display']) {
-    header('Location: '.url_rewrite('mods/_standard/tests/take_test_q.php?tid='.$tid.$cid_url, AT_PRETTY_URL_IS_HEADER));
+    #header('Location: '.url_rewrite('mods/_standard/tests/take_test_q.php?tid='.$tid.$cid_url, AT_PRETTY_URL_IS_HEADER));
+    header('Location: '.$_base_href.'mods/_standard/tests/take_test_q.php?tid='.$tid.$cid_url);
 } 
 
 $out_of = $test_row['out_of'];
@@ -123,13 +126,17 @@ if (isset($_POST['submit'])) {
     
     $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
     if ((!$enroll && !isset($cid)) || $test_row['result_release']==AT_RELEASE_IMMEDIATE) {
-        header('Location: '.url_rewrite('mods/_standard/tests/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
+        //header('Location: '.url_rewrite('mods/_standard/tests/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url, AT_PRETTY_URL_IS_HEADER));
+        header('Location: '.$_base_href.'mods/_standard/tests/view_results.php?tid='.$tid.SEP.'rid='.$result_id.$cid_url);
         exit;
     }
     
-    if (isset($cid)) header('Location: '.url_rewrite('content.php?cid='.$cid, AT_PRETTY_URL_IS_HEADER));
-    else header('Location: '.url_rewrite('mods/_standard/tests/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+    if (isset($cid)) header('Location: '.$_base_href.'content.php?cid='.$cid);
+    //header('Location: '.url_rewrite('content.php?cid='.$cid, AT_PRETTY_URL_IS_HEADER));
+    //else header('Location: '.url_rewrite('mods/_standard/tests/my_tests.php', AT_PRETTY_URL_IS_HEADER));
+    else header('Location: '.$_base_href.'mods/_standard/tests/my_tests.php');
     exit;
+    
 }
 
 $content_base_href = (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) ? 'get.php/' : sprintf('content/%d/', $course_id);

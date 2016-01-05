@@ -128,11 +128,13 @@ else if (isset($_POST['submit']))
     }
     $gid_str = (isset($guest_id)) ? SEP."gid=".$guest_id : "";
     if (isset($cid)) $gid_str .= SEP.'cid='.$cid;
-
+    global $_base_href;
     if ($test_row['display']) {
-        header('Location: '.url_rewrite('mods/_standard/tests/take_test_q.php?tid='.$tid.$gid_str, AT_PRETTY_URL_IS_HEADER));
+#        header('Location: '.url_rewrite('mods/_standard/tests/take_test_q.php?tid='.$tid.$gid_str, AT_PRETTY_URL_IS_HEADER));
+        header('Location: '.$_base_href.'mods/_standard/tests/take_test_q.php?tid='.$tid.$gid_str);
     } else {
-        header('Location: '.url_rewrite('mods/_standard/tests/take_test.php?tid='.$tid.$gid_str, AT_PRETTY_URL_IS_HEADER));
+        #header('Location: '.url_rewrite('mods/_standard/tests/take_test.php?tid='.$tid.$gid_str, AT_PRETTY_URL_IS_HEADER));
+        header('Location: '.$_base_href.'mods/_standard/tests/take_test.php?tid='.$tid.$gid_str);
     }
     exit;
 }

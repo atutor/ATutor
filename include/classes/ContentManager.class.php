@@ -987,7 +987,8 @@ class ContentManager
 					//if this is a test link.
 					if (isset($content['test_id'])){
 						$title_n_alt =  ContentManager::cleanOutput($content['title']);
-						$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].SEP.'in_cid='.$content['parent_content_id'];
+						//$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].SEP.'in_cid='.$content['parent_content_id'];
+						$in_link = $_base_href.'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].SEP.'in_cid='.$content['parent_content_id'];
 						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
 					} else {
 						$in_link = 'content.php?cid='.$content['content_id'];
@@ -995,7 +996,8 @@ class ContentManager
 					}
 					
 					$full_title = ContentManager::cleanOutput($content['title']);
-					$link .= $img_link . ' <a href="'.$_base_path.htmlentities_utf8(url_rewrite($in_link)).'" title="';
+					//$link .= $img_link . ' <a href="'.$_base_path.htmlentities_utf8(url_rewrite($in_link)).'" title="';
+					$link .= $img_link . ' <a href="'.$_base_path.htmlentities_utf8($in_link).'" title="';
 					$base_title_length = 29;
 					if ($_SESSION['prefs']['PREF_NUMBERING']) {
 						$base_title_length = 24;
