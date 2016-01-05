@@ -1746,10 +1746,10 @@ ul#topnavlist li a {
     /* The normal, unselected tabs. They are all links */
 	color: #555;
 	font-weight:bold;
-/*	border-top:1px solid #E5E5E5;
-	border-left:1px solid #E5E5E5;
-	border-right:1px solid #E5E5E5;
-*/
+	border-bottom: 3px solid #transparent;
+	border-top: 1px solid transparent;
+	border-left:1px solid transparent;
+	border-right:1px solid transparent;
    	text-decoration:underline;
 	background-color:white;
 	border-radius: .5em .5em 0em 0em;
