@@ -50,7 +50,7 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('background-color', '#EAEAEA'); 
                         $(this).find('div').css('padding', '');
                         $(this).find('div').css('width', '100%');
-                        $("#topnavlistcontainer").css('padding-left', '3.3em');
+                        $("#topnavlistcontainer").css('padding-left', '2.3em');
                         $("#topnavlistcontainer").css('padding-bottom', '.3em');
                         $("#topnavlistcontainer").css('margin-left', '-2.3em');
                         $("#topnavlistcontainer").css('background-image', 'none');                    
