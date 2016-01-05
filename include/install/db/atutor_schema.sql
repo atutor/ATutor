@@ -1023,20 +1023,20 @@ CREATE TABLE `myown_patches_files` (
 ) ENGINE = MyISAM ;
 
 # insert the default theme
-INSERT INTO `themes` VALUES ('ATutor', '2.2', 'default', 'Desktop', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2, 0);
-INSERT INTO `themes` VALUES ('ATutor 2.1', '2.2', 'default21', 'Desktop', NOW(), 'This is the ATutor 2.1 series defailt theme.', 1, 0);
-INSERT INTO `themes` VALUES ('Fluid', '2.2', 'fluid', 'Desktop', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1, 0);
+INSERT INTO `themes` VALUES ('ATutor', '2.2.1', 'default', 'Desktop', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2, 0);
+INSERT INTO `themes` VALUES ('ATutor 2.1', '2.2.1', 'default21', 'Desktop', NOW(), 'This is the ATutor 2.1 series defailt theme.', 1, 0);
+INSERT INTO `themes` VALUES ('Fluid', '2.2.1', 'fluid', 'Desktop', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1, 0);
 INSERT INTO `themes` VALUES ('ATutor Classic', '2.2', 'default_classic', 'Desktop', NOW(), 'This is the ATutor Classic theme which makes use of the custom Header and logo images. To customize those images you must edit the <code>theme.cfg.php</code> in this themes directory.', 1,0);
-INSERT INTO `themes` VALUES ('Blumin', '2.2', 'blumin', 'Desktop', NOW(), 'This is the plone look-alike theme.', 1, 0); 
-INSERT INTO `themes` VALUES ('Greenmin', '2.2', 'greenmin', 'Desktop', NOW(), 'This is the plone look-alike theme in green.', 1, 0);
-INSERT INTO `themes` VALUES ('ATutor 2.0', '2.2', 'default20', 'Desktop', NOW(), 'This is the ATutor 2.0 series Default theme.', 1, 0);
+INSERT INTO `themes` VALUES ('Blumin', '2.2.1', 'blumin', 'Desktop', NOW(), 'This is the plone look-alike theme.', 1, 0); 
+INSERT INTO `themes` VALUES ('Greenmin', '2.2.1', 'greenmin', 'Desktop', NOW(), 'This is the plone look-alike theme in green.', 1, 0);
+INSERT INTO `themes` VALUES ('ATutor 2.0', '2.2.1', 'default20', 'Desktop', NOW(), 'This is the ATutor 2.0 series Default theme.', 1, 0);
 
-INSERT INTO `themes` VALUES ('ATutor 1.5', '2.2', 'default15', 'Desktop', NOW(), 'This is the 1.5 series default theme.', 1, 0);
-INSERT INTO `themes` VALUES ('ATutor 1.6', '2.2', 'default16', 'Desktop', NOW(), 'This is the 1.6 series default theme.', 1, 0);
-INSERT INTO `themes` VALUES ('IDI Theme', '2.2', 'idi', 'Desktop', NOW(), 'The theme created for the IDI course server.', 1, 0);
-INSERT INTO `themes` VALUES ('Mobile', '2.2', 'mobile', 'Mobile', NOW(), 'This is the default theme for mobile devices.', 3, 0);
-INSERT INTO `themes` VALUES('Simple', '2.2', 'simplified_desktop', 'Desktop', NOW(), 'An adapted version of the iPad theme, designed to make a desktop look like an iPad.', 1, 0);
-INSERT INTO `themes` VALUES('ATutorSpaces', '2.2', 'atspaces', 'Desktop', NOW(), 'This is the default theme for the ATutorSpaces.com hosting service.', 1, 0);
+INSERT INTO `themes` VALUES ('ATutor 1.5', '2.2.1', 'default15', 'Desktop', NOW(), 'This is the 1.5 series default theme.', 1, 0);
+INSERT INTO `themes` VALUES ('ATutor 1.6', '2.2.1', 'default16', 'Desktop', NOW(), 'This is the 1.6 series default theme.', 1, 0);
+INSERT INTO `themes` VALUES ('IDI Theme', '2.2.1', 'idi', 'Desktop', NOW(), 'The theme created for the IDI course server.', 1, 0);
+INSERT INTO `themes` VALUES ('Mobile', '2.2.1', 'mobile', 'Mobile', NOW(), 'This is the default theme for mobile devices.', 3, 0);
+INSERT INTO `themes` VALUES('Simple', '2.2.1', 'simplified_desktop', 'Desktop', NOW(), 'An adapted version of the iPad theme, designed to make a desktop look like an iPad.', 1, 0);
+INSERT INTO `themes` VALUES('ATutorSpaces', '2.2.1', 'atspaces', 'Desktop', NOW(), 'This is the default theme for the ATutorSpaces.com hosting service.', 1, 0);
 
 # --------------------------------------------------------
 # Table structure for table `users_online`
