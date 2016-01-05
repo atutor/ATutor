@@ -290,11 +290,6 @@ global $system_courses, $_custom_css, $db;
 	  <?php } else { ?>
 	   <div class="crumbcontainer" style="padding-bottom:1.2em;">
 	  <?php } ?>
-		  <?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : ?>
-      <div id="guide_box">
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
-      </div>
-		  <?php endif; ?>
 
 
       </div>
@@ -303,7 +298,13 @@ global $system_courses, $_custom_css, $db;
 		<?php if (isset($_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"]) && $_SESSION["prefs"]["PREF_SHOW_BREAD_CRUMBS"] == 0):
 			$style.='margin-top:-2em;';
 			echo 'style="'.$style.'"';
-		endif; ?>>
+		endif; ?>>		  
+		<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : 
+		?>
+      <div id="guide_box">
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
+      </div>
+		  <?php endif; ?>
 		      <div style="font-size:.8em;margin-left:-.5em;">
       <?php mobile_switch(); ?>
       </div>
