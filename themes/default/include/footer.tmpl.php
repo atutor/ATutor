@@ -28,16 +28,19 @@
 <p><br /><br />&nbsp;</p>
 </div> <!-- end page wrapper --> 
 <div id="footer">
+    <div class="logo">
+          <a href="<?php echo $this->custom_logo_url; ?>"><img src="<?php echo get_custom_logo(); ?>"  alt="<?php echo $this->custom_logo_alt_text; ?>" style="border:none;" /></a>
+    </div>
+    <div id="footer-right">
 	<?php require(AT_INCLUDE_PATH.'html/languages.inc.php'); ?>
 	<?php require(AT_INCLUDE_PATH.'html/copyright.inc.php'); ?>
+	</div>
     <script type="text/javascript">
     //<!--
         <?php require_once(AT_INCLUDE_PATH.'../jscripts/ATutor_js.php'); ?>
     //-->
     </script>
-    <div class="logo">
-          <a href="<?php echo $this->custom_logo_url; ?>"><img src="<?php echo get_custom_logo(); ?>"  alt="<?php echo $this->custom_logo_alt_text; ?>" style="border:none;" /></a>
-    </div>
+
 </div>
 </body>
 </html>

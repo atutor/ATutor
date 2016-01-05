@@ -2109,7 +2109,7 @@ div#subnavlistcontainer {
     display:inline !important;
 }
 div#subnavbacktopage {
-	padding-top:5px;
+	/* padding-top:5px; */
 	float:left;
 	clear:left;
 }
@@ -2736,9 +2736,10 @@ div.social-wrapper{
     padding-bottom:0.2em;
 }
 .logo{
-width:15em;
+width:19%;
 margin-left:0em;
-margin-top:-2.2em;
+float:left;
+
 }
 .content-settings{
 	width: 30%;
@@ -3566,7 +3567,15 @@ clear:left;
     display:none;
 }
 #langdiv{
-    margin-top:-1.2em;
+    margin-top:-1em;
+    width:79%;
+    margin-left:auto;
+    margin-right: auto;
+}
+#footer-right{
+    width:79%; 
+    float:left; 
+    text-align:center;
 }
 #side_bar_on{
     display:none;
@@ -3583,7 +3592,7 @@ clear:left;
     height:1px;
 }
 #copyright{
-    width:35em;
+    width:79%;
     margin-left:auto;
     margin-right: auto;
 }
