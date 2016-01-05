@@ -188,7 +188,6 @@ ATutor.course = ATutor.course || {};
 
                 ATutor.switchView = function (viewFlag) {
                     if(viewFlag === "0"){
-                        $("ul#subnavlist").css("border-bottom", "1px solid #DED29E");
                         $("#subnavlist_i").toggleClass("show").show('slow');
                         $("#manage_off").css("display","none");
                         $("#manage_on").css("display","inline");
