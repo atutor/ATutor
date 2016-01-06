@@ -97,11 +97,11 @@ if ($num_of_dependents == 0)
 	</div>
 	
 	<br /><br /><br /><br /><br /><br />
-	<div class="row">
+	<div class="row"><br /><br />
 		<label for="filesDiv"><?php echo _AT('files'); ?></label><br />
 		<small>&middot; <?php echo _AT('relative_directory'); ?></small>
 	</div>
-
+    
 	<div id="filesDiv" class="row">
 	</div>
 
