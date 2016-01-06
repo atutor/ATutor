@@ -10,6 +10,7 @@ blueish bg: #F5F9FC
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 */
 
+ms-viewport {width : auto} 
 
 html,body{
 	height:100%;
@@ -1694,8 +1695,9 @@ div#topnavlistcontainer {
 	padding-bottom:.5em;
 	float:left;
     margin-right: -14px !important;
-    overflow-x:scroll;
+    overflow-x:auto;
     overflow-y: hidden;
+    
 }
 ul#topnavlist {
 	padding: 0;
