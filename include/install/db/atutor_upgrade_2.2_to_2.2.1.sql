@@ -1,7 +1,6 @@
 # DB Upgrade for ATutor 2.2.1, no database changes
 
 UPDATE `themes` SET `version` = '2.2.1' WHERE `title` = 'ATutor' LIMIT 1 ;
-UPDATE `themes` SET `version` = '2.2.1' WHERE `title` = 'Atutor' LIMIT 1 ;
 UPDATE `themes` SET `version` = '2.2.1' WHERE `title` = 'Fluid' LIMIT 1 ;
 UPDATE `themes` SET `version` = '2.2.1' WHERE `title` = 'ATutor Classic' LIMIT 1 ;
 UPDATE `themes` SET `version` = '2.2.1' WHERE `title` = 'Blumin' LIMIT 1 ;
