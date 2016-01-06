@@ -158,17 +158,17 @@ function upload_custom_logo()
                 $thumbnail_fixed_width = 153; 
 
                 if ($width > $height && $height > $thumbnail_fixed_height) {
-                    $thumbnail_height= $thumbnail_fixed_height;
-                    $thumbnail_width = intval($thumbnail_fixed_width * $height / $width);
+                    
+                    $thumbnail_height= intval(($thumbnail_fixed_width/$width)*(($thumbnail_fixed_height/$height)*$height));
+                    $thumbnail_width = intval(($thumbnail_fixed_width/$width)*($thumbnail_fixed_height/$height)*$width);
                     resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
-                    //cropping
-                    //resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, ($thumbnail_width-$thumbnail_fixed_width)/2);
+
                 } else if ($width <= $height && $width>$thumbnail_fixed_width) {
+
                     $thumbnail_height = intval($thumbnail_fixed_width * $height / $width);
                     $thumbnail_width  = $thumbnail_fixed_width;
                     resize_image($original_img, $thumbnail_img, $height, $width, $thumbnail_height, $thumbnail_width, $extension);
-                    //cropping
-                    //resize_image($thumbnail_img, $thumbnail_img, $thumbnail_fixed_height, $thumbnail_fixed_width, $thumbnail_fixed_height, $thumbnail_fixed_width, $extension, 0, ($thumbnail_height-$thumbnail_fixed_height)/2);
+     
                 } else {
                     // no resizing, just copy the image.
                     // it's too small to resize.
