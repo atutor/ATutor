@@ -1026,7 +1026,7 @@ CREATE TABLE `myown_patches_files` (
 INSERT INTO `themes` VALUES ('ATutor', '2.2.1', 'default', 'Desktop', NOW(), 'This is the default ATutor theme and cannot be deleted as other themes inherit from it. Please do not alter this theme directly as it would complicate upgrading. Instead, create a new theme derived from this one.', 2, 0);
 INSERT INTO `themes` VALUES ('ATutor 2.1', '2.2.1', 'default21', 'Desktop', NOW(), 'This is the ATutor 2.1 series defailt theme.', 1, 0);
 INSERT INTO `themes` VALUES ('Fluid', '2.2.1', 'fluid', 'Desktop', NOW(), 'Theme that implements the Fluid reorderer used to drag-and-drop the menu from side-to-side.', 1, 0);
-INSERT INTO `themes` VALUES ('ATutor Classic', '2.2', 'default_classic', 'Desktop', NOW(), 'This is the ATutor Classic theme which makes use of the custom Header and logo images. To customize those images you must edit the <code>theme.cfg.php</code> in this themes directory.', 1,0);
+INSERT INTO `themes` VALUES ('ATutor Classic', '2.2.1', 'default_classic', 'Desktop', NOW(), 'This is the ATutor Classic theme which makes use of the custom Header and logo images. To customize those images you must edit the <code>theme.cfg.php</code> in this themes directory.', 1,0);
 INSERT INTO `themes` VALUES ('Blumin', '2.2.1', 'blumin', 'Desktop', NOW(), 'This is the plone look-alike theme.', 1, 0); 
 INSERT INTO `themes` VALUES ('Greenmin', '2.2.1', 'greenmin', 'Desktop', NOW(), 'This is the plone look-alike theme in green.', 1, 0);
 INSERT INTO `themes` VALUES ('ATutor 2.0', '2.2.1', 'default20', 'Desktop', NOW(), 'This is the ATutor 2.0 series Default theme.', 1, 0);
