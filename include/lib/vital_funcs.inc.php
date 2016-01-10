@@ -1164,4 +1164,14 @@ function tool_origin($path=''){
     }
 }
 
+/**
+ * XSS safe echo replacement
+ * @param	string	$text	The text that should be displayed
+ * @param string	$encoding	The encoding of the text
+ * @date	Jan 11, 2016
+ */
+function xecho($text, $encoding='UTF-8') {
+	echo htmlspecialchars($text, ENT_QUOTES, $encoding);
+}
+
 ?>
