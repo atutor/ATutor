@@ -45,8 +45,8 @@ $operations[AT_ADMIN_LOG_OTHER] = _AT('other');
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="p" value="<?php echo $_GET['p']; ?>" />
-<input type="hidden" name="login" value="<?php echo $_GET['login']; ?>" />
+<input type="hidden" name="p" value="<?php xecho($_GET['p']); ?>" />
+<input type="hidden" name="login" value="<?php xecho($_GET['login']); ?>" />
 <div class="input-form">
 	<div class="row">
 		<?php echo _AT('date'); ?><br />
