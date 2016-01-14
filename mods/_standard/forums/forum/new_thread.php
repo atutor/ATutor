@@ -33,8 +33,7 @@ if (!valid_forum_user($fid) || !$_SESSION['enroll']) {
 	exit;
 }
 
-$_POST['subject'] = strip_tags($_POST['subject']);
-$_POST['body'] = strip_tags($_POST['body']); 
+
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -42,6 +41,9 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
+    $_POST['subject'] = htmlspecialchars(strip_tags($_POST['subject']));
+    $_POST['body'] = htmlspecialchars(strip_tags($_POST['body'])); 
+    $_POST['replytext'] = htmlspecialchars(strip_tags($_POST['replytext'])); 
 
 	if ($_POST['subject'] == '')  {
 		$missing_fields[] = _AT('subject');

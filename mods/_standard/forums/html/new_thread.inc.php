@@ -22,10 +22,12 @@ global $msg;
 $msg->printErrors();
 
 if (isset($_POST['submit'])) {
-$parent_id	= $_POST['parent_id'];
-$parent_name	= $_POST['parent_name'];
-$subject =  $_POST['subject'];
-$body = $_POST['body'];
+$parent_id	= intval($_POST['parent_id']);
+$parent_name	= htmlspecialchars($_POST['parent_name']);
+$subject =  htmlspecialchars($_POST['subject']);
+$body = htmlspecialchars($_POST['body']);
+$_POST['replytext'] =  htmlspecialchars($_POST['replytext']);
+
     //post reply is set when there is an error occuring.
     if ($_POST['reply']!=''){
         $saved_post['body'] = $_POST['replytext'];

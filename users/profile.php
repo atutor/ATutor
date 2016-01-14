@@ -35,6 +35,20 @@ if (isset($_POST['cancel'])) {
 if (isset($_POST['submit'])) {
 	$missing_fields = array();
 
+	$_POST['member_id'] = intval($_POST['member_id']);
+    $_POST['login'] = htmlspecialchars(strip_tags($_POST['login']));
+    $_POST['private_email'] = intval($_POST['private_email']);
+    $_POST['first_name'] = htmlspecialchars(strip_tags($_POST['first_name']));
+	$_POST['second_name'] = htmlspecialchars(strip_tags($_POST['second_name']));
+	$_POST['last_name'] = htmlspecialchars(strip_tags($_POST['last_name']));
+    $_POST['address'] = htmlspecialchars(strip_tags($_POST['address']));
+    $_POST['postal'] = htmlspecialchars(strip_tags($_POST['postal']));
+    $_POST['city'] = htmlspecialchars(strip_tags($_POST['city']));
+    $_POST['province'] = htmlspecialchars(strip_tags($_POST['province']));
+    $_POST['country'] = htmlspecialchars(strip_tags($_POST['country']));
+    $_POST['phone'] = htmlspecialchars(strip_tags($_POST['phone']));
+    $_POST['website'] = htmlspecialchars(strip_tags($_POST['website']));
+		
 	if (!$_POST['first_name']) { 
 		$missing_fields[] = _AT('first_name');
 	}
@@ -42,14 +56,7 @@ if (isset($_POST['submit'])) {
 	if (!$_POST['last_name']) { 
 		$missing_fields[] = _AT('last_name');
 	}
-/*
-	$_POST['first_name'] = str_replace('<', '', $_POST['first_name']);
-	$_POST['second_name'] = str_replace('<', '', $_POST['second_name']);
-	$_POST['last_name'] = str_replace('<', '', $_POST['last_name']);
-*/	
-	$_POST['first_name'] = strip_tags($_POST['first_name']);
-	$_POST['second_name'] = strip_tags($_POST['second_name']);
-	$_POST['last_name'] = strip_tags($_POST['last_name']);
+
 	//check date of birth
 	$mo = intval($_POST['month']);
 	$day = intval($_POST['day']);
