@@ -41,9 +41,9 @@ if (isset($_POST['cancel'])) {
 	exit;
 } else if (isset($_POST['submit'])) {
 	$missing_fields = array();
-    $_POST['subject'] = htmlspecialchars(strip_tags($_POST['subject']));
-    $_POST['body'] = htmlspecialchars(strip_tags($_POST['body'])); 
-    $_POST['replytext'] = htmlspecialchars(strip_tags($_POST['replytext'])); 
+    $_POST['subject'] = htmlentities(addslashes($_POST['subject']), ENT_QUOTES, 'UTF-8');
+    $_POST['body'] = htmlspecialchars(strip_tags($_POST['body']), ENT_QUOTES, 'UTF-8'); 
+    $_POST['replytext'] = htmlspecialchars(strip_tags($_POST['replytext']), ENT_QUOTES, 'UTF-8'); 
 
 	if ($_POST['subject'] == '')  {
 		$missing_fields[] = _AT('subject');

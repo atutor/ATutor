@@ -23,10 +23,10 @@ $msg->printErrors();
 
 if (isset($_POST['submit'])) {
 $parent_id	= intval($_POST['parent_id']);
-$parent_name	= htmlspecialchars($_POST['parent_name']);
-$subject =  htmlspecialchars($_POST['subject']);
-$body = htmlspecialchars($_POST['body']);
-$_POST['replytext'] =  htmlspecialchars($_POST['replytext']);
+$parent_name	= htmlspecialchars($_POST['parent_name'], ENT_QUOTES, 'UTF-8');
+$subject =  htmlspecialchars(addslashes($_POST['subject']), ENT_QUOTES, 'UTF-8');
+$body = htmlspecialchars($_POST['body'], ENT_QUOTES, 'UTF-8');
+$_POST['replytext'] =  htmlspecialchars($_POST['replytext'], ENT_QUOTES, 'UTF-8');
 
     //post reply is set when there is an error occuring.
     if ($_POST['reply']!=''){
