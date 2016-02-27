@@ -41,6 +41,7 @@ if ($_SESSION["prefs"]["PREF_SHOW_CONTENTS"] && $this->content_table <> "") {
 	<ol>
 		
 		<li><strong><?php echo _AT('tests') . ':' ; ?></strong>
+		<p><?php echo $this->test_message; ?></p>
 		<ul class="tools">
 		<?php 
 			foreach ($this->test_ids as $id => $test_obj){
