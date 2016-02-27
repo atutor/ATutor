@@ -26,6 +26,8 @@ if (!isset($_REQUEST['backup_id'])) {
 	header('Location: index.php');
 	exit;
 }
+$_REQUEST['backup_id'] = intval($_REQUEST['backup_id']);
+$_REQUEST['course_id']   = intval($_REQUEST['course_id']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

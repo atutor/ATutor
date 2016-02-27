@@ -20,7 +20,8 @@ $page = 'backups';
 $_user_location = 'admin';
 
 require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
-
+$_GET['backup_id'] = intval($_GET['backup_id']);
+$_GET['course']     =   intval($_GET['course']);
 $_SESSION['done'] = 0;
 
 if (isset($_POST['cancel'])) {

@@ -50,7 +50,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 ?>
 <form name="form1" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="course" value="<?php echo $_REQUEST['course']; ?>" />
+<input type="hidden" name="course" value="<?php echo intval($_REQUEST['course']); ?>" />
 	
 <table class="data" summary="" style="width: 90%">
 <thead>

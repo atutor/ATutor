@@ -17,7 +17,7 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_ADMIN); 
 
 require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
-
+$_GET['backup_id'] = intval($_GET['backup_id']);
 if (isset($_POST['cancel']) || !isset($_REQUEST['backup_id'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: index.php');
