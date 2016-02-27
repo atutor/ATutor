@@ -175,7 +175,7 @@
         
         <span id="emails" <?php if( $_POST['to'] != 3 ) echo "class='fc-forme-hide'"; ?> >
         <label for="emails1"> <?php echo _AT('calendar_mailtxt'); ?>: </label>
-        <input type="text" id="emails1" name="emails" value="<?php echo $_POST['emails']; ?>"/>
+        <input type="text" id="emails1" name="emails" value="<?php echo strip_tags($_POST['emails']); ?>"/>
         </span>
         
         <span id="selection" <?php if( $_POST['to'] != 2 ) echo "class='fc-forme-hide'"; ?>>
@@ -204,7 +204,7 @@
 
     <div class="row">
         <label for="subject"> <?php echo _AT('calendar_titletxt'); ?> </label><br />
-        <input type="text" name="subject" size="40" id="subject" value="<?php echo $_POST['subject']; ?>" /><br/>
+        <input type="text" name="subject" size="40" id="subject" value="<?php echo strip_tags($_POST['subject']); ?>" /><br/>
         <label>
             <?php echo _AT('calendar_optional_fld') . get_display_name($_SESSION['member_id']) . '"'; ?> 
         </label>

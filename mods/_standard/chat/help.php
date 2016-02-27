@@ -19,6 +19,8 @@ require(AT_INCLUDE_PATH.'lib/chat.inc.php');
 
 
 require('include/html/chat_header.inc.php');
+$_GET['chatID'] = intval($_GET['chatID']);
+$_GET['uniqueID'] = intval($_GET['uniqueID']);
 
 ?>
 <table width="100%" border="0" cellpadding="5" cellspacing="0">

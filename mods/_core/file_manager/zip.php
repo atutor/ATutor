@@ -19,6 +19,11 @@ require(AT_INCLUDE_PATH.'vitals.inc.php');
 require(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 
+$_GET['pathext'] = htmlspecialchars($_GET['pathext'], ENT_QUOTES);
+$_GET['file'] = htmlspecialchars($_GET['file'], ENT_QUOTES);
+$_GET['popup' ] = intval($_GET['popup' ]);
+$_GET['framed'] = intval($_GET['framed']);
+
 if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 	authenticate(AT_PRIV_CONTENT);
 }

@@ -17,7 +17,7 @@ authenticate(AT_PRIV_GROUPS);
 
 /* Get type ID */
 $id = intval($_REQUEST['id']);
-
+$_GET['gid'] = intval($_GET['gid']);
 
 $sql = "SELECT * FROM %sgroups_types WHERE type_id=%d AND course_id=%d";
 $rows_group_types = queryDB($sql, array(TABLE_PREFIX, $id, $_SESSION['course_id']));

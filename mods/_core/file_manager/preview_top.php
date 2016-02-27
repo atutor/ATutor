@@ -21,6 +21,11 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 	$get_file = AT_BASE_HREF.'content/' . $_SESSION['course_id'] . '/';
 }
 
+$_GET['pathext'] =  htmlspecialchars($_GET['pathext'], ENT_QUOTES);
+$_GET['popup'] = intval($_GET['popup']);
+$_GET['framed'] = intval($_GET['framed']);
+$_GET['file'] = htmlspecialchars($_GET['file']);
+
 ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd" />
 <html lang="<?php echo $myLang->getCode(); ?>">
@@ -32,7 +37,7 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 <body>
 <p align="bottom">
 
-<a href="index.php?framed=<?php echo SEP; ?>popup=<?php echo SEP; ?>pathext=<?php echo $_GET['pathext'].SEP . 'popup=' . $_GET['popup'] . SEP . 'framed=' . $_GET['framed']; ?>" target="_top"><?php echo _AT('return_file_manager'); ?></a> 
+<a href="index.php?pathext=<?php echo $_GET['pathext'].SEP . 'popup=' . $_GET['popup'] . SEP . 'framed=' . $_GET['framed']; ?>" target="_top"><?php echo _AT('return_file_manager'); ?></a> 
 <?php if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE): ?>
 	 | 
 	<a href="<?php echo $get_file; ?>@/<?php echo $_GET['file']; ?>" target="_top"><?php echo _AT('download_file'); ?></a>

@@ -15,6 +15,7 @@ define('AT_INCLUDE_PATH', '../../../include/');
 	require(AT_INCLUDE_PATH.'vitals.inc.php');
 	//authenticate(USER_CLIENT, USER_ADMIN);
 require(AT_INCLUDE_PATH.'../mods/_standard/chat/lib/chat.inc.php');
+$_GET['firstLoginFlag'] = intval($_GET['firstLoginFlag']);
 
 	$myPrefs = getPrefs($_SESSION['login']);
 	if ($_POST['submit'] || $_POST['submit_r']) {

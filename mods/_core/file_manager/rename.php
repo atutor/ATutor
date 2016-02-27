@@ -21,8 +21,13 @@ if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 
 $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
-$popup = $_REQUEST['popup'];
-$framed = $_REQUEST['framed'];
+$popup = intval($_REQUEST['popup']);
+$framed = intval($_REQUEST['framed']);
+$_GET['pathext'] = htmlspecialchars($_GET['pathext'], ENT_QUOTES);
+$_REQUEST['pathext'] = htmlspecialchars($_REQUEST['pathext'], ENT_QUOTES);
+$_REQUEST['oldname'] = htmlspecialchars($_REQUEST['oldname'], ENT_QUOTES);
+$_REQUEST['framed'] = intval($_REQUEST['framed'] );
+$_REQUEST['popup'] = intval($_REQUEST['popup']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');

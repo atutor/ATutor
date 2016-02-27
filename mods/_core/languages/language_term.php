@@ -16,6 +16,9 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_LANGUAGES);
 
+
+$_GET['term'] = htmlspecialchars($_GET['term'], ENT_QUOTES);
+
 if (isset($_POST['submit'])) {
 	$_POST['variable'] = $addslashes($_POST['variable']);
 	$_POST['term'] = $addslashes($_POST['term']);

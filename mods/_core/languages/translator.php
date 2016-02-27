@@ -32,6 +32,10 @@ if ($_REQUEST['u']) {
 	$u = ' checked="checked"';
 }
 
+$_REQUEST['v'] = htmlspecialchars($_REQUEST['v'], ENT_QUOTES);
+$_REQUEST['f'] = htmlspecialchars($_REQUEST['f'], ENT_QUOTES);
+$_REQUEST['page'] =  htmlspecialchars($_REQUEST['page'], ENT_QUOTES);
+
 if ($_SESSION['language'] != 'en') {
 	echo '<li>Choose the New and Updated filters to display only language that has not been translated, or language that needs to be modified<br />';
 

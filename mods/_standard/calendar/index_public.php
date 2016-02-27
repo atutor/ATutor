@@ -20,6 +20,9 @@
     
     define('AT_INCLUDE_PATH', '../../../include/');
     require(AT_INCLUDE_PATH.'vitals.inc.php');
+$_GET['mid'] = intval($_GET['mid']);
+$_GET['cid'] = intval($_GET['cid']);
+$_GET['calname'] = htmlspecialchars($_GET['calname'], ENT_QUOTES );
 
     $global_js_vars = "
         var calendar_prv_mnth       = '" . _AT('calendar_prv_mnth') . "';

@@ -17,6 +17,8 @@ admin_authenticate(AT_ADMIN_PRIV_MODULES);
 
 require(AT_INCLUDE_PATH.'../mods/_core/modules/classes/ModuleParser.class.php');
 
+$_GET['mod'] = htmlspecialchars($_GET['mod'], ENT_QUOTES);
+$_GET['new'] = htmlspecialchars($_GET['new'], ENT_QUOTES);
 
 if (isset($_POST['submit_no'])) {
 	$msg->addFeedback('CANCELLED');

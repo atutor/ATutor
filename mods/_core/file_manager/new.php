@@ -25,7 +25,10 @@ $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
 $popup  = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
-
+$_POST['pathext'] = htmlspecialchars($_POST['pathext'], ENT_QUOTES);
+$_REQUEST['pathext'] = htmlspecialchars($_REQUEST['pathext'], ENT_QUOTES);
+$_POST['framed'] = intval($_POST['framed']);
+$_POST['popup'] = intval($_POST['popup']);
 
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
@@ -188,8 +191,8 @@ if (!$_POST['extension']) {
 			, <input type="radio" name="extension" value="html" id="html" <?php if ($_POST['formatting'] ==1 || $_POST['setvisual']) { echo 'checked="checked"'; } ?> onclick="javascript: document.form.setvisualbutton.disabled=false;"/>
 			<label for="html"><?php echo _AT('html'); ?></label>
 	
-			<input type="hidden" name="setvisual" value="<?php echo $_POST['setvisual']; ?>" />
-			<input type="hidden" name="settext" value="<?php echo $_POST['settext']; ?>" />
+			<input type="hidden" name="setvisual" value="<?php echo intval($_POST['setvisual']); ?>" />
+			<input type="hidden" name="settext" value="<?php echo intval($_POST['settext']); ?>" />
 			<input type="button" name="setvisualbutton" value="<?php echo _AT('switch_visual'); ?>" onClick="switch_body_editor()" />
 		</div>
 	
