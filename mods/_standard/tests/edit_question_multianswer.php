@@ -49,7 +49,7 @@ if (isset($_POST['cancel'])) {
 
         for ($i=0; $i<10; $i++) {
             //$_POST['choice'][$i] = $addslashes(trim($_POST['choice'][$i]));
-            $_POST['choice'][$i] = trim($_POST['choice'][$i]);
+            $_POST['choice'][$i] = trim(htmlspecialchars($_POST['choice'][$i]));
             /**
              * Db defined it to be 255 length, chop strings off it it's less than that
              * @harris

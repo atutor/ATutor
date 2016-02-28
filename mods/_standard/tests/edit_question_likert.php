@@ -170,7 +170,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
+<input type="hidden" name="tid" value="<?php echo intval($_REQUEST['tid']); ?>" />
 <input type="hidden" name="required" value="1" />
 	<fieldset class="group_form" style="width:88%;margin-left:auto;margin-right:auto;"><legend class="group_form"><?php echo _AT('preset_scales'); ?></legend>
 <table cellspacing="1" cellpadding="0" border="0" class="bodyline" summary="" align="center">

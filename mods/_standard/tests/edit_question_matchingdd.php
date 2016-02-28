@@ -38,14 +38,14 @@ if (isset($_POST['cancel'])) {
     $_POST['tid']                = intval($_POST['tid']);
     $_POST['qid']                = intval($_POST['qid']);
     $_POST['feedback']            = trim($_POST['feedback']);
-    $_POST['instructions']        = trim($_POST['instructions']);
+    $_POST['instructions']        = trim(htmlspecialchars($_POST['instructions']));
     $_POST['category_id']        = intval($_POST['category_id']);
-    $_POST['remedial_content']    = trim($_POST['remedial_content']);
+    $_POST['remedial_content']    = trim(htmlspecialchars($_POST['remedial_content']));
 
     for ($i = 0 ; $i < 10; $i++) {
-        $_POST['question'][$i]        = trim($_POST['question'][$i]);
+        $_POST['question'][$i]        = trim(htmlspecialchars($_POST['question'][$i]));
         $_POST['question_answer'][$i] = (int) $_POST['question_answer'][$i];
-        $_POST['answer'][$i]          = trim($_POST['answer'][$i]);
+        $_POST['answer'][$i]          = trim(htmlspecialchars($_POST['answer'][$i]));
 
     }
 
@@ -169,7 +169,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
+<input type="hidden" name="tid" value="<?php echo intval($_REQUEST['tid']); ?>" />
 
 
 <div class="input-form">

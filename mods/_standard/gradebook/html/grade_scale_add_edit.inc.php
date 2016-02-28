@@ -29,6 +29,8 @@ authenticate(AT_PRIV_GRADEBOOK);
 tool_origin();
 require('lib/gradebook.inc.php');
 
+$_REQUEST['grade_scale_id'] = intval($_REQUEST['grade_scale_id']);
+
 if (isset($_POST['action'])) $action = $_POST['action'];
 
 if (isset($_POST['cancel'])) 

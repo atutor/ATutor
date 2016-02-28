@@ -22,6 +22,8 @@ if (!manage_links()) {
 	exit;
 }
 
+$_POST['title'] = htmlspecialchars($_POST['title'], ENT_QUOTES);
+
 if (!isset($_POST['approved'])) {
 	$_POST['approved'] = 1;
 }

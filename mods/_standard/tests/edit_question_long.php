@@ -91,7 +91,7 @@ $msg->printErrors();
 ?>
 <form action="mods/_standard/tests/edit_question_long.php" method="post" name="form">
 <input type="hidden" name="required" value="1" />
-<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
+<input type="hidden" name="tid" value="<?php echo intval($_REQUEST['tid']); ?>" />
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
 
 <div class="input-form">

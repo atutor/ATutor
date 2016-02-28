@@ -25,6 +25,7 @@ if (!manage_links()) {
 $lid = explode('-', $_REQUEST['lid']);
 $link_id = intval($lid[0]);
 
+
 if (isset($_POST['cancel'])) {
 	$msg->addFeedback('CANCELLED');
 	header('Location: '.AT_BASE_HREF.'mods/_standard/links/tools/index.php');
@@ -95,6 +96,11 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 $categories = get_link_categories(true);
 
 $msg->printErrors();
+
+$_REQUEST['lid'] = intval($_REQUEST['lid']);
+$_POST['title'] = htmlspecialchars($_POST['title'], ENT_QUOTES);
+$_POST['description'] = htmlspecialchars($_POST['description'], ENT_QUOTES);
+$_POST['url'] = htmlspecialchars($_POST['url'], ENT_QUOTES);
 
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">

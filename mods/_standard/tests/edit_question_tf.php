@@ -118,7 +118,7 @@ if ($_POST['answer'] == '') {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
+<input type="hidden" name="tid" value="<?php echo intval($_REQUEST['tid']); ?>" />
 <input type="hidden" name="required" value="1" />
 
 <div class="input-form">

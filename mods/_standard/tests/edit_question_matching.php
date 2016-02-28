@@ -168,7 +168,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 <input type="hidden" name="qid" value="<?php echo $qid; ?>" />
-<input type="hidden" name="tid" value="<?php echo $_REQUEST['tid']; ?>" />
+<input type="hidden" name="tid" value="<?php echo intval($_REQUEST['tid']); ?>" />
 
 
 <div class="input-form">

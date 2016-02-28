@@ -29,20 +29,20 @@ if (isset($_POST['cancel'])) {
 		exit;
 } else if (isset($_POST['submit'])) {
     $missing_fields                = array();
-    $_POST['title']                = trim($_POST['title']);
-    $_POST['description']        = trim($_POST['description']);
+    $_POST['title']                = trim(htmlspecialchars($_POST['title'], ENT_QUOTES));
+    $_POST['description']        = trim(htmlspecialchars($_POST['description'], ENT_QUOTES));
     $_POST['num_questions']        = intval($_POST['num_questions']);
     $_POST['num_takes']            = intval($_POST['num_takes']);
     $_POST['content_id']        = intval($_POST['content_id']);
     $_POST['passpercent']        = intval($_POST['passpercent']);
     $_POST['passscore']            = intval($_POST['passscore']);
-    $_POST['passfeedback']        = trim($_POST['passfeedback']);
-    $_POST['failfeedback']        = trim($_POST['failfeedback']);
+    $_POST['passfeedback']        = trim(htmlspecialchars($_POST['passfeedback'], ENT_QUOTES));
+    $_POST['failfeedback']        = trim(htmlspecialchars($_POST['failfeedback'], ENT_QUOTES));
     $_POST['num_takes']            = intval($_POST['num_takes']);
     $_POST['anonymous']            = intval($_POST['anonymous']);
     $_POST['allow_guests']        = $_POST['allow_guests'] ? 1 : 0;
     $_POST['show_guest_form']    = $_POST['show_guest_form'] ? 1 : 0;
-    $_POST['instructions']        = $_POST['instructions'];
+    $_POST['instructions']        = htmlspecialchars($_POST['instructions']);
     $_POST['display']            = intval($_POST['display']);
     $_POST['remedial_content']    = intval($_POST['remedial_content']);
 
@@ -224,7 +224,7 @@ $msg->printErrors();
     <fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_test'); ?></legend>
     <div class="row">
         <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-        <input type="text" name="title" id="title" size="30" value="<?php echo $_POST['title']; ?>" />
+        <input type="text" name="title" id="title" size="30" value="<?php echo htmlspacialchars($_POST['title'], ENT_QUOTES); ?>" />
     </div>
 
     <div class="row">
@@ -292,14 +292,14 @@ $msg->printErrors();
         <input type="radio" name="pass_score" value="1" id="percentage"  <?php if ($_POST['passpercent'] <> 0){echo 'checked="checked"';} ?>
         onfocus="ATutor.mods.tests.disable_elements('points');" onclick="this.onfocus();" />
 
-        <input type="text" name="passpercent" id="passpercent" size="2" value="<?php echo $_POST['passpercent']; ?>" 
+        <input type="text" name="passpercent" id="passpercent" size="2" value="<?php echo intval($_POST['passpercent']); ?>" 
          <?php if ($_POST['passpercent'] == 0){echo 'disabled="disabled"';} ?> /> 
         <label for="percentage" title="<?php echo _AT('pass_score'). ': '. _AT('percentage_score');  ?>"><?php  echo '% ' . _AT('percentage_score'); ?></label><br />
 
         <input type="radio" name="pass_score" value="2" id="points"  <?php if ($_POST['passscore'] <> 0){echo 'checked="checked"';} ?>
         onfocus="ATutor.mods.tests.disable_elements('percentage');" onclick="this.onfocus();" />
 
-        <input type="text" name="passscore" id="passscore" size="2" value="<?php echo $_POST['passscore']; ?>" 
+        <input type="text" name="passscore" id="passscore" size="2" value="<?php echo intval($_POST['passscore']); ?>" 
          <?php if ($_POST['passscore'] == 0){echo 'disabled="disabled"';} ?>/> 
         <label for="points" title="<?php echo _AT('pass_score'). ': '. _AT('points_score');  ?>"><?php  echo _AT('points_score'); ?></label>
     </div>

@@ -175,7 +175,7 @@ $(document).ready(
 
 					document.getElementById('s' + drag.value).selectedIndex =  this.value + 1;
 
-					window.top.document.getElementById("<?php echo $_GET['qid']; ?>q" + drag.value).value = this.value;
+					window.top.document.getElementById("<?php echo intval($_GET['qid']); ?>q" + drag.value).value = this.value;
 
 					$("#container" + drag.value).html(container_html);
 
@@ -187,7 +187,7 @@ $(document).ready(
 			}
 		); // end droppable
 
-        parent.iframeSetHeight(<?php echo $_GET['qid']; ?>, Math.max($("#q").height(), $("#a").height()));
+        parent.iframeSetHeight(<?php echo intval($_GET['qid']); ?>, Math.max($("#q").height(), $("#a").height()));
 		<?php foreach ($response as $id => $value): ?>
 		selectLine(<?php echo $value; ?>, <?php echo $id; ?>);
 		<?php endforeach; ?>
@@ -196,7 +196,7 @@ $(document).ready(
 
 function selectLine(value, id) {
 	if (value == -1) {
-		window.top.document.getElementById("<?php echo $_GET['qid']; ?>q" + id).value = "-1";
+		window.top.document.getElementById("<?php echo intval($_GET['qid']); ?>q" + id).value = "-1";
 		$("#container" + id).html(container_html);
 
 		return true;
@@ -207,7 +207,7 @@ function selectLine(value, id) {
 	var rx = document.getElementById("a" + value).offsetLeft + 310;
 	var ry = document.getElementById("a" + value).offsetTop + $("#a" + value).height()/2 + 10;
 
-	window.top.document.getElementById("<?php echo $_GET['qid']; ?>q" + id).value = value;
+	window.top.document.getElementById("<?php echo intval($_GET['qid']); ?>q" + id).value = value;
 
 	$("#container" + id).html(container_html);
 	jg[id].drawLine(lx, ly , rx, ry );

@@ -101,8 +101,8 @@ if ($still_errors || !isset($_POST['verify']) || isset($_POST['resubmit'])) {
 	</div>
 
 	<input type="hidden" name="verify" value="1" />
-	<input type="hidden" name="gradebook_test_id" value="<?php echo $_POST["gradebook_test_id"]; ?>" />
-	<input type="hidden" name="solve_conflict" value="<?php echo $_POST["solve_conflict"]; ?>" />
+	<input type="hidden" name="gradebook_test_id" value="<?php echo intval($_POST["gradebook_test_id"]); ?>" />
+	<input type="hidden" name="solve_conflict" value="<?php echo intval($_POST["solve_conflict"]); ?>" />
 	<input type="hidden" name="count" value="<?php echo count($students); ?>" />
 		
 	<table class="data static" summary="">
