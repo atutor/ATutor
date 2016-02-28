@@ -335,7 +335,8 @@ define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS
 						       + AT_FORMAT_HTML 
 						       + AT_FORMAT_GLOSSARY 
 							   + AT_FORMAT_ATCODES
-							   + AT_FORMAT_CONTENT_DIR);
+							   + AT_FORMAT_CONTENT_DIR
+							   + AT_FORMAT_QUOTES);
 
 $_field_formatting = array();
 $_field_formatting['url.*']          = AT_FORMAT_QUOTES & AT_FORMAT_HTML;
