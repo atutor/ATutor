@@ -23,8 +23,9 @@ if (substr($parts['dirname'], -5) == 'admin') {
 	header('Location: index/index.php');
 	exit;
 }
-$_GET['p'] = htmlentities($_GET['p']);
-
+if(isset($_GET['p'])){
+    $_GET['p'] = htmlentities($_GET['p']);
+}
 $req_lang = 'en';
 if (!empty($_GET)) {
 	$req_lang = key($_GET);
