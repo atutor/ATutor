@@ -199,7 +199,7 @@ if ($result_id == 0) {
 		exit;
 	} // else:
 	
-	header('Location: '.url_rewrite('mods/_standard/tests/take_test_q.php?tid='.$tid.SEP.'pos='.$pos.SEP.'efs='.$_REQUEST['efs'].$cid_url, AT_PRETTY_URL_IS_HEADER));
+	header('Location: '.url_rewrite('mods/_standard/tests/take_test_q.php?tid='.$tid.SEP.'pos='.$pos.SEP.'efs='.intval($_REQUEST['efs']).$cid_url, AT_PRETTY_URL_IS_HEADER));
 	exit;
 }
 
@@ -250,7 +250,7 @@ if (count($question_row)==0) {
 
 	<fieldset class="group_form"><legend class="group_form"><?php echo $title ?> (<?php echo _AT('question').' '. ($pos+1).'/'.$test_row['num_questions']; ?>)</legend>
 	<?php if ($_REQUEST['efs']){?>
-	<input type="hidden" name="efs" value=<?php echo $_REQUEST['efs']; ?> />
+	<input type="hidden" name="efs" value=<?php echo intval($_REQUEST['efs']); ?> />
 	<?php }?>
 	
 	<?php

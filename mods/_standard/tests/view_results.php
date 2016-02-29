@@ -39,7 +39,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $tid = intval($_GET['tid']);
 $rid = intval($_GET['rid']);
-if (isset($_REQUEST['cid'])) $cid = $_REQUEST['cid'];
+if (isset($_REQUEST['cid'])) $cid = intval($_REQUEST['cid']);
 
 $sql    = "SELECT title, random, passfeedback, failfeedback, passscore, passpercent FROM %stests WHERE test_id=%d AND course_id=%d";
 $row    = queryDB($sql, array(TABLE_PREFIX, $tid, $_SESSION['course_id']), TRUE);
@@ -114,7 +114,7 @@ foreach($rows_questions as $row){
     $this_total += $row['weight'];
 }
 ?>
-<form method="get" action="<?php echo $_REQUEST['PHP_SELF']; ?>">
+<form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <?php if (isset($_REQUEST['cid'])) {?> <input type="hidden" name="cid" value="<?php echo $cid; ?>" /> <?php }?>
 
 <div class="input-form">
@@ -136,10 +136,10 @@ foreach($rows_questions as $row){
                 // display pass feedback for passed students
                 elseif (($passscore<>0 && $my_score>=$passscore) ||
                     ($passpercent<>0 && ($my_score/$this_total*100)>=$passpercent))
-                    echo '<span style="color:green">' . $passfeedback . '</span>';
+                    echo '<span style="color:green">' . htmlspecialchars($passfeedback, ENT_QUOTES) . '</span>';
                 // otherwise, display fail feedback
-                else
-                    echo '<span style="color:red">' . $failfeedback . '</span>'; 
+                elseif ($passscore<>0)
+                    echo '<span style="color:red">' . htmlspecialchars($failfeedback, ENT_QUOTES) . '</span>'; 
             ?>
         </h3>
     </div>

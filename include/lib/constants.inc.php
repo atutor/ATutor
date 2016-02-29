@@ -335,8 +335,7 @@ define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS
 						       + AT_FORMAT_HTML 
 						       + AT_FORMAT_GLOSSARY 
 							   + AT_FORMAT_ATCODES
-							   + AT_FORMAT_CONTENT_DIR
-							   + AT_FORMAT_QUOTES);
+							   + AT_FORMAT_CONTENT_DIR);
 
 $_field_formatting = array();
 $_field_formatting['url.*']          = AT_FORMAT_QUOTES & AT_FORMAT_HTML;
@@ -391,7 +390,7 @@ $_field_formatting['resource_links.SubmitName']= AT_FORMAT_QUOTES;
 
 $_field_formatting['reading_list.*']            = AT_FORMAT_QUOTES;
 
-$_field_formatting['tests.title']				= AT_FORMAT_ALL;
+$_field_formatting['tests.title']				= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
 $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
 
 $_field_formatting['themes.title']				= AT_FORMAT_NONE;
@@ -400,7 +399,7 @@ $_field_formatting['tests_answers.answer']		= AT_FORMAT_NONE;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
 $_field_formatting['tests_questions.*']			= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
 // This constant is used to in the test question template scripts to display the preview and result.
-$_field_formatting['tests_questions.quotesNotConverted']	= AT_FORMAT_ALL;
+$_field_formatting['tests_questions.quotesNotConverted']	= AT_FORMAT_ALL| AT_FORMAT_QUOTES;
 $_field_formatting['tests_questions_categories.title']	= AT_FORMAT_NONE;
 
 $_field_formatting['photo_albums.*']            = AT_FORMAT_QUOTES;

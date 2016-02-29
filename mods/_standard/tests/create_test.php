@@ -224,7 +224,7 @@ $msg->printErrors();
     <fieldset class="group_form"><legend class="group_form"><?php echo _AT('create_test'); ?></legend>
     <div class="row">
         <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-        <input type="text" name="title" id="title" size="30" value="<?php echo htmlspacialchars($_POST['title'], ENT_QUOTES); ?>" />
+        <input type="text" name="title" id="title" size="30" value="<?php echo htmlspecialchars($_POST['title'], ENT_QUOTES); ?>" />
     </div>
 
     <div class="row">

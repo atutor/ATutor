@@ -20,7 +20,7 @@
 						<?php else: ?>
 							-.
 						<?php endif; ?>
-						<?php echo $this->row['choice_'. $i]; ?>
+						<?php echo strip_tags($this->row['choice_'. $i]); ?>
 					</li>
 				<?php endif; ?>
 			<?php endfor; ?>
@@ -29,7 +29,7 @@
 	<td valign="top">
 		<ul style="list-style-type: none; margin: 0px; padding: 0px">
 			<?php for ($i=0; $i < $this->num_options; $i++): ?>
-				<li style="padding: 4px"><?php echo $this->letters[$i]; ?>. <?php echo $this->row['option_'. $i]; ?></li>
+				<li style="padding: 4px"><?php echo $this->letters[$i]; ?>. <?php echo strip_tags($this->row['option_'. $i]); ?></li>
 			<?php endfor; ?>
 		</ul>
 	</td>
