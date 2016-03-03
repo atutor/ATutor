@@ -28,12 +28,12 @@
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="subject"><?php echo _AT('subject'); ?></label><br />
-		<input type="text" name="subject" size="60" id="subject" value="<?php echo $_POST['subject']; ?>" />
+		<input type="text" name="subject" size="60" id="subject" value="<?php echo htmlspecialchars($_POST['subject'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="55" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
+		<textarea cols="55" rows="18" name="body" id="body"><?php echo strip_tags($_POST['body']); ?></textarea>
 	</div>
 
 	<div class="row buttons">

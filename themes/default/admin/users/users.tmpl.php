@@ -53,7 +53,7 @@
 </form>
 <?php print_paginator($this->page, $this->num_results, $this->page_string . SEP . $this->order .'='. $col, $this->results_per_page); ?>
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
+<input type="hidden" name="status" value="<?php echo intval($_GET['status']); ?>" />
 <input type="hidden" name="search" value="<?php echo htmlspecialchars($_GET['search']); ?>" />
 <input type="hidden" name="include" value="<?php echo htmlspecialchars($_GET['include']); ?>" />
 

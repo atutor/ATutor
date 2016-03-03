@@ -1,6 +1,6 @@
 <?php global $moduleFactory; ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<input type="hidden" name="backup_id" value="<?php echo $_REQUEST['backup_id']; ?>" />
+<input type="hidden" name="backup_id" value="<?php echo intval($_REQUEST['backup_id']); ?>" />
 
 <div class="input-form">
 <fieldset class="group_form"><legend class="group_form"><?php echo _AT('restore'); ?></legend>

@@ -1,6 +1,6 @@
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
 	<input type="hidden" name="edit_forum" value="true" />
-	<input type="hidden" name="forum" value="<?php echo $_REQUEST['forum']; ?>"/>
+	<input type="hidden" name="forum" value="<?php echo htmlspecialchars($_REQUEST['forum'], ENT_QUOTES); ?>"/>
 
 <div class="input-form">
 	<div class="row">

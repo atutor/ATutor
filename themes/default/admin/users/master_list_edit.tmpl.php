@@ -1,10 +1,10 @@
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<input type="hidden" name="id" value="<?php echo $_REQUEST['id']; ?>" />
+<input type="hidden" name="id" value="<?php echo intval($_REQUEST['id']); ?>" />
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-		<input type="text" name="public_field" id="student_id" size="25" value="<?php echo $_POST['public_field']; ?>" />
+		<input type="text" name="public_field" id="student_id" size="25" value="<?php echo htmlspecialchars($_POST['public_field'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row buttons">

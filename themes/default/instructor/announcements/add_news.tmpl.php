@@ -5,7 +5,7 @@
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_announcement'); ?></legend>
 		<div class="row">
 			<label for="title"><?php echo _AT('title'); ?></label><br />
-			<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
+			<input type="text" name="title" size="40" id="title" value="<?php echo htmlspecialchars($_POST['title'], ENT_QUOTES); ?>" />
 		</div>
 
 		<div class="row">
@@ -30,7 +30,7 @@
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
-			<textarea name="body_text" id="body_text"><?php echo $_POST['body_text']; ?></textarea>
+			<textarea name="body_text" id="body_text"><?php echo strip_tags($_POST['body_text']); ?></textarea>
 		</div>
 		
 		<div class="row buttons">

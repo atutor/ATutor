@@ -83,7 +83,7 @@ function show_login_form()
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-			<input id="student_id" name="student_id" type="text" size="15" maxlength="15" value="<?php echo stripslashes(htmlspecialchars($_POST['student_id'])); ?>" /><br />
+			<input id="student_id" name="student_id" type="text" size="15" maxlength="15" value="<?php if(isset($_POST['student_id'])){echo intval($_POST['student_id']);} ?>" /><br />
 		</div>
 
 		<div class="row">
@@ -192,7 +192,7 @@ function show_login_form()
 			} else {
 				$uncon = ' checked="checked"';
 			}?>
-			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" />
+			<input type="hidden" name="id" value="<?php echo intval($_POST['member_id']); ?>" />
 			<div class="row">
 				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('account_status'); ?><br />
 
@@ -205,7 +205,7 @@ function show_login_form()
 
 				<input type="radio" name="status" value="3" id="inst" <?php echo $inst; ?> /><label for="inst"><?php echo _AT('instructor'); ?></label>
 
-				<input type="hidden" name="old_status" value="<?php echo $_POST['old_status']; ?>" />
+				<input type="hidden" name="old_status" value="<?php echo intval($_POST['old_status']); ?>" />
 			</div>
 	<?php endif; ?>
 </fieldset>
@@ -216,19 +216,19 @@ function show_login_form()
 		<div class="row">
 			<?php echo _AT('picture'); ?><br/>
 			<?php if (profile_image_exists($_POST['member_id'])): ?>
-				<a href="get_profile_img.php?id=<?php echo $_POST['member_id'].SEP.'size=o'; ?>"><?php print_profile_img($_POST['member_id']); ?></a>
+				<a href="get_profile_img.php?id=<?php echo intval($_POST['member_id']).SEP.'size=o'; ?>"><?php print_profile_img($_POST['member_id']); ?></a>
 				<input type="checkbox" name="profile_pic_delete" value="1" id="profile_pic_delete" /><label for="profile_pic_delete"><?php echo _AT('delete'); ?></label>
 			<?php else: ?>
-				<?php echo _AT('none'); ?> <a href="mods/_standard/profile_pictures/admin/profile_picture.php?member_id=<?php echo $_POST['member_id']; ?>"><?php echo _AT('add'); ?></a>
+				<?php echo _AT('none'); ?> <a href="mods/_standard/profile_pictures/admin/profile_picture.php?member_id=<?php echo intval($_POST['member_id']); ?>"><?php echo _AT('add'); ?></a>
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
 
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
-		<input type="hidden" name="old_student_id" value="<?php echo $_POST['old_student_id']; ?>" />
+		<input type="hidden" name="old_student_id" value="<?php echo intval($_POST['old_student_id']); ?>" />
 		<div class="row">
 			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-				<input type="text" id="student_id" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
+				<input type="text" id="student_id" name="student_id" value="<?php echo intval($_POST['student_id']); ?>" size="20" /><br />
 		</div>
 		<div class="row">
 			<input type="checkbox" id="overwrite" name="overwrite" value="1" <?php if ($_POST['overwrite']) { echo 'checked="checked"'; } ?> /><label for="overwrite"><?php echo _AT('overwrite_master');?></label>
@@ -238,7 +238,7 @@ function show_login_form()
 
 	<div class="row">
 		<?php echo _AT('date_of_birth'); ?><br />
-		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php if(isset($_POST['year'])){ echo $_POST['year'];} ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['month'])){echo $_POST['month'];} ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['day'])){ echo $_POST['day'];} ?>" />
+		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php if(isset($_POST['year'])){ echo htmlspecialchars($_POST['year'], ENT_QUOTES);} ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['month'])){echo $_POST['month'];} ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['day'])){ echo $_POST['day'];} ?>" />
 	</div>
 
 	<div class="row">

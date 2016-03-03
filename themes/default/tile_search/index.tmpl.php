@@ -22,7 +22,7 @@
 		<table width="100%">
 			<tr>
 				<td width="20%"><label for="words2"><?php echo _AT('keywords'); ?></label></td>
-				<td><input type="text" name="keywords" size="100" id="words2" value="<?php echo $_REQUEST['keywords']; ?>" /></td>
+				<td><input type="text" name="keywords" size="100" id="words2" value="<?php echo htmlspecialchars($_REQUEST['keywords'], ENT_QUOTES); ?>" /></td>
 			</tr>
 			<?php
 				// ***

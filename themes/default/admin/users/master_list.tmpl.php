@@ -65,7 +65,7 @@
 
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
+<input type="hidden" name="status" value="<?php echo intval($_GET['status']); ?>" />
 
 <table summary="Table lists results by Student ID, Login Name, First Name, Second Name, and Last Name." class="data" style="width: 60%;">
 <thead>

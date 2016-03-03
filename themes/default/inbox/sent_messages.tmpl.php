@@ -13,7 +13,7 @@
 			<h3><?php echo AT_print($this->row_messages['subject'], 'messages.subject'); ?></h3>
 			<div>
 				<div class="forum-post-ctrl">
-					<a href="inbox/send_message.php?forward=<?php echo $_GET['view']; ?>"><?php echo _AT('forward'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo $_GET['view']; ?>"><?php echo _AT('delete'); ?></a>
+					<a href="inbox/send_message.php?forward=<?php echo intval($_GET['view']); ?>"><?php echo _AT('forward'); ?></a> | <a href="<?php echo $_SERVER['PHP_SELF']; ?>?delete=<?php echo intval($_GET['view']); ?>"><?php echo _AT('delete'); ?></a>
 				</div>
 				<p class="date"><?php echo AT_date(_AT('forum_date_format'), $this->row_messages['date_sent'], AT_DATE_MYSQL_DATETIME); ?></p>
 			</div>
