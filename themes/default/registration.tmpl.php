@@ -238,7 +238,7 @@ function show_login_form()
 
 	<div class="row">
 		<?php echo _AT('date_of_birth'); ?><br />
-		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php if(isset($_POST['year'])){ echo htmlspecialchars($_POST['year'], ENT_QUOTES);} ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['month'])){echo $_POST['month'];} ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['day'])){ echo $_POST['day'];} ?>" />
+		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php if(isset($_POST['year'])){ echo htmlspecialchars($_POST['year'], ENT_QUOTES);} ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['month'])){echo intval($_POST['month']);} ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php if(isset($_POST['day'])){ echo intval($_POST['day']);} ?>" />
 	</div>
 
 	<div class="row">

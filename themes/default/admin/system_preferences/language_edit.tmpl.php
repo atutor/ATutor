@@ -6,7 +6,7 @@
 <div class="input-form" style="width:95%">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="code"><?php echo _AT('lang_code'); ?></label><br />
-		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['code']; ?>" />
+		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo htmlspecialchars($_POST['code'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
