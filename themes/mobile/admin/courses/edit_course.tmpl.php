@@ -9,8 +9,8 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	<input type="hidden" name="course" value="<?php echo $this->course; ?>" />
 	<input type="hidden" name="old_access" value="<?php echo $this->row['access']; ?>" />
 	<input type="hidden" name="created_date" value="<?php echo $this->row['created_date']; ?>" />
-	<input type="hidden" name="show_courses" value="<?php echo $_GET['show_courses']; ?>" />
-	<input type="hidden" name="current_cat" value="<?php echo $_GET['current_cat']; ?>" />
+	<input type="hidden" name="show_courses" value="<?php echo intval($_GET['show_courses']); ?>" />
+	<input type="hidden" name="current_cat" value="<?php echo intval($_GET['current_cat']); ?>" />
 	<input type="submit" name="submit" style="display:none;"/>
 
 <div class="input-form">
@@ -416,7 +416,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	</div>
     
             <?php echo _AT('upload_icon'); ?><br />
-            	<label for="customicon"><input type="file" name="customicon" title="custom icon" id="customicon" value="<?php echo $_POST['customicon']; ?>"/></label><br />
+            	<label for="customicon"><input type="file" name="customicon" title="custom icon" id="customicon" value="<?php echo intval($_POST['customicon']); ?>"/></label><br />
                 <small><?php echo _AT('upload_icon_text'); ?></small>
        
         <?php  //require_once(AT_INCLUDE_PATH.'../mods/_core/courses/html/course_icon.inc.php'); ?>

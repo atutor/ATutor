@@ -72,7 +72,7 @@
 
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="status" value="<?php echo $_GET['status']; ?>" />
+<input type="hidden" name="status" value="<?php echo intval($_GET['status']); ?>" />
 <div class="table-surround">
 <table summary="Table lists results by Student ID, Login Name, First Name, Second Name, and Last Name." class="data"  >
 <thead>

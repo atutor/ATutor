@@ -1,6 +1,6 @@
 <form method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<input type="hidden" name="mod" value="<?php echo $_GET['mod']; ?>" />
-<input type="hidden" name="new" value="<?php echo $_GET['new']; ?>" />
+<input type="hidden" name="mod" value="<?php echo htmlspecialchars($_GET['mod'], ENT_QUOTES); ?>" />
+<input type="hidden" name="new" value="<?php echo  htmlspecialchars($_GET['new'], ENT_QUOTES); ?>" />
 
 <input type="hidden" name="enabled" value="<?php echo (int) isset($_GET['enabled']); ?>" />
 <input type="hidden" name="disabled" value="<?php echo (int) isset($_GET['disabled']); ?>" />

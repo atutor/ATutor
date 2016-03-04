@@ -3,17 +3,17 @@
 <div class="input-form" style="width:95%">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="code"><?php echo _AT('lang_code'); ?></label><br />
-		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['code']; ?>" />
+		<input id="code" name="code" type="text" size="2" maxlength="2" class="formfield" value="<?php echo htmlspecialchars($_POST['code'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="locale"><?php echo _AT('locale'); ?></label><br />
-		<input id="locale" name="locale" type="text" size="2" maxlength="2" class="formfield" value="<?php echo $_POST['locale']; ?>" />
+		<input id="locale" name="locale" type="text" size="2" maxlength="2" class="formfield" value="<?php echo htmlspecialchars($_POST['locale'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="charset"><?php echo _AT('charset'); ?></label><br />
-		<input id="charset" name="charset" type="text" size="31" maxlength="20" class="formfield" value="<?php echo $_POST['charset']; ?>" />
+		<input id="charset" name="charset" type="text" size="31" maxlength="20" class="formfield" value="<?php echo htmlspecialchars($_POST['charset'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
@@ -32,17 +32,17 @@
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="reg_exp"><?php echo _AT('reg_exp'); ?></label><br />
-		<input id="reg_exp" name="reg_exp" type="text" size="31" class="formfield" value="<?php echo $_POST['reg_exp']; ?>" />
+		<input id="reg_exp" name="reg_exp" type="text" size="31" class="formfield" value="<?php echo htmlspecialchars($_POST['reg_exp'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="nname"><?php echo _AT('name_in_language'); ?></label><br />
-		<input id="nname" name="native_name" type="text" size="31" maxlength="20" class="formfield" value="<?php echo $_POST['native_name']; ?>" />
+		<input id="nname" name="native_name" type="text" size="31" maxlength="20" class="formfield" value="<?php echo htmlspecialchars($_POST['native_name'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="ename"><?php echo _AT('name_in_english'); ?></label><br />
-		<input id="ename" name="english_name" type="text" size="31" maxlength="20" class="formfield" value="<?php echo $_POST['english_name'];?>" />
+		<input id="ename" name="english_name" type="text" size="31" maxlength="20" class="formfield" value="<?php echo htmlspecialchars($_POST['english_name'], ENT_QUOTES);?>" />
 	</div>
 
 

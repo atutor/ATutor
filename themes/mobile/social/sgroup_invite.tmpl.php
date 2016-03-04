@@ -38,7 +38,7 @@
 					<label for="member_<?php echo $member_id; ?>"><?php echo printSocialName($member_id, false); ?></label><br/>
 				<?php endforeach; ?>
 			</div>
-			<input type="hidden" name="id" value="<?php echo $_REQUEST['id']; ?>" />
+			<input type="hidden" name="id" value="<?php echo intval($_REQUEST['id']); ?>" />
 			<input class="button" type="submit" name="inviteMember" value="<?php echo _AT('invite');?>" />
 			</div>
 		</form>
