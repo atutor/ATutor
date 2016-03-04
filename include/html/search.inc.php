@@ -100,7 +100,7 @@ if (isset($_GET['search']) && !$_GET['words']) {
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="keywords"><?php echo _AT('search_words'); ?></label><br />
-		<input type="text" name="words" size="30" id="keywords" value="<?php echo $_GET['words']; ?>" />
+		<input type="text" name="words" size="30" id="keywords" value="<?php echo htmlspecialchars($_GET['words'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">

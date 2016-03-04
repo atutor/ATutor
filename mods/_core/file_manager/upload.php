@@ -20,14 +20,9 @@ if (!authenticate(AT_PRIV_FILES,AT_PRIV_RETURN)) {
 }
 
 $_SESSION['done'] = 1;
-$popup = $_REQUEST['popup'];
-$framed = $_REQUEST['framed'];
-$alter = $_REQUEST['alter'];
-
-//echo $_REQUEST['cid'];
-//echo $_REQUEST['tab'];
-
-//echo $alter;
+$popup = intval($_REQUEST['popup']);
+$framed = intval($_REQUEST['framed']);
+$alter = intval($_REQUEST['alter']);
 					
 /* get this courses MaxQuota and MaxFileSize: */
 $sql	= "SELECT max_quota, max_file_size FROM %scourses WHERE course_id=%d";

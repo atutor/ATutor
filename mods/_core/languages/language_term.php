@@ -60,7 +60,7 @@ if (isset($_GET['term'])) {
 
 <?php if ($original_row): ?>
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<input type="hidden" name="term" value="<?php echo $_GET['term']; ?>" />
+	<input type="hidden" name="term" value="<?php echo htmlspecialchars($_GET['term'], ENT_QUOTES); ?>" />
 	<input type="hidden" name="variable" value="<?php echo $original_row['variable']; ?>" />
 
 	<div class="input-form" style="width: 99%">

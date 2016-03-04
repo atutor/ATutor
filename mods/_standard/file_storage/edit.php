@@ -178,7 +178,7 @@ $file_path = fs_get_file_path($id);
 			<label for="body"><?php echo _AT('contents'); ?></label><br />
 			<textarea name="body" id="body" cols="30" rows="20"><?php
 				if (isset($_POST['body'])) {
-					echo $_POST['body'];
+					echo htmlspecialchars($_POST['body'], ENT_QUOTES);
 				} else {
 					echo htmlspecialchars(file_get_contents($file_path . $id));
 				}

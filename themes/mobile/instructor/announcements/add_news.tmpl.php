@@ -30,7 +30,7 @@
 
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body_text"><?php echo _AT('body'); ?></label><br />
-			<textarea name="body_text" cols="40" rows="15" id="body_text"><?php echo $_POST['body_text']; ?></textarea>
+			<textarea name="body_text" cols="40" rows="15" id="body_text"><?php echo htmlspecialchars($_POST['body_text'], ENT_QUOTES); ?></textarea>
 		</div>
 		
 		<div class="row buttons">

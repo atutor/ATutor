@@ -146,7 +146,7 @@ tests a part of a CP or CP is actually possible
 
 <div class="row">
 	<p><?php echo _AT('custom_test_message'); ?></p>
-	<textarea name="test_message" cols="80" rows="4" class="test_message"><?php echo $_POST['test_message']; ?></textarea>
+	<textarea name="test_message" cols="80" rows="4" class="test_message"><?php echo htmlspecialchars($_POST['test_message'], ENT_QUOTES); ?></textarea>
 </div>
 
 <?php print_test_table($results, $_POST['tid']);?>

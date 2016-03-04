@@ -32,6 +32,9 @@ if (isset($_POST['cancel'])) {
     $_POST['description']  = trim($_POST['description']);
     $_POST['passfeedback']  = trim($_POST['passfeedback']);
     $_POST['failfeedback']  = trim($_POST['failfeedback']);
+    $_POST['num_questions']        = intval($_POST['num_questions']);
+    $_POST['passpercent']    = intval($_POST['passpercent']);
+    $_POST['passscore']    = intval($_POST['passscore']);
 /*    
     $_POST['format']            = intval($_POST['format']);
     $_POST['randomize_order']    = intval($_POST['randomize_order']);

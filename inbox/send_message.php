@@ -177,7 +177,7 @@ if ($reply_to) {
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<input type="hidden" name="replied" value="<?php echo $_GET['reply']; ?>" />
+<input type="hidden" name="replied" value="<?php intval(echo $_GET['reply']); ?>" />
 
 <div class="input-form">
 	<div class="row">
@@ -242,7 +242,7 @@ if ($reply_to) {
 				$body  = "\n\n\n"._AT('in_reply_to').":\n".$body;
 				echo $body;
 			} else {
-				echo $_POST['message'];
+				echo htmlspecialchars($_POST['message'], ENT_QUOTES);
 			}
 		?></textarea>
 	</div>

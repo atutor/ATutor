@@ -34,7 +34,7 @@ if (!isset($_GET['words'])) {
 <input type="hidden" name="search_within[]" value="content" />
 <input type="hidden" name="search_within[]" value="forums" />
 <label for="words" style="visibility:hidden; font-size:0;"><?php echo _AT('search'); ?></label>
-<input type="text" name="words" class="formfield" size="20" id="words" value="<?php echo $_GET['words']; ?>" title="<?php echo _AT('enter_search_terms'); ?>"/><br />
+<input type="text" name="words" class="formfield" size="20" id="words" value="<?php echo htmlspecialchars($_GET['words'], ENT_QUOTES); ?>" title="<?php echo _AT('enter_search_terms'); ?>"/><br />
 <fieldset>
 <legend style="display:none;"><?php echo _AT('search'); ?></legend>
 <small>
