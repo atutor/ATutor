@@ -5,7 +5,7 @@
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('add_announcement'); ?></legend>
 		<div class="row">
 			<label for="title"><?php echo _AT('title'); ?></label><br />
-			<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
+			<input type="text" name="title" size="40" id="title" value="<?php echo htmlspecialchars($_POST['title'], ENT_QUOTES); ?>" />
 		</div>
 
 		<div class="row">

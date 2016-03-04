@@ -33,7 +33,7 @@
 
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="body"><?php echo _AT('body'); ?></label><br />
-		<textarea cols="40" rows="18" name="body" id="body"><?php echo $_POST['body']; ?></textarea>
+		<textarea cols="40" rows="18" name="body" id="body"><?php echo strip_tags($_POST['body']); ?></textarea>
 	</div>
 
 	<div class="row buttons">

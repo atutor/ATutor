@@ -43,7 +43,7 @@
 			} else {
 				$uncon = ' checked="checked"';
 			}?>
-			<input type="hidden" name="id" value="<?php echo $_POST['member_id']; ?>" >
+			<input type="hidden" name="id" value="<?php echo intval($_POST['member_id']); ?>" >
 			<div class="row">
 				<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><?php echo _AT('account_status'); ?><br />
 
@@ -56,7 +56,7 @@
 
 				<input type="radio" name="status" value="3" id="inst" <?php echo $inst; ?> /><label for="inst"><?php echo _AT('instructor'); ?></label>
 
-				<input type="hidden" name="old_status" value="<?php echo $_POST['old_status']; ?>" />
+				<input type="hidden" name="old_status" value="<?php echo intval($_POST['old_status']); ?>" />
 			</div>
 	<?php endif; ?>
 	</fieldset>
@@ -68,7 +68,7 @@
 	<?php if (admin_authenticate(AT_ADMIN_PRIV_USERS, TRUE) && defined('AT_MASTER_LIST') && AT_MASTER_LIST): ?>
 		<div class="row">
 			<label for="student_id"><?php echo _AT('student_id'); ?></label><br />
-				<input type="text" name="student_id" value="<?php echo $_POST['student_id']; ?>" size="20" /><br />
+				<input type="text" name="student_id" value="<?php echo intval($_POST['student_id']); ?>" size="20" /><br />
 		</div>
 		<div class="row">
 			<label for="student_pin"><?php echo _AT('student_pin'); ?></label><br />
@@ -78,7 +78,7 @@
 
 	<div class="row">
 		<?php echo _AT('date_of_birth'); ?><br />
-		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo $_POST['year']; ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo $_POST['month']; ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo $_POST['day']; ?>" />
+		<label for="year"><?php echo _AT('year'); ?>: </label><input id="year" class="formfield" name="year" type="text" size="4" maxlength="4" value="<?php echo intval($_POST['year']); ?>" />  <label for="month"><?php echo _AT('month'); ?>: </label><input id="month" class="formfield" name="month" type="text" size="2" maxlength="2" value="<?php echo intval($_POST['month']); ?>" /> <label for="day"><?php echo _AT('day'); ?>: </label><input id="day" class="formfield" name="day" type="text" size="2" maxlength="2" value="<?php echo intval($_POST['day']); ?>" />
 	</div>
 
 	<div class="row">

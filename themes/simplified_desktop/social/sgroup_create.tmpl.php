@@ -9,7 +9,7 @@
 	<form action="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'groups/create.php'); ?>" method="POST" >
 		<div class="row">
 			<label for="group_name"><?php echo _AT('group_name'); ?></label>
-			<input type="text" size="45" name="group_name" id="group_name" value="<?php echo $_POST['group_name']; ?>"/>
+			<input type="text" size="45" name="group_name" id="group_name" value="<?php echo htmlspecialchars($_POST['group_name'], ENT_QUOTES); ?>"/>
 		</div>
 
 		<div class="row">
@@ -23,12 +23,12 @@
 
 		<div class="row">
 			<label for="logo"><?php echo _AT('group_logo'); ?></label>
-			<input type="text" size="45" name="logo" id="logo" value="<?php echo $_POST['logo']; ?>"/>
+			<input type="text" size="45" name="logo" id="logo" value="<?php echo htmlspecialchars($_POST['logo'], ENT_QUOTES); ?>"/>
 		</diV>
 
 		<div class="row">
 			<label for="description"><?php echo _AT('description'); ?></label>
-			<textarea cols="40" rows="5" name="description" id="description"><?php echo $_POST['description']; ?></textarea>
+			<textarea cols="40" rows="5" name="description" id="description"><?php echo strip_tags($_POST['description']); ?></textarea>
 		</div>
 
 		<div class="row">

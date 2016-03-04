@@ -27,14 +27,14 @@ if (!isset($_POST['confirm'])) {
 } else { ?>
 
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-	<input type="hidden" name="new" value="<?php echo $_POST['new']; ?>" />
+	<input type="hidden" name="new" value="<?php echo intval($_POST['new']); ?>" />
 
 	<div class="input-form">
 		<div class="row">
 			<h3><?php if (file_exists($this->title_file)) { 
 					readfile($this->title_file); 
 				} else {
-					echo $_POST['title'];
+					echo htmlspecialchars($_POST['title'], ENT_QUOTES)
 				}?>
 			</h3>
 		</div>

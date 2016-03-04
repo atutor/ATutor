@@ -4,12 +4,12 @@
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" size="40" id="title" value="<?php echo $_POST['title']; ?>" />
+		<input type="text" name="title" size="40" id="title" value="<?php echo htmlspecialchars($_POST['title'], ENT_QUOTES); ?>" />
 	</div>
 
 	<div class="row">
 		<label for="body"><?php echo _AT('description'); ?></label><br />
-		<textarea name="description" cols="45" rows="2" id="body" ><?php echo $_POST['description']; ?></textarea>
+		<textarea name="description" cols="45" rows="2" id="body" ><?php echo strip_tags($_POST['description']); ?></textarea>
 	</div>
 
 	<div class="row">
