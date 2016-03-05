@@ -18,6 +18,8 @@ admin_authenticate(AT_ADMIN_PRIV_MODULES);
 require(AT_INCLUDE_PATH.'../mods/_core/modules/classes/ModuleListParser.class.php');
 require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 // delete all folders and files in $dir
+
+
 function clear_dir($dir)
 {
 	if ($dh = opendir($dir)) 
@@ -154,8 +156,15 @@ else if (isset($_POST['install']) || isset($_POST["download"]) || isset($_POST["
 
 			if (!$msg->containsErrors())
 			{
-				header('Location: module_install_step_1.php?mod='.urlencode($module_folder).SEP.'new=1');
-				exit;
+			        if($_POST['csrftoken'] != $_SESSION['token']){
+                        $msg->addError('ACCESS_DENIED');
+                    } else {
+                    
+                        header('Location: module_install_step_1.php?mod='.urlencode($module_folder).SEP.'new=1');                        
+                        exit;
+                    }
+				//header('Location: module_install_step_1.php?mod='.urlencode($module_folder).SEP.'new=1');
+				//exit;
 			}
 		}
 		
@@ -181,8 +190,13 @@ if (isset($_POST['mod'])) {
 	$dir_name = str_replace(array('.','..'), '', $_POST['mod']);
 
 	if (isset($_POST['install_manually'])) {
-		header('Location: '.AT_BASE_HREF.'mods/_core/modules/module_install_step_2.php?mod='.urlencode($dir_name).SEP.'new=1'.SEP.'mod_in=1');
-		exit;
+	// Check for potential  CSRF
+        if($_POST['csrftoken'] != $_SESSION['token']){
+                $msg->addError('ACCESS_DENIED');
+        } else {
+            header('Location: '.AT_BASE_HREF.'mods/_core/modules/module_install_step_2.php?mod='.urlencode($dir_name).SEP.'new=1'.SEP.'mod_in=1');
+            exit;
+        }
 	}
 
 } else if (isset($_POST['install_manually'])) {
@@ -255,16 +269,18 @@ $rows_installed_mods = queryDB($sql, array(TABLE_PREFIX));
 
     // Add $module_list_array as the last parameter, to sort by the common key
     // Sorts by original $module_list_array by reference, then returns true|false
-    $sort_by_version = array_multisort($version, SORT_DESC, $module_list_array);
+    //$sort_by_version = array_multisort($version, SORT_DESC, $module_list_array);
 
 // Create menu for filter ATutor versions
-function select_atversion(){ 
+function select_atversion($v=0){ 
     global $sort_versions;
     $menu = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">'; 
     $menu.= '<select name="atversions">';
     $menu.= '<option value="0">'._AT("all").'</option>';
     foreach($sort_versions as $version){
-        if($version == VERSION){
+        if($version == $v){
+            $menu .= '<option value="'.$version.'" selected="selected">'.$version.'</option>';
+        }else if($version == VERSION){
             $menu .= '<option value="'.$version.'" selected="selected">'.$version.'</option>';
         }else{
             $menu .= '<option value="'.$version.'" >'.$version.'</option>';

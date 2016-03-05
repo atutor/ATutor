@@ -8,6 +8,7 @@ if ($this->enable_upload) {
 
 		<div class="row">
 			<input type="hidden" name="MAX_FILE_SIZE" value="52428800" />
+			<input type="hidden" name="csrftoken"  value="<?php echo $_SESSION['token'];?>" />
 			<input type="file" name="modulefile"  size="50" />
 		</div>
 		
@@ -26,6 +27,7 @@ if (count($this->keys) > 0)
 {
 ?>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="installform">
+<input type="hidden" name="csrftoken"  value="<?php echo $_SESSION['token'];?>" />
 <table class="data" summary="">
 <thead>
 <tr>
@@ -82,10 +84,23 @@ if ($this->enable_remote_installation === true) {
     <div class="row">
     <?php echo _AT('old_module_notes'); ?>
     </div>
-<?php echo select_atversion(); ?>
+<?php 
+
+if(isset($_POST['atversions'])){
+    $v = htmlspecialchars($_POST['atversions']);
+    $_SESSION['atversion'] = $_POST['atversions'];
+} elseif(isset($_SESSION['atversion'] )){
+    $v = substr($_SESSION['atversion'], 0, 3);
+} else {
+    $v = substr(VERSION, 0, 3);
+}
+echo select_atversion($v); 
+
+?>
 </div>
 </fieldset>
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<input type="hidden" name="csrftoken"  value="<?php echo $_SESSION['token'];?>" />
 <table class="data" summary="">
 <thead>
 	<tr>
