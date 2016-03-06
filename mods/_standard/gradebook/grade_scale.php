@@ -125,7 +125,7 @@ else
 </tbody>
 </table>
 </form>
-
+<br style="clear:both;" />
 <h3 align="center"><?php echo _AT('preset_grade_scale'); ?></h3>
 <table summary="" class="data" align="center" style="width: 90%;">
 <thead>
