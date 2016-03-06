@@ -235,7 +235,7 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 								<?php for ($i=0; $i<$num_pages; $i++): ?>	
 									<?php if($i==0): ?>
 				
-									<!-- <a id="subnavlist-link" class="content-expand" href="javascript:void(0);"> Topics in <?php echo $this->sub_level_pages[$i]['title']; ?></a> -->
+									<!-- <a id="subnavlist-link" class="content-expand" href="javascript:void(0);"> <?php echo _AT('topics_in'); ?> <?php echo $this->sub_level_pages[$i]['title']; ?></a> -->
 									<?php endif; ?>
 								<?php endfor;?>
 					</div>

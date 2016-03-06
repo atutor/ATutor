@@ -21,7 +21,7 @@
 
 <form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 <div class="table-surround">
-<table class="data" summary="Parent topics and subtopics">
+<table class="data" summary="<?php echo _AT('parent_and_sub_topics'); ?>">
 <thead>
 <tr>
 	<th scope="col">&nbsp;</th>

@@ -99,7 +99,7 @@ function encrypt_password() {
 			<?php
 			if($_config['allow_registration'] ==1){
 			?>
-			Don't have an account? 
+			<p><?php echo _AT('registration_text'); ?></p>
 			<form action="registration.php" method="get">
 			<?php if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION): ?>
 				<p><?php echo _AT('confirm_account_text'); ?></p>

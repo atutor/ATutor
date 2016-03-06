@@ -62,9 +62,9 @@
            if(isset($this->all_news[$i]['thumb'])){
         echo '<li><img src="'.$this->all_news[$i]['thumb'].'" alt="'.$this->all_news[$i]['alt'].'" title="'.$this->all_news[$i]['alt'].'"/> ' . $this->all_news[$i]['link'] .' <br />';
         if($this->all_news[$i]['object']['course_id']){
-        echo '<span class="current_list_date_time">'.'Posted in&nbsp;'.'<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>';
+        echo '<span class="current_list_date_time">'._AT('posted_in').'&nbsp;'.'<a href="bounce.php?course='.$this->all_news[$i]['object']['course_id'].'">'.$this->all_news[$i]['course'].'</a>';
         }
-        echo '&nbsp;on&nbsp;'.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).'</span></li>';
+        echo '&nbsp;'._AT('on').'&nbsp;'.AT_DATE('%F %j, %g:%i',$this->all_news[$i]['time']).'</span></li>';
     }
          echo '</ul>';
      }
@@ -72,7 +72,7 @@
     if($perpage == count($this->all_news)){ ?>
      <div id="show-pages"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=1"><?php echo _AT('show_pages'); ?></a></div>
     <?php }else{ ?>
-     <div id="show-all"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo "Show All"; ?></a></div>
+     <div id="show-all"><a href="<?php echo $_SERVER['PHP_SELF']; ?>?p=all"><?php echo _AT('show_all'); ?></a></div>
     <?php } ?>
 <br /><br />
 </div>  
