@@ -35,7 +35,8 @@ $unset_session = array('login',
                        'redirect_to',
                        'token',
                        'tool_origin',
-                       'message');
+                       'message',
+                       'atversion');
 //unset($msg);
 foreach ($unset_session as $session_name) {
     unset($_SESSION[$session_name]);
