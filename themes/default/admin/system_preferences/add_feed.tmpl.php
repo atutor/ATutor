@@ -46,6 +46,6 @@ if (!isset($_POST['confirm'])) {
 	</form>
 
 	<?php
-		$this->msg->printConfirm();
+		//$this->msg->printConfirm();
 }
 ?>
