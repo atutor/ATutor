@@ -37,6 +37,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_RSS, TRUE) || admin_authenticate(AT_ADMIN_P
 		$this->_pages['mods/_standard/rss_feeds/preview.php']['parent'] = 'mods/_standard/rss_feeds/index.php';
 }
 
+//side menu
+$this->_stacks['rss_feeds'] = array('title_var'=>'rss_feeds', 'file'=>dirname(__FILE__).'/side_menu.inc.php');
 //make the rss files side menu stacks
 $rss_files = array();
 $dh  = opendir(AT_CONTENT_DIR.'/feeds');
@@ -68,7 +70,7 @@ function make_cache_file($feed_id) {
 	$row_feeds = queryDB($sql, array(TABLE_PREFIX, $feed_id), TRUE);
 	
 	if(count($row_feeds) > 0){
-		$output = $rss->get($row['url'], $row['feed_id']);
+		$output = $rss->get($row_feeds['url'], $row_feeds['feed_id']);
 
 		$cache_file = AT_CONTENT_DIR.'feeds/'.$feed_id.'_rss.cache';
 		if ($f = @fopen($cache_file, 'w')) {
