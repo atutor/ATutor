@@ -93,14 +93,8 @@ if ( get_magic_quotes_gpc() == 1 ) {
     $addslashes   = 'my_add_null_slashes';
     $stripslashes = 'stripslashes';
 } else {
-    if(defined('MYSQLI_ENABLED')){
-        // mysqli_real_escape_string requires 2 params, breaking wherever
-        // current $addslashes with 1 param exists. So hack with trim and 
-        // manually run mysqli_real_escape_string requires during sanitization below
-        $addslashes   = 'trim';
-    }else{
-        $addslashes   = 'mysql_real_escape_string';
-    }
+    // if get_magic_quotes_gpc is off, we set our own handler
+    $addslashes   = 'mysql_real_escape_string';
     $stripslashes = 'my_null_slashes';
 }
 
