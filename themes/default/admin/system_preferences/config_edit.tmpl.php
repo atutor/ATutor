@@ -309,9 +309,8 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		<legend><?php echo _AT('enable_mail_queue'); ?></legend>
 		 (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['enable_mail_queue'] ? _AT('enable') : _AT('disable')); ?>)<br />
 		<?php echo _AT('mail_queue_cron'); ?><br />
-		<?php if (!$_config['last_cron'] || (time() - (int) $_config['last_cron'] > 2 * 60 * 60)): ?>
-			
-			<input type="radio" name="enable_mail_queue" id="mq_y" value="1" disabled="disabled" /><?php echo _AT('enable'); ?> 
+		<?php if (!$_config['last_cron'] || (time() - (int) $_config['last_cron'] > 2 * 60 * 60)): ?>	
+			<input type="radio" name="enable_mail_queue" id="mq_y" value="1" disabled="disabled" />
 			<label for="mq_y"><?php echo _AT('enable'); ?></label> 
 			<input type="radio" name="enable_mail_queue" value="0" id="mq_n" checked="checked" />
 			<label for="mq_n"><?php echo _AT('disable'); ?></label>
