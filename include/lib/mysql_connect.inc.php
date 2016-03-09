@@ -306,9 +306,9 @@ function at_db_version($db){
 }	
 function at_db_create($sql, $db){
  	if(defined('MYSQLI_ENABLED')){	
-        $result = $db->query($sql);	
+        $result = $db->query($sql) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage));   	
  	}else{
-        $result = mysql_query($sql, $db);
+        $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
     }
     return $result;
 }
