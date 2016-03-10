@@ -15,7 +15,7 @@
 	define('AT_INCLUDE_PATH', '../../../include/');
 	define('TR_INCLUDE_PATH', '../../../include/');
 
-	if(isset($_POST['tile_course_id'], $_POST['aclcl'])){
+	if(isset($_POST['tile_course_id'], $_POST['aclcl']) && !isset($_POST['cancel'])){
 
 		error_reporting(E_ALL & ~E_NOTICE & ~E_DEPRECATED);
 		ini_set("display_errors", 1);
@@ -32,10 +32,12 @@
 			$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	
 		header('Location: index.php');
-		exit();
+		exit;
+	} else if(isset($_POST['cancel'])){
+	    header('Location: index.php');
+	    exit;
 	}
-
-//define('AT_INCLUDE_PATH', '../../../include/');
+ 
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 authenticate(AT_PRIV_CONTENT);
 
@@ -120,7 +122,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 
 ?>
 
-<form name="form1" method="post" action="<?php echo $action; ?>" onsubmit="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');">
+<form name="form1" method="post" action="<?php echo $action; ?>">
 	<?php
 		foreach($vars as $name => $value){
 			echo '<input type="hidden" value="'.$value.'" name="'.$name.'" />';
@@ -147,7 +149,7 @@ function print_menu_sections(&$menu, $parent_content_id = 0, $depth = 0, $orderi
 	</div>
 
 	<div class="row buttons">
-		<input type="submit" name="submit" value="<?php echo _AT('import'); ?>" /> <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
+		<input type="submit" name="submit" value="<?php echo _AT('import'); ?>" onclick="openWindow('<?php echo AT_BASE_HREF; ?>tools/prog.php?tile=1');"/> <input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
 </div>
 </form>
