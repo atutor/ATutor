@@ -152,6 +152,7 @@ function dirsize($dir) {
 */
 	function preImportCallBack($p_event, &$p_header) {
 		global $IllegalExtentions;
+		$legalExtensions = array("txt", "xml");
 
 		if ($p_header['folder'] == 1) {
 			return 1;
@@ -160,7 +161,12 @@ function dirsize($dir) {
 		$path_parts = pathinfo($p_header['filename']);
 		$ext = $path_parts['extension'];
 
-		if (in_array($ext, $IllegalExtentions)) {
+		# we check for traversal attacks here, we could also log attacks...
+		if (strpos($path_parts['dirname'], '..') !== false) {
+			return 0;
+		}
+                # we use a white list, again, we could log here
+		if (!in_array($ext, $legalExtentions)) {
 			return 0;
 		}
 
