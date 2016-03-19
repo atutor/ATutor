@@ -160,6 +160,12 @@ function dirsize($dir) {
 		$path_parts = pathinfo($p_header['filename']);
 		$ext = $path_parts['extension'];
 
+		# we check for traversal attacks here, we could also log attacks...
+		if (strpos($path_parts['dirname'], '..') !== false) {
+			return 0;
+		}
+                # we should use a whitelist here instead of a blacklist,
+                # but the code above should stop traversal attacks at least
 		if (in_array($ext, $IllegalExtentions)) {
 			return 0;
 		}
