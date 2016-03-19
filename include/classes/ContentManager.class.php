@@ -1181,7 +1181,7 @@ class ContentManager
 				}
 
 				
-				echo $link;
+				echo htmlspecialchars_decode($link);
 				
 				echo "\n<br /></span>\n\n";
 				
