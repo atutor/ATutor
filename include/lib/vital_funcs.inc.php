@@ -1174,4 +1174,25 @@ function xecho($text, $encoding='UTF-8') {
 	echo htmlspecialchars($text, ENT_QUOTES, $encoding);
 }
 
+/**
+ * Superglobal filter, to prevent XSS
+ * @Author	mr_me
+ * @URL https://github.com/net-ninja/ATutor/blob/ef762a4cd451ead72276949a314e07e04f023b21/include/security.inc.php
+ * @date	Mar 10, 2016
+ * run below escape_all_supers();
+ **/
+function escape_all_supers(){
+    foreach($_POST as $key=>$value){
+        $_POST[$key] = htmlspecialchars($_POST[$key]);
+    }
+    foreach($_GET as $key=>$value){
+        $_GET[$key] = htmlspecialchars($_GET[$key]);
+    }
+    foreach($_POST as $key=>$value){
+        $_REQUEST[$key] = htmlspecialchars($_REQUEST[$key]);
+    }
+    $_SERVER['PHP_SELF'] = htmlspecialchars($_SERVER['PHP_SELF']);
+}
+escape_all_supers();
+
 ?>
