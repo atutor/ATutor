@@ -96,7 +96,6 @@ if (isset($_POST['cancel'])) {
 
 		if ($_REQUEST['h'] != $hash_bit) {
 			$msg->addError('INVALID_LINK');
-			$savant->display('password_reminder_feedback.tmpl.php'); 
 		} else if (($_REQUEST['h'] == $hash_bit) && !isset($_POST['form_change'])) {
 			$savant->assign('id', $_REQUEST['id']);
 			$savant->assign('g', $_REQUEST['g']);
