@@ -33,7 +33,7 @@ if (isset($_GET['e'], $_GET['id'], $_GET['m'])) {
 	if ($row['creation_date'] != '') {
 		$code = substr(md5($e . $row['creation_date'] . $id), 0, 10);
 
-		if ($code == $m) {
+		if ($code === $m) {
 			$sql = "UPDATE %smembers SET email='%s', last_login=NOW(), creation_date=creation_date WHERE member_id=%d";
 			$result = queryDB($sql, array(TABLE_PREFIX, $e, $id));
 			$msg->addFeedback('CONFIRM_GOOD');
@@ -148,7 +148,7 @@ if (isset($_REQUEST['auto_login']))
 
 	$code = substr(md5($e . $row['creation_date'] . $id), 0, 10);
 	
-	if ($row['member_id'] != '' && isset($_REQUEST['code']) && $_REQUEST['code'] == $code) 
+	if ($row['member_id'] != '' && isset($_REQUEST['code']) && $_REQUEST['code'] === $code) 
 	{
 		$_SESSION['valid_user'] = true;
 		$_SESSION['member_id']	= $_REQUEST["member_id"];
