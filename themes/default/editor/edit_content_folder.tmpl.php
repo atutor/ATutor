@@ -75,7 +75,7 @@ if ($this->shortcuts):
 	?>
 	<tr onmousedown="toggleTestSelect('r_<?php echo $row['test_id']; ?>');rowselect(this);" id="r_<?php echo $row['test_id']; ?>">
 		<td><input type="checkbox" name="tid[]" value="<?php echo $row['test_id']; ?>" id="t<?php echo $row['test_id']; ?>" <?php echo $checkMe; ?> onmouseup="this.checked=!this.checked" /></td>
-		<td><?php echo $row['title']; ?></td>
+		<td><?php echo htmlspecialchars($row['title']); ?></td>
 		<td><?php echo $row['status']; ?></td>
 		<!-- <td><?php echo $row['availability']; ?></td> -->
 		<td><?php echo $row['result_release']; ?></td>
