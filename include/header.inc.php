@@ -223,7 +223,7 @@ $_current_sub_level_page_i = get_current_sub_navigation_page_i($current_page);
 $_path = get_path($current_page);
 unset($_path[0]);
 if (isset($_pages[$current_page]['title'])) {
-	$_page_title = $_pages[$current_page]['title'];
+	$_page_title = htmlspecialchars_decode($_pages[$current_page]['title']);
 } else {
 	$_page_title = _AT($_pages[$current_page]['title_var']);
 }
