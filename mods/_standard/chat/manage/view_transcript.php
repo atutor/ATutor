@@ -14,7 +14,7 @@ define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 
 
-$file = AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html';
+$file = AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.basename($_GET['t']).'.html';
 if (!file_exists($file)) {
 	$msg->addError('FILE_NOT_FOUND');
 	header('Location: index.php');
