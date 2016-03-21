@@ -642,7 +642,7 @@ function write_temp_file() {
 		$content_base .= $_POST['content_path'] . '/';
 	}
 
-	$file_name = $_POST['cid'].'.html';
+	$file_name = basename($_POST['cid']).'.html';
 
 	if ($handle = fopen(AT_CONTENT_DIR . $file_name, 'wb+')) {
 		
