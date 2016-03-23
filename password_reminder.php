@@ -94,7 +94,7 @@ if (isset($_POST['cancel'])) {
 		$hash = sha1($_REQUEST['id'] + $_REQUEST['g'] + $row['password']);
 		$hash_bit = substr($hash, 5, 15);
 
-		if ($_REQUEST['h'] != $hash_bit) {
+		if ($_REQUEST['h'] !== $hash_bit) {
 			$msg->addError('INVALID_LINK');
 		} else if (($_REQUEST['h'] == $hash_bit) && !isset($_POST['form_change'])) {
 			$savant->assign('id', $_REQUEST['id']);
