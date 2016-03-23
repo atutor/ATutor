@@ -137,6 +137,11 @@ function dirsize($dir) {
 			return 0;
 		}
 
+		# we check for traversal attacks here, we could also log attacks...
+		if (strpos($path_parts['dirname'], '..') !== false) {
+			return 0;
+		}
+                
 		if ($translated_file_names[$p_header['index']]) {
 			$p_header['filename'] = substr($p_header['filename'], 0, -strlen($p_header['stored_filename']));
 			$p_header['filename'] .= $translated_file_names[$p_header['index']];
