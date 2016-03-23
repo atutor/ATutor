@@ -62,16 +62,10 @@ if ($_POST['cancel']) {
 
 if ($_POST['edit_post']) {
 	$missing_fields = array();
-
-//	$_POST['subject']	= str_replace('<', '&lt;', trim($_POST['subject']));
-//	$_POST['body']		= str_replace('<', '&lt;', trim($_POST['body']));
 	$_POST['pid']		= intval($_POST['pid']);
 
-	$_POST['subject']  = $addslashes($_POST['subject']);
 	//If subject > 60,then chop subject
 	$_POST['subject'] = validate_length($_POST['subject'], 60);
-
-	$_POST['body']  = $addslashes($_POST['body']);
 
 	if ($_POST['subject'] == '')  {
 		$missing_fields[] = _AT('subject');
