@@ -94,8 +94,12 @@ if ( get_magic_quotes_gpc() == 1 ) {
     $stripslashes = 'stripslashes';
 } else {
     // if get_magic_quotes_gpc is off, we set our own handler
-    $addslashes   = 'mysql_real_escape_string';
-    $stripslashes = 'my_null_slashes';
+    if(defined('MYSQLI_ENABLED')){
+        $addslashes = 'my_add_null_slashes';
+        $stripslashes = 'my_null_slashes';
+    }else{
+        $addslashes = mysql_real_escape_string;
+    }
 }
 
 /**
