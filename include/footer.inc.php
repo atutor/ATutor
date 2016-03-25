@@ -38,7 +38,7 @@ function get_custom_logo() {
     if($_config['custom_logo_enabled'] && isset($ext) && ($ext=='gif' || $ext=='jpg' || $ext=='png')) {
         if (defined('AT_FORCE_GET_FILE')) {
             if(isset($_REQUEST['cid']) && $_REQUEST['cid']>0) {
-                $file = 'custom_logo.'.$ext;
+                $file = 'get.php/custom_logo.'.$ext;
             } else if(!isset($_REQUEST['cid']) && isset($_SESSION['course_id']) && $_SESSION['course_id']>0) {
                 $file = 'get.php/custom_logo.'.$ext;
             } else {
