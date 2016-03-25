@@ -68,7 +68,7 @@ if (file_exists($real)) {
 
 	header('Content-Type: '.$ext);
 
-	@readfile($real);
+	@readfile(basename($real));
 	exit;
 } else {
 	header('HTTP/1.1 404 Not Found', TRUE);

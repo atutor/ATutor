@@ -20,7 +20,7 @@ if (isset($_GET['back'])) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-@readfile(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.$_GET['t'].'.html');
+@readfile(AT_CONTENT_DIR . 'chat/'.$_SESSION['course_id'].'/tran/'.basename($_GET['t']).'.html');
 ?>
 
 </table>
