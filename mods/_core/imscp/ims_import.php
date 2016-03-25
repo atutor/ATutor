@@ -669,7 +669,7 @@ if(isset($_POST['ignore_validation']) && $_POST['ignore_validation']==1) {
 }
 
 if (isset($_POST['url']) && ($_POST['url'] != 'http://') ) {
-	if ($content = @file_get_contents($_POST['url'])) {
+	if ($content = @file_get_contents(htmlspecialchars_decode($_POST['url']))) {
 		// save file to /content/
 		$filename = substr(time(), -6). '.zip';
 		$full_filename = AT_CONTENT_DIR . $filename;
