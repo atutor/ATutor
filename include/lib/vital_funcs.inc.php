@@ -1183,13 +1183,27 @@ function xecho($text, $encoding='UTF-8') {
  **/
 function escape_all_supers(){
     foreach($_POST as $key=>$value){
-        $_POST[$key] = htmlspecialchars($_POST[$key]);
+        // test if array, then filter each array element, author atutor
+        if(!is_array($_POST[$key])){
+            $_POST[$key] = htmlspecialchars($_POST[$key]);
+        } else {
+            foreach($_POST[$key] as $thiskey =>$thisvalue){
+                $_POST[$key][$thiskey] = htmlspecialchars($_POST[$key][$thiskey]);
+            }
+        }
     }
     foreach($_GET as $key=>$value){
         $_GET[$key] = htmlspecialchars($_GET[$key]);
     }
     foreach($_POST as $key=>$value){
-        $_REQUEST[$key] = htmlspecialchars($_REQUEST[$key]);
+        // test if array, then filter each array element, author atutor
+        if(!is_array($_POST[$key])){
+            $_REQUEST[$key] = htmlspecialchars($_REQUEST[$key]);
+        } else {
+            foreach($_POST[$key] as $thiskey =>$thisvalue){
+                $_REQUEST[$key][$thiskey] = htmlspecialchars($_REQUEST[$key][$thiskey]);
+            }
+        }
     }
     $_SERVER['PHP_SELF'] = htmlspecialchars($_SERVER['PHP_SELF']);
 }
