@@ -40,6 +40,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_BASICLTI, TRUE) || admin_authenticate(AT_AD
        $this->_pages['mods/_standard/basiclti/tool/admin_view.php']['parent'] = 'mods/_standard/basiclti/index_admin.php';
        $this->_pages['mods/_standard/basiclti/tool/admin_edit.php']['title_var'] = 'bl_edit';
        $this->_pages['mods/_standard/basiclti/tool/admin_edit.php']['parent'] = 'mods/_standard/basiclti/index_admin.php';
+       $this->_pages['mods/_standard/basiclti/tool/admin_edit.php']['guide'] = 'admin/?p=basiclti_external_tools.php';
        $this->_pages['mods/_standard/basiclti/tool/admin_delete.php']['title_var'] = 'bl_delete';
        $this->_pages['mods/_standard/basiclti/tool/admin_delete.php']['parent'] = 'mods/_standard/basiclti/index_admin.php';
 }
@@ -63,6 +64,7 @@ if ( authenticate(AT_PRIV_BASICLTI, TRUE) ) {
 	$this->_pages['mods/_standard/basiclti/tool/instructor_view.php']['parent'] = 'mods/_standard/basiclti/index_instructor.php';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_edit.php']['title_var'] = 'bl_edit';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_edit.php']['parent'] = 'mods/_standard/basiclti/index_instructor.php';
+	$this->_pages['mods/_standard/basiclti/tool/instructor_edit.php']['guide'] = 'admin/?p=basiclti_external_tools.php';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_delete.php']['title_var'] = 'bl_delete';
 	$this->_pages['mods/_standard/basiclti/tool/instructor_delete.php']['parent'] = 'mods/_standard/basiclti/index_instructor.php';
 }
