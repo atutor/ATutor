@@ -1199,7 +1199,13 @@ function escape_all_supers(){
         }
     }
     foreach($_GET as $key=>$value){
-        $_GET[$key] = htmlspecialchars($_GET[$key]);
+        if(!is_array($_GET[$key])){
+            $_GET[$key] = htmlspecialchars($_GET[$key]);
+        } else{
+            foreach($_GET[$key] as $thiskey =>$thisvalue){
+                $_GET[$key][$thiskey] = htmlspecialchars($_GET[$key][$thiskey]);
+            }
+        }
     }
     foreach($_POST as $key=>$value){
         // test if array, then filter each array element, author atutor
