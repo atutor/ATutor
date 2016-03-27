@@ -13,7 +13,7 @@
 			$side_menu = explode("|", $system_courses[$_SESSION['course_id']]['side_menu']);			
 
 			for ($i=0; $i<$num_stack; $i++) {				
-				echo '<select name="stack['.$i.']" aria-label="add to sidemenu">';
+				echo '<select name="stack['.$i.']" aria-label="'._AT('add_to_sidemenu').'">';
 				echo '<option value=""></option>';
 				foreach ($_stacks as $name=>$info) {
 					if (isset($info['title'])) {
