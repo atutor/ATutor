@@ -422,12 +422,18 @@ function generate_release_date($now = false) {
 		$year = date('Y');
 		$hour = date('H');
 		$min  = 0;
-	} else {
+	} else if ($_POST['year'] > 0)	{
 		$day	= intval($_POST['day']);
 		$month	= intval($_POST['month']);
 		$year	= intval($_POST['year']);
 		$hour	= intval($_POST['hour']);
-		$min	= intval($_POST['min']);
+		$min	= intval($_POST['min']);	
+	} else {
+		$day  = date('d');
+		$month= date('m');
+		$year = date('Y');
+		$hour = date('H');
+		$min  = 0;
 	}
 
 	if (!checkdate($month, $day, $year)) {
