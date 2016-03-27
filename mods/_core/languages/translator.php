@@ -229,10 +229,10 @@ function trans_form($page) {
 		
 		foreach($rows_pages as $row0){
 			if ($_REQUEST['page'] == $row0['page']) {
-				display_page_terms($_REQUEST['v'], $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u'], $row0['page']);
+				display_page_terms(htmlspecialchars($_REQUEST['v']), $_REQUEST['k'], $_REQUEST['f'], $_REQUEST['n'], $_REQUEST['u'], $row0['page']);
 			}
 			else {
-				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.$_REQUEST['v'].SEP.'page='.urlencode($row0['page']).SEP.'f='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">'.$row0['page'].'</a></li>';
+				echo '<li><a href="'.$_SERVER['PHP_SELF'].'?v='.htmlspecialchars($_REQUEST['v']).SEP.'page='.urlencode(htmlspecialchars($row0['page'])).SEP.'nnnf='.$_REQUEST['f'].SEP.'n='.$_REQUEST['n'].SEP.'u='.$_REQUEST['u'].'#anchor1">'.htmlspecialchars($row0['page']).'</a></li>';
 			}
 		}
 		echo '</ul>';
