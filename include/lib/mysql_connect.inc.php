@@ -78,6 +78,8 @@ function at_is_db($db_name, $db){
 function my_add_null_slashes( $string ) {
     global $db;
     if(defined('MYSQLI_ENABLED')){
+        // Replace newline added by real_escape_string
+        $string = str_replace(array("\n", "\r"), ' ', $string);
         return $db->real_escape_string(stripslashes($string));
     }else{
         return mysql_real_escape_string(stripslashes($string));
@@ -86,6 +88,7 @@ function my_add_null_slashes( $string ) {
 }
 
 function my_null_slashes($string) {
+    // This does not seem to do anything. Why is it needed, besides setting $stripslashes?
     return $string;
 }
 
@@ -93,13 +96,8 @@ if ( get_magic_quotes_gpc() == 1 ) {
     $addslashes   = 'my_add_null_slashes';
     $stripslashes = 'stripslashes';
 } else {
-    // if get_magic_quotes_gpc is off, we set our own handler
-    if(defined('MYSQLI_ENABLED')){
-        $addslashes = 'my_add_null_slashes';
-        $stripslashes = 'my_null_slashes';
-    }else{
-        $addslashes = mysql_real_escape_string;
-    }
+    $addslashes   = 'my_add_null_slashes';
+    $stripslashes = 'my_null_slashes';
 }
 
 /**
