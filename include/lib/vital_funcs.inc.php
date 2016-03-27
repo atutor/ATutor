@@ -1188,7 +1188,13 @@ function escape_all_supers(){
             $_POST[$key] = htmlspecialchars($_POST[$key]);
         } else {
             foreach($_POST[$key] as $thiskey =>$thisvalue){
-                $_POST[$key][$thiskey] = htmlspecialchars($_POST[$key][$thiskey]);
+                if(!is_array($_POST[$key][$thiskey])){
+                    $_POST[$key][$thiskey] = htmlspecialchars($_POST[$key][$thiskey]);
+                } else{
+                    foreach($_POST[$key][$thiskey] as $childkey => $childvalue){
+                        $_POST[$key][$thiskey][$childkey] = htmlspecialchars($_POST[$key][$thiskey][$childkey]);
+                    }
+                }
             }
         }
     }
@@ -1201,7 +1207,13 @@ function escape_all_supers(){
             $_REQUEST[$key] = htmlspecialchars($_REQUEST[$key]);
         } else {
             foreach($_POST[$key] as $thiskey =>$thisvalue){
-                $_REQUEST[$key][$thiskey] = htmlspecialchars($_REQUEST[$key][$thiskey]);
+                if(!is_array($_POST[$key][$thiskey])){
+                    $_REQUEST[$key][$thiskey] = htmlspecialchars($_REQUEST[$key][$thiskey]);
+                }else{
+                    foreach($_POST[$key][$thiskey] as $childkey => $childvalue){
+                        $_REQUEST[$key][$thiskey][$childkey] = htmlspecialchars($_REQUEST[$key][$thiskey][$childkey]);
+                    }                
+                }                
             }
         }
     }
