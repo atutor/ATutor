@@ -43,8 +43,12 @@ if (isset($_SESSION['flash']) && $_SESSION['flash'] == "yes") {
 
     if ($_GET['pathext'] != '') {
         $pathext = urldecode($_GET['pathext']);
+        $_SESSION['pathext'] = urldecode($_GET['pathext']);
     } else if ($_POST['pathext'] != '') {
         $pathext = $_POST['pathext'];
+        $_SESSION['pathext'] = urldecode($_POST['pathext']);
+    } else {
+        unset($_SESSION['pathext']);
     }
 
     if($_GET['back'] == 1) {

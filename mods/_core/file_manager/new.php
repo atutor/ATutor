@@ -25,8 +25,14 @@ $current_path = AT_CONTENT_DIR.$_SESSION['course_id'].'/';
 
 $popup  = $_REQUEST['popup'];
 $framed = $_REQUEST['framed'];
-$_POST['pathext'] = htmlspecialchars($_POST['pathext'], ENT_QUOTES);
-$_REQUEST['pathext'] = htmlspecialchars($_REQUEST['pathext'], ENT_QUOTES);
+if($_POST['pathext'] == ''){
+    $_POST['pathext'] = htmlspecialchars($_SESSION['pathext'], ENT_QUOTES);
+    $_REQUEST['pathext'] = htmlspecialchars($_SESSION['pathext'], ENT_QUOTES);
+} else {
+    $_POST['pathext'] = htmlspecialchars($_POST['pathext'], ENT_QUOTES);
+    $_REQUEST['pathext'] = htmlspecialchars($_REQUEST['pathext'], ENT_QUOTES);
+}
+
 $_POST['framed'] = intval($_POST['framed']);
 $_POST['popup'] = intval($_POST['popup']);
 
