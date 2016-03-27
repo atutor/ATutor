@@ -120,8 +120,8 @@ class QTIImport {
 					$test_obj['required']		= 1;
 					$test_obj['preset_num']	= 0;
 					$test_obj['category_id']	= 0;
-					$test_obj['question']		= $xml->question[$loopcounter];
-					$test_obj['feedback']		= $xml->feedback[$loopcounter];
+					$test_obj['question']		= htmlspecialchars($xml->question[$loopcounter], ENT_QUOTES);
+					$test_obj['feedback']		= htmlspecialchars($xml->feedback[$loopcounter], ENT_QUOTES);
 					$test_obj['groups']		= $xml->groups[$loopcounter];
 					$test_obj['property']		= intval($xml->attributes[$loopcounter]['render_fib']['property']);
 					$test_obj['choice']		= array();
