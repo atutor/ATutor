@@ -77,14 +77,6 @@ if (isset($_POST['submit'])){
 		}
 	}
 
-	//update photo album.
-	if (isset($_POST['album_cover'])){
-		$result = $pa->editAlbumCover($_POST['album_cover']);
-		if (!$result){
-			//albumcover error.
-			$msg->addError('PA_EDIT_PHOTO_FAILED');
-		}
-	}
 
 	//if no errors
 	if ($_POST['submit'] == 'ajax'){
