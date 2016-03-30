@@ -78,8 +78,6 @@ function at_is_db($db_name, $db){
 function my_add_null_slashes( $string ) {
     global $db;
     if(defined('MYSQLI_ENABLED')){
-        // Replace newline added by real_escape_string
-        $string = str_replace(array("\n", "\r"), ' ', $string);
         return $db->real_escape_string(stripslashes($string));
     }else{
         return mysql_real_escape_string(stripslashes($string));
@@ -88,7 +86,6 @@ function my_add_null_slashes( $string ) {
 }
 
 function my_null_slashes($string) {
-    // This does not seem to do anything. Why is it needed, besides setting $stripslashes?
     return $string;
 }
 
@@ -96,7 +93,14 @@ if ( get_magic_quotes_gpc() == 1 ) {
     $addslashes   = 'my_add_null_slashes';
     $stripslashes = 'stripslashes';
 } else {
-    $addslashes   = 'my_add_null_slashes';
+    if(defined('MYSQLI_ENABLED')){
+        // mysqli_real_escape_string requires 2 params, breaking wherever
+        // current $addslashes with 1 param exists. So hack with trim and 
+        // manually run mysqli_real_escape_string requires during sanitization below
+        $addslashes   = 'trim';
+    }else{
+        $addslashes   = 'mysql_real_escape_string';
+    }
     $stripslashes = 'my_null_slashes';
 }
 
@@ -308,9 +312,9 @@ function at_db_version($db){
 }	
 function at_db_create($sql, $db){
  	if(defined('MYSQLI_ENABLED')){	
-        $result = $db->query($sql) or (error_log(print_r(mysqli_error(), true), 0) and $msg->addError($displayErrorMessage));   	
+        $result = $db->query($sql);	
  	}else{
-        $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
+        $result = mysql_query($sql, $db);
     }
     return $result;
 }
