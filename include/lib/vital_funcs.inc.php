@@ -1202,8 +1202,14 @@ function escape_all_supers(){
         if(!is_array($_GET[$key])){
             $_GET[$key] = htmlspecialchars($_GET[$key]);
         } else{
-            foreach($_GET[$key] as $thiskey =>$thisvalue){
-                $_GET[$key][$thiskey] = htmlspecialchars($_GET[$key][$thiskey]);
+            if($_GET['qti_export_version']){
+                    // don't do anything
+                    // hack to prevent filter when selecting a question to edit.
+                    // the array the URL has attached needs to stay intact for the question editor
+            } else{
+                foreach($_GET[$key] as $thiskey =>$thisvalue){
+                    $_GET[$key][$thiskey] = htmlspecialchars($_GET[$key][$thiskey]);
+                }
             }
         }
     }
