@@ -177,7 +177,7 @@ if ($reply_to) {
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
-<input type="hidden" name="replied" value="<?php intval(echo $_GET['reply']); ?>" />
+<input type="hidden" name="replied" value="<?php echo intval($_GET['reply']); ?>" />
 
 <div class="input-form">
 	<div class="row">
