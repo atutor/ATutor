@@ -189,7 +189,6 @@ class QTIImport {
 				$this->copyMedia($attrs['file'], $xml_items);
 			}
 		}
-		debug_to_log($test_obj['answers']);
 		return $qids;
 	}
 
