@@ -226,7 +226,7 @@ if(count($rows_questions) > 0){
 		}
 
 		echo '<td class="row1">';
-        echo AT_print(validate_length($row['question'], 45, VALIDATE_LENGTH_FOR_DISPLAY), 'tests_questions.question');
+        echo AT_print(validate_length($row['question'], 250, VALIDATE_LENGTH_FOR_DISPLAY), 'tests_questions.question');
 
 		echo '</td>';
 		echo '<td nowrap="nowrap">';

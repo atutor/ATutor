@@ -83,7 +83,7 @@ $rows_questions = queryDB($sql, array(TABLE_PREFIX, $questions, $_SESSION['cours
 
 $questions = '';
 foreach($rows_questions as $row){
-	$questions .= '<li>'.htmlspecialchars($row['question']).'</li>';
+	$questions .= '<li>'.htmlspecialchars_decode(stripslashes($row['question'])).'</li>';
 	$questions_array['questions['.$row['question_id'].']'] = $row['question_id'];
 }
 $questions_array['tid'] = $_POST['tid'];

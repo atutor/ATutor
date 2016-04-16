@@ -182,7 +182,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
     <div class="row">
         <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label>
         <?php print_VE('question'); ?>
-        <textarea id="question" cols="50" rows="4" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+        <textarea id="question" cols="50" rows="4" name="question"><?php echo stripslashes($_POST['question']); ?></textarea>
     </div>
 
     <?php 
@@ -194,7 +194,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
             <small><input type="checkbox" name="answer[<?php echo $i; ?>]" id="answer_<?php echo $i; ?>" value="1" <?php if($_POST['answer'][$i]) { echo 'checked="checked"';} ?>><label for="answer_<?php echo $i; ?>"><?php echo _AT('correct_answer'); ?></label></small>
             
 
-            <textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea>
+            <textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]" class="formfield"><?php echo stripslashes($_POST['choice'][$i]); ?></textarea>
         </div>
     <?php } ?>
 

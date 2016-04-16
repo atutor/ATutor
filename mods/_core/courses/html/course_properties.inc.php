@@ -68,7 +68,7 @@ if (isset($_POST['form_course'])) {
 
 	$row['copyright']			= $_POST['copyright'];
 	$row['icon']				= $_POST['icon'];
-	$row['banner']              = stripcslashes($_POST['banner']);
+	$row['banner']              = stripslashes($_POST['banner']);
 
 	if (intval($_POST['release_date'])) {
 		$day_release	= intval($_POST['day_release']);

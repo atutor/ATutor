@@ -178,7 +178,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label> 
 		<?php print_VE('question'); ?>
 		<textarea id="question" cols="50" rows="6" name="question" style="width:90%;"><?php 
-		echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+		echo stripslashes($_POST['question']); ?></textarea>
 	</div>
 
 

@@ -152,7 +152,7 @@ if ($row['cnt'] > 0) {
 						AT_DATE_MYSQL_DATETIME),
 					  	'author'  => $row['first_name'] . ' ' . $row['last_name'],
 						'title'		=> AT_print($row['title'], 'news.title'),
-						'body'		=> format_content($row['body'], $row['formatting'], $glossary));
+						'body'		=> format_content(stripslashes($row['body']), $row['formatting'], $glossary));
 
 	}
 }

@@ -139,7 +139,7 @@ $msg->printConfirm();
     <div class="row">
         <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label>
         <?php print_VE('question'); ?>
-        <textarea id="question" cols="50" rows="4" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+        <textarea id="question" cols="50" rows="4" name="question"><?php echo stripslashes($_POST['question']); ?></textarea>
     </div>
 
 <?php

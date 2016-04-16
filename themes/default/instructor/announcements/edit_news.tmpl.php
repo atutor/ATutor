@@ -31,9 +31,9 @@
 		if($_POST['formatting'] === 0){
 		// if plain text, add line breaks
 		?>
-		    <textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($this->row['body'], 'input.text'); ?></textarea>
+		    <textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print(stripslashes($this->row['body']), 'input.text'); ?></textarea>
 	    <?php }else{ ?>
-	        <textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print($this->row['body'], 'news.body'); ?></textarea>
+	        <textarea name="body_text" cols="55" rows="15" id="body_text" wrap="wrap"><?php echo AT_print(stripslashes($this->row['body']), 'news.body'); ?></textarea>
 	    
 	    <?php } ?>
 	</div>

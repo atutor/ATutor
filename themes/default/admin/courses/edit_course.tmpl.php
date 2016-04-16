@@ -224,7 +224,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	<div class="row">
 
 		<label for="banner"><?php echo _AT('banner'); ?></label><br />
-		<textarea id="banner" cols="45" rows="15" name="banner"><?php echo $this->row['banner']; ?></textarea>
+		<textarea id="banner" cols="45" rows="15" name="banner"><?php echo stripslashes($this->row['banner']); ?></textarea>
 	</div>
 
 <?php if (!$this->course) : ?>

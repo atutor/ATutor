@@ -629,7 +629,7 @@ class ContentManager
 	}
 
 	function & cleanOutput($value) {
-		return stripslashes(htmlspecialchars($value));
+		return stripslashes(htmlspecialchars_decode($value));
 	}
 
 

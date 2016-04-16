@@ -421,6 +421,12 @@ function _AT() {
         if (query_bit($_field_formatting[$name], AT_FORMAT_IMAGES)) {
             $input = trim(image_replace(' ' . $input . ' '));
         }
+        if (query_bit($_field_formatting[$name], AT_FORMAT_SLASHES)) {
+            $input = htmlspecialchars_decode(stripslashes($input));
+        }
+        if (query_bit($_field_formatting[$name], AT_FORMAT_DECODE)) {
+            $input = htmlspecialchars_decode($input, ENT_QUOTES);
+        }
         return $input;
     }
 

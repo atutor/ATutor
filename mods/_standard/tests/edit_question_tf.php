@@ -133,7 +133,7 @@ if ($_POST['answer'] == '') {
     <div class="row">
         <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('statement'); ?></label> 
         <?php print_VE('question'); ?>    
-        <textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+        <textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars_decode(stripslashes($_POST['question'])); ?></textarea>
     </div>
 
     <div class="row">

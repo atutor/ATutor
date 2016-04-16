@@ -276,7 +276,7 @@ if (!$gid && !$in_progress && !isset($_SESSION['started'])) {
             queryDB($sql, array(TABLE_PREFIX, $result_id, $row[question_id], $member_id));
     
         }
-
+        $row['question'] = htmlspecialchars_decode(stripslashes($row['question']));
         $obj = TestQuestions::getQuestion($row['type']);
         $obj->display($row);
     }

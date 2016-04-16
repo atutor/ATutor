@@ -331,6 +331,8 @@ define('AT_FORMAT_GLOSSARY',     16);
 define('AT_FORMAT_ATCODES',      32);
 define('AT_FORMAT_CONTENT_DIR', 64); /* remove CONTENT_DIR */
 define('AT_FORMAT_QUOTES',      128); /* remove double quotes (does this get used?) */
+define('AT_FORMAT_SLASHES', 256);
+define('AT_FORMAT_DECODE', 512);
 define('AT_FORMAT_ALL',       AT_FORMAT_EMOTICONS 
 							   + AT_FORMAT_LINKS 
 						       + AT_FORMAT_IMAGES 
@@ -399,9 +401,14 @@ $_field_formatting['themes.title']				= AT_FORMAT_NONE;
 
 $_field_formatting['tests_answers.answer']		= AT_FORMAT_NONE;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
-$_field_formatting['tests_questions.*']			= AT_FORMAT_ALL | AT_FORMAT_QUOTES;
+//$_field_formatting['tests_questions.*']			= AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
+$_field_formatting['tests_questions.list']			= AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
+$_field_formatting['tests_questions.question']	=  AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
+$_field_formatting['tests_questions.*']   =  AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
+//$_field_formatting['tests_questions.list']			= AT_FORMAT_SLASHES;
+//$_field_formatting['tests_questions.choice_*']			=  AT_FORMAT_SLASHES;
 // This constant is used to in the test question template scripts to display the preview and result.
-$_field_formatting['tests_questions.quotesNotConverted']	= AT_FORMAT_ALL| AT_FORMAT_QUOTES;
+$_field_formatting['tests_questions.quotesNotConverted']	=  AT_FORMAT_SLASHES;
 $_field_formatting['tests_questions_categories.title']	= AT_FORMAT_NONE;
 
 $_field_formatting['photo_albums.*']            = AT_FORMAT_QUOTES;

@@ -193,7 +193,8 @@ class MyHandler {
 			}
 		} else if (isset($elements[$name]) && ($attrs[$elements[$name]] != '')) {
 			/* we know exactly which attribute contains the reference to the file. */
-			$my_files[] = $attrs[$elements[$name]];
+			$attrs[$elements[$name]] = str_replace(array('\'', '"'), '', $attrs[$elements[$name]]); 
+			$my_files[] = stripslashes($attrs[$elements[$name]]);
 		}
     }
     function closeHandler(& $parser,$name) { }
@@ -224,6 +225,7 @@ foreach($rows_content as $row){
 	if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) || $contentManager->isReleased($row['content_id']) === TRUE) {
 		$content[$row['content_parent_id']][] = $row;
 		if ($cid == $row['content_id']) {
+		    $row['text'] = htmlspecialchars_decode(stripslashes($row['text'] ));
 			$top_content = $row;
 			$top_content_parent_id = $row['content_parent_id'];
 		}

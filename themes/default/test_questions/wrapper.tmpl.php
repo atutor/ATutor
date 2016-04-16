@@ -5,7 +5,7 @@
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
   xsi:schemaLocation="http://www.imsglobal.org/xsd/ims_qtiasiv1p2 http://www.imsglobal.org/profile/cc/ccv1p0/derived_schema/domainProfile_4/ims_qtiasiv1p2_localised.xsd"
 >
-	<assessment title="<?php echo $this->title; ?>" ident="<?php echo md5($this->tid); ?>">
+	<assessment title="<?php echo strip_tags($this->title); ?>" ident="<?php echo md5($this->tid); ?>">
         <?php 
             /* If this is Common Cartridge export, add these metadatas
              * Based on the IMSCC 1.0 specification

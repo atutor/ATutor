@@ -181,7 +181,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
     <div class="row">
         <span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="question"><?php echo _AT('question'); ?></label>
         <?php print_VE('question'); ?>
-        <textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars(stripslashes($_POST['question'])); ?></textarea>
+        <textarea id="question" cols="50" rows="6" name="question"><?php echo htmlspecialchars_decode(stripslashes($_POST['question'])); ?></textarea>
     </div>
 
     <?php for ($i=0; $i<10; $i++): ?>
@@ -195,7 +195,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
             <br />
     
             <textarea id="choice_<?php echo $i; ?>" cols="50" rows="2" name="choice[<?php echo $i; ?>]"><?php 
-            echo htmlspecialchars(stripslashes($_POST['choice'][$i])); ?></textarea> 
+            echo htmlspecialchars_decode(stripslashes($_POST['choice'][$i])); ?></textarea> 
         </div>
     <?php endfor; ?>
     

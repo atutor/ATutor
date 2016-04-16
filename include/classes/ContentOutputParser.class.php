@@ -56,13 +56,13 @@ class ContentOutputParser {
 					if (strpos($attrs[$item], ',') !== false) {
 						$files = explode(',', $attrs[$item]);
 						foreach ($files as $file) {
-							$my_files[] = trim($file);
+							$my_files[] = trim(stripslashes($file));
 						}
 					} else {
 						$file = trim($attrs[$item]);
 						// filter our classid="clsid:..."
 						if (!strpos($file, "clsid:")) {
-							$my_files[] = $file;
+							$my_files[] = stripslashes($file);
 						}
 					}
 				}
@@ -79,7 +79,8 @@ class ContentOutputParser {
 				    && strpos($attrs[$elements[$name]], 'mailto:')===false 
 				    && strpos($attrs[$elements[$name]], 'void(')===false 
 				   ){
-					$my_files[] = $attrs[$elements[$name]];
+				  
+					$my_files[] = stripslashes(str_replace(array('\'', '"'), '',$attrs[$elements[$name]]));
 				}
 			}
 		}

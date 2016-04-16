@@ -5,10 +5,10 @@
 		<schemaversion>1.2.1</schemaversion>
 	</metadata>
 	<organizations default="">
-		<organization identifier="<?php echo 'ATUTOR_'.md5($this->title); ?>" structure="hierarchical">
-			<title><?php echo $this->title; ?></title>
+		<organization identifier="<?php echo 'ATUTOR_'.md5(strip_tags($this->title)); ?>" structure="hierarchical">
+			<title><?php echo strip_tags(stripslashes($this->title)); ?></title>
 			<item identifier="ITEM1" identifierref="RESOURCE1">
-				<title><?php echo $this->title; ?></title>
+				<title><?php echo strip_tags(stripslashes($this->title)); ?></title>
 			</item>
 		</organization>
 	</organizations>

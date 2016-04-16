@@ -225,7 +225,7 @@ function test_question_qti_export($question_ids) {
 
     //TODO
     $savant->assign('xml_content', $xml);
-    $savant->assign('title', $row['question']);
+    $savant->assign('title', htmlspecialchars_decode(stripslashes($row['question']), ENT_QUOTES));
     $xml = $savant->fetch('test_questions/wrapper.tmpl.php');
 
     $xml_filename = 'atutor_questions.xml';

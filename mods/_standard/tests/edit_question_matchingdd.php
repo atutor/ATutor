@@ -184,7 +184,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
     <div class="row">
         <label for="instructions"><?php echo _AT('instructions'); ?></label> 
         <?php print_VE('instructions'); ?>
-        <textarea id="instructions" cols="50" rows="3" name="instructions"><?php echo htmlspecialchars(stripslashes($_POST['instructions'])); ?></textarea>
+        <textarea id="instructions" cols="50" rows="3" name="instructions"><?php echo htmlspecialchars_decode(stripslashes($_POST['instructions'])); ?></textarea>
     </div>
 
     <div class="row">
