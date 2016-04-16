@@ -97,7 +97,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
         // mysqli_real_escape_string requires 2 params, breaking wherever
         // current $addslashes with 1 param exists. So hack with trim and 
         // manually run mysqli_real_escape_string requires during sanitization below
-        $addslashes   = 'trim';
+        $addslashes   = 'my_add_null_slashes';
     }else{
         $addslashes   = 'mysql_real_escape_string';
     }
