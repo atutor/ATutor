@@ -120,8 +120,8 @@ class QTIImport {
 					$test_obj['required']		= 1;
 					$test_obj['preset_num']	= 0;
 					$test_obj['category_id']	= 0;
-					$test_obj['question']		= htmlspecialchars($xml->question[$loopcounter], ENT_QUOTES);
-					$test_obj['feedback']		= htmlspecialchars($xml->feedback[$loopcounter], ENT_QUOTES);
+					$test_obj['question']		= htmlspecialchars_decode(stripslashes($xml->question[$loopcounter]), ENT_QUOTES);
+					$test_obj['feedback']		= htmlspecialchars_decode(stripslashes($xml->feedback[$loopcounter]), ENT_QUOTES);
 					$test_obj['groups']		= $xml->groups[$loopcounter];
 					$test_obj['property']		= intval($xml->attributes[$loopcounter]['render_fib']['property']);
 					$test_obj['choice']		= array();
@@ -163,8 +163,12 @@ class QTIImport {
 					$this->getQuestionType($xml->getQuestionType($loopcounter));
 
 					//save question id 
-					$qids[] = $this->qid;
-
+					if(in_array($this->qid, $qids)){
+					// This condition is a hack to deal with multiple answer questions 5676
+					// Increment the counter by one, if the qid already exists
+					    $this->qid = $this->qid+1;
+					}
+                    $qids[] = $this->qid;
 					//Dependency handling
 					if (!empty($attrs['dependency'])){
 						$xml_items = array_merge($xml_items, $xml->items);
@@ -185,7 +189,7 @@ class QTIImport {
 				$this->copyMedia($attrs['file'], $xml_items);
 			}
 		}
-
+		debug_to_log($test_obj['answers']);
 		return $qids;
 	}
 
