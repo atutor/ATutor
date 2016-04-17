@@ -48,8 +48,8 @@ if ($ext == '') {
 
 $real = realpath($file);
 // How did this ever work when the stock icons are used instead of a custom one, see mantis 5465
-// if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
-if (file_exists($real)) {
+if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
+//if (file_exists($real)) {
 	header('Content-Disposition: inline; filename="'.$size.$id.'.'.$pathinfo['extension'].'"');
 	
 	/**
@@ -66,8 +66,8 @@ if (file_exists($real)) {
 	header('x-Sendfile: '.$real);
 	header('x-Sendfile: ', TRUE); // if we get here then it didn't work
 
-	header('Content-Type: '.$ext);
-
+	header('Content-Type: '.$ext);    
+    //$real=preg_replace("/..\/..\//i", "", $real);
 	@readfile($real);
 	exit;
 } else {

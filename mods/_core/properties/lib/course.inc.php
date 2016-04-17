@@ -47,6 +47,7 @@ function add_update_course($course_prop, $isadmin = FALSE) {
 	$course_prop['pri_lang']		  = $addslashes($course_prop['pri_lang']);
 	$course_prop['created_date']	  = $addslashes($course_prop['created_date']);
 	$course_prop['copyright']		  = $addslashes($course_prop['copyright']);
+	$course_prop['icon']				= preg_replace("/\.\./i", "", $course_prop['icon']);
 	$course_prop['icon']			  = $addslashes($course_prop['icon']);
 	$course_prop['banner']		  = $addslashes($course_prop['banner']);
 	$course_prop['course_dir_name'] = $addslashes($course_prop['course_dir_name']);

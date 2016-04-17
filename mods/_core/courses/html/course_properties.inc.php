@@ -67,7 +67,10 @@ if (isset($_POST['form_course'])) {
 	$row['rss']                 = $_POST['rss'];
 
 	$row['copyright']			= $_POST['copyright'];
-	$row['icon']				= $_POST['icon'];
+	
+  //  $param=preg_replace("/[^a-z0-9]/i", "", $param);
+
+	$row['icon']				= preg_replace("/\.\./i", "", $_POST['icon']);
 	$row['banner']              = stripslashes($_POST['banner']);
 
 	if (intval($_POST['release_date'])) {
