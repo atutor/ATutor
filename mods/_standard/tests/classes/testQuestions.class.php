@@ -521,7 +521,6 @@ function TestQuestionCounter($increment = FALSE) {
     */
     /*final public */function displayResult($row, $answer_row, $editable = FALSE) {
         // print the generic question header
-        debug($answer_row['score']);
         $this->displayHeader($row['weight'], $answer_row['score'], $editable ? $row['question_id'] : FALSE);
 
         // print the question specific template
