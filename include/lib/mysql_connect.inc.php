@@ -78,7 +78,9 @@ function at_is_db($db_name, $db){
 function my_add_null_slashes( $string ) {
     global $db;
     if(defined('MYSQLI_ENABLED')){
-        return $db->real_escape_string(stripslashes($string));
+         if(!is_null($db)){
+            return $db->real_escape_string(stripslashes($string));
+        }
     }else{
         return mysql_real_escape_string(stripslashes($string));
     }

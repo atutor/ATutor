@@ -420,7 +420,7 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 	} 
 
 	$tb_prefix = $addslashes($tb_prefix);
-	$db_name = $addslashes($db_name);
+	//$db_name = $addslashes($db_name);
 	
 	// check mysql version number
 	$row = at_db_version($db);
