@@ -103,7 +103,13 @@ foreach($rows_courses as $row ){
 			if ($enrollment_row['approved'] == 'n') $row['enroll_link'] = $enroll_link;
 		}
 	}
+	$course_rows= [];
 	$courses_rows[] = $row;
+	for($i = 0; $i < count($courses_rows); $i++ ){
+	    $courses_rows[$i]['title']  = stripslashes($courses_rows[$i]['title']);
+	    $courses_rows[$i]['banner']  = stripslashes($courses_rows[$i]['banner']);
+	    $courses_rows[$i]['description']  = stripslashes($courses_rows[$i]['description']);
+	}
 }
 
 // get the categories <select>, if there are any.

@@ -333,7 +333,7 @@ $savant->assign('path', $_path);
 $savant->assign('back_to_page', isset($back_to_page) ? $back_to_page : null);
 $savant->assign('page_title', stripslashes(htmlspecialchars($_page_title, ENT_COMPAT, "UTF-8")));
 $savant->assign('top_level_pages', $_top_level_pages);
-$savant->assign('section_title', $section_title);
+$savant->assign('section_title', stripslashes($section_title));
 $savant->assign('content_keywords', $content_keywords);
 $savant->assign('content_description', $content_description);
 

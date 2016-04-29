@@ -47,6 +47,11 @@ foreach($rows_courses as $row){
 	}
 
 	$courses[] = array_merge($row, (array) $tests);
+	for($i = 0; $i < count($courses); $i++ ){
+        $courses[$i]['title'] = stripslashes($courses[$i]['title']);
+        $courses[$i]['banner'] = stripslashes($courses[$i]['banner']);
+        $courses[$i]['description']  = stripslashes($courses[$i]['description']);
+	}
 }
 
 function get_category_name($cat_id) {
@@ -91,6 +96,7 @@ foreach($module_list as $key=>$obj) {
 	$news = $obj->getNews();
 	while(!empty($news)){
 		$current_item = array_pop($news);
+		$current_item['course'] = stripslashes($current_item['course']);
 		array_push($all_news, $current_item);
 	}
 }
