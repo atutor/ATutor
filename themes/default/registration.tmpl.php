@@ -100,7 +100,7 @@ function show_login_form()
 		</div>";
 		
 		require(AT_INCLUDE_PATH.'html/auto_enroll_list_courses.inc.php'); 
-        if (isset($_SESSION['member_id']) && $_SESSION['login']) {
+        if (isset($_SESSION['member_id']) && $_SESSION['member_id'] > 0 &&  $_SESSION['login']  ) {
             require_once(AT_INCLUDE_PATH.'header.inc.php');
             ?>
             <div class="row buttons">

@@ -26,7 +26,7 @@ if($_config['allow_registration'] != 1){
 }
 
 if (isset($_POST['cancel'])) {
-    if(isset($_SESSION['member_id']) && $_SESSION['login']) {
+    if(isset($_SESSION['member_id']) && $_SESSION['member_id'] >0 && $_SESSION['login']) {
         $msg->addFeedback('CANCELLED');
         header('Location: index.php');
     }
@@ -34,11 +34,16 @@ if (isset($_POST['cancel'])) {
         header('Location: ./login.php');
 	exit;
 } else if (isset($_POST['submit'])) {
-    if(isset($_SESSION['member_id']) && $_SESSION['login']) {
+    if(isset($_SESSION['member_id']) && $_SESSION['member_id'] > 0 && $_SESSION['login']) {
         $member_id = $_SESSION['member_id'];
         require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
         if($course_registered_names != "")
         $msg->addInfo(array(AUTO_ENROLL_ALREADY_ENROLLED,$course_registered_names));
+        if(isset($_SESSION['course_id'])){
+            $sql = "SELECT title from %scourses WHERE course_id=%d";
+            $course_names = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
+            $course_names = stripslashes($course_names[0]['title']);
+        }
         if($course_names != "")
         $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
         header('Location: index.php');
@@ -273,7 +278,7 @@ if (isset($_POST['cancel'])) {
 
 
 		$result = queryDB($sql, array(TABLE_PREFIX)) or die(at_db_error());
-		$m_id	= at_insert_id($db);
+		$m_id	= at_insert_id();
 
 		if (!$result) {
 			require(AT_INCLUDE_PATH.'header.inc.php');
@@ -287,6 +292,11 @@ if (isset($_POST['cancel'])) {
 			queryDB($master_list_sql, array(TABLE_PREFIX,$student_id, $student_pin));
 		}
 
+        // enroll in the course, if registering from there
+        if(isset($_SESSION['course_id']) && $course_info['access'] != 'private'){
+            $sql	= "INSERT INTO %scourse_enrollment VALUES (%d, %d, 'y', 0, '"._AT('student')."', 0)";
+		    $result = queryDB($sql, array(TABLE_PREFIX,$m_id, $_SESSION['course_id']));
+        }
 		//reset login attempts
 			if ($result){
 				$sql = "DELETE FROM %smember_login_attempt WHERE login='%s'";
@@ -333,14 +343,18 @@ if (isset($_POST['cancel'])) {
 			// auto login
 			$_SESSION['valid_user'] = true;
 			$_SESSION['member_id']	= $m_id;
-			$_SESSION['course_id']  = 0;
+			//$_SESSION['course_id']  = 0;
 			$_SESSION['login']		= $_POST[login];
 			assign_session_prefs(unserialize(stripslashes($_config[pref_defaults])), 1);
 			$_SESSION['is_guest']	= 0;
 			$_SESSION['lang']		= $_SESSION[lang];
 			session_write_close();
 
-			header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_POST['course']);
+            if(isset($_SESSION['course_id'])){
+                header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_SESSION['course_id']);
+            } else{
+			    header('Location: '.AT_BASE_HREF.'bounce.php?course='.$_POST['course']);
+			}
 		}
 
 		require(AT_INCLUDE_PATH.'header.inc.php');
