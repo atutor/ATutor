@@ -40,7 +40,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span>
 		<label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" id="title" name="title" size="40" value="<?php echo htmlspecialchars($this->row['title']); ?>" title="<?php echo _AT('title'); ?> <?php echo _AT('required_field'); ?>"/>
+		<input type="text" id="title" name="title" size="40" value="<?php echo htmlspecialchars(stripslashes($this->row['title'])); ?>" title="<?php echo _AT('title'); ?> <?php echo _AT('required_field'); ?>"/>
 	</div>
 
 	<div class="row">
@@ -50,7 +50,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 
 	<div class="row">
 		<label for="description"><?php echo _AT('description'); ?></label><br />
-		<textarea id="description" cols="45" rows="2" name="description"><?php echo $this->row['description']; ?></textarea>
+		<textarea id="description" cols="45" rows="2" name="description"><?php echo stripslashes(returns_to_nl($this->row['description'])); ?></textarea>
 	</div>
 	<?php if ($_config['course_dir_name']): ?>
 	<div class="row">
@@ -224,7 +224,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	<div class="row">
 
 		<label for="banner"><?php echo _AT('banner'); ?></label><br />
-		<textarea id="banner" cols="45" rows="15" name="banner"><?php echo stripslashes($this->row['banner']); ?></textarea>
+		<textarea id="banner" cols="45" rows="15" name="banner"><?php echo stripslashes(strip_returns($this->row['banner'])); ?></textarea>
 	</div>
 
 <?php if (!$this->course) : ?>

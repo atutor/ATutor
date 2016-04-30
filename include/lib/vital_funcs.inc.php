@@ -1233,4 +1233,24 @@ function escape_all_supers(){
 }
 escape_all_supers();
 
+/**
+    * Functions to clean up the escaped newlines left behind
+    * by $mysqli->real_escape_string
+    * @date	 Apr 30, 2016
+**/ 
+function strip_returns($string)
+{
+    return str_replace(array("\\n\\r", "\\n", "\\r"), '', $string); 
+}
+function returns_to_br($string)
+{
+    return str_replace(array("\\n\\r", "\\n", "\\r"), "<br />", $string); 
+}
+function returns_to_nl($string)
+{
+    $string = str_replace(array("\\n\\r"), "\n", $string);
+    $string = str_replace(array("\\r"), "\n", $string);
+    $string = str_replace(array("\\n"), "", $string);
+    return $string;
+}
 ?>

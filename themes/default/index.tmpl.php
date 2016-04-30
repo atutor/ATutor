@@ -13,7 +13,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 global $_base_path;
 
-if ($this->banner): ?><?php echo stripslashes($this->banner); ?><br /><?php endif;
+if ($this->banner): ?><?php echo strip_returns($this->banner); ?><br /><?php endif;
 
 if(count($this->home_links) > 0){
     echo '<div class="detail_switch" id="detail_switch"><a href ="javascript:void(0)"  title="'._AT('switch_icon_view').'">&nbsp;</a></div>';

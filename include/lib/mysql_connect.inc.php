@@ -79,7 +79,7 @@ function my_add_null_slashes( $string ) {
     global $db;
     if(defined('MYSQLI_ENABLED')){
          if(!is_null($db)){
-            return $db->real_escape_string(stripslashes($string));
+            return $db->real_escape_string($string);
         }
     }else{
         return mysql_real_escape_string(stripslashes($string));
@@ -187,8 +187,8 @@ function create_sql($query, $params=array(), $sanitize = true){
     if ($sanitize) {
         foreach($params as $i=>$value) {
          if(defined('MYSQLI_ENABLED')){  
-             $value = $addslashes(htmlspecialchars_decode($value, ENT_QUOTES));  
-             $params[$i] = $db->real_escape_string($value);
+             $value = htmlspecialchars_decode($value, ENT_QUOTES);  
+             $params[$i] = $addslashes($value);
             }else {
              $params[$i] = $addslashes($value);           
             }

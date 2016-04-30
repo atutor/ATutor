@@ -83,8 +83,8 @@ if (isset($_POST['cancel'])) {
 		/* this fails however */
 		$now = date('Y-m-d H:i:s');
 
-		$sql_subject = $addslashes($_POST['subject']);
-		$sql_body    = $addslashes($_POST['body']);
+		$sql_subject = $_POST['subject'];
+		$sql_body    = $_POST['body'];
 
 		$sql = "INSERT INTO %sforums_threads VALUES (NULL, %d, %d, %d, '%s', 0, '%s', '%s', NOW(), 0, 0)";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_POST['parent_id'], $_SESSION['member_id'], $_POST['fid'], $now, $sql_subject, $sql_body, $now));
