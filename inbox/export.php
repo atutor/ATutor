@@ -37,7 +37,7 @@ if (!$_SESSION['valid_user']) {
 			$msg .= _AT('to')     .': ' . $my_display_name . "\r\n";
 			$msg .= _AT('subject').': ' . $row['subject'] . "\r\n";
 			$msg .= _AT('date')   .': ' . $row['date_sent'] . "\r\n";
-			$msg .= _AT('body')   .': ' . $row['body'] . "\r\n";
+			$msg .= _AT('body')   .': ' . returns_to_nl($row['body']) . "\r\n";
 			$msg .= "\r\n=============================================\r\n\r\n";
 
 			$inbox_messages .= $msg;
@@ -55,7 +55,7 @@ if (!$_SESSION['valid_user']) {
 			$msg .= _AT('to')     .': ' . get_display_name($row['from_member_id']). "\r\n";
 			$msg .= _AT('subject').': ' . $row['subject'] . "\r\n";
 			$msg .= _AT('date')   .': ' . $row['date_sent'] . "\r\n";
-			$msg .= _AT('body')   .': ' . $row['body'] . "\r\n";
+			$msg .= _AT('body')   .': ' . returns_to_nl($row['body']) . "\r\n";
 			$msg .= "\r\n=============================================\r\n\r\n";
 
 			$sent_messages .= $msg;

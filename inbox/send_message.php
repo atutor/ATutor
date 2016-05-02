@@ -240,9 +240,9 @@ if ($reply_to) {
 					$body .= ' ...';
 				}
 				$body  = "\n\n\n"._AT('in_reply_to').":\n".$body;
-				echo $body;
+				echo returns_to_nl($body);
 			} else {
-				echo htmlspecialchars($_POST['message'], ENT_QUOTES);
+				echo htmlspecialchars(returns_to_nl($_POST['message']), ENT_QUOTES);
 			}
 		?></textarea>
 	</div>

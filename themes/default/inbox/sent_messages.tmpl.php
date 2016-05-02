@@ -19,7 +19,7 @@
 			</div>
 
 			<div class="body">
-				<p><?php echo AT_print($this->row_messages['body'], 'messages.body'); ?></p>
+				<p><?php echo AT_print(returns_to_nl($this->row_messages['body']), 'messages.body'); ?></p>
 			</div>
 			<div style="clear: both; font-size:0.1em"></div>
 		</div>
