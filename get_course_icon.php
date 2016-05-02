@@ -67,7 +67,7 @@ if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTEN
 	header('x-Sendfile: ', TRUE); // if we get here then it didn't work
 
 	header('Content-Type: '.$ext);    
-    //$real=preg_replace("/..\/..\//i", "", $real);
+    $real=preg_replace("/..\/..\/..\//i", "", $real);
 	@readfile($real);
 	exit;
 } else {
