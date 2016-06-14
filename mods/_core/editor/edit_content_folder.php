@@ -47,8 +47,24 @@ if ($_POST['submit'])
 	
 	if (!$msg->containsErrors()) 
 	{
-		$_POST['title']	= $content_row['title'] = $addslashes($_POST['title']);
-	
+        
+
+        function clean_title($title){
+            //strip any bad stuff off the title
+            $title= htmlspecialchars_decode($title);
+            // This might be problematic for multi sentence title?
+            $title = preg_replace_callback('/([\?^\s])(.*)/', function ($str) {
+                return str_replace(array("'", '"', "&quot;"), '', $str[0]);    
+                }, $title);
+            $title = preg_replace('/<(.*?)>(.*?)<(.*?)>/','',$title );
+            $title = preg_replace('/>/','',$title );
+            $title = preg_replace('/\"\'/','',$title );
+            $title	= htmlspecialchars($title);
+            return $title;
+        }
+
+        $_POST['title'] =  clean_title($_POST['title']);
+
 		if ($cid > 0)
 		{ // edit existing content
 			$err = $contentManager->editContent($cid, 
