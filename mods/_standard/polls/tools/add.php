@@ -40,10 +40,11 @@ if ($_POST['add_poll'] && (authenticate(AT_PRIV_POLLS, AT_PRIV_RETURN))) {
 		}
 
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
-			$trimmed_word = addslashes($_POST['c' . $i]);
+			$trimmed_word = $_POST['c' . $i];
 			if ($strlen($trimmed_word) > 100){
 				$trimmed_word = $substr($trimmed_word, 0, 100);
 			}
+			$trimmed_word = my_add_null_slashes($trimmed_word);
 			$choices .= "'" . $trimmed_word . "',0,";
 		}
 		$choices = substr($choices, 0, -1);	//Remove the last comma.
