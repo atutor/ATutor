@@ -15,6 +15,8 @@ $_user_location	= 'admin';
 
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
+admin_authenticate(AT_ADMIN_PRIV_SOCIAL);
+
 require(AT_SOCIAL_INCLUDE.'constants.inc.php');
 require(AT_SOCIAL_INCLUDE.'friends.inc.php');
 include(AT_SOCIAL_INCLUDE.'classes/Application.class.php');
