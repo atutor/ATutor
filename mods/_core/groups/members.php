@@ -113,7 +113,7 @@ if (isset($_POST['cancel'])) {
 				$groups_counts[$group_id] = 0;
 			}
 			while (($groups_counts[$group_id] < $num_students_per_group) && ($mid = current($students))) {
-				$sql .= "($group_id, $mid),";
+				$sql .= "(".intval($group_id).",". intval($mid)."),";
 				$groups_counts[$group_id]++;
 				next($students);
 			}
@@ -121,7 +121,7 @@ if (isset($_POST['cancel'])) {
 			if ($remainder) {
 				$mid = current($students);
 				if ($mid) {
-					$sql .= "($group_id, $mid),";
+					$sql .= "(".intval($group_id).",". intval($mid)."),";
 					$remainder--;
 					next($students);
 					$groups_counts[$group_id]++;
