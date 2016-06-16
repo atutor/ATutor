@@ -218,9 +218,9 @@ function group_remove ($ids, $gid) {
 */
 function alumni ($list) {
 	global $course_id;
-	$members = '(member_id='.$list[0].')';
+	$members = '(member_id='.intval($list[0]).')';
 	for ($i=1; $i < count($list); $i++)	{
-		$members .= ' OR (member_id='.$list[$i].')';
+		$members .= ' OR (member_id='.intval($list[$i]).')';
 	}
 	
 	$sql    = "UPDATE %scourse_enrollment SET approved = 'a' WHERE course_id=%d AND (%s)";
