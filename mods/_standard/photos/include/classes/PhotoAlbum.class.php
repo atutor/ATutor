@@ -629,7 +629,7 @@ class PhotoAlbum {
 
         //filter 
         foreach($words as $k=>$v){
-            $v = trim($v);
+            $v = trim(my_add_null_slashes($v));
             $query .= "(description LIKE '%%$v%%' OR name LIKE '%%$v%%' OR alt_text LIKE '%%$v%%') OR ";	//for sql
             $pattern .= $v.'|';	//regex for albums
         }
