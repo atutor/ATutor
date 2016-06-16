@@ -46,7 +46,7 @@ if ($_POST['edit_poll']) {
 		for ($i=1; $i<= AT_NUM_POLL_CHOICES; $i++) {
 			$trimmed_word = validate_length($_POST['c' . $i], 100);			
 			//$trimmed_word = $addslashes($trimmed_word);
-			$choices .= "choice$i = '" . $trimmed_word . "',";
+			$choices .= "choice$i = '" . my_add_null_slashes($trimmed_word) . "',";
 		}
 		$choices = substr($choices, 0, -1);
 
