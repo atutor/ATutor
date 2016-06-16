@@ -78,7 +78,7 @@ class Applications {
 		}
 
 		//now delete it from the application table
-		$id_list = implode(', ', $ids);
+		$id_list = implode(',', array_map('intval', $ids));
 
 		$sql = "DELETE FROM %ssocial_applications WHERE id IN (%s)";
 		queryDB($sql, array(TABLE_PREFIX, $id_list));
