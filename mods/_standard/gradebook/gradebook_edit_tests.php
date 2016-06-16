@@ -38,7 +38,8 @@ else if (isset($_POST['save']))
 	$_POST["day_due"] = intval($_POST["day_due"]);
 	$_POST["hour_due"] = intval($_POST["hour_due"]);
 	$_POST["min_due"] = intval($_POST["min_due"]);
-
+    $_POST["title"] = my_add_null_slashes($_POST["title"]);
+ 
 	if (isset($_POST['title']) && $_POST['title'] == '') {
 		$missing_fields[] = _AT('title');
 	}
