@@ -105,6 +105,8 @@ if ($search) {
 	$search = trim($search);
 	$page_string .= SEP.'search='.urlencode($search);
 	$search = str_replace(array('%','_'), array('', '\_'), $search);
+	$search = my_add_null_slashes($search);
+
 	$search = '%%'.$search.'%%';
 	$search_sql = sprintf(' AND ((LinkName LIKE "%s") OR (description LIKE "%s"))', $search, $search);
 	
