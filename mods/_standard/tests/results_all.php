@@ -19,7 +19,8 @@ authenticate(AT_PRIV_TESTS);
 // Validate date
 function isValidDate($date)
 {
-    if (preg_match("/^(\d{4})-(\d{2})-(\d{2})$/", $date, $matches)) 
+    if (preg_match("/^(19|20)\d\d[\-\/.](0[1-9]|1[012])[\-\/.](0[1-9]|[12][0-9]|3[01])$/", $date, $matches)) 
+    
     {
         if (checkdate($matches[2], $matches[3], $matches[1])) {
             return true;
@@ -186,8 +187,8 @@ $num_questions = count($questions);
 //get all the marked tests for this test
 $sql	= "SELECT R.*, M.login FROM ".TABLE_PREFIX."tests_results R LEFT JOIN ".TABLE_PREFIX."members M USING (member_id) WHERE R.status=1 AND R.test_id=$tid AND R.final_score<>'' ";
 
-if ($start_date)     $sql .= " AND R.date_taken >= '" . $start_date . "'";
-if ($end_date)     $sql .= " AND R.date_taken <= '" . $end_date . "'";
+if ($start_date)     $sql .= " AND R.date_taken >= '" . my_add_null_slashes($start_date) . "'";
+if ($end_date)     $sql .= " AND R.date_taken <= '" . my_add_null_slashes($end_date). "'";
 
 if ($_POST["user_type"] == 1) $sql .= " AND R.member_id not like 'G_%' AND R.member_id > 0 ";
 if ($_POST["user_type"] == 2) $sql .= " AND (R.member_id like 'G_%' OR R.member_id = 0) ";
