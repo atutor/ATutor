@@ -78,11 +78,10 @@ if (isset($_POST['cancel'])) {
 
 		if ($_POST['groups']) {
 			// specific groups
-			$groups = implode(',', $_POST['groups']);
-
+            $groups = implode(',', array_map('intval', $_POST['groups']));
 			$group_members = array();
 			$sql = "SELECT member_id FROM %sgroups_members WHERE group_id IN (%s)";
-			$rows_members = queryDB($sql, array(TABLE_PREFIX, $groups));
+			$rows_members = queryDB($sql, array(TABLE_PREFIX, $groups ));
 			
 			foreach($rows_members as $row){
 				$group_members[] = $row['member_id'];
