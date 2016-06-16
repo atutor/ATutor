@@ -31,7 +31,9 @@ if (defined('AT_FORCE_GET_FILE') && AT_FORCE_GET_FILE) {
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$qid = $addslashes($_GET['qid']);
+$_GET['qid'] = explode(",", $_GET['qid']);
+$qid = implode(',', array_map('intval', $_GET['qid'] ));
+
 
 $sql = "SELECT * FROM %stests_questions WHERE course_id=%d AND question_id IN (%s)";
 $rows_questions	= queryDB($sql, array(TABLE_PREFIX, $_SESSION[course_id], $qid));
