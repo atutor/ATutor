@@ -53,9 +53,7 @@ if ($_GET['delete']) {
 	exit;
 } else if (isset($_POST['move'], $_POST['id'])) {
 	$_POST['id'][] = 0; // to make it non-empty
-	$_POST['id'] = implode(',', $_POST['id']);
-	$ids = $addslashes($_POST['id']);
-
+	$ids = implode(',', array_map('intval', $_POST['id']));
 	$sql = "INSERT INTO %smessages SELECT 0, course_id, from_member_id, %d, date_sent, 0, 0, subject, body FROM %smessages_sent WHERE from_member_id=%d AND message_id IN (%s)";
 	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], TABLE_PREFIX, $_SESSION['member_id'], $ids ));
 	
