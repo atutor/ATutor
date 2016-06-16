@@ -151,7 +151,7 @@ if (isset($_REQUEST['auto_login']))
 	if ($row['member_id'] != '' && isset($_REQUEST['code']) && $_REQUEST['code'] === $code) 
 	{
 		$_SESSION['valid_user'] = true;
-		$_SESSION['member_id']	= $_REQUEST["member_id"];
+		$_SESSION['member_id']	= intval($_REQUEST["member_id"]);
 		$_SESSION['course_id']  = 0;
 		$_SESSION['login']		= $row[login];
 		if ($row['preferences'] == "")

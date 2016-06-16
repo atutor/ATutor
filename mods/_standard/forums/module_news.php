@@ -23,8 +23,8 @@ function forums_news() {
 		return $news;
 	} 
 
-	$sql = 'SELECT E.approved, E.last_cid, C.* FROM '.TABLE_PREFIX.'course_enrollment E, '.TABLE_PREFIX.'courses C WHERE C.course_id in '. $enrolled_courses . '  AND E.member_id='.$_SESSION['member_id'].' AND E.course_id=C.course_id ORDER BY C.title';
-	$rows_en_courses = queryDB($sql, array());
+	$sql = 'SELECT E.approved, E.last_cid, C.* FROM %scourse_enrollment E, %scourses C WHERE C.course_id in %s  AND E.member_id=%d AND E.course_id=C.course_id ORDER BY C.title';
+	$rows_en_courses = queryDB($sql, array(TABLE_PREFIX, TABLE_PREFIX, $enrolled_courses, $_SESSION['member_id']));
 
     if(count($rows_en_courses) > 0){
 	    foreach($rows_en_courses as $row){
