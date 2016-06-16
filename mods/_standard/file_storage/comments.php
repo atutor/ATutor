@@ -69,7 +69,7 @@ if (isset($_GET['done'])) {
 	if (!$msg->containsErrors()) {
 		$_POST['comment'] = $addslashes($_POST['comment']);
 
-		$sql = "INSERT INTO ".TABLE_PREFIX."files_comments VALUES (NULL, $_POST[id], $_SESSION[member_id], NOW(), '$_POST[comment]')";
+		$sql = "INSERT INTO %sfiles_comments VALUES (NULL, %d, %d, NOW(), '%s')";
         $result = queryDB($sql, array(TABLE_PREFIX, $_POST['id'], $_SESSION['member_id'], $_POST['comment']));
         
         if($result > 0){
