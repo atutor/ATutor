@@ -30,11 +30,11 @@ class subscription {
 		
 		// Get appropriate sql parameters and write sql query
 		$ent_param = $this->entity_switch($entity_type);
-		$sql = ($ent_param) ? "SELECT COUNT(*) as count FROM $ent_param[sub_table] WHERE member_id = $member_id AND $ent_param[sub_id] = '$entity_id'" : false;
+		$sql = ($ent_param) ? "SELECT COUNT(*) as count FROM %s WHERE member_id = %d AND  %s = %d" : false;
 				
 		// Run SQL and check if table is populated for given member id and entity id
 		if ($sql){
-		    $result = queryDB($sql, array(), TRUE);
+		    $result = queryDB($sql, array($ent_param['sub_table'], $member_id ,  $ent_param['sub_id'], $entity_id), TRUE);
 			return (empty($result['count']))?false:true;
 		}	else {
 			return false;
@@ -80,16 +80,16 @@ class subscription {
 		}
 		
 		$ent_param = $this->entity_switch($entity_type);
-		$sql = ($ent_param) ? "INSERT INTO $ent_param[sub_table] (member_id, $ent_param[sub_id]) VALUES('$member_id','$entity_id')" : false;
-        $result = queryDB($sql, array());
+        $sql = ($ent_param) ? "INSERT INTO %s (member_id,  %s) VALUES(%d,%d)" : false;
+        $result = queryDB($sql, array($ent_param['sub_table'], $ent_param['sub_id'], $member_id, $entity_id));
         return ($result > 0)?true:false;
 	}
 	
 	// Unsubscribes user to feed
 	public function unset_subscription($entity_type, $member_id, $entity_id){
 		$ent_param = $this->entity_switch($entity_type);
-		$sql = ($ent_param) ? "DELETE FROM $ent_param[sub_table] WHERE member_id = '$member_id' AND $ent_param[sub_id] = '$entity_id'" : false;
-		$result = queryDB($sql, array());
+		$sql = ($ent_param) ? "DELETE FROM %s WHERE member_id = %d AND %s = %d" : false;
+		$result = queryDB($sql, array($ent_param['sub_table'], $member_id, $ent_param['sub_id'], $entity_id));
         return ($result > 0)?true:false;
 	}
 	
@@ -102,13 +102,14 @@ class subscription {
 		$ent_param = $this->entity_switch($entity_type);
 		
 		// Now, what are we going to send?
-		$fetch = (!empty($ent_param[content_head]))?$ent_param[content_head].",".$ent_param[content_body]:$ent_param[content_body];
-		$sql = "SELECT $fetch FROM $ent_param[content_table] WHERE $ent_param[content_id] = '$post_id'";
-		$post = queryDB($sql, array());	
-			
+		$fetch = (!empty($ent_param[content_head]))?$ent_param[content_head].",".$ent_param[content_body]:$ent_param[content_body];	
+		$sql = "SELECT %s FROM %s WHERE %s = %d";
+		$post = queryDB($sql, array($fetch, $ent_param['content_table'], $ent_param['content_id'], $post_id));		
+		
 		//Get all subscribers
-		$sql = "SELECT t1.email, t1.member_id FROM ".TABLE_PREFIX."members t1, $ent_param[sub_table] t2 WHERE t2.$ent_param[sub_id] = '$entity_id' AND t1.member_id=t2.member_id";
-		$rows_subscribers = queryDB($sql, array());		
+		$sql = "SELECT t1.email, t1.member_id FROM %smembers t1, %s t2 WHERE t2.%s = %d AND t1.member_id=t2.member_id";
+		$rows_subscribers = queryDB($sql, array(TABLE_PREFIX,  $ent_param['sub_table'], $ent_param['sub_id'],  $entity_id));
+		
 		//get system email
 		$sysinfo = $this->get_system_email();
 
