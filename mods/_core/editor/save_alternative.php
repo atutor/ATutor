@@ -23,6 +23,7 @@
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
+authenticate(AT_PRIV_CONTENT);
 
 $pid = intval($_POST['pid']);
 $type_id = intval($_POST['a_type']);
