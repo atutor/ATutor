@@ -43,6 +43,9 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 $col = ($_GET['col']) ? $_GET['col'] : 'LinkName';
 $order = ($_GET['order']) ? $_GET['order'] : 'asc';
+$col = my_add_null_slashes($col);
+$order = my_add_null_slashes($order);
+
 $parent_id = isset($_GET['cat_parent_id']) ? intval($_GET['cat_parent_id']) : 0;
 $groups = ($_SESSION['groups']) ? implode(',', $_SESSION['groups']) : 0;
 
