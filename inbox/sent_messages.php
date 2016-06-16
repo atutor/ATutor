@@ -37,8 +37,8 @@ if ($_GET['delete']) {
 	header('Location: '.$_SERVER['PHP_SELF']);
 	exit;
 } else if (isset($_POST['submit_yes'], $_POST['ids'])) {
-	$ids = $addslashes($_POST['ids']);
-
+	$ids = explode(",",$_POST['ids']);
+	$ids = implode(',', array_map('intval', $ids));
 	$sql = "DELETE FROM %smessages_sent WHERE from_member_id=%d AND message_id IN (%s)";
 	queryDB($sql, array(TABLE_PREFIX, $_SESSION['member_id'], $ids));
 	
