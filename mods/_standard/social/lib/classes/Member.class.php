@@ -258,19 +258,19 @@ class Member {
 		$sql = '';
 		//tricky, not all fields get updated at once.  Update only the ones that has entries.
 		if ($interests!=''){
-			$sql .= "interests='$interests', ";
+			$sql .= "interests='".my_add_null_slashes($interests)."', ";
 		}
 		if ($associations!=''){
-			$sql .= " associations='$associations', ";
+			$sql .= " associations='".my_add_null_slashes($associations)."', ";
 		}
 		if ($awards!=''){
-			$sql .= "awards='$awards', ";
+			$sql .= "awards='".my_add_null_slashes($awards)."', ";
 		}
 		if ($expertise!=''){
-			$sql .= "expertise='$expertise', ";
+			$sql .= "expertise='".my_add_null_slashes($expertise)."', ";
 		}
 		if ($others!=''){
-			$sql .= "others='$others', ";		
+			$sql .= "others='".my_add_null_slashes($others)."', ";
 		}
 		if ($sql!=''){
 			$sql = substr($sql, 0, -2);
