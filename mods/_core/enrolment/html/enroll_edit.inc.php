@@ -59,11 +59,8 @@ function check_roles ($member_ids) {
 */
 function unenroll ($list) {
 	global $system_courses, $course_id;
-	$members = implode(',', $list);
-
+    $members =implode(',', array_map('intval', $list));
 	if (isset($members)) {
-		$members = addslashes($members);
-
 		$sql    = "DELETE FROM %scourse_enrollment WHERE course_id=%d AND member_id IN (%s)";
 		$result = queryDB($sql, array(TABLE_PREFIX, $course_id, $members));
 
@@ -129,7 +126,7 @@ function enroll ($list) {
 	require(AT_INCLUDE_PATH . 'classes/phpmailer/atutormailer.class.php');
     
 	$num_list = count($list);
-	$members = '(member_id='.$list[0].')';
+	$members = '(member_id='.intval($list[0]).')';
 	for ($i=0; $i < $num_list; $i++)	{
 		$id = intval($list[$i]);
 		$members .= ' OR (member_id='.$id.')';
@@ -195,8 +192,7 @@ function group ($list, $gid) {
 function group_remove ($ids, $gid) {
 	global $msg;
 	$gid=intval($gid);
-
-	$ids=implode(',', $ids);
+    $ids =implode(',', array_map('intval', $ids));
 
 	if ($ids) {
 		$sql = "DELETE FROM %sgroups_members WHERE group_id=%d AND member_id IN (%s)";
