@@ -152,7 +152,7 @@ function at_form_validate($form_definition, $msg ) {
            $missing_fields[] = _AT($label);
         }
         if ( $info[1] == 'integer' || $info[1] == 'radio') {
-            if ( preg_match("/[0-9]+/", $datafield) == 1 || strlen($datafield) == 0 ) {
+             if (is_numeric($datafield) || strlen($datafield) == 0 ) {
                 // OK
             } else {
                 $numeric_fields[] = _AT($label);
