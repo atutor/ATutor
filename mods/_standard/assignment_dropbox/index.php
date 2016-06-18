@@ -90,7 +90,7 @@ if ($has_priv && isset($_POST['delete']) && is_array($files)) {
 	$hidden_vars = array();
 	$hidden_vars['owner_id'] = $_REQUEST['owner_id'];
 	$file_list_to_print = '';
-	$files = implode(',', $files);
+	$files  = implode(',', array_map('intval', $files));
 	$hidden_vars['files'] = $files;
 
 	$sql = "SELECT file_name FROM %sfiles WHERE file_id IN (%s) AND owner_type=%d AND owner_id=%d ORDER BY file_name";
