@@ -99,9 +99,9 @@ if ($has_priv && isset($_POST['delete']) && is_array($files)) {
     foreach($rows_files as $row){
 		$file_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.htmlspecialchars($row['file_name']).'</li>';
 	}
-	$msg->addConfirm(array('FILE_DELETE', $file_list_to_print), $hidden_vars);
-		
+
 	require(AT_INCLUDE_PATH.'header.inc.php');
+	$msg->addConfirm(array('FILE_DELETE', $file_list_to_print), $hidden_vars);
 	$msg->printConfirm();
 	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
