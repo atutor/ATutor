@@ -12,7 +12,7 @@
 
 define('AT_INCLUDE_PATH', 'include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-authenticate();
+authenticate(AT_PRIV_STYLES);
 
 global $addslashes;
 
