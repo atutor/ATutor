@@ -204,7 +204,7 @@ function at_get_field_value($fieldvalue, $type = false) {
     if ( $fieldvalue === false ) {
        $fieldvalue = 'NULL';
     } else if ( is_int($fieldvalue) ) {
-       $fieldvalue = $fieldvalue.'';
+       $fieldvalue = intval($fieldvalue).'';
     } else if ( $type == 'radio' || $type == 'integer') {
         if ( strlen($fieldvalue) < 1 ) $fieldvalue = '0';
     } else {
