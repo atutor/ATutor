@@ -42,6 +42,7 @@ $my_MaxFileSize	= $row['max_file_size'];
 	
 	// Check if  the filemanager directory path is a valid dirname/filename
 	if (strpbrk($_POST['pathext'], "\\?%*:|\"<>") === FALSE) {
+	    $_POST['pathext']= preg_replace("/\.\./i", "", $_POST['pathext']);
         /* $_POST['pathext'] is a folder or file; doesn't contain illegal character. */
     } else {
         /* $filename contains at least one illegal character, so make empty. */
@@ -60,7 +61,7 @@ if (isset($_POST['submit'])) {
 		$_FILES['uploadedfile']['name'] = strip_tags(str_replace(' ', '_', $_FILES['uploadedfile']['name']));
 
 		/* anything else should be okay, since we're on *nix.. hopefully */
-		$_FILES['uploadedfile']['name'] = str_replace(array(' ', ',', '/', '\\', ':', ';', '*', '?', '"', '<', '>', '|', '\''), '', $_FILES['uploadedfile']['name']);
+		$_FILES['uploadedfile']['name'] = str_replace(array(' ', ',', '/', '\\', ':', ';', '*', '?', '"', '<', '>', '|', '\'','\.\.'), '', $_FILES['uploadedfile']['name']);
 
 		$path_parts = pathinfo($_FILES['uploadedfile']['name']);
 		$ext = $path_parts['extension'];
