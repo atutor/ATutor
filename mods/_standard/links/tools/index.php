@@ -41,11 +41,8 @@ $course_id = $_SESSION['course_id'];
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 
-$col = ($_GET['col']) ? $_GET['col'] : 'LinkName';
-$order = ($_GET['order']) ? $_GET['order'] : 'asc';
-$col = my_add_null_slashes($col);
-$order = my_add_null_slashes($order);
-
+//$col = ($_GET['col']) ? $_GET['col'] : 'LinkName';
+//$order = ($_GET['order']) ? $_GET['order'] : 'asc';
 $parent_id = isset($_GET['cat_parent_id']) ? intval($_GET['cat_parent_id']) : 0;
 $groups = ($_SESSION['groups']) ? implode(',', $_SESSION['groups']) : 0;
 
@@ -68,8 +65,8 @@ if ($parent_id) {
 	$sql .= ' AND L.cat_id=%d';
 	array_push($sqlParams, $parent_id);
 } 
-$sql .= ' ORDER BY %s %s';
-array_push($sqlParams, $col, $order);
+//$sql .= ' ORDER BY %s %s';
+//array_push($sqlParams, $col, $order);
 
 $result = queryDB($sql, $sqlParams);
 
