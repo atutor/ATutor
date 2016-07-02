@@ -36,12 +36,12 @@ require (AT_INCLUDE_PATH.'header.inc.php');
 
 	<div class="row">
 		<label for="description"><?php echo _AT('description'); ?></label><br />
-		<textarea id="description" name="description" cols="40" rows="4"><?php echo $row_patches['description']; ?></textarea><br />
+		<textarea id="description" name="description" cols="40" rows="4"><?php echo htmlspecialchars_decode(stripslashes($row_patches['description'])); ?></textarea><br />
 	</div>
 
 	<div class="row">
 		<label for="sql_statement"><?php echo _AT('sql_statement'); ?></label><br />
-		<textarea id="sql_statement" name="sql_statement" cols="40" rows="8"><?php echo $row_patches['sql_statement']; ?></textarea><br />
+		<textarea id="sql_statement" name="sql_statement" cols="40" rows="8"><?php echo htmlspecialchars_decode(stripslashes($row_patches['sql_statement'])); ?></textarea><br />
 	</div>
 
 	<div class="row">

@@ -132,7 +132,6 @@ function is_patch_installed($patch_id)
 	       " and applied_version = '%s'".
 	       " and status like '%%Installed'";
 	$row = queryDB($sql,array(TABLE_PREFIX, $patch_id, VERSION), TRUE);
-
 		
 	if ($row["num_of_installed"] > 0) return true;
 	else return false;
