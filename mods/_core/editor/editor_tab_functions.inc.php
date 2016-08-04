@@ -184,7 +184,7 @@ function save_changes($redir, $current_tab) {
 	$_POST['use_customized_head']	= isset($_POST['use_customized_head'])?$_POST['use_customized_head']:0;
 	// $_POST['body_text']	= $stripslashes(trim($_POST['body_text'])); //this line breaks LaTex
 	$_POST['body_text']=preg_replace("/[\n\r]/","",$_POST['body_text']);
-	$_POST['body_text']	= trim($_POST['body_text']);
+	$_POST['body_text']	= trim(htmlspecialchars_decode($_POST['body_text']));
 	$_POST['weblink_text'] = trim($_POST['weblink_text']);
 	$_POST['formatting'] = intval($_POST['formatting']);
 	$_POST['keywords']	= $stripslashes(trim($_POST['keywords']));
