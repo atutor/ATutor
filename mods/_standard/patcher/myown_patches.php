@@ -80,7 +80,7 @@ else
 			<td width="10"><input type="radio" name="myown_patch_id" value="<?php echo $row['myown_patch_id']; ?>" id="m<?php echo $row['myown_patch_id']; ?>" <?php if ($row['myown_patch_id']==$_POST['myown_patch_id']) echo 'checked'; ?> /></td>
 			<td><label for="m<?php echo $row['myown_patch_id']; ?>"><?php echo $row['atutor_patch_id']; ?></label></td>
 			<td class="hidecol700"><?php echo $row['applied_version']; ?></td>
-			<td><?php echo $row['description']; ?></td>
+			<td><?php echo htmlspecialchars_decode(stripslashes($row['description'])); ?></td>
 			<td class="hidecol700"><?php echo $row['last_modified']; ?></td>
 		</tr>
 <?php 

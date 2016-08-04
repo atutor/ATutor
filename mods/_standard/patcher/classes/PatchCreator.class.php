@@ -84,8 +84,8 @@ class PatchCreator {
 			{
 				$patch_info_array["files"][$i]["directory"] = addslashes($patch_info_array["files"][$i]["directory"]);
 				$patch_info_array["files"][$i]["upload_tmp_name"] = addslashes($patch_info_array["files"][$i]["upload_tmp_name"]);
-				$patch_info_array["files"][$i]["code_from"] = addslashes($patch_info_array["files"][$i]["code_from"]);
-				$patch_info_array["files"][$i]["code_to"] = addslashes($patch_info_array["files"][$i]["code_to"]);
+				$patch_info_array["files"][$i]["code_from"] = $patch_info_array["files"][$i]["code_from"];
+				$patch_info_array["files"][$i]["code_to"] = $patch_info_array["files"][$i]["code_to"];
 			}
 		}
 		
@@ -211,8 +211,8 @@ class PatchCreator {
 				                                $file_info["action"],
 				                                my_add_null_slashes($file_info["file_name"]),
 				                                my_add_null_slashes($file_info["directory"]),
-				                                my_add_null_slashes($file_info["code_from"]),
-				                                my_add_null_slashes($file_info["code_to"]),
+				                                my_add_null_slashes(htmlspecialchars_decode($file_info["code_from"])),
+				                                my_add_null_slashes(htmlspecialchars_decode($file_info["code_to"])),
 				                                my_add_null_slashes($upload_to)), FALSE, FALSE);			
 			}
 		}
@@ -267,8 +267,8 @@ class PatchCreator {
 				{
 					$action_details .= str_replace(array('{TYPE}', '{CODE_FROM}', '{CODE_TO}'), 
 									  array('replace', 
-									  			htmlspecialchars(stripslashes($file_info["code_from"]), ENT_QUOTES), 
-									  			htmlspecialchars(stripslashes($file_info["code_to"]), ENT_QUOTES)),
+									  			htmlspecialchars(stripslashes($file_info["code_from"]), ENT_QUOTES, $double_encode =false), 
+									  			htmlspecialchars(stripslashes($file_info["code_to"]), ENT_QUOTES,  $double_encode =false)),
 									  $patch_action_detail_xml);
 				}
 				
@@ -287,8 +287,8 @@ class PatchCreator {
 		                         '{FILES}'), 
 							         array($this->patch_info_array["atutor_patch_id"], 
 							               $this->patch_info_array["atutor_version_to_apply"], 
-							               htmlspecialchars(stripslashes($this->htmlNewLine($this->patch_info_array["description"])), ENT_QUOTES), 
-							               htmlspecialchars(stripslashes($this->patch_info_array["sql_statement"]), ENT_QUOTES), 
+							               htmlspecialchars_decode(stripslashes($this->htmlNewLine($this->patch_info_array["description"])), ENT_QUOTES), 
+							               htmlspecialchars_decode(stripslashes($this->patch_info_array["sql_statement"]), ENT_QUOTES), 
 							               $dependent_patches,
 							               $xml_files),
 							         $patch_xml);

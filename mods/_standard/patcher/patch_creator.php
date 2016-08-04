@@ -111,8 +111,8 @@ if ($_POST['create'] || $_POST['save'])
 					$patch_info["files"][] = array("action"=>$action,
 					                           "file_name"=>$_POST['alter_filename'][$i],
 					                           "directory"=>$_POST['alter_dir'][$i],
-					                           "code_from"=>$_POST['alter_code_from'][$i],
-					                           "code_to"=>$_POST['alter_code_to'][$i]);
+					                           "code_from"=>htmlspecialchars_decode(stripslashes($_POST['alter_code_from'][$i])),
+					                           "code_to"=>htmlspecialchars_decode(stripslashes($_POST['alter_code_to'][$i])));
 				}
 				
 				if ($action == "delete" && $_POST['delete_filename'][$i] <> "") {

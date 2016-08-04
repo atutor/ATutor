@@ -459,7 +459,7 @@ function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix
 		/* Check if the database that existed is in UTF-8, if not, ask for retry */
 		at_db_select($db_name, $db);
 		$sql = "SHOW CREATE DATABASE `%s`";
-		$row = queryDButf8($sql, array($db_name), true, true, $db);
+		$row = queryDButf8($sql, $db_name, true, true, $db);
 
 		if (!preg_match('/CHARACTER SET utf8/i', $row['Create Database'])){
 			$sql2 = 'ALTER DATABASE `%s` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci';

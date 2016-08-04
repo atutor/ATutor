@@ -141,8 +141,10 @@ class Patch {
 		if (strlen(trim($this->patch_array['sql'])) > 0) $this->runSQL();
 
 		// Start applying patch
-		$this->createPatchesRecord($this->patch_summary_array);
-
+        if($this->createPatchesRecord($this->patch_summary_array)){
+             $updateInfo = array("status"=>"Installed");
+             updatePatchesRecord($this->patch_id, $updateInfo);
+        }
 		// if no file action defined, update database and return true
 		if (!is_array($this->patch_array[files])) 
 		{
