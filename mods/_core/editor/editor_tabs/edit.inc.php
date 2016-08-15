@@ -112,7 +112,7 @@ if ($do_check) {
     <div class="row">
         <span id="textSpan">
             <label for="body_text"><strong><?php echo _AT('body');  ?></strong></label><br />
-            <textarea name="body_text" id="body_text" cols="80" rows="20"><?php echo ContentManager::cleanOutput($_POST['body_text']);?></textarea>
+            <textarea name="body_text" id="body_text" cols="80" rows="20"><?php echo htmlentities($_POST['body_text'], ENT_NOQUOTES);?></textarea>
         </span>
         <span id="weblinkSpan">	
             <label for="weblink_text"><?php echo _AT('weblink');  ?></label>
