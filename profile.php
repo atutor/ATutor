@@ -32,7 +32,7 @@ $profile_row = queryDB($sql,array(TABLE_PREFIX, $_GET['id']), TRUE);
 if (count($profile_row) > 0) {	
 	//get privs
 	$sql	= 'SELECT `privileges`, approved FROM %scourse_enrollment WHERE member_id=%d';
-	$row_en = mysql_query($sql,array(TABLE_PREFIX, $_GET['id']));
+	$row_en = queryDB($sql,array(TABLE_PREFIX, $_GET['id']));
 
 	if ($system_courses[$_SESSION['course_id']]['member_id'] == $_GET['id']) {
 		$status = _AT('instructor');
