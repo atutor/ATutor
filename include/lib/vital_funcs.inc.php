@@ -1231,7 +1231,10 @@ function escape_all_supers(){
     }
     $_SERVER['PHP_SELF'] = htmlspecialchars($_SERVER['PHP_SELF']);
 }
-escape_all_supers();
+// hack to prevent content editor from converting entities to tags
+if(!strstr($_SERVER['PHP_SELF'], "edit_content")){
+    escape_all_supers();
+}
 
 /**
     * Functions to clean up the escaped newlines left behind

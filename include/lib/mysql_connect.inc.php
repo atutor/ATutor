@@ -187,7 +187,13 @@ function create_sql($query, $params=array(), $sanitize = true){
     if ($sanitize) {
         foreach($params as $i=>$value) {
          if(defined('MYSQLI_ENABLED')){  
-             $value = htmlspecialchars_decode($value, ENT_QUOTES);  
+            // the following decode is a problem for the content editor
+            // when html is being included as entities to be displayed as text.
+            // So disable it for the content editor
+             //$value = htmlspecialchars_decode($value, ENT_QUOTES);  
+             if(!strstr($_SERVER['PHP_SELF'], "edit_content")){
+                $value = htmlspecialchars_decode($value, ENT_QUOTES);
+            }
              $params[$i] = $addslashes($value);
             }else {
              $params[$i] = $addslashes($value);           

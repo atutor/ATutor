@@ -4,7 +4,7 @@
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="sitename"><?php echo _AT('site_name'); ?></label><br />
-		<input type="text" name="site_name" size="40" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo $stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo $_config['site_name']; } ?>" />
+		<input type="text" name="site_name" size="40" maxlength="60" id="sitename" value="<?php if (!empty($_POST['site_name'])) { echo $stripslashes(htmlspecialchars($_POST['site_name'])); } else { echo stripslashes($_config['site_name']); } ?>" />
 	</div>
 
 	<div class="row">
