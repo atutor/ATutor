@@ -188,7 +188,7 @@ function trans_form($page) {
 	</tr>
 	<tr>
 		<td valign="top" align="right" nowrap="nowrap"><b><tt><?php echo $langs[$_SESSION['language']]['name'];?></tt> text:</b></td>
-		<td><textarea cols="55" rows="8" name="text" class="input2"><?php echo $row2['text'];?></textarea></td>
+		<td><textarea cols="55" rows="8" name="text" class="input2"><?php echo str_replace("\\'","'",$row2['text']);?></textarea></td>
 	</tr>
 	<tr>
 		<td colspan="2" align="center"><input type="submit" name="submit" value="Save ALT-S" class="submit" accesskey="s" />
