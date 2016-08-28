@@ -31,13 +31,13 @@ if (!valid_forum_user($fid)) {
 
 $_pages['mods/_standard/forums/forum/index.php']['title']    = get_forum_name($fid);
 $_pages['mods/_standard/forums/forum/index.php']['parent']   = 'mods/_standard/forums/forum/list.php';
-$_pages['mods/_standard/forums/forum/index.php']['children'] = array('mods/_standard/forums/forum/new_thread.php?fid='.$fid, 'search.php?search_within[]=forums');
+$_pages['mods/_standard/forums/forum/index.php']['children'] = array('mods/_standard/forums/forum/new_thread.php?fid='.$fid, 'search.php?search_within=forums');
 
 $_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['title_var'] = 'new_thread';
 $_pages['mods/_standard/forums/forum/new_thread.php?fid='.$fid]['parent']    = 'mods/_standard/forums/forum/index.php';
 
-$_pages['search.php?search_within[]=forums']['title_var'] = 'search';
-$_pages['search.php?search_within[]=forums']['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
+$_pages['search.php?search_within=forums']['title_var'] = 'search';
+$_pages['search.php?search_within=forums']['parent']    = 'mods/_standard/forums/forum/index.php?fid='.$fid;
 
 
 
