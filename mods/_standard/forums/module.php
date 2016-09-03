@@ -26,7 +26,7 @@ $this->_pages['mods/_standard/forums/index.php']['children']  = array('mods/_sta
 
 $this->_pages['mods/_standard/forums/add_forum.php']['title_var']  = 'create_forum';
 $this->_pages['mods/_standard/forums/add_forum.php']['parent'] = 'mods/_standard/forums/index.php';
-$this->_pages['mods/_standard/forums/add_forum.php']['children']  = array('mods/_standard/forums/forum/list.php','search.php?search_within[]=forums');
+$this->_pages['mods/_standard/forums/add_forum.php']['children']  = array('mods/_standard/forums/forum/list.php','search.php?search_within=forums');
 
 $this->_pages['mods/_standard/forums/delete_forum.php']['title_var']  = 'delete_forum';
 $this->_pages['mods/_standard/forums/delete_forum.php']['parent'] = 'mods/_standard/forums/forums/index.php';
@@ -55,11 +55,11 @@ $this->_pages_i['mods/_standard/forums/edit_forum.php']['other_parent']    = 'mo
 $this->_pages_i['mods/_standard/forums/forum/index.php']['children'] = array('mods/_standard/forums/edit_forum.php');
 
 }
-$this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within[]=forums');
+$this->_pages['mods/_standard/forums/forum/list.php']['children']        = array('search.php?search_within=forums');
 
 	//list.php's children
-	$this->_pages['search.php?search_within[]=forums']['title_var'] = 'search';
-	$this->_pages['search.php?search_within[]=forums']['parent']    = 'mods/_standard/forums/index.php';
+	$this->_pages['search.php?search_within=forums']['title_var'] = 'search';
+	$this->_pages['search.php?search_within=forums']['parent']    = 'mods/_standard/forums/index.php';
 
 // for admin
 if (admin_authenticate(AT_ADMIN_PRIV_FORUMS, TRUE) || admin_authenticate(AT_ADMIN_PRIV_ADMIN, TRUE)) {
