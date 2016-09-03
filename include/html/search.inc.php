@@ -198,6 +198,7 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 	echo '<a name="search_results" tabindex="1"></a><h3 id="search_results">'.$num_found.' '._AT('search_results').'</h3>';
 
 	if (!$num_found) {
+		global $savant;
 		$msg->printInfos('NO_SEARCH_RESULTS');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
