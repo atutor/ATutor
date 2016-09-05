@@ -39,7 +39,7 @@
         $gcalobj->logout();
     } else {
         //request is for association
-        if (!isset($_GET['token'])) {
+        if (!isset($_GET['code'])) {
             //redirect to login page/consent page
 
             $query = "DELETE FROM %scalendar_google_sync WHERE userid=%d";

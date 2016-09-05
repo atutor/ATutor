@@ -279,7 +279,9 @@
         </table>
         <input type="hidden" id="viewname1" />
         <input type="hidden"  id="fc-emode1" /> 
-        <input type="hidden" id="ori-name1" />              
+        <input type="hidden" id="ori-name1" />
+        <input type="hidden" id="cal-id1"/>
+        <input type="hidden" id="cal-type1"/>
     </div>
 </div>
 
