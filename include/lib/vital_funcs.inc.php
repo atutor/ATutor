@@ -1202,7 +1202,7 @@ function escape_all_supers(){
         if(!is_array($_GET[$key])){
             $_GET[$key] = htmlspecialchars($_GET[$key]);
         } else{
-            if($_GET['qti_export_version']){
+            if(isset($_GET['qti_export_version'])){
                     // don't do anything
                     // hack to prevent filter when selecting a question to edit.
                     // the array the URL has attached needs to stay intact for the question editor
