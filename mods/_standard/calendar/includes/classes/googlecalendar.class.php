@@ -22,16 +22,7 @@
     $includePath   = implode(PATH_SEPARATOR,$includePath);
     set_include_path($includePath); 
     
-    require_once 'Zend/Loader.php';
-
-    Zend_Loader::loadClass('Zend_Gdata');
-    Zend_Loader::loadClass('Zend_Gdata_AuthSub');
-    Zend_Loader::loadClass('Zend_Gdata_ClientLogin');
-    Zend_Loader::loadClass('Zend_Gdata_HttpClient');
-    Zend_Loader::loadClass('Zend_Gdata_Calendar');
-
-    $_authSubKeyFile           = null; // Example value for secure use: 'mykey.pem'
-    $_authSubKeyFilePassphrase = null;
+    require_once 'vendor/autoload.php';
 
     class GoogleCalendar {
         /**
@@ -80,17 +71,14 @@
          * @return string AuthSub URL
          */
         public function getAuthSubUrl() {
-            global $_authSubKeyFile;
-            $next = $this->getCurrentUrl();
-            $scope = 'http://www.google.com/calendar/feeds/';
-            $session = true;
-            if ($_authSubKeyFile != null) {
-                $secure = true;
-            } else {
-                $secure = false;
-            }
-            return Zend_Gdata_AuthSub::getAuthSubTokenUri($next, $scope, $secure,
-                $session);
+            $client = new Google_Client();
+            $client->setApplicationName('ATutor');
+            $client->setScopes(Google_Service_Calendar::CALENDAR);
+            $client->setAuthConfig('client_secret.json');
+            $client->setAccessType('offline');
+
+            $authUrl = $client->createAuthUrl();
+            return $authUrl;
         }
     
         /**
@@ -119,48 +107,38 @@
          * @return Zend_Http_Client
          */
         public function getAuthSubHttpClient() {
-            global $_SESSION, $_GET, $_authSubKeyFile, $_authSubKeyFilePassphrase;
-            $client = new Zend_Gdata_HttpClient();
-            if ($_authSubKeyFile != null) {
-                // set the AuthSub key
-                $client->setAuthSubPrivateKeyFile($_authSubKeyFile, $_authSubKeyFilePassphrase, true);
+            global $_SESSION, $_GET;
+            $client = new Google_Client();
+            $client->setApplicationName('ATutor');
+            $client->setScopes(Google_Service_Calendar::CALENDAR);
+            $client->setAuthConfig('client_secret.json');
+            $client->setAccessType('offline');
+            if (!isset($_SESSION['sessionToken']) && isset($_GET['code'])) {
+                $accessToken = $client->fetchAccessTokenWithAuthCode($_GET['code']);
+                $_SESSION['sessionToken'] = $accessToken['access_token'].';'.$accessToken['refresh_token'];
             }
-            if (!isset($_SESSION['sessionToken']) && isset($_GET['token'])) {
-                $_SESSION['sessionToken'] =
-                    Zend_Gdata_AuthSub::getAuthSubSessionToken($_GET['token'], $client);
+            if (isset($_SESSION['sessionToken'])) {
+                $client->setAccessToken($this->getAccessToken($_SESSION['sessionToken']));
             }
-            $client->setAuthSubToken($_SESSION['sessionToken']);
             return $client;
         }
-    
-        /**
-         * Checks validity of a token. If token is valid then proceed ahead
-         * otherwise the user will be logged out. To check token a dummy
-         * call to function getCalendarListFeed is made. If there are some 
-         * problems then the token is not valid.
-         *
-         * @param Zend client object
-         *
-         * @return void
-         */
-        public function outputCalendarListCheck($client) {
-            $gdataCal = new Zend_Gdata_Calendar($client);
-            $calFeed = $gdataCal->getCalendarListFeed();
-        }
         
-        public function isvalidtoken($tokent) {
-            try {
+        public function isvalidtoken($token) {
+            //try {
                 $client = $this->getAuthSubHttpClient();
-                $this->outputCalendarListCheck($client);
+                if ($client->isAccessTokenExpired()) {
+                    $client->fetchAccessTokenWithRefreshToken($this->getRefreshToken($_SESSION['sessionToken']));
+                    $accessToken = $client->getAccessToken();
+                    $_SESSION['sessionToken'] = $accessToken['access_token'].';'.$accessToken['refresh_token'];
+                }
                 return true;
-            }
-            catch( Zend_Gdata_App_HttpException $e ) {
-
-                $qry = "DELETE FROM %scalendar_google_sync WHERE userid=%d";
-                queryDB($qry, array(TABLE_PREFIX, $_SESSION['member_id']));
-                
-                $this->logout();
-            }
+//            }
+//            catch (Exception $e ) {
+//                $qry = "DELETE FROM %scalendar_google_sync WHERE userid=%d";
+//                queryDB($qry, array(TABLE_PREFIX, $_SESSION['member_id']));
+//
+//                $this->logout();
+//            }
         }
         
         /**
@@ -172,9 +150,11 @@
          * @return void
          */
         public function outputCalendarList($client) {
-            $gdataCal = new Zend_Gdata_Calendar($client);
-            $calFeed = $gdataCal->getCalendarListFeed();
-            
+            $gdataCal = new Google_Service_Calendar($client);
+            $calFeed = $gdataCal->calendarList->listCalendarList();
+
+            $colors = $gdataCal->colors->get();
+
             //Get calendar list from database
 
             $query = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
@@ -187,20 +167,20 @@
             //Iterate through each calendar id
             foreach ($calFeed as $calendar) {
                 //set state according to database and if changed then update database
-                if( strpos($prevval,$calendar->id->text.',') === false )
+                if( strpos($prevval,$calendar->getId().',') === false )
                     $selectd = '';
                 else
                     $selectd = "checked='checked'";
                 echo "\t <div class='fc-square fc-inline-block'
-                    style='background-color:".$calendar->color->value."' ></div>
+                    style='background-color:".$colors['calendar'][$calendar->getColorId()]['background']."' ></div>
                     <input id='gcal".$i."' type='checkbox' name ='calid' value='".
-                    $calendar->id->text."' ".$selectd.
+                    $calendar->getId()."' ".$selectd.
                     " onclick='if(this.checked) $.get(\"mods/_standard/calendar/google_calendar_db_sync.php\",
                     { calid: this.value, mode: \"add\" },function (data){ refreshevents(); } );
                     else $.get(\"mods/_standard/calendar/google_calendar_db_sync.php\",
                     { calid: this.value, mode: \"remove\" },function (data){ refreshevents(); } );'
                     />
-                    <label for='gcal".$i."'>".$calendar->title->text."</label><br/>";
+                    <label for='gcal".$i."'>".$calendar->getSummary()."</label><br/>";
                 $i++;
             }
         }
@@ -216,12 +196,20 @@
             // Carefully construct this value to avoid application security problems.
             $php_self = htmlentities(substr($_SERVER['PHP_SELF'], 0 ,
                         strcspn($_SERVER['PHP_SELF'], "\n\r")), ENT_QUOTES);
-            //Revoke access for the stored token
-            Zend_Gdata_AuthSub::AuthSubRevokeToken($_SESSION['sessionToken']);
             unset($_SESSION['sessionToken']);
             //Close this popup window
             echo "<script>window.opener.location.reload(true);window.close();</script>";
             exit();
+        }
+
+        public function getAccessToken($token) {
+            $parts = explode(";", $token);
+            return $parts[0];
+        }
+
+        public function getRefreshToken($token) {
+            $parts = explode(";", $token);
+            return $parts[1];
         }
     }
 ?>

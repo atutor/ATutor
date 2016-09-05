@@ -143,6 +143,8 @@ $(document).ready(function () {
             $("#date-start1").val($.fullCalendar.formatDate(date, "yyyy-MM-dd"));
             //Store event id for manipulation
             $("#ori-name1").val( calevent.id );
+            $("#cal-id1").val( calevent.cal_id );
+            $("#cal-type1").val( calevent.calendar );
             
             //If allDay is true then no need to display time otherwise display time
             if (calevent.allDay == true) {
@@ -462,9 +464,9 @@ $(document).ready(function () {
     //Buttons for editing
     var edit_btns = {};
     edit_btns[calendar_del_e] = function () {
-        if ($("#ori-name1").val().indexOf("http") >= 0) {
+        if ($("#cal-type1").val().indexOf("Google") >= 0) {
             $.get("mods/_standard/calendar/google_calendar_update.php", 
-                  {id:$("#ori-name1").val(), cmd:"delete"});
+                  {id:$("#ori-name1").val(), cmd:"delete", cal_id:$("#cal-id1").val()});
         } else {
             //Delete event from db
             $.get("mods/_standard/calendar/update_personal_event.php",
@@ -600,7 +602,7 @@ $(document).ready(function () {
         );
         //Add edited event as a new event and also update db values
         if ($('#viewname1').val() == "true") {
-            if ($("#ori-name1").val().indexOf('http') >= 0) {
+            if ($("#cal-type1").val().indexOf('Google') >= 0) {
                 var mysqlendd = $.fullCalendar.formatDate(new Date(parseInt(endsplt[0]),
                                                                    parseInt(endsplt[1])-1,
                                                                    parseInt(endsplt[2])),
@@ -645,7 +647,7 @@ $(document).ready(function () {
             }
             $(this).dialog('close');
         } else {
-            if ($("#ori-name1").val().indexOf('http') >= 0) {
+            if ($("#cal-type1").val().indexOf('Google') >= 0) {
                 var mysqlendd = $.fullCalendar.formatDate(new Date(parseInt(endsplt[0]),
                                                                     parseInt(endsplt[1])-1,
                                                                     parseInt(endsplt[2]),
@@ -662,7 +664,7 @@ $(document).ready(function () {
                     "mods/_standard/calendar/google_calendar_update.php",
                     {
                     id:$("#ori-name1").val(), start:mysqlstartd, end:mysqlendd,
-                    title:$("#name1").val(), cmd:"update"
+                    title:$("#name1").val(), cmd:"update", cal_id:$("#cal-id1").val()
                     },
                     function(data) {
                             calendar.fullCalendar('refetchEvents');
