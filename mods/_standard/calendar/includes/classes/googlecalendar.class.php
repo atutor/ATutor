@@ -76,6 +76,7 @@
             $client->setScopes(Google_Service_Calendar::CALENDAR);
             $client->setAuthConfig('client_secret.json');
             $client->setAccessType('offline');
+            $client->setRedirectUri($this->getCurrentUrl());
 
             $authUrl = $client->createAuthUrl();
             return $authUrl;
@@ -124,21 +125,13 @@
         }
         
         public function isvalidtoken($token) {
-            //try {
-                $client = $this->getAuthSubHttpClient();
-                if ($client->isAccessTokenExpired()) {
-                    $client->fetchAccessTokenWithRefreshToken($this->getRefreshToken($_SESSION['sessionToken']));
-                    $accessToken = $client->getAccessToken();
-                    $_SESSION['sessionToken'] = $accessToken['access_token'].';'.$accessToken['refresh_token'];
-                }
-                return true;
-//            }
-//            catch (Exception $e ) {
-//                $qry = "DELETE FROM %scalendar_google_sync WHERE userid=%d";
-//                queryDB($qry, array(TABLE_PREFIX, $_SESSION['member_id']));
-//
-//                $this->logout();
-//            }
+            $client = $this->getAuthSubHttpClient();
+            if ($client->isAccessTokenExpired()) {
+                $client->fetchAccessTokenWithRefreshToken($this->getRefreshToken($_SESSION['sessionToken']));
+                $accessToken = $client->getAccessToken();
+                $_SESSION['sessionToken'] = $accessToken['access_token'].';'.$accessToken['refresh_token'];
+            }
+            return true;
         }
         
         /**
