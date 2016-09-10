@@ -63,19 +63,10 @@ if (isset($_GET['search'])) {
 		$checked_display_as_summaries = ' checked="checked"';
 	}
 
-	// search within options
-	if ($_GET['search_within']=='content'){
-		$checked_sw_content = ' checked="checked"';
-	} elseif ($_GET['search_within']=='forums') {
-		$checked_sw_forums = ' checked="checked"';
-	} else {
-		$checked_sw_all = ' checked="checked"';
-	}
 
 } else {
 	// default values:
 	$checked_include_all      = ' checked="checked"';
-	$checked_sw_all			  = ' checked="checked"';
 
 	if ($_SESSION['course_id'] > 0) {
 		$checked_find_in_course   = ' checked="checked"';
@@ -88,6 +79,16 @@ if (isset($_GET['search'])) {
 		$checked_display_as_summaries = ' checked="checked"';
 	}
 }
+
+// search within options
+if ($_GET['search_within']=='content'){
+	$checked_sw_content = ' checked="checked"';
+} elseif ($_GET['search_within']=='forums') {
+	$checked_sw_forums = ' checked="checked"';
+} else {
+	$checked_sw_all = ' checked="checked"';
+}
+
 if (isset($_GET['search']) && !$_GET['words']) {
 	$msg->printErrors('SEARCH_TERM_REQUIRED');
 	$_GET = array();
@@ -198,6 +199,7 @@ if (isset($_GET['search']) && isset($_GET['words'])) {
 	echo '<a name="search_results" tabindex="1"></a><h3 id="search_results">'.$num_found.' '._AT('search_results').'</h3>';
 
 	if (!$num_found) {
+		global $savant;
 		$msg->printInfos('NO_SEARCH_RESULTS');
 		require(AT_INCLUDE_PATH.'footer.inc.php');
 		exit;
