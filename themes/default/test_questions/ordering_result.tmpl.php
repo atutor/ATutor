@@ -8,7 +8,7 @@
 			<?php else: ?>
 				<img src="<?php echo $this->base_path; ?>images/x.gif" alt="<?php echo _AT('wrong_answer'); ?>" title="<?php echo _AT('wrong_answer'); ?>" height="16" width="16" style="vertical-align: middle" />
 			<?php endif; ?>
-			<?php echo $this->answers[$i] == -1 ? '-' : $this->answers[$i]+1; ?>. <?php echo AT_print($this->row['choice_'.$i], 'tests_questions.choice); ?>
+			<?php echo $this->answers[$i] == -1 ? '-' : $this->answers[$i]+1; ?>. <?php echo AT_print($this->row['choice_'.$i], 'tests_questions.choice'); ?>
 		</li>
 	<?php endfor; ?>
 </ol>
