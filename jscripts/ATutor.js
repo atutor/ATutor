@@ -579,7 +579,7 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         
         jQuery('#pref_style').replaceWith(pref_style);
         if (window.opener) {
-            jQuery('#pref_style', window.opener.document).replaceWith(pref_style);
+            try {jQuery('#pref_style', window.opener.document).replaceWith(pref_style);}catch(err){}finally{}
         }
     };
     
