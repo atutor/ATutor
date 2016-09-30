@@ -578,7 +578,8 @@ ATutor.users.preferences = ATutor.users.preferences || {};
         var pref_style = ATutor.users.preferences.user_styles.replace(/FONT_FAMILY/g, font_style).replace(/FONT_SIZE/g, font_size_style).replace(/BG_COLOR/g, bg_color_style).replace(/FG_COLOR/g, fg_color_style).replace(/HL_COLOR/g, hl_color_style).replace(/BORDER/g, bd_color_style);
 
         jQuery('#pref_style').replaceWith(pref_style);
-        if ((typeof window.opener === "object") && (window.opener !== null) ) {//users/pref_wizard/index.php popup style
+        // 5725 workaround to fix missing menu toggle images 
+        if ((typeof window.opener === "object") && (window.opener !== null) ) {
             jQuery('#pref_style', window.opener.document).replaceWith(pref_style);
         }
     };
