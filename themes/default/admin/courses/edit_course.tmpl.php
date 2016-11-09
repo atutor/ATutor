@@ -12,6 +12,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	<input type="hidden" name="show_courses" value="<?php echo intval($_GET['show_courses']); ?>" />
 	<input type="hidden" name="current_cat" value="<?php echo intval($_GET['current_cat']); ?>" />
 	<input type="submit" name="submit" style="display:none;"/>
+	<input type="hidden" name="csrftoken"  value="<?php echo $_SESSION['token'];?>" />
 
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('properties'); ?></legend>

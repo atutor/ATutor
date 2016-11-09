@@ -14,9 +14,9 @@
 $_user_location	= 'users';
 define('AT_INCLUDE_PATH', '../../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
-check_referer();
 require(AT_INCLUDE_PATH.'../mods/_core/backups/classes/Backup.class.php');
 require(AT_INCLUDE_PATH.'../mods/_core/courses/lib/course.inc.php');
+
 
 /* verify that this user has status to create courses */
 
@@ -69,8 +69,12 @@ if (isset($_POST['cancel'])) {
 	exit;
 }else if (isset($_POST['form_course']) && $_POST['submit'] != '') {
 	$_POST['instructor'] = $_SESSION['member_id'];
-
-		$errors = add_update_course($_POST);
+    if($_POST['csrftoken'] != $_SESSION['token']){
+        $msg->addError('ACCESS_DENIED');
+        header('Location: '.AT_BASE_HREF.'index.php');
+        exit;
+    } 
+	$errors = add_update_course($_POST);
 
 	if ($errors !== FALSE) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
