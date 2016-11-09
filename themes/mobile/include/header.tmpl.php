@@ -275,6 +275,13 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 		</div><!--  end page-title-back-to-page -->
 	
 		<?php global $msg; $msg->printAll(); $_base_href;?>
+		<?php
+	    // Section added to accomodate Gamify custom feedback
+	    // displayed when a badge is issued while working in ATutor
+	    if(isset($_GET['fb'])){
+	        $msg->printNoLookupFeedback($_GET['fb']) ;
+	    }
+	?>
 			<div id="content-sequence-links">
 			<!-- ENSURE "content_link" DOESN'T APPEAR IF NOT LOGGED IN -->
 		<?php if (isset($this->course_id) && $this->course_id > 0): ?>

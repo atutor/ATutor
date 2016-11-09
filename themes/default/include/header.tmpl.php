@@ -368,6 +368,13 @@ global $system_courses, $_custom_css, $db;
 	
 	<div id="message">
 	<?php global $msg; $msg->printAll(); $_base_href;?>
+	<?php
+	// Section added to accomodate Gamify custom feedback
+	// displayed when a badge is issued while working in ATutor
+	if(isset($_GET['fb'])){
+	    $msg->printNoLookupFeedback($_GET['fb']) ;
+	}
+	?>
     </div>
     
 

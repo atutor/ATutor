@@ -281,7 +281,13 @@ global $system_courses, $_custom_css, $db;
 	<a name="content" title="<?php echo _AT('content'); ?>"></a>
 	<h2 class="page-title"><?php echo $this->page_title; ?></h2>
 	<?php global $msg; $msg->printAll(); $_base_href;?>
-
+	<?php
+	// Section added to accomodate Gamify custom feedback
+	// displayed when a badge is issued while working in ATutor
+	if(isset($_GET['fb'])){
+	    $msg->printNoLookupFeedback($_GET['fb']) ;
+	}
+	?>
 	<?php if (count($this->sub_level_pages) > 0): ?>
 
 <!-- <div id="topnavlistcontainer">

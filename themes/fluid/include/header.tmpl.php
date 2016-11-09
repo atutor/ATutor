@@ -313,3 +313,10 @@ jQuery(document).ready(function () {
 
 	<a name="content"></a>
 	<?php global $msg; $msg->printAll(); ?>
+	<?php
+	// Section added to accomodate Gamify custom feedback
+	// displayed when a badge is issued while working in ATutor
+	if(isset($_GET['fb'])){
+	    $msg->printNoLookupFeedback($_GET['fb']) ;
+	}
+	?>
