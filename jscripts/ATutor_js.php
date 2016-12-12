@@ -304,7 +304,7 @@ ATutor.course = ATutor.course || {};
     ** Switch between hide and show submenu
     *****/
         // Get initial subnavbar toggle state
-        var initialSubNav = ($.cookie('showSubNav') === "expanded") ? "expanded" : "collapsed";
+ /*       var initialSubNav = ($.cookie('showSubNav') === "expanded") ? "expanded" : "collapsed";
         if(initialSubNav === 'collapsed'){
             $('#showsubnav').css('display', 'none');
             $('#hidesubnav').css('display', 'inline');
@@ -355,7 +355,7 @@ ATutor.course = ATutor.course || {};
                 }
             }
         });
-        
+    */    
         
         // Inject aria-live update when sidebar opened/closed for screen readers
         $("#menutoggle").click(function() {
