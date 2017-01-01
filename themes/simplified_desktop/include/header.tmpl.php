@@ -325,17 +325,17 @@ global $system_courses, $_custom_css, $db, $_base_path, $contentManager;
 					<?php if ($this->sequence_links['resume']): ?>
 						
 						<li class="rectangle2 arrow forward">
-							<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.htmlspecialchars($this->sequence_links['resume']['title']); ?>"><?php echo _AT('resume'); ?></a>
+							<a href="<?php echo $this->sequence_links['resume']['url']; ?>" class="previous-next resume" title="<?php echo _AT('resume').': '.$this->sequence_links['resume']['title']; ?>"><?php echo _AT('resume'); ?></a>
 						</li>
 					<?php else:
 						if ($this->sequence_links['previous']): ?>
 						<li class="rectangle2 arrow back">
-							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. htmlspecialchars($this->sequence_links['previous']['title']); ?>"> <?php echo _AT('previous'); ?> </a>
+							<a  href="<?php echo $this->sequence_links['previous']['url']; ?>" class="arrow back" title="<?php echo _AT('previous_topic').': '. $this->sequence_links['previous']['title']; ?>"> <?php echo _AT('previous'); ?> </a>
 						</li>
 					<?php endif;
 						if ($this->sequence_links['next']): ?>		
 						<li class=" rectangle2 arrow forward">
-							<a  href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.htmlspecialchars($this->sequence_links['next']['title']); ?>"> <?php echo _AT('next'); ?></a>
+							<a  href="<?php echo $this->sequence_links['next']['url']; ?>" class=""  title="<?php echo _AT('next_topic').': '.$this->sequence_links['next']['title']; ?>"> <?php echo _AT('next'); ?></a>
 						</li>
 					<?php endif; ?>
 				<?php endif; ?>

@@ -733,7 +733,7 @@ class ContentManager
 		}
 
 		if (!$cid && $_SESSION['s_cid']) {
-			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
+			$resume['title'] = htmlspecialchars($this->_menu_info[$_SESSION['s_cid']]['title']);
 
 			if ($_SESSION['prefs']['PREF_NUMBERING']) {
 				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
@@ -745,8 +745,10 @@ class ContentManager
 		} else {
 			if ($cid) {
 				$previous = $this->getPreviousContent($cid);
+				$previous['title'] = htmlspecialchars($previous['title']);
 			}
 			$next = $this->getNextContent($cid ? $cid : 0);
+			$next['title'] = htmlspecialchars($next['title']);
 
 			if ($_SESSION['prefs']['PREF_NUMBERING']) {
 				$previous['title'] = $this->getNumbering($previous['content_id']).' '.$previous['title'];
