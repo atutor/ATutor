@@ -68,7 +68,7 @@ $sql = "SELECT * from %scontent WHERE content_id = '%s'";
 $rows_content = queryDB($sql, array(TABLE_PREFIX, $hidden_vars['cid']));
 
 foreach($rows_content as $row){
-	$title = $row['title'];
+	$title = htmlspecialchars($row['title']);
 }
 
 $msg->addConfirm(array('DELETE', $title),  $hidden_vars);

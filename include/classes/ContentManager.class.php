@@ -733,7 +733,7 @@ class ContentManager
 		}
 
 		if (!$cid && $_SESSION['s_cid']) {
-			$resume['title'] = $this->_menu_info[$_SESSION['s_cid']]['title'];
+			$resume['title'] = htmlspecialchars($this->_menu_info[$_SESSION['s_cid']]['title']);
 
 			if ($_SESSION['prefs']['PREF_NUMBERING']) {
 				$resume['title'] = $this->getNumbering($_SESSION['s_cid']).' ' . $resume['title'];
@@ -745,8 +745,10 @@ class ContentManager
 		} else {
 			if ($cid) {
 				$previous = $this->getPreviousContent($cid);
+				$previous['title'] = htmlspecialchars($previous['title']);
 			}
 			$next = $this->getNextContent($cid ? $cid : 0);
+			$next['title'] = htmlspecialchars($next['title']);
 
 			if ($_SESSION['prefs']['PREF_NUMBERING']) {
 				$previous['title'] = $this->getNumbering($previous['content_id']).' '.$previous['title'];
@@ -969,6 +971,7 @@ class ContentManager
 				//tests do not have content id
 				$content['content_id'] = isset($content['content_id']) ? $content['content_id'] : '';
 				$content['parent_content_id'] = $parent_id;
+				$content['title'] = htmlspecialchars($content['title']);
 
 				if (!$ignore_state) {
 					$link .= '<a name="menu'.$content['content_id'].'"></a>';
@@ -986,16 +989,14 @@ class ContentManager
 					//content test extension  @harris
 					//if this is a test link.
 					if (isset($content['test_id'])){
-						$title_n_alt =  ContentManager::cleanOutput($content['title']);
 						//$in_link = 'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].SEP.'in_cid='.$content['parent_content_id'];
 						$in_link = $_base_href.'mods/_standard/tests/test_intro.php?tid='.$content['test_id'].SEP.'in_cid='.$content['parent_content_id'];
-						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$title_n_alt.'" alt="'.$title_n_alt.'" />';
+						$img_link = ' <img src="'.$_base_path.'images/check.gif" title="'.$content['title'].'" alt="'.$content['title'].'" />';
 					} else {
 						$in_link = 'content.php?cid='.$content['content_id'];
 						$img_link = '';
 					}
 					
-					$full_title = ContentManager::cleanOutput($content['title']);
 					//$link .= $img_link . ' <a href="'.$_base_path.htmlentities_utf8(url_rewrite($in_link)).'" title="';
 					$link .= $img_link . ' <a href="'.$_base_path.htmlentities_utf8($in_link).'" title="';
 					$base_title_length = 29;
@@ -1010,13 +1011,13 @@ class ContentManager
 					}
 					
 					if (isset($content['test_id'])) {
-						$link .= ContentManager::cleanOutput($content['title']);
+						$link .= $content['title'];
 					} else {
-						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.ContentManager::cleanOutput($full_title).'">';
+						$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$content['title'].'">';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						$link .= '&nbsp;'.ContentManager::cleanOutput($content['title']).'</span>';
+						$link .= '&nbsp;'.$content['title'].'</span>';
 					}
 					
 					$link .= '</a>';
@@ -1043,7 +1044,6 @@ class ContentManager
 
 					if ($content['content_type'] == CONTENT_TYPE_CONTENT || $content['content_type'] == CONTENT_TYPE_WEBLINK)
 					{ // current content page
-						$full_title = $content['title'];
 						$link .= '<a href="'.$_my_uri.'"><img src="'.$_base_path.'images/clr.gif" alt="'._AT('you_are_here').': ';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
@@ -1052,7 +1052,7 @@ class ContentManager
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
 							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
 						}
-						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$full_title.'">';
+						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$content['title'].'">';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
@@ -1065,9 +1065,8 @@ class ContentManager
 					}
 					else
 					{ // nodes with content type "CONTENT_TYPE_FOLDER"
-						$full_title = ContentManager::cleanOutput($content['title']);
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
-							$link .= '<a href="'.$_base_path."mods/_core/editor/edit_content_folder.php?cid=".$content['content_id'].'" title="'.ContentManager::cleanOutput($full_title). _AT('click_edit').'">'."\n";
+							$link .= '<a href="'.$_base_path."mods/_core/editor/edit_content_folder.php?cid=".$content['content_id'].'" title="'.$content['title']. _AT('click_edit').'">'."\n";
 						}
 						else {
 							$link .= '<span style="cursor:pointer" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); ">'."\n";
@@ -1077,13 +1076,13 @@ class ContentManager
 							$content['title'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
 						}
 						if (isset($content['test_id']))
-							$link .= ContentManager::cleanOutput($content['title']);
+							$link .= $content['title'];
 						else
-							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.ContentManager::cleanOutput($full_title).'">';
+							$link .= '<span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$content['title'].'">';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						  $link .= '&nbsp;'.ContentManager::cleanOutput($content['title']).'</span>';
+						  $link .= '&nbsp;'.$content['title'].'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
 							$link .= '</a>'."\n";
@@ -1142,7 +1141,7 @@ class ContentManager
 							
 						} else {
 							echo '<a href="'.$_my_uri.'collapse='.$content['content_id'].'">'."\n";
-							echo '<img src="'.AT_BASE_HREF.$this->tree_collapse_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'"  width="16" height="16" title="'._AT('collapse').' '.ContentManager::cleanOutput($content['title']).'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
+							echo '<img src="'.AT_BASE_HREF.$this->tree_collapse_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('collapse').'"  width="16" height="16" title="'._AT('collapse').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />'."\n";
 							echo '</a>'."\n";
 						}
 					} else {
@@ -1151,7 +1150,7 @@ class ContentManager
 							
 						} else {
 							echo '<a href="'.$_my_uri.'expand='.$content['content_id'].'">'."\n";
-							echo '<img src="'.AT_BASE_HREF.$this->tree_expand_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" width="16" height="16" 	title="'._AT('expand').' '.ContentManager::cleanOutput($content['title']).'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
+							echo '<img src="'.AT_BASE_HREF.$this->tree_expand_icon.'" id="tree_icon'.$content['content_id'].$from.'" alt="'._AT('expand').'" width="16" height="16" 	title="'._AT('expand').' '.$content['title'].'" class="img-size-tree" onclick="javascript: ATutor.course.toggleFolder(\''.$content['content_id'].$from.'\', \''._AT('expand').'\', \''._AT('collapse').'\', '.$this->course_id.'); " />';
 							echo '</a>'."\n";
 						}
 					}
@@ -1181,7 +1180,7 @@ class ContentManager
 				}
 
 				
-				echo htmlspecialchars_decode($link);
+				echo $link;
 				
 				echo "\n<br /></span>\n\n";
 				
@@ -1230,6 +1229,7 @@ class ContentManager
 				}
 
 				$link = $buttons = '';
+				$content['title'] = htmlspecialchars($content['title']);
 
 				echo '<tr>'."\n";
 				
@@ -1244,17 +1244,17 @@ class ContentManager
 				
 					$buttons = '<td>'."\n".
 					           '   <small>'."\n".
-					           '      <input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', ContentManager::cleanOutput($content['title'])).'" title="'._AT('before_topic', ContentManager::cleanOutput($content['title'])).'" style="height:1.5em; width:1.9em;" />'."\n";
+					           '      <input type="image" name="move['.$parent_id.'_'.$content['ordering'].']" src="'.$_base_path.'images/before.gif" alt="'._AT('before_topic', $content['title']).'" title="'._AT('before_topic', $content['title']).'" style="height:1.5em; width:1.9em;" />'."\n";
 
 					if ($current_num + 1 == count($top_level))
-						$buttons .= '      <input type="image" name="move['.$parent_id.'_'.($content['ordering']+1).']" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', ContentManager::cleanOutput($content['title'])).'" title="'._AT('after_topic', ContentManager::cleanOutput($content['title'])).'" style="height:1.5em; width:1.9em;" />'."\n";
+						$buttons .= '      <input type="image" name="move['.$parent_id.'_'.($content['ordering']+1).']" src="'.$_base_path.'images/after.gif" alt="'._AT('after_topic', $content['title']).'" title="'._AT('after_topic', $content['title']).'" style="height:1.5em; width:1.9em;" />'."\n";
 					
 					$buttons .= '   </small>'."\n".
 					           '</td>'."\n".
 					           '<td>';
 					
 					if ($content['content_type'] == CONTENT_TYPE_FOLDER)
-						$buttons .= '<input type="image" name="move['.$content['content_id'].'_1]" src="'.$_base_path.'images/child_of.gif" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', ContentManager::cleanOutput($content['title'])).'" title="'._AT('child_of', ContentManager::cleanOutput($content['title'])).'" />';
+						$buttons .= '<input type="image" name="move['.$content['content_id'].'_1]" src="'.$_base_path.'images/child_of.gif" style="height:1.25em; width:1.7em;" alt="'._AT('child_of', $content['title']).'" title="'._AT('child_of', $content['title']).'" />';
 					else
 						$buttons .= '&nbsp;';
 						
@@ -1279,7 +1279,7 @@ class ContentManager
 				{
 					$link .= '<img src="'.$_base_path.'images/folder.gif" />';
 				}
-				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.ContentManager::cleanOutput($content['title']).'</label>'."\n";
+				$link .= '&nbsp;<label for="r'.$content['content_id'].'">'.$content['title'].'</label>'."\n";
 
 				if ( is_array($menu[$content['content_id']]) && !empty($menu[$content['content_id']]) ) {
 					/* has children */
