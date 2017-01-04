@@ -161,6 +161,9 @@ $sql = "SELECT banner FROM %scourses WHERE course_id=%d";
 $row = queryDB($sql, array(TABLE_PREFIX, $course_id), TRUE);
 
 if ($row['banner'] != '') {
+    $row['banner'] = str_replace("\\n","",$row['banner']);
+    $row['banner'] = str_replace("\\r","",$row['banner']);
+    $row['banner'] = stripslashes($row['banner']);
 	$savant->assign('banner', AT_print($row['banner'], 'courses.banner'));
 } else {
 	$savant->assign('banner', '');
