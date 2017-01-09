@@ -27,6 +27,8 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	check_csrf_token();
+
 	$missing_fields = array();
 
 	/* email validation */

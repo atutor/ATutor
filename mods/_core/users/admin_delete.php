@@ -147,7 +147,8 @@ function delete_user($id) {
 $ids = explode(',', $_REQUEST['id']);
 
 if (isset($_POST['submit_yes'])) {
-	
+	check_csrf_token();
+
 	foreach($ids as $id) {
 		delete_user(intval($id));
 	}
@@ -174,6 +175,7 @@ $names = get_login($ids);
 $names_html = '<ul>'.html_get_list($names).'</ul>';
 $hidden_vars['id'] =  implode(',', array_keys($names));
 $hidden_vars['ml'] = intval($_REQUEST['ml']);
+$hidden_vars['csrftoken'] = $_SESSION['token'];
 
 $confirm = array('DELETE_USER', $names_html);
 $msg->addConfirm($confirm, $hidden_vars);

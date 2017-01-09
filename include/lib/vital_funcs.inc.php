@@ -681,6 +681,19 @@ function check_referer(){
     }
 }
 /**
+ * Check if token supplied in a POST request corresponds to the token in memory to prevent CSRF access
+ * @access public
+ * @return error message access denied
+ */
+function check_csrf_token() {
+	global $msg;
+	if($_POST['csrftoken'] != $_SESSION['token']){
+		$msg->addError('ACCESS_DENIED');
+		header('Location: '.AT_BASE_HREF.'index.php');
+		exit;
+	}
+}
+/**
  * Check if the give theme is a subsite customized theme. Return true if it is, otherwise, return false
  * @access public
  * @param string $theme_name

@@ -21,6 +21,8 @@ if ($_POST['cancel']) {
 	header('Location: users.php#feedback');
 	exit;
 } else if ($_POST['submit']) {
+	check_csrf_token();
+
 	$missing_fields = array();
 
 	$_POST['subject'] = trim($_POST['subject']);

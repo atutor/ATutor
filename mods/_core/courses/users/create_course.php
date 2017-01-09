@@ -68,12 +68,9 @@ if (isset($_POST['cancel'])) {
 	header('Location: index.php');
 	exit;
 }else if (isset($_POST['form_course']) && $_POST['submit'] != '') {
+	check_csrf_token();
+
 	$_POST['instructor'] = $_SESSION['member_id'];
-    if($_POST['csrftoken'] != $_SESSION['token']){
-        $msg->addError('ACCESS_DENIED');
-        header('Location: '.AT_BASE_HREF.'index.php');
-        exit;
-    } 
 	$errors = add_update_course($_POST);
 
 	if ($errors !== FALSE) {

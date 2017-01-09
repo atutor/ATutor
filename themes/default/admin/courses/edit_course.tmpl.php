@@ -4,6 +4,7 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 ?>
 <?php //echo _AT('available_immediately'); ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="course_form" enctype="multipart/form-data">
+	<input type="hidden" name="csrftoken"  value="<?php echo $_SESSION['token'];?>" />
 	<input type="hidden" name="form_course" value="true" />
 	<input type="hidden" name="MAX_FILE_SIZE" value="<?php echo $_config['prof_pic_max_file_size']; ?>" />
 	<input type="hidden" name="course" value="<?php echo $this->course; ?>" />
@@ -12,7 +13,6 @@ global $languageManager,  $_config, $MaxCourseSize, $MaxFileSize;
 	<input type="hidden" name="show_courses" value="<?php echo intval($_GET['show_courses']); ?>" />
 	<input type="hidden" name="current_cat" value="<?php echo intval($_GET['current_cat']); ?>" />
 	<input type="submit" name="submit" style="display:none;"/>
-	<input type="hidden" name="csrftoken"  value="<?php echo $_SESSION['token'];?>" />
 
 <div class="input-form">
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('properties'); ?></legend>

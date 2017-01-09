@@ -22,6 +22,8 @@ if (isset($_POST['submit_no'])) {
 	header('Location: ../../courses/admin/courses.php');
 	exit;
 } else if (isset($_POST['step']) && ($_POST['step'] == 2) && isset($_POST['submit_yes'])) {
+	check_csrf_token();
+
 	require_once(AT_INCLUDE_PATH.'../mods/_core/file_manager/filemanager.inc.php');
 	require(AT_INCLUDE_PATH.'../mods/_core/properties/lib/delete_course.inc.php');
 
@@ -43,6 +45,7 @@ if (!isset($_POST['step'])) {
 } else if ($_POST['step'] == 1) {
 	$hidden_vars['step']   = 2;
 	$hidden_vars['course'] = $course;
+	$hidden_vars['csrftoken'] = $_SESSION['token'];
 	$msg->addConfirm(array('DELETE_COURSE_2', $system_courses[$course]['title']), $hidden_vars);
 	$msg->printConfirm();
 }

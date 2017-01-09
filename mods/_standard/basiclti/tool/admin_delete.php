@@ -23,6 +23,7 @@ if (isset($_POST['submit_no'])) {
         header('Location: ../index_admin.php');
         exit;
 } else if (isset($_POST['submit_yes'])) {
+        check_csrf_token();
 
 		$sql = "DELETE FROM %sbasiclti_tools WHERE id =%d";
 	    $result = queryDB($sql, array(TABLE_PREFIX, $tool));
@@ -38,6 +39,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 if (!isset($_POST['step'])) {
         $hidden_vars['step']   = 2;
         $hidden_vars['id'] = $tool;
+        $hidden_vars['csrftoken'] = $_SESSION['token'];
         $msg->addConfirm(array('DELETE_TOOL_1', $row['title']), $hidden_vars);
         $msg->printConfirm();
 } 

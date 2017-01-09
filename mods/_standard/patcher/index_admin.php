@@ -130,6 +130,7 @@ if ($_POST['install_upload'] && $_POST['uploading'])
 // Installation process
 if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_version"]))
 {
+	check_csrf_token();
 	
 	if (isset($_POST['id'])) $id=$_POST['id'];
 	else $id = $_REQUEST['id'];
@@ -309,6 +310,7 @@ $msg->printAll();
 ?>
 
 <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
+<input type="hidden" name="csrftoken" value="<?php echo $_SESSION['token'];?>" />
 <div class="input-form">
 
 <table class="data" summary="" style="width: 100%">
