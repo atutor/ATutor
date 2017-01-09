@@ -1,5 +1,6 @@
 
-<form name="form" method="get" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<form name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+<input type="hidden" name="csrftoken" value="<?php echo $_SESSION['token'];?>" />
 <table class="data" summary="Table listing instructor requests">
 <thead>
 <tr>

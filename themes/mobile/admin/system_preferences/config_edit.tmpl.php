@@ -1,6 +1,7 @@
 <?php global $_config, $languageManager, $_config_defaults, $stripslashes;?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+<input type="hidden" name="csrftoken" value="<?php echo $_SESSION['token'];?>" />
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="sitename"><?php echo _AT('site_name'); ?></label><br />

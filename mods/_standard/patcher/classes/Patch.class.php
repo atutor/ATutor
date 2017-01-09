@@ -302,6 +302,7 @@ class Patch {
 			}
 
 			$notes = '<form action="'. $_SERVER['PHP_SELF'].'?id='.$id.'&who='. $who .'" method="post" name="skip_files_modified">
+		  <input type="hidden" name="csrftoken"  value="'.$_SESSION['token'].'" />
 		  <div class="row buttons">
 				<input type="submit" name="yes" value="'._AT('continue').'" accesskey="y" />
 				<input type="submit" name="no" value="'. _AT('cancel'). '" />
@@ -337,6 +338,7 @@ class Patch {
 				
 			$notes = '
 			  <form action="'. $_SERVER['PHP_SELF'].'?id='.$_POST['id'].'&who='. $_POST['who'] .'" method="post" name="skip_files_modified">
+			  <input type="hidden" name="csrftoken"  value="'.$_SESSION['token'].'" />
 			  <div class="row buttons">
 					<input type="submit" name="ignore_version" value="'._AT('yes').'" accesskey="y" />
 					<input type="submit" name="not_ignore_version" value="'. _AT('no'). '" />
@@ -453,6 +455,7 @@ class Patch {
 			else
 				$notes = '
 			  <form action="'. $_SERVER['PHP_SELF'].'?id='.$_POST['id'].'&who='. $_POST['who'] .'" method="post" name="skip_files_modified">
+			  <input type="hidden" name="csrftoken"  value="'.$_SESSION['token'].'" />
 			  <div class="row buttons">
 					<input type="submit" name="yes" value="'._AT('yes').'" accesskey="y" />
 					<input type="submit" name="no" value="'. _AT('no'). '" />

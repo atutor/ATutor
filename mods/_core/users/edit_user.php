@@ -28,6 +28,8 @@ if (isset($_POST['cancel'])) {
 }
 
 if (isset($_POST['submit'])) {
+	check_csrf_token();
+
 	$missing_fields = array();
 
 	$id = intval($_POST['id']);

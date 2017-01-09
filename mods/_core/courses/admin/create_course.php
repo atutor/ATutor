@@ -23,6 +23,8 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.AT_BASE_HREF.'mods/_core/courses/admin/courses.php');
 	exit;
 } else if (isset($_POST['form_course'])) {
+	check_csrf_token();
+
 	$errors = add_update_course($_POST, TRUE);
 	if ($errors !== FALSE) {
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');

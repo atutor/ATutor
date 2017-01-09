@@ -20,6 +20,7 @@ if (isset($_POST['cancel'])) {
 	header('Location: '.AT_BASE_HREF.'mods/_core/users/admins/index.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	check_csrf_token();
 	/* password check: password is verified front end by javascript. here is to handle the errors from javascript */
 	if ($_POST['password_error'] <> "")
 	{
