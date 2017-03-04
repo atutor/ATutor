@@ -1,5 +1,5 @@
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?lang_code=' . $_GET['lang_code']; ?>">
+<form method="post" action="<?php echo $_SERVER['PHP_SELF'] . '?lang_code=' . urlencode($_GET['lang_code']); ?>">
 
 <input type="hidden" name="old_code" value="<?php echo $this->lang->getCode(); ?>" />
 
