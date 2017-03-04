@@ -22,6 +22,8 @@ if (isset($_POST['cancel'])) {
 	header('Location: ../../courses/admin/courses.php');
 	exit;
 } else if (isset($_POST['submit'])) {
+	check_csrf_token();
+
 	require(AT_INCLUDE_PATH.'../mods/_core/courses/lib/course.inc.php');
 	$errors = add_update_course($_POST, TRUE);
 

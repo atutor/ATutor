@@ -234,6 +234,8 @@ if (isset($_POST['submit_no'])) {
 	exit;
 }
 else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
+	check_csrf_token();
+
 	//Unenroll student from course
 	unenroll($_POST['id']);
 
@@ -241,6 +243,8 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
 	header('Location: index.php?current_tab=4'.SEP.'course_id='.$course_id);
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='enroll' ) {
+	check_csrf_token();
+
 	//Enroll student in course
 	enroll($_POST['id']);
 
@@ -248,6 +252,8 @@ else if (isset($_POST['submit_yes']) && $_POST['func'] =='unenroll' ) {
 	header('Location: index.php?current_tab=0'.SEP.'course_id='.$course_id);
 	exit;
 } else if (isset($_POST['submit_yes']) && $_POST['func'] =='alumni' ) {
+	check_csrf_token();
+
 	//Mark student as course alumnus
 	alumni($_POST['id']);
 	
@@ -289,6 +295,7 @@ $hidden_vars['func']     = $_GET['func'];
 $hidden_vars['current_tab'] = $_GET['current_tab'];
 $hidden_vars['gid']		 = abs($_GET['gid']);
 $hidden_vars['course_id'] = $course_id;
+$hidden_vars['csrftoken'] = $_SESSION['token'];
 //get usernames of users about to be edited
 $str = get_usernames($member_ids);
 

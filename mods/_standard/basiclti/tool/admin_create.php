@@ -35,6 +35,7 @@ if (isset($_POST['cancel'])) {
         header('Location: '.AT_BASE_HREF.'mods/_standard/basiclti/index_admin.php');
         exit;
 } else if (isset($_POST['form_basiclti'])) {
+    check_csrf_token();
 
     if ( at_form_validate($blti_admin_form, $msg) ) {
 
@@ -65,6 +66,7 @@ $msg->printAll();
 
 ?>
 <form method="post" action="<?php echo $_SERVER['PHP_SELF'];  ?>" name="basiclti_form" enctype="multipart/form-data">
+  <input type="hidden" name="csrftoken" value="<?php echo $_SESSION['token'];?>" />
   <input type="hidden" name="form_basiclti" value="true" />
   <div class="input-form">
     <fieldset class="group_form"><legend class="group_form"><?php echo _AT('properties'); ?></legend>

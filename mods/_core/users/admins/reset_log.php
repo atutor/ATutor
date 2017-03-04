@@ -22,6 +22,7 @@ if (isset($_POST['submit_no'])) {
 	header('Location: ./log.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
+	check_csrf_token();
 	//clean up the db
 	$sql    = "DELETE FROM %sadmin_log";
 	$result = queryDB($sql, array(TABLE_PREFIX));
@@ -37,6 +38,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 
 //print confirmation
 $hidden_vars['all'] = TRUE;
+$hidden_vars['csrftoken'] = $_SESSION['token'];
 
 $confirm = array('RESET_ADMIN_LOG', $_SERVER['PHP_SELF']);
 $msg->addConfirm($confirm, $hidden_vars);

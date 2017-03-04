@@ -18,13 +18,14 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require(AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_USERS);
 
-if (isset($_GET['deny']) && isset($_GET['id'])) {
-	header('Location: admin_deny.php?id='.$_GET['id']);
+if (isset($_POST['deny']) && isset($_POST['id'])) {
+	header('Location: admin_deny.php?id='.$_POST['id']);
 	exit;
 
-} else if (isset($_GET['approve']) && isset($_GET['id'])) {
-   
-	$id = intval($_GET['id']);
+} else if (isset($_POST['approve']) && isset($_POST['id'])) {
+	check_csrf_token();
+
+	$id = intval($_POST['id']);
 
 	$sql = 'DELETE FROM %sinstructor_approvals WHERE member_id=%d';
 	$result = queryDB($sql, array(TABLE_PREFIX, $id));
@@ -69,7 +70,7 @@ if (isset($_GET['deny']) && isset($_GET['id'])) {
 	}
 
 	$msg->addFeedback('PROFILE_UPDATED_ADMIN');
-} else if (!empty($_GET) && !$_GET['submit']) {
+} else if (!empty($_POST) && !$_POST['submit']) {
 	$msg->addError('NO_ITEM_SELECTED');
 }
 

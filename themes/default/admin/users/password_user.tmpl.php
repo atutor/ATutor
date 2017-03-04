@@ -1,5 +1,6 @@
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" name="form">
+	<input type="hidden" name="csrftoken" value="<?php echo $_SESSION['token'];?>" />
 	<input type="hidden" name="id" value="<?php echo $this->id; ?>" />
 	<input type="hidden" name="form_password_hidden" value="" />
 	<input type="hidden" name="password_error" value="" />

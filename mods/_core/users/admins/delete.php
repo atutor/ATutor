@@ -23,6 +23,8 @@ if (isset($_POST['submit_no'])) {
 	header('Location: index.php');
 	exit;
 } else if (isset($_POST['submit_yes'])) {
+	check_csrf_token();
+
 	$_POST['login'] = $addslashes($_POST['login']);
 
 	$sql = "DELETE FROM %sadmins WHERE login='%s'";
@@ -52,6 +54,7 @@ if(count($row_admins) == 0){
 	echo _AT('no_user_found');
 } else {
 	$hidden_vars['login'] = $_GET['login'];
+	$hidden_vars['csrftoken'] = $_SESSION['token'];
 	$confirm = array('DELETE_ADMIN', $row_admins['login']);
 	$msg->addConfirm($confirm, $hidden_vars);
 	$msg->printConfirm();
