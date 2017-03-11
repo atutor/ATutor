@@ -423,6 +423,7 @@ else
 		<div class="row"><?php echo _AT("upload_patch"); ?></div>
 
 		<div class="row">
+		    <input type="hidden" name="csrftoken" value="<?php echo $_SESSION['token'];?>" />
 			<input type="hidden" name="MAX_FILE_SIZE" value="52428800" />
 			<input type="file" name="patchfile"  size="50" />
 		</div>
