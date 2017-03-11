@@ -25,7 +25,7 @@ if (isset($_POST['cancel'])) {
     exit;
 } else if ($_POST['submit']) {
     $_POST['feedback']          = trim($_POST['feedback']);
-    $_POST['question']          = trim($_POST['question']);
+    $_POST['question']          = htmlspecialchars(trim($_POST['question']), ENT_QUOTES);
     $_POST['category_id']       = intval($_POST['category_id']);
     $_POST['properties']        = intval($_POST['properties']);
     $_POST['remedial_content']  = trim($_POST['remedial_content']);
