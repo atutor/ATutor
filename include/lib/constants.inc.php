@@ -399,7 +399,7 @@ $_field_formatting['tests.instructions']		= AT_FORMAT_ALL;
 
 $_field_formatting['themes.title']				= AT_FORMAT_NONE;
 
-$_field_formatting['tests_answers.answer']		= AT_FORMAT_NONE;
+$_field_formatting['tests_answers.answer']		= AT_FORMAT_QUOTES;
 $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
 //$_field_formatting['tests_questions.*']			= AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
 $_field_formatting['tests_questions.list']			= AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;

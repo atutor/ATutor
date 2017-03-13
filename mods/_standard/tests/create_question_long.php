@@ -24,11 +24,11 @@ if (isset($_POST['cancel'])) {
     header('Location: question_db.php');
     exit;
 } else if ($_POST['submit']) {
-    $_POST['feedback']          = trim($_POST['feedback']);
+    $_POST['feedback']          = htmlspecialchars(trim($_POST['feedback']), ENT_QUOTES);
     $_POST['question']          = htmlspecialchars(trim($_POST['question']), ENT_QUOTES);
     $_POST['category_id']       = intval($_POST['category_id']);
     $_POST['properties']        = intval($_POST['properties']);
-    $_POST['remedial_content']  = trim($_POST['remedial_content']);
+    $_POST['remedial_content']  = htmlspecialchars(trim($_POST['remedial_content']), ENT_QUOTES);
 
     if ($_POST['question'] == ''){
         $msg->addError(array('EMPTY_FIELDS', _AT('question')));
