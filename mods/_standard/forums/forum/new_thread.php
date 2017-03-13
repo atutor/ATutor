@@ -164,7 +164,7 @@ if (isset($_POST['cancel'])) {
 				$mail->FromName = $_config['site_name'];
 				$mail->From     = $_config['contact_email'];
 				$mail->Subject = _AT('thread_notify1').': '.$_POST['parent_name'];
-				$mail->Body    = $body;
+				$mail->Body    = htmlspecialchars_decode($body, ENT_QUOTES)."n";
 
 				if(!$mail->Send()) {
 					$msg->addError('SENDING_ERROR');
