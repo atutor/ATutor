@@ -154,17 +154,17 @@ if (isset($_POST['cancel'])) {
 			foreach ($subscriber_email_list as $subscriber){
 				$mail = new ATutorMailer;
 				$mail->AddAddress($subscriber['email'], get_display_name($subscriber['member_id']));
-				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), $_POST['parent_name'],  AT_BASE_HREF.'mods/_standard/forums/forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['parent_id']);
+				$body = _AT('forum_new_submsg', $_SESSION['course_title'],  get_forum_name($_POST['fid']), stripslashes($_POST['parent_name']),  AT_BASE_HREF.'mods/_standard/forums/forum/view.php?fid='.$_POST['fid'].SEP.'pid='.$_POST['parent_id']);
 				$body .= "\n----------------------------------------------\n";
 				$body .= _AT('course').': '.$_SESSION['course_title']."\n";
 				$body .= _AT('forum').': '.get_forum_name($_POST['fid'])."\n";
-				$body .= _AT('thread').': '.$_POST['parent_name']."\n";
+				_AT('thread').': '.stripslashes($_POST['parent_name'])."\n";
 				$body .= _AT('posted_by').": ".get_display_name($_SESSION['member_id'])."\n";
 				$body .= $_POST['body']."\n";
 				$mail->FromName = $_config['site_name'];
 				$mail->From     = $_config['contact_email'];
-				$mail->Subject = _AT('thread_notify1').': '.$_POST['parent_name'];
-				$mail->Body    = htmlspecialchars_decode($body, ENT_QUOTES)."n";
+				$mail->Subject = _AT('thread_notify1').': '.htmlspecialchars_decode(stripslashes($_POST['parent_name']));
+				$mail->Body    = htmlspecialchars_decode($body, ENT_QUOTES);
 
 				if(!$mail->Send()) {
 					$msg->addError('SENDING_ERROR');
