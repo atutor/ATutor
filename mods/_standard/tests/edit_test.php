@@ -28,10 +28,10 @@ if (isset($_POST['cancel'])) {
     exit;
 } else if (isset($_POST['submit'])) {
     $missing_fields             = array();
-    $_POST['title']                = trim($_POST['title']);
-    $_POST['description']  = trim($_POST['description']);
-    $_POST['passfeedback']  = trim($_POST['passfeedback']);
-    $_POST['failfeedback']  = trim($_POST['failfeedback']);
+    $_POST['title']                = htmlspecialchars(trim($_POST['title'], ENT_QUOTES));
+    $_POST['description']  = htmlspecialchars(trim($_POST['description'], ENT_QUOTES));
+    $_POST['passfeedback']  = htmlspecialchars(trim($_POST['passfeedback'], ENT_QUOTES));
+    $_POST['failfeedback']  = htmlspecialchars(trim($_POST['failfeedback'], ENT_QUOTES));
     $_POST['num_questions']        = intval($_POST['num_questions']);
     $_POST['passpercent']    = intval($_POST['passpercent']);
     $_POST['passscore']    = intval($_POST['passscore']);
@@ -64,7 +64,7 @@ if (isset($_POST['cancel'])) {
     }
 
 
-    $_POST['instructions'] = trim($_POST['instructions']);
+    $_POST['instructions'] = htmlspecialchars(trim($_POST['instructions'], ENT_QUOTES));
 
     if ($_POST['title'] == '') {
         $missing_fields[] = _AT('title');
@@ -369,12 +369,12 @@ $msg->printErrors();
 
     <div class="row">
         <label for="passfeedback"><?php echo _AT('pass_feedback'); ?></label><br />
-        <textarea name="passfeedback" cols="35" rows="1" id="passfeedback"><?php echo htmlspecialchars($_POST['passfeedback']); ?></textarea>
+        <textarea name="passfeedback" cols="35" rows="1" id="passfeedback"><?php echo htmlspecialchars_decode($_POST['passfeedback']); ?></textarea>
     </div>
 
     <div class="row">
         <label for="failfeedback"><?php echo _AT('fail_feedback'); ?></label><br />
-        <textarea name="failfeedback" cols="35" rows="1" id="failfeedback"><?php echo htmlspecialchars($_POST['failfeedback']); ?></textarea>
+        <textarea name="failfeedback" cols="35" rows="1" id="failfeedback"><?php echo htmlspecialchars_decode($_POST['failfeedback']); ?></textarea>
     </div>
 
     <div class="row">
@@ -484,7 +484,7 @@ $msg->printErrors();
 
     <div class="row">
         <label for="inst"><?php echo _AT('instructions'); ?></label><br />
-        <textarea name="instructions" cols="35" rows="3" id="inst"><?php echo htmlspecialchars($_POST['instructions']); ?></textarea>
+        <textarea name="instructions" cols="35" rows="3" id="inst"><?php echo htmlspecialchars_decode($_POST['instructions']); ?></textarea>
     </div>
 
 
