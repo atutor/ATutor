@@ -136,10 +136,10 @@ foreach($rows_questions as $row){
                 // display pass feedback for passed students
                 elseif (($passscore<>0 && $my_score>=$passscore) ||
                     ($passpercent<>0 && ($my_score/$this_total*100)>=$passpercent))
-                    echo '<span style="color:green">' . htmlspecialchars($passfeedback, ENT_QUOTES) . '</span>';
+                    echo '<span style="color:green">' . htmlspecialchars_decode($passfeedback, ENT_QUOTES) . '</span>';
                 // otherwise, display fail feedback
                 elseif ($passscore<>0)
-                    echo '<span style="color:red">' . htmlspecialchars($failfeedback, ENT_QUOTES) . '</span>'; 
+                    echo '<span style="color:red">' . htmlspecialchars_decode($failfeedback, ENT_QUOTES) . '</span>'; 
             ?>
         </h3>
     </div>
@@ -148,7 +148,7 @@ foreach($rows_questions as $row){
         <div style="background-color: #f3f3f3; padding: 5px 10px; margin: 0px; border-top: 1px solid">
             <strong><?php echo _AT('instructions'); ?></strong>
         </div>
-        <div class="row" style="padding-bottom: 20px"><?php echo $row['instructions']; ?></div>
+        <div class="row" style="padding-bottom: 20px"><?php echo htmlspecialchars_decode($row['instructions']); ?></div>
     <?php endif; ?>
 
     <?php
@@ -175,7 +175,7 @@ foreach($rows_questions as $row){
                 </a>
             </legend>
             <div class="row">
-                <?php echo $row['remedial_content']; ?>
+                <?php echo htmlspecialchars_decode($row['remedial_content']); ?>
             </div>
         </fieldset>
         <?php
