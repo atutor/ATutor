@@ -1,4 +1,4 @@
-<?php global $_config; $_config_defaults;?>
+<?php global $_config, $_config_defaults;?>
 
 <div class="admin_container"> 
 
