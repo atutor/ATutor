@@ -274,7 +274,7 @@ function searchFriends($name, $searchMyFriends = false, $offset=-1){
 		if ($piece == ''){
 			continue;
 		}
-
+                $piece = mysql_escape_string($piece);
 		//if there are 2 double quotes around a search phrase, then search it as if it's "first_name last_name".
 		//else, match any contact in the search phrase.
 		if ($exact_match){
