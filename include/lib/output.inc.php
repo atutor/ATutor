@@ -700,14 +700,14 @@ function embed_media($text) {
 
     // youtube videos
     if (is_mobile_device() && get_mobile_device_type() == BLACKBERRY_DEVICE) {
-        preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
+        preg_match_all("#\[media[0-9a-z\|]*\]https?://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
         $media_replace[] = '<script type="text/javascript" src="'.$_base_path.'jscripts/ATutorYouTubeOnBlackberry.js"></script>'."\n".
             '<p id="blackberry_##MEDIA2##">'."\n".
             '<script'."\n".
             '  src="http://gdata.youtube.com/feeds/mobile/videos/##MEDIA2##?alt=json-in-script&amp;callback=ATutor.course.showYouTubeOnBlackberry&amp;format=6" [^]'."\n".
             '  type="text/javascript">'."\n".
             '</script>';
-        preg_match_all("#\[media[0-9a-z\|]*\]https://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
+        //preg_match_all("#\[media[0-9a-z\|]*\]https://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
         $media_replace[] = '<script type="text/javascript" src="'.$_base_path.'jscripts/ATutorYouTubeOnBlackberry.js"></script>'."\n".
             '<p id="blackberry_##MEDIA2##">'."\n".
             '<script'."\n".
@@ -721,7 +721,7 @@ function embed_media($text) {
             preg_match_all("#\[media[0-9a-z\|]*\]https://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
             $media_replace[] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="https://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="https://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
         } else{
-            preg_match_all("#\[media[0-9a-z\|]*\]http://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
+            preg_match_all("#\[media[0-9a-z\|]*\]https?://([a-z0-9\.]*)?youtube.com/watch\?v=(.*)\[/media\]#iU",$text,$media_matches[],PREG_SET_ORDER);
             $media_replace[] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
         }
     }
