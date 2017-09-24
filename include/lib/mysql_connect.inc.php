@@ -121,6 +121,7 @@ if ( get_magic_quotes_gpc() == 1 ) {
 function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows", $array_type = MYSQL_ASSOC) {
     if(defined('MYSQLI_ENABLED') && $callback_func == "mysql_affected_rows"){
         $callback_func = "mysqli_affected_rows";
+        $array_type = MYSQLI_ASSOC;
     }
     $sql = create_sql($query, $params, $sanitize);
     return execute_sql($sql, $oneRow, $callback_func, $array_type);

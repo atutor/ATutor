@@ -14,7 +14,7 @@ CREATE TABLE `admins` (
    `email` VARCHAR( 50 ) NOT NULL default '',
    `language` varchar(5) NOT NULL default '',
    `privileges` MEDIUMINT UNSIGNED NOT NULL default 0,
-   `last_login` TIMESTAMP NOT NULL default 0,
+   `last_login` TIMESTAMP NOT NULL,
    PRIMARY KEY ( `login` )
 ) ENGINE = MyISAM;
 
@@ -37,8 +37,8 @@ CREATE TABLE `assignments` (
 	`course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
 	`title` VARCHAR(240) NOT NULL default '',
 	`assign_to` MEDIUMINT UNSIGNED default 0,
-	`date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-	`date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`date_due` DATETIME NOT NULL ,
+	`date_cutoff` DATETIME NOT NULL,
 	`multi_submit` TINYINT DEFAULT '0',
 	PRIMARY KEY  (`assignment_id`),
 	INDEX (`course_id`)
@@ -112,7 +112,7 @@ CREATE TABLE `content` (
   `last_modified` TIMESTAMP NOT NULL,
   `revision` tinyint(3) unsigned NOT NULL default '0',
   `formatting` tinyint(4) NOT NULL default '0',
-  `release_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `release_date` datetime NOT NULL,
   `keywords` TEXT ,
   `content_path` TEXT ,
   `title` VARCHAR(255) NOT NULL ,
@@ -187,7 +187,7 @@ CREATE TABLE `course_enrollment` (
 
 CREATE TABLE `course_stats` (
   `course_id` mediumint(8) unsigned NOT NULL default '0',
-  `login_date` date NOT NULL default '0000-00-00',
+  `login_date` date NOT NULL,
   `guests` mediumint(8) unsigned NOT NULL default '0',
   `members` mediumint(8) unsigned NOT NULL default '0',
   PRIMARY KEY  (`course_id`,`login_date`)
@@ -202,7 +202,7 @@ CREATE TABLE `courses` (
   `cat_id` mediumint(8) unsigned NOT NULL default '0',
   `content_packaging` enum('none','top','all') NOT NULL default 'top',
   `access` enum('public','protected','private') NOT NULL default 'public',
-  `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `created_date` datetime NOT NULL,
   `title` VARCHAR(255) NOT NULL ,
   `description` TEXT ,
   `course_dir_name` VARCHAR(255) NOT NULL,
@@ -217,8 +217,8 @@ CREATE TABLE `courses` (
   `home_links` TEXT ,
   `main_links` TEXT ,
   `side_menu` VARCHAR( 255 ) NOT NULL default '',
-  `release_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `release_date` datetime NOT NULL ,
+  `end_date` datetime NOT NULL,
    `banner` TEXT,
    `home_view` tinyint NOT NULL DEFAULT 1,
   PRIMARY KEY  (`course_id`)
@@ -377,11 +377,11 @@ CREATE TABLE `forums_threads` (
   `parent_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `forum_id` mediumint(8) unsigned NOT NULL default '0',
-  `last_comment` TIMESTAMP NOT NULL,
+  `last_comment` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `num_comments` mediumint(8) unsigned NOT NULL default '0',
   `subject` VARCHAR(255) NOT NULL ,
   `body` TEXT ,
-  `date` TIMESTAMP NOT NULL,
+  `date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `locked` tinyint(4) NOT NULL default '0',
   `sticky` tinyint(4) NOT NULL default '0',
   PRIMARY KEY  (`post_id`)
@@ -510,7 +510,7 @@ CREATE TABLE `links` (
   `Approved` tinyint(8) default '0',
   `SubmitName` varchar(64) NOT NULL default '',
   `SubmitEmail` varchar(64) NOT NULL default '',
-  `SubmitDate` date NOT NULL default '0000-00-00',
+  `SubmitDate` date NOT NULL,
   `hits` int(11) default '0',
   PRIMARY KEY  (`link_id`)
 ) ENGINE = MyISAM ;
@@ -546,7 +546,7 @@ CREATE TABLE `members` (
   `first_name` VARCHAR(100) NOT NULL ,
   `second_name` varchar(100) NOT NULL default '',
   `last_name` VARCHAR(100) NOT NULL ,
-  `dob` date NOT NULL default '0000-00-00',
+  `dob` date NOT NULL,
   `gender` enum('m','f','n') NOT NULL default 'n',
   `address` TEXT ,
   `postal` varchar(15) NOT NULL default '',
@@ -560,7 +560,7 @@ CREATE TABLE `members` (
   `language` varchar(5) NOT NULL default '',
   `inbox_notify` tinyint(3) unsigned NOT NULL default '0',
   `private_email` TINYINT DEFAULT '1' NOT NULL,
-  `last_login` TIMESTAMP NOT NULL,
+  `last_login` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY  (`member_id`),
   UNIQUE KEY `login` (`login`)
 ) ENGINE = MyISAM;
@@ -758,8 +758,8 @@ CREATE TABLE `reading_list` (
 	`course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
 	`resource_id` MEDIUMINT UNSIGNED NOT NULL default 0,
 	`required` enum('required','optional') NOT NULL DEFAULT 'required',
-	`date_start` DATE NOT NULL DEFAULT '0000-00-00',
-	`date_end` DATE NOT NULL DEFAULT '0000-00-00',
+	`date_start` DATE NOT NULL,
+	`date_end` DATE NOT NULL,
 	`comment` TEXT ,
 	PRIMARY KEY  (`reading_id`),
 	INDEX (`course_id`)
@@ -792,8 +792,8 @@ CREATE TABLE `tests` (
   `course_id` mediumint(8) unsigned NOT NULL default '0',
   `title` VARCHAR(255) NOT NULL ,
   `format` tinyint(4) NOT NULL default '0',
-  `start_date` datetime NOT NULL default '0000-00-00 00:00:00',
-  `end_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `start_date` datetime NOT NULL,
+  `end_date` datetime NOT NULL,
   `randomize_order` tinyint(4) NOT NULL default '0',
   `num_questions` tinyint(3) unsigned NOT NULL default '0',
   `instructions` TEXT ,
@@ -916,10 +916,10 @@ CREATE TABLE `tests_results` (
   `result_id` mediumint(8) unsigned NOT NULL auto_increment,
   `test_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` VARCHAR(10) NOT NULL default '',
-  `date_taken` TIMESTAMP NOT NULL,
+  `date_taken` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `final_score` char(5) NOT NULL default '',
   `status` TINYINT NOT NULL DEFAULT '0',
-  `end_time` TIMESTAMP NOT NULL ,
+  `end_time` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
   `max_pos` TINYINT UNSIGNED NOT NULL DEFAULT '0',
   PRIMARY KEY  (`result_id`),
   KEY `test_id` (`test_id`)
@@ -934,7 +934,7 @@ CREATE TABLE `themes` (
   `version` varchar(10) NOT NULL default '',
   `dir_name` varchar(20) NOT NULL default '',
   `type` varchar(20) NOT NULL default 'Desktop',
-  `last_updated` date NOT NULL default '0000-00-00',
+  `last_updated` date NOT NULL,
   `extra_info` TEXT ,
   `status` tinyint(3) unsigned NOT NULL default '1',
   `customized` tinyint(1) NOT NULL DEFAULT '0',
@@ -1130,7 +1130,7 @@ CREATE TABLE `grade_scales` (
    `grade_scale_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
    `member_id` mediumint(8) unsigned NOT NULL default '0',
    `scale_name` VARCHAR(255) NOT NULL default '',
-   `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
+   `created_date` datetime NOT NULL,
    PRIMARY KEY ( `grade_scale_id` )
 ) ENGINE = MyISAM ;
 
@@ -1148,7 +1148,7 @@ CREATE TABLE `gradebook_tests` (
    `type` VARCHAR(50) NOT NULL default '' COMMENT 'Values: ATutor Test, ATutor Assignment, External',
    `course_id` mediumint(8) unsigned NOT NULL default '0' COMMENT 'Values: 0 or courses.course_id. Only has value for external tests/assignments. When ATutor internal assignments/tests/surveys, always 0.',
    `title` VARCHAR(255) NOT NULL default '' COMMENT 'Values: Null or test name. Always null if ATutor internal assignments/tests/surveys.',
-   `due_date` datetime NOT NULL default '0000-00-00 00:00:00',
+   `due_date` datetime NOT NULL,
    `grade_scale_id` mediumint(8) unsigned NOT NULL default '0',
    PRIMARY KEY ( `gradebook_test_id` )
 ) ENGINE = MyISAM ;
@@ -1357,8 +1357,8 @@ CREATE TABLE `social_groups` (
    `name` VARCHAR(255) NOT NULL,
   `logo` VARCHAR(255) NOT NULL,
   `description` TEXT,
-  `created_date` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `last_updated` TIMESTAMP NOT NULL,
+  `created_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `last_updated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE = MyISAM;
 
@@ -1406,7 +1406,7 @@ CREATE TABLE `social_groups_board` (
   `member_id` int(10) unsigned NOT NULL,
   `group_id` int(10) unsigned NOT NULL,
   `body` TEXT,
-  `created_date` timestamp NOT NULL default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP,
+  `created_date` timestamp NOT NULL,
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM;
 
@@ -1575,8 +1575,8 @@ CREATE TABLE `basiclti_tools` (
 	`course_id` mediumint(10) NOT NULL DEFAULT '0',
 	`title` varchar(255) NOT NULL,
 	`description` varchar(1024),
-	`timecreated` TIMESTAMP,
-	`timemodified` TIMESTAMP,
+	`timecreated` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	`timemodified` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`toolurl` varchar(1023) NOT NULL,
 	`resourcekey` varchar(1023) NOT NULL,
 	`password` varchar(1023) NOT NULL,

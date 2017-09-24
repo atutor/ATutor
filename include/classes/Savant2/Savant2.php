@@ -994,7 +994,7 @@ class Savant2 {
 	* @throws object An error object with a SAVANT2_ERROR_ASSIGN code.
 	* 
 	*/
-	
+/*	
 	function assign()
 	{
 		// this method is overloaded.
@@ -1038,7 +1038,47 @@ class Savant2 {
 			return $this->error(SAVANT2_ERROR_ASSIGN, $arg);
 		}
 	}
-	
+	*/
+	// This assign function copied from Savant3
+	// to fix php7 issues, see mantis 5805
+		public function assign()
+        {
+            // get the arguments; there may be 1 or 2.
+            $arg0 = @func_get_arg(0);
+            $arg1 = @func_get_arg(1);
+        
+            // assign from object
+            if (is_object($arg0)) {
+                // assign public properties
+                foreach (get_object_vars($arg0) as $key => $val) {
+                    // can't assign to __config
+                    if ($key != '__config') {
+                        $this->$key = $val;
+                    }
+                }
+                return true;
+            }
+        
+            // assign from associative array
+            if (is_array($arg0)) {
+                foreach ($arg0 as $key => $val) {
+                    // can't assign to __config
+                    if ($key != '__config') {
+                        $this->$key = $val;
+                    }
+                }
+                return true;
+            }
+        
+            // assign by name and value (can't assign to __config).
+            if (is_string($arg0) && func_num_args() > 1 && $arg0 != '__config') {
+                $this->$arg0 = $arg1;
+                return true;
+            }
+        
+            // $arg0 was not object, array, or string.
+            return false;
+        }
 	
 	/**
 	* 

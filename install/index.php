@@ -124,7 +124,8 @@ $not_as_good = FALSE;
 		</tr>
 		<tr>
 			<td><kbd>mysql</kbd></td>
-			<td><?php if (extension_loaded('mysql')) {
+			<td><?php if (extension_loaded('mysqli') || extension_loaded('mysql') ) {
+			            $mysql_enabled = TRUE;
 						echo 'Enabled</td><td align="center">';
 						echo $good;
 					} else {
@@ -283,7 +284,7 @@ $not_as_good = FALSE;
 		<tr>
 			<td><kbd>curl</kbd></td>
 			<td><?php
-				if (extension_loaded('curl')){
+				if(function_exists('curl_version')){
 					echo 'Enabled</td><td align="center">';
 					echo $good;
 				} else {
@@ -310,6 +311,8 @@ $not_as_good = FALSE;
 			<td>Mail configuration</td>
 			<td><?php
 			$smtp_server = ini_get('SMTP');
+			echo $smtp_server;
+			echo ini_get('sendmail_path');
 			if (($smtp_server == '' || $smtp_server == 'localhost') && ini_get('sendmail_path') == '') {
 					echo 'Disabled</td><td align="center">';
 					echo $warning;
@@ -328,8 +331,21 @@ $not_as_good = FALSE;
 		</tr>
 		<tr>
 			<td>MySQL 4.1.10+</td>
-			<td><?php if (defined('MYSQL_NUM')) {
-						$mysql_version = mysql_get_client_info();
+			<?php
+			
+			
+			?>
+			<td><?php 
+			//if (defined('MYSQL_NUM')) { 
+			if($mysql_enabled === TRUE){
+                        if(function_exists('mysqli_connect')){
+                            define('MYSQLI_ENABLED',	1);
+                        } 
+                        if(defined('MYSQLI_ENABLED')){
+                            $mysql_version = mysqli_get_client_info();
+                        }else{
+                            $mysql_version = mysql_get_client_info();
+                        }
 						echo 'Found  Version '.$mysql_version.'</td><td align="center">';
 						echo $good;
 					} else {
