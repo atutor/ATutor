@@ -118,10 +118,14 @@ if ( get_magic_quotes_gpc() == 1 ) {
  * @return  ALWAYS returns result of the query execution as an array of rows. If no results were found than array would be empty
  * @author  Alexey Novak, Cindy Li, Greg Gay
  */
-function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows", $array_type = MYSQL_ASSOC) {
+function queryDB($query, $params=array(), $oneRow = false, $sanitize = true, $callback_func = "mysql_affected_rows", $array_type = MYSQLI_ASSOC) {
     if(defined('MYSQLI_ENABLED') && $callback_func == "mysql_affected_rows"){
         $callback_func = "mysqli_affected_rows";
-        $array_type = MYSQLI_ASSOC;
+    }
+     if(defined('MYSQLI_ENABLED')){
+        if(!is_int($array_type)){
+            $array_type = MYSQLI_ASSOC;
+        }
     }
     $sql = create_sql($query, $params, $sanitize);
     return execute_sql($sql, $oneRow, $callback_func, $array_type);
@@ -135,6 +139,7 @@ function queryDButf8($query, $params=array(), $oneRow = true, $sanitize, $db, $a
          if(defined('MYSQLI_ENABLED')){  
              $value = $addslashes(htmlspecialchars_decode($value, ENT_QUOTES));  
              $params[$i] = $db->real_escape_string($value);
+             //$array_type = MYSQLI_ASSOC;
             }else {
              $params[$i] = $addslashes($value);           
             }
