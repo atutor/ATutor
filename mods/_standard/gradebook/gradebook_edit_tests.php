@@ -146,7 +146,7 @@ else
 		<?php echo _AT('title'); ?><br />
 		<?php echo $row_this["title"]; ?>
 	</div>
-
+    <input type="hidden" id="title" size="40" name="title" value="<?php echo $row_this["title"]; ?>" />
 <?php
 }
 ?>
