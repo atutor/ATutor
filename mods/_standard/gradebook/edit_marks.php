@@ -241,7 +241,7 @@ $table_head .= "	<td></td>\n\r";
 $has_edit_button = false;
 foreach ($selected_tests as $selected_test)
 {
-    if ($selected_test["type"] == "External" || $selected_test["type"] == "ATutor Assignment")
+    if ($selected_test["type"] == "External" || $selected_test["type"] == "ATutor Assignment" || $selected_test["type"] == "ATutor Test")
     {
         $has_edit_button = true;
         $table_head .= "	<td style='text-align:center'><a href='". $_SERVER['PHP_SELF']. '?edit=c_'.$selected_test['gradebook_test_id'].$query_str."'>". _AT("edit")."</a></td>\n\r";
@@ -280,7 +280,7 @@ if ($num_students > 0)
                         
             $row["grade"] = htmlspecialchars($row["grade"]);   // handle html special chars
             
-            if ($_GET["edit"]=="c_".$selected_test["gradebook_test_id"] || $_GET["edit"]=="r_".$selected_students[$i]["member_id"] && ($selected_test["type"]=="External" || $selected_test["type"]=="ATutor Assignment"))
+            if ($_GET["edit"]=="c_".$selected_test["gradebook_test_id"] || $_GET["edit"]=="r_".$selected_students[$i]["member_id"] && ($selected_test["type"]=="External" || $selected_test["type"]=="ATutor Assignment" || $selected_test["type"] == "ATutor Test"))
             {
                 $table_content .= "			<td><input type='text' name='grade_".$selected_test["gradebook_test_id"]."_".$selected_students[$i]["member_id"]."' value=\"".$row["grade"]."\" tabindex='".$tabindex_input."' /></td>\n\r";
                 $csv_content .= ",".$row["grade"];
