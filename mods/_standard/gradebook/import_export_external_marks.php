@@ -140,21 +140,21 @@ else
     if(count($rows_aa) > 0){
 		echo '			<optgroup label="'. _AT('assignments') .'">'."\n\r";
 	    foreach($rows_aa as $row_aa){
-			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.$row_aa['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_aa['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
     if(count($rows_at) > 0){
 		echo '			<optgroup label="'. _AT('tests') .'">'."\n\r";
 	    foreach($rows_at as $row_at){
-			echo '			<option value="'.$row_at['gradebook_test_id'].'">'.$row_at['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_at['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_at['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
     if(count($rows_e) > 0){
 		echo '			<optgroup label="'. _AT('external_tests') .'">'."\n\r";
 	   foreach($rows_e as $row_e){ 
-			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.$row_e['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_e['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
@@ -202,7 +202,7 @@ if(count($rows_aa) == 0 && count($rows_e) == 0){
 		echo '			<optgroup label="'. _AT('assignments') .'">'."\n\r";
 	    
 	    foreach($rows_aa as $row_aa){
-			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.$row_aa['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_aa['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
@@ -211,7 +211,7 @@ if(count($rows_aa) == 0 && count($rows_e) == 0){
 		echo '			<optgroup label="'. _AT('external_tests') .'">'."\n\r";
 	    
 	    foreach($rows_e as $row_e){
-			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.$row_e['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_e['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}

@@ -14,7 +14,7 @@
 	<?php if (is_array($this->item)) : ?>
 		<ul>
 		<?php foreach($this->item as $e) : ?>
-			<li><?php echo $e; ?></li>
+			<li><?php echo htmlspecialchars_decode(stripslashes($e)); ?></li>
 		<?php endforeach; ?>
 		</ul>
 	<?php endif; ?>

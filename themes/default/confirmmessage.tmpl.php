@@ -19,7 +19,7 @@
 	<div class="row" id="confirm" role="alert">
 		<?php if (is_array($this->item)) : ?>
 			<?php foreach($this->item as $e) : ?>
-				<p><?php echo $e; ?></p>
+				<p><?php echo htmlspecialchars_decode(stripslashes($e)); ?></p>
 			<?php endforeach; ?>
 		<?php endif; ?>
 	</div>
