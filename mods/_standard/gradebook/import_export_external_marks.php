@@ -191,8 +191,7 @@ if(count($rows_aa) == 0 && count($rows_e) == 0){
 	</div>
 <?php 
 }
-else
-{
+
 ?>
 	<div class="row">
 		<label for="select_gid2"><?php echo _AT('import_content_package_where'); ?></label><br />
@@ -230,9 +229,7 @@ else
 		<input type="submit" name="import" value="<?php echo _AT('import'); ?>" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
-<?php 
-}
-?>
+
 	</fieldset>
 </div>
 </form>
