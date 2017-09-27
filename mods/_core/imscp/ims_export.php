@@ -243,9 +243,9 @@ if ($cid) {
 			unset($content[$page['content_id']]);
 		}
 	}
-	$ims_course_title = $course_title . ' - ' . $content[$top_content_parent_id][0]['title'];
+	$ims_course_title = htmlspecialchars_decode($course_title . ' - ' . $content[$top_content_parent_id][0]['title'], ENT_QUOTES);
 } else {
-	$ims_course_title = $course_title;
+	$ims_course_title = htmlspecialchars_decode($course_title, ENT_QUOTES);
 }
 
 
