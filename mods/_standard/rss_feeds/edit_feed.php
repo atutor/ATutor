@@ -38,7 +38,7 @@ if (isset($_GET['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_GET['url'] = $addslashes($_GET['url']);
+        $_GET['url'] = htmlspecialchars(strip_tags($_GET['url']), ENT_QUOTES);
 
 		$sql	= "REPLACE INTO %sfeeds VALUES(%d, '%s')";
 		$result = queryDB($sql, array(TABLE_PREFIX, $feed_id, $_GET['url']));
