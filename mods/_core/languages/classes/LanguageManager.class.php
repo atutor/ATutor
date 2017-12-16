@@ -270,18 +270,26 @@ class LanguageManager {
 	// import language pack from specified file
 	function import($filename) {
 		global $languageManager, $msg;
-
-		require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+        if(strstr($_FILES['file']['name'], 'master')){
+            // hack to create path to subdir for imported github language packs
+            // no idea why this is happening with github zip files
+            $import_dir = str_replace(".zip", "", $_FILES['file']['name']);
+        }
+                require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguagesParser.class.php');
 		
-		$import_path = AT_CONTENT_DIR . 'import/';
-
+		if(isset($import_dir)){
+		    // hack to create path to subdir for imported github language packs
+		    $import_path = AT_CONTENT_DIR . 'import/'.$import_dir.'/';
+		} else{
+		    $import_path = AT_CONTENT_DIR . 'import/';
+		}
+		$language_xml = @file_get_contents($import_path.'language.xml');
 		$archive = new PclZip($filename);
+
 		if ($archive->extract(	PCLZIP_OPT_PATH,	$import_path) == 0) {
 			exit('Error : ' . $archive->errorInfo(true));
 		}
-
-		$language_xml = @file_get_contents($import_path.'language.xml');
 
 		$languageParser = new LanguageParser();
 		$languageParser->parse($language_xml);
@@ -305,7 +313,7 @@ class LanguageManager {
 		}
 
 		if (!$msg->containsErrors()) {
-			$languageEditor->import($import_path . 'language_text.sql');
+			$languageEditor->import($import_path .  'language_text.sql');
 			$msg->addFeedback('IMPORT_LANG_SUCCESS');
 		}
 
