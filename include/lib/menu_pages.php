@@ -414,7 +414,8 @@ function get_sub_navigation($current_page) {
  */
 function get_sub_navigation_i($current_page) {
     global $_pages_i, $_base_path;
-    $_sub_level_pages_i = '';
+    //$_sub_level_pages_i = '';
+    $_sub_level_pages_i = array();
 
     if (isset($current_page) && defined($current_page)) {
     // reached the top

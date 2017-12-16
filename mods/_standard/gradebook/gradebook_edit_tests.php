@@ -134,7 +134,7 @@ if ($row_this["type"] == "External")
 ?>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" id="title" size="40" name="title" value="<?php echo $row_this["title"]; ?>" />
+		<input type="text" id="title" size="40" name="title" value="<?php echo htmlspecialchars_decode(stripslashes($row_this["title"])); ?>" />
 	</div>
 
 <?php
@@ -146,7 +146,7 @@ else
 		<?php echo _AT('title'); ?><br />
 		<?php echo $row_this["title"]; ?>
 	</div>
-
+    <input type="hidden" id="title" size="40" name="title" value="<?php echo htmlspecialchars_decode(stripslashes($row_this["title"])); ?>" />
 <?php
 }
 ?>

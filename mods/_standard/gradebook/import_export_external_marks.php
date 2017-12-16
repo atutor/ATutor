@@ -140,21 +140,21 @@ else
     if(count($rows_aa) > 0){
 		echo '			<optgroup label="'. _AT('assignments') .'">'."\n\r";
 	    foreach($rows_aa as $row_aa){
-			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.$row_aa['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_aa['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
     if(count($rows_at) > 0){
 		echo '			<optgroup label="'. _AT('tests') .'">'."\n\r";
 	    foreach($rows_at as $row_at){
-			echo '			<option value="'.$row_at['gradebook_test_id'].'">'.$row_at['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_at['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_at['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
     if(count($rows_e) > 0){
 		echo '			<optgroup label="'. _AT('external_tests') .'">'."\n\r";
 	   foreach($rows_e as $row_e){ 
-			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.$row_e['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_e['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
@@ -191,8 +191,7 @@ if(count($rows_aa) == 0 && count($rows_e) == 0){
 	</div>
 <?php 
 }
-else
-{
+
 ?>
 	<div class="row">
 		<label for="select_gid2"><?php echo _AT('import_content_package_where'); ?></label><br />
@@ -203,7 +202,7 @@ else
 		echo '			<optgroup label="'. _AT('assignments') .'">'."\n\r";
 	    
 	    foreach($rows_aa as $row_aa){
-			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.$row_aa['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_aa['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_aa['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
@@ -212,7 +211,7 @@ else
 		echo '			<optgroup label="'. _AT('external_tests') .'">'."\n\r";
 	    
 	    foreach($rows_e as $row_e){
-			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.$row_e['title'].'</option>'."\n\r";
+			echo '			<option value="'.$row_e['gradebook_test_id'].'">'.htmlspecialchars_decode(stripslashes($row_e['title'])).'</option>'."\n\r";
 		}
 		echo '			</optgroup>'."\n\r";
 	}
@@ -230,9 +229,7 @@ else
 		<input type="submit" name="import" value="<?php echo _AT('import'); ?>" />
 		<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 	</div>
-<?php 
-}
-?>
+
 	</fieldset>
 </div>
 </form>

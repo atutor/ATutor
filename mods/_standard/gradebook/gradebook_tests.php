@@ -109,8 +109,8 @@ else
 ?>
 		<tr onmousedown="document.form['m<?php echo $row["gradebook_test_id"]; ?>'].checked = true; rowselect(this);" id="r_<?php echo $row["gradebook_test_id"]; ?>">
 			<td width="10"><input type="radio" name="gradebook_test_id" value="<?php echo $row["gradebook_test_id"]; ?>" id="m<?php echo $row["gradebook_test_id"]; ?>" <?php if ($row["gradebook_test_id"]==$_POST['gradebook_test_id']) echo 'checked'; ?> /></td>
-			<td><label for="m<?php echo $row["gradebook_test_id"]; ?>"><?php echo $row["title"]; ?></label></td>
-			<td><?php echo $scale_content[$row["grade_scale_id"]]; ?></td>
+			<td><label for="m<?php echo $row["gradebook_test_id"]; ?>"><?php echo htmlspecialchars_decode(stripslashes($row["title"])); ?></label></td>
+			<td><?php echo htmlspecialchars_decode(stripslashes($scale_content[$row["grade_scale_id"]])); ?></td>
 			<?php if ($row["type"] == "External"){?>
 				<td><?php echo _AT("external"); ?></td>
 			<?php } elseif($row["type"] == "ATutor Test"){ ?>

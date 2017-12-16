@@ -93,7 +93,7 @@ else
 		<tr>
 <?php 
 			if ( ($grade != '') && (($row['result_release']==AT_RELEASE_IMMEDIATE) || ($row['result_release']==AT_RELEASE_MARKED)) )
-				echo '			<td><a href="mods/_standard/tests/view_results.php?tid='.$row['id'].'&amp;rid='.$row_tr['result_id'].'">'.$row["title"].'</a></td>'."\n\r";
+				echo '			<td><a href="mods/_standard/tests/view_results.php?tid='.$row['id'].'&amp;rid='.$row_tr['result_id'].'">'.htmlspecialchars_decode(stripslashes($row["title"])).'</a></td>'."\n\r";
 			else
 				echo '			<td>'.$row["title"].'</td>'."\n\r";
 ?>
@@ -109,7 +109,7 @@ else
 		{
 ?>
 		<tr>
-			<td><?php echo $row["title"]; ?></td>
+			<td><?php echo htmlspecialchars_decode(stripslashes($row["title"])); ?></td>
 			<td><?php echo ($grade=="") ? _AT("na") : $grade; ?></td>
 			<td><?php echo get_class_avg($row["gradebook_test_id"]); ?></td>
 			<td><?php echo $row["due_date"]; ?></td>

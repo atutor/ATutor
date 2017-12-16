@@ -85,7 +85,7 @@ function print_grade_scale_selectbox($selected_grade_scale_id = 0, $id_name="sel
 				{
 					echo '<option value="'.$id.'" ';
 					if ($selected_grade_scale_id  == $id) echo 'selected="selected"';
-					echo '>'.$custom.'</option>'."\n\r";
+					echo '>'.htmlspecialchars_decode(stripslashes($custom)).'</option>'."\n\r";
 				}
 				echo '			</optgroup>'."\n\r";
 			}

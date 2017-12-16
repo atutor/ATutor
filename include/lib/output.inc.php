@@ -618,7 +618,7 @@ function myCodes($text, $html = false) {
     $text = str_replace("[code]","[code]<?php",$text);
     $text = str_replace("[/code]","?>[/code]",$text);
 
-    $text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usei", "highlight_code(fix_quotes('\\1'), $html)", $text);
+    $text = preg_replace("/\[code\]\s*(.*)\s*\[\\/code\]/Usi", "highlight_code(fix_quotes('\\1'), $html)", $text);
     // now remove the <?php added above and leave the syntax colour behind.
     $text = str_replace("&lt;?php", "", $text);
     $text = str_replace("?&gt;", "", $text);
@@ -1005,7 +1005,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
     $input = str_replace('CONTENT_DIR', '', $input);
 
     if (isset($_config['latex_server']) && $_config['latex_server']) {
-        $input = preg_replace('/\[tex\](.*?)\[\/tex\]/sie', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\" alt=\"'.'$1'.'\" title=\"'.'$1'.'\">'", $input);
+        $input = preg_replace('/\[tex\](.*?)\[\/tex\]/si', "'<img src=\"'.\$_config['latex_server'].rawurlencode('$1').'\" align=\"middle\" alt=\"'.'$1'.'\" title=\"'.'$1'.'\">'", $input);
     }
 
     if ($html) {

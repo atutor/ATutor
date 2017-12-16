@@ -282,7 +282,7 @@ global $system_courses, $_custom_css, $db;
 		<div class="crumbcontainer" role="navigation">
 		  <div id="breadcrumbs" tabindex="0"  aria-label="<?php echo _AT('breadcrumb_links'); ?>">
 			  <?php foreach ($this->path as $page): ?>
-				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars($page['title'], ENT_COMPAT, "UTF-8"); ?></a> > 
+				  <a href="<?php echo $page['url']; ?>"><?php echo htmlspecialchars_decode(stripslashes(($page['title'])), ENT_COMPAT, "UTF-8"); ?></a> > 
 			  <?php endforeach; ?> <?php echo $this->page_title; ?>
 		  </div>
 	  <?php } else { ?>

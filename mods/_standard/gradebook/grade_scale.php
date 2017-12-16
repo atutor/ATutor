@@ -26,17 +26,17 @@ function print_row($grade_scale_id, $scale_name, $value, $created_date, $post_gr
 	{
 ?>
 			<td width="10"><input type="radio" name="grade_scale_id" value="<?php echo $grade_scale_id; ?>" id="m<?php echo $grade_scale_id; ?>" <?php if ($grade_scale_id==$post_grade_scale_id) echo 'checked'; ?> /></td>
-			<td><label for="m<?php echo $grade_scale_id; ?>"><?php echo $scale_name; ?></label></td>
+			<td><label for="m<?php echo $grade_scale_id; ?>"><?php echo htmlspecialchars_decode(stripslashes($scale_name)); ?></label></td>
 <?php
 	}
 	else
 	{
 ?>
-			<td><?php echo $scale_name; ?></td>
+			<td><?php echo htmlspecialchars_decode(stripslashes($scale_name)); ?></td>
 <?php
 	}
 ?>
-			<td><?php echo $value; ?></td>
+			<td><?php echo htmlspecialchars_decode(stripslashes($value)); ?></td>
 			<td><?php echo $created_date; ?></td>
 		</tr>
 <?php

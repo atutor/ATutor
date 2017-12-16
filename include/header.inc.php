@@ -265,7 +265,7 @@ if(isset($_SESSION['tool_origin'])){
 } 
 
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
-	$_path[] = array('url' => AT_print($_base_path . url_rewrite('index.php'),'url.base'), 'title' => $_SESSION['course_title']);
+	$_path[] = array('url' => AT_print($_base_path . url_rewrite('index.php'),'url.base'), 'title' => htmlspecialchars_decode(stripslashes($_SESSION['course_title']), ENT_QUOTES));
 } else if (isset($_SESSION['course_id']) && $_SESSION['course_id'] < 0) {
 	$_path[] = array('url' => AT_print($_base_path . 'admin/index.php', 'url.base'), 'title' => _AT('administration'));
 }
