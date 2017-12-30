@@ -526,7 +526,7 @@ $moduleFactory = new ModuleFactory(TRUE); // TRUE is for auto_loading the module
 
 if (isset($_GET['submit_language']) && $_SESSION['valid_user'] === true) {
 	if ($_SESSION['course_id'] == -1) {
-		$sql = "UPDATE %sadmins SET language = %s WHERE login = %s";
+		$sql = "UPDATE %sadmins SET language = '%s' WHERE login = '%s'";
 		$row = queryDB($sql,array(TABLE_PREFIX, $_SESSION['lang'], $_SESSION['login']));
 	} else {
 		$sql = "UPDATE %smembers SET language = %s, creation_date=creation_date, last_login=last_login WHERE member_id = %d";
