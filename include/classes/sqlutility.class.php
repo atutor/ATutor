@@ -145,6 +145,11 @@ class SqlUtility
 	{
 		$pattern = "/^(REPLACE INTO|INSERT INTO|CREATE TABLE IF NOT EXISTS|CREATE TABLE|ALTER TABLE|UPDATE)(\s)+([`]?)([^`\s]+)\\3(\s)+/siU";
 		$pattern2 = "/^(DROP TABLE)(\s)+([`]?)([^`\s]+)\\3(\s)?$/siU";
+		if(strpos($query, 'languages') !== false){
+		    // replace INSERT with REPLACE to allow importing over an existing language
+		    $query = preg_replace('/INSERT INTO/', 'REPLACE INTO', $query);
+		} 
+		
 		if (preg_match($pattern, $query, $matches) || preg_match($pattern2, $query, $matches)) {
 			$replace = "\\1 ".$prefix."\\4\\5";
 			$matches[0] = preg_replace($pattern, $replace, $query);
