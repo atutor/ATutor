@@ -7,8 +7,9 @@ global $_config;
 $_student_tool = 'mods/_standard/tile_search/tile.php';
 
 // Add menu item into "Manage" => "Content" 
-$this->_pages['mods/_core/content/index.php']['children'] = array('mods/_standard/tile_search/index.php');
-
+if(isset($_config['transformable_uri'])){
+    $this->_pages['mods/_core/content/index.php']['children'] = array('mods/_standard/tile_search/index.php');
+}
 //modules sub-content
 $this->_list['tile_search'] = array('title_var'=>'tile_search','file'=>'mods/_standard/tile_search/sublinks.php');
 // admin page
