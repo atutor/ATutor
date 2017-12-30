@@ -11,6 +11,8 @@
 /* as published by the Free Software Foundation.				*/
 /****************************************************************/
 // $Id$
+exit;
+// removed in ATutor 2.2.3
 
 define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');

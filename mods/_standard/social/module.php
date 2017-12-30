@@ -83,7 +83,6 @@ $this->_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['img']       = AT_SOCIAL_BASEN
 $this->_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['children'] = array_merge(
 array(AT_SOCIAL_BASENAME.'connections.php',
 AT_SOCIAL_BASENAME.'sprofile.php', 
-AT_SOCIAL_BASENAME.'applications.php', 
 AT_SOCIAL_BASENAME.'groups/index.php',
 AT_SOCIAL_BASENAME.'settings.php'),
 isset($_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['children']) ? $_pages[AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX]['children'] : array());
@@ -101,9 +100,9 @@ $this->_pages[AT_SOCIAL_BASENAME.'profile_picture.php']['parent'] = AT_SOCIAL_BA
 $this->_pages[AT_SOCIAL_BASENAME.'basic_profile.php']['title_var'] = 'profile';
 $this->_pages[AT_SOCIAL_BASENAME.'basic_profile.php']['parent'] = AT_SOCIAL_BASENAME.'edit_profile.php';
 
-$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['title_var'] = 'applications';
-$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['parent'] = AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX;
-$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['guide']     = 'general/?p=my_gadgets.php';
+//$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['title_var'] = 'applications';
+//$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['parent'] = AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX;
+//$this->_pages[AT_SOCIAL_BASENAME.'applications.php']['guide']     = 'general/?p=my_gadgets.php';
 
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['title_var'] = 'connections';
 $this->_pages[AT_SOCIAL_BASENAME.'connections.php']['parent'] = AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX;
@@ -158,7 +157,6 @@ $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['parent'] = AT_NAV_START;
 $this->_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] = array_merge(
 array(AT_SOCIAL_BASENAME.'connections.php',
 AT_SOCIAL_BASENAME.'sprofile.php', 
-AT_SOCIAL_BASENAME.'applications.php', 
 AT_SOCIAL_BASENAME.'groups/index.php',
 AT_SOCIAL_BASENAME.'settings.php'),
 isset($_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children']) ? $_pages[AT_SOCIAL_BASENAME.'index_mystart.php']['children'] : array());
