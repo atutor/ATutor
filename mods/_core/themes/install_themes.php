@@ -218,88 +218,8 @@ $msg->printErrors();
 	</div>
 </div>
 </form>
-<?php
 
-if(!defined('IS_SUBSITE')){
-?>
-<form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="post" name="form">
-<?php 
-?>
-<table class="data" summary="" rules="all">
-<thead>
-	<tr>
-		<th scope="col">&nbsp;</th>
-		<th scope="col"><?php echo _AT('title');?></th>
-		<th scope="col"><?php echo _AT('installed').'?';?></th>
-		<th scope="col"><?php echo _AT('atutor_version_tested_with');?></th>
-		<th scope="col"><?php echo _AT('description');?></th>
-		<th scope="col"><?php echo _AT('theme_screenshot');?></th>
-	</tr>
-</thead>
-	
-<tfoot>
-<tr>
-	<td colspan="6">
-		<input type="submit" name="install" value="<?php echo _AT('install'); ?>" />
-		<input type="submit" name="download" value="<?php echo _AT('download'); ?>" />
-		<input type="submit" name="version_history" value="<?php echo _AT('version_history'); ?>" />
-	</td>
-</tr>
-</tfoot>
 
-<tbody>
-<?php 
-$num_of_themes = count($theme_list_array);
-
-if ($num_of_themes == 0)
-{
-?>
-
-<tr>
-	<td colspan="6"><?php echo _AT('none_found'); ?></td>
-</tr>
-
-<?php 
-}
-else
-{
-	// display themes
-	if(is_array($theme_list_array))
-	{
-		for ($i=0; $i < $num_of_themes; $i++)
-		{
-			// check if the theme has been installed
-			if (is_dir($local_theme_folder . $theme_list_array[$i]["history"][0]["install_folder"]))
-				$installed = true;
-			else
-				$installed = false;
-
-?>
-	<tr onmousedown="document.form['m<?php echo $i; ?>'].checked = true; rowselect(this);"  id="r_<?php echo $i; ?>">
-		<td><input type="radio" name="id" value="<?php echo $i; ?>" id="m<?php echo $i; ?>" <?php if ($installed) echo 'disabled="disabled"'; ?> /></td>
-		<td><label for="m<?php echo $i; ?>"><?php echo $theme_list_array[$i]["name"]; ?></label></td>
-		<td><?php if ($installed) echo _AT("installed"); else echo _AT("not_installed"); ?></td>
-		<td><?php echo $theme_list_array[$i]["history"][0]["atutor_version"]; ?></td>
-		<td><?php echo $theme_list_array[$i]["description"]; ?></td>
-		<td><?php if (file_get_contents($theme_folder.$theme_list_array[$i]["history"][0]["screenshot_file"])) { ?>
-			<img src="<?php echo $theme_folder.$theme_list_array[$i]["history"][0]["screenshot_file"]; ?>" border="1" alt="<?php echo _AT('theme_screenshot'); ?>" />
-			<?php }?>
-		</td>
-	</tr>
-
-<?php 
-		}
-	}
-
-?>
-</tbody>
-
-<?php 
-}
-?>
-</table>
-</form>
-<?php } // end test for subsite ?>
 <script language="JavaScript">
 <!--
 
