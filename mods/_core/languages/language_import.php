@@ -45,25 +45,14 @@ if (isset($_POST['submit_import'])){
 //Get language list from atutor.github.io
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_USERAGENT,'atutorlangs');
-curl_setopt($ch, CURLOPT_URL, "https://api.github.com/users/atutorlangs/repos");
+curl_setopt($ch, CURLOPT_URL, "https://api.github.com/users/atutorlangs/repos?per_page=100");
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $output = curl_exec($ch);
 curl_close($ch);
 $response = json_decode($output, true);
 
 require(AT_INCLUDE_PATH.'header.inc.php');
-echo '<form action="'.$_SERVER['PHP_SELF'].'" enctype="multipart/form-data"  onsubmit="openWindow(\'http://localhost/atutorgit/tools/prog.php\');" method="post">';
-echo '<input type="hidden" name="submit_import" value="1"/>';
-echo '<select name="language">';
-foreach($response as $languages=>$language){
-    if(strstr($language['name'], "_")){
-    $language_code = explode("_",$language['name']);
-    echo '<option value="'.$language['name'].'">'.$language['name'].'</option>';
-    }
-}
-echo "</select>";
-echo '<input type="submit" value="Import"/>';
-echo "</form>";
+
 require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/RemoteLanguageManager.class.php'); 
 $savant->assign('response', $response);
 $savant->assign('remoteLanguageManager', $remoteLanguageManager);
