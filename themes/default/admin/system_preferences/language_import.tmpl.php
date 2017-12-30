@@ -22,32 +22,20 @@
 	</div>
 
 	<div class="row">
-		<?php
-			
-			$remoteLanguageManager = new RemoteLanguageManager();
-			if ($remoteLanguageManager->getNumLanguages()) {
-				$found = false;
-				foreach ($remoteLanguageManager->getAvailableLanguages() as $codes){
-					$language = current($codes);
-					if (!$languageManager->exists($language->getCode()) && ($language->getStatus() == AT_LANG_STATUS_PUBLISHED)) {
-						if (!$found) {
-							echo '<select name="language" title="language">';
-							$found = true;
-						}
-						echo '<option value="'.$language->getCode().'">'.$language->getEnglishName().' - '.$language->getNativeName().'</option>';
-					}
-				}
-				if ($found) {
-					echo '</select></div>';
-					echo '<div class="row buttons"><input type="submit" name="submit_import" value="' . _AT('import') . '" class="button" /></div>';
-				} else {
-					echo _AT('none_found');
-					echo '</div>';
-				}
-			} else {
-				echo _AT('cannot_find_remote_languages');
-				echo '</div>';
-			}
-		?>
-</div>
+	<?php
+        echo '<form action="'.$_SERVER['PHP_SELF'].'" enctype="multipart/form-data"  onsubmit="openWindow(\'http://localhost/atutorgit/tools/prog.php\');" method="post">';
+        echo '<input type="hidden" name="submit_import" value="1"/>';
+        echo '<select name="language">';
+        foreach($this->response as $languages=>$language){
+            if(strstr($language['name'], "_")){
+            $language_code = explode("_",$language['name']);
+            echo '<option value="'.$language['name'].'">'.$language['name'].'</option>';
+            }
+        }
+        echo "</select>";
+        echo '<input type="submit" value="Import"/>';
+        echo "</form>";
+        ?>
+    </div>
+    </div>
 </form>

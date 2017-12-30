@@ -27,7 +27,7 @@ class RemoteLanguageManager extends LanguageManager {
 
 	function RemoteLanguageManager() {
 		$version = str_replace('.','_',VERSION);
-		$language_xml = @file_get_contents('http://update.atutor.ca/languages/'.$version.'/languages.xml');
+		$language_xml = @file_get_contents('https://atutor.github.io/atutor/languages.xml');
 		if ($language_xml === FALSE) {
 			// fix for bug #2896
 			$language_xml = @file_get_contents('http://update.atutor.ca/languages/1_5_3/languages.xml');
@@ -54,8 +54,7 @@ class RemoteLanguageManager extends LanguageManager {
 	function fetchLanguage($language_code, $filename) {
 		$version = str_replace('.','_',VERSION);
 
-		$language_pack = @file_get_contents('http://update.atutor.ca/languages/' . $version . '/atutor_' . $version . '_' . $language_code . '.zip');
-
+        $language_pack = @file_get_contents('https://github.com/atutorlangs/'.$language_code.'/archive/master.zip');
 		if ($language_pack) {
 			$fp = fopen($filename, 'wb+');
 			fwrite($fp, $language_pack, strlen($language_pack));
@@ -66,7 +65,7 @@ class RemoteLanguageManager extends LanguageManager {
 	}
 
 	function import($language_code) {
-		$filename = tempnam(AT_CONTENT_DIR . 'import', $language_code);
+		$filename = tempnam(AT_CONTENT_DIR . 'import', $language_code).'.zip';
 		if ($this->fetchLanguage($language_code, $filename)) {
 			parent::import($filename);
 		}

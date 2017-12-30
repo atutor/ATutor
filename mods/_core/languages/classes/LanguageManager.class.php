@@ -270,20 +270,18 @@ class LanguageManager {
 	// import language pack from specified file
 	function import($filename) {
 		global $languageManager, $msg;
+
         if(strstr($_FILES['file']['name'], 'master')){
             // hack to create path to subdir for imported github language packs
-            // no idea why this is happening with github zip files
-            $import_dir = str_replace(".zip", "", $_FILES['file']['name']);
+            $import_dir = str_replace(".zip", "", $_FILES['file']['name']).'/';
+        } else if(isset($_POST['language'])){
+            $import_dir = $_POST['language'].'-master/';
         }
-                require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
+        require_once(AT_INCLUDE_PATH.'classes/pclzip.lib.php');
 		require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguagesParser.class.php');
-		
-		if(isset($import_dir)){
-		    // hack to create path to subdir for imported github language packs
-		    $import_path = AT_CONTENT_DIR . 'import/'.$import_dir.'/';
-		} else{
-		    $import_path = AT_CONTENT_DIR . 'import/';
-		}
+
+		$import_path = AT_CONTENT_DIR . 'import/';
+		$import_path_tmp = $import_path.$import_dir;
 		$language_xml = @file_get_contents($import_path.'language.xml');
 		$archive = new PclZip($filename);
 
@@ -294,34 +292,24 @@ class LanguageManager {
 		$languageParser = new LanguageParser();
 		$languageParser->parse($language_xml);
 		$languageEditor = $languageParser->getLanguageEditor(0);
-
-		if (($languageEditor->getAtutorVersion() != VERSION) 
-			&& (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE)) 
-			{
-				$msg->addError('LANG_WRONG_VERSION');
-		}
-
-		if (($languageEditor->getStatus() != AT_LANG_STATUS_PUBLISHED) 
-			&& ($languageEditor->getStatus() != AT_LANG_STATUS_COMPLETE) 
-			&& (!defined('AT_DEVEL_TRANSLATE') || !AT_DEVEL_TRANSLATE)) 
-			{
-				$msg->addError('LANG_NOT_COMPLETE');
-		}
-
+		
 		if ($languageManager->exists($languageEditor->getCode())) {
 			$msg->addError('LANG_EXISTS');
 		}
 
 		if (!$msg->containsErrors()) {
-			$languageEditor->import($import_path .  'language_text.sql');
+			$languageEditor->import($import_path_tmp .  'language_text.sql');
 			$msg->addFeedback('IMPORT_LANG_SUCCESS');
 		}
 
 		// remove the files:
-		@unlink($import_path . 'language.xml');
-		@unlink($import_path . 'language_text.sql');
-		@unlink($import_path . 'readme.txt');
+		$tmp_filename = str_replace(".zip", "", $filename);
+		@unlink($import_path_tmp . 'language.xml');
+		@unlink($import_path_tmp . 'language_text.sql');
+		@unlink($import_path_tmp . 'readme.txt');
+		@rmdir($import_path_tmp);
 		@unlink($filename);
+        @unlink($tmp_filename);
 	}
 
 	// public
