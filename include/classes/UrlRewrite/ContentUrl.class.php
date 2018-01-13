@@ -19,7 +19,7 @@
 */
 class ContentUrl {
 	// constructor
-	function ContentUrl() {
+	function __construct() {
 		$this->rule = array(0=>'cid');
 	}
 

@@ -23,7 +23,7 @@ class TestsUrl {
 //	var $className;	//the name of this class
 
 	// constructor
-	function TestsUrl() {
+	function __construct() {
 		$this->rule = array(0=>'tid', 1=>'action');
 	}
 

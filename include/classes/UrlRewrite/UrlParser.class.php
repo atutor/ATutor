@@ -25,7 +25,7 @@ class UrlParser {
 	var $path_array;	//an array [0]->course_id; [1]->class obj
 
 	// Constructor
-	function UrlParser($pathinfo=''){
+	function __construct($pathinfo=''){
 		if ($pathinfo==''){
 			$pathinfo = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 		}

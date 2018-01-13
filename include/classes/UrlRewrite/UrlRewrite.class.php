@@ -33,7 +33,7 @@ class UrlRewrite  {
 	var $isEmpty;	//true if path, filename, and query are empty
 
 	// constructor
-	function UrlRewrite($path, $filename, $query) {
+	function __construct($path, $filename, $query) {
 		if ($path=='' && $filename=='' && $query==''){
 			$this->isEmpty = true;
 		} else {

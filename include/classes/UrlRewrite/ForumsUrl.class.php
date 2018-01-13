@@ -19,7 +19,7 @@
 */
 class ForumsUrl {
 	// constructor
-	function ForumsUrl() {
+	function __construct() {
 		$this->rule = array(0=>'fid', 1=>'pid');
 	}
 

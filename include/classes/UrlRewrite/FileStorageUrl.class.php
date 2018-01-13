@@ -23,7 +23,7 @@ class FileStorageUrl {
 
 	// constructor
 	// @param the filename that was being called, this can be index.php, comments.php, revisions.php
-	function FileStorageUrl($filename) {
+	function __construct($filename) {
 		if ($filename == ''){
 			$filename = 'index.php';
 		}

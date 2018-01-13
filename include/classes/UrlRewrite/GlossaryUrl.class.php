@@ -19,7 +19,7 @@
 */
 class GlossaryUrl {
 	// constructor
-	function GlossaryUrl() {
+	function __construct() {
 		$this->rule = array(0=>'p');
 	}
 
