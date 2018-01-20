@@ -14,7 +14,7 @@
 if (!defined('AT_INCLUDE_PATH')) { exit; }
 include_once(AT_INCLUDE_PATH . 'lib/vital_funcs.inc.php');
 
-define('AT_DEVEL', 1);
+define('AT_DEVEL', 0);
 define('AT_ERROR_REPORTING', E_ERROR | E_WARNING | E_PARSE); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 //define('AT_ERROR_REPORTING', E_ALL + E_STRICT); // default is E_ALL ^ E_NOTICE, use E_ALL or E_ALL + E_STRICT for developing
 
@@ -188,7 +188,7 @@ define('EMAIL',                     $_config['contact_email']);
 define('EMAIL_NOTIFY',              $_config['email_notification']);
 define('ALLOW_INSTRUCTOR_REQUESTS', $_config['allow_instructor_requests']);
 define('AUTO_APPROVE_INSTRUCTORS',  $_config['auto_approve_instructors']);
-define('SITE_NAME',                 $_config['site_name']);
+define('SITE_NAME',                 htmlspecialchars(stripslashes($_config['site_name'])));
 define('HOME_URL',                  $_config['home_url']);
 define('DEFAULT_LANGUAGE',          $_config['default_language']);
 define('CACHE_DIR',                 $_config['cache_dir']);
