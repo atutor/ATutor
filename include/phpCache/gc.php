@@ -1,4 +1,4 @@
-<?
+<?php
 /*
    phpCache v1.4 - PHP caching engine 
    Copyright (C) 2001 Nathan <nathan@0x00.org> 
