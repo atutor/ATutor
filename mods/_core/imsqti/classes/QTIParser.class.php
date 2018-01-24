@@ -316,9 +316,8 @@ class QTIParser {
 
 	// private
    	function characterData($parser, $data){
-		global $addslashes;
 		if (trim($data)!=''){
-			$this->character_data .= $addslashes(preg_replace('/[\t\0\x0B(\r\n)]*/', '', $data));
+			$this->character_data .= preg_replace('/[\t\0\x0B(\r\n)]*/', '', $data);
 		}
 	}
 
