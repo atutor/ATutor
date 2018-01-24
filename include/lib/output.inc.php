@@ -38,7 +38,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * Returns a formatted date string - Uses the same options as date(), but requires a % infront of each argument and the
 * textual values are language dependent (unlike date()).
 * @access  public
-* @param   string $format       preferred date format 
+* @param   string $format       preferred date format
 * @param   string $timestamp    value of timestamp
 * @param   int $format_type     timestamp format, an AT_DATE constant
 * @return  string               formatted date
@@ -46,7 +46,7 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 * @author  Joel Kronenberg
 */
 
-/* 
+/*
     The following options were added as language dependant:
     %D: A textual representation of a week, three letters Mon through Sun
     %F: A full textual representation of a month, such as January or March January through December
@@ -55,8 +55,8 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 
     Support for the following maybe added later:
     ?? %S: English ordinal suffix for the day of the month, 2 characters st, nd, rd or th. Works well with j
-    ?? %a: Lowercase Ante meridiem and Post meridiem am or pm 
-    ?? %A: Uppercase Ante meridiem and Post meridiem AM or PM 
+    ?? %a: Lowercase Ante meridiem and Post meridiem am or pm
+    ?? %A: Uppercase Ante meridiem and Post meridiem AM or PM
 
     valid format_types:
     AT_DATE_MYSQL_DATETIME:        YYYY-MM-DD HH:MM:SS
@@ -64,51 +64,51 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
     AT_DATE_UNIX_TIMESTAMP:        seconds since epoch
     AT_DATE_INDEX_VALUE:           0-x, index into a date array
 */
-function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME) {    
+function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL_DATETIME) {
 
     static $day_name_ext, $day_name_con, $month_name_ext, $month_name_con;
     global $_config;
 
     if (!isset($day_name_ext)) {
-        $day_name_ext = array(    'date_sunday', 
-                                'date_monday', 
-                                'date_tuesday', 
-                                'date_wednesday', 
-                                'date_thursday', 
+        $day_name_ext = array(    'date_sunday',
+                                'date_monday',
+                                'date_tuesday',
+                                'date_wednesday',
+                                'date_thursday',
                                 'date_friday',
                                 'date_saturday');
 
-        $day_name_con = array(    'date_sun', 
-                                'date_mon', 
-                                'date_tue', 
+        $day_name_con = array(    'date_sun',
+                                'date_mon',
+                                'date_tue',
                                 'date_wed',
-                                'date_thu', 
-                                'date_fri', 
+                                'date_thu',
+                                'date_fri',
                                 'date_sat');
 
-        $month_name_ext = array('date_january', 
-                                'date_february', 
-                                'date_march', 
-                                'date_april', 
+        $month_name_ext = array('date_january',
+                                'date_february',
+                                'date_march',
+                                'date_april',
                                 'date_may',
-                                'date_june', 
-                                'date_july', 
-                                'date_august', 
-                                'date_september', 
-                                'date_october', 
+                                'date_june',
+                                'date_july',
+                                'date_august',
+                                'date_september',
+                                'date_october',
                                 'date_november',
                                 'date_december');
 
-        $month_name_con = array('date_jan', 
-                                'date_feb', 
-                                'date_mar', 
-                                'date_apr', 
+        $month_name_con = array('date_jan',
+                                'date_feb',
+                                'date_mar',
+                                'date_apr',
                                 'date_may_short',
-                                'date_jun', 
-                                'date_jul', 
-                                'date_aug', 
-                                'date_sep', 
-                                'date_oct', 
+                                'date_jun',
+                                'date_jul',
+                                'date_aug',
+                                'date_sep',
+                                'date_oct',
                                 'date_nov',
                                 'date_dec');
     }
@@ -152,7 +152,7 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
         $minute        = substr($timestamp,10,2);
         $second        = substr($timestamp,12,2);
         //debug("y: ". $year . "; mon: ". $month. "; day: " . $day. "; h: ". $hour. "; min: ". $min. "; sec: ".$sec);
-        $timestamp    = mktime($hour, $minute, $second, $month, $day, $year);  
+        $timestamp    = mktime($hour, $minute, $second, $month, $day, $year);
 
     }
 
@@ -178,13 +178,13 @@ function AT_date($format='%Y-%M-%d', $timestamp = '', $format_type=AT_DATE_MYSQL
 
         if ($tokens[$i] == 'D') {
             $output = str_replace('%D', _AT($day_name_con[date('w', $timestamp)]),$output);
-        
+
         } else if ($tokens[$i] == 'l') {
             $output = str_replace('%l', _AT($day_name_ext[date('w', $timestamp)]),$output);
-        
+
         } else if ($tokens[$i] == 'F') {
-            $output = str_replace('%F', _AT($month_name_ext[date('n', $timestamp)-1]),$output);        
-        
+            $output = str_replace('%F', _AT($month_name_ext[date('n', $timestamp)-1]),$output);
+
         } else if ($tokens[$i] == 'M') {
             $output = str_replace('%M', _AT($month_name_con[date('n', $timestamp)-1]),$output);
 
@@ -240,7 +240,7 @@ function clean_extra_char($input) {
 * @access    public
 * @param    args                unlimited number of arguments allowed but first arg MUST be name of the language variable/term
 *                               i.e      $args[0] = the term to the format string $_template[term]
-*                                        $args[1..x] = optional arguments to the formatting string 
+*                                        $args[1..x] = optional arguments to the formatting string
 * @return    string|array       full resulting message
 * @see        $db               in include/vitals.inc.php
 * @see        cache()           in include/phpCache/phpCache.inc.php
@@ -252,13 +252,13 @@ function clean_extra_char($input) {
 function _AT() {
     global $_cache_template, $lang_et, $_rel_url, $_config_defaults, $_config, $_base_path;
     static $_template;
-    
+
     $termTypes = array('AT_ERRO','AT_INFO','AT_WARN','AT_FEED','AT_HELP','AT_CONF');
     $cache_life = $_config['cache_life'] ? $_config['cache_life'] : $_config_defaults['cache_life'];  // Get session resource timeout or set it to 2 hours if no such configuration exists
     $lang = $_SESSION['lang'];
     $args = func_get_args();
     $term_and_args = $args[0];
-    
+
     if (is_array($term_and_args)) {
         // Handle the case of _AT(array([term], [argument-1], ... [argument-N]))
         $term = array_shift($term_and_args);
@@ -268,12 +268,12 @@ function _AT() {
         $term = $term_and_args;
         array_shift($args);
     }
-    
+
     // Unset $args if none to avoid the vsprintf() error.
     if (count($args) == 0) {
         unset($args);
     }
-    
+
     // a template variable
     // Cache all the token used on the same page with the current language
     // NOTE!!! term has length of CHAR(30) in language_pages and CHAR(50) in language_text. While it is true the cache logic below is inefficient
@@ -296,7 +296,7 @@ function _AT() {
                     continue;
                 }
             }
-        
+
             cache_variable('_cache_template');
             endcache(true, false);
         }
@@ -328,7 +328,7 @@ function _AT() {
         // backawards compatibility:
         //$term = substr($term, 0, 30); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
         //$page = substr($page, 0, 50); // NOTE !!! This line is here to support DB of ATutor version 2.1 and lower
-    
+
         queryDB('INSERT IGNORE INTO %slanguage_pages (`term`, `page`) VALUES ("%s", "%s")', array(TABLE_PREFIX, $term, $_rel_url));
         $outString = empty($outString) ? sprintf('[ %s ]', $term) : clean_extra_char($outString);
     }
@@ -342,7 +342,7 @@ function _AT() {
         }
     }
     return $outString;
-    
+
 }
 
 /**********************************************************************************************************/
@@ -357,7 +357,7 @@ function _AT() {
     * @access    public
     * @param    string $input           text being transformed
     * @param    string $name            the unique name of this field (convension: table_name.field_name)
-    * @param    boolean $runtime_html   forcefully disables html formatting for $input (only used by fields that 
+    * @param    boolean $runtime_html   forcefully disables html formatting for $input (only used by fields that
     *                                   have the 'formatting' option
     * @return    string                 transformed $input
     * @see        AT_FORMAT constants   in include/lib/constants.inc.php
@@ -369,7 +369,7 @@ function _AT() {
         if (!isset($_field_formatting[$name])) {
             /* field not set, check if there's a global setting */
             $parts = explode('.', $name);
-            
+
             /* check if wildcard is set: */
             if (isset($_field_formatting[$parts[0].'.*'])) {
                 $name = $parts[0].'.*';
@@ -432,7 +432,7 @@ function _AT() {
 
 /********************************************************************************************/
 // Global variables for emoticons
- 
+
 global $smile_pics;
 global $smile_codes;
 if (!isset($smile_pics)) {
@@ -525,7 +525,7 @@ function smile_javascript () {
         $i++;
     }
 }
-    
+
 function myCodes($text, $html = false) {
     global $_base_path;
     global $HTTP_USER_AGENT;
@@ -609,12 +609,12 @@ function myCodes($text, $html = false) {
 //http://www.atutor.ca/atutor/mantis/view.php?id=4134 - attempt to fix this bug - does not work as required
 //    $outputUtils = new ContentOutputUtils();
 //    $text = $outputUtils ->stripPtags($text);
-    
+
     /* contributed by Thomas M. Duffey <tduffey at homeboyz.com> */
     $html = !$html ? 0 : 1;
-    
+
     // little hack added by greg to add syntax highlighting without using <?php \?\>
-    
+
     $text = str_replace("[code]","[code]<?php",$text);
     $text = str_replace("[/code]","?>[/code]",$text);
 
@@ -657,7 +657,7 @@ function fix_quotes($text){
  * This function converts the youtube playable url used in <object> tag (for instance: http://www.youtube.com/v/a0ryB0m0MiM)
  * to youtube url that is used to browse (for instance: http://www.youtube.com/watch?v=a0ryB0m0MiM)
  * @param: youtube playable URL. For instance, http://www.youtube.com/v/a0ryB0m0MiM
- * @return: if the param is a youtube playable url, return the according youtube URL used to browse. 
+ * @return: if the param is a youtube playable url, return the according youtube URL used to browse.
  *          For instance: http://www.youtube.com/watch?v=a0ryB0m0MiM
  *          Otherwise, return the original send-in parameter.
  */
@@ -669,9 +669,9 @@ function convert_youtube_playURL_to_watchURL($youtube_playURL) {
 /*
  * This function converts the youtube url that is used to browse (for instance: http://www.youtube.com/watch?v=a0ryB0m0MiM)
  * to youtube playable url used in <object> tag (for instance: http://www.youtube.com/v/a0ryB0m0MiM)
- * @param: the youtube URL used to browse. 
+ * @param: the youtube URL used to browse.
  *         For instance: http://www.youtube.com/watch?v=a0ryB0m0MiM
- * @return: if the param is a youtube url used to browse, return the according youtube playable URL. 
+ * @return: if the param is a youtube url used to browse, return the according youtube playable URL.
  *          For instance, http://www.youtube.com/v/a0ryB0m0MiM
  *          Otherwise, return the original send-in parameter.
  */
@@ -682,7 +682,7 @@ function convert_youtube_watchURL_to_playURL($youtube_watchURL) {
 
 function embed_media($text) {
     global $_base_path;
-    
+
     if (preg_match("/\[media(\|[0-9]+\|[0-9]+)?\]*/", $text)==0){
         return $text;
     }
@@ -690,10 +690,10 @@ function embed_media($text) {
     // 1. remove the spaces in [media] tag, otherwise, the next line converts URL inside [media] into <a> tag
     $text = preg_replace("/(\[media\])([\s]*)(.*)(\[\/media\])/", '$1$3$4', $text);
     $text = preg_replace("/(\[media\])(.*)([\s]*)(\[\/media\])/U", '$1$2$4', $text);
-    
+
     $media_matches = array();
     $media_replace = array();
-    
+
     // First, we search though the text for all different kinds of media defined by media tags and store the results in $media_matches.
     // Then the different replacements for the different media tags are stored in $media_replace.
     // Lastly, we loop through all $media_matches / $media_replaces. (We choose $media_replace as index because $media_matches is multi-dimensioned.) It is important that for each $media_matches there is a $media_replace with the same index. For each media match we check the width/height, or we use the default value of 425x350. We then replace the height/width/media1/media2 parameter placeholders in $media_replace with the correct ones, before running a str_replace on $text, replacing the given media with its correct replacement.
@@ -725,19 +725,19 @@ function embed_media($text) {
             $media_replace[] = '<object width="##WIDTH##" height="##HEIGHT##"><param name="movie" value="http://##MEDIA1##youtube.com/v/##MEDIA2##"></param><embed src="http://##MEDIA1##youtube.com/v/##MEDIA2##" type="application/x-shockwave-flash" width="##WIDTH##" height="##HEIGHT##"></embed></object>';
         }
     }
-    
+
     // .mpg
     preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mpg\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] = "<object data=\"##MEDIA1##.mpg\" type=\"video/mpeg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mpg\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mpg\">##MEDIA1##.mpg</a></object>";
-    
+
     // .avi
     preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).avi\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] = "<object data=\"##MEDIA1##.avi\" type=\"video/x-msvideo\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.avi\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.avi\">##MEDIA1##.avi</a></object>";
-    
+
     // .wmv
     preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).wmv\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] = "<object data=\"##MEDIA1##.wmv\" type=\"video/x-ms-wmv\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wmv\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wmv\">##MEDIA1##.wmv</a></object>";
-    
+
     // .mov
     preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mov\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] = "<object classid=\"clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B\" codebase=\"http://www.apple.com/qtactivex/qtplugin.cab\" width=\"##WIDTH##\" height=\"##HEIGHT##\">\n".
@@ -755,7 +755,7 @@ function embed_media($text) {
                        "  <a href=\"##MEDIA1##.mov\">##MEDIA1##.mov</a>\n".
                        "  <![endif]-->\n".
                        "</object>";
-    
+
     // .swf
     preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).swf\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] = "<object type=\"application/x-shockwave-flash\" data=\"##MEDIA1##.swf\" width=\"##WIDTH##\" height=\"##HEIGHT##\">  <param name=\"movie\" value=\"##MEDIA1##.swf\"><param name=\"loop\" value=\"false\"><a href=\"##MEDIA1##.swf\">##MEDIA1##.swf</a></object>";
@@ -763,23 +763,23 @@ function embed_media($text) {
     // .mp3
     preg_match_all("#\[media[0-9a-z\|]*\]([.\w\d]+[^\s\"]+).mp3\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] = "<object type=\"audio/mpeg\" data=\"##MEDIA1##.mp3\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mp3\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.mp3\">##MEDIA1##.mp3</a></object>";
-    
+
     // .wav
     preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).wav\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] ="<object type=\"audio/x-wav\" data=\"##MEDIA1##.wav\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.wav\"><param name=\"autoplay\" value=\"false\"><param name=\"autoStart\" value=\"0\"><a href=\"##MEDIA1##.wav\">##MEDIA1##.wav</a></object>";
-    
+
     // .ogg
     preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogg\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] ="<object type=\"application/ogg\" data=\"##MEDIA1##.ogg\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.ogg\"><a href=\"##MEDIA1##.ogg\">##MEDIA1##.ogg</a></object>";
-    
+
     // .ogm
     preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).ogm\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] ="<object type=\"application/ogm\" data=\"##MEDIA1##.ogm\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.ogm\"><a href=\"##MEDIA1##.ogg\">##MEDIA1##.ogm</a></object>";
-    
+
     // .mid
     preg_match_all("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i",$text,$media_matches[],PREG_SET_ORDER);
     $media_replace[] ="<object type=\"application/x-midi\" data=\"##MEDIA1##.mid\" width=\"##WIDTH##\" height=\"##HEIGHT##\"><param name=\"src\" value=\"##MEDIA1##.mid\"><a href=\"##MEDIA1##.mid\">##MEDIA1##.mid</a></object>";
-    
+
     $text = preg_replace("#\[media[0-9a-z\|]*\](.+[^\s\"]+).mid\[/media\]#i", "<object type=\"application/x-midi\" data=\"\\1.mid\" width=\"".$width."\" height=\"".$height."\"><param name=\"src\" value=\"\\1.mid\"><a href=\"\\1.mid\">\\1.mid</a></object>", $text);
 
     // Executing the replace
@@ -787,7 +787,7 @@ function embed_media($text) {
         foreach($media_matches[$i] as $media)
         {
             //find width and height for each matched media
-            if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches)) 
+            if (preg_match("/\[media\|([0-9]*)\|([0-9]*)\]*/", $media[0], $matches))
             {
                 $width = $matches[1];
                 $height = $matches[2];
@@ -797,14 +797,14 @@ function embed_media($text) {
                 $width = 425;
                 $height = 350;
             }
-            
+
             //replace media tags with embedded media for each media tag
             $media_input = $media_replace[$i];
             $media_input = str_replace("##WIDTH##","$width",$media_input);
             $media_input = str_replace("##HEIGHT##","$height",$media_input);
             $media_input = str_replace("##MEDIA1##","$media[1]",$media_input);
             $media_input = str_replace("##MEDIA2##","$media[2]",$media_input);
-            
+
             $text = str_replace($media[0],$media_input,$text);
         }
     }
@@ -825,10 +825,10 @@ function make_clickable($text) {
     // convert plain text URL to clickable URL.
     // Limited conversion: It doesn't cover the case when the stuff in front of the URL is not a word. For example:
     // <p>http://google.ca</p>
-    // "http://google.ca" 
-    $text = preg_replace('/(^|[\n ])([\w]*?)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t\)<]*)/is', 
+    // "http://google.ca"
+    $text = preg_replace('/(^|[\n ])([\w]*?)((?<!(\[media\]))http(s)?:\/\/[\w]+[^ \,\"\n\r\t\)<]*)/is',
                          '$1$2<a href="$3">$3</a>', $text);
-    
+
     // convert email address to clickable URL that pops up "send email" interface with the address filled in
     $text = preg_replace('/(?|<a href="mailto[\s]*:[\s]*([_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'\@'
                             .'[_a-zA-Z0-9\-]+(\.[_a-zA-Z0-9\-]+)*'.'(\.[a-zA-Z]{1,6})+)">(.*)<\/a>'
@@ -841,7 +841,7 @@ function make_clickable($text) {
 
 function image_replace($text) {
     /* image urls do not require http:// */
-    
+
 //    $text = eregi_replace("\[image(\|)?([[:alnum:][:space:]]*)\]" .
 //                         "[:space:]*" .
 //                         "([[:alnum:]#?/&=:\"'_.-]+)" .
@@ -849,14 +849,14 @@ function image_replace($text) {
 //                         "((\[/image\])|(.*\[/image\]))",
 //                  "<img src=\"\\3\" alt=\"\\2\" />",
 //                  $text);
-     
+
     $text = preg_replace("/\[image(\|)?([a-zA-Z0-9\s]*)\]".
                          "[\s]*".
                          "([a-zA-Z0-9\#\?\/\&\=\:\\\"\'\_\.\-]+)[\s]*".
                          "((\[\/image\])|(.*\[\/image\]))/i",
                   "<img src=\"\\3\" alt=\"\\2\" />",
                   $text);
-                  
+
     return $text;
 }
 
@@ -871,13 +871,13 @@ function format_final_output($text, $nl2br = true) {
     return image_replace(make_clickable(myCodes(' '.$text, true)));
 }
 
-// 
+//
 function apply_customized_format($input) {
     global $_input, $moduleFactory, $content_base_href, $_content_base_href;
-    
+
     $_input = $input;
     $_content_base_href = $content_base_href;
-    
+
     $enabled_modules = $moduleFactory->getModules(AT_MODULE_STATUS_ENABLED);
 
     if (is_array($enabled_modules))
@@ -891,7 +891,7 @@ function apply_customized_format($input) {
             }
         }
     }
-    
+
     return $_input;
 }
 /****************************************************************************************/
@@ -938,22 +938,22 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
         $output .= '<script type="text/javascript">
 
                     </script>
-        '; 
+        ';
 		$output .='<script language="javascript" type="text/javascript">
 			function resizeIframe(obj) {
 				obj.style.height = obj.contentWindow.document.body.scrollHeight + \'px\';
 				}
 			</script>';
-   /*   
+   /*
    //The above method to resize the iframe, woprks better than the one below
    $output .=    '<script type="text/javascript">
                     function resizeIframe() {
-                        var height = document.documentElement.clientHeight;    
+                        var height = document.documentElement.clientHeight;
                         // not sure how to get this dynamically
                         height -= 20; // whatever you set your body bottom margin/padding to be
                         document.getElementById(\'content_frame\').sty	le.height = height +"px";
                         //document.getElementById(\'content_frame\').style.height = "100px";
-                        
+
                     };
                     document.getElementById(\'content_frame\').onload = resizeIframe;
                     window.onresize = resizeIframe;
@@ -980,8 +980,8 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
              /* escape special characters */
             $term = preg_quote($term, "/");
             $term = '(\s*'.$term.'\s*)';
-            $term = str_replace(' ','((<br \/>)*\s*)', $term); 
-            
+            $term = str_replace(' ','((<br \/>)*\s*)', $term);
+
             // Uncomment the line below and comment the following line
             // when the jquery UI tooltip supports the html display.
             //$def = htmlspecialchars($v, ENT_QUOTES, 'UTF-8');
@@ -1001,7 +1001,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
     } else if (!$user_glossary) {
         $input = str_replace(array('[?]','[/?]'), '', $input);
     }
-        
+
     $input = str_replace('CONTENT_DIR', '', $input);
 
     if (isset($_config['latex_server']) && $_config['latex_server']) {
@@ -1013,7 +1013,7 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
         return $x;
     }
 
-// the following has been taken out for this: 
+// the following has been taken out for this:
 // http://atutor.ca/atutor/mantis/view.php?id=4593
 // @date Oct 18, 2010
 //    $output = apply_customized_format(format_final_output($input));
@@ -1025,8 +1025,8 @@ function format_content($input, $html = 0, $glossary, $simple = false) {
 
 function get_content_table($content)
 {
-    preg_match_all("/<(h[\d]+)[^>]*>(.*)<\/(\s*)\\1(\s*)>/i", $content, $found_headers, PREG_SET_ORDER);
-    
+    preg_match_all("/<(h[\d]+)[^>]*>(.*?)<\/(\s*)\\1(\s*)>/i", $content, $found_headers, PREG_SET_ORDER);
+
     if (count($found_headers) == 0) {
         return array("", $content);
     } else {
@@ -1035,7 +1035,7 @@ function get_content_table($content)
         for ($i = 0; $i < count($found_headers); $i++)
         {
             $div_id = "_header_" . $num_of_headers++;
-            
+
             if ($i == 0)
             {
                 $content_table = "<div id=\"toc\">\n<fieldset class=\"toc\"><legend>". _AT("table_of_contents")."</legend>\n";
@@ -1064,7 +1064,7 @@ function find_terms($find_text) {
 */
 
 /**
-* Take a code as input and grab its language specific message. Also cache the resulting 
+* Take a code as input and grab its language specific message. Also cache the resulting
 * message. Return the message. Same as get_message but key value in cache is string
 * @access  public
 * @param   string $codes     Message Code to translate - > 'term' field in DB
@@ -1072,7 +1072,7 @@ function find_terms($find_text) {
 * @author  Jacek Materna
 */
 function getTranslatedCodeStr($codes) {
-    
+
     /* this is where we want to get the msgs from the database inside a static variable */
     global $_cache_msgs_new;
     static $_msgs_new;
@@ -1085,8 +1085,8 @@ function getTranslatedCodeStr($codes) {
 
             /* get $_msgs_new from the DB */
             $sql    = 'SELECT * FROM %slanguage_text WHERE variable="_msgs" AND (language_code="%s" OR language_code="%s")';
-            $rows_lang    = queryDB($sql, array(TABLE_PREFIX, $_SESSION['lang'], $parent));         
-            
+            $rows_lang    = queryDB($sql, array(TABLE_PREFIX, $_SESSION['lang'], $parent));
+
             $i = 1;
             foreach($rows_lang as $row){
                 // do not cache key as a digit (no contstant(), use string)
@@ -1103,7 +1103,7 @@ function getTranslatedCodeStr($codes) {
     }
 
     if (is_array($codes)) {
-        /* this is an array with terms to replace */        
+        /* this is an array with terms to replace */
         $code        = array_shift($codes);
 
         $message    = $_msgs_new[$code];
@@ -1117,7 +1117,7 @@ function getTranslatedCodeStr($codes) {
 
         if ($message == '') {
             /* the language for this msg is missing: */
-        
+
             $sql    = 'SELECT * FROM '.TABLE_PREFIX.'language_text WHERE variable="_msgs"';
             $rows_msgs    = queryDB($sql, array(TABLE_PREFIX));
             $i = 1;
@@ -1153,7 +1153,7 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
     if ($num_rows) {
         echo '<div class="paging">';
         echo '<ul>';
-        
+
         $i=max($current_page-$window - max($window-$num_pages+$current_page,0), 1);
 
         if ($i > 1) {
@@ -1189,7 +1189,7 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 * @param    $info_only:              boolean. Default value is "false". When it's "true", returns an array of 4 values:
 *                                    $has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative
 * @param    $only_on_secondary_type: Default value is "". Accept one of the values: 1(auditory), 2(sign_language), 3(text), 4(visual)
-*                                    When the value is given, ignore the alternative preference settings and only replace/append 
+*                                    When the value is given, ignore the alternative preference settings and only replace/append
 *                                    (replace or append is still from session preference) the objects with the alternatives with
 *                                    the given alternative types.
 * @return    string                  $content: the content page with the appropriated resources.
@@ -1198,17 +1198,17 @@ function print_paginator($current_page, $num_rows, $request_args, $rows_per_page
 */
 function provide_alternatives($cid, $content, $info_only = false, $only_on_secondary_type = 0){
     global $db;
-    
+
     $video_exts = array("mpg", "avi", "wmv", "mov", "swf", "mp4", "flv");
-    
+
     $audio_exts = array("mp3", "wav", "ogg", "mid");
     $audio_width = 425;
     $audio_height = 27;
-    
+
     $txt_exts = array("txt", "html", "htm");
     $image_exts = array("gif", "bmp", "png", "jpg", "jpeg", "png", "tif");
     $only_on_secondary_type = intval($only_on_secondary_type);
-    
+
     // intialize the 4 returned values when $info_only is on
     if ($info_only)
     {
@@ -1218,10 +1218,10 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
         $has_sign_lang_alternative = false;
     }
 
-    if (!$info_only && !$only_on_secondary_type && 
-        ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) && 
-        ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) && 
-        ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0)) 
+    if (!$info_only && !$only_on_secondary_type &&
+        ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==0) &&
+        ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==0) &&
+        ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==0))
     {
         //No user's preferences related to content format are declared
         if (!$info_only) {
@@ -1230,9 +1230,9 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
             return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
         }
     }
-    
+
     // get all relations between primary resources and their alternatives
-    $sql = "SELECT DISTINCT c.content_path, pr.resource, prt.type_id primary_type, 
+    $sql = "SELECT DISTINCT c.content_path, pr.resource, prt.type_id primary_type,
                    sr.secondary_resource, srt.type_id secondary_type
               FROM ".TABLE_PREFIX."primary_resources pr, ".
                      TABLE_PREFIX."primary_resources_types prt,".
@@ -1249,7 +1249,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
         $sql .= " AND srt.type_id=".$only_on_secondary_type;
     }
     $sql .= " ORDER BY pr.primary_resource_id, prt.type_id";
-    
+
 
     $rows_content = queryDB($sql, array());
 
@@ -1260,7 +1260,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
             return array($has_text_alternative, $has_audio_alternative, $has_visual_alternative, $has_sign_lang_alternative);
         }
     }
-    
+
     $primary_resource_names = array();
     foreach($rows_content as $row){
         // if the primary resource is defined with multiple resource type,
@@ -1275,7 +1275,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
         // so, should replace happen or append happen? With this fix, whichever
         // the first in the sql return gets preserved in the array and processed.
         // The further improvement is requried to keep rows based on the selected
-        // secondary type (http://www.atutor.ca/atutor/mantis/view.php?id=4598). 
+        // secondary type (http://www.atutor.ca/atutor/mantis/view.php?id=4598).
         if ($only_on_secondary_type > 0) {
             if (in_array($row['resource'], $primary_resource_names)) {
                 continue;
@@ -1284,38 +1284,38 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
             }
         }
         $alternative_rows[] = $row;
-        
+
         $youtube_playURL = convert_youtube_watchURL_to_playURL($row['resource']);
-        
+
         if ($row['resource'] <> $youtube_playURL) {
             $row['resource'] = $youtube_playURL;
             $alternative_rows[] = $row;
         }
     }
 
-    foreach ($alternative_rows as $row) 
+    foreach ($alternative_rows as $row)
     {
         if ($info_only || $only_on_secondary_type ||
             ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_TEXT']==1 && $row['primary_type']==3 &&
-            ($_SESSION['prefs']['PREF_ALT_TO_TEXT']=="audio" && $row['secondary_type']==1 || 
-             $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="visual" && $row['secondary_type']==4 || 
+            ($_SESSION['prefs']['PREF_ALT_TO_TEXT']=="audio" && $row['secondary_type']==1 ||
+             $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="visual" && $row['secondary_type']==4 ||
              $_SESSION['prefs']['PREF_ALT_TO_TEXT']=="sign_lang" && $row['secondary_type']==2)) ||
-             
+
              ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_AUDIO']==1 && $row['primary_type']==1 &&
-             ($_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="visual" && $row['secondary_type']==4 || 
-              $_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="text" && $row['secondary_type']==3 || 
+             ($_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="visual" && $row['secondary_type']==4 ||
+              $_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="text" && $row['secondary_type']==3 ||
               $_SESSION['prefs']['PREF_ALT_TO_AUDIO']=="sign_lang" && $row['secondary_type']==2)) ||
-              
+
              ($_SESSION['prefs']['PREF_USE_ALTERNATIVE_TO_VISUAL']==1 && $row['primary_type']==4 &&
-             ($_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="audio" && $row['secondary_type']==1 || 
-              $_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="text" && $row['secondary_type']==3 || 
+             ($_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="audio" && $row['secondary_type']==1 ||
+              $_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="text" && $row['secondary_type']==3 ||
               $_SESSION['prefs']['PREF_ALT_TO_VISUAL']=="sign_lang" && $row['secondary_type']==2))
             )
         {
             $ext = substr($row['secondary_resource'], strrpos($row['secondary_resource'], '.')+1);
-            
+
             // alternative is video or a youtube url
-            if (in_array($ext, $video_exts) || in_array($ext, $audio_exts) || 
+            if (in_array($ext, $video_exts) || in_array($ext, $audio_exts) ||
                 preg_match("/http:\/\/.*youtube.com\/watch.*/", $row['secondary_resource'])) {
                 if (in_array($ext, $audio_exts)) {
                     // display audio medias in a smaller width/height (425 * 27)
@@ -1326,17 +1326,17 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
                     $target = '[media]'.$row['secondary_resource'].'[/media]';
                 }
             }
-            // a text primary to be replaced by a visual alternative 
+            // a text primary to be replaced by a visual alternative
             else if (in_array($ext, $txt_exts))
             {
-                if ($row['content_path'] <> '') 
+                if ($row['content_path'] <> '')
                     $file_location = $row['content_path'].'/'.$row['secondary_resource'];
-                else 
+                else
                     $file_location = $row['secondary_resource'];
-                
+
                 $file = AT_CONTENT_DIR.$_SESSION['course_id'] . '/'.$file_location;
                 $target = '<br />'.file_get_contents($file);
-                
+
                 // check whether html file
                 if (preg_match('/.*\<html.*\<\/html\>.*/s', $target))
                 { // is a html file, use iframe to display
@@ -1346,16 +1346,16 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
                     } else {
                         $course_base_href = 'content/' . $_SESSION['course_id'] . '/';
                     }
-    
+
                     $file = AT_BASE_HREF . $course_base_href.$file_location;
-                        
+
                     $target = '<iframe width="100%" frameborder="0" class="autoHeight" scrolling="auto" src="'.$file.'"></iframe>';
                 }
                 else
                 { // is a text file, insert/replace into content
                     $target = nl2br($target);
                 }
-            } 
+            }
             else if (in_array($ext, $image_exts))
                 $target = '<img border="0" alt="'._AT('alternate_text').'" src="'.$row['secondary_resource'].'"/>';
             // otherwise
@@ -1371,14 +1371,14 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
                 $pattern_replace_to = '${1}${2}'."<br /><br />\n".$target."\n".'${3}';
 
             // *** Alternative replace/append starts from here ***
-            $processed = false;    // one primary resource is only processed once 
-            
+            $processed = false;    // one primary resource is only processed once
+
             // append/replace target alternative to [media]source[/media]
             if (!$processed && preg_match("/".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/")."/sU", $content))
             {
                 $processed = true;
                 if (!$info_only) {
-                    $content = preg_replace("/(.*)(".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/").")(.*)/sU", 
+                    $content = preg_replace("/(.*)(".preg_quote("[media").".*".preg_quote("]".$row['resource']."[/media]", "/").")(.*)/sU",
                          $pattern_replace_to, $content);
                 } else {
                     if ($row['secondary_type'] == 1) $has_audio_alternative = true;
@@ -1387,13 +1387,13 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
                     if ($row['secondary_type'] == 4) $has_visual_alternative = true;
                 }
             }
-            
+
             // append/replace target alternative to <img ... src="source" ...></a>
             if (!$processed && preg_match("/\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>/sU", $content))
             {
                 $processed = true;
                 if (!$info_only) {
-                    $content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/sU", 
+                    $content = preg_replace("/(.*)(\<img.*src=\"".preg_quote($row['resource'], "/")."\".*\/\>)(.*)/sU",
                                         $pattern_replace_to, $content);
                 } else {
                     if ($row['secondary_type'] == 1) $has_audio_alternative = true;
@@ -1402,13 +1402,13 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
                     if ($row['secondary_type'] == 4) $has_visual_alternative = true;
                 }
             }
-            
+
             // append/replace target alternative to <object ... source ...></object>
             if (!$processed && preg_match("/\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>/sU", $content))
             {
                 $processed = true;
                 if (!$info_only) {
-                    $content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU", 
+                    $content = preg_replace("/(.*)(\<object.*".preg_quote($row['resource'], "/").".*\<\/object\>)(.*)/sU",
                                         $pattern_replace_to, $content);
                 } else {
                     if ($row['secondary_type'] == 1) $has_audio_alternative = true;
@@ -1417,14 +1417,14 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
                     if ($row['secondary_type'] == 4) $has_visual_alternative = true;
                 }
             }
-            
+
             // append/replace target alternative to <a>...source...</a> or <a ...source...>...</a>
             // skip this "if" when the source object has been processed in aboved <img> tag
             if (!$processed && preg_match("/\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>/sU", $content))
             {
                 $processed = true;
                 if (!$info_only) {
-                    $content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU", 
+                    $content = preg_replace("/(.*)(\<a.*".preg_quote($row['resource'], "/").".*\<\/a\>)(.*)/sU",
                                         $pattern_replace_to, $content);
                 } else {
                     if ($row['secondary_type'] == 1) $has_audio_alternative = true;
@@ -1433,13 +1433,13 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
                     if ($row['secondary_type'] == 4) $has_visual_alternative = true;
                 }
             }
-            
+
             // append/replace target alternative to <embed ... source ...>
             if (!$processed && preg_match("/\<embed.*".preg_quote($row['resource'], "/").".*\>/sU", $content))
             {
                 $processed = true;
                 if (!$info_only) {
-                    $content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/sU", 
+                    $content = preg_replace("/(.*)(\<embed.*".preg_quote($row['resource'], "/").".*\>)(.*)/sU",
                                         $pattern_replace_to, $content);
                 } else {
                     if ($row['secondary_type'] == 1) $has_audio_alternative = true;
@@ -1450,7 +1450,7 @@ function provide_alternatives($cid, $content, $info_only = false, $only_on_secon
             }
         }
     }
-    
+
     if (!$info_only) {
         return $content;
     } else {
