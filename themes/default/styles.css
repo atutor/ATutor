@@ -2111,6 +2111,7 @@ div#subnavlistcontainer {
 	width:100%;
 	margin:auto;
 	height:auto;
+	padding-left:1.5em;
 }
 
 .show_hide {
@@ -3412,7 +3413,7 @@ div.input-form.remedialContent {
 }
 
 .wide{
-    width:90%;
+    width:90% !important;
 }
 #sm_topnav{
     display:none;
