@@ -44,7 +44,7 @@ class ModuleFactory {
 	// private
 	var $_modules = NULL; // array of module refs
 
-	function ModuleFactory($auto_load = FALSE) {
+	function __construct($auto_load = FALSE) {
 		$this->_modules = array();
 
 		if ($auto_load == TRUE) {

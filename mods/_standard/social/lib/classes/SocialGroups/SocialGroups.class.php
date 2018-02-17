@@ -22,7 +22,7 @@ class SocialGroups{
 	/**
 	 * constructor
 	 */
-	 function SocialGroups(){}
+	 function __construct(){}
 
 	/**
 	 * Adding a group

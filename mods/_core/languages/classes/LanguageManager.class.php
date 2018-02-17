@@ -64,7 +64,7 @@ class LanguageManager {
 	* 
 	* Initializes availableLanguages and numLanguages.
 	*/
-	function LanguageManager() {
+	function __construct() {
 		$sql	= "SELECT * FROM %slanguages ORDER BY native_name";
 		$rows_langs = queryDB($sql, array(TABLE_PREFIX));
 		foreach($rows_langs as $row){

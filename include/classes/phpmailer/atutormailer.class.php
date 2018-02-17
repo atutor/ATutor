@@ -32,7 +32,7 @@ class ATutorMailer extends PHPMailer {
 	* @since   ATutor 1.4.1
 	* @author  Joel Kronenberg
 	*/
-	function ATutorMailer() {
+	function __construct() {
 		if (MAIL_USE_SMTP) {
 			$this->IsSMTP(); // set mailer to use SMTP
 			$this->Host = ini_get('SMTP');  // specify main and backup server

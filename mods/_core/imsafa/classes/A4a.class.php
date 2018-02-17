@@ -28,7 +28,7 @@ class A4a {
 	var $relative_path = '';			//relative path to the file 
 
 	//Constructor
-	function A4a($cid){
+	function __construct($cid){
 		$this->cid = intval($cid);
 	}
 

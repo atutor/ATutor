@@ -48,7 +48,7 @@ class Savant2_Plugin {
 	* 
 	*/
 	
-	function Savant2_Plugin($conf = array())
+	function __construct($conf = array())
 	{
 		settype($conf, 'array');
 		foreach ($conf as $key => $val) {

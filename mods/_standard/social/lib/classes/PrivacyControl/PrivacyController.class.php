@@ -18,7 +18,7 @@ include_once(AT_SOCIAL_INCLUDE.'classes/SocialGroups/SocialGroups.class.php');
  */
 class PrivacyController{
 	//Constructor
-	function PrivacyController(){
+	function __construct(){
 	}
 
 	/**

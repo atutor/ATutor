@@ -34,7 +34,7 @@ class SocialGroup {
 	/**
 	 * Constructor
 	 */
-	function SocialGroup($group_id){
+	function __construct($group_id){
 		$this->group_id = intval($group_id);
 
 		if ($this->group_id > 0){

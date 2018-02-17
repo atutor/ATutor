@@ -20,7 +20,7 @@ class PhotoAlbum {
     var $id;
 
     /** Constructor */
-    function PhotoAlbum($id=0){
+    function __construct($id=0){
         $this->id = intval($id);
     }
 

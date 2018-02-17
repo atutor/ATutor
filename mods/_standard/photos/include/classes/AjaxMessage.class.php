@@ -24,7 +24,7 @@ class AjaxMessage extends Message {
 	/**
 	 * Override constructor
 	 */
-	function AjaxMessage(){
+	function __construct(){
 	}
 
 	/**

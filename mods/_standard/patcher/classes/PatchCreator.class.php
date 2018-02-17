@@ -72,7 +72,7 @@ class PatchCreator {
 	* )
 	*/
 	
-	function PatchCreator($patch_info_array, $patch_id)
+	function __construct($patch_info_array, $patch_id)
 	{
 		// add slashes if magic_quotes_gpc is off
 		if (!get_magic_quotes_gpc())

@@ -39,7 +39,7 @@ class QTIImport {
 	var $weights	 = array();
 
 	//Constructor
-	function QTIImport($import_path){
+	function __construct($import_path){
 		$this->import_path = $import_path;
 	}
 

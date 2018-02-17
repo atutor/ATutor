@@ -56,7 +56,7 @@ class ErrorHandler {
 	* @return void 
 	* @access public 
 	*/ 
-	function ErrorHandler() {  
+	function __construct() {  
 		
 		$this->setFlags(); // false by default
 		set_error_handler(array(&$this, 'ERROR_HOOK')); 

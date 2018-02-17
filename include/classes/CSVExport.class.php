@@ -18,7 +18,7 @@ class CSVExport {
 	var $quote_replace = array('""', '\n', '\r', '\0');
 
 	// constructor
-	function CSVExport() { }
+	function __construct() { }
 
 	// public
 	function export($sql, $course_id) {

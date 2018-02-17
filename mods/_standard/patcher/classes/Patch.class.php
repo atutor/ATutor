@@ -62,7 +62,7 @@ class Patch {
 	*          $skipFilesModified
 	* @author  Cindy Qi Li
 	*/
-	function Patch($patch_array, $patch_summary_array, $skipFilesModified, $patch_folder) 
+	function __construct($patch_array, $patch_summary_array, $skipFilesModified, $patch_folder) 
 	{
 		// add relative path to move to ATutor root folder
 		for ($i = 0; $i < count($patch_array[files]); $i++)

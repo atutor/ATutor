@@ -43,7 +43,7 @@ class ContentManager
 	    $tree_split_icon, $tree_disabled_icon, $tree_end_icon, $tree_space_icon;
 
 	/* constructor	*/
-	function ContentManager(&$db, $course_id) {
+	function __construct(&$db, $course_id) {
 		global $rtl;
 		
 		$this->db = $db;

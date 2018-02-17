@@ -62,7 +62,7 @@ class TableFactory {
 	* @param string $import_dir The directory where the backup was unzipped to.
 	* 
 	*/
-	function TableFactory ($version, $db, $course_id, $import_dir) {
+	function __construct ($version, $db, $course_id, $import_dir) {
 		$this->version    = $version;
 		$this->db         = $db;
 		$this->course_id  = $course_id;

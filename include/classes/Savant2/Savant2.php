@@ -306,7 +306,7 @@ class Savant2 {
 	* 
 	*/
 	
-	function Savant2($conf = array())
+	function __construct($conf = array())
 	{
 		// set the default template search dirs
 		if (isset($conf['template_path'])) {

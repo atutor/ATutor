@@ -31,7 +31,7 @@ class ModuleParser {
 	var $maintainers = array();
 	var $attributes;
 
-	function ModuleParser() {
+	function __construct() {
 	}
 
 	// public

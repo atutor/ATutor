@@ -27,7 +27,7 @@ class ThemeParser {
 	var $element_path; // array of element paths (basically a stack)
 	var $row_num;
 
-	function ThemeParser() {
+	function __construct() {
 		$this->parser = xml_parser_create(); 
 
 		xml_set_object($this->parser, $this);

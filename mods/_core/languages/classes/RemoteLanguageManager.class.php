@@ -25,7 +25,7 @@ require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/LanguagesParser.cl
 
 class RemoteLanguageManager extends LanguageManager {
 
-	function RemoteLanguageManager() {
+	function __construct() {
 		$version = str_replace('.','_',VERSION);
 		$language_xml = @file_get_contents('https://atutor.github.io/atutor/languages.xml');
 		if ($language_xml === FALSE) {

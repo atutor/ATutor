@@ -12,7 +12,7 @@
 // $Id$
 
 class ContentOutputParser {
-    function ContentOutputParser(){}
+    function __construct(){}
     function openHandler(& $parser,$name,$attrs) {
 		global $my_files;
 

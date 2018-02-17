@@ -21,7 +21,7 @@ class PrivacyObject{
 	var $activities_prefs;
 
 	//constructor
-	function PrivacyObject(){
+	function __construct(){
 		//For now, default PrivacyObject allows all First degree connection to see everything.
 		$demo = array(	AT_SOCIAL_EVERYONE_VISIBILITY=>0, 
 						AT_SOCIAL_FRIENDS_VISIBILITY=>1, 

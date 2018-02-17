@@ -16,7 +16,7 @@ class CSVImport {
 	var $quote_replace = array('"', '\n', '\r');
 
 	// constructor
-	function CSVImport() { }
+	function __construct() { }
 
 	// public
 	// returns the primary_key, or false if there is none, or null if more than 1

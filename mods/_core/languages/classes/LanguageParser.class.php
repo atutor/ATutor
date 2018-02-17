@@ -27,7 +27,7 @@ class LanguageParser {
 	var $element_path; // array of element paths (basically a stack)
 	var $row_num;
 
-	function LanguageParser() {
+	function __construct() {
 		$this->parser = xml_parser_create(''); 
 
 		xml_set_object($this->parser, $this);

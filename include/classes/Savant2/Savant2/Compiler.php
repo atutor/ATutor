@@ -46,7 +46,7 @@ class Savant2_Compiler {
 	* 
 	*/
 	
-	function Savant2_Compiler($conf = array())
+	function __construct($conf = array())
 	{
 		settype($conf, 'array');
 		foreach ($conf as $key => $val) {

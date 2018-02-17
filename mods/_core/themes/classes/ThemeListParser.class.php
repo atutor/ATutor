@@ -29,7 +29,7 @@ class ThemeListParser {
 	var $row_num;
 	var $history_num;
 
-	function ThemeListParser() {
+	function __construct() {
 		$this->parser = xml_parser_create(''); 
 
 		xml_set_object($this->parser, $this);

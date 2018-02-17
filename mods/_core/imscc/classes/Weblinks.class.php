@@ -28,7 +28,7 @@ class Weblinks {
 	 * Constructor
 	 * For now, uses only title and URL
 	 */
-	function Weblinks($title, $url){
+	function __construct($title, $url){
 		$this->title = $title;
 		$this->url['href'] = $url;
 		$this->setUrlPrefs();	//set defaults values

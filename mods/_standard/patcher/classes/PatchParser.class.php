@@ -30,7 +30,7 @@ class PatchParser {
 	var $action_detail_num;
 	var $dependent_patches_num;
 
-	function PatchParser() {
+	function __construct() {
 		$this->parser = xml_parser_create(''); 
 
 		xml_set_object($this->parser, $this);

@@ -61,7 +61,7 @@ class Message {
 	* @param   obj $savant Reference to Savant object
 	* @author  Jacek Materna
 	*/
-	function Message($savant) { 
+	function __construct($savant) { 
 		$this->savant = $savant;
 	} 
 		

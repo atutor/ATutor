@@ -91,7 +91,7 @@ class Savant2_Error {
 	*
 	*/
 	
-	function Savant2_Error($conf = array())
+	function __construct($conf = array())
 	{
 		// set public properties
 		foreach ($conf as $key => $val) {

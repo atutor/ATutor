@@ -29,7 +29,7 @@ class ResultParser {
 	var $row_num;
 	var $history_num;
 
-	function ResultParser() {
+	function __construct() {
 
 		$this->parser = xml_parser_create(''); 
 

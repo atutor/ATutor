@@ -34,7 +34,7 @@ class LanguageEditor extends Language {
 	* 
 	* Initializes db and parent properties.
 	*/
-	function LanguageEditor($myLang) {
+	function __construct($myLang) {
 		global $db, $addslashes, $msg;
 		
 		global $savant;

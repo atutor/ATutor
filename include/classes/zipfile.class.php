@@ -53,7 +53,7 @@ class zipfile {
 	* @access	public
 	* @author	Joel Kronenberg
 	*/
-	function zipfile() {
+	function __construct() {
 		//create the temp folder for export if it hasn't been created.
 		if (!is_dir(PCLZIP_TEMPORARY_DIR)){
 			mkdir(PCLZIP_TEMPORARY_DIR);

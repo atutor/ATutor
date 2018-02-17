@@ -55,7 +55,7 @@ class Backup {
 	var $backup_tables;
 
 	// constructor
-	function Backup(&$db, $course_id = 0) {
+	function __construct(&$db, $course_id = 0) {
 
 		$this->db = $db;
 

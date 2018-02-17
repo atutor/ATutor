@@ -27,7 +27,7 @@ class WeblinksParser {
 	var $url; //url
 
 	//constructor
-	function WeblinksParser() {
+	function __construct() {
 		$this->parser = xml_parser_create(); 
 
 		xml_set_object($this->parser, $this);

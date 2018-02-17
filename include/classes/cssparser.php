@@ -3,7 +3,7 @@ class cssparser {
   var $css;
   var $html;
   
-  function cssparser($html = true) {
+  function __construct($html = true) {
     // Register "destructor"
     register_shutdown_function(array(&$this, "finalize"));
     $this->html = ($html != false);

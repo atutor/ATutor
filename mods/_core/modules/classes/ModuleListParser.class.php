@@ -29,7 +29,7 @@ class ModuleListParser {
 	var $row_num;
 	var $history_num;
 
-	function ModuleListParser() {
+	function __construct() {
 		$this->parser = xml_parser_create(''); 
 
 		xml_set_object($this->parser, $this);

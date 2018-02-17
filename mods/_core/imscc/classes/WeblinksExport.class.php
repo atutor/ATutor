@@ -25,7 +25,7 @@ class WeblinksExport {
 	 * Constructor
 	 * @param	mixed	Weblink Object, ref Weblinks.class.php
 	 */
-	function WeblinksExport($wl){
+	function __construct($wl){
 		$this->wl = $wl;
 	}
 
