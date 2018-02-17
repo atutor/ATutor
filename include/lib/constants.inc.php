@@ -75,11 +75,13 @@ $_config_defaults['session_timeout']           = '20'; // timeout after 20 minut
 $_config_defaults['prof_pic_max_file_size']	   = 819200; // max size of an uploaded profile pic, in bytes. default 800 KB
 $_config_defaults['sent_msgs_ttl']             = 120; // number of days till saved sent inbox msgs are deleted
 $_config_defaults['mysql_group_concat_max_len'] = null; // null = check, 0 = disabled/unsupported, (non-zero is the actual mysql value)
-$_config_defaults['latex_server']              = 'http://www.atutor.ca/cgi/mimetex.cgi?'; // the full URL to an external LaTeX parse
+$_config_defaults['latex_server']              = ''; // the full URL to an external LaTeX parse
 $_config_defaults['gtype']					   = 0;	//Defaulted to be original google search, @author Harris
 $_config_defaults['pretty_url']				   = 0;	//pretty url, disabled
 $_config_defaults['course_dir_name']		   = 0;	//course dir name (course slug), disabled
 $_config_defaults['apache_mod_rewrite']		   = 0;	//apache mod_rewrite extension, disabled by default.
+$_config_defaults['achecker_url']               = 'https://achecker.ca'; // default checker URL if no other is provided
+$_config_defaults['achecker_key']               = ''; // achecker key is empty by default, user must create an account
 $_config = $_config_defaults;
 
 
@@ -176,9 +178,7 @@ if (strpos(@ini_get('arg_separator.input'), ';') !== false) {
 }
 
 /* the URL to the AChecker server of choice. must include trailing slash. */
-//define('AT_ACHECKER_URL', 'http://checker.atrc.utoronto.ca/servlet/');
-define('AT_ACHECKER_URL', 'http://www.achecker.ca/');
-define('AT_ACHECKER_WEB_SERVICE_ID', '2f4149673d93b7f37eb27506905f19d63fbdfe2d');
+// moved to mods/_core/editor/editor_tabs/accessibility.php
 
 if (!isset($_SERVER['REQUEST_URI'])) {
 	$REQUEST_URI = $_SERVER['SCRIPT_NAME'];
@@ -404,7 +404,7 @@ $_field_formatting['tests_answers.notes']		= AT_FORMAT_ALL;
 //$_field_formatting['tests_questions.*']			= AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
 $_field_formatting['tests_questions.list']			= AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
 $_field_formatting['tests_questions.question']	=  AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
-$_field_formatting['tests_questions.*']   =  AT_FORMAT_SLASHES| AT_FORMAT_QUOTES;
+$_field_formatting['tests_questions.*']   =  AT_FORMAT_SLASHES;
 //$_field_formatting['tests_questions.list']			= AT_FORMAT_SLASHES;
 //$_field_formatting['tests_questions.choice_*']			=  AT_FORMAT_SLASHES;
 // This constant is used to in the test question template scripts to display the preview and result.

@@ -26,6 +26,8 @@ function in_array_cin($strItem, $arItems)
 
 
 function get_tabs() {
+
+    global $_config;
 	//these are the _AT(x) variable names and their include file
 	/* tabs[tab_id] = array(tab_name, file_name,                accesskey) */
 	$tabs[0] = array('content',       		'edit.inc.php',          'n');
@@ -35,7 +37,10 @@ function get_tabs() {
 	$tabs[3] = array('alternative_content', 'alternatives.inc.php',  'l');	
 	//Harris: Extended test functionality into content export
 	$tabs[4] = array('tests',				'tests.inc.php',		 't');
-	$tabs[5] = array('accessibility',		'accessibility.php',	 'a');
+    // if there is an achecker key, turn the accessibility tab on.
+	if($_config['achecker_key'] != ''){
+	    $tabs[5] = array('accessibility',		'accessibility.php',	 'a');
+	}
 	return $tabs;
 }
 

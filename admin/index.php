@@ -59,6 +59,12 @@ $num_courses = $row['cnt'];
 if($num_courses == 0 && $_config['just_social'] == 0){
     $msg->addFeedback('ADMIN_NO_COURSES');
 }
+///////
+// If no AChecker key is present, explain how to get one
+if(!isset($_config['achecker_key']) || $_config['achecker_key'] ==''){
+    $msg->addFeedback('NEED_ACHECK_KEY');
+}
+
 //////////
 require(AT_INCLUDE_PATH.'header.inc.php');
 

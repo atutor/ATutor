@@ -65,7 +65,8 @@ if (isset($_POST['cancel'])) {
 	$_POST['course_dir_name']			= intval($_POST['course_dir_name']);
 	$_POST['max_login']					= intval($_POST['max_login']);		//max login attempt
 	$_POST['use_captcha']				= $_POST['use_captcha'] ? 1 : 0;
-
+	$_POST['achecker_url']					= trim($_POST['achecker_url']);		
+	$_POST['achecker_key']				= trim($_POST['achecker_key']);
 
 	//apache_mod_rewrite can only be enabled if pretty_url is.
 	if ($_POST['pretty_url']==1){
@@ -118,11 +119,14 @@ if (isset($_POST['cancel'])) {
 
 		foreach ($_config as $name => $value) {
 			// the isset() is needed to avoid overridding settings that don't get set here (ie. modules)
+			
+			// If the POST value is different from the config value, save the new value
 			if (isset($_POST[$name]) && ($stripslashes($_POST[$name]) != $value) && ($stripslashes($_POST[$name]) != $_config_defaults[$name])) {
 				$sql = 'REPLACE INTO %sconfig VALUES ("%s", "%s")';
 				$num_rows = queryDB($sql, array(TABLE_PREFIX, $name, $_POST[$name]));
 				write_to_log(AT_ADMIN_LOG_REPLACE, 'config', $num_rows, $sqlout);
-
+				
+            // if the POST value is the same as the default config setting, delete from config table
 			} else if (isset($_POST[$name]) && ($stripslashes($_POST[$name]) == $_config_defaults[$name])) {
 				$sql = "DELETE FROM %sconfig WHERE name='%s'";
 				$num_rows = queryDB($sql, array(TABLE_PREFIX, $name));

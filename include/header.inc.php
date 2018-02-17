@@ -136,7 +136,7 @@ if(isset($_SESSION['valid_user'])){
 }
     //////////
     // Analytics for ATutorSpaces course site usage tracking
-    
+ /*   
         $custom_head .= "\n"." <!--  // We collect anonymous usage data to help us better understand \n         how ATutor is used, and to improve it to best suit those using it.\n --> <script type=\"text/javascript\">
   (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
   (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -146,6 +146,7 @@ if(isset($_SESSION['valid_user'])){
   ga('create', 'UA-42182978-1', 'auto');
   ga('send', 'pageview');
         </script>"; 
+        */
     /////////////    
 // End session timeout warning
 

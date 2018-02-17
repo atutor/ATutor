@@ -24,7 +24,9 @@ foreach($rows_content as $content_row){
 }
 $course_base_href = '';
 $content_base_href = '';
-
+$_config['achecker_url'] = rtrim($_config['achecker_url'], '/') . '/';
+define('AT_ACHECKER_URL', $_config['achecker_url']);
+define('AT_ACHECKER_WEB_SERVICE_ID', $_config['achecker_key']);
 //make decisions
 if ($_POST['make_decision']) 
 {

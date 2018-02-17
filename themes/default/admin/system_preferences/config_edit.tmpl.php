@@ -258,6 +258,13 @@ echo AT_date(_AT('server_date_format'), '', AT_DATE_MYSQL_DATETIME);
 		<input type="radio" name="user_notes" value="1" id="un_y" <?php if($_config['user_notes']) { echo 'checked="checked"'; }?>  /><label for="un_y"><?php echo _AT('enable'); ?></label> <input type="radio" name="user_notes" value="0" id="un_n" <?php if(!$_config['user_notes']) { echo 'checked="checked"'; }?>  /><label for="un_n"><?php echo _AT('disable'); ?></label>
 	</fieldset>
 	</div>
+	<div class="row">
+		<label for="achecker_url"><?php echo _AT('achecker_url'); ?></label> (<?php echo _AT('default'); ?>: <?php echo ($_config_defaults['achecker_url']); ?>)<br />
+		<input type="text" name="achecker_url" id="achecker_url" size="40" maxlength="255" value="<?php if (!empty($_POST['achecker_url'])) { echo $stripslashes(htmlspecialchars($_POST['achecker_url'])); } else { echo $_config['achecker_url']; } ?>"  />
+	</div>
+	<div class="row">
+		<label for="achecker_key"> <?php echo _AT('achecker_key'); ?> </label><br /><input type="text" name="achecker_key" id="achecker_key" size="40" value="<?php if (!empty($_POST['achecker_key'])) {echo $stripslashes(htmlspecialchars($_POST['achecker_key']));} else {echo $_config['achecker_key']; } ?>"  />
+	</div>
 
 	<div class="row">
 		<label for="ext"><?php echo _AT('illegal_file_extensions'); ?></label><br />
