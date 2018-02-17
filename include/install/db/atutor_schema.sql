@@ -1625,15 +1625,15 @@ CREATE TABLE `basiclti_content` (
 # It should be commented out for most installations
 
 
-# Public AContent setup
-INSERT INTO `config` (`name`,`value`) VALUES ('transformable_uri','http://acontent.atutorspaces.com/');
-INSERT INTO `config` (`name`,`value`) VALUES ('transformable_web_service_id','987f65dddffa43abd43b30426e6c7c1c');
-INSERT INTO `config` (`name`,`value`) VALUES ('transformable_oauth_expire','93600');
+# Public AContent setup DEPRECATED
+# INSERT INTO `config` (`name`,`value`) VALUES ('transformable_uri','http://acontent.atutorspaces.com/');
+# INSERT INTO `config` (`name`,`value`) VALUES ('transformable_web_service_id','987f65dddffa43abd43b30426e6c7c1c');
+# INSERT INTO `config` (`name`,`value`) VALUES ('transformable_oauth_expire','93600');
 
 
 ########
 # Set the default Home URL to atutorspaces.com
-INSERT INTO `config` (`name`,`value`) VALUES ('home_url','https://www.atutorspaces.com');
+INSERT INTO `config` (`name`,`value`) VALUES ('home_url','https://atutor.github.io');
 
 ########
 # Set the the intial state of the fixed footer to fixed
