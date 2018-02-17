@@ -67,13 +67,14 @@ if(!isset($_config['achecker_key']) || $_config['achecker_key'] ==''){
 
 //////////
 require(AT_INCLUDE_PATH.'header.inc.php');
-
+/*
 if ($_config['check_version']) {
 	$request = @file('http://atutor.ca/check_atutor_version.php?return');
 	if ($request && version_compare(VERSION, $request[0], '<')) {
 		$msg->printFeedbacks('ATUTOR_UPDATE_AVAILABLE');
 	}
 }
+*/
 if ($_config['allow_instructor_requests'] && admin_authenticate(AT_ADMIN_PRIV_USERS, AT_PRIV_RETURN)){
 		    $sql	= "SELECT COUNT(*) AS cnt FROM %sinstructor_approvals";		
 			$row = queryDB($sql, array(TABLE_PREFIX), TRUE);
