@@ -101,7 +101,7 @@ $display_name_formats[6] = 'display_name_format_tfs';
 $display_name_formats[7] = 'display_name_format_tfl';
 
 /* the atutor.ca language translation server: */
-define('AT_LIVE_LANG_PACK_URL', 'http://atutor.ca/atutor/translate/get_lang_pack.php?lang_code=');
+//define('AT_LIVE_LANG_PACK_URL', 'http://atutor.ca/atutor/translate/get_lang_pack.php?lang_code=');
 
 /* links */
 define('LINK_CAT_COURSE',	1);

@@ -16,7 +16,7 @@
 </form>
 
 <?php if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE): ?>
-	<form name="form1" method="post" action="mods/_core/languages/language_translate.php">
+<!-- 	<form name="form1" method="post" action="mods/_core/languages/language_translate.php">
 		<div class="input-form">
 			<div class="row">
 				Import partial language from the <strong>live ATutor language database</strong> to your local installation for translating.
@@ -33,5 +33,5 @@
 				<input type="submit" name="svn_submit" value="<?php echo _AT('import'); ?>" />
 			</div>
 		</div>
-	</form>
+	</form> -->
 <?php endif; ?>
