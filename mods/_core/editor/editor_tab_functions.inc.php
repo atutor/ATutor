@@ -278,10 +278,10 @@ function save_changes($redir, $current_tab) {
 			$old_w = $w;
 			$key = in_array_cin($w, $glossary_ids);
 			$w = urldecode($w);
-			$d = $addslashes($d);
+			//$d = $addslashes($d);
 
 			if (($key !== false) && (($glossary[$old_w] != $d) || isset($_POST['related_term'][$old_w])) ) {
-				$w = addslashes($w);
+				//$w = addslashes($w);
 				$related_id = intval($_POST['related_term'][$old_w]);
 
 				$sql = "UPDATE %sglossary SET definition='%s', related_word_id=%d WHERE word_id=%d AND course_id=%d";
@@ -289,7 +289,7 @@ function save_changes($redir, $current_tab) {
 				$glossary[$old_w] = $d;
 				
 			} else if ($key === false && ($d != '')) {
-				$w = addslashes($w);
+				//$w = addslashes($w);
 				$related_id = intval($_POST['related_term'][$old_w]);
 
 				$sql = "INSERT INTO %sglossary VALUES (NULL, %d, '%s', '%s', %d)";
