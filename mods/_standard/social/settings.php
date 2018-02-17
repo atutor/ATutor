@@ -38,8 +38,8 @@ include(AT_INCLUDE_PATH.'header.inc.php');
 
 <?php
 
-$savant->display('social/pubmenu.tmpl.php');
-$savant->display('social/settings/settings_menu.tmpl.php');
+//$savant->display('social/pubmenu.tmpl.php');
+//$savant->display('social/settings/settings_menu.tmpl.php');
 if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 	//TODO
 	//Default to account settings
@@ -56,10 +56,10 @@ if (isset($_REQUEST['n']) && $_REQUEST['n']=='account_settings'){
 		$msg->printAll();
 	}
 	
-	//initialization
-	$savant->assign('home_display', $app->getHomeDisplaySettings());
-	$savant->assign('my_apps', $list_of_my_apps = $app->listMyApplications());
-	$savant->display('social/settings/application_settings.tmpl.php');
+	//initialization DEPRECATED
+	//$savant->assign('home_display', $app->getHomeDisplaySettings());
+	//$savant->assign('my_apps', $list_of_my_apps = $app->listMyApplications());
+	//$savant->display('social/settings/application_settings.tmpl.php');
 } else {
 	//handle privacy setting updates
 	if (isset($_POST['submit'])){

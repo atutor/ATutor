@@ -43,7 +43,6 @@ if(!defined('AT_PRETTY_URL_HEADER')){
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.AT_SOCIAL_INDEX, AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('network_home'); ?></a></li>
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'connections.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('connections'); ?></a></li>
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'sprofile.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('social_profile'); ?></a></li>
-	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'applications.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('applications'); ?></a></li>
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'groups/index.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('social_groups'); ?></a></li>
 	<li><a href="<?php echo url_rewrite(AT_SOCIAL_BASENAME.'settings.php', AT_PRETTY_URL_HEADER); ?>"><?php echo _AT('settings'); ?></a></li>
 </ul>
