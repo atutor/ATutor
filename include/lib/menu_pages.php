@@ -417,7 +417,7 @@ function get_sub_navigation_i($current_page) {
     //$_sub_level_pages_i = '';
     $_sub_level_pages_i = array();
 
-    if (isset($current_page) && defined($current_page)) {
+    if (isset($current_page)) {
     // reached the top
         return array();
     } else if (isset($_pages_i[$current_page]['children']) && page_available($current_page)) {
