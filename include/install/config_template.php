@@ -91,7 +91,7 @@ $config_template = "<"."?php
 /************************************************************************/
 /* ATutor                                                               */
 /************************************************************************/
-/* Copyright (c) 2002-2010                                              */
+/* Copyright (c) 2002-2018                                              */
 /* http://atutor.ca                                                     */
 /*                                                                      */
 /* This program is free software. You can redistribute it and/or        */
@@ -128,7 +128,10 @@ define('AT_CONTENT_DIR', '{CONTENT_DIR}');
 
 /* Whether or not to use the default php.ini SMTP settings.             */
 /* If false, then mail will try to be sent using sendmail.              */
+/* If true, set the username and password for the SMTP user     */
 define('MAIL_USE_SMTP', {MAIL_USE_SMTP});
+define('MAIL_SMTP_USER', '');
+define('MAIL_SMTP_PASSWORD', '');
 
 /* Whether or not to use the AT_CONTENT_DIR as a protected directory.   */
 /* If set to FALSE then the content directory will be hard coded        */

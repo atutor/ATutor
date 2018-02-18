@@ -34,14 +34,36 @@ class ATutorMailer extends PHPMailer {
 	*/
 	function __construct() {
 		if (MAIL_USE_SMTP) {
-			$this->IsSMTP(); // set mailer to use SMTP
-			$this->Host = ini_get('SMTP');  // specify main and backup server
+		    // SMTP is triggered if MAIL_USE_SMTP is manually set to true in config.inc.php 
+            $this->IsSMTP(); // set mailer to use SMTP
+            ///////
+            // default gmail SMTP setup in the following params
+            // REQUIRES: gmail Username & Password below
+            // adjust accordingly for other SMTP services
+            ///////
+            $this->Host = ini_set("SMTP","tls://smtp.gmail.com");
+            $this->Port  = ini_set("smtp_port","587");
+            $this->IsSMTP(); // set mailer to use SMTP
+            // Set the encryption system to use - ssl (deprecated) or tls
+            $this->SMTPSecure = 'tls';
+            // Whether to use SMTP authentication
+            $this->SMTPAuth = true;
+            // Username to use for SMTP authentication - use full email address for gmail
+            $this->Username = MAIL_SMTP_USER;            // the gmail address of the account to run SMTP
+            // Password to use for SMTP authentication
+            $this->Password = MAIL_SMTP_PASSWORD;             // The password for the gmail account above
+            ///////
 		} else {
+		    // The default is to go with local Sendmail
 			$this->IsSendmail(); // use sendmail
 			$this->Sendmail = ini_get('sendmail_path');
+			$this->SMTPAuth = false;  // turn on SMTP authentication
 		}
-
-		$this->SMTPAuth = false;  // turn on SMTP authentication
+        // Other PHPMailer options that can be set here
+        //$this->SetFrom("example@gmail.com");
+        //$this->Subject = "Mail from ATutor";
+        //$this->Body = "This message was sent from your course";
+        //$this->AddAddress("email@gmail.com");
 		$this->IsHTML(false);
 
 		// send the email in the current encoding:
@@ -71,7 +93,7 @@ class ATutorMailer extends PHPMailer {
 			$this->Body .= 'login.php?course='.$_SESSION['course_id'].' | ' . $_SESSION['course_title'];
 		}
 
-		$this->Body .= "\n"._AT('atutor_home').': http://atutor.ca';
+		$this->Body .= "\n"._AT('atutor_home').': https://atutor.github.io';
 
 		// if this email has been queued then don't send it. instead insert it in the db
 		// for each bcc or to or cc
