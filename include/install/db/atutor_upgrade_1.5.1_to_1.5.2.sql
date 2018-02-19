@@ -18,7 +18,7 @@ CREATE TABLE `faq_topics` (
 CREATE TABLE `faq_entries` (
   `entry_id` mediumint(8) NOT NULL auto_increment,
   `topic_id` mediumint(8) NOT NULL default '0',
-  `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `revised_date` datetime default NULL,
   `approved` tinyint(4) NOT NULL default '0',
   `question` varchar(250) NOT NULL default '',
   `answer` text NOT NULL,

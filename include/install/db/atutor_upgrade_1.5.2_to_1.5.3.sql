@@ -39,7 +39,7 @@ CREATE TABLE `forums_groups` (
 ) TYPE = MYISAM ;
 
 # release date for courses
-ALTER TABLE `courses` ADD `release_date` datetime NOT NULL default '0000-00-00 00:00:00';
+ALTER TABLE `courses` ADD `release_date` datetime default NULL;
 ALTER TABLE `courses` ADD `banner` TEXT NOT NULL default '';
 
 # --------------------------------------------------------
@@ -90,7 +90,7 @@ CREATE TABLE `files` (
   `member_id` mediumint(8) unsigned NOT NULL default '0',
   `folder_id` mediumint(8) unsigned NOT NULL default '0',
   `parent_file_id` mediumint(8) unsigned NOT NULL default '0',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date` datetime default NULL,
   `num_comments` tinyint(3) unsigned NOT NULL default '0',
   `num_revisions` tinyint(3) unsigned NOT NULL default '0',
   `file_name` varchar(80) NOT NULL default '',
@@ -103,7 +103,7 @@ CREATE TABLE `files_comments` (
   `comment_id` mediumint(8) unsigned NOT NULL auto_increment,
   `file_id` mediumint(8) unsigned NOT NULL default '0',
   `member_id` mediumint(8) unsigned NOT NULL default '0',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date` datetime default NULL,
   `comment` text NOT NULL default '',
   PRIMARY KEY  (`comment_id`)
 ) ENGINE=MyISAM;
@@ -123,8 +123,8 @@ CREATE TABLE `assignments` (
   `course_id` MEDIUMINT UNSIGNED NOT NULL default 0,
   `title` VARCHAR(60) NOT NULL default '',
   `assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
-  `date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_due` DATETIME default NULL,
+  `date_cutoff` DATETIME default NULL,
   `multi_submit` TINYINT DEFAULT '0',
   PRIMARY KEY  (`assignment_id`),
   INDEX (`course_id`)
@@ -168,7 +168,7 @@ CREATE TABLE `blog_posts` (
   `owner_type` tinyint(3) unsigned NOT NULL default '0',
   `owner_id` mediumint(8) unsigned NOT NULL default '0',
   `private` tinyint(3) unsigned NOT NULL default '0',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date` datetime default NULL,
   `num_comments` tinyint(3) unsigned NOT NULL default '0',
   `title` varchar(100) NOT NULL default '',
   `body` text NOT NULL default '',
@@ -181,7 +181,7 @@ CREATE TABLE `blog_posts_comments` (
    `comment_id` MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT ,
    `post_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
    `member_id` MEDIUMINT UNSIGNED DEFAULT '0' NOT NULL ,
-   `date` DATETIME NOT NULL default '0000-00-00 00:00:00',
+   `date` DATETIME default NULL,
    `private` TINYINT UNSIGNED DEFAULT '0' NOT NULL ,
    `comment` TEXT NOT NULL default '',
    PRIMARY KEY ( `comment_id` ) ,

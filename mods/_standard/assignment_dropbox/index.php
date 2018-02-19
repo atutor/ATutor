@@ -29,7 +29,7 @@ if (isset($_POST['upload']) && isset($_POST['owner_id'])) {
 	$_POST['comments'] = trim($_POST['comments']);
 
 	$parent_folder_id = abs($_POST['folder']);
-	
+
 	if ($_FILES['file']['error'] == UPLOAD_ERR_INI_SIZE) {
 		$msg->addError(array('FILE_TOO_BIG', get_human_size(megabytes_to_bytes(substr(ini_get('upload_max_filesize'), 0, -1)))));
 
@@ -51,11 +51,11 @@ if (isset($_POST['upload']) && isset($_POST['owner_id'])) {
 		}
 
 		$sql = "INSERT INTO %sfiles
-		               (owner_type, owner_id, member_id, folder_id, 
+		               (owner_type, owner_id, member_id, folder_id,
 		                parent_file_id, date, num_comments, num_revisions, file_name,
-		                file_size, description) 
-		        VALUES (%d, %d, %d, %d, 
-		                0, NOW(), %d, 0, '%s', 
+		                file_size, description)
+		        VALUES (%d, %d, %d, %d,
+		                0, NOW(), %d, 0, '%s',
 		                %d, '%s')";
 		$result = queryDB($sql, array(TABLE_PREFIX, $owner_type, $_POST['owner_id'], $_SESSION['member_id'], $_POST['folder_id'], $num_comments, $_FILES['file']['name'], $_FILES['file']['size'], $_POST['description']));
 
@@ -95,7 +95,7 @@ if ($has_priv && isset($_POST['delete']) && is_array($files)) {
 
 	$sql = "SELECT file_name FROM %sfiles WHERE file_id IN (%s) AND owner_type=%d AND owner_id=%d ORDER BY file_name";
 	$rows_files = queryDB($sql, array(TABLE_PREFIX, $files, $owner_type, $_REQUEST['owner_id']));
-    
+
     foreach($rows_files as $row){
 		$file_list_to_print .= '<li style="list-style: none; margin: 0px; padding: 0px 10px;"><img src="images/file_types/'.fs_get_file_type_icon($row['file_name']).'.gif" height="16" width="16" alt="" title="" /> '.htmlspecialchars($row['file_name']).'</li>';
 	}
@@ -151,9 +151,9 @@ if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) { // instructor
 	        ";
 	}
 	$sql .= "(SELECT assignment_id, title, date_due, 0
-	           FROM ".TABLE_PREFIX."assignments 
-	          WHERE assign_to=0 
-	            AND course_id=$_SESSION[course_id] 
+	           FROM ".TABLE_PREFIX."assignments
+	          WHERE assign_to=0
+	            AND course_id=$_SESSION[course_id]
 	            AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time()."))
 	        ORDER BY title";
 }
@@ -173,21 +173,21 @@ else {
 	echo _AT('flag_text', '<img src="'.AT_BASE_HREF.'mods/_standard/assignment_dropbox/flag.png" border="0" />');
 	foreach($rows_assignment_list as $assignment_row){
 		$owner_id = $assignment_row['assignment_id'];
-		
+
 		if ($assignment_row['group_id'] == 0) {
 			$folder_id = $_SESSION['member_id'];
 		} else {
 			$folder_id = $assignment_row['group_id'];
 		}
-		
+
 		// default sql for instructor: find all submitted assignments
-		$sql = "SELECT * FROM %sfiles 
-		         WHERE owner_type=%d 
-		           AND owner_id=%d 
+		$sql = "SELECT * FROM %sfiles
+		         WHERE owner_type=%d
+		           AND owner_id=%d
 		           AND parent_file_id=0";
 		// students: find his own submitted assignments
 		if (!authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) {
-			$sql .= " AND folder_id=$folder_id 
+			$sql .= " AND folder_id=$folder_id
 		           ORDER BY date DESC, file_name, file_size";
 		}
 
@@ -198,7 +198,7 @@ else {
     <h4>
       <?php if (authenticate(AT_PRIV_ASSIGNMENTS, AT_PRIV_RETURN)) { // instructor ?>
       <a href="javascript:window.location='<?php echo AT_BASE_HREF. url_rewrite("mods/_standard/file_storage/index.php?ot=". $owner_type.SEP."oid=". $assignment_row['assignment_id'].SEP."folder=0"); ?>';" class="floatleft">
-      
+
       <?php } else { // students ?>
       <a href="javascript:ATutor.mods.assignment_dropbox.toggleDiv(<?php echo $assignment_row['assignment_id']; ?>)" class="floatleft">
       <?php } ?>
@@ -206,15 +206,15 @@ else {
       <?php echo $assignment_row['title']; ?>
       </a>
       <div id="flag<?php echo $assignment_row['assignment_id']; ?>" class="flagdiv">
-      <?php 
+      <?php
       if(count($rows_files) > 0){ ?>
         <img src="<?php echo AT_BASE_HREF; ?>mods/_standard/assignment_dropbox/flag.png" border="0" />
-      <?php }?>    
+      <?php }?>
       </div>
     </h4><br />
-    <strong><?php echo _AT('due_date');?>: <?php if ($assignment_row['date_due'] == '0000-00-00 00:00:00') echo _AT('no'); else echo $assignment_row['date_due']; ?></strong>
+    <strong><?php echo _AT('due_date');?>: <?php if (is_null($assignment_row['date_due'])) echo _AT('no'); else echo $assignment_row['date_due']; ?></strong>
   </div>
-  
+
   <div id="assignment_detail<?php echo $assignment_row['assignment_id']; ?>" class="assignment-detail" style="display:none">
     <?php echo '<small>'._AT('delete_text').'</small>';?><br /><br />
     <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" enctype="multipart/form-data" name="form<?php echo $assignment_row['assignment_id']; ?>">
@@ -233,22 +233,22 @@ else {
     <tfoot>
     <tr>
       <td colspan="5">
-        <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button" 
-          <?php 
-          if ($assignment_row['date_due'] <> '0000-00-00 00:00:00' && strtotime("now") > strtotime($assignment_row['date_due'])) 
+        <input type="submit" name="delete" value="<?php echo _AT('delete'); ?>" class="button"
+          <?php
+          if (!is_null($assignment_row['date_due']) && strtotime("now") > strtotime($assignment_row['date_due']))
           	echo 'disabled="disabled"'; ?> />
       </td>
     </tr>
     </tfoot>
-  
+
     <tbody>
-  <?php 
+  <?php
   if(count($rows_files) == 0){ ?>
       <tr>
         <td colspan="5"><?php echo _AT('none_found'); ?></td>
       </tr>
-  <?php } else { 
-  foreach($rows_files as $file_info){ ?> 
+  <?php } else {
+  foreach($rows_files as $file_info){ ?>
       <tr onmousedown="document.form<?php echo $assignment_row['assignment_id']; ?>['r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>'].checked = !document.form<?php echo $assignment_row['assignment_id']; ?>['r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>'].checked; togglerowhighlight(this, 'r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>');" id="r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>_0">
         <td valign="top" width="10">
           <input type="checkbox" name="files<?php echo $assignment_row['assignment_id']; ?>[]" value="<?php echo $file_info['file_id']; ?>" id="r<?php echo $assignment_row['assignment_id']; ?>_<?php echo $file_info['file_id']; ?>" onmouseup="this.checked=!this.checked" />
@@ -262,7 +262,7 @@ else {
         <td align="right" valign="top"><?php echo get_human_size($file_info['file_size']); ?></td>
         <td align="right" valign="top"><?php echo AT_date(_AT('filemanager_date_format'), $file_info['date'], AT_DATE_MYSQL_DATETIME); ?></td>
         <td valign="top">
-		<?php 
+		<?php
 		if ($file_info['num_comments'] == 1) {
 			$lang_var = 'fs_comment';
 		} else {
@@ -274,9 +274,9 @@ else {
   <?php }?>
   <?php } // end of foreach ($file_info) ?>
     </tbody>
-  
+
     </table>
-  
+
     <input type="hidden" name="owner_id" value="<?php echo $owner_id; ?>" />
     <input type="hidden" name="folder_id" value="<?php echo $folder_id; ?>" />
     <div class="row">
@@ -290,7 +290,7 @@ else {
     </div>
     </form>
   </div><!-- end of assignment_detail -->
-<?php 		
+<?php
 	} // end of while (assignment list)
 }
 ?>
@@ -306,9 +306,9 @@ ATutor.mods.assignment_dropbox = ATutor.mods.assignment_dropbox || {};
 (function () {
     // Toggle div of assignment details
     // param: assignment_id: used to compose div id
-    // param: set_to_state: Optional. 
+    // param: set_to_state: Optional.
     //        When provided, is the open/close state for the div
-    //        When not given, find the current open/close state on the div and reverse the state. 
+    //        When not given, find the current open/close state on the div and reverse the state.
     ATutor.mods.assignment_dropbox.toggleDiv = function (assignment_id, set_to_state){
     		flag = typeof(set_to_state) != 'undefined' ? set_to_state : jQuery("#assignment_detail"+assignment_id+"_toggled").val();
 
@@ -321,12 +321,12 @@ ATutor.mods.assignment_dropbox = ATutor.mods.assignment_dropbox || {};
     			jQuery('#assignment_detail'+assignment_id+'_toggled').val(1);
     			ATutor.setcookie('ad'+assignment_id+'_'+<?php echo $_SESSION['member_id'];?>, '0', 1);
     		}
-    		jQuery('#assignment_detail'+assignment_id).toggle();		
+    		jQuery('#assignment_detail'+assignment_id).toggle();
     };
 
     //set up the open/close state of each assignment div
     var initialize = function () {
-        <?php 
+        <?php
         if(count($rows_assignment_list) > 0){
         	foreach($rows_assignment_list as $assignment_row){
         ?>
@@ -336,7 +336,7 @@ ATutor.mods.assignment_dropbox = ATutor.mods.assignment_dropbox || {};
         <?php } // end of foreach
         } // end of if?>
     };
-    
+
     jQuery(document).ready(initialize);
 })();
 

@@ -143,7 +143,7 @@ CREATE TABLE `social_groups` (
    `name` VARCHAR(255) NOT NULL,
   `logo` VARCHAR(255) NOT NULL,
   `description` TEXT NOT NULL,
-  `created_date` TIMESTAMP NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `created_date` TIMESTAMP default NULL,
   `last_updated` TIMESTAMP NOT NULL,
   PRIMARY KEY (`id`)
 )

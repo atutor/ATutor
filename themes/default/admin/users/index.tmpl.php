@@ -41,7 +41,7 @@
 </tr>
 </tfoot>
 <tbody>
-<?php 
+<?php
 if(count($this->rows_admins) == 0){ ?>
 	<tr>
 		<td colspan="6"><?php echo _AT('no_admins_found'); ?></td>
@@ -53,14 +53,14 @@ if(count($this->rows_admins) == 0){ ?>
 				<td><label for="m<?php echo $row['login']; ?>"><?php echo $row['login'];      ?></label></td>
 				<td><?php echo $row['real_name'];  ?></td>
 				<td><?php echo $row['email'];      ?></td>
-				<td><?php 
-					if ($row['last_login'] == '0000-00-00 00:00:00') {
+				<td><?php
+					if (is_null($row['last_login'])) {
 						echo _AT('never');
 					} else {
 						echo $row['last_login'];
 					} ?></td>
-				<td><?php 
-					if ($row['privileges'] == 1) { 
+				<td><?php
+					if ($row['privileges'] == 1) {
 						echo _AT('priv_admin_super');
 					} else if ($row['privileges'] > 0) {
 						echo _AT('active_admin');

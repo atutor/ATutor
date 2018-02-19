@@ -93,7 +93,7 @@ if (isset($this_login, $this_password)) {
 
     //Check if this account has exceeded maximum attempts
     $rows = queryDB("SELECT login, attempt, expiry FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login), TRUE);
-    
+
     if ($rows && count($rows) > 0){
         list($attempt_login_name, $attempt_login, $attempt_expiry) = $rows;
     } else {
@@ -104,10 +104,10 @@ if (isset($this_login, $this_password)) {
     if($attempt_expiry > 0 && $attempt_expiry < time()){
         //clear entry if it has expired
         queryDB("DELETE FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login));
-        $attempt_login = 0;    
+        $attempt_login = 0;
         $attempt_expiry = 0;
-    } 
-    
+    }
+
     if ($used_cookie) {
         #4775: password now store with salt
         $rows = queryDB("SELECT password, last_login FROM %smembers WHERE login='%s'", array(TABLE_PREFIX, $this_login), TRUE);
@@ -118,7 +118,7 @@ if (isset($this_login, $this_password)) {
         $row = queryDB("SELECT member_id, login, first_name, second_name, last_name, preferences, language, status, password AS pass, last_login FROM %smembers WHERE (login='%s' OR email='%s') AND SHA1(CONCAT(password, '%s'))='%s'", array(TABLE_PREFIX, $this_login, $this_login, $_SESSION['token'], $this_password), TRUE);
     }
     //$row = $rows;
- 
+
     if($_config['max_login'] > 0 && $attempt_login >= $_config['max_login']){
         $msg->addError('MAX_LOGIN_ATTEMPT');
     } else if ($row['status'] == AT_STATUS_UNCONFIRMED) {
@@ -147,24 +147,24 @@ if (isset($this_login, $this_password)) {
             ATutor.setcookie('ATLogin', $this_login, $cookie_expire, $parts['path']);
             ATutor.setcookie('ATPass',  $saltedPassword,  $cookie_expire, $parts['path']);
         }
-        
+
         $_SESSION['first_login'] = false;
-        if ($row['last_login'] == null || $row['last_login'] == '' || $row['last_login'] == '0000-00-00 00:00:00' 
+        if ($row['last_login'] == null || $row['last_login'] == '' || is_null($row['last_login'])
             || $_SESSION['prefs']['PREF_MODIFIED']!==1) {
             $_SESSION['first_login'] = true;
         }
 
         queryDB("UPDATE %smembers SET creation_date=creation_date, last_login='%s' WHERE member_id=%d", array(TABLE_PREFIX, $now, $_SESSION['member_id']));
-        
+
         //clear login attempt on successful login
         queryDB("DELETE FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login));
-        
+
         //if page variable is set, bring them there.
         if (isset($_POST['p']) && $_POST['p']!=''){
             header ('Location: '.urldecode($_POST['p']));
             exit;
         }
-        
+
         $msg->addFeedback('LOGIN_SUCCESS');
         if(!isset($_REQUEST['en_id'])) {
             header('Location: bounce.php?course='.$_POST['form_course_id']);
@@ -173,7 +173,7 @@ if (isset($this_login, $this_password)) {
     } else {
         // check if it's an admin login.
         $rows = queryDB("SELECT login, `privileges`, language FROM %sadmins WHERE login='%s' AND SHA1(CONCAT(password, '%s'))='%s' AND `privileges`>0", array(TABLE_PREFIX, $this_login, $_SESSION['token'], $this_password));
-        
+
         if ($row = $rows[0]) {
             $sql = "UPDATE %sadmins SET last_login=NOW() WHERE login='%s'";
             $num_login = queryDB($sql, array(TABLE_PREFIX, $this_login));
@@ -189,7 +189,7 @@ if (isset($this_login, $this_password)) {
 
             //clear login attempt on successful login
             queryDB("DELETE FROM %smember_login_attempt WHERE login='%s'", array(TABLE_PREFIX, $this_login));
-            
+
             $msg->addFeedback('LOGIN_SUCCESS');
 
             header('Location: admin/index.php');
@@ -201,7 +201,7 @@ if (isset($this_login, $this_password)) {
             if ($attempt_expiry==0){
                 $expiry = (time() + LOGIN_ATTEMPT_LOCKED_TIME * 60);    //an hour from now
             } else {
-                $expiry = $attempt_expiry;    
+                $expiry = $attempt_expiry;
             }
             queryDB("REPLACE INTO %smember_login_attempt SET attempt='%s', expiry='%s', login='%s'", array(TABLE_PREFIX, $attempt_login, $expiry, $this_login));
         }
@@ -214,7 +214,7 @@ if (isset($this_login, $this_password)) {
             $msg->addError('MAX_LOGIN_ATTEMPT');
         } else {
             $msg->addError('INVALID_LOGIN');
-        } 
+        }
     }
 }
 

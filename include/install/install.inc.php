@@ -21,11 +21,11 @@ if (!defined('AT_INCLUDE_PATH')) { exit; }
 function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email, $site_name,
                                $email, $account_username, $account_pwd_hidden,
                                $account_fname, $account_lname, $account_email,
-                               $just_social, $home_url, $session_path, $db_host, $db_port, 
+                               $just_social, $home_url, $session_path, $db_host, $db_port,
                                $db_login, $db_pwd, $db_name, $tb_prefix, $in_plain_msg = false) {
 	global $addslashes, $stripslashes;
 	global $errors, $progress, $msg;
-	
+
 	$admin_username = trim($admin_username);
 	$admin_email    = trim($admin_email);
 	$site_name      = trim($site_name);
@@ -155,21 +155,21 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
 			$msg->addError('EMPTY_LAST_NAME');
 		}
 	}
-	
+
 	if (isset($errors)) {
 		return;
 	}
 
 	$status = 3; // for instructor account
 
-	$sql = "INSERT INTO %sadmins (login, password, real_name, email, language, privileges, last_login) 
+	$sql = "INSERT INTO %sadmins (login, password, real_name, email, language, privileges, last_login)
 	        VALUES ('%s', '%s', '', '%s', 'en', 1, NOW())";
 	$result= queryDB($sql, array($tb_prefix, $admin_username, $admin_pwd_hidden, $admin_email));
 
 	$sql = "INSERT INTO %smembers (member_id, login, password, email, website, first_name, ".
 	       "second_name, last_name, dob, gender, address, postal, city, province, country, phone, status,".
-	       "preferences, creation_date, language, inbox_notify, private_email, last_login) ". 
-	       "VALUES (NULL,'%s','%s','%s','','%s','','%s','0000-00-00','n', '','','','','', '',%d,'', NOW(),'en', 0, 1, '0000-00-00 00:00:00')";
+	       "preferences, creation_date, language, inbox_notify, private_email, last_login) ".
+	       "VALUES (NULL,'%s','%s','%s','','%s','','%s','0000-00-00','n', '','','','','', '',%d,'', NOW(),'en', 0, 1, NULL)";
 	$result = queryDB($sql , array($tb_prefix, $account_username, $account_pwd_hidden, $account_email, $account_fname, $account_lname, $status));
 
 	$sql = "INSERT INTO %sconfig (name, value) VALUES ('site_name', '%s')";
@@ -177,7 +177,7 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
 
 	$sql = "INSERT INTO %sconfig (name, value) VALUES ('contact_email', '%s')";
 	$result = queryDB($sql, array($tb_prefix, $email));
-	
+
 	$home_url = $addslashes($home_url);
 	if ($home_url != '') {
 		$sql = "INSERT INTO %sconfig (name, value) VALUES ('home_url', '%s')";
@@ -193,7 +193,7 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
 	//if fresh install, use SET NAME to set the mysql connection to UTF8
 	$sql = "INSERT INTO %sconfig (name, value) VALUES ('set_utf8', '1')";
 	$result = queryDB($sql, array($tb_prefix));
-	
+
 	// Calculate the ATutor installation path and save into database for the usage of
 	// session associated path @ include/vitals.inc.php
 	$sql = "INSERT INTO %sconfig (name, value) VALUES ('session_path', '%s')";
@@ -205,7 +205,7 @@ function install_step_accounts($admin_username, $admin_pwd_hidden, $admin_email,
  */
 function create_content_subdir($content_dir, $index_html_location, $in_plain_msg = false) {
 	global $errors, $msg;
-	
+
 	if (!is_dir($content_dir.'/import')) {
 		if (!@mkdir($content_dir.'/import')) {
 			if ($in_plain_msg) {
@@ -220,7 +220,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 		} else {
 			$msg->addError(array('FILE_NOT_WRITABLE', $content_dir.'/import'));
 		}
-	} 
+	}
 
 	if (!is_dir($content_dir.'/chat')) {
 		if (!@mkdir($content_dir.'/chat')) {
@@ -241,7 +241,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/backups')) {
 		if (!@mkdir($content_dir.'/backups')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/backups</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/backups</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/backups'));
 			}
@@ -256,7 +256,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/feeds')) {
 		if (!@mkdir($content_dir.'/feeds')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/feeds</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/feeds</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/feeds'));
 			}
@@ -272,7 +272,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/file_storage')) {
 		if (!@mkdir($content_dir.'/file_storage')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/file_storage</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/file_storage</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/file_storage'));
 			}
@@ -288,7 +288,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/profile_pictures')) {
 		if (!@mkdir($content_dir.'/profile_pictures')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/profile_pictures</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/profile_pictures</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/profile_pictures'));
 			}
@@ -322,7 +322,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/social')) {
 		if (!@mkdir($content_dir.'/social')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/social</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/social</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/social'));
 			}
@@ -337,7 +337,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/photos')) {
 		if (!@mkdir($content_dir.'/photos')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/photos</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/photos</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/photos'));
 			}
@@ -352,7 +352,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/module')) {
 		if (!@mkdir($content_dir.'/module')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/module</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/module</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/module'));
 			}
@@ -363,7 +363,7 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
 	if (!is_dir($content_dir.'/theme')) {
 		if (!@mkdir($content_dir.'/theme')) {
 			if ($in_plain_msg) {
-				$errors[] = '<strong>'.$content_dir.'/theme</strong> directory does not exist and cannot be created.';  
+				$errors[] = '<strong>'.$content_dir.'/theme</strong> directory does not exist and cannot be created.';
 			} else {
 				$msg->addError(array('DIR_CANNOT_CREATE', $content_dir.'/theme'));
 			}
@@ -394,34 +394,34 @@ function create_content_subdir($content_dir, $index_html_location, $in_plain_msg
  *         db_pwd      The password of the login id
  *         db_name     DB name to create
  *         schema_file The location of atutor_schema.sql
- *         in_plain_msg if true, save the progress msg into global arrays $errors & $progress, 
+ *         in_plain_msg if true, save the progress msg into global arrays $errors & $progress,
  *                      otherwise, save into global Message object $msg
  * @return An array of progress/error information or the same message in $msg depending on the flag $in_plain_msg.
  */
 function create_and_switch_db($db_host, $db_port, $db_login, $db_pwd, $tb_prefix, $db_name, $in_plain_msg = false) {
-	
+
 	global $addslashes;
 	global $errors, $progress, $msg;
-	
+
 	//$db = at_db_connect($db_host, $db_port, $db_login, $db_pwd);
     if(defined('MYSQLI_ENABLED')){
- 	    $db = at_db_connect($db_host, $db_port, $db_login, $db_pwd, '');   
+ 	    $db = at_db_connect($db_host, $db_port, $db_login, $db_pwd, '');
     }else{
 	    $db = at_db_connect($db_host, $db_port, $db_login, $db_pwd, '');
 	    //at_db_select($db_name, $db);
     }
-    
+
 	if (!$db) {
 		if ($in_plain_msg) {
 			$errors[] = 'Unable to connect to database server.';
 		} else {
 			$msg->addError('UNABLE_CONNECT_DB');
 		}
-	} 
+	}
 
 	$tb_prefix = $addslashes($tb_prefix);
 	//$db_name = $addslashes($db_name);
-	
+
 	// check mysql version number
 	$row = at_db_version($db);
 

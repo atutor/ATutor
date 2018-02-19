@@ -30,7 +30,7 @@ if (isset($_POST['cancel'])) {
         $msg->addFeedback('CANCELLED');
         header('Location: index.php');
     }
-    else 
+    else
         header('Location: ./login.php');
 	exit;
 } else if (isset($_POST['submit'])) {
@@ -51,7 +51,7 @@ if (isset($_POST['cancel'])) {
         header('Location: index.php');
         exit;
     }
-    
+
 	$missing_fields = array();
 
 	/* email check */
@@ -86,7 +86,7 @@ if (isset($_POST['cancel'])) {
 			$sql = "SELECT * FROM %smembers WHERE login='%s'";
 			$rows_logins = queryDB($sql, array(TABLE_PREFIX, $chk_login));
 			$num_rows_logins = count($rows_logins);
-			
+
 			if ($num_rows_logins != 0) {
 				$msg->addError('LOGIN_EXISTS');
 			} else {
@@ -124,18 +124,18 @@ if (isset($_POST['cancel'])) {
 	$sql = "SELECT * FROM %smembers WHERE email='%s'";
     $rows_email = queryDB($sql,array(TABLE_PREFIX, $chk_email));
     $num_rows_email = count($rows_email);
-    
+
 	if ($num_rows_email != 0) {
 		$msg->addError('EMAIL_EXISTS');
 	} else if ($_POST['email'] != $_POST['email2']) {
 		$msg->addError('EMAIL_MISMATCH');
 	}
 
-	if (!$_POST['first_name']) { 
+	if (!$_POST['first_name']) {
 		$missing_fields[] = _AT('first_name');
 	}
 
-	if (!$_POST['last_name']) { 
+	if (!$_POST['last_name']) {
 		$missing_fields[] = _AT('last_name');
 	}
 
@@ -147,15 +147,15 @@ if (isset($_POST['cancel'])) {
 	$yr = $_POST['year'] = intval($_POST['year']);
 
 	/* let's us take (one or) two digit years (ex. 78 = 1978, 3 = 2003) */
-	if ($yr <= date('y')) { 
-		$yr += 2000; 
-	} else if ($yr < 1900) { 
-		$yr += 1900; 
-	} 
+	if ($yr <= date('y')) {
+		$yr += 2000;
+	} else if ($yr < 1900) {
+		$yr += 1900;
+	}
 
 	$dob = $yr.'-'.$mo.'-'.$day;
 
-	if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
+	if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {
 		$msg->addError('DOB_INVALID');
 	} else if (!$mo || !$day || !$yr) {
 		$dob = '0000-00-00';
@@ -164,7 +164,7 @@ if (isset($_POST['cancel'])) {
 
 	unset($master_list_sql);
 	if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
-		
+
 		$student_id  = $addslashes($_POST['student_id']);
 		$student_pin = md5($_POST['student_pin']);
 
@@ -189,11 +189,11 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		if (($_POST['website']) && (!strstr($_POST['website'],"://"))) { 
-			$_POST['website'] = "http://".$_POST['website']; 
+		if (($_POST['website']) && (!strstr($_POST['website'],"://"))) {
+			$_POST['website'] = "http://".$_POST['website'];
 		}
-		if ($_POST['website'] == 'http://') { 
-			$_POST['website'] = ''; 
+		if ($_POST['website'] == 'http://') {
+			$_POST['website'] = '';
 		}
 		if (isset($_POST['private_email'])) {
 			$_POST['private_email'] = 1;
@@ -224,7 +224,7 @@ if (isset($_POST['cancel'])) {
 		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 		/* insert into the db */
-		$sql = "INSERT INTO %smembers 
+		$sql = "INSERT INTO %smembers
 		              (login,
 		               password,
 		               email,
@@ -253,22 +253,22 @@ if (isset($_POST['cancel'])) {
 		               '$_POST[website]',
 		               '$_POST[first_name]',
 		               '$_POST[second_name]',
-		               '$_POST[last_name]', 
-		               '$dob', 
-		               '$_POST[gender]', 
+		               '$_POST[last_name]',
+		               '$dob',
+		               '$_POST[gender]',
 		               '$_POST[address]',
 		               '$_POST[postal]',
 		               '$_POST[city]',
 		               '$_POST[province]',
-		               '$_POST[country]', 
-		               '$_POST[phone]', 
-		               $status, 
-		               '$_config[pref_defaults]', 
+		               '$_POST[country]',
+		               '$_POST[phone]',
+		               $status,
+		               '$_config[pref_defaults]',
 		               '$now',
-		               '$_SESSION[lang]', 
-		               $_config[pref_inbox_notify], 
-		               $_POST[private_email], 
-		               '0000-00-00 00:00:00')";
+		               '$_SESSION[lang]',
+		               $_config[pref_inbox_notify],
+		               $_POST[private_email],
+		               NULL)";
 
 
 		$result = queryDB($sql, array(TABLE_PREFIX)) or die(at_db_error());
@@ -301,7 +301,7 @@ if (isset($_POST['cancel'])) {
 			$msg->addFeedback('REG_THANKS_CONFIRM');
 
 			$code = substr(md5($_POST['email'] . $now . $m_id), 0, 10);
-			
+
 			if (isset($_REQUEST["en_id"]) && $_REQUEST["en_id"] <> "")
 				$confirmation_link = $_base_href . 'confirm.php?id='.$m_id.SEP.'m='.$code.SEP.'en_id='.$_REQUEST["en_id"];
 			else
@@ -318,22 +318,22 @@ if (isset($_POST['cancel'])) {
 
 			$mail->Send();
 
-		} 
-		else 
+		}
+		else
 		{
 			// if en_id is set, automatically enroll into courses that links with en_id and go to "My Start Page"
 			$member_id	= $m_id;
 
 			require (AT_INCLUDE_PATH.'html/auto_enroll_courses.inc.php');
-			
+
 			// update last_login
-			$sql = "UPDATE %smembers 
-			           SET last_login=now(), creation_date=creation_date 
+			$sql = "UPDATE %smembers
+			           SET last_login=now(), creation_date=creation_date
 			         WHERE member_id=%d";
-			queryDB($sql, array(TABLE_PREFIX, $member_id));	
-            
+			queryDB($sql, array(TABLE_PREFIX, $member_id));
+
         $msg->addFeedback(array(LOGIN_SUCCESS_AUTO_ENROLL,$course_names));
-            
+
 			// auto login
 			$_SESSION['valid_user'] = true;
 			$_SESSION['member_id']	= $m_id;
