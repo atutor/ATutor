@@ -93,9 +93,14 @@ if (isset($_POST['cancel'])) {
 		$missing_fields[] = _AT('contact_email');
 	} else if (!preg_match("/^[a-z0-9\._-]+@+[a-z0-9\._-]+\.+[a-z]{2,6}$/i", $_POST['contact_email'])) {
 		$msg->addError('EMAIL_INVALID');	
-	} else if(count($row_email) > 0){
-	    $msg->addError('EMAIL_EXISTS');
-	}
+	} 
+	// Disable email check  when setting contact email. That
+	// email is not associated with an atutor account, so it should
+	// be able to be any email, even one already in use. 
+	// Remove this comment when no side effects are confirmed
+	//else if(count($row_email) > 0){
+	   // $msg->addError('EMAIL_EXISTS');
+	//}
 
 	if ($_POST['cache_dir']) {
 		if (!is_dir($_POST['cache_dir'])) {
