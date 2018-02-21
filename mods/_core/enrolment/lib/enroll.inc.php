@@ -123,13 +123,13 @@ function add_users($user_list, $enroll, $course) {
 	}
 
 	foreach ($user_list as $student) {
-		if (!$student['remove'])  {
+		if ($student['remove']  == '')  {
 				$student['uname'] = $addslashes($student['uname']);
 				$student['email'] = $addslashes($student['email']);
 				$student['fname'] = $addslashes($student['fname']);
 				$student['lname'] = $addslashes($student['lname']);
 
-			if (!$student['exists']) {
+			if ($student['exists'] == '') {
 				$sql = "INSERT INTO %smembers 
 				              (login,
 				               password,
@@ -154,7 +154,7 @@ function add_users($user_list, $enroll, $course) {
 				               '$_config[pref_defaults]', 
 				               NOW(),
 				               '$_config[default_language]', 
-				               $_config[pref_inbox_notify], 
+				               0, 
 				               1)";
 
 				$result = queryDB($sql,array(TABLE_PREFIX));
@@ -165,6 +165,7 @@ function add_users($user_list, $enroll, $course) {
 			        $sql = "INSERT INTO %scourse_enrollment (member_id, course_id, approved, last_cid, role) VALUES (%d, %d, '%s', 0, '%s')";
                     $result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll, $role));
                     if($result > 0){
+                    
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 
 						if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION) {
@@ -203,25 +204,23 @@ function add_users($user_list, $enroll, $course) {
 				} else {
 					//$msg->addError('LIST_IMPORT_FAILED');	
 				}
-			} else if (! $student['err_disabled']) {
-
+			} else if ($student['err_disabled'] == '') {
 				$sql = "SELECT member_id FROM %smembers WHERE email='%s'";
 				$rows_members = queryDB($sql, array(TABLE_PREFIX, $student['email']), TRUE);
                 $role = "Student";
-
                 if(count($rows_members) >0){
 				    $row = $rows_members;
 					$m_id = $row['member_id'];
-
-					$sql = "INSERT INTO %scourse_enrollment (member_id, course_id, approved, last_cid, role) VALUES (%d, %d, '%s', 0, '%s')";
-                    $result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll, $role));
-                    if($result > 0){
+					$sql = "SELECT member_id FROM %smembers WHERE member_id =".$m_id;
+					$result = queryDB($sql, array(TABLE_PREFIX, $m_id), TRUE);
+					
+                    if(!is_array($result)){
+					    $sql = "INSERT INTO %scourse_enrollment (member_id, course_id, approved, last_cid, role) VALUES (%d, %d, '%s', 0, '%s')";
+                        $result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll, $role));
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					} else {
-
 						$sql = "REPLACE INTO %scourse_enrollment (member_id, course_id, approved, last_cid, role) VALUES (%d, %s, '%s', 0, '%s')";
 						$result = queryDB($sql, array(TABLE_PREFIX, $m_id, $course, $enroll, $role));
-
 						$enrolled_list .= '<li>' . $student['uname'] . '</li>';
 					}
 				$subject = $_config['site_name'].': '._AT('email_confirmation_subject');
@@ -239,7 +238,7 @@ function add_users($user_list, $enroll, $course) {
 
 				}
 
-			} else if ($student['err_disabled']) {
+			} else if ($student['err_disabled'] != '') {
 				$not_enrolled_list .= '<li>' . $student['uname'] . '</li>';
 			}
 		}
