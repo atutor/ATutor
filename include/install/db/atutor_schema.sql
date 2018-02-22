@@ -1113,7 +1113,7 @@ INSERT INTO `resource_types` VALUES
 
 INSERT INTO `config` (`name`, `value`) VALUES('encyclopedia', 'http://www.wikipedia.org');
 INSERT INTO `config` (`name`, `value`) VALUES('dictionary', 'http://dictionary.reference.com/');
-INSERT INTO `config` (`name`, `value`) VALUES('thesaurus', 'http://www.thesaurus.com//');
+INSERT INTO `config` (`name`, `value`) VALUES('thesaurus', 'http://www.thesaurus.com/');
 INSERT INTO `config` (`name`, `value`) VALUES('atlas', 'http://maps.google.ca/');
 INSERT INTO `config` (`name`, `value`) VALUES('calculator', 'http://www.calculateforfree.com/');
 INSERT INTO `config` (`name`, `value`) VALUES('note_taking', 'http://www.aypwip.org/webnote/');
