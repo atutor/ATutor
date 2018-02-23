@@ -63,7 +63,7 @@ $rows_rlists = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 				}?>
 				</td>
 
-				<td><a href="<?php echo url_rewrite('mods/_standard/reading_list/display_resource.php?id='.$id); ?>" title="<?php echo _AT('rl_view_resource_details')?>" ><?php echo AT_print($resource_row['title'], 'reading_list.title'); ?></a>		
+				<td><a href="<?php echo url_rewrite('mods/_standard/reading_list/display_resource.php?id='.$id); ?>" ><?php echo AT_print($resource_row['title'], 'reading_list.title'); ?></a>		
 				</td>
 				<td><?php echo _AT ($row['required']); ?></td>
 				<td><?php echo $row['comment']; ?></td>
