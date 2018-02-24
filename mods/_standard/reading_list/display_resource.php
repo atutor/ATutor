@@ -16,13 +16,14 @@ define('AT_INCLUDE_PATH', '../../../include/');
 require (AT_INCLUDE_PATH.'vitals.inc.php');
 
 if (isset($_GET['submit'])) { // was the 'back' button pressed?
-	header('Location: '.url_rewrite('mods/_standard/reading_list/index.php', AT_PRETTY_URL_IS_HEADER));
+	//header('Location: '.url_rewrite('mods/_standard/reading_list/index.php', AT_PRETTY_URL_IS_HEADER));
+		header('Location: '.$_base_href.'mods/_standard/reading_list/index.php');
 	exit;
 }
 
 require(AT_INCLUDE_PATH.'header.inc.php');
 
-$id = intval ($_GET['id']);
+$id = intval($_GET['id']);
 
 $sql = "SELECT * FROM %sexternal_resources WHERE course_id=%d AND resource_id=%d";
 $row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $id), TRUE);
@@ -77,7 +78,7 @@ $row['comments']	= AT_print($row['comments'], 'readling_list.comments');
 			<?php  echo _AT('rl_type_of_resource'). ": ". _AT($_rl_types[$row['type']]); ?> 
 		</div>
 		<div class="row">
-			<?php echo _AT('location'). ": " ?><a href="<?php echo $row['url']?>"><?php echo $row['url']; ?></a> 
+			<?php echo _AT('location'). ": " ?><a href="<?php echo $row['url']?>" target="readinglist"><?php echo $row['url']; ?></a> 
 		</div>
 		<div class="row">
 			<?php  echo _AT('author'). ": ". $row['author']; ?> 
