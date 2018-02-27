@@ -1007,7 +1007,6 @@ class ContentManager
 					$link .= $content['title'].'">';
 
 					if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-						//$content['title'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
 					    $content['name'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
 						$content['title'] = stripslashes(htmlspecialchars(rtrim(htmlspecialchars_decode($content['title']))));
 					}
@@ -1052,8 +1051,7 @@ class ContentManager
 						}
 						  $link .= $content['title'].'" height="1" width="1" /></a><strong class="current-content" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-							//$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
-						$content['name'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
+							$content['name'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
 							$content['title'] = stripslashes(htmlspecialchars(rtrim(htmlspecialchars_decode($content['title']))));
 						}
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$content['title'].'">';
