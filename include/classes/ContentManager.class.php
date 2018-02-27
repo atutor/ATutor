@@ -972,7 +972,7 @@ class ContentManager
 				$content['content_id'] = isset($content['content_id']) ? $content['content_id'] : '';
 				$content['parent_content_id'] = $parent_id;
 				$content['title'] = htmlspecialchars($content['title']);
-
+                $content['name'] = htmlspecialchars($content['title']);
 				if (!$ignore_state) {
 					$link .= '<a name="menu'.$content['content_id'].'"></a>';
 				}
@@ -1007,7 +1007,9 @@ class ContentManager
 					$link .= $content['title'].'">';
 
 					if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-						$content['title'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
+						//$content['title'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
+					    $content['name'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
+						$content['title'] = stripslashes(htmlspecialchars(rtrim(htmlspecialchars_decode($content['title']))));
 					}
 					
 					if (isset($content['test_id'])) {
@@ -1017,7 +1019,7 @@ class ContentManager
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						$link .= '&nbsp;'.$content['title'].'</span>';
+						$link .= '&nbsp;'.$content['name'].'</span>';
 					}
 					
 					$link .= '</a>';
@@ -1050,7 +1052,9 @@ class ContentManager
 						}
 						  $link .= $content['title'].'" height="1" width="1" /></a><strong class="current-content" title="'.$content['title'].'">'."\n";
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-							$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
+							//$content['title'] = htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4))).'...';
+						$content['name'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
+							$content['title'] = stripslashes(htmlspecialchars(rtrim(htmlspecialchars_decode($content['title']))));
 						}
 						$link .= '<a name="menu'.$content['content_id'].'"></a><span class="inlineEdits" id="menu-'.$content['content_id'].'" title="'.$content['title'].'">';
 						if($_SESSION['prefs']['PREF_NUMBERING']){
@@ -1073,7 +1077,8 @@ class ContentManager
 						}
 						
 						if ($truncate && ($strlen($content['title']) > ($base_title_length-$depth*4)) ) {
-							$content['title'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
+							$content['name'] = stripslashes(htmlspecialchars(rtrim($substr(htmlspecialchars_decode($content['title']), 0, ($base_title_length-$depth*4)-4)))).'...';
+							$content['title'] = stripslashes(htmlspecialchars(rtrim(htmlspecialchars_decode($content['title']))));
 						}
 						if (isset($content['test_id']))
 							$link .= $content['title'];
@@ -1082,7 +1087,8 @@ class ContentManager
 						if($_SESSION['prefs']['PREF_NUMBERING']){
 						  $link .= $path.$counter;
 						}
-						  $link .= '&nbsp;'.$content['title'].'</span>';
+						
+						  $link .= '&nbsp;'.$content['name'].'</span>';
 						
 						if (authenticate(AT_PRIV_CONTENT, AT_PRIV_RETURN) && !is_mobile_device()) {
 							$link .= '</a>'."\n";
