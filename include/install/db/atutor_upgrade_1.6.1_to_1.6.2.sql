@@ -82,7 +82,7 @@ CREATE TABLE `grade_scales` (
    `grade_scale_id` mediumint(8) unsigned NOT NULL AUTO_INCREMENT,
    `member_id` mediumint(8) unsigned NOT NULL default '0',
    `scale_name` VARCHAR(255) NOT NULL default '',
-   `created_date` datetime NOT NULL default '0000-00-00 00:00:00',
+   `created_date` datetime default NULL,
    PRIMARY KEY ( `grade_scale_id` )
 );
 
@@ -100,7 +100,7 @@ CREATE TABLE `gradebook_tests` (
    `type` VARCHAR(50) NOT NULL default '' COMMENT 'Values: ATutor Test, ATutor Assignment, External',
    `course_id` mediumint(8) unsigned NOT NULL default '0' COMMENT 'Values: 0 or courses.course_id. Only has value for external tests/assignments. When ATutor internal assignments/tests/surveys, always 0.',
    `title` VARCHAR(255) NOT NULL default '' COMMENT 'Values: Null or test name. Always null if ATutor internal assignments/tests/surveys.',
-   `due_date` datetime NOT NULL default '0000-00-00 00:00:00',
+   `due_date` datetime default NULL,
    `grade_scale_id` mediumint(8) unsigned NOT NULL default '0',
    PRIMARY KEY ( `gradebook_test_id` )
 );

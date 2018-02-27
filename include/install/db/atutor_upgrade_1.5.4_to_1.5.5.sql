@@ -14,4 +14,4 @@ ALTER TABLE `tests_results` ADD `status` TINYINT NOT NULL DEFAULT '0';
 ALTER TABLE `tests_results` ADD `end_time` TIMESTAMP NOT NULL ;
 
 ## end date - #3089
-ALTER TABLE `courses` ADD `end_date` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00' AFTER `release_date`;
+ALTER TABLE `courses` ADD `end_date` DATETIME default NULL AFTER `release_date`;

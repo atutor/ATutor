@@ -68,8 +68,8 @@ if (isset($_POST['regenerate'])) {
 
 	$sql = "UPDATE %scourse_access SET `expiry_date`='%s', enabled=%d WHERE course_id=%d";
 	$result = queryDB($sql,  array(TABLE_PREFIX, $expiry_date, $auth, $_SESSION['course_id']));
-	
-	if($result > 0){	
+
+	if($result > 0){
 	    $msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
 	} else {
 	    $msg->addError('DB_NOT_UPDATED');
@@ -78,19 +78,19 @@ if (isset($_POST['regenerate'])) {
 	exit;
 }
 
-require(AT_INCLUDE_PATH.'header.inc.php'); 
+require(AT_INCLUDE_PATH.'header.inc.php');
 
-if ($system_courses[$_SESSION['course_id']]['access'] == 'public') { 
+if ($system_courses[$_SESSION['course_id']]['access'] == 'public') {
 	// if this course is public, then we can't use this feature
 	$msg->printInfos('ACCESS_PUBLIC');
-	require(AT_INCLUDE_PATH.'footer.inc.php'); 
+	require(AT_INCLUDE_PATH.'footer.inc.php');
 	exit;
 }
 
 $sql = "SELECT password, expiry_date+0 AS expiry_date, enabled FROM %scourse_access WHERE course_id=%d";
 $row = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
 
-if(count($row) > 0){		
+if(count($row) > 0){
 	$enabled = $row['enabled'];
 	$password = $row['password'];
 	$expiry = $row['expiry_date'];
@@ -98,7 +98,7 @@ if(count($row) > 0){
 	$enabled = 0;
 	$password = strtoupper(substr(md5(rand()), 3, 8));
 	$expiry = 0;
-	$sql = "INSERT INTO %scourse_access VALUES ('%s', %d,'0000-00-00 00:00:00', 0)";
+	$sql = "INSERT INTO %scourse_access VALUES ('%s', %d, NULL, 0)";
 	$result = queryDB($sql, array(TABLE_PREFIX, $password, $_SESSION['course_id']));
 }
 $url = AT_BASE_HREF.'acl.php?'.$password;
@@ -107,7 +107,7 @@ $url = AT_BASE_HREF.'acl.php?'.$password;
 	<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
 		<div class="input-form">
 		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('regenerate'); ?></legend>
-			<div class="row">				
+			<div class="row">
 				<?php echo _AT('auth_access_text'); ?>
 			</div>
 			<div class="row">
@@ -124,7 +124,7 @@ $url = AT_BASE_HREF.'acl.php?'.$password;
 		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('authenticated_access'); ?></legend>
 			<div class="row">
 				<?php echo _AT('authenticated_access'); ?><br />
-				<input type="radio" name="auth" id="enable" value="1" <?php if($enabled) { echo 'checked="checked"'; } ?> /> <label for="enable"><?php echo _AT('enable'); ?></label> <input type="radio" name="auth" id="disable" value="0" <?php if(!$enabled) { echo 'checked="checked"'; } ?> /> <label for="disable"><?php echo _AT('disable'); ?></label> 
+				<input type="radio" name="auth" id="enable" value="1" <?php if($enabled) { echo 'checked="checked"'; } ?> /> <label for="enable"><?php echo _AT('enable'); ?></label> <input type="radio" name="auth" id="disable" value="0" <?php if(!$enabled) { echo 'checked="checked"'; } ?> /> <label for="disable"><?php echo _AT('disable'); ?></label>
 			</div>
 
 			<div class="row">
@@ -142,7 +142,7 @@ $url = AT_BASE_HREF.'acl.php?'.$password;
 						$today_min   = substr($expiry, 10, 2);
 
 					} else {
-						$exp_no = ' checked="checked"'; 
+						$exp_no = ' checked="checked"';
 						$today_day	 = date('d');
 						$today_mon	 = date('m');
 						$today_year  = date('Y');
@@ -151,7 +151,7 @@ $url = AT_BASE_HREF.'acl.php?'.$password;
 
 				<input type="radio" name="expiry_date" value="0" id="expire_never" <?php echo $exp_no; ?> /> <label for="expire_never"><?php echo _AT('expire_never'); ?></label><br />
 
-				<input type="radio" name="expiry_date" value="1" id="expire_on" <?php echo $exp_yes; ?> /> <label for="expire_on"><?php echo _AT('expire_on'); ?></label> 
+				<input type="radio" name="expiry_date" value="1" id="expire_on" <?php echo $exp_yes; ?> /> <label for="expire_on"><?php echo _AT('expire_on'); ?></label>
 				<?php
 					$name = '_expire';
 					require(AT_INCLUDE_PATH.'html/release_date.inc.php');
@@ -159,7 +159,7 @@ $url = AT_BASE_HREF.'acl.php?'.$password;
 			</div>
 
 			<div class="row buttons">
-				<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" /> 
+				<input type="submit" name="submit" value="<?php echo _AT('save'); ?>" />
 				<input type="submit" name="cancel" value="<?php echo _AT('cancel'); ?>" />
 			</div>
 			</fieldset>

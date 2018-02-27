@@ -19,7 +19,7 @@ require(AT_INCLUDE_PATH.'../mods/_standard/file_storage/file_storage.inc.php');
 $owner_type = abs($_REQUEST['ot']);
 $owner_id   = abs($_REQUEST['oid']);
 $owner_arg_prefix = '?ot='.$owner_type.SEP.'oid='.$owner_id. SEP;
-if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) { 
+if (!($owner_status = fs_authenticate($owner_type, $owner_id)) || !query_bit($owner_status, WORKSPACE_AUTH_WRITE)) {
 	$msg->addError('ACCESS_DENIED');
 	header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
 	exit;
@@ -49,8 +49,8 @@ if (isset($_POST['cancel'])) {
 	} else {
 
 		$sql = "SELECT group_id FROM %sgroups WHERE group_id=$owner_id AND type_id=%d";
-		$rows_groups = queryDB($sql, array(TABLE_PREFIX, $owner_id, $assignment_row['assign_to']));		
-		
+		$rows_groups = queryDB($sql, array(TABLE_PREFIX, $owner_id, $assignment_row['assign_to']));
+
 		if(count($rows_groups) == 0){
 			$msg->addError('ACCESS_DENIED');
 			header('Location: '.url_rewrite('mods/_standard/file_storage/index.php', AT_PRETTY_URL_IS_HEADER));
@@ -80,7 +80,7 @@ if ($owner_type == WORKSPACE_GROUP) {
 
 	$sql = "SELECT type_id FROM ".TABLE_PREFIX."groups WHERE group_id=$owner_id LIMIT 1";
 	$row = queryDB($sql, array(TABLE_PREFIX, $owner_id), TRUE);
-	
+
 	$sql = "SELECT assignment_id, title, date_due, date_cutoff FROM %sassignments WHERE assign_to=%d AND course_id=%d AND (date_cutoff=0 OR UNIX_TIMESTAMP(date_cutoff) > ".time().") ORDER BY title";
     $rows_assignments  = queryDB($sql, array(TABLE_PREFIX, $row['type_id'], $_SESSION['course_id']));
 
@@ -116,12 +116,12 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 <?php endforeach; ?>
 
 <div class="input-form">
-	
+
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="name"><?php echo _AT('assignment'); ?></label><br />
 		<select name="assignment" size="<?php echo min(5, count($assignments)); ?>">
 			<?php foreach ($assignments as $assignment): ?>
-				<?php if ($assignment['date_due'] != '0000-00-00 00:00:00'): ?>
+				<?php if (!is_null($assignment['date_due'])): ?>
 					<option value="<?php echo $assignment['assignment_id']; ?>"><?php echo $assignment['title']; ?> - <?php echo _AT('due') . ': ' . AT_date(_AT('filemanager_date_format'), $assignment['date_due'], AT_DATE_MYSQL_DATETIME); ?></option>
 				<?php else: ?>
 					<option value="<?php echo $assignment['assignment_id']; ?>"><?php echo $assignment['title']; ?> - <?php echo _AT('no_due_date'); ?></option>
@@ -138,7 +138,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 				$sql = "SELECT file_name FROM %sfiles WHERE file_id IN (%s) AND owner_type=%d AND owner_id=%d ORDER BY file_name";
 				$rows_filenames = queryDB($sql, array(TABLE_PREFIX, $file_list, $owner_type, $owner_id));
 			?>
-			<?php 
+			<?php
 			foreach($rows_filenames as $row){?>
 				<li><img src="images/file_types/<?php echo fs_get_file_type_icon($row['file_name']); ?>.gif" height="16" width="16" alt="" title="" /> <?php echo $row['file_name']; ?></li>
 			<?php }  ?>

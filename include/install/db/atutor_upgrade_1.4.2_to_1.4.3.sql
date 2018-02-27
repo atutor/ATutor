@@ -42,7 +42,7 @@ INSERT INTO themes VALUES ('Atutor', '1.4.3', 'default', NOW(), 'This is the def
 CREATE TABLE `backups` (
   `backup_id` mediumint(8) unsigned NOT NULL auto_increment,
   `course_id` mediumint(8) unsigned NOT NULL default '0',
-  `date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `date` datetime default NULL,
   `description` varchar(100) NOT NULL default '',
   `file_size` int(10) unsigned NOT NULL default '0',
   `system_file_name` varchar(50) NOT NULL default '',

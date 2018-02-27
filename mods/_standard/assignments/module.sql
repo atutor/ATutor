@@ -5,8 +5,8 @@ CREATE TABLE `assignments` (
 	`course_id` MEDIUMINT UNSIGNED NOT NULL ,
 	`title` VARCHAR(60) NOT NULL,
 	`assign_to` MEDIUMINT UNSIGNED DEFAULT 0,
-	`date_due` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
-	`date_cutoff` DATETIME NOT NULL DEFAULT '0000-00-00 00:00:00',
+	`date_due` DATETIME default NULL,
+	`date_cutoff` DATETIME default NULL,
 	`multi_submit` TINYINT DEFAULT '0',
 	PRIMARY KEY  (`assignment_id`),
 	INDEX (`course_id`)

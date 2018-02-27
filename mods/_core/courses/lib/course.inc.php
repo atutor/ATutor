@@ -143,7 +143,7 @@ function add_update_course($course_data, $isadmin = FALSE) {
 		}
 		$release_date = "$year_release-$month_release-$day_release $hour_release:$min_release:00";
 	} else {
-		$release_date = "0000-00-00 00:00:00";
+		$release_date = NULL;
 	}
 
 	if ($course_data['end_date']) {
@@ -171,7 +171,7 @@ function add_update_course($course_data, $isadmin = FALSE) {
 		}
 		$end_date = "$year_end-$month_end-$day_end $hour_end:$min_end:00";
 	} else {
-		$end_date = "0000-00-00 00:00:00";
+		$end_date = NULL;
 	}
 
 	$initial_content_info = explode('_', $course_data['initial_content'], 2);

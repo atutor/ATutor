@@ -72,7 +72,7 @@ if (isset($_POST['submit'])) {
 
 				$sql = "SELECT * FROM %sadmins WHERE login='%s'";
 				$rows_admins = queryDB($sql, array(TABLE_PREFIX, $_POST['login']));
-				
+
 				if(count($rows_admins) > 0){
 					$msg->addError('LOGIN_EXISTS');
 				}
@@ -106,7 +106,7 @@ if (isset($_POST['submit'])) {
 
 	$sql = "SELECT member_id FROM %smembers WHERE email LIKE '%s'";
 	$rows_email = queryDB($sql, array(TABLE_PREFIX, $_POST['email']));
-	
+
 	if(count($rows_email) != 0){
 		$msg->addError('EMAIL_EXISTS');
 	}
@@ -131,15 +131,15 @@ if (isset($_POST['submit'])) {
 	$yr = intval($_POST['year']);
 
 	/* let's us take (one or) two digit years (ex. 78 = 1978, 3 = 2003) */
-	if ($yr < date('y')) { 
-		$yr += 2000; 
-	} else if ($yr < 1900) { 
-		$yr += 1900; 
-	} 
+	if ($yr < date('y')) {
+		$yr += 2000;
+	} else if ($yr < 1900) {
+		$yr += 1900;
+	}
 
 	$dob = $yr.'-'.$mo.'-'.$day;
 
-	if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {	
+	if ($mo && $day && $yr && !checkdate($mo, $day, $yr)) {
 		$msg->addError('DOB_INVALID');
 	} else if (!$mo || !$day || !$yr) {
 		$dob = '0000-00-00';
@@ -152,14 +152,14 @@ if (isset($_POST['submit'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		if (($_POST['website']) && (!strstr($_POST['website'], '://'))) { 
-			$_POST['website'] = 'http://' . $_POST['website']; 
+		if (($_POST['website']) && (!strstr($_POST['website'], '://'))) {
+			$_POST['website'] = 'http://' . $_POST['website'];
 		}
-		if ($_POST['website'] == 'http://') { 
-			$_POST['website'] = ''; 
+		if ($_POST['website'] == 'http://') {
+			$_POST['website'] = '';
 		}
 		$_POST['postal'] = strtoupper(trim($_POST['postal']));
-	
+
 		if (isset($_POST['private_email'])) {
 			$_POST['private_email'] = 1;
 		} else {
@@ -169,34 +169,34 @@ if (isset($_POST['submit'])) {
 		$now = date('Y-m-d H:i:s'); // we use this later for the email confirmation.
 
 		/* insert into the db. (the last 0 for status) */
-		$sql = "INSERT INTO %smembers 
+		$sql = "INSERT INTO %smembers
 		    VALUES (NULL,
 		        '$_POST[login]',
 		        '$_POST[password]',
 		        '$_POST[email]',
 		        '$_POST[website]',
-		        '$_POST[first_name]', 
-		        '$_POST[second_name]', 
-		        '$_POST[last_name]', 
-		        '$dob', 
-		        '$_POST[gender]', 
+		        '$_POST[first_name]',
+		        '$_POST[second_name]',
+		        '$_POST[last_name]',
+		        '$dob',
+		        '$_POST[gender]',
 		        '$_POST[address]',
 		        '$_POST[postal]',
 		        '$_POST[city]',
 		        '$_POST[province]',
-		        '$_POST[country]', 
+		        '$_POST[country]',
 		        '$_POST[phone]',
-		        $_POST[status], 
-		        '$_config[pref_defaults]', 
+		        $_POST[status],
+		        '$_config[pref_defaults]',
 		        '$now',
-		        '$_config[default_language]', 
-		        $_config[pref_inbox_notify], 
-		        $_POST[private_email], 
-		        '0000-00-00 00:00:00')";
+		        '$_config[default_language]',
+		        $_config[pref_inbox_notify],
+		        $_POST[private_email],
+		        NULL)";
 
 		$result = queryDB($sql, array(TABLE_PREFIX));
 		$m_id	= at_insert_id();
-		
+
 		if ($result == 0) {
 			require(AT_INCLUDE_PATH.'header.inc.php');
 			$msg->addError('DB_NOT_UPDATED');
@@ -208,10 +208,10 @@ if (isset($_POST['submit'])) {
 		if (defined('AT_MASTER_LIST') && AT_MASTER_LIST) {
 			$student_id  = $addslashes($_POST['student_id']);
 			$student_pin = md5($addslashes($_POST['student_pin']));
-			if ($student_id != '') {			
+			if ($student_id != '') {
 				$sql = "UPDATE %smaster_list SET member_id=%d WHERE public_field='%s'";
 				$result = queryDB($sql, array(TABLE_PREFIX, $m_id, $student_id));
-				
+
 				if($result > 0){
 					$sql = "REPLACE INTO %smaster_list VALUES ('%s', '%s', %d)";
 					$result = queryDB($sql, array(TABLE_PREFIX, $student_id, $student_pin, $m_id));
@@ -231,7 +231,7 @@ if (isset($_POST['submit'])) {
 		$mail = new ATutorMailer();
 		$mail->AddAddress($_POST['email']);
 		$mail->From    = $_config['contact_email'];
-		
+
 		if (defined('AT_EMAIL_CONFIRMATION') && AT_EMAIL_CONFIRMATION && ($_POST['status'] == AT_STATUS_UNCONFIRMED)) {
 			$code = substr(md5($_POST['email'] . $now . $m_id), 0, 10);
 			$confirmation_link = AT_BASE_HREF . 'confirm.php?id='.$m_id.SEP.'m='.$code;

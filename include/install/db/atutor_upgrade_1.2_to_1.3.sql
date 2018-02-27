@@ -52,7 +52,7 @@ CREATE TABLE `lang2` (
   `variable` varchar(30) NOT NULL default '',
   `key` varchar(50) NOT NULL default '',
   `text` text NOT NULL,
-  `revised_date` datetime NOT NULL default '0000-00-00 00:00:00',
+  `revised_date` datetime default NULL,
   PRIMARY KEY  (`lang`,`variable`,`key`),
   KEY `lang_variable` (`lang`,`variable`)
 ) TYPE=MyISAM;

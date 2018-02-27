@@ -40,9 +40,9 @@ function print_patch_row($patch_row, $row_id, $enable_radiotton)
 		<td><?php if (!isset($patch_row['status'])) echo _AT("not_installed"); else echo $patch_row["status"]; ?></td>
 		<td class="hidecol700"><?php echo $patch_row["available_to"]; ?></td>
 		<td class="hidecol700"><?php echo $patch_row["author"]; ?></td>
-		<td class="hidecol700"><?php if (isset($patch_row['status'])) echo ($patch_row["installed_date"]=='0000-00-00 00:00:00')?_AT('na'):$patch_row["installed_date"]; ?></td>
+		<td class="hidecol700"><?php if (isset($patch_row['status'])) echo (is_null($patch_row["installed_date"]))?_AT('na'):$patch_row["installed_date"]; ?></td>
 		<td class="hidecol700">
-		<?php 
+		<?php
 		if (preg_match('/Installed/', $patch_row["status"]) > 0 && ($patch_row["remove_permission_files"]<> "" || $patch_row["backup_files"]<>"" || $patch_row["patch_files"]<> ""))
 			echo '
 		  <div class="row buttons">
@@ -79,11 +79,11 @@ elseif (trim($_REQUEST['who']) != '') $who = trim($_REQUEST['who']);
 else $who = "public";
 
 // check the connection to server update.atutor.ca
-$update_server = "http://update.atutor.ca"; 
+$update_server = "http://update.atutor.ca";
 $connection_test_file = $update_server . '/index.php';
 $connection = @file_get_contents($connection_test_file);
 
-if (!$connection) 
+if (!$connection)
 {
 	$infos = array('CANNOT_CONNECT_PATCH_SERVER', $update_server);
 	$msg->addInfo($infos);
@@ -96,10 +96,10 @@ else
 if ($server_connected)
 {
 	$patch_folder = $update_server . '/patch/' . str_replace('.', '_', VERSION) . '/';
-	
+
 	$patch_list_xml = @file_get_contents($patch_folder . 'patch_list.xml');
-	
-	if ($patch_list_xml) 
+
+	if ($patch_list_xml)
 	{
 		$patchListParser = new PatchListParser();
 		$patchListParser->parse($patch_list_xml);
@@ -109,14 +109,14 @@ if ($server_connected)
 // end of get patch list
 
 $module_content_folder = AT_CONTENT_DIR . "patcher";
-		
+
 if ($_POST['install_upload'] && $_POST['uploading'])
 {
 	include_once(AT_INCLUDE_PATH . '/classes/pclzip.lib.php');
-	
+
 	// clean up module content folder
 	clear_dir($module_content_folder);
-	
+
 	// 1. unzip uploaded file to module's content directory
 	$archive = new PclZip($_FILES['patchfile']['tmp_name']);
 
@@ -131,7 +131,7 @@ if ($_POST['install_upload'] && $_POST['uploading'])
 if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_version"]))
 {
 	check_csrf_token();
-	
+
 	if (isset($_POST['id'])) $id=$_POST['id'];
 	else $id = $_REQUEST['id'];
 
@@ -149,10 +149,10 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 		{
 			$patchURL = $module_content_folder . "/";
 		}
-			
+
 		$patch_xml = @file_get_contents($patchURL . 'patch.xml');
-		
-		if ($patch_xml === FALSE) 
+
+		if ($patch_xml === FALSE)
 		{
 			$msg->addError('PATCH_XML_NOT_FOUND');
 		}
@@ -160,14 +160,14 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 		{
 			require_once('classes/PatchParser.class.php');
 			require_once('classes/Patch.class.php');
-			
+
 			$patchParser = new PatchParser();
 			$patchParser->parse($patch_xml);
-			
+
 			$patch_array = $patchParser->getParsedArray();
 
 			if ($_POST["ignore_version"]) $patch_array["applied_version"] = VERSION;
-			
+
 			if ($_POST["install_upload"])
 			{
 				$current_patch_list = array('atutor_patch_id' => $patch_array['atutor_patch_id'],
@@ -191,7 +191,7 @@ if ($_POST['install'] || $_POST['install_upload'] && !isset($_POST["not_ignore_v
 			else
 			{
 				$patch = new Patch($patch_array, $current_patch_list, $skipFilesModified, $patchURL);
-			
+
 				if ($patch->applyPatch())  $patch_id = $patch->getPatchID();
 			}
 		}
@@ -209,7 +209,7 @@ if ($patch_id > 0)
 	if ($_POST['done'])
 	{
 		$permission_files = array();
-		
+
 		if (is_array($_SESSION['remove_permission']))
 		{
 			foreach ($_SESSION['remove_permission'] as $file)
@@ -217,25 +217,25 @@ if ($patch_id > 0)
 				if (is_writable($file))  $permission_files[] = $file;
 			}
 		}
-		
+
 		if (count($permission_files) == 0)
 		{
 			$updateInfo = array("remove_permission_files"=>"", "status"=>"Installed");
-		
+
 			updatePatchesRecord($patch_id, $updateInfo);
 		}
 		else
 		{
 			foreach($permission_files as $permission_file)
 				$remove_permission_files .= $permission_file. '|';
-		
+
 			$updateInfo = array("remove_permission_files"=>preg_quote($remove_permission_files), "status"=>"Partly Installed");
-			
+
 			updatePatchesRecord($patch_id, $updateInfo);
 		}
-	
+
 	}
-	
+
 	// display remove permission info
 	unset($_SESSION['remove_permission']);
 
@@ -250,9 +250,9 @@ if ($patch_id > 0)
 		{
 			if ($_POST['done']) $msg->printErrors('REMOVE_WRITE_PERMISSION');
 			else $msg->printInfos('PATCH_INSTALLED_AND_REMOVE_PERMISSION');
-			
+
 			$feedbacks[] = _AT('remove_write_permission');
-			
+
 			foreach($remove_permission_files as $remove_permission_file)
 				if ($remove_permission_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $remove_permission_file . "</strong><br />";
 
@@ -271,15 +271,15 @@ if ($patch_id > 0)
 	if ($row["remove_permission_files"] == "")
 	{
 		$msg->printFeedbacks('PATCH_INSTALLED_SUCCESSFULLY');
-		
+
 		if ($row["backup_files"]<> "")
 		{
 			$backup_files = get_array_by_delimiter($row["backup_files"], "|");
-	
+
 			if (count($backup_files) > 0)
 			{
 				$feedbacks[] = _AT('patcher_show_backup_files');
-				
+
 				foreach($backup_files as $backup_file)
 					if ($backup_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $backup_file . "</strong><br />";
 			}
@@ -288,17 +288,17 @@ if ($patch_id > 0)
 		if ($row["patch_files"]<> "")
 		{
 			$patch_files = get_array_by_delimiter($row["patch_files"], "|");
-	
+
 			if (count($patch_files) > 0)
 			{
 				$feedbacks[] = _AT('patcher_show_patch_files');
-				
+
 				foreach($patch_files as $patch_file)
 					if ($patch_file <> "") $feedbacks[count($feedbacks)-1] .= "<strong>" . $patch_file . "</strong><br />";
-					
+
 			}
 		}
-		
+
 		if (count($feedbacks)> 0)
 			print_feedback($feedbacks);
 		else
@@ -312,7 +312,7 @@ $msg->printAll();
 
 
 <form name="frm_upload" enctype="multipart/form-data" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
-	
+
 <div class="input-form">
 		<div class="row"><?php echo _AT("upload_patch"); ?></div>
 
@@ -321,7 +321,7 @@ $msg->printAll();
 			<input type="hidden" name="MAX_FILE_SIZE" value="52428800" />
 			<input type="file" name="patchfile"  size="50" />
 		</div>
-		
+
 		<div class="row buttons">
 			<input type="submit" name="install_upload" value="Install" onclick="javascript: return validate_filename(); " class="submit" />
 			<input type="hidden" name="uploading" value="1" />
@@ -345,7 +345,7 @@ function validate_filename() {
     alert('<?php echo _AT("upload_zip")  ?>');
     return false;
   }
-  
+
   if(file.slice(file.lastIndexOf(".")).toLowerCase() != '.zip') {
     //alert('Please upload ZIP file only!');
     alert('<?php echo _AT("upload_zip")  ?>');
