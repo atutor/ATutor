@@ -26,7 +26,7 @@ if (isset($_POST['cancel'])) {
 
 	$missing_fields = array();
 
-	$_POST['site_name']          = trim($_POST['site_name']);
+	$_POST['site_name']          = trim(htmlspecialchars($_POST['site_name'], ENT_QUOTES));
 	$_POST['home_url']           = trim($_POST['home_url']);
 	$_POST['default_language']   = trim($_POST['default_language']);
 	$_POST['contact_email']      = trim($_POST['contact_email']);
