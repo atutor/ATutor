@@ -42,12 +42,12 @@ if (isset($_POST['submit'])) {
 
 	if (!$msg->containsErrors()) {
 
-		if ($_POST['theme_children']) {
+		if (isset($_POST['theme_children'])) {
 			// apply this theme to all the sub-categories recursively.
 			$children = recursive_get_subcategories($cat_id);
 			$children = implode(',', $children);
 
-			if ($children) {
+			if (isset($children)) {
 				$sql = "UPDATE %scourse_cats SET theme='%s' WHERE cat_id IN (%s)";
 				$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_theme, $children));
 				
@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
 		}
 
 		$sql = "UPDATE %scourse_cats SET cat_parent=%d, cat_name='%s', theme='%s' WHERE cat_id=%d";
-		$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_parent_id, $cat_name, $cat_theme, $cat_id));
+		$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_parent_id, htmlentities($cat_name, ENT_QUOTES), $cat_theme, $cat_id));
 		write_to_log(AT_ADMIN_LOG_UPDATE, 'course_cats', count($rows_cats), $sqlout);
 
 		$msg->addFeedback('ACTION_COMPLETED_SUCCESSFULLY');
@@ -86,11 +86,12 @@ $msg->printAll();
 <div class="input-form">
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="category_name"><?php echo _AT('title'); ?></label><br />
-		<input type="text" id="category_name" name="cat_name" size="30" value="<?php echo htmlspecialchars($categories[$cat_id]['cat_name']); ?>" />
+		<input type="text" id="category_name" name="cat_name" size="30" value="<?php echo $categories[$cat_id]['cat_name']; ?>" />
 	</div>
 
 	<div class="row">
-		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="category_parent"><?php echo _AT('cats_parent_category'); ?></label><br />
+		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="category_parent">
+		<?php echo _AT('cats_parent_category'); ?></label><br />
 		<select name="cat_parent_id" id="category_parent"><?php
 
 				$current_cat_id = $cat_id;

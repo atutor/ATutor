@@ -46,7 +46,7 @@ if (isset($_POST['submit'])) {
 	if (!$msg->containsErrors()) {
 		
 		$sql = "INSERT INTO %scourse_cats VALUES (NULL, '%s', %d, '%s')";
-		$rows_cats = queryDB($sql, array(TABLE_PREFIX, $cat_name, $cat_parent_id, $cat_theme));
+		$rows_cats = queryDB($sql, array(TABLE_PREFIX, htmlentities($cat_name, ENT_QUOTES), $cat_parent_id, $cat_theme));
 
 		$cat_id = at_insert_id($db);
 

@@ -278,19 +278,11 @@ if (isset($_SESSION['member_id']) && $_SESSION['member_id']) {
 }
 
 $_path = array_reverse($_path);
-/*
-if (isset($_pages[$current_page]['title'])) {
-	$_page_title = $_pages[$current_page]['title'];
-} else {
-	$_page_title = _AT($_pages[$current_page]['title_var']);
-}
-*/
-
 
 /* calculate the section_title: */
 if (isset($_SESSION['course_id']) && $_SESSION['course_id'] > 0) {
 	//Truncate course title if it's > 45.
-	$session_course_title = htmlentities($_SESSION['course_title'], ENT_QUOTES, 'UTF-8');
+    $session_course_title = $_SESSION['course_title'];
 	$section_title = validate_length($session_course_title, 100, VALIDATE_LENGTH_FOR_DISPLAY);
 	// If there is an icon, display it on the header
 

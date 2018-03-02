@@ -106,9 +106,9 @@ foreach($rows_courses as $row ){
 	$course_rows= [];
 	$courses_rows[] = $row;
 	for($i = 0; $i < count($courses_rows); $i++ ){
-	    $courses_rows[$i]['title']  = stripslashes($courses_rows[$i]['title']);
+	    $courses_rows[$i]['title']  = stripslashes(html_entity_decode($courses_rows[$i]['title']));
 	    $courses_rows[$i]['banner']  = stripslashes($courses_rows[$i]['banner']);
-	    $courses_rows[$i]['description']  = stripslashes($courses_rows[$i]['description']);
+	    $courses_rows[$i]['description']  = stripslashes(html_entity_decode($courses_rows[$i]['description']));
 	}
 }
 

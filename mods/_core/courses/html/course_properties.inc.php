@@ -48,10 +48,10 @@ if (!isset($isadmin, $course, $db)) {
 if (isset($_POST['form_course'])) {
 
 	$row['course_id']			= $_POST['course'];
-	$row['title']				= $_POST['title'];
+	$row['title']				= htmlspecialchars($_POST['title'], ENT_QUOTES);
 	$row['primary_language']	= $_POST['primary_language'];
 	$row['member_id']			= $_POST['member_id'];
-	$row['description']			= $_POST['description'];
+	$row['description']			= htmlspecialchars($_POST['description'], ENT_QUOTES);
 	$row['course_dir_name']		= $_POST['course_dir_name'];
 	$row['cat_id']				= $_POST['cat_id'];
 	$row['content_packaging']	= $_POST['content_packaging'];
