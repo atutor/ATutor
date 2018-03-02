@@ -50,7 +50,7 @@ $real = realpath($file);
 // How did this ever work when the stock icons are used instead of a custom one, see mantis 5465
 //if (file_exists($real) && (substr($real, 0, strlen(AT_CONTENT_DIR)) == AT_CONTENT_DIR)) {
 if (file_exists($real)) {
-	header('Content-Disposition: inline; filename="'.$size.$id.'.'.$pathinfo['extension'].'"');
+	header('Content-Disposition: inline; filename="'.$filename.'"');
 	
 	/**
 	 * although we can check if mod_xsendfile is installed in apache2
