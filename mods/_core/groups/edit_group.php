@@ -33,8 +33,8 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title']       = $addslashes($_POST['title']);
-		$_POST['description'] = $addslashes($_POST['description']);
+		$_POST['title']       = htmlspecialchars($_POST['title'], ENT_QUOTES);
+		$_POST['description'] = htmlspecialchars($_POST['description']);
 
 		$id = intval($_POST['id']);
 		$type_id = intval($_POST['type_id']);

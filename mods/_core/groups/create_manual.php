@@ -45,7 +45,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['new_type'] = $addslashes($_POST['new_type']);
+		$_POST['new_type'] = htmlspecialchars($_POST['new_type'], ENT_QUOTES);
 		$_POST['prefix']      = $addslashes($_POST['prefix']);
 		$_POST['description'] = $addslashes($_POST['description']);
 

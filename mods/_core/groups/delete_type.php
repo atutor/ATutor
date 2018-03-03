@@ -68,7 +68,7 @@ if(count($row_group_types) == 0){
 
 unset($hidden_vars);
 $hidden_vars['id'] = $_GET['id'];
-
+$row_group_types['title'] = htmlspecialchars($row_group_types['title'], ENT_QUOTES) ;
 $msg->addConfirm(array('DELETE_GROUP_TYPE',$row_group_types['title']), $hidden_vars);
 $msg->printConfirm();
 

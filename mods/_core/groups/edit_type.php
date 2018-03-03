@@ -28,7 +28,7 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['title']       = $addslashes($_POST['title']);
+		$_POST['title']       = htmlspecialchars($_POST['title'], ENT_QUOTES);
 
 		$type_id = intval($_POST['type_id']);
 
@@ -64,7 +64,7 @@ require(AT_INCLUDE_PATH.'header.inc.php');
 		<fieldset class="group_form"><legend class="group_form"><?php echo _AT('edit'); ?></legend>
 	<div class="row">
 		<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="title"><?php echo _AT('title'); ?></label><br />
-		<input type="text" name="title" id="title" value="<?php echo $row['title']; ?>" size="30" maxlength="40" />
+		<input type="text" name="title" id="title" value="<?php echo stripslashes($row['title']); ?>" size="30" maxlength="40" />
 	</div>
 
 	<div class="row buttons">

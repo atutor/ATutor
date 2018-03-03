@@ -88,7 +88,7 @@ if(count($rows_group_types) == 0){
 unset($hidden_vars);
 $hidden_vars['id'] = $_GET['id'];
 $hidden_vars['type_id'] = $row_groups['type_id'];
-
+$row_groups['title'] = htmlspecialchars($row_groups['title'], ENT_QUOTES); 
 $msg->addConfirm(array('DELETE_GROUP',AT_print($row_groups['title'], 'groups.title')), $hidden_vars);
 $msg->printConfirm();
 
