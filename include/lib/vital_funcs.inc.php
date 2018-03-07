@@ -60,7 +60,8 @@ function regenerate_session($reload = false)
 	// Set session ID to the new one, and start it back up again
 	session_id($newSession);
 	session_start();
-
+    unset($_SESSION['OBSOLETE']);
+    unset($_SESSION['EXPIRES']);
 	$_SESSION = $session_values; 
 }
 
@@ -1115,7 +1116,7 @@ function debug_to_log($var, $log='') {
 	if (!defined('AT_DEVEL') || !AT_DEVEL) {
 		return;
 	}
-	$_SESSION['log'] == 'log';
+	$_SESSION['log'] = 'log';
 	if ($log == '') $log = AT_CONTENT_DIR. 'atutor.log';
 	$handle = fopen($log, 'a');
 	fwrite($handle, "\n\n");
@@ -1215,7 +1216,7 @@ function escape_all_supers(){
         if(!is_array($_GET[$key])){
             $_GET[$key] = htmlspecialchars($_GET[$key]);
         } else{
-            if(isset($_GET['qti_export_version'])){
+            if(array_key_exists('qti_export_version', $_GET)){
                     // don't do anything
                     // hack to prevent filter when selecting a question to edit.
                     // the array the URL has attached needs to stay intact for the question editor
