@@ -218,9 +218,9 @@ if (!$_SESSION['valid_user']) {
          * otherwise display connect option.
          */
 
-        $query = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
-        $row_gsync = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));     
-          
+        //$query = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+        //$row_gsync = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));     
+ /*         
         if(count($row_gsync) > 0){
 
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php?logout=yes' target='_blank'>".
@@ -233,8 +233,9 @@ if (!$_SESSION['valid_user']) {
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php' target='_blank'>".
                 _AT('calendar_connect_gcal'). "</a></li></ul></fieldset>";
         }
-           
+   */        
     ?>
+    </ul></fieldset>
     <br/>
     <!-- Display color codes with description. -->
     <fieldset>

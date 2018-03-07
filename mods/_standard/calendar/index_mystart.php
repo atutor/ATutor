@@ -353,10 +353,12 @@
          * otherwise display connect option.
          */
 
-        $query = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
-        $rows_gcals = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));
-                
-        if(count($rows_gcals) > 0){
+
+
+       // $query = "SELECT * FROM %scalendar_google_sync WHERE userid=%d";
+        //$rows_gcals = queryDB($query, array(TABLE_PREFIX, $_SESSION['member_id']));
+    
+/*        if(count($rows_gcals) > 0){
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php?logout=yes' target='_blank'>".
                  _AT('calendar_disconnect_gcal') . "</a></li></ul></fieldset>";
             echo "<br/><fieldset><legend><h4>". _AT('calendar_gcals') . "</h4></legend>";
@@ -364,9 +366,11 @@
             echo "</fieldset>";
         } else {
             echo "<li><a href='mods/_standard/calendar/google_connect_disconnect.php' target='_blank'>".
-                _AT('calendar_connect_gcal'). "</a></li></ul></fieldset>";
+                _AT('calendar_connect_gcal'). "</a></li>";
         }
+*/
     ?>
+    </ul></fieldset>
     <br/>
     <!-- Display color codes with description. -->
     <fieldset>
