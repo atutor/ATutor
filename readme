@@ -3,10 +3,7 @@ ATutor readme:
 To install ATutor simply point your browser to your installation and follow the provided instructions.
 
 For additional installation details see:
-http://www.atutor.ca/atutor/docs/installation.php
-
-Or, the official ATutor Handbook:
-http://help.atutor.ca
+https://atutor.github.io/atutor/docs/installation
 
 Installing from a GitHub Clone
 1. If you are installing ATutor from a GitHub clone, rather than an ATutor bundled distribution, follow the usual installation and upgrade instructions at the link above.
@@ -17,10 +14,19 @@ touch include/config.inc.php
 GitHub Basics
 If you wish to have code you've developed added to the ATutor public source code, you will need to understand a few Git basics.
 
-See: http://wiki.atutor.ca/display/atutorwiki/Using+Git+and+GitHub
+See: https://atutor.github.io/atutor/docs/dev_with_github.html
 
-Enjoy!
+Or, see the ATutor Handbook:
 
+Administrators
+https://atutor.github.io/atutor/handbook/admin.html
 
-The ATutor Development Team
-http://www.atutor.ca
+Instructors:
+https://atutor.github.io/atutor/handbook/instructor.html
+
+Users:
+https://atutor.github.io/atutor/handbook/users.html
+
+Have fun, and take it places!
+
+greg
