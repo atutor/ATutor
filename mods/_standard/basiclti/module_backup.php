@@ -31,7 +31,7 @@ function basiclti_content_convert($row, $course_id, $table_id_map, $version) {
 	$new_row[15]  = $row[15];          //
 	$new_row[16]  = $row[16];          //
 	$new_row[17]  = $row[17];          //
-	$new_row[18]  = $row[18];          //
+	//$new_row[18]  = $row[18];          //
 
 	return $new_row;
 }
@@ -62,7 +62,7 @@ function basiclti_tools_convert($row, $course_id, $table_id_map, $version) {
 	$new_row[21]  = $row[21];          //
 	$new_row[22]  = $row[22];          //
 	$new_row[23]  = $row[23];          //
-	$new_row[24]  = $row[24];          //
+	//$new_row[24]  = $row[24];          //
 
 	return $new_row;
 }
