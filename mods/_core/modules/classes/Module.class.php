@@ -181,7 +181,7 @@ class Module {
 	var $_content_tools; // content tool icons on "edit content" page
 
 	// constructor
-	function Module($row) {
+	function __construct($row) {
 		global $_content_tools;
 		
 		if (is_array($row)) {
