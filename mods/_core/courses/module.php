@@ -71,7 +71,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_COURSES, TRUE) || admin_authenticate(AT_ADM
 $sql = "SELECT * FROM %smodules WHERE dir_name ='_core/services' && status ='2'";
 $row = queryDB($sql, array(TABLE_PREFIX), TRUE);
 
-if($row['dir_name']){
+if(isset($row['dir_name'])){
     //This is a Service site 
     $service_site = 1;
 }
