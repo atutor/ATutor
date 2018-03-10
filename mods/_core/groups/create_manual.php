@@ -46,8 +46,8 @@ if (isset($_POST['cancel'])) {
 
 	if (!$msg->containsErrors()) {
 		$_POST['new_type'] = htmlspecialchars($_POST['new_type'], ENT_QUOTES);
-		$_POST['prefix']      = $addslashes($_POST['prefix']);
-		$_POST['description'] = $addslashes($_POST['description']);
+		$_POST['prefix']      = htmlspecialchars($_POST['prefix'], ENT_QUOTES);
+		$_POST['description'] = htmlspecialchars($_POST['description'], ENT_QUOTES);
 
 		if ($_POST['new_type']) {
 
@@ -100,7 +100,7 @@ $sql = "SELECT type_id, title FROM %sgroups_types WHERE course_id=%d ORDER BY ti
 $rows_group_types = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']));
 
 foreach($rows_group_types as $row){
-	$types[$row['type_id']] = htmlentities_utf8($row['title']);
+	$types[$row['type_id']] = $row['title'];
 }
 
 $savant->assign('types', $types);

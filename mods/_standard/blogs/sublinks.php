@@ -31,7 +31,7 @@ if(count($rows_groups)){
 			} else {
 				$last_updated = '';
 			}
-	
+	        $row['title'] = htmlspecialchars_decode($row['title']);
 			$link_title = $row['title'].$last_updated;
 			$list[] = '<a href="'.url_rewrite('mods/_standard/blogs/view.php?ot='.BLOGS_GROUP. SEP .'oid='.$row['group_id'], AT_PRETTY_URL_IS_HEADER).'"'.
 			          (strlen($link_title) > SUBLINK_TEXT_LEN ? ' title="'.AT_print($link_title, 'blog_posts.title').'"' : '') .'>'. 

@@ -4,7 +4,7 @@
 	<fieldset class="group_form"><legend class="group_form"><?php echo _AT('groups_create_automatic'); ?></legend>
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="type"><?php echo _AT('groups_type'); ?></label><br />
-			<input type="text" name="type_title" id="type" value="<?php echo AT_print($_POST['type_title'], 'groups.type'); ?>" size="30" maxlength="60" />
+			<input type="text" name="type_title" id="type" value="<?php echo htmlspecialchars_decode($_POST['type_title'], ENT_QUOTES); ?>" size="30" maxlength="60" />
 		</div>
 
 		<div class="row">

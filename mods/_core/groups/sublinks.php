@@ -33,10 +33,11 @@ if (count($rows) > 0) {
     foreach($rows as $row) {
         $add = 0;
         $modules = explode('|', $row['modules']);
-        $str = '<a href="#" onclick="popup_open(\''.$row[group_id].'\'); return false;">'.validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
+        $row['title'] = htmlspecialchars_decode($row['title']);
+        $str = '<a href="#" onclick="popup_open(\''.$row['group_id'].'\'); return false;">'.validate_length($row['title'], SUBLINK_TEXT_LEN, VALIDATE_LENGTH_FOR_DISPLAY) .'</a>';
         asort($modules);
         if ($modules) {
-            echo "<div title = '".AT_print($row['title'], 'groups.title')." -> Latest Additions' id = 'group_".$row['group_id']."' class='group_dialog'>";
+            echo "<div title = <?php echo ' -> Latest Additions' id = 'group_".$row['group_id']."' class='group_dialog'>";
             $str.= '<ul class="child-top-tool">';
             foreach ($modules as $module_name) {
                 $fn = basename($module_name) . '_get_group_url';

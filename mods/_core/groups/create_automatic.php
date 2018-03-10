@@ -28,7 +28,7 @@ if (isset($_POST['cancel'])) {
 		$modules = implode('|', $_POST['modules']);
 	}
 
-	$_POST['type_title']   = trim($_POST['type_title']);
+	$_POST['type_title']   = htmlspecialchars(trim($_POST['type_title']));
 	$_POST['num_students'] = abs($_POST['num_students']);
 	$_POST['num_groups']   = abs($_POST['num_groups']);
 	$_POST['num_g']        = intval($_POST['num_g']);
@@ -102,9 +102,9 @@ if (isset($_POST['cancel'])) {
 	}
 
 	if (!$msg->containsErrors()) {
-		$_POST['type_title']  = $addslashes($_POST['type_title']);
-		$_POST['prefix']      = $addslashes($_POST['prefix']);
-		$_POST['description'] = $addslashes($_POST['description']);
+		$_POST['type_title']  = htmlspecialchars($_POST['type_title'], ENT_QUOTES);
+		$_POST['prefix']      = htmlspecialchars($_POST['prefix'], ENT_QUOTES);
+		$_POST['description'] = htmlspecialchars($_POST['description'], ENT_QUOTES);
 
 		$sql = "INSERT INTO %sgroups_types VALUES (NULL, %d, '%s')";
 		$result = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id'], $_POST['type_title'] ));
