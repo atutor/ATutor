@@ -48,7 +48,7 @@ foreach($rows_courses as $row){
 
 	$courses[] = array_merge($row, (array) $tests);
 	for($i = 0; $i < count($courses); $i++ ){
-        $courses[$i]['title'] = stripslashes($courses[$i]['title']);
+        $courses[$i]['title'] = stripslashes(htmlspecialchars_decode($courses[$i]['title'], ENT_QUOTES));
         $courses[$i]['banner'] = stripslashes($courses[$i]['banner']);
         $courses[$i]['description']  = stripslashes($courses[$i]['description']);
 	}
