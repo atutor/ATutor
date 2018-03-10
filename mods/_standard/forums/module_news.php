@@ -31,8 +31,8 @@ function forums_news() {
 			$all_forums = get_forums($row['course_id']);
 
 			if (is_array($all_forums)){
-				foreach($all_forums as $forums){				
-					if (is_array($forums)){					
+				foreach($all_forums as $forums){		
+					if (is_array($forums) && !empty($forums)){						
 						foreach ($forums as $forum_obj){
                             $latest_post =get_last_post($forum_obj['forum_id']);
 							$forum_obj['course_id'] = $row['course_id'];
