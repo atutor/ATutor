@@ -52,7 +52,7 @@ function upload_custom_logo()
         
         //custom logo url missing
         if(isset($_POST['custom_logo_url']) && $_POST['custom_logo_url'] == '') {
-            $missing_fields[] = _AT('custom_logo_url');
+            //$missing_fields[] = _AT('custom_logo_url');
         } 
         
         if($missing_fields) {
