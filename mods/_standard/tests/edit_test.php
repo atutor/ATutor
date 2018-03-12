@@ -285,7 +285,7 @@ $msg->printErrors();
     
     <div class="row">
         <label for="description"><?php echo _AT('test_description'); ?></label><br />
-        <textarea name="description" cols="35" rows="3" id="description"><?php echo htmlspecialchars($_POST['description']); ?></textarea>
+        <textarea name="description" cols="35" rows="3" id="description"><?php echo $_POST['description']; ?></textarea>
     </div>
 
     <div class="row">    
