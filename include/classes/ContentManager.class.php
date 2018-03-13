@@ -610,7 +610,7 @@ class ContentManager
 	 * @date	Sep 10, 2008
 	 * @author	Harris
 	 */
-	function & getContentTestsAssoc($content_id){
+	function  getContentTestsAssoc($content_id){
 
 		$sql	= "SELECT ct.test_id, t.title FROM (SELECT * FROM %scontent_tests_assoc WHERE content_id=%d) AS ct LEFT JOIN %stests t ON ct.test_id=t.test_id";
 		$rows_test_assocs = queryDB($sql, array(TABLE_PREFIX, $content_id, TABLE_PREFIX));
@@ -620,7 +620,7 @@ class ContentManager
 	}
 
         /*TODO***************BOLOGNA***************REMOVE ME**********/
-    function & getContentForumsAssoc($content_id){
+    function  getContentForumsAssoc($content_id){
 
 		$sql	= "SELECT cf.forum_id, f.title FROM (SELECT * FROM %scontent_forums_assoc WHERE content_id=%d) AS cf LEFT JOIN %sforums f ON cf.forum_id=f.forum_id";
 		$result = queryDB($sql, array(TABLE_PREFIX, $content_id, TABLE_PREFIX));	
@@ -628,7 +628,7 @@ class ContentManager
 		return $result;
 	}
 
-	function & cleanOutput($value) {
+	function  cleanOutput($value) {
 		return stripslashes(htmlspecialchars_decode($value));
 	}
 
