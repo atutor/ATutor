@@ -226,8 +226,22 @@ function execute_sql($sql, $oneRow, $callback_func, $array_type){
     
         // Query DB and if something goes wrong then log the problem
         if(defined('MYSQLI_ENABLED')){
-               $result = $db->query($sql) or (error_log(print_r($db->error . "\nSQL: " . $sql, true), 0) and $msg->addError($displayErrorMessage));                
+                //$result = $db->query($sql) or (error_log(print_r($db->error . "\nSQL: " . $sql, true), 0) and $msg->addError($displayErrorMessage));                
 
+               if($result = $db->query($sql)){
+                    //all good
+                } else{
+                    if(AT_DEVEL == 1){
+                        array_push($displayErrorMessage,$db->error);
+                        array_push($displayErrorMessage,$sql);
+                        //error_log(print_r($db->error . "\nSQL: " . $sql, true), 0) and $msg->addError($displayErrorMessage);  
+                    } else {
+                        array_push($displayErrorMessage, '');
+                        array_push($displayErrorMessage, '');
+                        //error_log(print_r($db->error . "\nSQL: " . $sql, true), 0) and $msg->addError($displayErrorMessage);     
+                    }         
+                    error_log(print_r($db->error . "\nSQL: " . $sql, true), 0) and $msg->addError($displayErrorMessage);     
+                }
         }else{
                $result = mysql_query($sql, $db) or (error_log(print_r(mysql_error(), true), 0) and $msg->addError($displayErrorMessage));
         }
