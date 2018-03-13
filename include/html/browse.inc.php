@@ -77,13 +77,9 @@ if (!empty($_GET['search'])) {
 	$sql_search = '1';
 }
 
-$sql	= "SELECT COUNT(course_id) AS cnt FROM %scourses WHERE access %s AND cat_id %s AND %s AND hide=0";
-$row = queryDB($sql, array(TABLE_PREFIX, $sql_access, $sql_category, $sql_search), TRUE);
-
-$num_results = $row['cnt'];
-
 $sql	= "SELECT * FROM %scourses WHERE access %s AND cat_id %s AND %s AND hide=0 ORDER BY title";
 $rows_courses = queryDB($sql, array(TABLE_PREFIX, $sql_access, $sql_category, $sql_search));
+$num_results = count($rows_courses);
 
 // add "enroll me" link if the user is not the course owner and is not enrolled
 foreach($rows_courses as $row ){
