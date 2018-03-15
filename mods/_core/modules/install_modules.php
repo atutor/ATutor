@@ -42,13 +42,13 @@ function clear_dir($dir)
 set_time_limit(0);
 
 // check the connection to server update.atutor.ca
-$update_server = "http://update.atutor.ca"; 
-$connection_test_file = $update_server . '/index.php';
-$connection = @file_get_contents($connection_test_file);
+//$update_server = "http://update.atutor.ca"; 
+//$connection_test_file = $update_server . '/index.php';
+//$connection = @file_get_contents($connection_test_file);
 
 if (!$connection) 
 {
-	$msg->addInfo(array('CANNOT_CONNECT_MOD_SERVER'));
+	//$msg->addInfo(array('CANNOT_CONNECT_MOD_SERVER'));
 }
 else
 {
@@ -261,18 +261,19 @@ $rows_installed_mods = queryDB($sql, array(TABLE_PREFIX));
 	}
 	
     // Sort the data with atutor_version descending
-	foreach ($module_list_array as $key => $row) {
+    
+	/*foreach ($module_list_array as $key => $row) {
                 $version[$key]  = $row['atutor_version'];
         }
         $sort_versions = array_unique($version, SORT_REGULAR);
         rsort($sort_versions);
-
+    */
     // Add $module_list_array as the last parameter, to sort by the common key
     // Sorts by original $module_list_array by reference, then returns true|false
     //$sort_by_version = array_multisort($version, SORT_DESC, $module_list_array);
 
 // Create menu for filter ATutor versions
-function select_atversion($v=0){ 
+/* function select_atversion($v=0){ 
     global $sort_versions;
     $menu = '<form action="'.$_SERVER['PHP_SELF'].'" method="post">'; 
     $menu.= '<select name="atversions">';
@@ -292,6 +293,8 @@ function select_atversion($v=0){
 }
 
 $savant->assign('atversions', select_atversion());
+*/
+
 $savant->assign('enable_upload', $enable_upload);
 $savant->assign('enable_remote_installation', $enable_remote_installtion);
 $savant->assign('keys', $keys);

@@ -22,7 +22,7 @@ if (isset($_POST["cancel"]))
 	header('Location: '.AT_BASE_HREF.'mods/_core/modules/install_modules.php');
 	exit;
 }
-
+/*
 // check the connection to server update.atutor.ca
 $update_server = "update.atutor.ca"; 
 $connection_test_file = "http://" . $update_server . '/index.php';
@@ -54,7 +54,7 @@ if ($module_list_xml)
 	$module_list_array = $moduleListParser->getParsedArray();
 }
 // end of get module list
-
+*/
 $module_content_folder = AT_CONTENT_DIR . "module";
 
 //debug($_POST["vid"]);

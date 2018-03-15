@@ -79,8 +79,9 @@ elseif (trim($_REQUEST['who']) != '') $who = trim($_REQUEST['who']);
 else $who = "public";
 
 // check the connection to server update.atutor.ca
-$update_server = "http://update.atutor.ca";
-$connection_test_file = $update_server . '/index.php';
+/******
+$update_server = "https://atutor.github.io";
+$connection_test_file = $update_server . '/index.html';
 $connection = @file_get_contents($connection_test_file);
 
 if (!$connection)
@@ -107,7 +108,7 @@ if ($server_connected)
 	}
 }
 // end of get patch list
-
+*/
 $module_content_folder = AT_CONTENT_DIR . "patcher";
 
 if ($_POST['install_upload'] && $_POST['uploading'])

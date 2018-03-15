@@ -51,7 +51,10 @@
 		
 	</div>
 
-	<?php if(!defined('IS_SUBSITE')){ ?>
+	<?php 
+	
+	/*
+	if(!defined('IS_SUBSITE')){ ?>
 	<div class="input-form">
 		<form method="get" action="mods/_standard/patcher/index_admin.php">
 			<div class="row">
@@ -64,7 +67,9 @@
 			</div>
 		</form>
 	</div>
-	<?php } ?>
+	<?php } 
+	*/
+	?>
 	
 	<div class="input-form">
 		<div class="row">

@@ -39,7 +39,7 @@ function clear_dir($dir)
 }
 
 set_time_limit(0);
-
+/*
 // check the connection to server update.atutor.ca
 $update_server = "http://update.atutor.ca"; 
 $connection_test_file = $update_server . '/index.php';
@@ -69,7 +69,7 @@ if ($theme_list_xml)
 	$theme_list_array = $themeListParser->getParsedArray();
 }
 // end of get theme list
-
+*/
 $theme_content_folder = AT_CONTENT_DIR . "theme/";
 
 // create theme content dir if not exists

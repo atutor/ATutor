@@ -22,7 +22,7 @@ if (isset($_POST["cancel"]))
 	header('Location: '.AT_BASE_HREF.'mods/_core/themes/install_themes.php');
 	exit;
 }
-
+/*
 // check the connection to server update.atutor.ca
 $update_server = "update.atutor.ca"; 
 $connection_test_file = "http://" . $update_server . '/index.php';
@@ -54,7 +54,7 @@ if ($theme_list_xml)
 	$theme_list_array = $themeListParser->getParsedArray();
 }
 // end of get theme list
-
+*/
 $theme_content_folder = AT_CONTENT_DIR . "theme";
 
 //debug($_POST["vid"]);

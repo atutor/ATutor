@@ -15,23 +15,4 @@
 </div>
 </form>
 
-<?php if (defined('AT_DEVEL_TRANSLATE') && AT_DEVEL_TRANSLATE): ?>
-<!-- 	<form name="form1" method="post" action="mods/_core/languages/language_translate.php">
-		<div class="input-form">
-			<div class="row">
-				Import partial language from the <strong>live ATutor language database</strong> to your local installation for translating.
-			</div>
-			<div class="row">
-				<?php
-					require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/RemoteLanguageManager.class.php');
-					$remoteLanguageManager = new RemoteLanguageManager();
-					$remoteLanguageManager->printDropdown($_SESSION['lang'], 'import_lang', 'import_lang');
-				?>
-			</div>
 
-			<div class="row buttons">
-				<input type="submit" name="svn_submit" value="<?php echo _AT('import'); ?>" />
-			</div>
-		</div>
-	</form> -->
-<?php endif; ?>

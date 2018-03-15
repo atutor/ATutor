@@ -369,7 +369,7 @@ class Module {
 	function getName() {
 		if ($this->isUninstalled()) {
 			$name = $this->getProperty('name');
-			return current($name);
+			if($name) return current($name);
 		}
 		return _AT(basename($this->_directoryName));
 	}

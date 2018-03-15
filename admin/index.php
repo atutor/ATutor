@@ -84,7 +84,9 @@ if ($_config['allow_instructor_requests'] && admin_authenticate(AT_ADMIN_PRIV_US
 }
 
 
-
+/* *******
+// Disabled patch server, no longer available through atutor.ca
+// Adapt this for Github delivery of patches
 $update_server = "update.atutor.ca"; 
 
 $file = fsockopen ($update_server, 80, $errno, $errstr, 15);
@@ -124,7 +126,7 @@ if ($file)
 		}
 	}
 } 
-
+*/
 if (!isset($_config['db_size']) || ($_config['db_size_ttl'] < time())) {
 	$_config['db_size'] = 0;
 	$sql = 'SHOW TABLE STATUS';

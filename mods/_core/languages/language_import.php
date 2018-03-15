@@ -50,7 +50,7 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 $output = curl_exec($ch);
 curl_close($ch);
 $response = json_decode($output, true);
-
+debug($response);
 require(AT_INCLUDE_PATH.'header.inc.php');
 
 require_once(AT_INCLUDE_PATH.'../mods/_core/languages/classes/RemoteLanguageManager.class.php'); 
