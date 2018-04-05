@@ -59,6 +59,11 @@ if(isset($_SERVER['HTTP_USER_AGENT'])){
 		$relative_path = substr(AT_INCLUDE_PATH, 0, -strlen('include/'));
 		header('Location: ' . $relative_path . 'install/not_installed.php');
 		exit;
+	} else{
+	    // Hack to disable caching until 5673 is resolved
+	    // Comment out two lines below to resume default caching behaviour
+	    //header('Cache-Control: no-store, no-cache, must-revalidate');
+		//header('Pragma: no-cache');
 	}
 
 /*** end system config block ***/
@@ -346,7 +351,7 @@ if (isset($_user_location) && ($_user_location == 'users') && $_SESSION['valid_u
 	$_SESSION['course_id'] = 0;
 }
 
-if ((!isset($_SESSION['course_id']) || $_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($_user_location != 'prog') && !isset($_GET['h']) && ($_user_location != 'public') && (!isset($_pretty_url_course_id) || $_pretty_url_course_id == 0)) {
+if ((!isset($_SESSION['course_id']) || $_SESSION['course_id'] == 0) && ($_user_location != 'users') && ($helpme_total > 0) && ($_user_location != 'prog') && !isset($_GET['h']) && ($_user_location != 'public') && (!isset($_pretty_url_course_id) || $_pretty_url_course_id == 0)) {
 	header('Location:'.AT_BASE_HREF.'users/index.php');
 	exit;
 }
