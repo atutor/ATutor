@@ -232,12 +232,11 @@ ATutor.course = ATutor.course || {};
  <?php
     if(isset($_SESSION['prefs']['PREF_HIDE_FEEDBACK']) && $_SESSION['prefs']['PREF_HIDE_FEEDBACK'] != 0) {
     ?>
-         $('#message').css('display', 'block').slideDown("slow");
+        $('#message').not('#message #help').css('display', 'block').slideDown("slow");
             setTimeout(function() {
-            $("#message").delay( <?php echo $_SESSION['prefs']['PREF_HIDE_FEEDBACK']; ?>*1000 ).hide('blind', {}, 500);
-            }
-        );
-        
+            $("#message #feedback").delay( <?php echo $_SESSION['prefs']['PREF_HIDE_FEEDBACK']; ?>*1000 ).hide('blind', {}, 500);
+        });
+
         <?php } ?>
     /* To hide feedback div when clicked */
         $(".message_link").click(function() {
