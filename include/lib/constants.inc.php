@@ -235,7 +235,7 @@ define('AT_GUIDES_PATH', $_base_path . 'documentation/');
 
 define('AT_BACKUP_DIR', AT_CONTENT_DIR . 'backups/'); // where the backups get stored
 
-define('VERSION',		'2.2.3');
+define('VERSION',		'2.2.4');
 define('AT_GITHUB_RELEASE_COMMIT', 'ef64e66bd1fcd058a6bb653778ba44202efad589');
 define('ONLINE_UPDATE', 3); /* update the user expiry every 3 min */
 
