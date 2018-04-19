@@ -828,6 +828,7 @@ div#error ul, div#feedback ul, div#help ul {
 }
 #message{
     width:100%;
+    clear:both;
 }
 .message_link{
     float:right;
@@ -864,13 +865,13 @@ div#confirm {
 	color: #000000;
 	font-weight: bold;
 }
-div#help {
+/*div#help {
 	width: 100%;
 	border-left: .5em solid #ACCFCC;
 	padding: 15px;
 	background-color: #E9F4F3;
 	color:  #000000;
-}
+}*/
 
 div#info {
 	width: 100%;
@@ -879,8 +880,9 @@ div#info {
 	border-left: .5em #4538d0 solid;
 	color:  #000000;
 	font-weight: bold;
-	float:left;
-	clear:left;
+clear: both;
+float: left;
+margin-bottom: .5em;
 }
 div#info a{
 	color:red;

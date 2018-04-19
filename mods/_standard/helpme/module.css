@@ -16,21 +16,14 @@ div#help{
     background-repeat:no-repeat;
     background-position:1% 50%;
     background-size: 4em 4em;
-    /*background-position:left bottom;*/
-    width:95%;
+    background-color: #F7F3ED;
     border:1px solid transparent; 
     font-weight:bold;
     box-shadow: 2px 2px 1px #888888;
- 
-}
-div#help {
-    background-color: #F7F3ED;
-    font-size: small;
     padding-bottom: 1em;
     padding-top: 2em;
     padding-left: 5.5em;
     padding-right: 5px;
-    clear:both;
     margin-bottom:2em;
     min-height: 2.8em;
 }
@@ -80,10 +73,7 @@ div.msg_buttons img{
 #revisit img:hover, #revisit img:focus{
     background-color:#cccddd;
 }
-#message{
-    width:90%;
-    margin-right:1em;
-}
+
 #message img{
     margin-right:0;
 }
