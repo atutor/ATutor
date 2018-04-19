@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">Help Me</name> 
+    <description lang="en">This module helps new users become familiar with using ATutor, guiding them through the steps to create and manage a course, or to setup and administer an ATutor installation. </description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutorSpaces</name> 
+            <email>support@atutorspaces.com</email> 
+        </maintainer>
+    </maintainers> 
+    <url>https://www.atutorspaces.com</url> 
+    <license>BSD</license> 
+	<release> 
+        <version>0.2</version> 
+        <date>2014-30-06</date> 
+        <state>stable</state> 
+        <notes></notes> 
+    </release> 
+</module>

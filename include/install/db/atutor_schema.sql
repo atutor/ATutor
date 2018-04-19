@@ -650,6 +650,7 @@ INSERT INTO `modules` VALUES ('_standard/social',	     2, 8388608, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/photos',	     2, 16777216, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/flowplayer',	 2, 33554432, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/basiclti',      2, 67108864, 16384, 0, 0);
+INSERT INTO `modules` VALUES ('_standard/helpme',      2, 0, 32768, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/assignment_dropbox', 2, 134217728, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_standard/calendar',      2, 268435456, 0, 0, 0);
 INSERT INTO `modules` VALUES ('_core/users',             2, 0,         2, 0, 0);
@@ -1180,6 +1181,16 @@ INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from,
 INSERT INTO `grade_scales_detail` (grade_scale_id, scale_value, percentage_from, percentage_to) values (3, 'Inadequate', 0, 59);
 
 #  END gradebook SQL
+
+
+# Table for the Helpme Module
+CREATE TABLE IF NOT EXISTS `helpme_user` (
+  `user_id` mediumint(8) NOT NULL,
+  `help_id` mediumint(8) unsigned NOT NULL,
+  PRIMARY KEY (`user_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+#  END helpme SQL
 
 # Tables for standalone student tools page
 

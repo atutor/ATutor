@@ -1,0 +1,95 @@
+.divClass .deleteDiv {
+     margin-left:auto;
+     margin-right:auto;
+     margin-top:-1.7em;
+    float:right;
+    clear:right;
+	cursor: pointer;
+	width:3.5em;
+}
+.divClass ul {
+    width:90%;
+}
+
+div#help{
+    background-image: url('images/helpme_icon.png');
+    background-repeat:no-repeat;
+    background-position:1% 50%;
+    background-size: 4em 4em;
+    /*background-position:left bottom;*/
+    width:95%;
+    border:1px solid transparent; 
+    font-weight:bold;
+    box-shadow: 2px 2px 1px #888888;
+ 
+}
+div#help {
+    background-color: #F7F3ED;
+    font-size: small;
+    padding-bottom: 1em;
+    padding-top: 2em;
+    padding-left: 5.5em;
+    padding-right: 5px;
+    clear:both;
+    margin-bottom:2em;
+    min-height: 2.8em;
+}
+div.helpme_count{
+    float:right;
+    font-weight: 400;
+    font-size:7pt;
+    border:1px solid #779ECB;
+    padding:.2em;
+    margin-right:.3em;
+    float:left;
+}
+#dismiss_all{
+    height:1.5em;
+    width:1.5em;
+}
+#dismiss_all img{
+    height:1.5em;
+    width:1.5em;
+}
+div.msg_buttons{
+    margin-top:-1em;
+    padding:0;
+    width:7em;
+    float:right;
+    position: relative;
+    right:.2em;
+}
+div.msg_buttons img{
+    height:1.5em;
+    width:1.5em;
+    float:right;
+    margin:0 0 0 0;
+}
+#delete img{
+    width:1.5em;
+    float:right;
+}
+#delete img:hover, #delete img:focus{
+    background-color:#cccddd;
+}
+#revisit img{
+    width:1.5em;
+    margin-right:5.2em;
+    float:left;
+}
+#revisit img:hover, #revisit img:focus{
+    background-color:#cccddd;
+}
+#message{
+    width:90%;
+    margin-right:1em;
+}
+#message img{
+    margin-right:0;
+}
+#helpme_reset img{
+    margin-right:.3em;
+}
+#helpme_reset img:hover, #helpme_reset img:hover{
+    background-color:#cccddd;
+}
