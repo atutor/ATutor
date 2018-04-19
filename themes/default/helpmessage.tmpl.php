@@ -28,10 +28,10 @@ global $_base_href;
     <?php endif; ?>
     <div class="msg_buttons">
     <a href="#" onclick="return false;" id="dismiss_all">
-        <img src="<?php echo $_base_href; ?>mods/helpme/images/close.png" alt="<?php echo _AT('helpme_dismiss_all'); ?>" title="<?php echo _AT('helpme_dismiss_all'); ?>" role="link"/>
+        <img src="<?php echo $_base_href; ?>mods/_standard/helpme/images/close.png" alt="<?php echo _AT('helpme_dismiss_all'); ?>" title="<?php echo _AT('helpme_dismiss_all'); ?>" role="link"/>
     </a>
     <a href="#" onclick="return false;" id="helpme_reset" >
-        <img src="<?php echo $_base_href; ?>mods/helpme/images/reload.png" alt="<?php echo _AT('helpme_reset'); ?>" title="<?php echo _AT('helpme_reset'); ?>" role="link"/>
+        <img src="<?php echo $_base_href; ?>mods/_standard/helpme/images/reload.png" alt="<?php echo _AT('helpme_reset'); ?>" title="<?php echo _AT('helpme_reset'); ?>" role="link"/>
     </a>
  <div class="helpme_count" aria-live="polite"><?php echo $this->helpme_count; ?>/<?php echo $this->helpme_total; ?></div>
  </div>
