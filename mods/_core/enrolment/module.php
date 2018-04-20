@@ -43,6 +43,7 @@ $this->_pages['mods/_core/enrolment/index.php']['children'] = array('mods/_core/
 
 	$this->_pages['mods/_core/enrolment/create_course_list.php']['title_var'] = 'list_create_course_list';
 	$this->_pages['mods/_core/enrolment/create_course_list.php']['parent']    = 'mods/_core/enrolment/index.php';
+	$this->_pages['mods/_core/enrolment/create_course_list.php']['guide']     = 'instructor/?p=enrollment_course_list.php';
 	$this->_pages['mods/_core/enrolment/create_course_list.php']['avail_in_mobile']   = false;
 
 	$this->_pages['mods/_core/enrolment/verify_list.php']['title_var']  = 'course_list';
