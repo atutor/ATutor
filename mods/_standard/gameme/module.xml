@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1"?> 
+<module version="0.1"> 
+    <name lang="en">GameMe</name> 
+    <description lang="en">Integrates game elements into ATutor. Setup points, badges, levels, and events to add game mechanics to ATutor courses. </description> 
+    <maintainers>
+        <maintainer> 
+            <name>ATutor Team</name> 
+            <email>info@atutor.ca</email> 
+        </maintainer>
+    </maintainers> 
+    <url>https://atutor.ca</url>
+    <license>BSD</license> 
+	<release> 
+        <version>1.1</version> 
+        <date>2018-05-01</date> 
+        <state>Stable</state> 
+        <notes>Previously an addon module, now standard with ATutor. Once installed and enabled, see the administrator handbook, linked from the top right when the GameMe manager is open, for details on customising game elements for your particular ATutor system.</notes> 
+    </release> 
+</module>

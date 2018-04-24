@@ -1,0 +1,23 @@
+{
+    "name": "jquery quickedit",
+    "main": "quickedit.js",
+    "version": "1.0",
+    "authors": [
+        "林盛 <linren_888@126.com>"
+    ],
+    "description": "jquery quickedit",
+    "keywords": [
+        "quickedit"
+    ],
+    "dependencies": {
+        "jquery": ">= 1.9.1"
+    },
+    "license": "MIT",
+    "ignore": [
+        "**/.*",
+        "node_modules",
+        "bower_components",
+        "test",
+        "tests"
+    ]
+}
