@@ -212,8 +212,10 @@ CREATE TABLE IF NOT EXISTS `gm_user_scores` (
 
 ALTER TABLE `gm_options`
  ADD PRIMARY KEY (`course_id`,`gm_option`), ADD KEY `id` (`id`);
+
 ALTER TABLE `gm_options`
- CHANGE `option` `gm_option` VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT 
+ CHANGE `option` `gm_option` VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT; 
+
 ALTER TABLE `gm_user_badges`
  ADD PRIMARY KEY (`id_user`,`id_badge`,`course_id`);
 
