@@ -110,7 +110,8 @@ function gamemeEnabled(){
 if($_SESSION['valid_user'] && gamemeEnabled()){
     global $_base_path;
     include(AT_INCLUDE_PATH.'../mods/_standard/gameme/events.php');
-    // limit gameme to within courses (BREAKS LOGIN EVENT)
+    // limit gameme to within courses, comment out the include above, 
+    // and uncomment the if statement below (requires less CPU than the above include)
     //if(($_SESSION['course_id']>0 || $_REQUEST['course'] >0) && gamemeEnabled() === TRUE){
         //include($_SERVER['DOCUMENT_ROOT'].$root_path.'/mods/_standard/gameme/events.php');
     //}
@@ -127,4 +128,25 @@ if($_SESSION['is_admin'] == true){
         }
     }
 }
+// Insert some basic data to populate GameMe
+if (isset($_POST['form_course'])) {
+    $sql = "SELECT course_id FROM %scourses ORDER BY course_id DESC LIMIT 1";
+    $this_course = queryDB($sql, array(TABLE_PREFIX), TRUE);
+
+     $gm_enable = array("showlog", "showlevels", "showprogress", "showpoints", "showbadges", "showposition", "showleaders", "showalerts");   
+    $gm_enable2 = array("showleader_count"	, "level_count	");
+    $newcourseid = ($this_course['course_id']+1);
+    foreach ($gm_enable as $gm_option){
+        $sql = "INSERT IGNORE into %sgm_options (id,course_id, gm_option, value) 
+        VALUES(0, %d, '%s', 1)";
+        queryDB($sql, array(TABLE_PREFIX,  $newcourseid, $gm_option));
+    }
+    foreach ($gm_enable2 as $gm_option){
+        $sql = "INSERT IGNORE into %sgm_options (id,course_id, gm_option, value) 
+        VALUES(0, %d, '%s', 10)";
+        queryDB($sql, array(TABLE_PREFIX, $newcourseid, $gm_option));
+    }
+
+}
+
 ?>
