@@ -133,7 +133,7 @@ if($_SESSION['inline_edit']){ ?>
 </tr>
 
 <?php
-$sql = "SELECT * from %sgm_events";
+$sql = "SELECT * from %sgm_events WHERE course_id = 0";
 $all_events = queryDB($sql, array(TABLE_PREFIX));
 $count = 0;
 foreach($all_events as $key=>$event){
