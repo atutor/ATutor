@@ -1740,6 +1740,9 @@ ul#topnavlist li, ul#topnavlist li a:hover, ul#topnavlist li a:focus, ul#topnavl
 	text-decoration:none;
 	border-radius: .5em .5em 0em 0em;
 	-moz-border-radius: .5em .5em 0em 0em;
+	border-top: 1px solid #f3f3f3;
+	border-left:1px solid #f3f3f3;
+	border-right:1px solid #f3f3f3;
 	
 
 }
@@ -2171,14 +2174,14 @@ ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
 	font-weight:700;
 	text-align:center;
 	background-color:#ffffff;
-	border-top: 1px solid transparent;
-	border-left:1px solid transparent;
-	border-right:1px solid transparent;
-	border-bottom:3px solid transparent;
+	border-top: 1px solid #f3f3f3;
+	border-left:1px solid #f3f3f3;
+	border-right:1px solid #f3f3f3;
+	border-bottom:3px solid #f3f3f3;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.3em;	
-	padding: .4em .5em .2em .5em ;
+	padding: .2em .5em .2em .5em ;
 }
 
 ul#subsubnavlist li a:hover, ul#subsubnavlist li a:focus,  ul#subsubnavlist li a:hover,
