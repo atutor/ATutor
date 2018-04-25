@@ -1780,14 +1780,10 @@ VALUES
 	(33,0,'photo_description','Photo descriptions provided',0,5,NULL,NULL,22,25,150,NULL,'GmCallbacksClass::PhotoDescriptionCallback','Congratulations, you have received a new badge for providing descriptions for your photos. Add alternative text to make your photos accessible to blind classmates, and earn bonus points and a badge.'),
 	(34,0,'photo_alt_text','Photo Alt texts provided',0,2,NULL,NULL,23,50,250,NULL,'GmCallbacksClass::PhotoAltTextCallback','Congratulations, you have received a new badge for providing alternative text for your photos. This makes photos accessible to blind classmates using a screen reader to access the course. Providing descriptions for your photos can also earn points, and a badge.'),
 	(35,0,'photo_create_albums','Photo albums created',0,3,NULL,NULL,18,50,100,NULL,'GmCallbacksClass::PhotoAlbumsCallback','Congratulations, you have received a new badge for creating multiple photo albums to organize your photos. Continue adding photos to earn more points.'),
-	(1,26,'login','Login',0,NULL,NULL,1,2,10,25,NULL,'GmCallbacksClass::LoginReachCallback',''),
 	(38,0,'logout','Logout (not timeout)',0,2,250,NULL,25,10,25,NULL,'GmCallbacksClass::LogoutReachCallback','Congratulations, you have received a new badge for logging out properly, instead of leaving or letting your session timeout, maintaining your privacy and security. '),
 	(39,0,'welcome','First course login',1,1,250,NULL,26,250,NULL,NULL,'GmCallbacksClass::WelcomeCallback','Welcome to the course. You have earned your first badge by successfully logging in. Continue earning badges by using the features in the course, and participating in course activities.<br /><br />By participating in the course you can also earn points and advance through levels as your points grow. Follow the leader board to see your position among others in the course. Watch for hints after earning a badge, for earning additional badges and bonus points.'),
-	(2,26,'profile_view','Profile view other\'s',0,10,NULL,NULL,1,10,25,NULL,NULL,NULL),
 	(1,0,'login','Login',0,25,NULL,NULL,24,10,100,NULL,'GmCallbacksClass::LoginReachCallback','Congratulations, you have received a new badge for logging into the course many times. You can also earn points by logging out of the course properly, clicking the logout link, instead of just leaving or letting your session timeout.'),
-	(37,0,'submit_test','Submit a test or quiz',0,5,NULL,NULL,NULL,100,250,NULL,NULL,NULL),
-	(1,3,'login','Login',0,25,NULL,NULL,24,10,100,NULL,'GmCallbacksClass::LoginReachCallback',NULL),
-	(3,26,'profile_viewed','Profile viewed by others',0,25,NULL,NULL,2,25,50,NULL,'GmCallbacksClass::ProfileViewedReachCallback','Congratulations, you have received a new badge because lots of people have been viewing your profile.');
+	(37,0,'submit_test','Submit a test or quiz',0,5,NULL,NULL,NULL,100,250,NULL,NULL,NULL);
 
 CREATE TABLE IF NOT EXISTS `gm_levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
