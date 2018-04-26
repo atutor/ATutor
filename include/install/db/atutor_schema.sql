@@ -1780,7 +1780,7 @@ CREATE TABLE IF NOT EXISTS `gm_user_scores` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 #### Populate Gameme tables with default data
-REPLACE INTO `gm_levels` (`id`, `course_id`, `title`, `description`, `points`, `icon`)
+INSERT INTO `gm_levels` (`id`, `course_id`, `title`, `description`, `points`, `icon`)
 VALUES
 	(1,0,'Level 0','Welcome to the course',0,'star_empty_lg.png'),
 	(2,0,'Level 1','1000 points passed',1000,'star_white_lg.png'),
@@ -1794,7 +1794,7 @@ VALUES
 	(10,0,'Level 9','50000 points passed: Advanced status: Gold Badge',50000,'star_gold_lg.png'),
 	(11,0,'Level 10','65000 point passed: Highest Honor: Platinum Badge',65000,'star_platinum_lg.png');
 
-REPLACE  INTO `gm_events` (`id`, `course_id`, `alias`, `description`, `allow_repetitions`, `reach_required_repetitions`, `max_points`, `id_each_badge`, `id_reach_badge`, `each_points`, `reach_points`, `each_callback`, `reach_callback`, `reach_message`)
+INSERT  INTO `gm_events` (`id`, `course_id`, `alias`, `description`, `allow_repetitions`, `reach_required_repetitions`, `max_points`, `id_each_badge`, `id_reach_badge`, `each_points`, `reach_points`, `each_callback`, `reach_callback`, `reach_message`)
 VALUES
 	(2,0,'profile_view','Profile view other\'s',0,10,NULL,NULL,1,10,25,NULL,'GmCallbacksClass::ProfileViewReachCallback','Congratulations, you have received a new badge for getting to know your classmates by viewing their profiles. You can earn additional points by sending a private message to a person through their profile page.'),
 	(3,0,'profile_viewed','Profile viewed by others',0,25,NULL,NULL,2,25,50,NULL,'GmCallbacksClass::ProfileViewedReachCallback','Congratulations, you have received a new badge because lots of people have been viewing your profile.'),
@@ -1835,7 +1835,7 @@ VALUES
 	(1,0,'login','Login',0,25,NULL,NULL,24,10,100,NULL,'GmCallbacksClass::LoginReachCallback','Congratulations, you have received a new badge for logging into the course many times. You can also earn points by logging out of the course properly, clicking the logout link, instead of just leaving or letting your session timeout.'),
 	(37,0,'submit_test','Submit a test or quiz',0,5,NULL,NULL,NULL,100,250,NULL,NULL,NULL);
 
-REPLACE  INTO  `gm_badges` (`id`, `course_id`, `alias`, `title`, `description`, `image_url`)
+INSERT  INTO  `gm_badges` (`id`, `course_id`, `alias`, `title`, `description`, `image_url`)
 VALUES
 	(7,0,'upload_file_badge','Good use of File Storage','You have figured out how to upload files into the course.','mods/_standard/gameme/images/badges/arrow.png'),
 	(8,0,'create_file_badge','Create your own files','You learned how to create new files in File Storage.','mods/_standard/gameme/images/badges/doc.png'),
