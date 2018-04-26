@@ -1815,7 +1815,7 @@ CREATE TABLE IF NOT EXISTS `gm_options` (
   `gm_option` varchar(25) NOT NULL DEFAULT '',
   `value` int(11) unsigned DEFAULT NULL,
   PRIMARY KEY (`course_id`,`gm_option`),
-  KEY `id` (`id`);
+  KEY `id` (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_alerts` (
@@ -1831,7 +1831,7 @@ CREATE TABLE IF NOT EXISTS `gm_user_badges` (
   `badges_counter` int(10) unsigned NOT NULL,
   `grant_date` datetime NOT NULL,
   `course_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_user`,`id_badge`,`course_id`);
+  PRIMARY KEY (`id_user`,`id_badge`,`course_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_events` (
@@ -1840,7 +1840,7 @@ CREATE TABLE IF NOT EXISTS `gm_user_events` (
   `event_counter` int(10) unsigned NOT NULL,
   `points_counter` int(10) unsigned NOT NULL,
   `course_id` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id_user`,`id_event`,`course_id`);
+  PRIMARY KEY (`id_user`,`id_event`,`course_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_logs` (
@@ -1851,7 +1851,7 @@ CREATE TABLE IF NOT EXISTS `gm_user_logs` (
   `id_badge` int(10) unsigned DEFAULT NULL,
   `id_level` int(10) unsigned DEFAULT NULL,
   `points` int(10) unsigned DEFAULT NULL,
-  KEY `id_user` (`id_user`);
+  KEY `id_user` (`id_user`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_scores` (
@@ -1859,7 +1859,7 @@ CREATE TABLE IF NOT EXISTS `gm_user_scores` (
   `points` int(10) unsigned NOT NULL,
   `id_level` int(10) unsigned NOT NULL,
   `course_id` int(10) unsigned NOT NULL DEFAULT '0'
-  PRIMARY KEY (`id_user`,`course_id`);
+  PRIMARY KEY (`id_user`,`course_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
