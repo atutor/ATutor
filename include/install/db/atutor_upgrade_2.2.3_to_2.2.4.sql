@@ -40,6 +40,7 @@ UPDATE `tests` SET `end_date` = NULL WHERE `end_date` = '0000-00-00 00:00:00';
 // Add Gameme as a standard Module
 INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/gameme', 2, MAX(privilege) * 2, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
 
+
 CREATE TABLE IF NOT EXISTS `gm_badges` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `course_id` int(11) NOT NULL DEFAULT '0',
@@ -50,7 +51,10 @@ CREATE TABLE IF NOT EXISTS `gm_badges` (
   PRIMARY KEY (`id`,`course_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT IGNORE INTO  `gm_badges` (`id`, `course_id`, `alias`, `title`, `description`, `image_url`)
+LOCK TABLES `gm_badges` WRITE;
+/*!40000 ALTER TABLE `AT_gm_badges` DISABLE KEYS */;
+
+INSERT INTO `gm_badges` (`id`, `course_id`, `alias`, `title`, `description`, `image_url`)
 VALUES
 	(7,0,'upload_file_badge','Good use of File Storage','You have figured out how to upload files into the course.','mods/_standard/gameme/images/badges/arrow.png'),
 	(8,0,'create_file_badge','Create your own files','You learned how to create new files in File Storage.','mods/_standard/gameme/images/badges/doc.png'),
@@ -77,7 +81,12 @@ VALUES
 	(23,0,'photo_alt_text','Accessibility Aware','Its great you are providing Alt text for you image, to make them accessible to people with disabilities. Secret bonus points if you continue adding Alt text to new images in your gallery.','mods/_standard/gameme/images/badges/heart.png'),
 	(24,0,'login_badge','Returning Visitor','You have come back quite a few times now. Keep on visiting the course for bonus points.','mods/_standard/gameme/images/badges/hot.png'),
 	(25,0,'logout_badge','Security Conscious','You have been logging out, rather than leaving or allowing your session to time out. This helps improve security.','mods/_standard/gameme/images/badges/lock.png'),
-	(26,0,'welcome_badge','Welcome','Welcome to the course. Finding your way here earned you your first badge. Get busy with the course to earn points and collect more badges.','mods/_standard/gameme/images/badges/acorn.png');
+	(26,0,'welcome_badge','Welcome','Welcome to the course. Finding your way here earned you your first badge. Get busy with the course to earn points and collect more badges.','mods/_standard/gameme/images/badges/acorn.png'),
+	(7,26,'upload_file_badge','Good use of File Storage','You have figured out how to upload files into the course.','mods/_standard/gameme/images/badges/arrow.png'),
+	(13,26,'blog_comment_badge','Blog Commenter','You have been commenting on other (or your own) blog posts. Keep on commenting.','mods/_standard/gameme/images/badges/lightbulb.png');
+
+UNLOCK TABLES;
+
 
 CREATE TABLE IF NOT EXISTS `gm_events` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -97,7 +106,10 @@ CREATE TABLE IF NOT EXISTS `gm_events` (
   PRIMARY KEY (`id`,`course_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-INSERT IGNORE INTO `gm_events` (`id`, `course_id`, `alias`, `description`, `allow_repetitions`, `reach_required_repetitions`, `max_points`, `id_each_badge`, `id_reach_badge`, `each_points`, `reach_points`, `each_callback`, `reach_callback`, `reach_message`)
+LOCK TABLES `gm_events` WRITE;
+
+
+INSERT INTO `gm_events` (`id`, `course_id`, `alias`, `description`, `allow_repetitions`, `reach_required_repetitions`, `max_points`, `id_each_badge`, `id_reach_badge`, `each_points`, `reach_points`, `each_callback`, `reach_callback`, `reach_message`)
 VALUES
 	(2,0,'profile_view','Profile view other\'s',0,10,NULL,NULL,1,10,25,NULL,'GmCallbacksClass::ProfileViewReachCallback','Congratulations, you have received a new badge for getting to know your classmates by viewing their profiles. You can earn additional points by sending a private message to a person through their profile page.'),
 	(3,0,'profile_viewed','Profile viewed by others',0,25,NULL,NULL,2,25,50,NULL,'GmCallbacksClass::ProfileViewedReachCallback','Congratulations, you have received a new badge because lots of people have been viewing your profile.'),
@@ -138,6 +150,74 @@ VALUES
 	(1,0,'login','Login',0,25,NULL,NULL,24,10,100,NULL,'GmCallbacksClass::LoginReachCallback','Congratulations, you have received a new badge for logging into the course many times. You can also earn points by logging out of the course properly, clicking the logout link, instead of just leaving or letting your session timeout.'),
 	(37,0,'submit_test','Submit a test or quiz',0,5,NULL,NULL,NULL,100,250,NULL,NULL,NULL);
 
+UNLOCK TABLES;
+
+
+CREATE TABLE IF NOT EXISTS `gm_levels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `course_id` int(11) NOT NULL DEFAULT '0',
+  `title` varchar(64) NOT NULL DEFAULT '',
+  `description` text,
+  `points` int(11) NOT NULL,
+  `icon` varchar(25) DEFAULT NULL,
+  PRIMARY KEY (`id`,`course_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE IF NOT EXISTS `gm_options` (
+`id` int(11) unsigned NOT NULL,
+  `course_id` int(11) unsigned NOT NULL,
+  `gm_option` varchar(25) NOT NULL DEFAULT '',
+  `value` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`course_id`,`gm_option`),
+  KEY `id` (`id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `gm_user_alerts` (
+  `id_user` int(10) unsigned NOT NULL,
+  `course_id` int(10) unsigned DEFAULT NULL,
+  `id_badge` int(10) unsigned DEFAULT NULL,
+  `id_level` int(10) unsigned DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `gm_user_badges` (
+  `id_user` int(10) unsigned NOT NULL,
+  `id_badge` int(10) unsigned NOT NULL,
+  `badges_counter` int(10) unsigned NOT NULL,
+  `grant_date` datetime NOT NULL,
+  `course_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_user`,`id_badge`,`course_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `gm_user_events` (
+  `id_user` int(10) unsigned NOT NULL,
+  `id_event` int(10) unsigned NOT NULL,
+  `event_counter` int(10) unsigned NOT NULL,
+  `points_counter` int(10) unsigned NOT NULL,
+  `course_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_user`,`id_event`,`course_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `gm_user_logs` (
+  `id_user` int(10) unsigned NOT NULL,
+  `course_id` int(10) unsigned DEFAULT NULL,
+  `id_event` int(10) unsigned DEFAULT NULL,
+  `event_date` datetime NOT NULL,
+  `id_badge` int(10) unsigned DEFAULT NULL,
+  `id_level` int(10) unsigned DEFAULT NULL,
+  `points` int(10) unsigned DEFAULT NULL,
+  KEY `id_user` (`id_user`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `gm_user_scores` (
+  `id_user` int(10) unsigned NOT NULL,
+  `points` int(10) unsigned NOT NULL,
+  `id_level` int(10) unsigned NOT NULL,
+  `course_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_user`,`course_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+#### Populate Gameme tables with default data
 
 CREATE TABLE IF NOT EXISTS `gm_levels` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -214,7 +294,7 @@ ALTER TABLE `gm_options`
  ADD PRIMARY KEY (`course_id`,`gm_option`), ADD KEY `id` (`id`);
 
 ALTER TABLE `gm_options`
- CHANGE `option` `gm_option` VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT; 
+ CHANGE `option` "gm_option" VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT; 
 
 ALTER TABLE `gm_user_badges`
  ADD PRIMARY KEY (`id_user`,`id_badge`,`course_id`);
