@@ -1775,7 +1775,7 @@ CREATE TABLE IF NOT EXISTS `gm_user_scores` (
   `id_user` int(10) unsigned NOT NULL,
   `points` int(10) unsigned NOT NULL,
   `id_level` int(10) unsigned NOT NULL,
-  `course_id` int(10) unsigned NOT NULL DEFAULT '0'
+  `course_id` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id_user`,`course_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
