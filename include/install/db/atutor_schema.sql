@@ -1813,7 +1813,9 @@ CREATE TABLE IF NOT EXISTS `gm_options` (
 `id` int(11) unsigned NOT NULL,
   `course_id` int(11) unsigned NOT NULL,
   `gm_option` varchar(25) NOT NULL DEFAULT '',
-  `value` int(11) unsigned DEFAULT NULL
+  `value` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`course_id`,`gm_option`),
+  KEY `id` (`id`);
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_alerts` (
@@ -1828,7 +1830,8 @@ CREATE TABLE IF NOT EXISTS `gm_user_badges` (
   `id_badge` int(10) unsigned NOT NULL,
   `badges_counter` int(10) unsigned NOT NULL,
   `grant_date` datetime NOT NULL,
-  `course_id` int(10) unsigned NOT NULL DEFAULT '0'
+  `course_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_user`,`id_badge`,`course_id`);
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_events` (
@@ -1836,7 +1839,8 @@ CREATE TABLE IF NOT EXISTS `gm_user_events` (
   `id_event` int(10) unsigned NOT NULL,
   `event_counter` int(10) unsigned NOT NULL,
   `points_counter` int(10) unsigned NOT NULL,
-  `course_id` int(10) unsigned NOT NULL DEFAULT '0'
+  `course_id` int(10) unsigned NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_user`,`id_event`,`course_id`);
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_logs` (
@@ -1846,7 +1850,8 @@ CREATE TABLE IF NOT EXISTS `gm_user_logs` (
   `event_date` datetime NOT NULL,
   `id_badge` int(10) unsigned DEFAULT NULL,
   `id_level` int(10) unsigned DEFAULT NULL,
-  `points` int(10) unsigned DEFAULT NULL
+  `points` int(10) unsigned DEFAULT NULL,
+  KEY `id_user` (`id_user`);
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 CREATE TABLE IF NOT EXISTS `gm_user_scores` (
@@ -1854,36 +1859,9 @@ CREATE TABLE IF NOT EXISTS `gm_user_scores` (
   `points` int(10) unsigned NOT NULL,
   `id_level` int(10) unsigned NOT NULL,
   `course_id` int(10) unsigned NOT NULL DEFAULT '0'
+  PRIMARY KEY (`id_user`,`course_id`);
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-ALTER TABLE `gm_options`
- ADD PRIMARY KEY (`course_id`,`gm_option`), ADD KEY `id` (`id`);
 
-ALTER TABLE `gm_options`
- CHANGE `option` `gm_option` VARCHAR(25) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL DEFAULT; 
-
-ALTER TABLE `gm_user_badges`
- ADD PRIMARY KEY (`id_user`,`id_badge`,`course_id`);
-
-ALTER TABLE `gm_user_events`
- ADD PRIMARY KEY (`id_user`,`id_event`,`course_id`);
-
-ALTER TABLE `gm_user_logs`
- ADD KEY `id_user` (`id_user`);
-
-ALTER TABLE `gm_user_scores`
- ADD PRIMARY KEY (`id_user`,`course_id`);
-
-ALTER TABLE `gm_badges`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=27;
-
-ALTER TABLE `gm_events`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=40;
-
-ALTER TABLE `gm_levels`
-MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=14;
-
-ALTER TABLE `gm_options`
-MODIFY `id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=410;
 
 ##### End SQL for GameMe module
