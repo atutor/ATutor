@@ -230,6 +230,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
 		    //This is a Service site 
 			$service_site = 1;
 		}
+  		/*
   		if ($this_count == 0) {
             if(isset($service_site) && $_config['disable_create'] != 1){
                 $msg->addFeedback('CREATE_NEW_COURSE');
@@ -241,6 +242,7 @@ if (($course === 0) && $_SESSION['valid_user']) {
                 exit;
             }
         }
+        */
     }
     /* http://atutor.ca/atutor/mantis/view.php?id=4587
      * 	for users with no enrolled courses, default to the Browse Courses screen instead of My Courses. 
