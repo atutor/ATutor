@@ -50,7 +50,7 @@ $_config_defaults['theme_categories']          = 0; // disabled
 $_config_defaults['custom_logo_enabled']       = 1;
 $_config_defaults['custom_logo_alt_text']      = 'ATutor Logo';
 $_config_defaults['custom_logo_url']           = 'https://atutor.github.io/';
-$_config_defaults['main_defaults']	           = 'mods/_standard/forums/forum/list.php|mods/_core/glossary/index.php|mods/_standard/file_storage/index.php|mods/_standard/sitemap/sitemap.php|mods/_standard/photos/index.php';
+$_config_defaults['main_defaults']	           = 'mods/_standard/forums/forum/list.php|mods/_standard/file_storage/index.php|mods/_standard/sitemap/sitemap.php|mods/_standard/photos/index.php|mods/_standard/gameme/index.php';
 $_config_defaults['home_defaults']             = 'mods/_standard/file_storage/index.php|mods/_standard/tests/my_tests.php|mods/_standard/tracker/my_stats.php|mods/_standard/directory/directory.php';
 $_config_defaults['side_defaults']             = 'menu_menu|gameme|users_online|glossary|search|poll|posts';
 
