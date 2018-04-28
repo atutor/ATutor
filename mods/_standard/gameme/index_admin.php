@@ -4,7 +4,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_GAMEME);
 require_once(AT_INCLUDE_PATH.'../mods/_standard/gameme/gamify.lib.php');
 $_custom_css = $_base_path . 'mods/_standard/gameme/module.css'; // use a custom stylesheet
-$_custom_head = '<script type="text/javascript" src="'.$_base_path .'jscripts/lib/jquery.1.10.1.min.js"></script>'."\n";
+//$_custom_head = '<script type="text/javascript" src="'.$_base_path .'jscripts/lib/jquery.1.10.1.min.js"></script>'."\n";
 $_custom_head.= '<script type="text/javascript" src="'.$_base_path .'mods/_standard/gameme/gamify.js"></script>'."\n";
 $_custom_head .= '<script type="text/javascript" src="'.$_base_path.'mods/_standard/gameme/inline_edit/jquery-quickedit.js"></script>'."\n";
 $_custom_head .= '<script type="text/javascript" src="'.$_base_path.'mods/_standard/gameme/jquery/js.cookie-min.js"></script>'."\n";
