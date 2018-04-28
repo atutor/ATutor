@@ -39,7 +39,7 @@ if (admin_authenticate(AT_ADMIN_PRIV_GAMEME, TRUE) || admin_authenticate(AT_ADMI
 	$this->_pages['mods/_standard/gameme/index_admin.php']['guide'] = '../mods/_standard/gameme/admin_handbook.php';
 	$this->_pages['mods/_standard/gameme/edit_event.php']['title_var'] = 'gm_edit_event';
 	$this->_pages['mods/_standard/gameme/edit_event.php']['parent']    = 'mods/_standard/gameme/index_admin.php';
-	//$this->_pages['mods/_standard/gameme/edit_event.php']['guide'] = 'mods/_standard/gameme/admin_handbook.php';
+	$this->_pages['mods/_standard/gameme/edit_event.php']['guide'] = 'mods/_standard/gameme/admin_handbook.php';
 	$this->_pages['mods/_standard/gameme/edit_level.php']['title_var'] = 'gm_edit_level';
     $this->_pages['mods/_standard/gameme/edit_level.php']['parent']   = 'mods/_standard/gameme/index_admin.php';
     $this->_pages['mods/_standard/gameme/edit_badge.php']['title_var'] = 'gm_edit_badge';
