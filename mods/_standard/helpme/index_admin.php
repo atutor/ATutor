@@ -11,7 +11,7 @@
 /************************************************************************/
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once(AT_INCLUDE_PATH.'vitals.inc.php');
-debug('something');
+
 admin_authenticate(AT_ADMIN_PRIV_HELPME);
 if(isset($_POST['submit_disable'])){
     // update enable/disable setting
