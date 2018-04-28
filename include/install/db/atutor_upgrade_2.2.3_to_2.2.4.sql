@@ -81,9 +81,7 @@ VALUES
 	(23,0,'photo_alt_text','Accessibility Aware','Its great you are providing Alt text for you image, to make them accessible to people with disabilities. Secret bonus points if you continue adding Alt text to new images in your gallery.','mods/_standard/gameme/images/badges/heart.png'),
 	(24,0,'login_badge','Returning Visitor','You have come back quite a few times now. Keep on visiting the course for bonus points.','mods/_standard/gameme/images/badges/hot.png'),
 	(25,0,'logout_badge','Security Conscious','You have been logging out, rather than leaving or allowing your session to time out. This helps improve security.','mods/_standard/gameme/images/badges/lock.png'),
-	(26,0,'welcome_badge','Welcome','Welcome to the course. Finding your way here earned you your first badge. Get busy with the course to earn points and collect more badges.','mods/_standard/gameme/images/badges/acorn.png'),
-	(7,26,'upload_file_badge','Good use of File Storage','You have figured out how to upload files into the course.','mods/_standard/gameme/images/badges/arrow.png'),
-	(13,26,'blog_comment_badge','Blog Commenter','You have been commenting on other (or your own) blog posts. Keep on commenting.','mods/_standard/gameme/images/badges/lightbulb.png');
+	(26,0,'welcome_badge','Welcome','Welcome to the course. Finding your way here earned you your first badge. Get busy with the course to earn points and collect more badges.','mods/_standard/gameme/images/badges/acorn.png');
 
 UNLOCK TABLES;
 
