@@ -12,7 +12,7 @@
 define('AT_INCLUDE_PATH', '../../../include/');
 require_once(AT_INCLUDE_PATH.'vitals.inc.php');
 
-global $msg,  $savant;
+global $msg, $_base_href, $savant;
 $current_help = queryDB("SELECT help_id FROM %shelpme_user WHERE user_id ='%d'", array(TABLE_PREFIX, $member_id), true);
 unset($myhelp); // = "";
 
@@ -32,7 +32,8 @@ if($current_help['help_id'] <= $helpme_total){
         // Hack to remove the get.php/ added to $_base_href
         $_help_href = str_replace("get.php/", "", $_base_href);
         $_help_href = str_replace("get.php/", "", $_help_href);    
-        
+        $_help_href = str_replace("gameme/badges/", "", $_help_href); 
+
         $msg->deleteHelp('CREATE_COURSE');
         helpme_msg('COURSE_TOOLS', $_help_href."mods/_standard/course_tools/modules.php");
         helpme_msg('MANAGE_ONOFF', '');
