@@ -2149,6 +2149,7 @@ ul#subnavlist_i {
    /* background-image:url("images/wand.png");*/
     background-position: 1em .3em;
     background-repeat:no-repeat;
+    margin-top: -2.2em;
 }
 ul#subnavlist, ul#navlist {
 	margin-top: 0px;
