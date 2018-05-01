@@ -401,7 +401,7 @@ function admin_switch(){
 
         </div>
         <div class="bypass">
-            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#admin_tools"><?php echo _AT('jump_to_admin_tools'); ?></a>
+            <a href="<?php echo htmlspecialchars($_SERVER['REQUEST_URI'], ENT_QUOTES); ?>#content"><?php echo _AT('goto_content'); ?></a>
         </div>
     <?php } ?>
 <?php } 

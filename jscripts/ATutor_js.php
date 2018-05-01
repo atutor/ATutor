@@ -222,6 +222,9 @@ ATutor.course = ATutor.course || {};
                 });
                 $(".ui-switch").keypress(function(e){
                     var code = e.keyCode || e.which;
+                    if(code == 9) { 
+                        $('.bypass a').focus();
+                    }
                     if(code == 13 || code == 32) { 
                     ATutor.switchView($('#admin_switch').val());
                     }
