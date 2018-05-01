@@ -2165,7 +2165,7 @@ ul#subnavlist_i li {
 	border-right:1px solid #DED29E;
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
-	padding: .4em .5em .2em .5em ;
+
 	border-bottom: 3px solid blue;
 }
 ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
@@ -2181,7 +2181,7 @@ ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.3em;	
-    padding: .2em .0em .2em .0em;
+padding: .2em .0em .2em .0em;
 }
 
 ul#subnavlist li a:hover, 
@@ -2226,7 +2226,7 @@ ul#subnavlist li a, ul#subsubnavlist li a, ul#subnavlist_i li a, ul#navlist_i li
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
-   	padding: .4em .3em .2em .3em ;
+   	padding: .2em .3em .2em .3em;
    	text-decoration:underline;
 	font-weight:500;
 }
