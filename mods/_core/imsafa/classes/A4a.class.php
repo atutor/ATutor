@@ -31,7 +31,10 @@ class A4a {
 	function __construct($cid){
 		$this->cid = intval($cid);
 	}
-
+	
+    function A4a($cid){
+        self::__construct($cid);
+    }
 
 	// Return resources type hash mapping.
 	function getResourcesType($type_id=0){

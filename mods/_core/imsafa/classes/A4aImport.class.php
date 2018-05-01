@@ -24,7 +24,7 @@ require_once(AT_INCLUDE_PATH.'../mods/_core/imsafa/classes/A4a.class.php');
  */
 class A4aImport extends A4a {
 	//Constructor
-	function A4aImport($cid){
+	function __construct($cid){
 		parent::A4a($cid);		//call its parent
 	}
 
