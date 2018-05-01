@@ -2181,13 +2181,12 @@ ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.3em;	
-padding: .2em .0em .2em .0em;
+    padding: .2em .0em .2em .0em;
+    cursor:pointer;
 }
-
-ul#subnavlist li a:hover, 
+ul#subnavlist li:hover,
 ul#subnavlist li a:hover,
 ul#subnavlist_i li a:hover, 
-ul#subnavlist_i li a:hover,
 ul#navlist li a:hover, 
 ul#navlist li:hover{
   	color: black;
@@ -2195,8 +2194,8 @@ ul#navlist li:hover{
     background-color: #F3F3F3;
     background-image: linear-gradient(#FAFAFA, #EAEAEA);
     border-bottom: 3px solid #D26911;
-    padding: .2em .3em .2em .3em ;
 }
+ul#navlist li:focus,
 ul#navlist li a:focus, 
 ul#subnavlist_i li a:focus,  
 ul#subnavlist li a:focus, 
@@ -2220,7 +2219,7 @@ ul#navlist li.active {
 	border-right:1px solid white;
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
-	padding: .2em .5em .2em .5em;
+	/* padding: .2em .5em .2em .5em; */
 }
 ul#subnavlist li a, ul#subsubnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
