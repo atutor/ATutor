@@ -2181,22 +2181,37 @@ ul#subnavlist li, ul#subsubnavlist li, ul#navlist li{
 	border-radius: .3em .3em 0em 0em;
 	-moz-border-radius: .3em .3em 0em 0em;
 	height:1.3em;	
-	padding: .2em .5em .2em .5em ;
+    padding: .2em .0em .2em .0em;
 }
 
-ul#subsubnavlist li a:hover, ul#subsubnavlist li a:focus,  ul#subsubnavlist li a:hover,
-ul#subnavlist li a:hover, ul#subnavlist li a:focus,  ul#subnavlist li a:hover,
-ul#subnavlist_i li a:hover, ul#subnavlist_i li a:focus,  ul#subnavlist_i li a:hover,
-ul#navlist li a:hover, ul#navlist li a:focus,  ul#navlist li:hover{
+ul#subnavlist li a:hover, 
+ul#subnavlist li a:hover,
+ul#subnavlist_i li a:hover, 
+ul#subnavlist_i li a:hover,
+ul#navlist li a:hover, 
+ul#navlist li:hover{
   	color: black;
-	text-decoration:none;
-	background-color: #F3F3F3;
-	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    text-decoration: none;
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    border-bottom: 3px solid #D26911;
+    padding: .2em .3em .2em .3em ;
 }
-ul#subsubnavlist li.active, ul#subsubnavlist li:hover, ul#subsubnavlist li:focus,
-ul#subnavlist li.active, ul#subnavlist li:hover, ul#subnavlist li:focus,
-ul#subnavlist_i li.active, ul#subnavlist_i li:hover, ul#subnavlist_i li:focus,  
-ul#navlist li.active, ul#navlist li:hover, ul#navlist li:focus {
+ul#navlist li a:focus, 
+ul#subnavlist_i li a:focus,  
+ul#subnavlist li a:focus, 
+ul#subsubnavlist li a:focus{
+  	color: black;
+    text-decoration: none;
+    background-color: #F3F3F3;
+    border-bottom: 3px solid #D26911;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+
+}
+ul#subsubnavlist li.active,
+ul#subnavlist li.active,
+ul#subnavlist_i li.active, 
+ul#navlist li.active {
   	color: black;
 	text-decoration:none;
 	background-color: #F3F3F3;
@@ -2205,12 +2220,13 @@ ul#navlist li.active, ul#navlist li:hover, ul#navlist li:focus {
 	border-right:1px solid white;
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	padding: .2em .5em .2em .5em;
 }
 ul#subnavlist li a, ul#subsubnavlist li a, ul#subnavlist_i li a, ul#navlist_i li a  {
     /* The normal, unselected tabs. They are all links */
    	color: #555;
     height: 1.5em;
-   	padding: .4em .4em .2em .4em ;
+   	padding: .4em .3em .2em .3em ;
    	text-decoration:underline;
 	font-weight:500;
 }
@@ -2261,28 +2277,67 @@ tr.odd {
 	*/
 }
 /* Content editor tabs */
-.editor_buttontab {
+input[type=submit].editor_buttontab {
 	color:#685642;
 /*	font-size:10pt;*/
-	border:0;
+    border: thin solid transparent;
 	white-space: nowrap;
 	margin: 0px;
 	font-weight:500;
 	text-align:center;
-	padding:0em 0em 0em;
 	-moz-box-shadow:0;
 	box-shadow: none;
+    text-align: center;
+    white-space: nowrap;
+    padding: 0em .3em 0em .2em;
+    height: 1.4em;
 }
 
+input[type=submit].editor_buttontab:focus {
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    border-bottom: 3px solid #D26911;
+    color: #000000;
+    text-decoration: none;
+    margin:0;
+    background-color: #F4F0CB;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    padding: .2em .6em 1.7em .5em
+    border-radius: .3em 0em 0em 0em !important;
+    -moz-border-radius: .3em .3em 0em 0em;
+    height:2.2em;
+    margin-bottom:-.4em;
+}
+input[type=submit].editor_buttontab:hover {
+    background-color: #F3F3F3;
+    background-image: linear-gradient(#FAFAFA, #EAEAEA);
+    color: #000000;
+    text-decoration: none;
+	padding: .2em .5em .2em .5em
+    background-color: #F4F0CB;
+    text-align: center;
+    white-space: nowrap;
+    text-decoration: none;
+    border-radius: .3em .3em 0em 0em;
+    -moz-border-radius: .3em .3em 0em 0em;
+    height:2.2em;
+    margin:0;
+}
 .editor_tab{
 	margin-bottom:-.5em;
 	margin-top:1.5em;
 	text-align: center;
 	white-space: nowrap;
-	padding: 0em .2em 0em .2em ;
+    background-color: #ffffff;
+    border-top: 1px solid #f3f3f3;
+    border-left: 1px solid #f3f3f3;
+    border-right: 1px solid #f3f3f3;
+    border-bottom: 3px solid #f3f3f3;
 	height:1.4em;
 }
-.editor_tab:hover, .editor_tab:focus{
+.editor_tab:hover, .editor_tab:focus {
     background-color: #F3F3F3;
     background-image: linear-gradient(#FAFAFA, #EAEAEA);
     border-bottom: 3px solid #D26911;
@@ -2309,7 +2364,8 @@ tr.odd {
 	height:1.4em;
 }
 .editor_tab input[type=submit]{
-	height:1.2em;
+	height:2.2em;
+	padding: .2em .5em .2em .5em
 }
 /* 1pxgs current box on My Start */
 .current_box{
