@@ -1,6 +1,6 @@
 jQuery(document).ready(function(){
         if($("div[role='tabpanel'], panel1").attr("aria-hidden") == "false"){
-            $("#tab1").addClass("active");
+            $("#tab1").addClass("tabactive");
             $("#panel1").attr("aria-hidden", "false");
         } 
         //} 
@@ -12,22 +12,22 @@ jQuery(document).ready(function(){
         } 
 */
     if(Cookies.get('activetab') == "tab2"){
-        $("#tab1").removeClass("active");
-        $("#tab3").removeClass("active");
-        $("#tab2").addClass("active");
-        $("#tab4").removeClass("active");
-        $("#tab5").removeClass("active");
+        $("#tab1").removeClass("tabactive");
+        $("#tab3").removeClass("tabactive");
+        $("#tab2").addClass("tabactive");
+        $("#tab4").removeClass("tabactive");
+        $("#tab5").removeClass("tabactive");
         $("#panel1").attr("aria-hidden","true");
         $("#panel3").attr("aria-hidden","true");
         $("#panel2").attr("aria-hidden","false");
         $("#panel4").attr("aria-hidden","true");
         $("#panel5").attr("aria-hidden","true");
     } else if(Cookies.get('activetab') == "tab3"){
-        $("#tab1").removeClass("active");
-        $("#tab2").removeClass("active");
-        $("#tab3").addClass("active");
-        $("#tab4").removeClass("active");
-        $("#tab5").removeClass("active");
+        $("#tab1").removeClass("tabactive");
+        $("#tab2").removeClass("tabactive");
+        $("#tab3").addClass("tabactive");
+        $("#tab4").removeClass("tabactive");
+        $("#tab5").removeClass("tabactive");
         $("#panel3").attr("aria-hidden","false");
         $("#panel1").attr("aria-hidden","true");
         $("#panel2").attr("aria-hidden","true");
@@ -36,22 +36,22 @@ jQuery(document).ready(function(){
     } else if(Cookies.get('activetab') == "tab4"){
         if(!$("#tab4").length){
             $("#tab1").focus();
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab1").addClass("active");
-            $("#tab4").removeClass("active");
-            $("#tab5").removeClass("active");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab1").addClass("tabactive");
+            $("#tab4").removeClass("tabactive");
+            $("#tab5").removeClass("tabactive");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
             $("#panel1").attr("aria-hidden","false");
             $("#panel4").attr("aria-hidden","true");
             $("#panel5").attr("aria-hidden","true");
         } else{
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab1").removeClass("active");
-            $("#tab4").addClass("active");
-            $("#tab5").removeClass("active");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab1").removeClass("tabactive");
+            $("#tab4").addClass("tabactive");
+            $("#tab5").removeClass("tabactive");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
             $("#panel1").attr("aria-hidden","true");
@@ -59,32 +59,32 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         }
     } else if (Cookies.get('activetab') == "tab5"){
-        $("#tab1").removeClass("active");
-        $("#tab2").removeClass("active");
-        $("#tab3").removeClass("active");
-        $("#tab4").removeClass("active");
-        $("#tab5").addClass("active");
+        $("#tab1").removeClass("tabactive");
+        $("#tab2").removeClass("tabactive");
+        $("#tab3").removeClass("tabactive");
+        $("#tab4").removeClass("tabactive");
+        $("#tab5").addClass("tabactive");
         $("#panel3").attr("aria-hidden","true");
         $("#panel1").attr("aria-hidden","true");
         $("#panel2").attr("aria-hidden","true");
         $("#panel4").attr("aria-hidden","true");
         $("#panel5").attr("aria-hidden","false");
     }else {
-        $("#tab2").removeClass("active");
-        $("#tab3").removeClass("active");
-        $("#tab1").addClass("active");
-        $("#tab4").removeClass("active");
+        $("#tab2").removeClass("tabactive");
+        $("#tab3").removeClass("tabactive");
+        $("#tab1").addClass("tabactive");
+        $("#tab4").removeClass("tabactive");
         $("#panel2").attr("aria-hidden","true");
         $("#panel3").attr("aria-hidden","true");
         $("#panel1").attr("aria-hidden","false");
         $("#panel4").attr("aria-hidden","true");
     }
      $("#tab1").click(function(){
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab1").addClass("active");
-            $("#tab4").removeClass("active");
-            $("#tab5").removeClass("active");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab1").addClass("tabactive");
+            $("#tab4").removeClass("tabactive");
+            $("#tab5").removeClass("tabactive");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
             $("#panel1").attr("aria-hidden","false");
@@ -92,11 +92,11 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });
        $("#tab2").click(function(){
-            $("#tab1").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab2").addClass("active");
-            $("#tab4").removeClass("active");
-            $("#tab5").removeClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab2").addClass("tabactive");
+            $("#tab4").removeClass("tabactive");
+            $("#tab5").removeClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","false");
@@ -104,11 +104,11 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });
         $("#tab3").click(function(){
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab3").addClass("active");
-            $("#tab4").removeClass("active");
-            $("#tab5").removeClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").addClass("tabactive");
+            $("#tab4").removeClass("tabactive");
+            $("#tab5").removeClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","false");
@@ -116,11 +116,11 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });
         $("#tab4").click(function(){
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab4").addClass("active");
-            $("#tab5").removeClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab4").addClass("tabactive");
+            $("#tab5").removeClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
@@ -128,11 +128,11 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });
         $("#tab5").click(function(){
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab4").removeClass("active");
-            $("#tab5").addClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab4").removeClass("tabactive");
+            $("#tab5").addClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
@@ -140,10 +140,10 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","false");
         });
         $("#tab1").keyup(function(){
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab1").addClass("active");
-            $("#tab4").removeClass("active");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab1").addClass("tabactive");
+            $("#tab4").removeClass("tabactive");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
             $("#panel1").attr("aria-hidden","false");
@@ -151,10 +151,10 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });
        $("#tab2").keyup(function(){
-            $("#tab1").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab2").addClass("active");
-            $("#tab4").removeClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab2").addClass("tabactive");
+            $("#tab4").removeClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","false");
@@ -162,10 +162,10 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });
         $("#tab3").keyup(function(){
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab3").addClass("active");
-            $("#tab4").removeClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").addClass("tabactive");
+            $("#tab4").removeClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","false");
@@ -173,10 +173,10 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });
         $("#tab4").keyup(function(){
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab4").addClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab4").addClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
@@ -184,11 +184,11 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","true");
         });  
         $("#tab5").keyup(function(){
-            $("#tab1").removeClass("active");
-            $("#tab2").removeClass("active");
-            $("#tab3").removeClass("active");
-            $("#tab4").removeClass("active");
-            $("#tab4").addClass("active");
+            $("#tab1").removeClass("tabactive");
+            $("#tab2").removeClass("tabactive");
+            $("#tab3").removeClass("tabactive");
+            $("#tab4").removeClass("tabactive");
+            $("#tab4").addClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
@@ -196,7 +196,7 @@ jQuery(document).ready(function(){
             $("#panel5").attr("aria-hidden","false");
         });     
     if(Cookies.get('activetab') == ''){ 
-        $("#tab1").addClass("active");
+        $("#tab1").addClass("tabactive");
         $("#panel1").attr("aria-hidden","false");
         Cookies.set('activetab', 'tab1');
      } 

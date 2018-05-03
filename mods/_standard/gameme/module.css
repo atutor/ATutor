@@ -24,11 +24,11 @@ div[aria-hidden='true'] {
     margin: 0;
     padding: 0;
 }
-.tab {
-/*    background: #dddddd none repeat scroll 0 0;
+ .tab {
+    background: #dddddd none repeat scroll 0 0;
     border-top-left-radius: 0.5em;
     border-top-right-radius: 0.5em; 
-    font-weight: bold;*/
+    font-weight: bold;
     border: none;
     text-decoration:underline;
     display: inline;
@@ -36,6 +36,29 @@ div[aria-hidden='true'] {
     height: 1em;
     margin: 0.2em 1px 0 0;
     padding: 10px;
+}
+ .tabactive {
+  	color: black;
+	text-decoration:none;
+	background-color: #F3F3F3;
+	border-top: 1px solid white;
+	border-left:1px solid white;
+	border-right:1px solid white;
+	border-bottom: 3px solid #D26911 !important;
+	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+
+}
+ul#subsubnavlist li.tabactive,
+ul#navlist li.tabactive {
+  	color: black;
+	text-decoration:none;
+	background-color: #F3F3F3;
+	border-top: 1px solid white;
+	border-left:1px solid white;
+	border-right:1px solid white;
+	border-bottom: 3px solid #D26911;
+	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	 padding: .2em .5em .2em .5em; 
 }
 .panel {
     border:2px solid #f3f3f3;
@@ -84,7 +107,7 @@ div[aria-hidden='false'] {
     background-color:#FDFDFD;
     background: url('mods/_standard/gameme/images/loaderIcon.gif') no-repeat right; 
 }
-.tabactive{
+/*.tabactive{
     background-color: #f3f3f3;
     background-image: linear-gradient(#fafafa, #eaeaea);
     border-color: white white #d26911;
@@ -92,7 +115,7 @@ div[aria-hidden='false'] {
     border-width: 1px 1px 3px;
     color: black;
     text-decoration: none;
-}
+}*/
 
 .gm_table{
     border:1px solid black;
@@ -108,230 +131,13 @@ div#info {
     float:left;
     clear:both;
 }
-/*
-#jquery-script-menu {
-position: fixed;
-height: 90px;
-width: 100%;
-top: 0;
-left: 0;
-border-top: 5px solid #316594;
-background: #fff;
--moz-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
--webkit-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
-box-shadow: 0 2px 3px 0px rgba(0, 0, 0, 0.16);
-z-index: 999999;
-padding: 10px 0;
--webkit-box-sizing:content-box;
--moz-box-sizing:content-box;
-box-sizing:content-box;
-}
-
-.jquery-script-center {
-width: 960px;
-margin: 0 auto;
-}
-.jquery-script-center ul {
-width: 212px;
-float:left;
-line-height:45px;
-margin:0;
-padding:0;
-list-style:none;
-}
-.jquery-script-center a {
-	text-decoration:none;
-}
-.jquery-script-ads {
-width: 728px;
-height:90px;
-float:right;
-}
-.jquery-script-clear {
-clear:both;
-height:0;
-}
-*/
 
 /* Dropzone CSS */
 /*
  * The MIT License
  * Copyright (c) 2012 Matias Meno <m@tias.me>
  */
- /*
-@-webkit-keyframes passing-through {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(40px);
-    -moz-transform: translateY(40px);
-    -ms-transform: translateY(40px);
-    -o-transform: translateY(40px);
-    transform: translateY(40px); }
-  30%, 70% {
-    opacity: 1;
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    transform: translateY(0px); }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateY(-40px);
-    -moz-transform: translateY(-40px);
-    -ms-transform: translateY(-40px);
-    -o-transform: translateY(-40px);
-    transform: translateY(-40px); 
-    } 
-}
-@-moz-keyframes passing-through {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(40px);
-    -moz-transform: translateY(40px);
-    -ms-transform: translateY(40px);
-    -o-transform: translateY(40px);
-    transform: translateY(40px); }
-  30%, 70% {
-    opacity: 1;
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    transform: translateY(0px); }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateY(-40px);
-    -moz-transform: translateY(-40px);
-    -ms-transform: translateY(-40px);
-    -o-transform: translateY(-40px);
-    transform: translateY(-40px); } }
-@keyframes passing-through {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(40px);
-    -moz-transform: translateY(40px);
-    -ms-transform: translateY(40px);
-    -o-transform: translateY(40px);
-    transform: translateY(40px); }
-  30%, 70% {
-    opacity: 1;
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    transform: translateY(0px); }
-  100% {
-    opacity: 0;
-    -webkit-transform: translateY(-40px);
-    -moz-transform: translateY(-40px);
-    -ms-transform: translateY(-40px);
-    -o-transform: translateY(-40px);
-    transform: translateY(-40px); } }
-@-webkit-keyframes slide-in {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(40px);
-    -moz-transform: translateY(40px);
-    -ms-transform: translateY(40px);
-    -o-transform: translateY(40px);
-    transform: translateY(40px); }
-  30% {
-    opacity: 1;
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    transform: translateY(0px); } }
-@-moz-keyframes slide-in {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(40px);
-    -moz-transform: translateY(40px);
-    -ms-transform: translateY(40px);
-    -o-transform: translateY(40px);
-    transform: translateY(40px); }
-  30% {
-    opacity: 1;
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    transform: translateY(0px); } }
-@keyframes slide-in {
-  0% {
-    opacity: 0;
-    -webkit-transform: translateY(40px);
-    -moz-transform: translateY(40px);
-    -ms-transform: translateY(40px);
-    -o-transform: translateY(40px);
-    transform: translateY(40px); }
-  30% {
-    opacity: 1;
-    -webkit-transform: translateY(0px);
-    -moz-transform: translateY(0px);
-    -ms-transform: translateY(0px);
-    -o-transform: translateY(0px);
-    transform: translateY(0px); } }
-@-webkit-keyframes pulse {
-  0% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1); }
-  10% {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    transform: scale(1.1); }
-  20% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1); } }
-@-moz-keyframes pulse {
-  0% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1); }
-  10% {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    transform: scale(1.1); }
-  20% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1); } }
-@keyframes pulse {
-  0% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1); }
-  10% {
-    -webkit-transform: scale(1.1);
-    -moz-transform: scale(1.1);
-    -ms-transform: scale(1.1);
-    -o-transform: scale(1.1);
-    transform: scale(1.1); }
-  20% {
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -ms-transform: scale(1);
-    -o-transform: scale(1);
-    transform: scale(1);
-    } 
-}
-*/
+
     .dropzone, .dropzone * {
         box-sizing: border-box; 
         float:left;
