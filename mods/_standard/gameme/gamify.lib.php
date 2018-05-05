@@ -11,12 +11,7 @@ function getLeaders($gamification, $leader_depth){
     $sql = "SELECT member_id FROM %scourses WHERE course_id = %d";
     $instructor = queryDB($sql, array(TABLE_PREFIX, $_SESSION['course_id']), TRUE);
     $count = 0;
-    $leader_board = '<table 
-        style="
-        width:95%; 
-        border-top:1px solid #ded29e;
-        border-bottom:1px solid #ded29e;
-        text-align:center;"><tr><th>#</th><th>'._AT('gm_id').'</th><th>'._AT('gm_points').'</th><th>'._AT('gm_level').'</th></tr>';
+    $leader_board = '<table  class="data"><tr><th>#</th><th>'._AT('gm_id').'</th><th>'._AT('gm_points').'</th><th>'._AT('gm_level').'</th></tr>';
    if(!empty($leaders)){
     foreach($leaders as $key=>$leader){
         // don't display instructor on leader board
@@ -103,18 +98,7 @@ function showUserScore($gamification){
     if($score->getPoints() == 0){
         echo '<div style="text-align:center;">'._AT('gm_login_for_points').'</div>';
     }
-    echo "<div style=' 
-    width:80%;
-    font-size:2em;
-    text-align:center;
-    margin-top:.5em;
-    margin-left:auto;
-    margin-right:auto;   
-    border: 1px solid green;
-    box-shadow: .1em .1em .1em;#666666;
-    background-color: #e9fbe9;
-    border-radius:.3em;
-    padding:.2em;'
+    echo "<div id='gameme_points'
     >"._AT('gm_points').": " . $score->getPoints() . " </div><br /><hr />";
 }
 /*

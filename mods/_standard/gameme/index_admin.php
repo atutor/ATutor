@@ -4,7 +4,7 @@ require (AT_INCLUDE_PATH.'vitals.inc.php');
 admin_authenticate(AT_ADMIN_PRIV_GAMEME);
 require_once(AT_INCLUDE_PATH.'../mods/_standard/gameme/gamify.lib.php');
 $_custom_css = $_base_path . 'mods/_standard/gameme/module.css'; // use a custom stylesheet
-//$_custom_head = '<script type="text/javascript" src="'.$_base_path .'jscripts/lib/jquery.1.10.1.min.js"></script>'."\n";
+//$_custom_head .=  '<script type="text/javascript" src="'.$_base_path.'jscripts/lib/jquery-scrolltofixed-min.js"></script>';
 $_custom_head.= '<script type="text/javascript" src="'.$_base_path .'mods/_standard/gameme/gamify.js"></script>'."\n";
 $_custom_head .= '<script type="text/javascript" src="'.$_base_path.'mods/_standard/gameme/inline_edit/jquery-quickedit.js"></script>'."\n";
 $_custom_head .= '<script type="text/javascript" src="'.$_base_path.'mods/_standard/gameme/jquery/js.cookie-min.js"></script>'."\n";
@@ -263,7 +263,7 @@ foreach($all_levels as $level){
 </form> 
 
 </div>
-<script src="<?php echo $_base_href; ?>mods/_standard/gameme/jquery/1.11.1/jquery.min.js" type="text/javascript"></script>
+<!-- <script src="<?php echo $_base_href; ?>mods/_standard/gameme/jquery/1.11.1/jquery.min.js" type="text/javascript"></script> -->
 <script type="text/javascript" src="<?php echo $_base_path; ?>mods/_standard/gameme/inline_edit/jquery-quickedit.js"></script>
 
 <?php require (AT_INCLUDE_PATH.'footer.inc.php'); ?>

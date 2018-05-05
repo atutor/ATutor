@@ -93,9 +93,7 @@ if (isset($_custom_script)) {
 $custom_head .='<meta name="google-site-verification" content="_O0BbIDd98mENDFWCWD5NR8xPQhoEEnKOKaA_DlhqKY" />';
 $custom_head .= '<meta name="google-site-verification" content="dNU6z27-f4GLPfPishC4RK8HhFdtjvr6-Hca2GFn5to" />';
 $custom_head .='<meta name="viewport" content="width=device-width, initial-scale=1">';
-$custom_head .= '
-    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery-scrolltofixed-min.js"></script>
-    <script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>';
+$custom_head .= '<script type="text/javascript" src="'.AT_print($_base_path, 'url.base').'jscripts/lib/jquery.cookie.js"></script>';
 // Set session timeout warning if user is logged in
 if(isset($_SESSION['valid_user'])){
     // Setup the timeout warning when a user logs in

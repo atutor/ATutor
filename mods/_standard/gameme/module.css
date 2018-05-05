@@ -19,6 +19,7 @@ div[aria-hidden='true'] {
 .hidden {
     display:none;
 }
+/*
 .tablist {
     list-style: outside none none;
     margin: 0;
@@ -48,6 +49,7 @@ div[aria-hidden='true'] {
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 
 }
+*/
 ul#subsubnavlist li.tabactive,
 ul#navlist li.tabactive {
   	color: black;
@@ -58,7 +60,10 @@ ul#navlist li.tabactive {
 	border-right:1px solid white;
 	border-bottom: 3px solid #D26911;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
-	 padding: .2em .5em .2em .5em; 
+}
+ul#subnavlist_i li {
+    margin-right:5em;
+    margin-bottom:-3em;
 }
 .panel {
     border:2px solid #f3f3f3;
@@ -78,7 +83,7 @@ ul.controlList {
 li[aria-selected='true'] {
   color: black;
   background-color: #fff;
-  border-bottom: 1px solid white;
+  /* border-bottom: 1px solid white; */
 }
 
 div[aria-hidden='true'] {

@@ -114,10 +114,17 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('height', '2.6em')
                         $("ul#subnavlist_i li").css('background-color', '#FFFFFF'); 
                         $("ul#subnavlist_i li").css('padding', '.3em'); 
-                        $("ul#subnavlist li").css('padding', '.4em'); 
-                        $("ul#subnavlist").css('margin-top', '-2.6em');  
+                        $("ul#subnavlist li").css('padding-bottom', '.4em');  
+                        $("ul#subnavlist li").css('padding-top', '.4em');  
+                        $("ul#subnavlist li > a").css('padding', '.4em .6em .4em .6em'); 
+                        $("ul#subnavlist li a").css('padding', '.4em'); 
+                        $("ul#subnavlist li.active > a").css('border-bottom', '.3em solid #D26911');
+                        $("ul#subnavlist li > a").css('border-color', '.3em');
+                        $("ul#subnavlist").css('margin-top', '-2.3em');   
                         $("#subnavlist").css('float', 'left'); 
                         $("#subnavlist").css('clear', 'left');
+                        $("#subnavlist_i").css('padding-top', '0');
+                        
                         if($.cookie('side-menu') === 'none'){
                             $("#subnavlistcontainer").css('margin-left', '-20.5em');
                         }
@@ -144,12 +151,16 @@ ATutor.course = ATutor.course || {};
                         $(this).find('div').css('position','');
                         $(this).find('div').css('height','');
                         $(this).find('div').css('padding', '0');
-                        $("ul#subnavlist li").css('padding', '.4em'); 
+                        //$("ul#subnavlist li a").css('padding', '.4em'); 
                         $("ul#subnavlist").css('float', 'none');                         
-                        $("ul#subnavlist").css('padding-left', '2em');
+                        //$("ul#subnavlist").css('padding-left', '2em');
                         $("ul#subnavlist").css('clear', 'none');
                         $("ul#subnavlist li").css('margin-bottom', '0');
                         $("ul#subnavlist").css('margin-top', '0'); 
+                        $("#subnavlist_i").css('padding-top', '2em');
+                        $("ul#subnavlist").css('margin-bottom', '-2.1em'); 
+                        $("ul#subnavlist li").css('border-bottom', '3px solid #eeeeee'); 
+                        $("li.active").css('border-bottom', '3px solid #D26911'); 
                         $("div#subnavbacktopage").css('width', '1.5em'); 
                         
                         $("#subnavlistcontainer").css('border-bottom', '0'); 

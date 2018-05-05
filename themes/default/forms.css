@@ -49,7 +49,7 @@ div.input-form input:focus {
 }
 }
 div.input-form textarea {
-	border: 1px solid #DED29E;
+	border: 1px solid #EAEAEA;
 	width: 98%;
 	*width:400px;
 	padding: 2px;
@@ -61,7 +61,7 @@ textarea{
     width:98%;
 }
 div.input-form input[type=text], div.input-form input[type=password] {
-	border: 1px solid #DED29E;
+	border: 1px solid #EAEAEA;
 	padding: 2px;
 	max-width: 60%;
 	background-color:white;
@@ -70,12 +70,12 @@ div.input-form input[type=text]:focus, div.input-form input[type=password]:focus
 	background-color:#FAF6D7;
 }
 div.input-form textarea:focus, div.input-form  input[type=password]:focus, div.input-form  input[type=text]:focus{
-	border:1px solid #DED29E;
+	border:1px solid #EAEAEA;
 	padding: 2px;
 }
 
 input[type=checkbox]{
-	background-color: #DED29E;
+	background-color: #EAEAEA;
 /*font-size:100%;*/
 
 }
@@ -145,7 +145,7 @@ div.input-form input[type=submit]{
 }
 select{
 	background-color:#E5E5E5;
-	border:1px solid #DED29E;
+	border:1px solid #EAEAEA;
 	border-radius: .2em .2em .2em .2em;
 	-moz-border-radius: .2em .2em .2em .2em;
 /*	-moz-box-shadow:.2em .2em .3em #999999;
@@ -153,14 +153,14 @@ select{
 /*	font-size:100%;*/
 }
 select:focus{
-	background-color:#DED29E;
+	background-color:#EAEAEA;
 
 }
 .test_instruction{
 	background-color: #F4F0CB; 
 	padding: 5px 10px; 
 	margin: 0px; 
-	border-top: 1px solid #DED29E;
+	border-top: 1px solid #EAEAEA;
 }
 .test_points{
 	float: right; 

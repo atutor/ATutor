@@ -76,6 +76,8 @@ if (admin_authenticate(AT_ADMIN_PRIV_GAMEME, TRUE) || admin_authenticate(AT_ADMI
     $this->_pages['mods/_standard/gameme/game_options.php']['title_var'] = 'gm_game_options';
     $this->_pages['mods/_standard/gameme/game_options.php']['parent']   = 'mods/_standard/gameme/index_instructor.php';
     $this->_pages['mods/_standard/gameme/index_instructor.php']['img']    = 'mods/_standard/gameme/images/gamify.png';
+    $this->_pages_i['mods/_standard/gameme/index_instructor.php']['title_var']  = 'manage';
+    $this->_pages_i['mods/_standard/gameme/index.php']['children'] = array('mods/_standard/gameme/index_instructor.php');
 }
 
 /*******

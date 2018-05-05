@@ -74,10 +74,12 @@ jQuery(document).ready(function(){
         $("#tab3").removeClass("tabactive");
         $("#tab1").addClass("tabactive");
         $("#tab4").removeClass("tabactive");
+        $("#tab5").removeClass("tabactive");
         $("#panel2").attr("aria-hidden","true");
         $("#panel3").attr("aria-hidden","true");
         $("#panel1").attr("aria-hidden","false");
         $("#panel4").attr("aria-hidden","true");
+        
     }
      $("#tab1").click(function(){
             $("#tab2").removeClass("tabactive");
@@ -177,6 +179,7 @@ jQuery(document).ready(function(){
             $("#tab2").removeClass("tabactive");
             $("#tab3").removeClass("tabactive");
             $("#tab4").addClass("tabactive");
+            $("#tab5").removeClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
@@ -188,7 +191,7 @@ jQuery(document).ready(function(){
             $("#tab2").removeClass("tabactive");
             $("#tab3").removeClass("tabactive");
             $("#tab4").removeClass("tabactive");
-            $("#tab4").addClass("tabactive");
+            $("#tab5").addClass("tabactive");
             $("#panel1").attr("aria-hidden","true");
             $("#panel2").attr("aria-hidden","true");
             $("#panel3").attr("aria-hidden","true");
