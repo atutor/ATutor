@@ -158,7 +158,7 @@ ATutor.course = ATutor.course || {};
                         $("ul#subnavlist li").css('margin-bottom', '0');
                         $("ul#subnavlist").css('margin-top', '0'); 
                         $("#subnavlist_i").css('padding-top', '2em');
-                        $("ul#subnavlist").css('margin-bottom', '-2.1em'); 
+                        //$("ul#subnavlist").css('margin-bottom', '-.5em'); 
                         $("ul#subnavlist li").css('border-bottom', '3px solid #eeeeee'); 
                         $("li.active").css('border-bottom', '3px solid #D26911'); 
                         $("div#subnavbacktopage").css('width', '1.5em'); 
