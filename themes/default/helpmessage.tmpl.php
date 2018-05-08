@@ -9,7 +9,7 @@ global $_base_href;
 
 ?>
 
-<div id="help" class="divClass">
+<div id="help" class="divClass" tabindex="0">
 <div class="deleteDiv">
 <a href="#" onclick="return false;" id="revisit"  tabindex="-1">
 <img src="<?php echo $this->img; ?>previous.png" alt="<?php echo _AT('helpme_revisit'); ?>" title="<?php echo _AT('helpme_revisit'); ?>" role="link"  tabindex="0"/>
