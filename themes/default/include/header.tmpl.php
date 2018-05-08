@@ -221,7 +221,7 @@ global $system_courses, $_custom_css, $db;
                 <?php $accesskey_text = ($accesscounter < 10 ? 'accesskey="'.$accesscounter.'"' : ''); ?>
                 <?php $accesskey_title = ($accesscounter < 10 ? ' Alt+'.$accesscounter : ''); ?>
                 <?php if ($page['url'] == $this->current_top_level_page): ?>
-                    <li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"><?php echo $page['title']; ?></a></li>
+                    <li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>" class="active"  aria-label="<?php echo $page['title'].':'._AT('active'); ?>"><?php echo $page['title']; ?></a></li>
                 <?php else: ?>
                     <li><a href="<?php echo $page['url']; ?>" <?php echo $accesskey_text; ?> title="<?php echo $page['title'] . $accesskey_title; ?>"><?php echo $page['title']; ?></a></li>
                 <?php endif; ?>
@@ -336,8 +336,8 @@ global $system_courses, $_custom_css, $db;
       <?php endif; ?>
       		<?php if (isset($this->guide) && isset($_SESSION["course_id"]) && $this->guide && ($_SESSION["prefs"]["PREF_SHOW_GUIDE"] || $_SESSION["course_id"] == "-1")) : 
 		?>
-      <div id="guide_box">
-			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new"><?php echo $this->page_title; ?></a>
+      <div id="guide_box" tabindex="0" aria-label="<?php echo _AT('atutor_handbook'); ?>">
+			  <a href="<?php echo $this->guide; ?>" id="guide" onclick="ATutor.poptastic('<?php echo $this->guide; ?>'); return false;" target="_new" title="<?php echo _AT('atutor_handbook'); ?>: <?php echo $this->page_title; ?>"><?php echo $this->page_title; ?></a>
       </div>
 		  <?php endif; ?>
 		<?php if (isset($this->course_id) && $this->course_id > 0 && $system_courses[$this->course_id]['side_menu']): ?>
@@ -381,7 +381,6 @@ global $system_courses, $_custom_css, $db;
 	<?php  if (count($this->sub_level_pages) > 1 || $this->sub_level_pages_i > 0): ?>
 	<div id="lrg_subnav">
 		<div id="subnavlistcontainer" role="navigation" aria-label="<?php echo _AT('sub'); ?>">
-		<a name="admin_tools" id="admin_tools" title="<?php echo _AT("course_admin_tools"); ?>"></a>
 			<div id="subnavbacktopage">
 			<?php if (isset($this->back_to_page)): ?>
 				<a href="<?php echo $this->back_to_page['url']; ?>">
@@ -398,7 +397,7 @@ global $system_courses, $_custom_css, $db;
 			<?php for ($i=0; $i<$num_pages; $i++): ?>
 
 				<?php if ($this->sub_level_pages[$i]['url'] == $this->current_sub_level_page && $num_pages > 1){ ?>
-				      <li class="active" tabindex="0"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?><span class="subnav_toggle" id="hidesubnav"  title="<?php echo _AT("hide_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span><span class="subnav_toggle" id="showsubnav" title="<?php echo _AT("open_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span></li>
+				      <li class="active" tabindex="0" aria-label="<?php echo $this->sub_level_pages[$i]['title'].':'._AT('active'); ?>"><?php echo stripslashes(htmlentities_utf8($this->sub_level_pages[$i]['title'])); ?><span class="subnav_toggle" id="hidesubnav"  title="<?php echo _AT("hide_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span><span class="subnav_toggle" id="showsubnav" title="<?php echo _AT("open_sub_navigation"); ?>">&nbsp;&nbsp;&nbsp;</span></li>
 
 				
 				<?php } else if($num_pages > 1) { ?>
