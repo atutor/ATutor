@@ -218,6 +218,7 @@ jQuery(document).ready(function(){
             $(\"#help li:nth-child(1)\").animate({ opacity: 'show' }, \"slow\");  
             $(\"#revisit img\").animate({ opacity: 'hide' }, \"slow\");
             $(\"#help a#delete\").animate({ opacity: 'show' }, \"slow\");
+            $(\"#help\").focus();
             //$(\"#delete img\").animate({ opacity: 'show' }, \"slow\");
             //url = \"https://www.rapidtables.com/web/dev/jquery-redirect.htm\";
             // window.location.reload();
