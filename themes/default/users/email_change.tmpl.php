@@ -18,7 +18,7 @@ function encrypt_password()
 	<input type="hidden" name="form_password_hidden" value="" />
 
 	<div class="input-form" style="width:90%;">
-
+<fieldset class="group_form"><legend class="group_form"><?php echo _AT('change_email'); ?></legend>
 		<div class="row">
 			<span class="required" title="<?php echo _AT('required_field'); ?>">*</span><label for="form_password"><?php echo _AT('password'); ?></label><br />
 			<input id="form_password" name="form_password" type="password" size="15" maxlength="15" value="" /><br />
@@ -33,6 +33,7 @@ function encrypt_password()
 			<input type="submit" name="submit" value="<?php echo _AT('submit'); ?>" onClick="encrypt_password()" />
 			<input type="submit" name="cancel" value=" <?php echo _AT('cancel'); ?> " />
 		</div>
+		</fieldset>
 	</div>
 </form>
 
