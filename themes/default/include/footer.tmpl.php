@@ -27,7 +27,7 @@
 </div>
 <p><br /><br />&nbsp;</p>
 </div> <!-- end page wrapper --> 
-<div id="footer">
+<div id="footer" role="contentinfo">
     <div class="logo">
           <a href="<?php echo $this->custom_logo_url; ?>"><img src="<?php echo get_custom_logo(); ?>"  alt="<?php echo $this->custom_logo_alt_text; ?>" style="border:none;" /></a>
     </div>
