@@ -227,16 +227,21 @@ foreach($all_events as $key=>$event){
                 $badge_file_array = explode('/',$badge['image_url']);
                 if($badge_file_array[1] == 0){
                     $custom_default = TRUE;
+                } elseif($badge_file_array[1] >= 1){
+                    $custom_course = TRUE;
                 }
                 array_shift($badge_file_array);
                 $badge_file_stem = implode('/',$badge_file_array);
-        
+        debug($badge_file_stem);
                 if(is_file(AT_CONTENT_DIR.$badge_file_stem)){
-                    if(!$custom_default){
+                    if($custom_course){
                         // Course Badge
                         $badge_file = $_base_href.'get.php/gameme/badges/'.end($badge_file_array);
+                    } else  if($custom_default){
+                        //Custom Default
+                        $badge_file = $_base_href.'content/0/gameme/badges/'.end($badge_file_array);
                     } else{
-                        // Custom Default Badge
+                        // Default Badge
                         $badge_file = $_base_href.'mods/_standard/gameme/get_badge_icon.php?badge_id='.$badge['id'];
                     }
                 }
