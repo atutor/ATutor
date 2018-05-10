@@ -18,7 +18,7 @@ if (isset($_POST['submit_no'])) {
 } else if (isset($_POST['submit_yes'])) {
     if($_SESSION['course_id'] > 0){
         $course_id = $_SESSION['course_id'];
-    }else{
+    }else if($course_id == -1){
         $course_id=0;
     }
     // remove the badge file
