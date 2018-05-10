@@ -232,7 +232,7 @@ foreach($all_events as $key=>$event){
                 }
                 array_shift($badge_file_array);
                 $badge_file_stem = implode('/',$badge_file_array);
-        debug($badge_file_stem);
+
                 if(is_file(AT_CONTENT_DIR.$badge_file_stem)){
                     if($custom_course){
                         // Course Badge
