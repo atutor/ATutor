@@ -84,7 +84,6 @@ global $_base_path;
 $this_path =  preg_replace ('#/get.php#','',$_SERVER['DOCUMENT_ROOT'].$_base_path);
 
 ?>
-
 <ul class="tablist " role="tablist" id="subnavlist">
 <li id="tab1" class="tab" aria-controls="panel1" aria-selected="true" tabindex="0" role="tab"  onclick="javascript:Cookies.set('activetab', 'tab1');">
 <?php echo _AT('gm_events'); ?></li>
@@ -236,7 +235,12 @@ foreach($all_events as $key=>$event){
                 if(is_file(AT_CONTENT_DIR.$badge_file_stem)){
                     if($custom_course){
                         // Course Badge
-                        $badge_file = $_base_href.'get.php/gameme/badges/'.end($badge_file_array);
+                        if(is_file($_base_href.'get.php/gameme/badges/'.end($badge_file_array))){
+                            $badge_file = $_base_href.'get.php/gameme/badges/'.end($badge_file_array);
+                        }else{
+                            // get.php breaks above for php7.2, fallback here when get.php fails
+                            $badge_file = $_base_href.'content/'.$_SESSION['course_id'].'/gameme/badges/'.end($badge_file_array);
+                        }
                     } else  if($custom_default){
                         //Custom Default
                         $badge_file = $_base_href.'content/0/gameme/badges/'.end($badge_file_array);
