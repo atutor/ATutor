@@ -69,6 +69,13 @@ function yourPosition($mid){
                 if($leader['id_user'] == $_SESSION['member_id'] && !$_SESSION['is_admin']){
                     echo "<p>"._AT('gm_in_position' , $count)."</p>"."\n";
                 }
+            } else{
+                if(show_instructor() == 1){
+                $count++;
+                echo "<p>"._AT('gm_in_position' , $count)."</p>"."\n";
+                } else{
+                 echo "<p></p>"."\n";
+                }
             }
     }
     return $member_login['login'];
