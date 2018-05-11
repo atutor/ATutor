@@ -248,7 +248,8 @@ function showstars($points){
 
         if(!empty($level_image['icon'])){
             if(is_file(AT_CONTENT_DIR.$_SESSION['course_id'].'/gameme/levels/'.$level_image['icon'])){
-                 $level_file = $_base_href.'get.php/gameme/levels/'.$level_image['icon'];
+                 //$level_file = $_base_href.'get.php/gameme/levels/'.$level_image['icon'];
+                 $level_file = $_base_href.'content/'.$_SESSION['course_id'].'/gameme/levels/'.$level_image['icon'];
             }else if(is_file(AT_CONTENT_DIR.'0/gameme/levels/'.$level_image['icon'])){
                 $level_file = $_base_href.'mods/_standard/gameme/get_level_icon.php?level_id='.$level_image['id'];
             }else {
@@ -300,7 +301,8 @@ function star_file($id){
         if(!empty($level_image['icon'])){
             if(is_file(AT_CONTENT_DIR.$_SESSION['course_id'].'/gameme/levels/'.$level_image['icon'])){
                 // Course level
-                $level_file = $_base_href.'get.php/gameme/levels/'.$level_image['icon'];
+                //$level_file = $_base_href.'get.php/gameme/levels/'.$level_image['icon'];
+                $level_file = $_base_href.'content/'.$_SESSION['course_id'].'/gameme/levels/'.$level_image['icon'];
             }else {
                 $level_file = $_base_href.'mods/_standard/gameme/images/'.$level_image['icon'];
             }
@@ -410,7 +412,8 @@ function getBadgeImage($badge_id){
         
         if(is_file(AT_CONTENT_DIR.$badge_file_stem)){
             if(!$custom_default){
-                $badge_file = $_base_href.'get.php/gameme/badges/'.end($badge_file_array);
+                //$badge_file = $_base_href.'get.php/gameme/badges/'.end($badge_file_array);
+                $badge_file = $_base_href.'content/'.$_SESSION['course_id'].'/gameme/badges/'.end($badge_file_array);
             } else{
                 $badge_file = $_base_href.'mods/_standard/gameme/get_badge_icon.php?badge_id='.$badge_id;
             }
