@@ -310,7 +310,7 @@ a .highlight{
 	border-bottom:0;
 	text-align: center;
 	white-space: nowrap;
-	width:13%;
+	width:7%;
 	padding:0;
 	margin:0;
 }
@@ -2191,7 +2191,6 @@ ul#subsubnavlist li,
 ul#navlist li{
 	list-style: none;
 	display: inline-block;
-	font-weight:700;
 	text-align:center;
 	background-color:#ffffff;
 	/*border-bottom: 3px solid #f3f3f3;*/
@@ -2288,19 +2287,19 @@ ul#subnavlist span#showsubnav{
 }
 .tab {
     background: #dddddd none repeat scroll 0 0;
-    border-top-left-radius: 0.5em;
-    border-top-right-radius: 0.5em; 
+    border-top-left-radius: 0.2em;
+    border-top-right-radius: 0.2em; 
     border-bottom: 3px solid #D26911;
-    font-weight: bold;
     border: none;
     text-decoration:none;
     display: inline;
     float: left;
     height: 1em;
     margin: 0.1em 1px 0 0;
-  	padding: .2em .3em .4em .2em;
+  	padding: .2em 0em .4em 0em;
   	cursor:pointer;
 }
+
 #gamify > ul#subnavlist>li {
     border-bottom: 3px solid #eeeeee;
 }
@@ -2332,6 +2331,7 @@ ul#subnavlist span#showsubnav{
 	border-right:1px solid white;
 	border-bottom: 3px solid #D26911 !important;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
+	font-weight:bold;
 }
 div.menuedit{
 	float:right;
