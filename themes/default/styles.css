@@ -2297,7 +2297,7 @@ ul#subnavlist span#showsubnav{
     display: inline;
     float: left;
     height: 1em;
-    margin: 0.2em 1px 0 0;
+    margin: 0.1em 1px 0 0;
   	padding: .2em .3em .4em .2em;
   	cursor:pointer;
 }
