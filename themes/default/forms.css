@@ -6,7 +6,9 @@ div.input-form {
 	background-color:#FCFCFC;
 	/*border: 1px #685642 solid; */
 /*	border-top:1px solid #E5E5E5;*/
-	border-bottom:1px solid #E5E5E5; 
+    border:1px solid #E5E5E5 !important;
+    border-radius:.2em;
+    padding:.2em;
 	margin-bottom: 10px;
 	line-height:120%;
 /*    box-shadow: 0em .1em 0em #cccccc inset;*/
