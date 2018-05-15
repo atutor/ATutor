@@ -1757,6 +1757,7 @@ ul#topnavlist li a.active,
 ul#topnavlist li:hover, 
 ul#topnavlist li a:focus{
 	border-bottom: 3px solid #D26911;
+	font-weight:bold;
 }
 ul#topnavlist li a {
     /* The normal, unselected tabs. They are all links */
@@ -2235,6 +2236,7 @@ ul#navlist li.active {
 	border-radius: .3em .3em 0em 0em;
 	background-image: linear-gradient(#FAFAFA, #EAEAEA);
 	padding: .2em .5em .2em .5em; 
+	font-weight:bold;
 }
 
 ul#subnavlist li a, 
@@ -2298,6 +2300,7 @@ ul#subnavlist span#showsubnav{
     margin: 0.1em 1px 0 0;
   	padding: .2em 0em .4em 0em;
   	cursor:pointer;
+  	margin-left:.2em;
 }
 
 #gamify > ul#subnavlist>li {
