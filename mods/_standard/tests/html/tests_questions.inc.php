@@ -125,8 +125,9 @@ foreach ($cats as $cat) {
 			echo '<tr onmousedown="document.form[\'q' . $row['question_id'] . '\'].checked = !document.form[\'q' . $row['question_id'] . '\'].checked; togglerowhighlight(this, \'q'.$row['question_id'].'\');" id="rq'.$row['question_id'].'">';
 			echo '<td>';
 			echo '<input type="checkbox" value="'.$row['question_id'].'|'.$row['type'].'" name="questions['.$cat['category_id'].'][]" id="q'.$row['question_id'].'" onmouseup="this.checked=!this.checked" /></td>';
-			echo '<td>'. strip_tags(htmlspecialchars_decode($row['question'], ENT_QUOTES));
-			echo '<a title="'.strip_tags(htmlspecialchars_decode($row['question'])).'">';
+			echo '<td>';
+			//strip_tags(htmlspecialchars_decode($row['question'], ENT_QUOTES));
+			//echo '<a title="'.strip_tags(htmlspecialchars_decode($row['question'])).'">';
 			echo AT_print((validate_length(htmlspecialchars_decode($row['question']), 1250, VALIDATE_LENGTH_FOR_DISPLAY)), 'tests_questions.list');
 			echo '</a>';
 			echo '</td>';
