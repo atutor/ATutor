@@ -11,6 +11,7 @@ CREATE TABLE IF NOT EXISTS `helpme_user` (
 REPLACE INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/helpme', 2, 0, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 // Add Gameme as a standard Module
+DO SLEEP(3);
 REPLACE INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/gameme', 2, MAX(privilege) * 2, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 # Update db date fields for compatibility with MySQL 5.7
