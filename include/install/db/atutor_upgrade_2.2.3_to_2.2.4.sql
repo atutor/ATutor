@@ -8,7 +8,10 @@ CREATE TABLE IF NOT EXISTS `helpme_user` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 
-INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/helpme', 2, 0, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
+REPLACE INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/helpme', 2, 0, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
+
+// Add Gameme as a standard Module
+REPLACE INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/gameme', 2, MAX(privilege) * 2, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 # Update db date fields for compatibility with MySQL 5.7
 UPDATE `language_text` SET `revised_date` = NULL WHERE `revised_date` = '0000-00-00 00:00:00';
@@ -35,10 +38,6 @@ UPDATE `courses` SET `end_date` = NULL WHERE `end_date` = '0000-00-00 00:00:00';
 UPDATE `tests` SET `start_date` = NULL WHERE `start_date` = '0000-00-00 00:00:00';
 UPDATE `tests` SET `end_date` = NULL WHERE `end_date` = '0000-00-00 00:00:00';
 
-
-
-// Add Gameme as a standard Module
-INSERT INTO `modules` (`dir_name`, `status`, `privilege`, `admin_privilege`, `cron_interval`, `cron_last_run`) SELECT '_standard/gameme', 2, MAX(privilege) * 2, MAX(admin_privilege) * 2, 0, 0 FROM `modules`;
 
 
 CREATE TABLE IF NOT EXISTS `gm_badges` (
