@@ -15,13 +15,13 @@ if ($step < 4) {
 	error_reporting(0);
 	include('../include/config.inc.php');
 	error_reporting(E_ALL ^ E_NOTICE);
-	if (defined('AT_INSTALL')) {
-		include_once(AT_INSTALLER_INCLUDE_PATH.'common.inc.php');
-		echo print_meta_redirect();
-		exit;
-	}
-}
 
+}
+if (defined('AT_INSTALL')) {
+	include_once(AT_INSTALLER_INCLUDE_PATH.'common.inc.php');
+	echo print_meta_redirect();
+	exit;
+}
 $install_steps[0] = array('name' => 'Introduction');
 $install_steps[1] = array('name' => 'Terms of Use');
 $install_steps[2] = array('name' => 'Database');
