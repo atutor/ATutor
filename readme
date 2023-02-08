@@ -1,8 +1,5 @@
 # **ATutor readme:** 
  ---------------
-# Django Girls Tutorial
-
-This is the source code repository for the Django Girls Tutorial. Django Girls Tutorial is used on [tutorial.djangogirls.org](http://tutorial.djangogirls.org) so if you want to read it, please go there. If you want to contribute please do go further with this file.
 
 ## About 
  ---------------
@@ -15,7 +12,7 @@ e.g. http://localhost/ATutor
 
 *For full installation instructions see:* https://atutor.github.io/atutor/docs/installation
 
-###Installing from a Github Clone### 
+### Installing from a Github Clone### 
  ---------------
   1. Fork ATutor into your own Github account, at: https://github.com/atutor/ATutor
 
@@ -27,7 +24,7 @@ e.g. http://localhost/ATutor
 
   5. Or, follow the instructions given by the ATutor Installer.
 
-##How to contribute##
+## How to contribute
  ---------------
 If you want to contribute to ATutor, visit: https://atutor.github.io/atutor/docs/dev_with_github.html
 
@@ -42,13 +39,13 @@ For additional ATutor documentation, see the ATutor Handbook in ATutor, or at th
   - Users:
   https://atutor.github.io/atutor/handbook/users.html
   
-##Developers##
+## Developers
  ---------------
 - Inclusive Design Research Centre
 - OCAD University
 - ATutorSpaces
 
-##License##
+## License
  ---------------
 GPL
 
