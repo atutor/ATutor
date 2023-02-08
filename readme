@@ -1,41 +1,53 @@
-ATutor readme:
+# **ATutor readme:** #
+ ---------------
 
+##About##
+ ---------------
+ATutor is a learning management system to continue professional development for teachers, career developers, and academic research. It is written in PHP in a cross platform operating system.
+
+##Installation##
+ ---------------
 To install ATutor, point your web browser to the installation directory where ATutor was extracted, and follow the Installer's instructions.
 e.g. http://localhost/ATutor
 
-For full installation instructions see:
-https://atutor.github.io/atutor/docs/installation
+*For full installation instructions see:* https://atutor.github.io/atutor/docs/installation
 
-Installing from a Github Clone (assuming you know Github)
+###Installing from a Github Clone### 
+ ---------------
+  1. Fork ATutor into your own Github account, at: https://github.com/atutor/ATutor
 
-1. Fork ATutor into your own Github account, at:
-https://github.com/atutor/ATutor
+  2. Clone ATutor from the fork you created into the document root of your webserver (for convenience), with:git clone                      https://github.com/yourname/ATutor.git 
 
-2. Clone ATutor from the fork you created into the document root of your webserver (for convenience), with:
-git clone https://github.com/yourname/ATutor.git
+  3.  Before running the Installer, create an empty config.inc.php file in the ATutor/include/ directory. If you have a command line to work from, while          located in the ATutor directory, create the file with: touch include/config.inc.php
 
-3.  Before running the Installer, create an empty config.inc.php file in the ATutor/include/ directory. If you have a command line to work from, while located in the ATutor directory, create the file with: 
+  4. Follow the installation instructions at the link above.
 
-touch include/config.inc.php
+  5. Or, follow the instructions given by the ATutor Installer.
 
-4. Follow the installation instructions at the link above.
-
-5. Or, follow the instructions given by the ATutor Installer.
-
-GitHub Basics
-If you want to contribute to ATutor, a few Git basics will describe how.
-See: https://atutor.github.io/atutor/docs/dev_with_github.html
+##How to contribute##
+ ---------------
+If you want to contribute to ATutor, visit: https://atutor.github.io/atutor/docs/dev_with_github.html
 
 For additional ATutor documentation, see the ATutor Handbook in ATutor, or at the following links:
 
-Administrators
-https://atutor.github.io/atutor/handbook/admin.html
+  - Administrators
+  https://atutor.github.io/atutor/handbook/admin.html
 
-Instructors:
-https://atutor.github.io/atutor/handbook/instructor.html
+  - Instructors:
+  https://atutor.github.io/atutor/handbook/instructor.html
 
-Users:
-https://atutor.github.io/atutor/handbook/users.html
+  - Users:
+  https://atutor.github.io/atutor/handbook/users.html
+  
+##Developers##
+ ---------------
+- Inclusive Design Research Centre
+- OCAD University
+- ATutorSpaces
+
+##License##
+ ---------------
+GPL
 
 Have fun, and take it places!
 
