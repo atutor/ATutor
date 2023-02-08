@@ -1,19 +1,19 @@
-# **ATutor readme:** 
- ---------------
+
+# ATutor readme:
 
 ## About 
- ---------------
+
 ATutor is a learning management system to continue professional development for teachers, career developers, and academic research. It is written in PHP in a cross platform operating system.
 
 ## Installation
- ---------------
+
 To install ATutor, point your web browser to the installation directory where ATutor was extracted, and follow the Installer's instructions.
 e.g. http://localhost/ATutor
 
 *For full installation instructions see:* https://atutor.github.io/atutor/docs/installation
 
-### Installing from a Github Clone### 
- ---------------
+### Installing from a Github Clone
+ 
   1. Fork ATutor into your own Github account, at: https://github.com/atutor/ATutor
 
   2. Clone ATutor from the fork you created into the document root of your webserver (for convenience), with:git clone                      https://github.com/yourname/ATutor.git 
@@ -25,7 +25,7 @@ e.g. http://localhost/ATutor
   5. Or, follow the instructions given by the ATutor Installer.
 
 ## How to contribute
- ---------------
+ 
 If you want to contribute to ATutor, visit: https://atutor.github.io/atutor/docs/dev_with_github.html
 
 For additional ATutor documentation, see the ATutor Handbook in ATutor, or at the following links:
@@ -40,15 +40,16 @@ For additional ATutor documentation, see the ATutor Handbook in ATutor, or at th
   https://atutor.github.io/atutor/handbook/users.html
   
 ## Developers
- ---------------
+ 
 - Inclusive Design Research Centre
 - OCAD University
 - ATutorSpaces
 
 ## License
- ---------------
+ 
 GPL
 
+-----------
 Have fun, and take it places!
 
-greg
+-Greg
