@@ -1,11 +1,11 @@
 # **ATutor readme:** 
  ---------------
 
-##About##
+## About 
  ---------------
 ATutor is a learning management system to continue professional development for teachers, career developers, and academic research. It is written in PHP in a cross platform operating system.
 
-##Installation##
+## Installation
  ---------------
 To install ATutor, point your web browser to the installation directory where ATutor was extracted, and follow the Installer's instructions.
 e.g. http://localhost/ATutor
