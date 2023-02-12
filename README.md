@@ -1,9 +1,12 @@
 
-# ATutor readme:
+# ATutor Readme:
 
 ## About 
 
 ATutor is a learning management system to continue professional development for teachers, career developers, and academic research. It is written in PHP in a cross platform operating system.
+
+## Features
+Two accessibility features in the system are text alternatives for all visual elements and keyboard access to all elements of the program. With these features, a blind person can listen to the entire interface of the system with the help of a screen reader, and he or she can access the system without needing a mouse. These features also allow ATutor to adapt to a wide variety of technologies including cell phones, personal data assistants (PDAs), and text-based Web browsers, to name a few. ATutor is also designed for adaptability to any of several teaching and learning scenarios. There are four main areas that reflect this design principle: themes, privileges, tool modules, and groups
 
 ## Installation
 
@@ -26,7 +29,12 @@ e.g. http://localhost/ATutor
 
 ## How to contribute
  
-If you want to contribute to ATutor, visit: https://atutor.github.io/atutor/docs/dev_with_github.html
+If you want to contribute to ATutor follow the instructions below or on https://atutor.github.io/atutor/docs/dev_with_github.html
+ 1. Fork the repository and create clone
+ 2. Create a new branch to work in
+ 3. Edit and create new files within your new branch
+ 4. Make sure your branch is up to date with the master branch
+ 5. Merge pull requests into master branch
 
 For additional ATutor documentation, see the ATutor Handbook in ATutor, or at the following links:
 
@@ -48,6 +56,10 @@ For additional ATutor documentation, see the ATutor Handbook in ATutor, or at th
 ## License
  
 GPL
+
+## [Website Link](https://atutor.github.io/)
+
+## [Report Issues](https://github.com/atutor/ATutor/issues)
 
 -----------
 Have fun, and take it places!
